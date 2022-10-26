@@ -1,0 +1,212 @@
+import { Box } from '@chakra-ui/react';
+import { css } from '@emotion/react';
+import type { InferGetServerSidePropsType } from 'next';
+import type { GetServerSidePropsContext } from 'next/types';
+import { signIn, useSession } from 'next-auth/react';
+import type { ComponentProps } from 'react';
+import React, { useRef } from 'react';
+import type { Swiper as SwiperClass } from 'swiper/types';
+
+import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
+import MainSwiper from '@/components/article/MainSwiper';
+import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
+import OnlyPcContainer from '@/components/layout/OnlyPcContainer';
+import ToastBox from '@/components/ui/ToastBox';
+import { useModalStore } from '@/models/modal/useModalStore';
+import { createContext } from '@/server/createContext';
+import getTrpcSSGHelpers from '@/server/getTrpcSSGHelpers';
+import { colors, mediaQueries, typo } from '@/styles/chakraTheme/variable';
+import trpcHooks from '@/utils/trpcHooks';
+
+import Container from '../components/layout/Container';
+import LayoutTemplate from '../components/layout/LayoutTemplate';
+import SwiperButton from '../components/ui/Button/SwiperButton';
+
+const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
+  () => {
+    const { data } = useSession();
+    const trpcUtils = trpcHooks.useContext();
+
+    return (
+      <a
+        href="#"
+        onClick={async (e) => {
+          e.preventDefault();
+          if (!data?.user) {
+            ToastBox.errorToast(
+              '크리에이터 등록을 하려면 로그인이 필요합니다.',
+            );
+            return;
+          }
+          const my = await trpcUtils.fetchQuery([
+            'user - get',
+            {
+              id: data?.user.id,
+            },
+          ]);
+          if (!my) return;
+          if (my.creator) {
+            ToastBox.errorToast('이미 크리에이터로 등록되어 있습니다.');
+            return;
+          }
+
+          signIn('youtube', {
+            callbackUrl: '/api/auth/creator',
+          });
+        }}
+      >
+        <img src="/images/banner2.svg" alt="크리에이터 등록" />
+      </a>
+    );
+  },
+];
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const trpcSSGHelpers = await getTrpcSSGHelpers();
+
+  trpcSSGHelpers.fetchQuery('request post - main solved items');
+  trpcSSGHelpers.fetchQuery('request post - main recommend items');
+
+  return {
+    props: {
+      trpcState: trpcSSGHelpers.dehydrate(),
+    },
+  };
+}
+
+export default function Home({}: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) {
+  const resolvedRequestSwiperRef = useRef<SwiperClass | null>(null);
+  const solvedRequests = trpcHooks.useQuery([
+    'request post - main solved items',
+  ]);
+  const recommendRequests = trpcHooks.useQuery([
+    'request post - main recommend items',
+  ]);
+
+  // if (!solvedRequests || !recommendRequests.data) return;
+
+  return (
+    <LayoutTemplate>
+      <OnlyPcContainer>
+        {/* 메인 스와이퍼 */}
+        <Box mt={{ base: 16, tablet: 32 }}>
+          <MainSwiper Banners={Banners} />
+        </Box>
+      </OnlyPcContainer>
+      <Container css={contentsStyle}>
+        {/* 해결된 요청 */}
+
+        {solvedRequests.data && (
+          <section className="resolved-request-post">
+            <div className="section-title">
+              <h2>해결된 요청</h2>
+              {/*<Link href="/src/pages" passHref>*/}
+              {/*  <a className="view-all-contents">*/}
+              {/*    /!*<span>전체보기</span>*!/*/}
+              {/*  </a>*/}
+              {/*</Link>*/}
+
+              <div className="section-slide-buttons">
+                <SwiperButton
+                  dir="prev"
+                  onClick={() => resolvedRequestSwiperRef.current?.slidePrev()}
+                />
+                <SwiperButton
+                  dir="next"
+                  onClick={() => resolvedRequestSwiperRef.current?.slideNext()}
+                />
+              </div>
+            </div>
+            <div className="section-contents">
+              <ResolveRequestListSwiper
+                postRequestList={solvedRequests.data}
+                swiperRef={resolvedRequestSwiperRef}
+              />
+            </div>
+          </section>
+        )}
+
+        {/* 추천 요청 */}
+        {recommendRequests.data && (
+          <section className="recommend-request-post">
+            <div className="section-title">
+              <h2>🎯 추천 요청</h2>
+            </div>
+            <div className="section-contents">
+              <HorizonPostRequestItemWrap>
+                {recommendRequests.data.map((request) => (
+                  <HorizonPostRequestItem
+                    key={`${request.id}`}
+                    requestPost={request}
+                  />
+                ))}
+              </HorizonPostRequestItemWrap>
+            </div>
+          </section>
+        )}
+      </Container>
+    </LayoutTemplate>
+  );
+}
+const contentsStyle = css`
+  section {
+    padding-bottom: 28px;
+
+    ${mediaQueries.tablet} {
+      padding-bottom: 36px;
+    }
+  }
+
+  section:first-of-type {
+    padding-top: 24px;
+
+    ${mediaQueries.tablet} {
+      padding-bottom: 32px;
+    }
+  }
+
+  section + section {
+    padding-top: 36px;
+    border-top: 2px solid ${colors.border['4']};
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    height: 48px;
+  }
+
+  .view-all-contents {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    color: ${colors.gray['60']};
+    height: 100%;
+    ${typo.t2};
+  }
+
+  h2 {
+    ${typo.h2};
+  }
+
+  .section-slide-buttons {
+    display: flex;
+    height: 100%;
+    margin-left: auto;
+
+    * + * {
+      margin-left: 12px;
+    }
+  }
+
+  .section-contents {
+    padding-top: 16px;
+
+    ${mediaQueries.tablet} {
+      padding-bottom: 24px;
+    }
+  }
+`;
