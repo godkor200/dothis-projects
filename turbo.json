@@ -19,6 +19,12 @@
       "dependsOn": [
         "^build"
       ],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "prisma/**/client.ts",
+        "prisma/**/schema.prisma"
+      ],
       "env": [
         "DATABASE_URL",
         "NEXTAUTH_URL",
@@ -33,5 +39,9 @@
         "FACEBOOK_SECRET"
       ]
     }
-  }
+  },
+
+  "globalDependencies": [
+    ".env.*"
+  ]
 }

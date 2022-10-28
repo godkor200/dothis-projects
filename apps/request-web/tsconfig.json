@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "@dothis/config/nextjs.json",
   "compilerOptions": {
     "declaration": false,
     "paths": {
