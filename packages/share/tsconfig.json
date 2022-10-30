@@ -1,0 +1,13 @@
+{
+  "extends": "@dothis/config/tsconfig-nextjs.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
+  "baseUrl": ".",
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+}
