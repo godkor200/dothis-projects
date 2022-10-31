@@ -1,43 +1,32 @@
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import type {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  NextApiHandler,
-} from 'next';
+import type { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandler } from 'next';
 import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
-import { pagePath } from '@/constants';
-import type { Message } from '@/models/Message';
-import { errorMessage } from '@/models/Message';
-import type { PartialRequiredNotNull, RequiredNonNull } from '@/types/utils';
-
+import { pagePath } from '@/lib/constants';
+import type { Message } from '@/lib/models/Message';
+import { errorMessage } from '@/lib/models/Message';
+import type { PartialRequiredNotNull } from '@/lib/types/utilityTypes';
+ 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,
   cookieName: 'sid',
   cookieOptions: { secure: process.env.NODE_ENV === 'production' },
 };
-declare module 'iron-session' {
-  interface IronSessionData {
-    message?: Message | undefined;
-  }
-}
 
 export const withSessionRoute = (handler: NextApiHandler) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
-export const withSessionSsr = <
-  P extends Record<string, unknown> = Record<string, unknown>,
->(
+export const withSessionSsr = <P extends Record<string, unknown> = Record<string, unknown>,
+  >(
   handler: (
     context: GetServerSidePropsContext,
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
 ) => withIronSessionSsr(handler, sessionOptions);
 
-export const withUserSessionSsr = <
-  P extends Record<string, unknown> = Record<string, unknown>,
->(
+export const withUserSessionSsr = <P extends Record<string, unknown> = Record<string, unknown>,
+  >(
   handler: (
     context: GetServerSidePropsContext,
     userSession: PartialRequiredNotNull<Session['user'], 'id' | 'name'>,

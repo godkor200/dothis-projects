@@ -1,8 +1,8 @@
-import { prisma } from 'prisma/client';
 import { z } from 'zod';
 
 import RequestCommentDomain from '@/domain/RequestCommentDomain/index';
 import RequestPostDomain from '@/domain/RequestPostDomain';
+import { prisma } from '@/prisma/client';
 import { createRouter } from '@/server/createRouter';
 
 const requestCommentRouter = createRouter()

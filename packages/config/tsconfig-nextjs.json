@@ -4,6 +4,7 @@
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
     "target": "ES2021",
+    "outDir": "dist",
     "lib": [
       "dom",
       "dom.iterable",

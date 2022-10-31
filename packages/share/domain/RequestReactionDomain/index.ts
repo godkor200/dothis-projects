@@ -1,9 +1,9 @@
-import { ReactionType, RequestPost } from '@prisma/client';
+import { ReactionType } from '@prisma/client';
 import { z } from 'zod';
 
 import RequestPostDomain from '@/domain/RequestPostDomain';
 import UserDomain from '@/domain/UserDomain';
-import { strictlyOnlyRecordKey } from '@/utils/common';
+import { strictlyOnlyRecordKey } from '@/lib/utils/common';
 
 namespace RequestReactionDomain {
   export const schema = z.object({

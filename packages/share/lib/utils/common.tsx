@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 
-import type { Merge } from '../types/utilityTypes';
+import type { Merge } from '@/lib/types/utilityTypes';
+
 
 
 export function isNil(v: unknown) {

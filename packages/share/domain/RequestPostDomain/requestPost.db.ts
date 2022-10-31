@@ -1,9 +1,7 @@
 import type { Prisma } from '@prisma/client';
 
-import RequestCommentDomain from '@/domain/RequestCommentDomain';
 import RequestFundingDomain from '@/domain/RequestFundingDomain';
-
-import { prisma } from '../../../prisma/client';
+import { prisma } from '@/prisma/client';
 
 export const requestPostDB = {
   async getDetailItem(args: Omit<Prisma.RequestPostFindUniqueArgs, 'include'>) {

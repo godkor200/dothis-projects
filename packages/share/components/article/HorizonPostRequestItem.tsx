@@ -2,23 +2,15 @@ import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 
-import SvgCalendar from '@/components/ui/Icons/SvgCalendar';
 import SvgDonate from '@/components/ui/Icons/SvgDonate';
 import Tag from '@/components/ui/Tag';
 import StatusTag from '@/components/ui/Tag/StatusTag';
-import RequestFundingDomain from '@/domain/RequestFundingDomain';
 import RequestPostDomain from '@/domain/RequestPostDomain';
-import {
-  colors,
-  fontWeights,
-  mediaQueries,
-  typo,
-} from '@/lib/styles/chakraTheme';
-import type { AwaitedReturn } from '@/types/utils';
-import domUtils from '@/utils/domUtils';
-import { matchMark } from '@/utils/matchMarkList';
-import numberUtils from '@/utils/numberUtils';
-import stringUtils from '@/utils/stringUtils';
+import { colors, fontWeights, mediaQueries, typo } from '@/lib/styles/chakraTheme';
+import domUtils from '@/lib/utils/domUtils';
+import { matchMark } from '@/lib/utils/matchMarkList';
+import numberUtils from '@/lib/utils/numberUtils';
+import stringUtils from '@/lib/utils/stringUtils';
 
 import ViewRequestPost from '../contents/ViewRequestPost';
 
@@ -28,9 +20,9 @@ export type HorizonPostRequestItemProps = {
 };
 
 export default function HorizonPostRequestItem({
-  matchText,
-  requestPost,
-}: HorizonPostRequestItemProps) {
+                                                 matchText,
+                                                 requestPost,
+                                               }: HorizonPostRequestItemProps) {
   const matchedTitle = useMemo(
     () =>
       matchText ? matchMark(requestPost.title, matchText) : requestPost.title,
@@ -46,10 +38,10 @@ export default function HorizonPostRequestItem({
   return (
     <ViewRequestPost.ModalLink requestPost={requestPost}>
       <div css={postRequestItemStyle}>
-        <div className="request-post-swiper-item-contents">
+        <div className='request-post-swiper-item-contents'>
           <Flex gap={8}>
             {requestPost.category && (
-              <Tag theme="orange">
+              <Tag theme='orange'>
                 {RequestPostDomain.constants.categoryKor.get(
                   requestPost.category,
                 )}
@@ -57,20 +49,20 @@ export default function HorizonPostRequestItem({
             )}
             <StatusTag requestStatus={requestPost.status} />
           </Flex>
-          <Text as="strong" noOfLines={2}>
+          <Text as='strong' noOfLines={2}>
             {matchedTitle}
           </Text>
 
-          <div className="item-info">
-            <div className="etc-info">
+          <div className='item-info'>
+            <div className='etc-info'>
               {matchedCreatorName ? (
                 <span>@{matchedCreatorName}</span>
               ) : requestPost.creator?.user?.name ? (
                 <span>{requestPost.creator?.user?.name}</span>
               ) : null}
 
-              <Box className="item-donate">
-                <Text as="span" mr={8}>
+              <Box className='item-donate'>
+                <Text as='span' mr={8}>
                   {numberUtils.thousandsSeparators(requestPost.totalQuantity)}
                   &nbsp;P
                 </Text>
@@ -88,8 +80,8 @@ export default function HorizonPostRequestItem({
           </div>
           {requestPost.content && (
             <Text
-              className="item-comment"
-              as="p"
+              className='item-comment'
+              as='p'
               noOfLines={2}
               dangerouslySetInnerHTML={{
                 __html: stringUtils.cutOverflowStr(
@@ -102,7 +94,7 @@ export default function HorizonPostRequestItem({
         </div>
         {requestPost.thumbnailUrl && (
           <AspectRatio ratio={1} minW={{ base: '90px', tablet: '160px' }}>
-            <div className="item-img-wrap">
+            <div className='item-img-wrap'>
               <img src={requestPost.thumbnailUrl}></img>
             </div>
           </AspectRatio>

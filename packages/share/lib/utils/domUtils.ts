@@ -1,12 +1,12 @@
 import type { RefObject } from 'react';
 
-const inputChangeTrigger = (el: HTMLInputElement, newValue: string) => {
+export function inputChangeTrigger(el: HTMLInputElement, newValue: string) {
   Object.getOwnPropertyDescriptor(
     HTMLInputElement.prototype,
     'value',
   )?.set?.call(el, newValue);
   el.dispatchEvent(new Event('change', { bubbles: true }));
-};
+}
 
 type PosT = 'top' | 'center' | 'bottom';
 
@@ -21,7 +21,7 @@ const defaultScrollOpt: ScrollOpt = {
   extraValue: 0,
 };
 
-function getPositionValue(
+export function getPositionValue(
   position: ScrollOpt['position'],
   {
     scrollSize,
@@ -56,17 +56,18 @@ function removeHTMLTag(str: string) {
 }
 
 type ElementT = string | RefObject<HTMLElement>;
-function getEl(el: ElementT) {
+
+export function getEl(el: ElementT) {
   return typeof el === 'string'
     ? document.querySelector<HTMLElement>(el)
     : el.current;
 }
 
-const scrollToY = (
+export function scrollToY(
   scrollSelector: ElementT,
   childSelector: ElementT,
   _scrollOpt: Partial<ScrollOpt>,
-) => {
+) {
   const scrollEl = getEl(scrollSelector);
   const childrenEl = getEl(childSelector);
   const { smooth, position, extraValue } = {
@@ -81,25 +82,26 @@ const scrollToY = (
 
   smooth
     ? scrollEl.scrollTo({
-        behavior: 'smooth',
-        top: positionValue,
-      })
+      behavior: 'smooth',
+      top: positionValue,
+    })
     : (scrollEl.scrollTop = positionValue);
-};
-const onEnter =
-  (fn: React.KeyboardEventHandler<HTMLInputElement>) =>
-  (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
-      e.preventDefault();
-      return fn(e);
-    }
-  };
+}
 
-const elementOnceInterval = <E>(
+export const onEnter =
+  (fn: React.KeyboardEventHandler<HTMLInputElement>) =>
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+        e.preventDefault();
+        return fn(e);
+      }
+    };
+
+export function elementOnceInterval<E>(
   findElFn: () => E,
   checkDelay = 30,
   maxTimeout = 1000,
-) => {
+) {
   let interval: NodeJS.Timeout;
   let timeout: NodeJS.Timeout;
 
@@ -116,9 +118,9 @@ const elementOnceInterval = <E>(
       clearInterval(interval);
     }, maxTimeout);
   };
-};
+}
 
-const elementOnceFrame = <E>(findElFn: () => E, maxTimeout = 500) => {
+export function elementOnceFrame<E>(findElFn: () => E, maxTimeout = 500) {
   let stop = false;
   let timeout: NodeJS.Timeout;
 
@@ -140,13 +142,4 @@ const elementOnceFrame = <E>(findElFn: () => E, maxTimeout = 500) => {
 
     requestAnimationFrame(frame);
   };
-};
-const domUtils = {
-  inputChangeTrigger,
-  elementOnceInterval,
-  elementOnceFrame,
-  scrollToY,
-  onEnter,
-  removeHTMLTag,
-};
-export default domUtils;
+}

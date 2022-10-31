@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 
-import { colors } from '@/styles/chakraTheme/variable';
+import { colors } from '@/lib/styles/chakraTheme';
+
 
 const commonStyle = {
   grayBox: css`

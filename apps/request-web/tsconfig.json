@@ -1,6 +1,7 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
   "compilerOptions": {
+    "outDir": "dist",
     "paths": {
       "@/*": [
         "./src/*"
@@ -10,6 +11,16 @@
       ]
     }
   },
+  "references": [
+    {
+      "path": "../../types",
+      "declarationMap": true,
+    },
+    {
+      "path": "../../packages/share",
+      "declarationMap": true,
+    }
+  ],
   "include": [
     "next-env.d.ts",
     "src"

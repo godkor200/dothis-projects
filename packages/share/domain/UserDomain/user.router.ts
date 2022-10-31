@@ -1,8 +1,8 @@
-import { prisma } from 'prisma/client';
 import { z } from 'zod';
 
 import RequestPostDomain from '@/domain/RequestPostDomain';
 import UserDomain from '@/domain/UserDomain/index';
+import { prisma } from '@/prisma/client';
 import { createRouter } from '@/server/createRouter';
 
 const userRouter = createRouter()

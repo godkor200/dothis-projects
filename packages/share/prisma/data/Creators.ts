@@ -1,4 +1,4 @@
-import { AuthPlatformType } from '@prisma/client';
+import { AuthPlatformType } from '@/generated/prisma-client';
 
 import { users } from './Users';
 

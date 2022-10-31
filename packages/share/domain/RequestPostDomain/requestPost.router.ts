@@ -6,9 +6,8 @@ import { z } from 'zod';
 import RequestFundingDomain from '@/domain/RequestFundingDomain';
 import RequestPostDomain from '@/domain/RequestPostDomain/index';
 import UserDomain from '@/domain/UserDomain';
+import { prisma } from '@/prisma/client';
 import { createRouter } from '@/server/createRouter';
-
-import { prisma } from '../../../prisma/client';
 
 const requestPostRouter = createRouter()
   // 메인 해결 요청

@@ -2,9 +2,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import UserDomain from '@/domain/UserDomain';
+import { prisma } from '@/prisma/client';
 import { createRouter } from '@/server/createRouter';
 
-import { prisma } from '../../../prisma/client';
 import RequestFundingDomain from '.';
 
 const requestFundingRouter = createRouter()

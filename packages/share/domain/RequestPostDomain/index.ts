@@ -1,13 +1,12 @@
 import type { RequestPost } from '@prisma/client';
-import { Prisma, RequestCategoryType, RequestStatusType } from '@prisma/client';
+import { RequestCategoryType, RequestStatusType } from '@prisma/client';
 import { z } from 'zod';
 
 import CreatorDomain from '@/domain/CreatorDomain';
 import UserDomain from '@/domain/UserDomain';
-import type { AwaitedReturn } from '@/types/utils';
-import { youtubeUrlToId } from '@/utils/appUtils';
-import { strictlyOnlyRecordKey } from '@/utils/common';
-import { iterableToEnum } from '@/utils/zodUtils';
+import type { AwaitedReturn } from '@/lib/types/utilityTypes';
+import { youtubeUrlToId } from '@/lib/utils/appUtils';
+import { iterableToEnum } from '@/lib/utils/zodUtils';
 
 import requestPostDB from './requestPost.db';
 

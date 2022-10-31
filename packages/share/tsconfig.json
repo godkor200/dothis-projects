@@ -4,10 +4,18 @@
   "exclude": ["dist", "build", "node_modules"],
   "baseUrl": ".",
   "compilerOptions": {
+    "outDir": "dist",
+    "composite": true,
     "paths": {
       "@/*": [
         "./*"
       ]
     }
   },
+  "references": [
+    {
+      "path": "../../types",
+      "declarationMap": true,
+    }
+  ]
 }

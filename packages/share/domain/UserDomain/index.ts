@@ -1,7 +1,7 @@
 import type { Prisma, RequestPost } from '@prisma/client';
 import { z } from 'zod';
 
-import { prisma } from '../../../prisma/client';
+import { prisma } from '@/prisma/client';
 
 namespace UserDomain {
   export const schema = z.object({

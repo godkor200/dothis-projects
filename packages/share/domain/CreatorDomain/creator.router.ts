@@ -1,9 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import type { Prisma } from '../../generated/prisma-client';
-import { prisma } from '../../prisma/client';
-import { createRouter } from '../../server/createRouter';
+import type { Prisma } from '@/generated/prisma-client';
+import { prisma } from '@/prisma/client';
+import { createRouter } from '@/server/createRouter';
+
 import RequestPostDomain from '../RequestPostDomain';
 import UserDomain from '../UserDomain';
 import CreatorDomain from '.';

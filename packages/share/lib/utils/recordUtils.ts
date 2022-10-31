@@ -1,4 +1,4 @@
-const swap = <
+export const recordSwap = <
   K extends string | number | symbol,
   V extends string | number | symbol,
 >(
@@ -14,6 +14,3 @@ const swap = <
   return swapRecord as Record<V, K>;
 };
 
-const recordUtils = { swap };
-
-export default recordUtils;

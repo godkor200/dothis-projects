@@ -1,9 +1,9 @@
 import { Box, Link } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
-import NewRequestPost from '@/components/contents/NewRequestPost';
-import useScroll from '@/hooks/useScroll';
-import { mediaQueries } from '@/styles/chakraTheme/variable';
+import NewRequestPost from '@/components/contents/NewRequestPost'
+import useScroll from '@/lib/hooks/useScroll';
+import { mediaQueries } from '@/lib/styles/chakraTheme/variable';
 
 import Button from '../ui/Button';
 import SvgPlus from '../ui/Icons/SvgPlus';

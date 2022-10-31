@@ -2,7 +2,7 @@ import { RequestPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
 import RequestPostDomain from '@/domain/RequestPostDomain';
-import { strictlyOnlyRecordKey } from '@/utils/common';
+import { strictlyOnlyRecordKey } from '@/lib/utils/common';
 
 namespace RequestPlatforms {
   export const schema = z.object({

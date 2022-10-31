@@ -1,6 +1,6 @@
+import { prisma } from '@/prisma/client';
 import { createRouter } from '@/server/createRouter';
 
-import { prisma } from '../../../prisma/client';
 import RequestReactionDomain from '.';
 
 const requestReactionRouter = createRouter().mutation('update', {

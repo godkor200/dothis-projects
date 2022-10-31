@@ -1,6 +1,6 @@
-const basicMatcher = <T>(a: T, b: T) => a === b;
+export const basicMatcher = <T>(a: T, b: T) => a === b;
 
-const matchRemove =
+export const matchRemove =
   <T>(matchFn = basicMatcher) =>
   (arr: T[], removeItem: T) => {
     for (let i = 0; i < arr.length; i++) {
@@ -14,5 +14,3 @@ const matchRemove =
     return arr;
   };
 
-const arrayUtils = { matchRemove };
-export default arrayUtils;

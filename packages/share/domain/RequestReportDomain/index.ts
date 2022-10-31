@@ -4,7 +4,6 @@ import { z } from 'zod';
 
 import RequestPostDomain from '@/domain/RequestPostDomain';
 import UserDomain from '@/domain/UserDomain';
-import { strictlyOnlyRecordKey } from '@/utils/common';
 
 type Domain = RequestReport;
 namespace RequestReportDomain {
@@ -32,7 +31,7 @@ namespace RequestReportDomain {
     ]),
     korStatus: new Map<RequestReportStatus, string>([
       ['PROCESSING', '신고 검토 중'],
-      ['COMPLETION', "'신고 완료'"],
+      ['COMPLETION', '\'신고 완료\''],
     ]),
   } as const;
 }

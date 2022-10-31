@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import { chunksOf } from 'fp-ts/ReadonlyArray';
-import Link from 'next/link';
 import type { MutableRefObject } from 'react';
 import React from 'react';
 import { A11y } from 'swiper';
@@ -10,11 +9,9 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 
 import type { HorizonPostRequestItemProps } from '@/components/article/HorizonPostRequestItem';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
-import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
-import { PAGE_KEYS, pagePath } from '@/constants';
-import { useModalStore } from '@/models/modal/useModalStore';
-import { colors } from '@/styles/chakraTheme/variable';
+import { useModalStore } from '@/lib/models/modal/useModalStore';
+import { colors } from '@/lib/styles/chakraTheme/variable';
 
 type Props = {
   postRequestList: HorizonPostRequestItemProps['requestPost'][];
@@ -22,10 +19,10 @@ type Props = {
   onSlideChange?: SwiperProps['onSlideChange'];
 };
 export default function HotRequestListSwiper({
-  postRequestList,
-  swiperRef,
-  onSlideChange,
-}: Props) {
+                                               postRequestList,
+                                               swiperRef,
+                                               onSlideChange,
+                                             }: Props) {
   const modalStore = useModalStore();
 
   return (
@@ -46,7 +43,7 @@ export default function HotRequestListSwiper({
         {chunksOf(3)(postRequestList).map((post3arr) => (
           <SwiperSlide
             key={`${post3arr[0].id}`}
-            className="list-item-swiper_slide"
+            className='list-item-swiper_slide'
           >
             <HorizonPostRequestItemWrap>
               {post3arr.map((request) => (
