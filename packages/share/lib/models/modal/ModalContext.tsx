@@ -6,6 +6,7 @@ import createContext from 'zustand/context';
 interface ModalConfigStore {
   isInnerModal: boolean;
 }
+
 const { Provider, useStore } = createContext<StoreApi<ModalConfigStore>>();
 
 const createStore = () =>

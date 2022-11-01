@@ -1,7 +1,5 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
   "baseUrl": ".",
   "compilerOptions": {
     "outDir": "dist",
@@ -17,5 +15,14 @@
       "path": "../../types",
       "declarationMap": true,
     }
+  ], 
+  "include": [
+  ".",
+  "next-env.d.ts",
+  "../../types/**/*.d.ts"
+],
+  "exclude": [
+    "dist",
+    "node_modules",
   ]
 }

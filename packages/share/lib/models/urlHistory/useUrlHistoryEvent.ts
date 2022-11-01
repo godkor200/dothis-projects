@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import useUrlHistoryStore from '@/models/urlHistory/useUrlHistoryStore';
 
 let init = false;
-export default function useUrlHistoryEvent() {
+export function useUrlHistoryEvent() {
   const router = useRouter();
   const historyStore = useUrlHistoryStore();
 

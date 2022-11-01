@@ -2,7 +2,7 @@ import '@emotion/react';
 
 import type { DefaultSession } from 'next-auth';
 
-import type { Message } from '@/lib/models/Message';
+import type { Index } from '@/lib/models/Message/Message';
 
 declare module 'next-auth' {
   interface Session {
@@ -19,7 +19,7 @@ declare module '@emotion/react' {
 
 declare module 'iron-session' {
   interface IronSessionData {
-    message?: Message | undefined;
+    message?: Index | undefined;
   }
 }
 

@@ -1,16 +1,17 @@
+import { pagePath } from '@dothis/share/lib/constants';
+import { prisma } from '@dothis/share/prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
 import InstagramProvider from 'next-auth/providers/instagram';
 import TwitchProvider from 'next-auth/providers/twitch';
-import { prisma } from 'prisma/client';
 
-import { pagePath } from '@/constants';
 import YoutubeProvider from '@/providers/youtube';
 
+
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma), 
   debug: process.env.NODE_ENV === 'development',
   providers: [
     GoogleProvider({

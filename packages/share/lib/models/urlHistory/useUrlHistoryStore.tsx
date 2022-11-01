@@ -1,9 +1,5 @@
-import * as IO from 'fp-ts';
-import { useRouter } from 'next/router';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-
-import type { NextjsUrl } from '@/types/common';
 
 type UrlHistoryState = {
   history: string[];

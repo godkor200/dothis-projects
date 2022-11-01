@@ -1,6 +1,6 @@
 import superjson from 'superjson';
 
-import creatorRouter from '@/domain/CreatorDomain/creator.router';
+import creatorRouter from '@/domain/CreatorDomain/router';
 import requestCommentRouter from '@/domain/RequestCommentDomain/requestComment.router';
 import requestFundingRouter from '@/domain/RequestFundingDomain/requestFunding.router';
 import requestPostRouter from '@/domain/RequestPostDomain/requestPost.router';

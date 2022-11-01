@@ -5,8 +5,8 @@ import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
 import { pagePath } from '@/lib/constants';
-import type { Message } from '@/lib/models/Message';
-import { errorMessage } from '@/lib/models/Message';
+import type { Index } from '@/lib/models/Message/Message';
+import { errorMessage } from '@/lib/models/Message/Message';
 import type { PartialRequiredNotNull } from '@/lib/types/utilityTypes';
  
 export const sessionOptions: IronSessionOptions = {
