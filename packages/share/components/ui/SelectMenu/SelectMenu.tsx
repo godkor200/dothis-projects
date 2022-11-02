@@ -1,22 +1,9 @@
 import type { BoxProps, MenuProps } from '@chakra-ui/react';
 import { Box, Menu } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import type { Dispatch, InputHTMLAttributes, RefObject } from 'react';
-import {
-  forwardRef,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { mergeRefs } from 'react-merge-refs';
-import { StoreApi } from 'zustand';
-import createContext from 'zustand/context';
 
-import { colors, fontWeights, shadows } from '@/styles/chakraTheme/variable';
-import commonStyle from '@/styles/commonStyle';
-import domUtils from '@/utils/domUtils';
+import { colors, fontWeights, shadows } from '@/lib/styles/chakraTheme';
+import commonStyle from '@/lib/styles/commonStyle';
 
 type Theme = 'graybox' | 'transparent';
 
@@ -28,7 +15,7 @@ type Props = MenuProps & {
 const SelectMenu = ({ theme, width = 'auto', ...props }: Props) => {
   return (
     <Box css={style} className={theme} width={width}>
-      <Menu placement="bottom-start" strategy="fixed" {...props} />
+      <Menu placement='bottom-start' strategy='fixed' {...props} />
     </Box>
   );
 };
@@ -49,6 +36,7 @@ const style = css`
       }
     }
   }
+
   .ui_select-menu-button {
     display: block;
     width: 100%;
@@ -85,6 +73,7 @@ const style = css`
         border-radius: 0;
       }
     }
+
     .ui_select-menu-button {
       ${commonStyle.grayBox};
       min-height: 48px;
@@ -96,6 +85,7 @@ const style = css`
       }
     }
   }
+
   &.transparent {
     font-size: 14px;
     color: ${colors.gray['90']};
@@ -123,6 +113,7 @@ const style = css`
       .ui_menu-button_icon-arrow-down {
         fill: ${colors.gray['50']};
       }
+
       &[aria-expanded='true'] {
         .ui_menu-button_icon-arrow-down {
           fill: ${colors.gray['70']};

@@ -13,6 +13,8 @@
     "allowJs": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
+    "declaration": false,
+    "declarationMap": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
@@ -25,7 +27,6 @@
     "jsx": "preserve",
     "noUncheckedIndexedAccess": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": false,
     "types": [
       "@emotion/react/types/css-prop",
       "reflect-metadata",

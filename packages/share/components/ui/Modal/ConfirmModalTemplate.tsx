@@ -1,5 +1,4 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { css } from '@emotion/react';
 import type { MouseEventHandler, ReactNode } from 'react';
 
 import Button from '@/components/ui/Button';
@@ -10,15 +9,15 @@ export type ConfirmTemplateProps = {
   onConfirm: MouseEventHandler<HTMLButtonElement>;
 };
 const ConfirmModalTemplate = ({
-  children,
-  confirmText = '확인',
-  onConfirm,
-}: ConfirmTemplateProps) => {
+                                children,
+                                confirmText = '확인',
+                                onConfirm,
+                              }: ConfirmTemplateProps) => {
   return (
     <Box px={{ base: 16, tablet: 24 }} py={24}>
       <Box>{children}</Box>
       <Flex mt={24} gap={16}>
-        <Button theme="white" onClick={onConfirm}>
+        <Button theme='white' onClick={onConfirm}>
           {confirmText}
         </Button>
       </Flex>

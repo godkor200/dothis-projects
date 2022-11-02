@@ -7,8 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
-import domUtils from '@/utils/domUtils';
-import { mapIterToArr } from '@/utils/iterUtils';
+import  { elementOnceInterval, mapIterToArr } from '@/lib/utils';
 
 export type ListMap<K> = Map<K, string>;
 
@@ -28,7 +27,7 @@ export default function SelectMenuList<K extends string>({
 
   useEffect(() => {
     if (!menu.isOpen) return;
-    const once = domUtils.elementOnceInterval(
+    const once = elementOnceInterval(
       () =>
         ref.current?.querySelector?.<HTMLButtonElement>('[aria-checked=true]'),
       10,

@@ -4,9 +4,9 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 
 import RequestPostDomain from '@/domain/RequestPostDomain';
-import { colors, typo } from '@/styles/chakraTheme/variable';
+import { colors, typo } from '@/lib/styles/chakraTheme';
+import { PartialApProps } from '@/lib/utils';
 import type { MapKeyOf } from '@/types/utils';
-import { PartialApProps } from '@/utils/common';
 
 export type TagTheme = 'orange' | 'red' | 'purple' | 'green' | 'gray';
 type Props = ChakraTagProps & { theme?: TagTheme };

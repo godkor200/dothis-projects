@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import type { ComponentProps } from 'react';
 
-import { colors } from '@/styles/chakraTheme/variable';
+import { colors } from '@/lib/styles/chakraTheme';
 
 import SvgNext from '../Icons/SvgNext';
 import SvgPrev from '../Icons/SvgPrev';

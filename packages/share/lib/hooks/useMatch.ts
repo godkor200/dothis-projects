@@ -1,8 +1,8 @@
 import { useBoolean } from '@chakra-ui/react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { matchMarkList } from '@/utils/matchMarkList';
+import { matchMarkList } from '@/lib/utils/matchMarkList';
 
 type List = string[];
 export type UseMatchParam = {
@@ -15,11 +15,11 @@ export type UseMatchParam = {
 export type UseMatchReturn = ReturnType<typeof useMatch>;
 
 export function useMatch({
-  getList,
-  defaultValue,
-  onlyMatchOpen,
-  debounceDelay = 250,
-}: UseMatchParam) {
+                           getList,
+                           defaultValue,
+                           onlyMatchOpen,
+                           debounceDelay = 250,
+                         }: UseMatchParam) {
   const [value, _setValue] = useState(defaultValue ?? '');
   const [matchList, setMatchList] = useState<ReturnType<typeof matchMarkList>>(
     [],

@@ -1,3 +1,4 @@
+export * from './appUtils'
 export * from './arrayUtils'
 export * from './common'
 export * from './dateUtils'

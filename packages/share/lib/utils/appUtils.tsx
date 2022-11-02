@@ -1,12 +1,9 @@
 import type { NextRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { useCallback } from 'react';
 import type { UrlObject } from 'url';
 
-import Login from '@/components/contents/Login';
 import ToastBox from '@/components/ui/ToastBox';
-import { pagePath } from '@/lib/constants';
-import stringUtils from '@/lib/utils/stringUtils';
+
+import { joinQueryParams } from './stringUtils';
 
 type ShareProps = {
   title: string;
@@ -40,21 +37,21 @@ export function isLinkActive(router: NextRouter, href: string | UrlObject) {
   return typeof href === 'string'
     ? router.asPath.includes(href)
     : href.pathname
-    ? router.asPath.includes(href.pathname)
-    : false;
+      ? router.asPath.includes(href.pathname)
+      : false;
 }
 
 export const shareUrlObject = ({
-  title,
-  urlObject,
-}: {
+                                 title,
+                                 urlObject,
+                               }: {
   title: string;
   urlObject: UrlObject;
 }) => {
   const queryString = (() => {
     if (!urlObject.query) return '';
     if (urlObject.query && typeof urlObject.query === 'object') {
-      return `?${stringUtils.joinQueryParams(urlObject.query)}`;
+      return `?${joinQueryParams(urlObject.query)}`;
     }
     return urlObject.query;
   })();

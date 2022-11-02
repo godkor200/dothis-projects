@@ -1,7 +1,7 @@
 import { AspectRatio } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
-import { youtubeUrlToId } from '@/utils/appUtils';
+import { youtubeUrlToId } from '@/lib/utils/appUtils';
 
 type Props = {
   url: string;

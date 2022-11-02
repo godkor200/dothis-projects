@@ -1,3 +1,5 @@
+import Container from '@dothis/share/components/layout/Container';
+import { extractQueryParams } from '@dothis/share/lib/utils';
 import { useRouter } from 'next/router';
 import type {
   GetServerSidePropsContext,
@@ -6,10 +8,8 @@ import type {
 import { z } from 'zod';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
-import Container from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import getTrpcSSGHelpers from '@/server/getTrpcSSGHelpers';
-import stringUtils from '@/utils/stringUtils';
+import { getTrpcSSGHelpers } from '@/utils/trpc';
 
 const querySchema = z.object({
   requestId: z.string().transform(BigInt),
@@ -46,13 +46,13 @@ export default function RequestViewPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const query = querySchema.parse(
-    stringUtils.extractQueryParams(router.asPath),
+    extractQueryParams(router.asPath),
   );
 
   return (
     <LayoutTemplate>
       <Container py={24}>
-        <ViewRequestPost requestPost={requestDetail}></ViewRequestPost>
+        <ViewRequestPost requestPost={requestDetail}/>
       </Container>
     </LayoutTemplate>
   );

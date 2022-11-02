@@ -2,7 +2,7 @@ import type { PopoverProps } from '@chakra-ui/react';
 import { Menu, Popover } from '@chakra-ui/react';
 import { createContext, useContext } from 'react';
 
-import type { UseMatchReturn } from '@/hooks/useMatch';
+import type { UseMatchReturn } from '@/lib/hooks/useMatch';
 
 type PickMatchParams = Pick<UseMatchReturn, 'isOpen' | 'matchList'> & {
   onSelect: (s: string) => void;

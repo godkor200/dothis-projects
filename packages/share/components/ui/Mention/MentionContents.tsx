@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 
 import { useMentionContext } from '@/components/ui/Mention/Mention';
-import { shadows } from '@/styles/chakraTheme/variable';
-import commonStyle from '@/styles/commonStyle';
+import { shadows } from '@/lib/styles/chakraTheme';
+import commonStyle from '@/lib/styles/commonStyle';
 
 type Props = Omit<PopoverContentProps, 'children' | 'as'>;
 

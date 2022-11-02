@@ -7,10 +7,9 @@ import { pipe } from 'fp-ts/lib/function';
 import { uid } from 'uid';
 
 import SvgClose from '@/components/ui/Icons/SvgClose';
-import type { Message } from '@/models/Message';
-import { errorMessage, message, successMessage } from '@/models/Message';
-import { toast } from '@/pages/_app';
-import { colors, fontWeights, shadows } from '@/styles/chakraTheme/variable';
+import type { Message } from '@/lib/models';
+import { errorMessage, message, standaloneToast, successMessage } from '@/lib/models';
+import { colors, fontWeights, shadows } from '@/lib/styles/chakraTheme/variable';
 
 import Button from '../Button';
 
@@ -84,7 +83,7 @@ ToastBox.getMessageOptions = (
     render() {
       return (
         <ToastBox
-          onClose={!overrideOpt?.isClosable ? () => toast.close(id) : undefined}
+          onClose={!overrideOpt?.isClosable ? () => standaloneToast.toast.close(id) : undefined}
           className={status}
         >
           <b>{message}</b>
@@ -95,16 +94,16 @@ ToastBox.getMessageOptions = (
   };
 };
 
-ToastBox.toast = flow(message, ToastBox.getMessageOptions, toast);
+ToastBox.toast = flow(message, ToastBox.getMessageOptions, standaloneToast.toast);
 ToastBox.successToast = (message: string) =>
-  pipe(successMessage({ message }), ToastBox.getMessageOptions, toast);
+  pipe(successMessage({ message }), ToastBox.getMessageOptions, standaloneToast.toast);
 ToastBox.errorToast = (message: string) =>
-  pipe(errorMessage({ message }), ToastBox.getMessageOptions, toast);
+  pipe(errorMessage({ message }), ToastBox.getMessageOptions, standaloneToast.toast);
 ToastBox.infoToast = (_message: string) =>
   pipe(
     message({ status: 'info', message: _message }),
     ToastBox.getMessageOptions,
-    toast,
+    standaloneToast.toast,
   );
 
 export default ToastBox;

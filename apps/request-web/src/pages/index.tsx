@@ -1,4 +1,10 @@
 import { Box } from '@chakra-ui/react';
+import Container from '@dothis/share/components/layout/Container';
+import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
+import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
+import SwiperButton from '@dothis/share/components/ui/Button/SwiperButton';
+import ToastBox from '@dothis/share/components/ui/ToastBox';
+import { colors, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import type { GetServerSidePropsContext } from 'next/types';
@@ -10,27 +16,18 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import MainSwiper from '@/components/article/MainSwiper';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
-import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
-import OnlyPcContainer from '@/components/layout/OnlyPcContainer';
-import ToastBox from '@/components/ui/ToastBox';
-import { useModalStore } from '@/models/modal/useModalStore';
-import { createContext } from '@/server/createContext';
-import getTrpcSSGHelpers from '@/server/getTrpcSSGHelpers';
-import { colors, mediaQueries, typo } from '@/styles/chakraTheme/variable';
-import trpcHooks from '@/utils/trpcHooks';
+import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { getTrpcSSGHelpers, t } from '@/utils/trpc';
 
-import Container from '../components/layout/Container';
-import LayoutTemplate from '../components/layout/LayoutTemplate';
-import SwiperButton from '../components/ui/Button/SwiperButton';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
   () => {
     const { data } = useSession();
-    const trpcUtils = trpcHooks.useContext();
+    const trpcUtils = t.useContext();
 
     return (
       <a
-        href="#"
+        href='#'
         onClick={async (e) => {
           e.preventDefault();
           if (!data?.user) {
@@ -56,7 +53,7 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
           });
         }}
       >
-        <img src="/images/banner2.svg" alt="크리에이터 등록" />
+        <img src='/images/banner2.svg' alt='크리에이터 등록' />
       </a>
     );
   },
@@ -75,14 +72,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-export default function Home({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const resolvedRequestSwiperRef = useRef<SwiperClass | null>(null);
-  const solvedRequests = trpcHooks.useQuery([
+  const solvedRequests = t.useQuery([
     'request post - main solved items',
   ]);
-  const recommendRequests = trpcHooks.useQuery([
+  const recommendRequests = t.useQuery([
     'request post - main recommend items',
   ]);
 
@@ -100,8 +95,8 @@ export default function Home({}: InferGetServerSidePropsType<
         {/* 해결된 요청 */}
 
         {solvedRequests.data && (
-          <section className="resolved-request-post">
-            <div className="section-title">
+          <section className='resolved-request-post'>
+            <div className='section-title'>
               <h2>해결된 요청</h2>
               {/*<Link href="/src/pages" passHref>*/}
               {/*  <a className="view-all-contents">*/}
@@ -109,18 +104,18 @@ export default function Home({}: InferGetServerSidePropsType<
               {/*  </a>*/}
               {/*</Link>*/}
 
-              <div className="section-slide-buttons">
+              <div className='section-slide-buttons'>
                 <SwiperButton
-                  dir="prev"
+                  dir='prev'
                   onClick={() => resolvedRequestSwiperRef.current?.slidePrev()}
                 />
                 <SwiperButton
-                  dir="next"
+                  dir='next'
                   onClick={() => resolvedRequestSwiperRef.current?.slideNext()}
                 />
               </div>
             </div>
-            <div className="section-contents">
+            <div className='section-contents'>
               <ResolveRequestListSwiper
                 postRequestList={solvedRequests.data}
                 swiperRef={resolvedRequestSwiperRef}
@@ -131,11 +126,11 @@ export default function Home({}: InferGetServerSidePropsType<
 
         {/* 추천 요청 */}
         {recommendRequests.data && (
-          <section className="recommend-request-post">
-            <div className="section-title">
+          <section className='recommend-request-post'>
+            <div className='section-title'>
               <h2>🎯 추천 요청</h2>
             </div>
-            <div className="section-contents">
+            <div className='section-contents'>
               <HorizonPostRequestItemWrap>
                 {recommendRequests.data.map((request) => (
                   <HorizonPostRequestItem

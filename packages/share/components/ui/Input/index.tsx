@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { forwardRef, useEffect, useRef } from 'react';
 
-import { colors, fontWeights, typo } from '@/styles/chakraTheme/variable';
+import { colors, fontWeights, typo } from '@/lib/styles/chakraTheme';
 import commonStyle from '@/styles/commonStyle';
 
 type Size = 'sm' | 'md' | 'lg';

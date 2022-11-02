@@ -1,6 +1,5 @@
 import type { FlexProps } from '@chakra-ui/react';
 import { Box, Flex, forwardRef } from '@chakra-ui/react';
-import type { RequestComment } from '@prisma/client';
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
 import Button from '@/components/ui/Button';
@@ -8,8 +7,9 @@ import SvgSendPlane from '@/components/ui/Icons/SvgSendPlane';
 import ToastBox from '@/components/ui/ToastBox';
 import type { UserAvatarProps } from '@/components/ui/UserAvatar';
 import UserAvatar from '@/components/ui/UserAvatar';
-import type RequestCommentDomain from '@/domain/RequestCommentDomain';
-import type { Optional } from '@/types/utils';
+import type { RequestCommentDomain } from '@/domain';
+import type { RequestComment } from '@/generated/prisma-client';
+import type { Optional } from '@/lib/types/utilityTypes';
 
 import type { TextareaProps } from './index';
 import Textarea from './index';

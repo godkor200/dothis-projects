@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import useUrlHistoryStore from '@/models/urlHistory/useUrlHistoryStore';
+import useUrlHistoryStore from './useUrlHistoryStore';
 
 let init = false;
 export function useUrlHistoryEvent() {

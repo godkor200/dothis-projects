@@ -39,4 +39,4 @@ const Popover: ComponentStyleConfig = {
   },
 };
 
-export default { Divider, Avatar, Popover };
+export default  { Divider, Avatar, Popover };

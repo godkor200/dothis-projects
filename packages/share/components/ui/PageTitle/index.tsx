@@ -1,25 +1,23 @@
 import type { TextProps } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import * as React from 'react';
 
 import Button from '@/components/ui/Button';
-import SvgClose from '@/components/ui/Icons/SvgClose';
-import { colors, typo } from '@/styles/chakraTheme/variable';
+import SvgPrev from '@/components/ui/Icons/SvgPrev';
+import { typo } from '@/lib/styles/chakraTheme';
 
-import SvgPrev from '../Icons/SvgPrev';
 
 type Props = TextProps & { onClose?: () => void };
 const PageTitle = ({ onClose, ...props }: Props) => {
   return (
     <header css={style}>
       {onClose && (
-        <Button className="ui_header-title-close-button" onClick={onClose}>
-          <SvgPrev></SvgPrev>
+        <Button className='ui_header-title-close-button' onClick={onClose}>
+          <SvgPrev/>
         </Button>
       )}
-      <Text className="ui_header-title-text" as="h3" {...props} />
+      <Text className='ui_header-title-text' as='h3' {...props} />
     </header>
   );
 };

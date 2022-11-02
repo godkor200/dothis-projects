@@ -1,14 +1,14 @@
 import type { ChangeEvent, ComponentProps, KeyboardEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
 
-import numberUtils from '@/utils/numberUtils';
+import { removeSeparators, thousandsSeparators } from '@/lib/utils';
 
 import Input from './index';
 
 const formats = {
   thousandsSeparators: {
-    encode: numberUtils.thousandsSeparators,
-    decode: numberUtils.removeSeparators,
+    encode: thousandsSeparators,
+    decode: removeSeparators,
     filterKeyRegexp: /[0-9]|Backspace|Enter|Tab|ArrowLeft|ArrowRight/,
     filterKey: (v: string) =>
       formats.thousandsSeparators.filterKeyRegexp.test(v),
@@ -42,7 +42,7 @@ const FormatInput = forwardRef<HTMLInputElement, Props>(
     );
     return (
       <Input
-        type="text"
+        type='text'
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         {...props}

@@ -2,8 +2,6 @@
   "extends": "@dothis/config/tsconfig-nextjs.json",
   "baseUrl": ".",
   "compilerOptions": {
-    "outDir": "dist",
-    "composite": true,
     "paths": {
       "@/*": [
         "./*"

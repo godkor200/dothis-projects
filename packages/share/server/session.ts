@@ -3,10 +3,9 @@ import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import type { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandler } from 'next';
 import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
+import { UrlObject } from 'url';
 
-import { pagePath } from '@/lib/constants';
-import type { Index } from '@/lib/models/Message/Message';
-import { errorMessage } from '@/lib/models/Message/Message';
+import { errorMessage } from '@/lib/models';
 import type { PartialRequiredNotNull } from '@/lib/types/utilityTypes';
  
 export const sessionOptions: IronSessionOptions = {
@@ -31,6 +30,7 @@ export const withUserSessionSsr = <P extends Record<string, unknown> = Record<st
     context: GetServerSidePropsContext,
     userSession: PartialRequiredNotNull<Session['user'], 'id' | 'name'>,
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
+  fallbackUrl: string
 ) =>
   withIronSessionSsr(async (context) => {
     const session = await getSession(context);
@@ -41,7 +41,7 @@ export const withUserSessionSsr = <P extends Record<string, unknown> = Record<st
       await context.req.session.save();
       return {
         redirect: {
-          destination: pagePath.login().pathname,
+          destination: fallbackUrl,
           permanent: false,
         },
       };

@@ -1,6 +1,17 @@
 import { Box, Center, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
+import Container from '@dothis/share/components/layout/Container';
+import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
+import Button from '@dothis/share/components/ui/Button';
+import SvgShareForward from '@dothis/share/components/ui/Icons/SvgShareForward';
+import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
+import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
+import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
+import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import { CreatorDomain, RequestPostDomain } from '@dothis/share/domain';
+import useParsedQuery from '@dothis/share/lib/hooks/useParsedQuery';
+import { colors, fontSizes, fontWeights, mediaQueries } from '@dothis/share/lib/styles/chakraTheme';
+import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
 import { css } from '@emotion/react';
-import { isString } from 'fp-ts/lib/string';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { GetServerSidePropsContext } from 'next/types';
@@ -11,24 +22,10 @@ import { z } from 'zod';
 
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import NewRequestPost from '@/components/contents/NewRequestPost';
-import Container from '@/components/layout/Container';
-import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import Button from '@/components/ui/Button';
-import SvgShareForward from '@/components/ui/Icons/SvgShareForward';
-import SelectMenu from '@/components/ui/SelectMenu/SelectMenu';
-import SelectMenuButton from '@/components/ui/SelectMenu/SelectMenuButton';
-import SelectMenuList from '@/components/ui/SelectMenu/SelectMenuList';
-import UserAvatar from '@/components/ui/UserAvatar';
 import { pagePath } from '@/constants';
-import CreatorDomain from '@/domain/CreatorDomain';
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import useParsedQuery from '@/hooks/useParsedQuery';
-import getTrpcSSGHelpers from '@/server/getTrpcSSGHelpers';
-import { colors, fontSizes, fontWeights, mediaQueries } from '@/styles/chakraTheme/variable';
-import { shareUrlObject } from '@/utils/appUtils';
-import type { inferQueryOutput } from '@/utils/trpcHooks';
-import trpcHooks from '@/utils/trpcHooks';
+import type { inferQueryOutput } from '@/utils/trpc';
+import { getTrpcSSGHelpers, t } from '@/utils/trpc';
 
 export const querySchema = z
   .object({
@@ -37,7 +34,32 @@ export const querySchema = z
   .merge(RequestPostDomain.filterSchema);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!isString(context.query.userId)) {
+  try {
+    const { userId } = querySchema.parse(context.query);
+    const trpcSSGHelper = await getTrpcSSGHelpers();
+
+    const user = await trpcSSGHelper.fetchQuery('user - get', {
+      id: userId,
+    });
+
+
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: pagePath.home().pathname,
+        },
+      };
+    }
+
+
+    return {
+      props: {
+        creatorUserId: userId,
+        creatorUser: user,
+      },
+    };
+  } catch (e) {
     return {
       redirect: {
         permanent: false,
@@ -46,30 +68,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const trpcSSGHelper = await getTrpcSSGHelpers();
 
-  const user = await trpcSSGHelper.fetchQuery('user - get', {
-    id: context.query.userId,
-  });
   
-  console.log("index.tsx", "user", user)
-
-  if (!user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: pagePath.home().pathname,
-      },
-    };
-  }
-
-
-  return {
-    props: {
-      creatorUserId: context.query.userId,
-      creatorUser: user,
-    },
-  };
 }
 
 type Props = {
@@ -77,7 +77,7 @@ type Props = {
   creatorUser: NonNullable<inferQueryOutput<'user - get'>>;
 };
 const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
- 
+
   const { data: session } = useSession();
   const router = useRouter();
   const query = useParsedQuery(querySchema);
@@ -92,7 +92,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   );
   const order = useMemo(() => query.order ?? 'LATEST', [query.order]);
 
-  const creatorRequests = trpcHooks.useInfiniteQuery(
+  const creatorRequests = t.useInfiniteQuery(
     ['creator - infinite creator request', query],
     {
       getNextPageParam(lastPage) {
@@ -100,7 +100,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
       },
     },
   );
-  const myRequests = trpcHooks.useQuery(
+  const myRequests = t.useQuery(
     [
       'request post - user items requested by the creator',
       { userId: session?.user.id, creatorUserId },

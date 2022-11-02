@@ -1,0 +1,104 @@
+import { HStack } from '@chakra-ui/react';
+import Container from '@dothis/share/components/layout/Container';
+import {
+  colors,
+  fontWeights,
+  mediaQueries,
+} from '@dothis/share/lib/styles/chakraTheme';
+import { isLinkActive } from '@dothis/share/lib/utils';
+import { css } from '@emotion/react';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
+
+import { pagePath } from '@/constants';
+
+export default function InquiryLayoutHeader() {
+  const router = useRouter();
+  return (
+    <div css={contentsStyle}>
+      <div className="inquiry-header">
+        <Container>
+          <h3>문의</h3>
+        </Container>
+      </div>
+      <Container>
+        <nav>
+          <HStack as="ul" spacing={0}>
+            <li
+              className={clsx(
+                isLinkActive(router, pagePath.notice()) && 'active',
+              )}
+            >
+              <Link href={pagePath.notice()} passHref>
+                <a>
+                  <span>공지사항</span>
+                </a>
+              </Link>
+            </li>
+            {/*<li>*/}
+            {/*  <Link href={pagePath.notice()} passHref>*/}
+            {/*    <a>고객센터</a>*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
+            <li
+              className={clsx(
+                isLinkActive(router, pagePath.account()) && 'active',
+              )}
+            >
+              <Link href={pagePath.account()} passHref>
+                <a>
+                  <span>계정</span>
+                </a>
+              </Link>
+            </li>
+          </HStack>
+        </nav>
+      </Container>
+    </div>
+  );
+}
+
+const contentsStyle = css`
+  .inquiry-header {
+    line-height: 48px;
+
+    h3 {
+      font-size: 24px;
+      font-weight: ${fontWeights.sb};
+    }
+
+    ${mediaQueries.pc} {
+      line-height: 80px;
+    }
+  }
+
+  nav {
+    ul {
+      display: flex;
+    }
+
+    a {
+      display: block;
+      height: 34px;
+      padding-right: 16px;
+      font-weight: ${fontWeights.sb};
+      font-size: 16px;
+
+      span {
+        display: inline-block;
+        height: 100%;
+      }
+    }
+
+    li.active a {
+      font-weight: ${fontWeights.b};
+      color: ${colors.primary.default};
+
+      span {
+        border-bottom: 3px solid ${colors.primary.default};
+      }
+    }
+  }
+`;

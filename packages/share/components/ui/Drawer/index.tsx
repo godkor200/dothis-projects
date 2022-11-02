@@ -1,17 +1,8 @@
 import type { DrawerProps } from '@chakra-ui/react';
-import {
-  Box,
-  Drawer as ChakraDrawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerContentProps,
-  DrawerOverlay,
-} from '@chakra-ui/react';
-import { css, Global } from '@emotion/react';
+import { Box, Drawer as ChakraDrawer, DrawerContent, DrawerOverlay } from '@chakra-ui/react';
+import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
 import React from 'react';
-
-import { colors } from '@/styles/chakraTheme/variable';
 
 type Props = {
   isOpen: boolean;
@@ -22,14 +13,14 @@ type Props = {
 export default function Drawer({ isOpen, onClose, children, ...props }: Props) {
   return (
     <ChakraDrawer
-      placement="right"
+      placement='right'
       isOpen={isOpen}
       onClose={onClose}
       {...props}
     >
       <Box css={style}>
-        <DrawerOverlay className="drawer-overlay" />
-        <DrawerContent className="drawer-contents">{children}</DrawerContent>
+        <DrawerOverlay className='drawer-overlay' />
+        <DrawerContent className='drawer-contents'>{children}</DrawerContent>
       </Box>
     </ChakraDrawer>
   );
@@ -38,9 +29,11 @@ const style = css`
   .drawer-overlay {
     z-index: var(--chakra-zIndices-overlay);
   }
+
   .chakra-modal__content-container {
     z-index: var(--chakra-zIndices-modal);
   }
+
   .drawer-contents {
     width: auto !important;
     height: auto !important;

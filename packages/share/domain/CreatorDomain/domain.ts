@@ -1,4 +1,3 @@
-import type { AuthPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
 import SvgFacebook from '@/components/ui/Icons/SvgFacebook';
@@ -7,6 +6,7 @@ import SvgTwitch from '@/components/ui/Icons/SvgTwitch';
 import SvgYoutube from '@/components/ui/Icons/SvgYoutube';
 import { UserDomain } from '@/domain';
 import type { db } from '@/domain/CreatorDomain/db';
+import type { AuthPlatformType } from '@/generated/prisma-client';
 import type { AwaitedReturn } from '@/lib/types/utilityTypes';
 import { strictlyOnlyRecordKey } from '@/lib/utils/common';
 

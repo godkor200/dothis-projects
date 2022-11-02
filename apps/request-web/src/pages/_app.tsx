@@ -1,6 +1,10 @@
 import 'swiper/css';
 
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import Modal from '@dothis/share/components/ui/Modal';
+import  { ModalOptProvider , standaloneToast, useModalStore,useUrlHistoryEvent } from '@dothis/share/lib/models';
+import chakraTheme from '@dothis/share/lib/styles/chakraTheme';
+import globalStyle from '@dothis/share/lib/styles/globalStyle';
 import { Global } from '@emotion/react';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
@@ -14,18 +18,10 @@ import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
-import Modal from '@/components/ui/Modal';
-import { ModalOptProvider } from '@/models/modal/ModalContext';
-import { useModalStore } from '@/models/modal/useModalStore';
-import useUrlHistoryEvent from '@/models/urlHistory/useUrlHistoryEvent';
-import type { AppRouter } from '@/server/routers/app.router';
+import type { AppRouter } from '@/appRouter';
 
-import chakraTheme from '../styles/chakraTheme';
-import globalStyle from '../styles/globalStyle';
 
-const { ToastContainer, toast: _toast } = createStandaloneToast();
 
-export const toast = _toast;
 
 // immer Map Set 사용 가능하게
 enableMapSet();
@@ -37,6 +33,7 @@ axios.defaults.transformResponse = (data, headers) => {
     return data;
   }
 };
+export const toast = standaloneToast.toast;
 
 // @ts-ignore
 BigInt.prototype.toJSON = function () {
@@ -69,7 +66,7 @@ function App({
         <ChakraProvider theme={chakraTheme} resetCSS>
           {/*<CssBaseline enableColorScheme />*/}
           <Component {...pageProps} />
-          <ToastContainer />
+          <standaloneToast.ToastContainer />
           <ModalOptProvider>
             <ModalManager />
           </ModalOptProvider>
@@ -140,10 +137,6 @@ export default withTRPC<AppRouter>({
       },
       links,
       transformer: superjson,
-      // headers: {
-      // optional - inform server that it's an ssr request
-      // 'x-ssr': '1',
-      // },
     };
   },
   ssr: false,

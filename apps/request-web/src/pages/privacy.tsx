@@ -1,10 +1,9 @@
+import Container from '@dothis/share/components/layout/Container';
+import { typo } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 
-import { typo } from '@/styles/chakraTheme/variable';
-
-import Container from '../components/layout/Container';
-import LayoutTemplate from '../components/layout/LayoutTemplate';
+import LayoutTemplate from '@/components/layout/LayoutTemplate';
 
 export default function Privacy() {
   return (

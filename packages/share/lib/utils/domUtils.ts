@@ -51,7 +51,7 @@ function getPositionY(
   });
 }
 
-function removeHTMLTag(str: string) {
+export function removeHTMLTag(str: string) {
   return str.replace(/<[^>]+>/g, '');
 }
 

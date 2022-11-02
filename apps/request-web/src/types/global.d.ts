@@ -1,8 +1,12 @@
 import '@emotion/react';
 
+import type {PrismaClient} from '@dothis/share/generated/prisma-client'
 import type { DefaultSession } from 'next-auth';
 
 import type { Message } from '@/lib/models/Message';
+
+
+declare const global: Global & { prisma?: PrismaClient };
 
 declare module 'next-auth' {
   interface Session {

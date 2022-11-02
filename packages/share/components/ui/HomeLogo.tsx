@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import type { UrlObject } from 'url';
 
-import { pagePath } from '@/constants';
 
-export default function HomeLogo() {
+type Props = { href: UrlObject }
+export default function HomeLogo({ href }: Props) {
   return (
-    <Link href={pagePath.home()} passHref title="두디스 홈">
+    <Link href={href} passHref title='두디스 홈'>
       <a css={style}>
-        <img src="/images/dothis-logo.svg" alt="dothis logo" />
+        <img src='/images/dothis-logo.svg' alt='dothis logo' />
       </a>
     </Link>
   );

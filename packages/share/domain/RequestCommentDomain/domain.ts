@@ -1,8 +1,8 @@
-import type { RequestComment, RequestCommentHeart, User } from '@prisma/client';
 import { groupBy } from 'fp-ts/lib/NonEmptyArray';
 import { z } from 'zod';
 
 import { UserDomain } from '@/domain';
+import type { RequestComment, RequestCommentHeart, User } from '@/generated/prisma-client';
 import type { AwaitedReturn } from '@/lib/types/utilityTypes';
 
 import type { db } from '.';
@@ -11,8 +11,9 @@ import type { db } from '.';
 type WithChildrenComments = Pick<AwaitedReturn<typeof db.getDetailItems>[number],
   'id' | 'childrenComments' | 'rootId' | 'createdAt'>;
 
-export interface Schema extends z.infer<typeof schema> {
-}
+export type Schema = z.infer<typeof schema> 
+
+export type CreateSchema = z.infer<typeof createSchema>
 
 
 export const schema = z.object({
@@ -37,6 +38,7 @@ export const createSchema = schema
     userId: UserDomain.schema.shape.id,
     requestId: z.bigint(),
   });
+
 
 export const utils = {
   makeViewComments,

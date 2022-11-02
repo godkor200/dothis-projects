@@ -1,4 +1,3 @@
-import { pagePath } from '@dothis/share/lib/constants';
 import { prisma } from '@dothis/share/prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
@@ -7,6 +6,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import InstagramProvider from 'next-auth/providers/instagram';
 import TwitchProvider from 'next-auth/providers/twitch';
 
+import { pagePath } from '@/constants';
 import YoutubeProvider from '@/providers/youtube';
 
 

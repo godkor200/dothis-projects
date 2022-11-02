@@ -7,8 +7,8 @@ import {
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import { colors, fontWeights, typo } from '@/styles/chakraTheme/variable';
-import commonStyle from '@/styles/commonStyle';
+import { colors, fontWeights, typo } from '@/lib/styles/chakraTheme';
+import commonStyle from '@/lib/styles/commonStyle';
 
 export type TextareaProps = ChakraTextareaProps & {
   isInvalid?: boolean;

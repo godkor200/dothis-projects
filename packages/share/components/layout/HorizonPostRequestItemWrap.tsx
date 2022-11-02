@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import { colors } from '@/styles/chakraTheme/variable';
-
 const HorizonPostRequestItemWrap = styled.div`
   > * {
     display: block;
