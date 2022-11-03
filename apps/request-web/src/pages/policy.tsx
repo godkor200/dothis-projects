@@ -1,9 +1,8 @@
+import Container from '@dothis/share/components/layout/Container';
+import { colors, typo } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 
-import { colors, typo } from '@/styles/chakraTheme/variable';
-
-import Container from '../components/layout/Container';
 import LayoutTemplate from '../components/layout/LayoutTemplate';
 
 export default function Policy() {

@@ -1,13 +1,13 @@
 import { Box, Divider, Text, VStack } from '@chakra-ui/react';
-import type { RequestPost, User } from '@prisma/client';
+import InputCommentTextarea from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
+import type { RequestCommentDomain } from '@dothis/share/domain';
+import type { RequestPost, User } from '@dothis/share/generated/prisma-client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback } from 'react';
 
-import Comment from '@/components/article/Comment';
+import Comment from '@/components/article/Comment'
 import ViewPostRequestContainer from '@/components/contents/ViewRequestPost/ViewPostRequestContainer';
-import InputCommentTextarea from '@/components/ui/Textarea/InputCommentTextarea';
-import type RequestCommentDomain from '@/domain/RequestCommentDomain';
-import trpcHooks from '@/utils/trpcHooks';
+import { t } from '@/utils/trpc';
 
 type Props = {
   requestId: RequestPost['id'];
@@ -17,8 +17,8 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const trpcUtils = trpcHooks.useContext();
-  const orderedCommentsDetail = trpcHooks.useQuery(
+  const trpcUtils = t.useContext();
+  const orderedCommentsDetail = t.useQuery(
     [
       'request comment - view ordered items',
       {
@@ -43,7 +43,7 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
     },
   );
 
-  const heartCommentMutation = trpcHooks.useMutation(
+  const heartCommentMutation = t.useMutation(
     ['request comment - heart'],
     {
       onSuccess() {
@@ -55,7 +55,7 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
     },
   );
 
-  const addCommentMutation = trpcHooks.useMutation(['request comment - add'], {
+  const addCommentMutation = t.useMutation(['request comment - add'], {
     onSuccess() {
       trpcUtils.invalidateQueries([
         'request comment - view ordered items',

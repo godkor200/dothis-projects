@@ -1,4 +1,11 @@
 import { HStack } from '@chakra-ui/react';
+import Container from '@dothis/share/components/layout/Container';
+import {
+  colors,
+  fontWeights,
+  mediaQueries,
+} from '@dothis/share/lib/styles/chakraTheme';
+import { isLinkActive } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -6,14 +13,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { pagePath } from '@/constants';
-import {
-  colors,
-  fontWeights,
-  mediaQueries,
-} from '@/styles/chakraTheme/variable';
-import { isLinkActive } from '@/utils/appUtils';
-
-import Container from './Container';
 
 export default function InquiryLayoutHeader() {
   const router = useRouter();

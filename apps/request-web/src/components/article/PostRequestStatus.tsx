@@ -1,15 +1,14 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
+import SvgAward from '@dothis/share/components/ui/Icons/SvgAward';
+import SvgCheck from '@dothis/share/components/ui/Icons/SvgCheck';
+import SvgSendPlane from '@dothis/share/components/ui/Icons/SvgSendPlane';
+import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
+import { RequestPostDomain } from '@dothis/share/domain';
+import type { RequestPost, RequestStatusType } from '@dothis/share/generated/prisma-client';
+import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
-import type { RequestPost, RequestStatusType } from '@prisma/client';
 import clsx from 'clsx';
 import React from 'react';
-
-import SvgAward from '@/components/ui/Icons/SvgAward';
-import SvgCheck from '@/components/ui/Icons/SvgCheck';
-import SvgSendPlane from '@/components/ui/Icons/SvgSendPlane';
-import SvgThumbUp from '@/components/ui/Icons/SvgThumbUp';
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import { colors, fontWeights } from '@/styles/chakraTheme/variable';
 
 const { statusTypeKor, statusStep, requestStatusType } =
   RequestPostDomain.constants;

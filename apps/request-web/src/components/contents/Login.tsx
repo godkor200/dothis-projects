@@ -1,53 +1,34 @@
 import { Box, Divider, VStack } from '@chakra-ui/react';
+import Button from '@dothis/share/components/ui/Button';
+import SvgFacebook from '@dothis/share/components/ui/Icons/SvgFacebook';
+import SvgInstagram from '@dothis/share/components/ui/Icons/SvgInstagram';
+import SvgTwitch from '@dothis/share/components/ui/Icons/SvgTwitch';
+import SvgYoutube from '@dothis/share/components/ui/Icons/SvgYoutube';
+import { useModalStore } from '@dothis/share/lib/models';
 import { css } from '@emotion/react';
-import { getSession, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import React from 'react';
 
-import SvgFacebook from '@/components/ui/Icons/SvgFacebook';
-import SvgInstagram from '@/components/ui/Icons/SvgInstagram';
-import SvgTwitch from '@/components/ui/Icons/SvgTwitch';
-import SvgYoutube from '@/components/ui/Icons/SvgYoutube';
-import { PAGE_KEYS, pagePath } from '@/constants';
-import { useModalStore } from '@/models/modal/useModalStore';
-import { withSessionSsr } from '@/server/session';
-
-import Button from '../ui/Button';
-
-export const getServerSideProps = withSessionSsr(async (context) => {
-  const session = await getSession(context);
-
-  if (session?.user) {
-    return {
-      redirect: {
-        destination: pagePath.home().pathname,
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-});
+import { PAGE_KEYS } from '@/constants';
 
 export default function Login() {
   return (
     <VStack css={style} spacing={20}>
-      <Button theme="white" onClick={() => signIn('google')} round>
+      <Button theme='white' onClick={() => signIn('google')} round>
         <SvgYoutube />
         <strong>구글 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme="white" disabled onClick={() => signIn('instagram')} round>
+      <Button theme='white' disabled onClick={() => signIn('instagram')} round>
         <SvgInstagram />
         <strong>인스타그램 로그인</strong>
       </Button>
-      <Button theme="white" disabled onClick={() => signIn('facebook')} round>
+      <Button theme='white' disabled onClick={() => signIn('facebook')} round>
         <SvgFacebook />
         <strong>페이스북 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme="white" disabled onClick={() => signIn('twitch')} round>
+      <Button theme='white' disabled onClick={() => signIn('twitch')} round>
         <SvgTwitch />
         <strong>트위치 로그인</strong>
       </Button>

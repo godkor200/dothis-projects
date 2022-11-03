@@ -1,47 +1,38 @@
 import { Box, Text } from '@chakra-ui/react';
+import Button from '@dothis/share/components/ui/Button';
+import type { EditorT } from '@dothis/share/components/ui/Editor';
+import Editor from '@dothis/share/components/ui/Editor';
+import FormErrorMessages from '@dothis/share/components/ui/FormErrorMessages';
+import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
+import Input from '@dothis/share/components/ui/Input';
+import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
+import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTemplate';
+import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
+import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
+import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
+import ToastBox from '@dothis/share/components/ui/ToastBox';
+import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@dothis/share/domain';
+import type { Creator, RequestPost } from '@dothis/share/generated/prisma-client';
+import { errorMessage, isErrorMessage, isMessage, useModalOptStore, useModalStore } from '@dothis/share/lib/models';
+import { isNilStr, removeSeparators } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
 import { isString } from 'fp-ts/lib/string';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
-import Button from '@/components/ui/Button';
-import type { EditorRefObject } from '@/components/ui/Editor';
-import Editor from '@/components/ui/Editor';
-import FormErrorMessages from '@/components/ui/FormErrorMessages';
-import FormValidMessage from '@/components/ui/FormValidMessage';
-import SearchInput from '@/components/ui/Input/SearchInput';
-import SubmitModalTemplate from '@/components/ui/Modal/SubmitModalTemplate';
-import SelectMenuList from '@/components/ui/SelectMenu/SelectMenuList';
 import { PAGE_KEYS, pagePath } from '@/constants';
-import RequestFundingDomain from '@/domain/RequestFundingDomain';
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import UserDomain from '@/domain/UserDomain';
-import {
-  errorMessage,
-  isErrorMessage,
-  isMessage,
-  successMessage,
-} from '@/models/Message';
-import { useModalOptStore } from '@/models/modal/ModalContext';
-import { useModalStore } from '@/models/modal/useModalStore';
 import { toast } from '@/pages/_app';
-import numberUtils from '@/utils/numberUtils';
-import stringUtils from '@/utils/stringUtils';
-import trpcHooks from '@/utils/trpcHooks';
+import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
+import { t } from '@/utils/trpc';
 
-import Input from '../ui/Input';
-import FormatInput from '../ui/Input/FormatInput';
-import SelectMenu from '../ui/SelectMenu/SelectMenu';
-import SelectMenuButton from '../ui/SelectMenu/SelectMenuButton';
-import ToastBox from '../ui/ToastBox';
+import SearchInput from '../ui/SearchInput';
 
 const formValid = RequestPostDomain.schema
   .pick({
@@ -76,24 +67,24 @@ type Props = {
   onSubmit?: () => void;
 };
 export default function NewRequestPost({
-  editRequestPostId,
-  creatorId,
-  onSubmit,
-}: Props) {
-  const trpcUtils = trpcHooks.useContext();
+                                         editRequestPostId,
+                                         creatorId,
+                                         onSubmit,
+                                       }: Props) {
+  const trpcUtils = t.useContext();
   const modalStore = useModalStore();
   const { data: session } = useSession();
 
   const isEditMode = useMemo(() => !!editRequestPostId, [editRequestPostId]);
 
-  const editorRef = useRef<EditorRefObject>(null);
+  const editorRef = useRef<EditorT>(null);
   const { isInnerModal } = useModalOptStore();
 
   const [contentsLength, setContentsLength] = React.useState(0);
 
   const [createMutation, updateMutation, deleteMutation] = [
-    trpcHooks.useMutation(['request post - create']),
-    trpcHooks.useMutation(['request post - update'], {
+    t.useMutation(['request post - create']),
+    t.useMutation(['request post - update'], {
       onSuccess() {
         trpcUtils.invalidateQueries([
           'request post - user items requested by the creator',
@@ -111,7 +102,7 @@ export default function NewRequestPost({
           ]);
       },
     }),
-    trpcHooks.useMutation(['request post - delete']),
+    t.useMutation(['request post - delete']),
   ];
   const {
     register,
@@ -139,7 +130,7 @@ export default function NewRequestPost({
         throw Error('에디터를 찾을 수 없습니다.');
       }
       // 해당 postId를 넘겨 폴더 구분하여 이미지 업로드, 이미지 업로드 후 필드 업데이트
-      const resData = await editorRef.current?.imageUpload(editRequestPostId);
+      const resData = await requestPostImageUpload(editorRef.current, editRequestPostId);
 
       if (isErrorMessage(resData)) {
         ToastBox.toast(resData);
@@ -248,7 +239,7 @@ export default function NewRequestPost({
           throw Error('에디터를 찾을 수 없습니다.');
         }
         // 해당 postId를 넘겨 폴더 구분하여 이미지 업로드, 이미지 업로드 후 필드 업데이트
-        const resData = await editorRef.current?.imageUpload(newRequestId);
+        const resData = await requestPostImageUpload(editorRef.current, newRequestId);
 
         if (isErrorMessage(resData)) {
           ToastBox.toast(resData);
@@ -273,7 +264,7 @@ export default function NewRequestPost({
                 title: '요청 내역 확인',
                 Component: () => (
                   <SubmitModalTemplate
-                    submitText="보기"
+                    submitText='보기'
                     onSubmit={() => {
                       modalStore.close('view modal submit');
                       ViewRequestPost.modalOpen({
@@ -308,11 +299,11 @@ export default function NewRequestPost({
     <>
       <form css={style} className={clsx(isInnerModal && 'in-modal')}>
         {/* 제목 */}
-        <div className="form-cell">
+        <div className='form-cell'>
           <div>
             <Input
               isInvalid={!!errors.title}
-              placeholder="제목 *"
+              placeholder='제목 *'
               {...register('title')}
             />
 
@@ -323,7 +314,7 @@ export default function NewRequestPost({
         </div>
 
         {/* 내용 */}
-        <Box className="form-cell" mt={14}>
+        <Box className='form-cell' mt={14}>
           <Editor
             init={{ placeholder: '내용 *' }}
             // initialValue={editRequestPost?.data?.content}
@@ -365,14 +356,14 @@ export default function NewRequestPost({
         </Box>
         {/* 크리에이터 */}
         {!isEditMode && !creatorId && (
-          <Box className="form-cell" mt={4}>
+          <Box className='form-cell' mt={4}>
             <Controller
               control={control}
-              name="creatorName"
+              name='creatorName'
               render={({ field }) => (
                 <SearchInput
                   isInvalid={!!errors.creatorName}
-                  placeholder="크리에이터 지정(선택사항)"
+                  placeholder='크리에이터 지정(선택사항)'
                   onItemSelect={(v) => {
                     field.onChange(v);
                   }}
@@ -384,22 +375,22 @@ export default function NewRequestPost({
         )}
         {/* 후원금 */}
         {!isEditMode && (
-          <Box className="form-cell" mt={14}>
+          <Box className='form-cell' mt={14}>
             <FormatInput
-              placeholder="후원금 (1,000P부터)"
-              format="thousandsSeparators"
+              placeholder='후원금 (1,000P부터)'
+              format='thousandsSeparators'
               isInvalid={!!errors.quantity}
               Right={
-                <Text as="span" ml={4} display="flex" alignItems="center">
+                <Text as='span' ml={4} display='flex' alignItems='center'>
                   Point
                 </Text>
               }
               {...register('quantity', {
                 setValueAs(v) {
-                  if (stringUtils.isNilStr(v)) return undefined;
+                  if (isNilStr(v)) return undefined;
                   return typeof v === 'number'
                     ? v
-                    : parseInt(numberUtils.removeSeparators(v));
+                    : parseInt(removeSeparators(v));
                 },
               })}
             />
@@ -410,17 +401,17 @@ export default function NewRequestPost({
           </Box>
         )}
         {/* 카테고리 */}
-        <Box className="form-cell" mt={4}>
+        <Box className='form-cell' mt={4}>
           <Controller
             control={control}
-            name="category"
+            name='category'
             render={({ field }) => (
-              <SelectMenu theme="graybox">
+              <SelectMenu theme='graybox'>
                 <SelectMenuButton ref={field.ref} isInvalid={!!errors.category}>
                   {field.value ? (
                     RequestPostDomain.constants.categoryKor.get(field.value)
                   ) : (
-                    <Text color="gray.60">카테고리 선택 *</Text>
+                    <Text color='gray.60'>카테고리 선택 *</Text>
                   )}
                 </SelectMenuButton>
                 <SelectMenuList
@@ -441,7 +432,7 @@ export default function NewRequestPost({
           <FormErrorMessages errors={errors} />
         </div>
         <Button
-          theme="primary"
+          theme='primary'
           onClick={isEditMode ? submitEditRequestPost : submitCreateRequestPost}
           w={120}
           h={50}
@@ -485,9 +476,9 @@ const footerStyle = css`
 
 NewRequestPost.title = () => '새로운 요청 등록';
 NewRequestPost.ModalLink = function NewRequestPostModalLink({
-  children,
-  ...props
-}: Props & { children: ReactNode }) {
+                                                              children,
+                                                              ...props
+                                                            }: Props & { children: ReactNode }) {
   const modalStore = useModalStore();
   const handleModalOpen = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {

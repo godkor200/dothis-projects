@@ -1,12 +1,12 @@
 import { Box, Link } from '@chakra-ui/react';
+import Button from '@dothis/share/components/ui/Button';
+import SvgPlus from '@dothis/share/components/ui/Icons/SvgPlus';
+import useScroll from '@dothis/share/lib/hooks/useScroll';
+import { mediaQueries } from '@dothis/share/lib/styles/chakraTheme/variable';
 import { css } from '@emotion/react';
 
-import NewRequestPost from '@/components/contents/NewRequestPost';
-import useScroll from '@/hooks/useScroll';
-import { mediaQueries } from '@/styles/chakraTheme/variable';
+import NewRequestPost from '../contents/NewRequestPost';
 
-import Button from '../ui/Button';
-import SvgPlus from '../ui/Icons/SvgPlus';
 
 const MobileActionBar = () => {
   const { scrollDirection } = useScroll();

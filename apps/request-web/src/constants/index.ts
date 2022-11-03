@@ -1,6 +1,3 @@
-import type { RequestCategoryType, RequestStatusType } from '@prisma/client';
-import type { UrlObject } from 'url';
-
 export const PAGE_KEYS = {
   home: 'home',
   ranking: 'ranking',

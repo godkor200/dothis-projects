@@ -1,25 +1,22 @@
 import { Box, Flex, HStack, Text, useBoolean } from '@chakra-ui/react';
+import Button from '@dothis/share/components/ui/Button';
+import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
+import SvgHeart from '@dothis/share/components/ui/Icons/SvgHeart';
+import type { InputCommentTextareaProps } from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
+import InputCommentTextarea from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
+import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import { UserDomain } from '@dothis/share/domain';
+import type { User } from '@dothis/share/generated/prisma-client';
+import useGlobalStore from '@dothis/share/lib/models/globalStore';
+import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
+import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
-import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import type { Session } from 'next-auth';
 import React, { useMemo } from 'react';
 
-import Button from '@/components/ui/Button';
-import SvgDonate from '@/components/ui/Icons/SvgDonate';
-import SvgHeart from '@/components/ui/Icons/SvgHeart';
-import UserLink from '@/components/ui/Links/UserLink';
-import type { InputCommentTextareaProps } from '@/components/ui/Textarea/InputCommentTextarea';
-import InputCommentTextarea from '@/components/ui/Textarea/InputCommentTextarea';
-import type RequestCommentDomain from '@/domain/RequestCommentDomain';
-import UserDomain from '@/domain/UserDomain';
-import useGlobalStore from '@/models/globalStore';
-import { colors, fontWeights } from '@/styles/chakraTheme/variable';
-import { FirstParameter } from '@/types/utils';
-import dateUtils from '@/utils/dateUtils';
-import NumberUtils from '@/utils/numberUtils';
+import UserLink from '../ui/Links/UserLink';
 
-import UserAvatar from '../ui/UserAvatar';
 
 export type CommentProps = {
   comment: {
@@ -48,14 +45,14 @@ export type CommentProps = {
   // onEdit(): void;
 };
 const Comment = ({
-  comment,
-  isHearted,
-  isDonated,
-  onReply,
-  onHeart,
-  heartCount,
-  currentUser,
-}: CommentProps) => {
+                   comment,
+                   isHearted,
+                   isDonated,
+                   onReply,
+                   onHeart,
+                   heartCount,
+                   currentUser,
+                 }: CommentProps) => {
   const { user } = comment;
   const isActiveUser = useMemo(() => !!user, [user]);
   const [isWriteReply, isWriteReplyFlag] = useBoolean(false);
@@ -77,28 +74,28 @@ const Comment = ({
           />
         </Box>
       )}
-      <Box className="comment-contents">
-        <Text as="b" fontWeight="b">
+      <Box className='comment-contents'>
+        <Text as='b' fontWeight='b'>
           {isActiveUser ? (
             <UserLink userId={user!.id}>{user!.name}</UserLink>
           ) : (
             UserDomain.constants.resignedUserName
           )}
         </Text>
-        <Text as="p" mt={2}>
+        <Text as='p' mt={2}>
           {comment.parentComment && comment.parentComment?.user?.name && (
-            <Text as="mark" fontWeight="sb" mr={6}>
+            <Text as='mark' fontWeight='sb' mr={6}>
               @{comment.parentComment.user.name}
             </Text>
           )}
           {comment.content}
         </Text>
-        <HStack className="comment-etc-info" spacing={8} pt={4}>
-          <Text as="span" fontWeight={fontWeights.m}>
-            {dateUtils.toKoAboutDateAgo(now, comment.createdAt)}
+        <HStack className='comment-etc-info' spacing={8} pt={4}>
+          <Text as='span' fontWeight={fontWeights.m}>
+            {toKoAboutDateAgo(now, comment.createdAt)}
           </Text>
           {isActiveUser && isDonated && (
-            <Box className="comment-donate">
+            <Box className='comment-donate'>
               <SvgDonate fill={colors.primary.default} />
               <span>후원중</span>
             </Box>
@@ -113,16 +110,16 @@ const Comment = ({
               onClick={() => onHeart(comment)}
             >
               <SvgHeart width={14} height={14} fill={colors.gray['60']} />
-              <span>{NumberUtils.thousandsSeparators(heartCount)}</span>
+              <span>{thousandsSeparators(heartCount)}</span>
             </Button>
           }
           {currentUser && !isWriteReply && (
-            <Button className="comment-reply" onClick={isWriteReplyFlag.on}>
+            <Button className='comment-reply' onClick={isWriteReplyFlag.on}>
               답글
             </Button>
           )}
           {currentUser && isWriteReply && (
-            <Button className="comment-reply" onClick={isWriteReplyFlag.off}>
+            <Button className='comment-reply' onClick={isWriteReplyFlag.off}>
               취소
             </Button>
           )}

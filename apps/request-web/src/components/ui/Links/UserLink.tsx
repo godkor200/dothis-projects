@@ -1,10 +1,10 @@
+import { useModalStore } from '@dothis/share/lib/models';
+import type { FirstParameter } from '@dothis/share/lib/types/utilityTypes';
+import { PartialApProps } from '@dothis/share/lib/utils';
 import Link from 'next/link';
 import type { AnchorHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 
 import { pagePath } from '@/constants';
-import { useModalStore } from '@/models/modal/useModalStore';
-import type { FirstParameter, MergeFirstParameter } from '@/types/utils';
-import { PartialApProps } from '@/utils/common';
 
 type Props = FirstParameter<typeof pagePath.user> & {
   anchorProps?: AnchorHTMLAttributes<HTMLAnchorElement>;

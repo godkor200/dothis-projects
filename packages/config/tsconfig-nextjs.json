@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js",
+  "extends": "./tsconfig-base.json",
+  "compilerOptions": {
+    "target": "ES2021",
+    "outDir": "dist",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "declarationMap": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "jsxImportSource": "@emotion/react",
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "noUncheckedIndexedAccess": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "@emotion/react/types/css-prop",
+      "reflect-metadata",
+      "jest",
+      "node"
+    ]
+  }
+}

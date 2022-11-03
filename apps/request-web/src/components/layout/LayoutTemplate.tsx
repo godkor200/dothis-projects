@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import type { ReactNode } from 'react';
 
@@ -19,19 +18,19 @@ export default function LayoutTemplate({ children }: Props) {
   return (
     <>
       <Head>
-        <link rel="icon" href="/public/favicon.ico" />
+        <link rel='icon' href='/public/favicon.ico' />
         <meta
-          name="description"
-          content="두디스 - 보고 싶던 콘텐츠, 이젠 두디스에서"
+          name='description'
+          content='두디스 - 보고 싶던 콘텐츠, 이젠 두디스에서'
         />
         <meta
-          property="og:image"
+          property='og:image'
           content={`https://og-image.vercel.app/${encodeURI(
             siteTitle,
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
-        <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name='og:title' content={siteTitle} />
+        <meta name='twitter:card' content='summary_large_image' />
       </Head>
       <LayoutHeader />
       <main css={mainWrapperStyle}>{children}</main>

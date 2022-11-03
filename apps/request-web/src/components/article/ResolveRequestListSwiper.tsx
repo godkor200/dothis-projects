@@ -1,4 +1,15 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
+import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
+import Tag from '@dothis/share/components/ui/Tag';
+import StatusTag from '@dothis/share/components/ui/Tag/StatusTag';
+import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import RequestPostDomain from '@dothis/share/domain/RequestPostDomain';
+import {
+  breakpoints,
+  colors,
+  fontWeights,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import type { MutableRefObject } from 'react';
 import React, { useMemo } from 'react';
@@ -7,21 +18,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { SwiperProps } from 'swiper/react/swiper-react';
 import type { Swiper as SwiperClass } from 'swiper/types';
 
-import SvgDonate from '@/components/ui/Icons/SvgDonate';
-import UserLink from '@/components/ui/Links/UserLink';
-import StatusTag from '@/components/ui/Tag/StatusTag';
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import {
-  breakpoints,
-  colors,
-  fontWeights,
-  typo,
-} from '@/styles/chakraTheme/variable';
+import UserLink from '@/../../../../apps/request-web/src/components/Links/UserLink';
 import { youtubeUrlToId } from '@/utils/appUtils';
 
 import ViewRequestPost from '../contents/ViewRequestPost';
-import Tag from '../ui/Tag';
-import UserAvatar from '../ui/UserAvatar';
 
 type Props = {
   postRequestList: PostRequestItemProps['requestPost'][];

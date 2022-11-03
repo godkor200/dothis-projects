@@ -1,19 +1,20 @@
 {
   "name": "@dothis/config",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "private": true,
   "files": [
-    "base.json",
-    "nextjs.json",
-    "react-library.json",
+    "tsconfig-base.json",
+    "tsconfig-nextjs.json",
+    "tsconfig-react-library.json",
     "eslint-dothis-nextjs.js"
   ],
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
-    "prettier": "^2.7.1",
-    "eslint-config-turbo": "latest",
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-config-turbo": "latest",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^27.1.3",
     "eslint-plugin-jest-dom": "^4.0.2",
@@ -23,7 +24,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "eslint-plugin-testing-library": "^5.9.1",
-    "@typescript-eslint/eslint-plugin": "^5.40.1",
-    "@typescript-eslint/parser": "^5.40.1"
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
   }
 }

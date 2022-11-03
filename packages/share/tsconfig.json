@@ -1,0 +1,26 @@
+{
+  "extends": "@dothis/config/tsconfig-nextjs.json",
+  "baseUrl": ".",
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../../types",
+      "declarationMap": true,
+    }
+  ], 
+  "include": [
+  ".",
+  "next-env.d.ts",
+  "../../types/**/*.d.ts"
+],
+  "exclude": [
+    "dist",
+    "node_modules",
+  ]
+}

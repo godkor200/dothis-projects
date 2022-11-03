@@ -1,18 +1,18 @@
+import Container from '@dothis/share/components/layout/Container';
+import HomeLogo from '@dothis/share/components/ui/HomeLogo';
+import { colors, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import React from 'react';
 
-import { colors, mediaQueries, typo } from '@/styles/chakraTheme/variable';
-
-import HomeLogo from '../ui/HomeLogo';
-import Container from './Container';
+import { pagePath } from '@/constants';
 
 export default function LayoutFooter() {
   return (
     <footer css={style}>
       <Container className="footer-container">
         <div className="footer-info">
-          <HomeLogo></HomeLogo>
+          <HomeLogo href={pagePath.home()}></HomeLogo>
           <p className="footer-info-contents">
             두디스 | 대표이사 : 민상현 | 개인정보 보호 최고책임자 : 박순헌
             <br />

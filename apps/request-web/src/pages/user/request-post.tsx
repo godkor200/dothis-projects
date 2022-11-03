@@ -1,4 +1,11 @@
 import { Box, Center, HStack, Spinner, Text } from '@chakra-ui/react';
+import Container from '@dothis/share/components/layout/Container';
+import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
+import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
+import Input from '@dothis/share/components/ui/Input';
+import { useModalStore } from '@dothis/share/lib/models';
+import { typo } from '@dothis/share/lib/styles/chakraTheme';
+import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -8,16 +15,10 @@ import { useDebouncedCallback } from 'use-debounce';
 import { z } from 'zod';
 
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
-import Container from '@/components/layout/Container';
-import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import Input from '@/components/ui/Input';
-import { useModalStore } from '@/models/modal/useModalStore';
-import { withUserSessionSsr } from '@/server/session';
-import { typo } from '@/styles/chakraTheme/variable';
-import trpcHooks from '@/utils/trpcHooks';
+import { pagePath } from '@/constants';
+import { t } from '@/utils/trpc';
 
-import SvgSearch from '../../components/ui/Icons/SvgSearch';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -43,8 +44,7 @@ export const getServerSideProps = withUserSessionSsr(
         // userRequest,
       },
     };
-  },
-);
+  }, pagePath.home().pathname);
 
 const requestPost = ({
   searchText: _searchText,
@@ -53,7 +53,7 @@ const requestPost = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchText, _setSearchText] = useState(_searchText);
   const router = useRouter();
-  const trpcUtils = trpcHooks.useContext();
+  const trpcUtils = t.useContext();
   const handleSetSearchText = useCallback(
     (_searchText: typeof searchText) => {},
     [],
@@ -70,7 +70,7 @@ const requestPost = ({
   }, []);
 
   const modalStore = useModalStore();
-  const userSearchRequestPost = trpcHooks.useInfiniteQuery(
+  const userSearchRequestPost = t.useInfiniteQuery(
     [
       'user - infinite search user request',
       {

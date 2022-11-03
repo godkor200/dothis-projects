@@ -1,15 +1,17 @@
+import { prisma } from '@dothis/share/prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
 import InstagramProvider from 'next-auth/providers/instagram';
 import TwitchProvider from 'next-auth/providers/twitch';
-import { prisma } from 'prisma/client';
 
+import { pagePath } from '@/constants';
 import YoutubeProvider from '@/providers/youtube';
 
+
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma), 
   debug: process.env.NODE_ENV === 'development',
   providers: [
     GoogleProvider({
@@ -34,7 +36,7 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/auth/login',
+    signIn: pagePath.login().pathname,
   },
   callbacks: {
     async jwt({ token: _token, account, user }) {
@@ -48,10 +50,6 @@ export default NextAuth({
       };
       if (user) token.user = user;
 
-      // console.log('jwt', token);
-      // console.log('jwt', account);
-      // console.log('jwt', user);
-
       return token;
     },
     async session({ session: _session, token, user }) {
@@ -64,14 +62,9 @@ export default NextAuth({
         _session.user = token.user as any;
       }
 
-      // console.log('session', _session);
-      // console.log('session', token);
-      // console.log('session', user);
-
       return _session;
     },
     async redirect({ url, baseUrl }) {
-      console.log('[...nextauth].ts redirect', 'url, baseUrl', url, baseUrl);
       // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin

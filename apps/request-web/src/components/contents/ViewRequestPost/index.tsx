@@ -1,14 +1,30 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  Flex,
-  HStack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar, Box, Divider, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import DotDotDotMenu from '@dothis/share/components/ui/ActionMenu/DotDotDotMenu';
+import Button from '@dothis/share/components/ui/Button';
+import SvgAccept from '@dothis/share/components/ui/Icons/SvgAccept';
+import SvgAlarmWarning from '@dothis/share/components/ui/Icons/SvgAlarmWarning';
+import SvgBack from '@dothis/share/components/ui/Icons/SvgBack';
+import SvgClose from '@dothis/share/components/ui/Icons/SvgClose';
+import SvgDelete from '@dothis/share/components/ui/Icons/SvgDelete';
+import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
+import SvgEdit from '@dothis/share/components/ui/Icons/SvgEdit';
+import SvgGiveUp from '@dothis/share/components/ui/Icons/SvgGiveUp';
+import SvgHandCoin from '@dothis/share/components/ui/Icons/SvgHandCoin';
+import SvgRegistration from '@dothis/share/components/ui/Icons/SvgRegistration';
+import SvgShareForward from '@dothis/share/components/ui/Icons/SvgShareForward';
+import SvgThumbDown from '@dothis/share/components/ui/Icons/SvgThumbDown';
+import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
+import ToastBox from '@dothis/share/components/ui/ToastBox';
+import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import YoutubeIframe from '@dothis/share/components/ui/YoutubeIframe';
+import type { RequestPostDomain } from '@dothis/share/domain';
+import { RequestFundingDomain } from '@dothis/share/domain';
+import type { User } from '@dothis/share/generated/prisma-client';
+import { useModalOptStore, useModalStore } from '@dothis/share/lib/models';
+import { colors, fontSizes, fontWeights, mediaQueries } from '@dothis/share/lib/styles/chakraTheme';
+import { thousandsSeparators } from '@dothis/share/lib/utils';
+import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
 import { css } from '@emotion/react';
-import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -16,44 +32,14 @@ import { useSession } from 'next-auth/react';
 import type { ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
 
+import PostRequestStatus from '@/components/article/PostRequestStatus';
 import NewRequestPost from '@/components/contents/NewRequestPost';
 import viewRequestModalHandlers from '@/components/contents/ViewRequestPost/viewRequestModalHandlers';
 import 후원금펀딩 from '@/components/contents/후원금펀딩';
-import DotDotDotMenu from '@/components/ui/ActionMenu/DotDotDotMenu';
-import Button from '@/components/ui/Button';
-import SvgAccept from '@/components/ui/Icons/SvgAccept';
-import SvgAlarmWarning from '@/components/ui/Icons/SvgAlarmWarning';
-import SvgBack from '@/components/ui/Icons/SvgBack';
-import SvgClose from '@/components/ui/Icons/SvgClose';
-import SvgDelete from '@/components/ui/Icons/SvgDelete';
-import SvgEdit from '@/components/ui/Icons/SvgEdit';
-import SvgGiveUp from '@/components/ui/Icons/SvgGiveUp';
-import SvgHandCoin from '@/components/ui/Icons/SvgHandCoin';
-import SvgRegistration from '@/components/ui/Icons/SvgRegistration';
-import SvgThumbDown from '@/components/ui/Icons/SvgThumbDown';
-import ToastBox from '@/components/ui/ToastBox';
-import UserAvatar from '@/components/ui/UserAvatar';
 import { PAGE_KEYS, pagePath } from '@/constants';
-import RequestFundingDomain from '@/domain/RequestFundingDomain';
-import type RequestPostDomain from '@/domain/RequestPostDomain';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { useModalOptStore } from '@/models/modal/ModalContext';
-import { useModalStore } from '@/models/modal/useModalStore';
-import {
-  colors,
-  fontSizes,
-  fontWeights,
-  mediaQueries,
-} from '@/styles/chakraTheme/variable';
-import { shareUrlObject } from '@/utils/appUtils';
-import NumberUtils from '@/utils/numberUtils';
-import trpcHooks from '@/utils/trpcHooks';
+import { t } from '@/utils/trpc';
 
-import PostRequestStatus from '../../article/PostRequestStatus';
-import SvgDonate from '../../ui/Icons/SvgDonate';
-import SvgShareForward from '../../ui/Icons/SvgShareForward';
-import SvgThumbUp from '../../ui/Icons/SvgThumbUp';
-import YoutubeIframe from '../../ui/YoutubeIframe';
 import _CommentsArea from './_CommentsArea';
 import ViewPostRequestContainer from './ViewPostRequestContainer';
 
@@ -63,10 +49,10 @@ type Props = {
 
 const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
   const { data: session } = useSession();
-  const trpcUtils = trpcHooks.useContext();
+  const trpcUtils = t.useContext();
   const mustLoginFirst = useMustLoginFirst();
 
-  const requestDetail = trpcHooks.useQuery(
+  const requestDetail = t.useQuery(
     ['request post - detail item', { id: _requestPost.id }],
     {
       select(data) {
@@ -94,7 +80,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   );
 
-  const reactionMutation = trpcHooks.useMutation('request reaction - update', {
+  const reactionMutation = t.useMutation('request reaction - update', {
     onSuccess() {
       trpcUtils.invalidateQueries([
         'request post - detail item',
@@ -103,7 +89,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   });
 
-  const statusMutation = trpcHooks.useMutation(
+  const statusMutation = t.useMutation(
     ['request post - update status'],
     {
       onSuccess(_, requestData) {
@@ -137,7 +123,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       },
     },
   );
-  const deleteRequestMutation = trpcHooks.useMutation(
+  const deleteRequestMutation = t.useMutation(
     ['request post - delete'],
     {
       onError(e) {
@@ -166,7 +152,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   );
   const { isInnerModal } = useModalOptStore();
-  const completeRequestMutation = trpcHooks.useMutation(
+  const completeRequestMutation = t.useMutation(
     ['request post - complete'],
     {
       onError(e) {
@@ -192,7 +178,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
   );
 
   const user = session?.user;
-  const my = trpcHooks.useQuery(['user - get', { id: user?.id }]);
+  const my = t.useQuery(['user - get', { id: user?.id }]);
 
   const handleLike = useCallback(
     () =>
@@ -365,19 +351,19 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     <>
       {isInnerModal && (
         <Box
-          position="sticky"
+          position='sticky'
           display={{ base: 'flex', tablet: 'none' }}
-          justifyContent="space-between"
+          justifyContent='space-between'
           top={0}
           left={0}
           right={0}
           h={56}
-          bg="white"
+          bg='white'
           zIndex={1}
           borderBottom={`1px solid ${colors.border['2']}`}
-          alignItems="center"
+          alignItems='center'
         >
-          <Button px={16} h="100%" onClick={modalStore.closeAll}>
+          <Button px={16} h='100%' onClick={modalStore.closeAll}>
             <SvgBack />
           </Button>
           {isMyRequest && (
@@ -393,7 +379,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       {requestDetail.data && (
         <Box css={style} pt={20} pb={24}>
           <ViewPostRequestContainer>
-            <Flex justifyContent="space-between">
+            <Flex justifyContent='space-between'>
               <PostRequestStatus status={requestDetail.data.status} />
               <Box display={{ base: 'none', tablet: 'block' }}>
                 {isMyRequest && (
@@ -401,12 +387,12 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 )}
               </Box>
             </Flex>
-            <Box as="header" mt={16}>
-              <Text as="h3" color="gray.80" fontSize={22} fontWeight="b">
+            <Box as='header' mt={16}>
+              <Text as='h3' color='gray.80' fontSize={22} fontWeight='b'>
                 {requestDetail.data.title}
               </Text>
-              <Flex mt={8} fontWeight="m">
-                <Flex alignItems="center" color="gray.70">
+              <Flex mt={8} fontWeight='m'>
+                <Flex alignItems='center' color='gray.70'>
                   {requestDetail.data.expires && (
                     <Text>
                       {format(requestDetail.data.expires, 'yy.MM.dd HH:mm ')}
@@ -416,13 +402,13 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   <Button
                     className={clsx(myReaction === 'LIKE' && '--like')}
                     p={8}
-                    fontWeight="m"
+                    fontWeight='m'
                     onClick={handleLike}
                   >
                     <SvgThumbUp width={16} height={16} />
                     &nbsp;
-                    <Text as="span" color="gray.70">
-                      {NumberUtils.thousandsSeparators(
+                    <Text as='span' color='gray.70'>
+                      {thousandsSeparators(
                         requestDetail.data.likeSet.size,
                       )}
                     </Text>
@@ -430,13 +416,13 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   <Button
                     className={clsx(myReaction === 'DISLIKE' && '--dislike')}
                     p={8}
-                    fontWeight="m"
+                    fontWeight='m'
                     onClick={handleDislike}
                   >
                     <SvgThumbDown width={16} height={16} />
                     &nbsp;
-                    <Text as="span" color="gray.70">
-                      {NumberUtils.thousandsSeparators(
+                    <Text as='span' color='gray.70'>
+                      {thousandsSeparators(
                         requestDetail.data.dislikeSet.size,
                       )}
                     </Text>
@@ -444,14 +430,14 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 </Flex>
               </Flex>
             </Box>
-            <Box className="request-info" mt={12}>
+            <Box className='request-info' mt={12}>
               <VStack
-                className="request-info_detail"
+                className='request-info_detail'
                 spacing={16}
-                alignItems="start"
+                alignItems='start'
               >
                 {requestDetail.data.user && (
-                  <Flex className="request-info-row" h={40} alignItems="center">
+                  <Flex className='request-info-row' h={40} alignItems='center'>
                     <label>요청자</label>
                     <Link
                       href={pagePath.user({
@@ -459,7 +445,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                       })}
                     >
                       <a onClick={modalStore.closeAll}>
-                        <Flex className="request-info_user" alignItems="center">
+                        <Flex className='request-info_user' alignItems='center'>
                           <Avatar
                             w={32}
                             h={32}
@@ -467,10 +453,10 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                             src={requestDetail.data.user.image ?? undefined}
                           />
                           <Text
-                            as="span"
+                            as='span'
                             ml={10}
-                            fontWeight="m"
-                            color="gray.70"
+                            fontWeight='m'
+                            color='gray.70'
                           >
                             {requestDetail.data.user?.name}
                           </Text>
@@ -480,7 +466,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   </Flex>
                 )}
                 {requestDetail.data.creator && (
-                  <Flex className="request-info-row" h={40} alignItems="center">
+                  <Flex className='request-info-row' h={40} alignItems='center'>
                     <label>멘션</label>
                     <Link
                       href={pagePath.user({
@@ -488,7 +474,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                       })}
                     >
                       <a onClick={modalStore.closeAll}>
-                        <Flex className="request-info_user" alignItems="center">
+                        <Flex className='request-info_user' alignItems='center'>
                           <Avatar
                             w={32}
                             h={32}
@@ -501,10 +487,10 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                             }
                           />
                           <Text
-                            as="span"
+                            as='span'
                             ml={10}
-                            fontWeight="m"
-                            color="gray.70"
+                            fontWeight='m'
+                            color='gray.70'
                           >
                             {requestDetail.data.creator?.user.name
                               ? `@${requestDetail.data.creator?.user.name}`
@@ -515,32 +501,32 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                     </Link>
                   </Flex>
                 )}
-                <Box className="request-info-row">
+                <Box className='request-info-row'>
                   <label>후원금</label>
                   <span>
-                    {NumberUtils.thousandsSeparators(
+                    {thousandsSeparators(
                       RequestFundingDomain.utils.sumFundings(
                         requestDetail.data.requestFundings,
                       ),
                     )}
                     &nbsp;P
                   </span>
-                  <Flex ml={{ base: 16, tablet: 80 }} alignItems="center">
+                  <Flex ml={{ base: 16, tablet: 80 }} alignItems='center'>
                     <SvgDonate />
-                    <Text as="span" ml={4} color="gray.70">
+                    <Text as='span' ml={4} color='gray.70'>
                       {requestDetail.data.requestFundings.length}
                     </Text>
                   </Flex>
                   <Button
-                    theme="primary"
+                    theme='primary'
                     w={{ base: 80, tablet: 120 }}
-                    size="md"
+                    size='md'
                     h={40}
                     ml={{ base: 16, tablet: 32 }}
                     onClick={handleOpenFundingModal}
                   >
                     <SvgHandCoin fill={colors.white} />
-                    <Text as="span" ml={10} fontWeight="b">
+                    <Text as='span' ml={10} fontWeight='b'>
                       펀딩
                     </Text>
                   </Button>
@@ -552,11 +538,11 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 {/*  </Box>*/}
                 {/*)}*/}
 
-                <Flex className="request-info-row">
+                <Flex className='request-info-row'>
                   {isRequestIGot && requestDetail.data.status === 'REQUEST' && (
                     <>
                       <Button
-                        theme="primary"
+                        theme='primary'
                         w={150}
                         h={40}
                         onClick={() =>
@@ -567,7 +553,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                         <Text ml={10}>수락</Text>
                       </Button>
                       <Button
-                        theme="white"
+                        theme='white'
                         w={150}
                         h={40}
                         ml={28}
@@ -583,7 +569,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   {isRequestIGot && requestDetail.data.status === 'ACCEPT' && (
                     <>
                       <Button
-                        theme="primary"
+                        theme='primary'
                         w={150}
                         h={40}
                         onClick={() =>
@@ -596,7 +582,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                         <Text ml={10}>콘텐츠 등록</Text>
                       </Button>
                       <Button
-                        theme="white"
+                        theme='white'
                         w={150}
                         h={40}
                         ml={28}
@@ -626,7 +612,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   {/*)}*/}
                   {!requestDetail.data.creator && my?.data?.creator && (
                     <Button
-                      theme="primary"
+                      theme='primary'
                       w={150}
                       h={40}
                       onClick={() =>
@@ -645,24 +631,24 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
           </ViewPostRequestContainer>
 
           {requestDetail.data.solvedUrl && (
-            <Box className="reqeust-solved-contents" mt={36}>
+            <Box className='reqeust-solved-contents' mt={36}>
               <YoutubeIframe url={requestDetail.data.solvedUrl}></YoutubeIframe>
               <ViewPostRequestContainer>
                 <Text
-                  as="h3"
-                  color="gray.80"
+                  as='h3'
+                  color='gray.80'
                   fontSize={20}
-                  fontWeight="b"
+                  fontWeight='b'
                   mt={10}
                 >
                   등록된 컨텐츠
                 </Text>
-                <Flex mt={10} alignItems="center">
+                <Flex mt={10} alignItems='center'>
                   <UserAvatar
                     size={32}
                     user={requestDetail.data.creator?.user}
                     Text={
-                      <Text as="span" ml={10} mr={30}>
+                      <Text as='span' ml={10} mr={30}>
                         {requestDetail.data.creator?.user?.name}
                       </Text>
                     }
@@ -672,22 +658,22 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
             </Box>
           )}
           <ViewPostRequestContainer
-            display="flex"
-            flexDirection="column"
-            flex="auto"
+            display='flex'
+            flexDirection='column'
+            flex='auto'
           >
             <Divider my={20} />
             <Box
-              display="flex"
-              flexDirection="column"
-              flex="auto"
+              display='flex'
+              flexDirection='column'
+              flex='auto'
               dangerouslySetInnerHTML={{
                 __html: requestDetail.data?.content
                   ? requestDetail.data?.content
                   : '',
               }}
             />
-            <Flex justifyContent="center" mt={30}>
+            <Flex justifyContent='center' mt={30}>
               <Button
                 className={clsx(
                   'like-button',
@@ -695,9 +681,9 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 )}
                 onClick={handleLike}
               >
-                <Flex gap={6} alignItems="center">
+                <Flex gap={6} alignItems='center'>
                   <SvgThumbUp fill={colors.gray['50']} />
-                  <Text as="span" fontSize={14} fontWeight="sb">
+                  <Text as='span' fontSize={14} fontWeight='sb'>
                     {requestDetail?.data?.likeSet.size}
                   </Text>
                 </Flex>
@@ -711,9 +697,9 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 ml={32}
                 onClick={handleDislike}
               >
-                <Flex gap={6} alignItems="center">
+                <Flex gap={6} alignItems='center'>
                   <SvgThumbDown fill={colors.gray['50']} />
-                  <Text as="span" fontSize={14} fontWeight="sb">
+                  <Text as='span' fontSize={14} fontWeight='sb'>
                     {requestDetail?.data?.dislikeSet.size}
                   </Text>
                 </Flex>
@@ -721,13 +707,13 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
               </Button>
             </Flex>
             <HStack
-              className="request-post-actions"
-              justifyContent="center"
+              className='request-post-actions'
+              justifyContent='center'
               mt={20}
               spacing={16}
             >
               <Button
-                theme="white"
+                theme='white'
                 w={120}
                 h={40}
                 onClick={() => {
@@ -745,14 +731,14 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 <Text ml={10}>공유</Text>
               </Button>
               <Button
-                theme="primary"
+                theme='primary'
                 w={120}
-                size="md"
+                size='md'
                 h={40}
                 onClick={handleOpenFundingModal}
               >
                 <SvgHandCoin fill={colors.white} />
-                <Text as="span" ml={10} fontWeight="b">
+                <Text as='span' ml={10} fontWeight='b'>
                   펀딩
                 </Text>
               </Button>
@@ -809,7 +795,7 @@ const style = css`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    //border: 1px solid ${colors.border['2']};
+      //border: 1px solid ${colors.border['2']};
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -843,7 +829,7 @@ ViewRequestPost.title = () => '요청 상세';
 ViewRequestPost.modalOpen = (props: Props) => {
   useModalStore.getState().open(PAGE_KEYS.viewPostRequest, {
     Component: () => (
-      <Box width="100vw">
+      <Box width='100vw'>
         <ViewRequestPost {...props} />
       </Box>
     ),
@@ -855,9 +841,9 @@ ViewRequestPost.modalOpen = (props: Props) => {
   });
 };
 ViewRequestPost.ModalLink = function ViewRequestPostModalLink({
-  children,
-  ...props
-}: {
+                                                                children,
+                                                                ...props
+                                                              }: {
   children: ReactNode;
 } & Props) {
   const modalStore = useModalStore();

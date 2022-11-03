@@ -1,17 +1,12 @@
-import { AspectRatio } from '@chakra-ui/react';
+import Button from '@dothis/share/components/ui/Button';
+import SvgNext from '@dothis/share/components/ui/Icons/SvgNext';
+import SvgPrev from '@dothis/share/components/ui/Icons/SvgPrev';
+import { colors, typo } from '@dothis/share/lib/styles/chakraTheme/variable';
 import { css } from '@emotion/react';
-import Link from 'next/link';
-import type { CSSProperties, ReactNode } from 'react';
 import { useRef, useState } from 'react';
-import { A11y, Autoplay } from 'swiper';
+import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperClass } from 'swiper/types';
-
-import { colors, mediaQueries, typo } from '@/styles/chakraTheme/variable';
-
-import Button from '../ui/Button';
-import SvgNext from '../ui/Icons/SvgNext';
-import SvgPrev from '../ui/Icons/SvgPrev';
 
 type Props = {
   Banners: React.ComponentType[];
@@ -37,7 +32,7 @@ const MainSwiper = ({ Banners }: Props) => {
         }}
       >
         {Banners.map((Banner, i) => (
-          <SwiperSlide key={i} className="main-swiper_slide">
+          <SwiperSlide key={i} className='main-swiper_slide'>
             <Banner />
           </SwiperSlide>
         ))}
@@ -45,24 +40,24 @@ const MainSwiper = ({ Banners }: Props) => {
       {Banners.length > 1 && (
         <>
           <Button
-            className="main-swiper_nav-prev-button"
-            aria-label="Previous slide"
+            className='main-swiper_nav-prev-button'
+            aria-label='Previous slide'
             // disabled={swiperIndex === 0}
             onClick={() => swiper.current?.slidePrev()}
           >
             <SvgPrev />
           </Button>
           <Button
-            className="main-swiper_nav-next-button"
-            aria-label="Next slide"
+            className='main-swiper_nav-next-button'
+            aria-label='Next slide'
             // disabled={swiperIndex + 1 === banners.length}
             onClick={() => swiper.current?.slideNext()}
           >
             <SvgNext />
           </Button>
-          <div className="main-swiper_pagination">
-            <span className="current-slide-index">{swiperIndex + 1}</span>
-            <span className="max-slide-index">
+          <div className='main-swiper_pagination'>
+            <span className='current-slide-index'>{swiperIndex + 1}</span>
+            <span className='max-slide-index'>
               &nbsp;/&nbsp;{Banners.length}
             </span>
           </div>

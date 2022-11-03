@@ -1,17 +1,15 @@
-import { Box, FormErrorMessage, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
+import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
+import Input from '@dothis/share/components/ui/Input';
+import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTemplate';
+import Textarea from '@dothis/share/components/ui/Textarea';
+import { RequestPostDomain } from '@dothis/share/domain';
+import { useModalStore } from '@dothis/share/lib/models';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { RequestPost } from '@prisma/client';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import FormValidMessage from '@/components/ui/FormValidMessage';
-import Input from '@/components/ui/Input';
-import SubmitModalTemplate from '@/components/ui/Modal/SubmitModalTemplate';
-import Textarea from '@/components/ui/Textarea';
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import { useModalStore } from '@/models/modal/useModalStore';
-import trpcHooks from '@/utils/trpcHooks';
 
 const 요청포기 = (onSubmit: (refusalReason: string) => void) => {
   const modalStore = useModalStore.getState();
@@ -27,12 +25,12 @@ const 요청포기 = (onSubmit: (refusalReason: string) => void) => {
           onCancel={() => modalStore.close('요청포기')}
           w={456}
         >
-          <Text as="p" fontWeight="m">
+          <Text as='p' fontWeight='m'>
             수락한 요청을 포기하는 사유를 적어주세요.
             <br />
             입력하신 내용은 요청자에게 전달됩니다.
           </Text>
-          <Textarea ref={textareaRef} theme="gray" h={88} w="100%" mt={14} />
+          <Textarea ref={textareaRef} theme='gray' h={88} w='100%' mt={14} />
         </SubmitModalTemplate>
       );
     },
@@ -126,15 +124,15 @@ export const 등록콘텐츠URL = (onSubmit: (solvedUrl: string) => void) => {
 
       return (
         <SubmitModalTemplate
-          submitText="등록"
+          submitText='등록'
           onSubmit={submit}
           onCancel={() => modalStore.close('등록콘텐츠URL')}
           w={456}
         >
-          <Text mb={8} fontWeight="m">
+          <Text mb={8} fontWeight='m'>
             유튜브 콘텐츠의 주소를 입력해주세요.
           </Text>
-          <Input placeholder="https://" {...register('solvedUrl')} />
+          <Input placeholder='https://' {...register('solvedUrl')} />
           {errors.solvedUrl && (
             <FormValidMessage errorMessage={errors.solvedUrl.message} mt={4} />
           )}
@@ -152,7 +150,7 @@ export const 등록콘텐츠리뷰 = (onSubmit: () => void) => {
     Component: () => {
       return (
         <SubmitModalTemplate
-          submitText="등록 확인"
+          submitText='등록 확인'
           onSubmit={onSubmit}
           onCancel={() => modalStore.close('등록콘텐츠리뷰')}
           w={456}

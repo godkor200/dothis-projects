@@ -74,9 +74,6 @@ async function main() {
   await prisma.$queryRaw`ALTER TABLE notices AUTO_INCREMENT = 1`;
   await prisma.notice.createMany({ data: notices });
 
-  await prisma.alarm.deleteMany();
-  await prisma.$queryRaw`ALTER TABLE alarms AUTO_INCREMENT = 1`;
-  await prisma.alarm.createMany({ data: alarms });
 }
 
 
