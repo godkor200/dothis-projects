@@ -19,7 +19,7 @@ import { z } from 'zod';
 
 import UserLink from '@/components/ui/Links/UserLink';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
   user?: User;
@@ -51,7 +51,7 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
     resolver: zodResolver(formSchema),
   });
 
-  const fundingDetail = t.useQuery(
+  const fundingDetail = trpc.useQuery(
     ['request post - detail item', { id: requestPost.id }],
     {
       initialData: requestPost,
@@ -66,8 +66,8 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
     [fundingDetail.data?.status],
   );
 
-  const trpcUtils = t.useContext();
-  const result = t.useMutation(['request funding - funding'], {
+  const trpcUtils = trpc.useContext();
+  const result = trpc.useMutation(['request funding - funding'], {
     onSuccess(_, request) {
       resetField('quantity');
 

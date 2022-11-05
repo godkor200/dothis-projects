@@ -38,7 +38,7 @@ import viewRequestModalHandlers from '@/components/contents/ViewRequestPost/view
 import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 import _CommentsArea from './_CommentsArea';
 import ViewPostRequestContainer from './ViewPostRequestContainer';
@@ -49,10 +49,10 @@ type Props = {
 
 const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
   const { data: session } = useSession();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const mustLoginFirst = useMustLoginFirst();
 
-  const requestDetail = t.useQuery(
+  const requestDetail = trpc.useQuery(
     ['request post - detail item', { id: _requestPost.id }],
     {
       select(data) {
@@ -80,7 +80,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   );
 
-  const reactionMutation = t.useMutation('request reaction - update', {
+  const reactionMutation = trpc.useMutation('request reaction - update', {
     onSuccess() {
       trpcUtils.invalidateQueries([
         'request post - detail item',
@@ -89,7 +89,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   });
 
-  const statusMutation = t.useMutation(
+  const statusMutation = trpc.useMutation(
     ['request post - update status'],
     {
       onSuccess(_, requestData) {
@@ -123,7 +123,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       },
     },
   );
-  const deleteRequestMutation = t.useMutation(
+  const deleteRequestMutation = trpc.useMutation(
     ['request post - delete'],
     {
       onError(e) {
@@ -152,7 +152,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   );
   const { isInnerModal } = useModalOptStore();
-  const completeRequestMutation = t.useMutation(
+  const completeRequestMutation = trpc.useMutation(
     ['request post - complete'],
     {
       onError(e) {
@@ -178,7 +178,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
   );
 
   const user = session?.user;
-  const my = t.useQuery(['user - get', { id: user?.id }]);
+  const my = trpc.useQuery(['user - get', { id: user?.id }]);
 
   const handleLike = useCallback(
     () =>

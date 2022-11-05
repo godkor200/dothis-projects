@@ -25,7 +25,7 @@ import NewRequestPost from '@/components/contents/NewRequestPost';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
-import { getTrpcSSGHelpers, t } from '@/utils/trpc';
+import { trpc,trpcSSG } from '@/utils/trpc';
 
 export const querySchema = z
   .object({
@@ -36,7 +36,7 @@ export const querySchema = z
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const { userId } = querySchema.parse(context.query);
-    const trpcSSGHelper = await getTrpcSSGHelpers();
+    const trpcSSGHelper = await trpcSSG();
 
     const user = await trpcSSGHelper.fetchQuery('user - get', {
       id: userId,
@@ -92,7 +92,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   );
   const order = useMemo(() => query.order ?? 'LATEST', [query.order]);
 
-  const creatorRequests = t.useInfiniteQuery(
+  const creatorRequests = trpc.useInfiniteQuery(
     ['creator - infinite creator request', query],
     {
       getNextPageParam(lastPage) {
@@ -100,7 +100,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
       },
     },
   );
-  const myRequests = t.useQuery(
+  const myRequests = trpc.useQuery(
     [
       'request post - user items requested by the creator',
       { userId: session?.user.id, creatorUserId },

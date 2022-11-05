@@ -4,11 +4,11 @@ import type { MentionInputProps } from '@dothis/share/components/ui/Input/Mentio
 import MentionInput from '@dothis/share/components/ui/Input/MentionInput';
 import { useMatch } from '@dothis/share/lib/hooks';
 
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 export type SearchInputProps = Omit<MentionInputProps, 'match'>;
 const SearchInput = (props: SearchInputProps) => {
-  const creatorNames = t.useQuery(['creator - get all'], {
+  const creatorNames = trpc.useQuery(['creator - get all'], {
     select: (data) => {
       let creatorNameArr: string[] = [];
       for (const creator of data) {

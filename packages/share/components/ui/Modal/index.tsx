@@ -1,6 +1,6 @@
 import type { ModalProps as ChakraModalProps } from '@chakra-ui/react';
 import { Box, Modal as ChakraModal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
-import { css } from '@emotion/react';
+import { css } from '@emotion/css';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import * as React from 'react';
@@ -37,7 +37,7 @@ const Modal = ({
       motionPreset={'slideInBottom'}
       {...modalProps}
     >
-      <Box css={style}>
+      <Box className={style}>
         <ModalOverlay className='modal-overlay' />
         <ModalContent
           className={clsx('modal-contents', isFull && 'full')}

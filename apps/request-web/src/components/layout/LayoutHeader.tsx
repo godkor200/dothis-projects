@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 import React from 'react';
 
 import { pagePath } from '@/constants';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 import Login from '../contents/Login';
 import NewRequestPost from '../contents/NewRequestPost';
@@ -23,12 +23,12 @@ export default function LayoutHeader() {
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = React.useState('');
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
 
 
   const router = useRouter();
 
-  const my = t.useQuery(['user - get', { id: session?.user.id }], {
+  const my = trpc.useQuery(['user - get', { id: session?.user.id }], {
     enabled: !!session?.user.id,
   });
 

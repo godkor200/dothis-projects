@@ -17,7 +17,7 @@ import { z } from 'zod';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 
 const querySchema = z.object({
@@ -53,7 +53,7 @@ const requestPost = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchText, _setSearchText] = useState(_searchText);
   const router = useRouter();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const handleSetSearchText = useCallback(
     (_searchText: typeof searchText) => {},
     [],
@@ -70,7 +70,7 @@ const requestPost = ({
   }, []);
 
   const modalStore = useModalStore();
-  const userSearchRequestPost = t.useInfiniteQuery(
+  const userSearchRequestPost = trpc.useInfiniteQuery(
     [
       'user - infinite search user request',
       {

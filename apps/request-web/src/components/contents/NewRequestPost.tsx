@@ -30,7 +30,7 @@ import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import { toast } from '@/pages/_app';
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 import SearchInput from '../ui/SearchInput';
 
@@ -71,7 +71,7 @@ export default function NewRequestPost({
                                          creatorId,
                                          onSubmit,
                                        }: Props) {
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
   const { data: session } = useSession();
 
@@ -83,8 +83,8 @@ export default function NewRequestPost({
   const [contentsLength, setContentsLength] = React.useState(0);
 
   const [createMutation, updateMutation, deleteMutation] = [
-    t.useMutation(['request post - create']),
-    t.useMutation(['request post - update'], {
+    trpc.useMutation(['request post - create']),
+    trpc.useMutation(['request post - update'], {
       onSuccess() {
         trpcUtils.invalidateQueries([
           'request post - user items requested by the creator',
@@ -102,7 +102,7 @@ export default function NewRequestPost({
           ]);
       },
     }),
-    t.useMutation(['request post - delete']),
+    trpc.useMutation(['request post - delete']),
   ];
   const {
     register,
@@ -192,13 +192,12 @@ export default function NewRequestPost({
   // 생성 요청
   const submitCreateRequestPost = handleSubmit(
     async ({ creatorName, ...form }) => {
-      const userId = UserDomain.schema.shape.id.parse(session?.user.id);
       // 크리에이터 매칭
       const matchedCreator = await (() => {
         if (!creatorName) return;
-        return trpcUtils.client.query('creator - match', {
+        return trpcUtils.fetchQuery(['creator - match', {
           name: creatorName,
-        });
+        }]);
       })();
 
       // 크리에이터 네임은 있는데 매칭되는 크리에이터가 없으면 에러

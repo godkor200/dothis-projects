@@ -93,7 +93,7 @@ export default function HorizonPostRequestItem({
         {requestPost.thumbnailUrl && (
           <AspectRatio ratio={1} minW={{ base: '90px', tablet: '160px' }}>
             <div className='item-img-wrap'>
-              <img src={requestPost.thumbnailUrl}></img>
+              <img src={requestPost.thumbnailUrl} alt={`${requestPost.title} thumbnail`}></img>
             </div>
           </AspectRatio>
         )}

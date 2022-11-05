@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import type { AppRouter } from '@/appRouter';
+import { trpc } from '@/utils/trpc';
 
 
 
@@ -104,40 +105,4 @@ const ModalManager = () => {
   );
 };
 
-export default withTRPC<AppRouter>({
-  config({ ctx }) {
-    const ONE_DAY_SECONDS = 60 * 60 * 24;
-    // 서버는 Full url을 알아야 한다.
-    const url =
-      typeof window !== 'undefined'
-        ? '/api/trpc'
-        : `${process.env.NEXTAUTH_URL}/api/trpc`;
-
-    ctx?.res?.setHeader(
-      'Cache-Control',
-      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
-    );
-
-    const links = [
-      loggerLink({
-        enabled: (opts) => process.env.NODE_ENV === 'development',
-      }),
-      httpBatchLink({
-        maxBatchSize: 10,
-        url,
-      }),
-    ];
-    return {
-      queryClientConfig: {
-        defaultOptions: {
-          queries: {
-            staleTime: 30 * 1000,
-          },
-        },
-      },
-      links,
-      transformer: superjson,
-    };
-  },
-  ssr: false,
-})(App);
+export default trpc.withTRPC(App)

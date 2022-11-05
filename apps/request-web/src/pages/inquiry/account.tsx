@@ -15,7 +15,7 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { getTrpcSSGHelpers, t } from '@/utils/trpc';
+import { trpc,trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -23,7 +23,7 @@ const querySchema = z.object({
 
 export const getServerSideProps = withUserSessionSsr(
   async (context, userSession) => {
-    const trpcSSGHelper = await getTrpcSSGHelpers();
+    const trpcSSGHelper = await trpcSSG();
     trpcSSGHelper.fetchQuery('user - get', { id: userSession.id });
 
     return {
@@ -36,10 +36,10 @@ export const getServerSideProps = withUserSessionSsr(
 export default function AccountPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
-  const my = t.useQuery(['user - get', { id: session?.user.id }]);
-  const deleteMutation = t.useMutation('user - delete', {
+  const my = trpc.useQuery(['user - get', { id: session?.user.id }]);
+  const deleteMutation = trpc.useMutation('user - delete', {
     onSuccess() {
       if (my.data)
         trpcUtils.invalidateQueries(['user - get', { id: my.data.id }]);

@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 
 import Comment from '@/components/article/Comment'
 import ViewPostRequestContainer from '@/components/contents/ViewRequestPost/ViewPostRequestContainer';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
   requestId: RequestPost['id'];
@@ -17,8 +17,8 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const trpcUtils = t.useContext();
-  const orderedCommentsDetail = t.useQuery(
+  const trpcUtils = trpc.useContext();
+  const orderedCommentsDetail = trpc.useQuery(
     [
       'request comment - view ordered items',
       {
@@ -43,7 +43,7 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
     },
   );
 
-  const heartCommentMutation = t.useMutation(
+  const heartCommentMutation = trpc.useMutation(
     ['request comment - heart'],
     {
       onSuccess() {
@@ -55,7 +55,7 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
     },
   );
 
-  const addCommentMutation = t.useMutation(['request comment - add'], {
+  const addCommentMutation = trpc.useMutation(['request comment - add'], {
     onSuccess() {
       trpcUtils.invalidateQueries([
         'request comment - view ordered items',
