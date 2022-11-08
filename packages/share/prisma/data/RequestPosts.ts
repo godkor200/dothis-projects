@@ -1,12 +1,12 @@
-import type {
-  Creator} from '@/generated/prisma-client';
+import type { Creator } from '@prisma/client';
 import {
   ReactionType,
   RequestCategoryType,
   RequestPlatformType,
   RequestReportStatus,
   RequestReportType,
-  RequestStatusType} from '@/generated/prisma-client';
+  RequestStatusType,
+} from '@prisma/client';
 
 import { users } from './Users';
 

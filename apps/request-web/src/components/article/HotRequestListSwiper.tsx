@@ -19,12 +19,10 @@ type Props = {
   onSlideChange?: SwiperProps['onSlideChange'];
 };
 export default function HotRequestListSwiper({
-                                               postRequestList,
-                                               swiperRef,
-                                               onSlideChange,
-                                             }: Props) {
-  const modalStore = useModalStore();
-
+  postRequestList,
+  swiperRef,
+  onSlideChange,
+}: Props) {
   return (
     <div css={swiperWrapperStyle}>
       <Swiper
@@ -43,7 +41,7 @@ export default function HotRequestListSwiper({
         {chunksOf(3)(postRequestList).map((post3arr) => (
           <SwiperSlide
             key={`${post3arr[0].id}`}
-            className='list-item-swiper_slide'
+            className="list-item-swiper_slide"
           >
             <HorizonPostRequestItemWrap>
               {post3arr.map((request) => (

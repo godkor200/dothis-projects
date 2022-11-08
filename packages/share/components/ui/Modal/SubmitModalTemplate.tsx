@@ -1,9 +1,8 @@
 import type { BoxProps } from '@chakra-ui/react';
 import { Box, Flex } from '@chakra-ui/react';
-import { css } from '@emotion/react';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-import Button from '@/components/ui/Button';
+import Button from '../../../components/ui/Button';
 
 export type SubmitTemplateProps = {
   children: ReactNode;

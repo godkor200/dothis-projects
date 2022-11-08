@@ -1,12 +1,13 @@
+import { RequestReportStatus, RequestReportType } from '@prisma/client';
 import { z } from 'zod';
 
-import { RequestPostDomain, UserDomain } from '@/domain';
-import { RequestReportStatus, RequestReportType } from '@/generated/prisma-client';
+import { schema as requestPostSchema } from '../../domain/RequestPostDomain/domain';
+import { schema as userSchema } from '../../domain/UserDomain/domain';
 
 export const schema = z.object({
   id: z.bigint(),
-  requestId: RequestPostDomain.schema.shape.id,
-  userId: UserDomain.schema.shape.id.nullish(),
+  requestId: requestPostSchema.shape.id,
+  userId: userSchema.shape.id.nullish(),
   content: z.string(),
   type: z.nativeEnum(RequestReportType),
   status: z.nativeEnum(RequestReportStatus),
@@ -27,6 +28,6 @@ export const constants = {
   ]),
   korStatus: new Map<RequestReportStatus, string>([
     ['PROCESSING', '신고 검토 중'],
-    ['COMPLETION', '\'신고 완료\''],
+    ['COMPLETION', "'신고 완료'"],
   ]),
 } as const;

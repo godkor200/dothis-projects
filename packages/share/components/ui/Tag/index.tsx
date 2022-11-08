@@ -3,10 +3,7 @@ import { Tag as ChakraTag } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import RequestPostDomain from '@/domain/RequestPostDomain';
-import { colors, typo } from '@/lib/styles/chakraTheme';
-import { PartialApProps } from '@/lib/utils';
-import type { MapKeyOf } from '@/types/utils';
+import { colors, typo } from '../../../lib/styles/chakraTheme';
 
 export type TagTheme = 'orange' | 'red' | 'purple' | 'green' | 'gray';
 type Props = ChakraTagProps & { theme?: TagTheme };

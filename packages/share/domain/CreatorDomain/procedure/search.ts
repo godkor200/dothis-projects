@@ -1,12 +1,12 @@
 // 크리에이터 이름 검색
 import { TRPCError } from '@trpc/server';
 
-import { UserDomain } from '@/domain';
-import { db } from '@/domain/CreatorDomain';
-import { t } from '@/server/trpc';
+import { schema as userSchema } from '../../../domain/UserDomain/domain';
+import { t } from '../../../server/trpc';
+import { db } from '../db';
 
 export default t.procedure
-  .input(UserDomain.schema.pick({ name: true }).required())
-  .query(async ({ input: { name } }) => {
+  .input(userSchema.pick({ name: true }).required())
+  .mutation(async ({ input: { name } }) => {
     return await db.searchName(name);
   });

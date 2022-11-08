@@ -2,7 +2,11 @@ import { Box, Text } from '@chakra-ui/react';
 import Button from '@dothis/share/components/ui/Button';
 import SvgClose from '@dothis/share/components/ui/Icons/SvgClose';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import { colors, fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  fontWeights,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { isLinkActive, thousandsSeparators } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
@@ -17,7 +21,7 @@ import type { inferQueryOutput } from '@/utils/trpc';
 
 type Props = {
   onClose(): void;
-  user: NonNullable<inferQueryOutput<'user - get'>>;
+  user: NonNullable<inferQueryOutput['user']['get']>;
 };
 
 export default function SideProfile({ onClose, user }: Props) {
@@ -32,28 +36,28 @@ export default function SideProfile({ onClose, user }: Props) {
   return (
     <div css={style}>
       <Button
-        className='profile-drawer-close-button'
-        aria-label='profile close button'
+        className="profile-drawer-close-button"
+        aria-label="profile close button"
         onClick={onClose}
       >
         <SvgClose />
       </Button>
       <Link href={pagePath.account()} passHref>
-        <a className='profile_my-user-page'>
+        <a className="profile_my-user-page">
           <UserAvatar
             user={user}
             size={48}
             Text={
-              <Text as='b' ml={16} fontSize={18}>
+              <Text as="b" ml={16} fontSize={18}>
                 {user.name}
               </Text>
             }
           />
         </a>
       </Link>
-      <div className='profile-cache'>
+      <div className="profile-cache">
         <label>보유 포인트</label>
-        <div className='cache-contents'>
+        <div className="cache-contents">
           <Box h={30} />
           {/*<div className="primary-round-circle">*/}
           {/*  <SvgPlus />*/}
@@ -63,11 +67,11 @@ export default function SideProfile({ onClose, user }: Props) {
       </div>
       {!user.creator && (
         <Button
-          theme='primary'
-          w='100%'
+          theme="primary"
+          w="100%"
           h={50}
           mt={24}
-          fontWeight='b'
+          fontWeight="b"
           onClick={() =>
             signIn('youtube', {
               // scope:
@@ -81,7 +85,7 @@ export default function SideProfile({ onClose, user }: Props) {
         </Button>
       )}
 
-      <ul className='side-profile-links'>
+      <ul className="side-profile-links">
         <li
           className={clsx(isLinkActive(router, profilePageUrl) && 'active')}
           data-matchUrl={profilePageUrl}

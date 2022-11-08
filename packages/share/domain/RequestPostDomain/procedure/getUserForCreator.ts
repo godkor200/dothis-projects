@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { UserDomain } from '@/domain';
-import { db } from '@/domain/RequestPostDomain';
-import { t } from '@/server/trpc';
+import * as UserDomain from '../../../domain/UserDomain';
+import { t } from '../../../server/trpc';
+import { db } from '../db';
 
 // 특정 크리에이터한테 요청한 유저의 아이템을 가져옴
 export default t.procedure

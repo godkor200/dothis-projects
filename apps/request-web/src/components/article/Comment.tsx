@@ -6,17 +6,16 @@ import type { InputCommentTextareaProps } from '@dothis/share/components/ui/Text
 import InputCommentTextarea from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import { UserDomain } from '@dothis/share/domain';
-import type { User } from '@dothis/share/generated/prisma-client';
 import useGlobalStore from '@dothis/share/lib/models/globalStore';
 import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
 import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
+import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import type { Session } from 'next-auth';
 import React, { useMemo } from 'react';
 
 import UserLink from '../ui/Links/UserLink';
-
 
 export type CommentProps = {
   comment: {
@@ -45,14 +44,14 @@ export type CommentProps = {
   // onEdit(): void;
 };
 const Comment = ({
-                   comment,
-                   isHearted,
-                   isDonated,
-                   onReply,
-                   onHeart,
-                   heartCount,
-                   currentUser,
-                 }: CommentProps) => {
+  comment,
+  isHearted,
+  isDonated,
+  onReply,
+  onHeart,
+  heartCount,
+  currentUser,
+}: CommentProps) => {
   const { user } = comment;
   const isActiveUser = useMemo(() => !!user, [user]);
   const [isWriteReply, isWriteReplyFlag] = useBoolean(false);
@@ -74,28 +73,28 @@ const Comment = ({
           />
         </Box>
       )}
-      <Box className='comment-contents'>
-        <Text as='b' fontWeight='b'>
+      <Box className="comment-contents">
+        <Text as="b" fontWeight="b">
           {isActiveUser ? (
             <UserLink userId={user!.id}>{user!.name}</UserLink>
           ) : (
             UserDomain.constants.resignedUserName
           )}
         </Text>
-        <Text as='p' mt={2}>
+        <Text as="p" mt={2}>
           {comment.parentComment && comment.parentComment?.user?.name && (
-            <Text as='mark' fontWeight='sb' mr={6}>
+            <Text as="mark" fontWeight="sb" mr={6}>
               @{comment.parentComment.user.name}
             </Text>
           )}
           {comment.content}
         </Text>
-        <HStack className='comment-etc-info' spacing={8} pt={4}>
-          <Text as='span' fontWeight={fontWeights.m}>
+        <HStack className="comment-etc-info" spacing={8} pt={4}>
+          <Text as="span" fontWeight={fontWeights.m}>
             {toKoAboutDateAgo(now, comment.createdAt)}
           </Text>
           {isActiveUser && isDonated && (
-            <Box className='comment-donate'>
+            <Box className="comment-donate">
               <SvgDonate fill={colors.primary.default} />
               <span>후원중</span>
             </Box>
@@ -114,12 +113,12 @@ const Comment = ({
             </Button>
           }
           {currentUser && !isWriteReply && (
-            <Button className='comment-reply' onClick={isWriteReplyFlag.on}>
+            <Button className="comment-reply" onClick={isWriteReplyFlag.on}>
               답글
             </Button>
           )}
           {currentUser && isWriteReply && (
-            <Button className='comment-reply' onClick={isWriteReplyFlag.off}>
+            <Button className="comment-reply" onClick={isWriteReplyFlag.off}>
               취소
             </Button>
           )}

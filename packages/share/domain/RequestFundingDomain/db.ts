@@ -1,12 +1,13 @@
-import type { Prisma, RequestFunding, RequestPost, User } from '@/generated/prisma-client';
-import { prisma } from '@/prisma/client';
+import type { Prisma, RequestFunding, RequestPost, User } from '@prisma/client';
+
+import { prisma } from '../../prisma/client';
 
 export const db = {
   async funding({
-                  userId,
-                  requestId,
-                  quantity,
-                }: {
+    userId,
+    requestId,
+    quantity,
+  }: {
     userId: User['id'];
     requestId: RequestPost['id'];
     quantity: RequestFunding['quantity'];
@@ -36,9 +37,7 @@ export const db = {
       },
     });
   },
-  refundFundings(
-    requestFundings: (RequestFunding & { user: User | null })[],
-  ) {
+  refundFundings(requestFundings: (RequestFunding & { user: User | null })[]) {
     const userRefundQuantity = requestFundings.reduce(
       (pv, { user, quantity }) => {
         if (user)

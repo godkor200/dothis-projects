@@ -1,25 +1,24 @@
+import type { RequestComment, RequestCommentHeart, User } from '@prisma/client';
 import { groupBy } from 'fp-ts/lib/NonEmptyArray';
 import { z } from 'zod';
 
-import { UserDomain } from '@/domain';
-import type { RequestComment, RequestCommentHeart, User } from '@/generated/prisma-client';
-import type { AwaitedReturn } from '@/lib/types/utilityTypes';
-
+import { schema as userSchema } from '../../domain/UserDomain/domain';
+import type { AwaitedReturn } from '../../lib/types/utilityTypes';
 import type { db } from '.';
 
+type WithChildrenComments = Pick<
+  AwaitedReturn<typeof db.getDetailItems>[number],
+  'id' | 'childrenComments' | 'rootId' | 'createdAt'
+>;
 
-type WithChildrenComments = Pick<AwaitedReturn<typeof db.getDetailItems>[number],
-  'id' | 'childrenComments' | 'rootId' | 'createdAt'>;
+export type Schema = z.infer<typeof schema>;
 
-export type Schema = z.infer<typeof schema> 
-
-export type CreateSchema = z.infer<typeof createSchema>
-
+export type CreateSchema = z.infer<typeof createSchema>;
 
 export const schema = z.object({
   id: z.bigint(),
   requestId: z.bigint().nullish(),
-  userId: UserDomain.schema.shape.id.nullish(),
+  userId: userSchema.shape.id.nullish(),
   parentId: z.bigint().nullish(),
   rootId: z.bigint().nullish(),
   content: z
@@ -35,16 +34,14 @@ export const createSchema = schema
     rootId: true,
   })
   .extend({
-    userId: UserDomain.schema.shape.id,
+    userId: userSchema.shape.id,
     requestId: z.bigint(),
   });
-
 
 export const utils = {
   makeViewComments,
   getMostHeartsComment,
 };
-
 
 function getMostHeartsComment(
   comments: (RequestComment & { hearts: RequestCommentHeart[]; user: User })[],
@@ -87,4 +84,3 @@ function makeViewComments<T extends WithChildrenComments>(comments: Array<T>) {
 
   return resultArr;
 }
-

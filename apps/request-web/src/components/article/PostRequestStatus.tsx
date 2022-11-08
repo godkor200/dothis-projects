@@ -4,9 +4,9 @@ import SvgCheck from '@dothis/share/components/ui/Icons/SvgCheck';
 import SvgSendPlane from '@dothis/share/components/ui/Icons/SvgSendPlane';
 import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
 import { RequestPostDomain } from '@dothis/share/domain';
-import type { RequestPost, RequestStatusType } from '@dothis/share/generated/prisma-client';
 import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
+import type { RequestPost, RequestStatusType } from '@prisma/client';
 import clsx from 'clsx';
 import React from 'react';
 

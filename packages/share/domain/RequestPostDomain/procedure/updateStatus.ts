@@ -1,10 +1,8 @@
 import { TRPCError } from '@trpc/server';
-import { addDays } from 'date-fns';
 
-import { RequestFundingDomain, UserDomain } from '@/domain';
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export const updateStatusSchema = schema.pick({
   id: true,

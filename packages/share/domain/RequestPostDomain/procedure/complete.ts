@@ -1,11 +1,10 @@
 import { TRPCError } from '@trpc/server';
-import { addDays } from 'date-fns';
 import { groupBy } from 'fp-ts/NonEmptyArray';
 
-import { RequestFundingDomain, UserDomain } from '@/domain';
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { constants as userConstants } from '../../../domain/UserDomain/domain';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 // 요청 완료, 크리에이터에게 펀딩액 지급
 export default t.procedure
@@ -38,7 +37,7 @@ export default t.procedure
 
     const fundingsGroupByUserIdData = groupBy(
       (funding: typeof request.requestFundings[number]) =>
-        funding.user?.id ?? UserDomain.constants.resignedUserName,
+        funding.user?.id ?? userConstants.resignedUserName,
     )(request.requestFundings);
 
     const prismaFundingQueryies = Object.entries(fundingsGroupByUserIdData).map(

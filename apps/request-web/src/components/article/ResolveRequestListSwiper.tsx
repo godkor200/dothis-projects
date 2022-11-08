@@ -4,7 +4,12 @@ import Tag from '@dothis/share/components/ui/Tag';
 import StatusTag from '@dothis/share/components/ui/Tag/StatusTag';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import { RequestPostDomain } from '@dothis/share/domain';
-import { breakpoints, colors, fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  breakpoints,
+  colors,
+  fontWeights,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { youtubeUrlToId } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import type { MutableRefObject } from 'react';
@@ -23,10 +28,10 @@ type Props = {
   onSlideChange?: SwiperProps['onSlideChange'];
 };
 const ResolveRequestListSwiper = ({
-                                    postRequestList,
-                                    swiperRef,
-                                    onSlideChange,
-                                  }: Props) => {
+  postRequestList,
+  swiperRef,
+  onSlideChange,
+}: Props) => {
   return (
     <div css={swiperWrapperStyle}>
       <Swiper
@@ -58,7 +63,7 @@ const ResolveRequestListSwiper = ({
         {postRequestList.map((requestPost) => (
           <SwiperSlide
             key={`${requestPost.id}`}
-            className='list-item-swiper_slide'
+            className="list-item-swiper_slide"
           >
             <VerticalPostRequestItem requestPost={requestPost} />
           </SwiperSlide>
@@ -81,29 +86,29 @@ function VerticalPostRequestItem({ requestPost }: PostRequestItemProps) {
   );
   return (
     <div css={postRequestItemStyle}>
-      <div className='request-post-swiper-item-contents'>
+      <div className="request-post-swiper-item-contents">
         <ViewRequestPost.ModalLink requestPost={requestPost}>
-          <AspectRatio ratio={16 / 9} bg='bg.dark'>
-            <Box className='item-img-wrap'>
+          <AspectRatio ratio={16 / 9} bg="bg.dark">
+            <Box className="item-img-wrap">
               {youtubeId && (
-                <img src={makeThumbnail(youtubeId)} alt='thumbnail image' />
+                <img src={makeThumbnail(youtubeId)} alt="thumbnail image" />
               )}
             </Box>
           </AspectRatio>
-          <Text as='strong' noOfLines={2}>
+          <Text as="strong" noOfLines={2}>
             {requestPost.title}
           </Text>
         </ViewRequestPost.ModalLink>
-        <div className='item-bottom'>
+        <div className="item-bottom">
           {requestPost.creator?.user && (
             <UserLink userId={requestPost.creator.userId}>
               <UserAvatar user={requestPost.creator.user} size={42} />
             </UserLink>
           )}
-          <div className='item-info'>
-            <Flex gap='8px' mb={2}>
+          <div className="item-info">
+            <Flex gap="8px" mb={2}>
               {requestPost.category && (
-                <Tag theme='orange'>
+                <Tag theme="orange">
                   {RequestPostDomain.constants.categoryKor.get(
                     requestPost.category,
                   )}
@@ -111,13 +116,13 @@ function VerticalPostRequestItem({ requestPost }: PostRequestItemProps) {
               )}
               <StatusTag requestStatus={requestPost.status} />
             </Flex>
-            <div className='etc-info'>
+            <div className="etc-info">
               {requestPost.creator?.user.name && (
                 <span>@{requestPost.creator.user.name}</span>
               )}
               {/*<span>{numberUtils.thousandsSeparators(donationFee)}원</span>*/}
               <span>0 P</span>
-              <Box className='item-donate'>
+              <Box className="item-donate">
                 <SvgDonate fill={colors.gray['70']} />
                 <span>{requestPost.requestFundings.length}</span>
               </Box>

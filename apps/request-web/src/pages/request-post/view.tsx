@@ -21,10 +21,9 @@ export const getServerSideProps = async (
   const query = querySchema.parse(context.query);
   const trpcSSGHelpers = await trpcSSG();
 
-  const requestDetail = await trpcSSGHelpers.fetchQuery(
-    'request post - detail item',
-    { id: query.requestId },
-  );
+  const requestDetail = await trpcSSGHelpers.requestPost.getDetail.fetch({
+    id: query.requestId,
+  });
 
   if (!requestDetail)
     return {
@@ -45,14 +44,12 @@ export default function RequestViewPage({
   requestDetail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const query = querySchema.parse(
-    extractQueryParams(router.asPath),
-  );
+  const query = querySchema.parse(extractQueryParams(router.asPath));
 
   return (
     <LayoutTemplate>
       <Container py={24}>
-        <ViewRequestPost requestPost={requestDetail}/>
+        <ViewRequestPost requestPost={requestDetail} />
       </Container>
     </LayoutTemplate>
   );

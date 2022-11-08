@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-import { colors } from './chakraTheme/variable';
+import { colors } from './chakraTheme';
 
 const globalStyle = css`
   //@font-face {

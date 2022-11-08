@@ -1,5 +1,5 @@
-import { db } from '@/domain/CreatorDomain';
-import { t } from '@/server/trpc';
+import { t } from '../../../server/trpc';
+import { db } from '../db';
 
 export default t.procedure.query(() => {
   return db.getAll();

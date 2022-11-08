@@ -1,6 +1,7 @@
-import { RequestFundingDomain } from '@/domain';
-import type { Prisma } from '@/generated/prisma-client';
-import { prisma } from '@/prisma/client';
+import type { Prisma } from '@prisma/client';
+
+import { RequestFundingDomain } from '../../domain';
+import { prisma } from '../../prisma/client';
 
 export const db = {
   async getDetailItem(args: Omit<Prisma.RequestPostFindUniqueArgs, 'include'>) {

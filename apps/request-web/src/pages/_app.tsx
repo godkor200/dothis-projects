@@ -1,14 +1,16 @@
 import 'swiper/css';
 
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import Modal from '@dothis/share/components/ui/Modal';
-import  { ModalOptProvider , standaloneToast, useModalStore,useUrlHistoryEvent } from '@dothis/share/lib/models';
+import {
+  ModalOptProvider,
+  standaloneToast,
+  useModalStore,
+  useUrlHistoryEvent,
+} from '@dothis/share/lib/models';
 import chakraTheme from '@dothis/share/lib/styles/chakraTheme';
 import globalStyle from '@dothis/share/lib/styles/globalStyle';
 import { Global } from '@emotion/react';
-import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import { loggerLink } from '@trpc/client/links/loggerLink';
-import { withTRPC } from '@trpc/next';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
 import type { AppProps } from 'next/app';
@@ -18,11 +20,7 @@ import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
-import type { AppRouter } from '@/appRouter';
 import { trpc } from '@/utils/trpc';
-
-
-
 
 // immer Map Set 사용 가능하게
 enableMapSet();
@@ -105,4 +103,4 @@ const ModalManager = () => {
   );
 };
 
-export default trpc.withTRPC(App)
+export default trpc.withTRPC(App);

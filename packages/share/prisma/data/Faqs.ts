@@ -5,8 +5,7 @@ title       String      @db.VarChar(255)
 content     String      @db.LongText
 createdAt   DateTime    @default(now())
 **************/
-import { FaqType } from '@/generated/prisma-client';
-
+import { FaqType } from '@prisma/client';
 
 export const faqs = [
   {

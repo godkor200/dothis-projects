@@ -1,24 +1,11 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
-  "baseUrl": ".",
-  "compilerOptions": {
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
-  },
-  "references": [
-    {
-      "path": "../../types",
-      "declarationMap": true,
-    }
-  ], 
+  "types": "types/theme.d.ts",
   "include": [
-  ".",
-  "next-env.d.ts",
-  "../../types/**/*.d.ts"
-],
+    "**/*.ts",
+    "**/*.tsx",
+    "../../types/**/*.d.ts"
+  ],
   "exclude": [
     "dist",
     "node_modules",

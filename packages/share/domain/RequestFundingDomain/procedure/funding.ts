@@ -1,9 +1,9 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { db, schema } from '@/domain/RequestFundingDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { db, schema } from '..';
 
 export default t.procedure
   .input(
@@ -15,7 +15,7 @@ export default t.procedure
       })
       .required(),
   )
-  .query(async ({ input }) => {
+  .mutation(async ({ input }) => {
     const fundingPost = await prisma.requestPost.findUnique({
       where: { id: input.requestId },
       select: { totalQuantity: true, status: true },

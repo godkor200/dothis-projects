@@ -48,7 +48,7 @@ const LoginPage = ({
 
   return (
     <LayoutTemplate>
-      <Container css={style}>
+      <Container className={style}>
         <h2>로그인</h2>
         <Login />
       </Container>

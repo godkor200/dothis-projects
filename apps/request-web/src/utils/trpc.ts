@@ -2,10 +2,8 @@ import { createContext } from '@dothis/share/server/createContext';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { createTRPCNext } from '@trpc/next';
-import { createReactQueryHooks } from '@trpc/react';
-import { createSSGHelpers } from '@trpc/react/ssg';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
+import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import type * as trpcNext from '@trpc/server/adapters/next';
 import superjson from 'superjson';
 
@@ -40,18 +38,6 @@ export const trpcSSG = async (context?: trpcNext.CreateNextContextOptions) =>
     transformer: superjson,
   });
 
-export type inferQueryOutput<
-  TRouteKey extends keyof AppRouter['_def']['queries'],
-> = inferProcedureOutput<AppRouter['_def']['queries'][TRouteKey]>;
+export type inferQueryOutput = inferRouterOutputs<AppRouter>;
 
-export type inferQueryInput<
-  TRouteKey extends keyof AppRouter['_def']['queries'],
-> = inferProcedureInput<AppRouter['_def']['queries'][TRouteKey]>;
-
-export type inferMutationInput<
-  TRouteKey extends keyof AppRouter['_def']['mutations'],
-> = inferProcedureInput<AppRouter['_def']['mutations'][TRouteKey]>;
-
-export type inferMutationOutput<
-  TRouteKey extends keyof AppRouter['_def']['mutations'],
-> = inferProcedureOutput<AppRouter['_def']['mutations'][TRouteKey]>;
+export type inferQueryInput = inferRouterInputs<AppRouter>;

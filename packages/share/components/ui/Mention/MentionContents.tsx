@@ -3,9 +3,9 @@ import { Box, Button, forwardRef, PopoverContent } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import { useMentionContext } from '@/components/ui/Mention/Mention';
-import { shadows } from '@/lib/styles/chakraTheme';
-import commonStyle from '@/lib/styles/commonStyle';
+import { shadows } from '../../../lib/styles/chakraTheme';
+import commonStyle from '../../../lib/styles/commonStyle';
+import { useMentionContext } from './Mention';
 
 type Props = Omit<PopoverContentProps, 'children' | 'as'>;
 

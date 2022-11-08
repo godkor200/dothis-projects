@@ -1,8 +1,7 @@
 import type { NextRouter } from 'next/router';
 import type { UrlObject } from 'url';
 
-import ToastBox from '@/components/ui/ToastBox';
-
+import ToastBox from '../../components/ui/ToastBox';
 import { joinQueryParams } from './stringUtils';
 
 type ShareProps = {
@@ -37,14 +36,14 @@ export function isLinkActive(router: NextRouter, href: string | UrlObject) {
   return typeof href === 'string'
     ? router.asPath.includes(href)
     : href.pathname
-      ? router.asPath.includes(href.pathname)
-      : false;
+    ? router.asPath.includes(href.pathname)
+    : false;
 }
 
 export const shareUrlObject = ({
-                                 title,
-                                 urlObject,
-                               }: {
+  title,
+  urlObject,
+}: {
   title: string;
   urlObject: UrlObject;
 }) => {

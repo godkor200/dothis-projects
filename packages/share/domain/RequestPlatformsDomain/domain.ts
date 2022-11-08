@@ -1,12 +1,12 @@
+import { RequestPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
-import { RequestPostDomain } from '@/domain';
-import { RequestPlatformType } from '@/generated/prisma-client';
-import { strictlyOnlyRecordKey } from '@/lib/utils';
+import { schema as requestPostSchema } from '../../domain/RequestPostDomain/domain';
+import { strictlyOnlyRecordKey } from '../../lib/utils';
 
 export const schema = z.object({
   id: z.bigint(),
-  requestId: RequestPostDomain.schema.shape.id,
+  requestId: requestPostSchema.shape.id,
   name: z.nativeEnum(RequestPlatformType),
 });
 

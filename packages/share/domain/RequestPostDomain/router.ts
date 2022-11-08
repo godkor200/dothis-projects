@@ -1,6 +1,5 @@
-import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
-import { t } from '@/server/trpc';
-
+import getUserForCreator from '../../domain/RequestPostDomain/procedure/getUserForCreator';
+import { t } from '../../server/trpc';
 import complete from './procedure/complete';
 import create from './procedure/create';
 import Delete from './procedure/delete';

@@ -1,9 +1,9 @@
 import { TRPCError } from '@trpc/server';
 
-import { RequestFundingDomain } from '@/domain';
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { RequestFundingDomain } from '../../../domain';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export default t.procedure
   .input(

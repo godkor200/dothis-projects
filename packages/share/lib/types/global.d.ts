@@ -2,7 +2,7 @@ import '@emotion/react';
 
 import type { DefaultSession } from 'next-auth';
 
-import type { Index } from '@/lib/models/Message/Message';
+import type { Index } from '../../lib/models/Message/Message';
 
 declare module 'next-auth' {
   interface Session {
@@ -23,6 +23,5 @@ declare module 'iron-session' {
   }
 }
 
-
 /// <reference path="../../../../types/theme.d.ts" />
-/// <reference path="../../../../types/nodeEnv.d.ts" /> 
+/// <reference path="../../../../types/nodeEnv.d.ts" />

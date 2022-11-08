@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { schema } from '@/domain/UserDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export default t.procedure
   .input(

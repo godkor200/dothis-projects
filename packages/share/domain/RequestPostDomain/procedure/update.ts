@@ -1,6 +1,6 @@
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export const updateSchema = schema.pick({ id: true }).merge(
   schema.partial().pick({

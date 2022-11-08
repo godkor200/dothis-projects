@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { schema } from '@/domain/RequestCommentDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export default t.procedure
   .input(
@@ -13,7 +13,7 @@ export default t.procedure
       })
       .required(),
   )
-  .query(async ({ input: { userId, requestCommentId } }) => {
+  .mutation(async ({ input: { userId, requestCommentId } }) => {
     const heartWhere = {
       requestCommentId,
       userId,

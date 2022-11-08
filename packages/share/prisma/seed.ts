@@ -1,4 +1,4 @@
-import { PrismaClient } from '@/generated/prisma-client';
+import { PrismaClient } from "@prisma/client";
 
 import { creatorAuths, creators } from './data/Creators';
 import { faqs } from './data/Faqs';

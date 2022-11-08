@@ -2,7 +2,7 @@ import type React from 'react';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import type { ModalProps } from '@/components/ui/Modal';
+import type { ModalProps } from '../../../components/ui/Modal';
 
 export interface ModalItem {
   Component: React.ComponentType;

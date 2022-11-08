@@ -3,7 +3,6 @@ import Container from '@dothis/share/components/layout/Container';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
 import Input from '@dothis/share/components/ui/Input';
-import { useModalStore } from '@dothis/share/lib/models';
 import { typo } from '@dothis/share/lib/styles/chakraTheme';
 import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
@@ -18,7 +17,6 @@ import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem'
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import { trpc } from '@/utils/trpc';
-
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -44,7 +42,9 @@ export const getServerSideProps = withUserSessionSsr(
         // userRequest,
       },
     };
-  }, pagePath.home().pathname);
+  },
+  pagePath.home().pathname,
+);
 
 const requestPost = ({
   searchText: _searchText,
@@ -69,15 +69,11 @@ const requestPost = ({
     console.log('request-post.tsx', '');
   }, []);
 
-  const modalStore = useModalStore();
-  const userSearchRequestPost = trpc.useInfiniteQuery(
-    [
-      'user - infinite search user request',
-      {
-        userId,
-        searchText,
-      },
-    ],
+  const userSearchRequestPost = trpc.user.getSearchRequests.useInfiniteQuery(
+    {
+      userId,
+      searchText,
+    },
     {
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;

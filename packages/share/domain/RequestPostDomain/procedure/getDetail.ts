@@ -1,5 +1,5 @@
-import { db, schema } from '@/domain/RequestPostDomain';
-import { t } from '@/server/trpc';
+import { db, schema } from '../../../domain/RequestPostDomain';
+import { t } from '../../../server/trpc';
 
 export default t.procedure
   .input(schema.pick({ id: true }))

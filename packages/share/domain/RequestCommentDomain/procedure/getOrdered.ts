@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { RequestPostDomain } from '@/domain';
-import { db, utils } from '@/domain/RequestCommentDomain';
-import { t } from '@/server/trpc';
+import { db, utils } from '../../../domain/RequestCommentDomain';
+import { schema as requestPostSchema } from '../../../domain/RequestPostDomain/domain';
+import { t } from '../../../server/trpc';
 
 export default t.procedure
   .input(
     z.object({
-      requestId: RequestPostDomain.schema.shape.id,
+      requestId: requestPostSchema.shape.id,
     }),
   )
   .query(async ({ input: { requestId } }) => {

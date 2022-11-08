@@ -1,12 +1,13 @@
+import { ReactionType } from '@prisma/client';
 import { z } from 'zod';
 
-import {RequestPostDomain,UserDomain} from '@/domain';
-import { ReactionType } from '@/generated/prisma-client';
-import { strictlyOnlyRecordKey } from '@/lib/utils';
+import { schema as requestPostSchema } from '../../domain/RequestPostDomain/domain';
+import { schema as userSchema } from '../../domain/UserDomain/domain';
+import { strictlyOnlyRecordKey } from '../../lib/utils';
 
 export const schema = z.object({
-  requestId: RequestPostDomain.schema.shape.id,
-  userId: UserDomain.schema.shape.id.optional(),
+  requestId: requestPostSchema.shape.id,
+  userId: userSchema.shape.id.optional(),
   type: z.nativeEnum(ReactionType),
   createdAt: z.date(),
 });

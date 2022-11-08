@@ -1,4 +1,12 @@
-import { Box, Center, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Divider,
+  Flex,
+  HStack,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import Container from '@dothis/share/components/layout/Container';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import Button from '@dothis/share/components/ui/Button';
@@ -9,7 +17,12 @@ import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuLis
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import { CreatorDomain, RequestPostDomain } from '@dothis/share/domain';
 import useParsedQuery from '@dothis/share/lib/hooks/useParsedQuery';
-import { colors, fontSizes, fontWeights, mediaQueries } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  fontSizes,
+  fontWeights,
+  mediaQueries,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
 import { css } from '@emotion/react';
 import Link from 'next/link';
@@ -25,7 +38,7 @@ import NewRequestPost from '@/components/contents/NewRequestPost';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
-import { trpc,trpcSSG } from '@/utils/trpc';
+import { trpc, trpcSSG } from '@/utils/trpc';
 
 export const querySchema = z
   .object({
@@ -38,10 +51,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { userId } = querySchema.parse(context.query);
     const trpcSSGHelper = await trpcSSG();
 
-    const user = await trpcSSGHelper.fetchQuery('user - get', {
+    const user = await trpcSSGHelper.user.get.fetch({
       id: userId,
     });
-
 
     if (!user) {
       return {
@@ -51,7 +63,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         },
       };
     }
-
 
     return {
       props: {
@@ -67,17 +78,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-
-
-  
 }
 
 type Props = {
   creatorUserId: string;
-  creatorUser: NonNullable<inferQueryOutput<'user - get'>>;
+  creatorUser: NonNullable<inferQueryOutput['user']['get']>;
 };
 const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
-
   const { data: session } = useSession();
   const router = useRouter();
   const query = useParsedQuery(querySchema);
@@ -92,19 +99,13 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   );
   const order = useMemo(() => query.order ?? 'LATEST', [query.order]);
 
-  const creatorRequests = trpc.useInfiniteQuery(
-    ['creator - infinite creator request', query],
-    {
-      getNextPageParam(lastPage) {
-        return lastPage.nextCursor;
-      },
+  const creatorRequests = trpc.creator.getRequests.useInfiniteQuery(query, {
+    getNextPageParam(lastPage) {
+      return lastPage.nextCursor;
     },
-  );
-  const myRequests = trpc.useQuery(
-    [
-      'request post - user items requested by the creator',
-      { userId: session?.user.id, creatorUserId },
-    ],
+  });
+  const myRequests = trpc.requestPost.getUserForCreator.useQuery(
+    { userId: session?.user.id, creatorUserId },
     {
       enabled: !!session?.user.id && !!creatorUserId,
     },
@@ -121,15 +122,15 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   return (
     <LayoutTemplate>
       <Container css={style} pt={40} pb={68}>
-        <Box className='creator-profile' position='relative'>
+        <Box className="creator-profile" position="relative">
           <UserAvatar
             size={80}
             user={creatorUser}
             Text={
               <Text
-                as='h3'
-                fontSize='h1'
-                fontWeight='b'
+                as="h3"
+                fontSize="h1"
+                fontWeight="b"
                 ml={20}
                 maxW={{ base: 'auto', tablet: 360 }}
                 noOfLines={2}
@@ -157,15 +158,15 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     <Button
                       key={auth.platform}
                       disabled={!auth.profileUrl}
-                      theme='white'
-                      size='sm'
+                      theme="white"
+                      size="sm"
                       w={32}
                       h={32}
                       round
                     >
                       {auth.profileUrl ? (
                         <Link href={auth.profileUrl} passHref>
-                          <a target='_blank'>
+                          <a target="_blank">
                             <Component key={auth.platform} />
                           </a>
                         </Link>
@@ -176,7 +177,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                   );
                 })}
                 <Button
-                  theme='primary'
+                  theme="primary"
                   h={36}
                   w={96}
                   onClick={() =>
@@ -188,8 +189,8 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     })
                   }
                 >
-                  <SvgShareForward fill='white' />
-                  <Text as='span' ml={4}>
+                  <SvgShareForward fill="white" />
+                  <Text as="span" ml={4}>
                     요청 주소
                   </Text>
                 </Button>
@@ -197,7 +198,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
             )}
           </Box>
 
-          <Box color='gray.80' mt={32}>
+          <Box color="gray.80" mt={32}>
             {creatorUser.introduction}
           </Box>
         </Box>
@@ -210,7 +211,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
               }}
               mb={30}
             />
-            <Text as='h3' mb={20} fontSize='t1' fontWeight='m'>
+            <Text as="h3" mb={20} fontSize="t1" fontWeight="m">
               {NewRequestPost.title()}
             </Text>
             <NewRequestPost
@@ -224,15 +225,15 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
         {myRequests?.data && myRequests?.data.length > 0 && (
           <>
             <Divider mt={8} mb={30} />
-            <Box as='section'>
+            <Box as="section">
               <Flex
-                as='header'
-                alignItems='center'
-                justifyContent='space-between'
+                as="header"
+                alignItems="center"
+                justifyContent="space-between"
                 h={48}
                 mb={20}
               >
-                <Text as='h2' fontSize='h3' fontWeight='b'>
+                <Text as="h2" fontSize="h3" fontWeight="b">
                   내 요청
                 </Text>
                 <Link
@@ -241,7 +242,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                   })}
                   passHref
                 >
-                  <a className='view-more-request'>더보기</a>
+                  <a className="view-more-request">더보기</a>
                 </Link>
               </Flex>
               <HorizonPostRequestItemWrap>
@@ -259,19 +260,19 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
         {creatorUser.creator && (
           <>
             <Divider my={30} />
-            <Box as='section'>
+            <Box as="section">
               <Flex
-                as='header'
+                as="header"
                 alignItems={{ base: 'start', tablet: 'center' }}
                 flexDirection={{ base: 'column', tablet: 'row' }}
-                justifyContent='space-between'
+                justifyContent="space-between"
                 mb={20}
               >
-                <Text as='h2' fontSize='h3' fontWeight='b'>
+                <Text as="h2" fontSize="h3" fontWeight="b">
                   받은 요청
                 </Text>
                 <HStack spacing={30} marginTop={{ base: 12, tablet: 0 }}>
-                  <SelectMenu theme='transparent' width={120}>
+                  <SelectMenu theme="transparent" width={120}>
                     <SelectMenuButton>
                       {RequestPostDomain.constants.categoryFilter.get(
                         categoryFilter,
@@ -291,7 +292,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                       }}
                     />
                   </SelectMenu>
-                  <SelectMenu theme='transparent' width={113}>
+                  <SelectMenu theme="transparent" width={113}>
                     <SelectMenuButton>
                       {RequestPostDomain.constants.requestFilter.get(
                         requestFilter,
@@ -341,14 +342,14 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     {creatorRequests.data?.pages.map(({ items }) =>
                       items
                         ? items.map(
-                          (request) =>
-                            request && (
-                              <HorizonPostRequestItem
-                                key={`${request.id}`}
-                                requestPost={request}
-                              />
-                            ),
-                        )
+                            (request) =>
+                              request && (
+                                <HorizonPostRequestItem
+                                  key={`${request.id}`}
+                                  requestPost={request}
+                                />
+                              ),
+                          )
                         : null,
                     )}
                     <div ref={ref}></div>

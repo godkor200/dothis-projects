@@ -1,11 +1,10 @@
+import { RequestCategoryType, RequestStatusType } from '@prisma/client';
 import { z } from 'zod';
 
-import { CreatorDomain, UserDomain } from '@/domain';
-import { RequestCategoryType, RequestStatusType } from '@/generated/prisma-client';
-import type { AwaitedReturn } from '@/lib/types/utilityTypes';
-import { iterableToEnum } from '@/lib/utils';
-import { youtubeUrlToId } from '@/lib/utils/appUtils';
-
+import { schema as creatorSchema } from '../../domain/CreatorDomain/domain';
+import { schema as userSchema } from '../../domain/UserDomain/domain';
+import type { AwaitedReturn } from '../../lib/types/utilityTypes';
+import { iterableToEnum, youtubeUrlToId } from '../../lib/utils';
 import type { db } from '.';
 
 const _categoryKor = new Map<RequestCategoryType, string>([
@@ -29,8 +28,8 @@ export const schema = z.object({
   id: z.bigint(),
   createAt: z.date(),
   updateAt: z.date(),
-  userId: UserDomain.schema.shape.id.nullish(),
-  creatorId: CreatorDomain.schema.shape.id.nullish(),
+  userId: userSchema.shape.id.nullish(),
+  creatorId: creatorSchema.shape.id.nullish(),
   title: z
     .string()
     .min(6, { message: '제목을 최소 6자 이상 작성해주세요.' })
@@ -105,11 +104,7 @@ export const constants = {
 } as const;
 
 export const filterSchema = z.object({
-  categoryFilter: iterableToEnum(
-    constants.categoryFilter.keys(),
-  ).optional(),
-  requestFilter: iterableToEnum(
-    constants.requestFilter.keys(),
-  ).optional(),
+  categoryFilter: iterableToEnum(constants.categoryFilter.keys()).optional(),
+  requestFilter: iterableToEnum(constants.requestFilter.keys()).optional(),
   order: iterableToEnum(constants.order.keys()).optional(),
 });

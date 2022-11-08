@@ -3,16 +3,32 @@
   "pipeline": {
     "build": {
       "dependsOn": [
-        "^build"
+        "^build", "^db-generate"
       ],
       "outputs": [
         ".next/**"
       ]
     },
+    "theme-generate": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": true
+    },
+    "db-generate": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": true
+    },
+    "db-push": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
     "lint": {
       "outputs": []
     },
     "dev": {
+      "dependsOn": ["^db-generate", "^theme-generate"],
+      "cache": false
+    },
+    "clean": {
       "cache": false
     },
     "request-web": {
@@ -24,18 +40,12 @@
         "NEXTAUTH_URL",
         "NEXTAUTH_SECRET",
         "AWS_ACCESS_KEY_ID",
-        "AWS_SECRET_ACCESS_KEY",
-        "GOOGLE_ID",
-        "GOOGLE_SECRET",
-        "TWITCH_CLIENT_ID",
-        "TWITCH_CLIENT_SECRET",
-        "FACEBOOK_ID",
-        "FACEBOOK_SECRET"
+        "AWS_SECRET_ACCESS_KEY"
       ]
     }
   },
 
   "globalDependencies": [
-    ".env.*"
+    ".env*"
   ]
 }

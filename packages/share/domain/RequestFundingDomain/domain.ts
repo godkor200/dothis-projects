@@ -1,9 +1,13 @@
+import type {
+  RequestFunding,
+  RequestFundingStatus,
+  User,
+} from '@prisma/client';
 import { sort } from 'fp-ts/Array';
 import { fromCompare } from 'fp-ts/Ord';
 import { z } from 'zod';
 
-import { UserDomain } from '@/domain';
-import type { RequestFunding, RequestFundingStatus, User } from '@/generated/prisma-client';
+import { schema as userSchema } from '../../domain/UserDomain/domain';
 
 type RequestFundingIncludeUser = RequestFunding & { user: User | null };
 const _quantityAmountDesc = sort(
@@ -14,7 +18,7 @@ const _quantityAmountDesc = sort(
 
 export const schema = z.object({
   id: z.bigint(),
-  userId: UserDomain.schema.shape.id.nullish(),
+  userId: userSchema.shape.id.nullish(),
   createdAt: z.date(),
   quantity: z
     .number({
@@ -66,4 +70,3 @@ export const utils = {
     ];
   },
 };
-

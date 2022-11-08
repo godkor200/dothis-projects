@@ -1,6 +1,6 @@
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export default t.procedure
   .input(schema.pick({ id: true }))

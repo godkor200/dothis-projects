@@ -5,8 +5,8 @@ import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import { UrlObject } from 'url';
 
-import { errorMessage } from '@/lib/models';
-import type { PartialRequiredNotNull } from '@/lib/types/utilityTypes';
+import { errorMessage } from '../lib/models';
+import type { PartialRequiredNotNull } from '../lib/types/utilityTypes';
  
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,

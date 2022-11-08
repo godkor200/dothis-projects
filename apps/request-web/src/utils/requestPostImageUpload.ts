@@ -1,8 +1,15 @@
-import type { EditorT, FileLocations } from '@dothis/share/components/ui/Editor';
+import type {
+  EditorT,
+  FileLocations,
+} from '@dothis/share/components/ui/Editor';
 import { RequestPostDomain } from '@dothis/share/domain';
-import type { RequestPost } from '@dothis/share/generated/prisma-client';
 import type { ErrorMessage } from '@dothis/share/lib/models';
-import { errorMessage, isErrorMessage, message } from '@dothis/share/lib/models';
+import {
+  errorMessage,
+  isErrorMessage,
+  message,
+} from '@dothis/share/lib/models';
+import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';
 
@@ -11,14 +18,15 @@ export type imageResponseData = {
   thumbnailLocation: string | undefined;
 };
 
-
-export async function requestPostImageUpload(editorRef: EditorT, postId: RequestPost['id'], ) {
+export async function requestPostImageUpload(
+  editorRef: EditorT,
+  postId: RequestPost['id'],
+) {
   if (!editorRef)
     return errorMessage({
       message: '에디터를 찾을 수 없습니다.',
     });
-  const images =
-    await editorRef?.editor?.editorUpload.scanForImages();
+  const images = await editorRef?.editor?.editorUpload.scanForImages();
 
   if (!images || (await images).length === 0)
     return message({
@@ -50,20 +58,18 @@ export async function requestPostImageUpload(editorRef: EditorT, postId: Request
     // 최초 Form에 리사이징된 썸네일 이미지 추가
     if (!formData.has('images')) {
       const thumbnailImg = getThumbnailImage(img.image);
-      formData.append(
-        'thumbnail',
-        await thumbnailImg,
-        uid(7),
-      );
+      formData.append('thumbnail', await thumbnailImg, uid(7));
     }
     formData.append('images', img.file, key);
   }
 
-  const result = await axios.post<| ErrorMessage
+  const result = await axios.post<
+    | ErrorMessage
     | {
-    images: FileLocations;
-    thumbnail: FileLocations;
-  }>(`/api/s3?post-id=${postId}`, formData, {
+        images: FileLocations;
+        thumbnail: FileLocations;
+      }
+  >(`/api/s3?post-id=${postId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
@@ -83,7 +89,6 @@ export async function requestPostImageUpload(editorRef: EditorT, postId: Request
     thumbnailLocation,
   } as imageResponseData;
 }
-
 
 async function getThumbnailImage(image: HTMLImageElement): Promise<File> {
   const canvas = document.createElement('canvas');

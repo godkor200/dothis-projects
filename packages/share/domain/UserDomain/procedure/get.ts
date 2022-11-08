@@ -1,8 +1,6 @@
 import { z } from 'zod';
 
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
-
+import { t } from '../../../server/trpc';
 import { db, schema } from '..';
 
 export default t.procedure

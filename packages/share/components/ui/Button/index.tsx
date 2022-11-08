@@ -3,7 +3,7 @@ import { Button as ChakraButton, forwardRef } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import { colors, fontWeights } from '@/lib/styles/chakraTheme';
+import { colors, fontWeights } from '../../../lib/styles/chakraTheme';
 
 type ButtonThemes = 'primary' | 'primaryOutline' | 'white';
 

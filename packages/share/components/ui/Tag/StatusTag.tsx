@@ -1,7 +1,7 @@
-import type { TagTheme } from '@/components/ui/Tag/index';
-import Tag from '@/components/ui/Tag/index';
-import { RequestPostDomain } from '@/domain';
-import { PartialApProps } from '@/lib/utils';
+import type { TagTheme } from '../../../components/ui/Tag/index';
+import Tag from '../../../components/ui/Tag/index';
+import { RequestPostDomain } from '../../../domain';
+import { PartialApProps } from '../../../lib/utils';
 
 type StatusKeys = keyof typeof RequestPostDomain.constants.requestStatusType;
 const requestStatusToColor: Record<StatusKeys, TagTheme> = {

@@ -1,5 +1,6 @@
-import type { Prisma } from '@/generated/prisma-client';
-import { prisma } from '@/prisma/client';
+import type { Prisma } from '@prisma/client';
+
+import { prisma } from '../../prisma/client';
 
 export const db = {
   get(args: Omit<Prisma.UserFindUniqueArgs, 'include'>) {

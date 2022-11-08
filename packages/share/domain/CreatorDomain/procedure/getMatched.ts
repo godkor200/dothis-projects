@@ -1,12 +1,12 @@
 import { TRPCError } from '@trpc/server';
 
-import { UserDomain } from '@/domain';
-import { db } from '@/domain/CreatorDomain';
-import { t } from '@/server/trpc';
+import { t } from '../../../server/trpc';
+import { schema as userSchema } from '../../UserDomain/domain';
+import { db } from '../db';
 
 // 이름이 "정확히" 매칭되는 크리에이터 정보 가져오기
 export default t.procedure
-  .input(UserDomain.schema.pick({ name: true }).required())
+  .input(userSchema.pick({ name: true }).required())
   .query(async ({ input: { name } }) => {
     const matchCreator = await db.match(name);
     if (matchCreator === null) {

@@ -2,7 +2,7 @@ import type { MenuButtonProps } from '@chakra-ui/react';
 import { forwardRef, MenuButton } from '@chakra-ui/react';
 import clsx from 'clsx';
 
-import SvgArrowDown from '@/components/ui/Icons/SvgArrowDown';
+import SvgArrowDown from '../../../components/ui/Icons/SvgArrowDown';
 
 type Props = MenuButtonProps & {
   isInvalid?: boolean;

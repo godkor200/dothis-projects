@@ -1,6 +1,5 @@
-import add from '@/domain/RequestCommentDomain/procedure/add';
-import { t } from '@/server/trpc';
-
+import { t } from '../../server/trpc';
+import add from './procedure/add';
 import getOrdered from './procedure/getOrdered';
 import toggleHeart from './procedure/toggleHeart';
 

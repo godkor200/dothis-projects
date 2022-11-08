@@ -11,12 +11,22 @@ import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
 import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
 import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
-import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@dothis/share/domain';
-import type { Creator, RequestPost } from '@dothis/share/generated/prisma-client';
-import { errorMessage, isErrorMessage, isMessage, useModalOptStore, useModalStore } from '@dothis/share/lib/models';
+import {
+  RequestFundingDomain,
+  RequestPostDomain,
+  UserDomain,
+} from '@dothis/share/domain';
+import {
+  errorMessage,
+  isErrorMessage,
+  isMessage,
+  useModalOptStore,
+  useModalStore,
+} from '@dothis/share/lib/models';
 import { isNilStr, removeSeparators } from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
 import { isString } from 'fp-ts/lib/string';
 import Link from 'next/link';
@@ -67,10 +77,10 @@ type Props = {
   onSubmit?: () => void;
 };
 export default function NewRequestPost({
-                                         editRequestPostId,
-                                         creatorId,
-                                         onSubmit,
-                                       }: Props) {
+  editRequestPostId,
+  creatorId,
+  onSubmit,
+}: Props) {
   const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
   const { data: session } = useSession();
@@ -83,27 +93,23 @@ export default function NewRequestPost({
   const [contentsLength, setContentsLength] = React.useState(0);
 
   const [createMutation, updateMutation, deleteMutation] = [
-    trpc.useMutation(['request post - create']),
-    trpc.useMutation(['request post - update'], {
+    trpc.requestPost.create.useMutation(),
+    trpc.requestPost.update.useMutation({
       onSuccess() {
-        trpcUtils.invalidateQueries([
-          'request post - user items requested by the creator',
-        ]);
-        trpcUtils.invalidateQueries(['creator - infinite creator request']);
-        trpcUtils.invalidateQueries(['user - infinite search user request']);
+        trpcUtils.requestPost.getUserForCreator.invalidate();
+        trpcUtils.creator.getRequests.invalidate();
+        trpcUtils.user.getSearchRequests.invalidate();
         if (session?.user.id)
-          trpcUtils.invalidateQueries(['user - get', { id: session?.user.id }]);
+          trpcUtils.user.get.invalidate({ id: session?.user.id });
         if (editRequestPostId)
-          trpcUtils.invalidateQueries([
-            'request post - detail item',
-            {
-              id: editRequestPostId,
-            },
-          ]);
+          trpcUtils.requestPost.getDetail.invalidate({
+            id: editRequestPostId,
+          });
       },
     }),
-    trpc.useMutation(['request post - delete']),
+    trpc.requestPost.delete.useMutation(),
   ];
+
   const {
     register,
     control,
@@ -130,7 +136,10 @@ export default function NewRequestPost({
         throw Error('에디터를 찾을 수 없습니다.');
       }
       // 해당 postId를 넘겨 폴더 구분하여 이미지 업로드, 이미지 업로드 후 필드 업데이트
-      const resData = await requestPostImageUpload(editorRef.current, editRequestPostId);
+      const resData = await requestPostImageUpload(
+        editorRef.current,
+        editRequestPostId,
+      );
 
       if (isErrorMessage(resData)) {
         ToastBox.toast(resData);
@@ -155,25 +164,18 @@ export default function NewRequestPost({
             modalStore.close('요청수정');
             reset();
             onSubmit?.();
-            trpcUtils.invalidateQueries([
-              'request post - get item',
-              {
-                id: editRequestPostId,
-              },
-            ]);
-            trpcUtils.invalidateQueries([
-              'request post - main recommend items',
-            ]);
+            trpcUtils.requestPost.get.invalidate({
+              id: editRequestPostId,
+            });
+            trpcUtils.requestPost.getRecommends.invalidate();
 
             if (session?.user.id) {
-              trpcUtils.invalidateQueries([
-                'creator - infinite creator request',
-                { userId: session?.user.id },
-              ]);
-              trpcUtils.invalidateQueries([
-                'user - infinite search user request',
-                { userId: session?.user.id },
-              ]);
+              trpcUtils.creator.getRequests.invalidate({
+                userId: session?.user.id,
+              });
+              trpcUtils.user.getSearchRequests.invalidate({
+                userId: session?.user.id,
+              });
             }
           },
         },
@@ -195,9 +197,9 @@ export default function NewRequestPost({
       // 크리에이터 매칭
       const matchedCreator = await (() => {
         if (!creatorName) return;
-        return trpcUtils.fetchQuery(['creator - match', {
+        return trpcUtils.creator.getMatched.fetch({
           name: creatorName,
-        }]);
+        });
       })();
 
       // 크리에이터 네임은 있는데 매칭되는 크리에이터가 없으면 에러
@@ -210,12 +212,9 @@ export default function NewRequestPost({
       }
       if (!session?.user.id) throw Error('사용자 정보를 찾을 수 없습니다.');
 
-      const user = await trpcUtils.fetchQuery([
-        'user - get',
-        {
-          id: session.user.id,
-        },
-      ]);
+      const user = await trpcUtils.user.get.fetch({
+        id: session.user.id,
+      });
       if (!user) throw Error('사용자 정보를 찾을 수 없습니다.');
 
       if (form.quantity && user.totalPoint < form.quantity) {
@@ -238,7 +237,10 @@ export default function NewRequestPost({
           throw Error('에디터를 찾을 수 없습니다.');
         }
         // 해당 postId를 넘겨 폴더 구분하여 이미지 업로드, 이미지 업로드 후 필드 업데이트
-        const resData = await requestPostImageUpload(editorRef.current, newRequestId);
+        const resData = await requestPostImageUpload(
+          editorRef.current,
+          newRequestId,
+        );
 
         if (isErrorMessage(resData)) {
           ToastBox.toast(resData);
@@ -263,7 +265,7 @@ export default function NewRequestPost({
                 title: '요청 내역 확인',
                 Component: () => (
                   <SubmitModalTemplate
-                    submitText='보기'
+                    submitText="보기"
                     onSubmit={() => {
                       modalStore.close('view modal submit');
                       ViewRequestPost.modalOpen({
@@ -298,11 +300,11 @@ export default function NewRequestPost({
     <>
       <form css={style} className={clsx(isInnerModal && 'in-modal')}>
         {/* 제목 */}
-        <div className='form-cell'>
+        <div className="form-cell">
           <div>
             <Input
               isInvalid={!!errors.title}
-              placeholder='제목 *'
+              placeholder="제목 *"
               {...register('title')}
             />
 
@@ -313,7 +315,7 @@ export default function NewRequestPost({
         </div>
 
         {/* 내용 */}
-        <Box className='form-cell' mt={14}>
+        <Box className="form-cell" mt={14}>
           <Editor
             init={{ placeholder: '내용 *' }}
             // initialValue={editRequestPost?.data?.content}
@@ -332,13 +334,10 @@ export default function NewRequestPost({
             onInit={() => {
               if (!editRequestPostId) return;
               if (editRequestPost) return;
-              trpcUtils
-                .fetchQuery([
-                  'request post - get item',
-                  {
-                    id: editRequestPostId,
-                  },
-                ])
+              trpcUtils.requestPost.get
+                .fetch({
+                  id: editRequestPostId,
+                })
                 .then((data) => {
                   if (!data) return;
                   setValue('title', data.title);
@@ -355,14 +354,14 @@ export default function NewRequestPost({
         </Box>
         {/* 크리에이터 */}
         {!isEditMode && !creatorId && (
-          <Box className='form-cell' mt={4}>
+          <Box className="form-cell" mt={4}>
             <Controller
               control={control}
-              name='creatorName'
+              name="creatorName"
               render={({ field }) => (
                 <SearchInput
                   isInvalid={!!errors.creatorName}
-                  placeholder='크리에이터 지정(선택사항)'
+                  placeholder="크리에이터 지정(선택사항)"
                   onItemSelect={(v) => {
                     field.onChange(v);
                   }}
@@ -374,13 +373,13 @@ export default function NewRequestPost({
         )}
         {/* 후원금 */}
         {!isEditMode && (
-          <Box className='form-cell' mt={14}>
+          <Box className="form-cell" mt={14}>
             <FormatInput
-              placeholder='후원금 (1,000P부터)'
-              format='thousandsSeparators'
+              placeholder="후원금 (1,000P부터)"
+              format="thousandsSeparators"
               isInvalid={!!errors.quantity}
               Right={
-                <Text as='span' ml={4} display='flex' alignItems='center'>
+                <Text as="span" ml={4} display="flex" alignItems="center">
                   Point
                 </Text>
               }
@@ -400,17 +399,17 @@ export default function NewRequestPost({
           </Box>
         )}
         {/* 카테고리 */}
-        <Box className='form-cell' mt={4}>
+        <Box className="form-cell" mt={4}>
           <Controller
             control={control}
-            name='category'
+            name="category"
             render={({ field }) => (
-              <SelectMenu theme='graybox'>
+              <SelectMenu theme="graybox">
                 <SelectMenuButton ref={field.ref} isInvalid={!!errors.category}>
                   {field.value ? (
                     RequestPostDomain.constants.categoryKor.get(field.value)
                   ) : (
-                    <Text color='gray.60'>카테고리 선택 *</Text>
+                    <Text color="gray.60">카테고리 선택 *</Text>
                   )}
                 </SelectMenuButton>
                 <SelectMenuList
@@ -431,7 +430,7 @@ export default function NewRequestPost({
           <FormErrorMessages errors={errors} />
         </div>
         <Button
-          theme='primary'
+          theme="primary"
           onClick={isEditMode ? submitEditRequestPost : submitCreateRequestPost}
           w={120}
           h={50}
@@ -475,9 +474,9 @@ const footerStyle = css`
 
 NewRequestPost.title = () => '새로운 요청 등록';
 NewRequestPost.ModalLink = function NewRequestPostModalLink({
-                                                              children,
-                                                              ...props
-                                                            }: Props & { children: ReactNode }) {
+  children,
+  ...props
+}: Props & { children: ReactNode }) {
   const modalStore = useModalStore();
   const handleModalOpen = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {

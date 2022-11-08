@@ -7,7 +7,6 @@ import { css } from '@emotion/react';
 
 import NewRequestPost from '../contents/NewRequestPost';
 
-
 const MobileActionBar = () => {
   const { scrollDirection } = useScroll();
   return (

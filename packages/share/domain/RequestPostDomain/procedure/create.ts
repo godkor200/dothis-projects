@@ -1,9 +1,10 @@
 import { addDays } from 'date-fns';
 
-import { RequestFundingDomain, UserDomain } from '@/domain';
-import { schema } from '@/domain/RequestPostDomain';
-import { prisma } from '@/prisma/client';
-import { t } from '@/server/trpc';
+import * as RequestFundingDomain from '../../../domain/RequestFundingDomain';
+import * as UserDomain from '../../../domain/UserDomain';
+import { prisma } from '../../../prisma/client';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export const createSchema = schema
   .pick({

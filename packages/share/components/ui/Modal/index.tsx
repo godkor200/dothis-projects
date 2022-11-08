@@ -1,16 +1,23 @@
 import type { ModalProps as ChakraModalProps } from '@chakra-ui/react';
-import { Box, Modal as ChakraModal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import {
+  Box,
+  Modal as ChakraModal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { css } from '@emotion/css';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import * as React from 'react';
 
-import ModalTitle from '@/components/ui/ModalTitle';
-import { useModalStore } from '@/lib/models';
-import { colors, mediaQueries } from '@/lib/styles/chakraTheme';
-import commonStyle from '@/lib/styles/commonStyle';
+import { useModalStore } from '../../../lib/models';
+import { colors, mediaQueries } from '../../../lib/styles/chakraTheme';
+import commonStyle from '../../../lib/styles/commonStyle';
+import ModalTitle from '../ModalTitle';
 
-export type ModalProps = Required<Pick<ChakraModalProps, 'isOpen' | 'children' | 'onClose'>> & {
+export type ModalProps = Required<
+  Pick<ChakraModalProps, 'isOpen' | 'children' | 'onClose'>
+> & {
   title?: ReactNode;
   trapFocus?: ChakraModalProps['trapFocus'];
   closeOnOverlayClick?: ChakraModalProps['closeOnOverlayClick'];
@@ -19,14 +26,14 @@ export type ModalProps = Required<Pick<ChakraModalProps, 'isOpen' | 'children' |
 };
 
 const Modal = ({
-                 title,
-                 children,
-                 onClose,
-                 closeOnOverlayClick = true,
-                 hiddenOnMobile = false,
-                 isFull,
-                 ...modalProps
-               }: ModalProps) => {
+  title,
+  children,
+  onClose,
+  closeOnOverlayClick = true,
+  hiddenOnMobile = false,
+  isFull,
+  ...modalProps
+}: ModalProps) => {
   const { modals } = useModalStore();
   const zIndex = 1000 + modals.size;
   return (
@@ -38,7 +45,7 @@ const Modal = ({
       {...modalProps}
     >
       <Box className={style}>
-        <ModalOverlay className='modal-overlay' />
+        <ModalOverlay className="modal-overlay" />
         <ModalContent
           className={clsx('modal-contents', isFull && 'full')}
           zIndex={zIndex + 1}
@@ -48,7 +55,7 @@ const Modal = ({
               {title}
             </ModalTitle>
           )}
-          <ModalBody className='modal-body'>{children}</ModalBody>
+          <ModalBody className="modal-body">{children}</ModalBody>
         </ModalContent>
       </Box>
     </ChakraModal>

@@ -39,7 +39,7 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
             );
             return;
           }
-          const my = await trpcUtils.getUser.fetch({
+          const my = await trpcUtils.user.get.fetch({
             id: data?.user.id,
           });
           if (!my) return;
@@ -62,8 +62,10 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const trpcSSGHelpers = await trpcSSG();
 
-  trpcSSGHelpers.solvedRequests.prefetch();
-  trpcSSGHelpers.recommendRequests.prefetch();
+  await Promise.all([
+    trpcSSGHelpers.requestPost.getSolveds.prefetch(),
+    trpcSSGHelpers.requestPost.getRecommends.prefetch(),
+  ]);
 
   return {
     props: {
@@ -76,10 +78,8 @@ export default function Home({}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
   const resolvedRequestSwiperRef = useRef<SwiperClass | null>(null);
-  const solvedRequests = trpc.solvedRequests.useQuery();
-  const recommendRequests = trpc.recommendRequests.useQuery();
-
-  // if (!solvedRequests || !recommendRequests.data) return;
+  const solvedRequests = trpc.requestPost.getSolveds.useQuery();
+  const recommendRequests = trpc.requestPost.getRecommends.useQuery();
 
   return (
     <LayoutTemplate>

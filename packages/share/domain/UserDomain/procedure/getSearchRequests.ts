@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { RequestPostDomain } from '@/domain';
-import { schema } from '@/domain/UserDomain';
-import { t } from '@/server/trpc';
+import * as RequestPostDomain from '../../../domain/RequestPostDomain';
+import { t } from '../../../server/trpc';
+import { schema } from '../domain';
 
 export default t.procedure
   .input(

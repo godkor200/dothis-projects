@@ -3,14 +3,22 @@ import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
 import Tag from '@dothis/share/components/ui/Tag';
 import StatusTag from '@dothis/share/components/ui/Tag/StatusTag';
 import { RequestPostDomain } from '@dothis/share/domain';
-import { colors, fontWeights, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
-import { cutOverflowStr, removeHTMLTag, thousandsSeparators } from '@dothis/share/lib/utils';
+import {
+  colors,
+  fontWeights,
+  mediaQueries,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
+import {
+  cutOverflowStr,
+  removeHTMLTag,
+  thousandsSeparators,
+} from '@dothis/share/lib/utils';
 import { matchMark } from '@dothis/share/lib/utils/matchMarkList';
 import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 
 import ViewRequestPost from '../contents/ViewRequestPost';
-
 
 export type HorizonPostRequestItemProps = {
   requestPost: RequestPostDomain.GetItemT;
@@ -18,9 +26,9 @@ export type HorizonPostRequestItemProps = {
 };
 
 export default function HorizonPostRequestItem({
-                                                 matchText,
-                                                 requestPost,
-                                               }: HorizonPostRequestItemProps) {
+  matchText,
+  requestPost,
+}: HorizonPostRequestItemProps) {
   const matchedTitle = useMemo(
     () =>
       matchText ? matchMark(requestPost.title, matchText) : requestPost.title,
@@ -36,10 +44,10 @@ export default function HorizonPostRequestItem({
   return (
     <ViewRequestPost.ModalLink requestPost={requestPost}>
       <div css={postRequestItemStyle}>
-        <div className='request-post-swiper-item-contents'>
+        <div className="request-post-swiper-item-contents">
           <Flex gap={8}>
             {requestPost.category && (
-              <Tag theme='orange'>
+              <Tag theme="orange">
                 {RequestPostDomain.constants.categoryKor.get(
                   requestPost.category,
                 )}
@@ -47,20 +55,20 @@ export default function HorizonPostRequestItem({
             )}
             <StatusTag requestStatus={requestPost.status} />
           </Flex>
-          <Text as='strong' noOfLines={2}>
+          <Text as="strong" noOfLines={2}>
             {matchedTitle}
           </Text>
 
-          <div className='item-info'>
-            <div className='etc-info'>
+          <div className="item-info">
+            <div className="etc-info">
               {matchedCreatorName ? (
                 <span>@{matchedCreatorName}</span>
               ) : requestPost.creator?.user?.name ? (
                 <span>{requestPost.creator?.user?.name}</span>
               ) : null}
 
-              <Box className='item-donate'>
-                <Text as='span' mr={8}>
+              <Box className="item-donate">
+                <Text as="span" mr={8}>
                   {thousandsSeparators(requestPost.totalQuantity)}
                   &nbsp;P
                 </Text>
@@ -78,22 +86,22 @@ export default function HorizonPostRequestItem({
           </div>
           {requestPost.content && (
             <Text
-              className='item-comment'
-              as='p'
+              className="item-comment"
+              as="p"
               noOfLines={2}
               dangerouslySetInnerHTML={{
-                __html: cutOverflowStr(
-                  removeHTMLTag(requestPost.content),
-                  120,
-                ),
+                __html: cutOverflowStr(removeHTMLTag(requestPost.content), 120),
               }}
             />
           )}
         </div>
         {requestPost.thumbnailUrl && (
           <AspectRatio ratio={1} minW={{ base: '90px', tablet: '160px' }}>
-            <div className='item-img-wrap'>
-              <img src={requestPost.thumbnailUrl} alt={`${requestPost.title} thumbnail`}></img>
+            <div className="item-img-wrap">
+              <img
+                src={requestPost.thumbnailUrl}
+                alt={`${requestPost.title} thumbnail`}
+              ></img>
             </div>
           </AspectRatio>
         )}

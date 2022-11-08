@@ -1,9 +1,8 @@
 import type { AvatarProps, FlexProps } from '@chakra-ui/react';
 import { Avatar, Flex } from '@chakra-ui/react';
+import type { User } from '@prisma/client';
 import type { ReactNode } from 'react';
 import React from 'react';
-
-import type { User } from '@/generated/prisma-client';
 
 export type UserAvatarProps = {
   user?: Partial<Pick<User, 'name' | 'image'>>;
