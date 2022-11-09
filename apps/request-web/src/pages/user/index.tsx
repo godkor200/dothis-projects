@@ -122,7 +122,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
 
   return (
     <LayoutTemplate>
-      <Container css={style} pt={40} pb={68}>
+      <Container css={style} mt={40} mb={68}>
         <Box className="creator-profile" position="relative">
           <UserAvatar
             size={80}
@@ -166,10 +166,8 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                       round
                     >
                       {auth.profileUrl ? (
-                        <Link href={auth.profileUrl} passHref>
-                          <a target="_blank">
-                            <Component key={auth.platform} />
-                          </a>
+                        <Link href={auth.profileUrl} target="_blank">
+                          <Component key={auth.platform} />
                         </Link>
                       ) : (
                         <Component key={auth.platform} />
@@ -238,12 +236,12 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                   내 요청
                 </Text>
                 <Link
+                  className="view-more-request"
                   href={pagePath.userRequestPost({
                     searchText: creatorUser.name ? creatorUser.name : undefined,
                   })}
-                  passHref
                 >
-                  <a className="view-more-request">더보기</a>
+                  더보기
                 </Link>
               </Flex>
               <HorizonPostRequestItemWrap>

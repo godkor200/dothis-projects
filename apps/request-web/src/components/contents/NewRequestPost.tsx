@@ -498,8 +498,8 @@ NewRequestPost.ModalLink = function NewRequestPostModalLink({
   );
 
   return (
-    <Link href={pagePath.newPostRequest()} passHref>
-      <a onClick={handleModalOpen}>{children}</a>
+    <Link href={pagePath.newPostRequest()} onClick={handleModalOpen}>
+      {children}
     </Link>
   );
 };

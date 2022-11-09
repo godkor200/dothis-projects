@@ -42,18 +42,16 @@ export default function SideProfile({ onClose, user }: Props) {
       >
         <SvgClose />
       </Button>
-      <Link href={pagePath.account()} passHref>
-        <a className="profile_my-user-page">
-          <UserAvatar
-            user={user}
-            size={48}
-            Text={
-              <Text as="b" ml={16} fontSize={18}>
-                {user.name}
-              </Text>
-            }
-          />
-        </a>
+      <Link className="profile_my-user-page" href={pagePath.account()}>
+        <UserAvatar
+          user={user}
+          size={48}
+          Text={
+            <Text as="b" ml={16} fontSize={18}>
+              {user.name}
+            </Text>
+          }
+        />
       </Link>
       <div className="profile-cache">
         <label>보유 포인트</label>
@@ -97,16 +95,12 @@ export default function SideProfile({ onClose, user }: Props) {
             isLinkActive(router, pagePath.userRequestPost()) && 'active',
           )}
         >
-          <Link href={pagePath.userRequestPost()} passHref>
-            <a>요청 관리</a>
-          </Link>
+          <Link href={pagePath.userRequestPost()}>요청 관리</Link>
         </li>
         <li
           className={clsx(isLinkActive(router, pagePath.account()) && 'active')}
         >
-          <Link href={pagePath.account()} passHref>
-            <a>계정</a>
-          </Link>
+          <Link href={pagePath.account()}>계정</Link>
         </li>
         <li>
           <Button onClick={() => signOut()}>로그아웃</Button>

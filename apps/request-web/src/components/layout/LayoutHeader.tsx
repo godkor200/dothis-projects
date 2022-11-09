@@ -113,22 +113,21 @@ export default function LayoutHeader() {
               ) : (
                 /**************** 비로그인 ***************/
                 <>
-                  <Link href={pagePath.login()} passHref>
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault();
-                        Login.openModal();
-                      }}
+                  <Link
+                    href={pagePath.login()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      Login.openModal();
+                    }}
+                  >
+                    <Button
+                      theme="primary"
+                      w={{ base: 60, tablet: 88 }}
+                      h={36}
+                      fontWeight="b"
                     >
-                      <Button
-                        theme="primary"
-                        w={{ base: 60, tablet: 88 }}
-                        h={36}
-                        fontWeight="b"
-                      >
-                        로그인
-                      </Button>
-                    </a>
+                      로그인
+                    </Button>
                   </Link>
                 </>
               )}

@@ -429,25 +429,19 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                       href={pagePath.user({
                         userId: requestDetail.data.user.id,
                       })}
+                      onClick={modalStore.closeAll}
                     >
-                      <a onClick={modalStore.closeAll}>
-                        <Flex className="request-info_user" alignItems="center">
-                          <Avatar
-                            w={32}
-                            h={32}
-                            name={requestDetail.data.user.name ?? undefined}
-                            src={requestDetail.data.user.image ?? undefined}
-                          />
-                          <Text
-                            as="span"
-                            ml={10}
-                            fontWeight="m"
-                            color="gray.70"
-                          >
-                            {requestDetail.data.user?.name}
-                          </Text>
-                        </Flex>
-                      </a>
+                      <Flex className="request-info_user" alignItems="center">
+                        <Avatar
+                          w={32}
+                          h={32}
+                          name={requestDetail.data.user.name ?? undefined}
+                          src={requestDetail.data.user.image ?? undefined}
+                        />
+                        <Text as="span" ml={10} fontWeight="m" color="gray.70">
+                          {requestDetail.data.user?.name}
+                        </Text>
+                      </Flex>
                     </Link>
                   </Flex>
                 )}
@@ -458,32 +452,25 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                       href={pagePath.user({
                         userId: requestDetail.data.creator.userId,
                       })}
+                      onClick={modalStore.closeAll}
                     >
-                      <a onClick={modalStore.closeAll}>
-                        <Flex className="request-info_user" alignItems="center">
-                          <Avatar
-                            w={32}
-                            h={32}
-                            name={
-                              requestDetail.data.creator.user?.name ?? undefined
-                            }
-                            src={
-                              requestDetail.data.creator.user?.image ??
-                              undefined
-                            }
-                          />
-                          <Text
-                            as="span"
-                            ml={10}
-                            fontWeight="m"
-                            color="gray.70"
-                          >
-                            {requestDetail.data.creator?.user.name
-                              ? `@${requestDetail.data.creator?.user.name}`
-                              : '-'}
-                          </Text>
-                        </Flex>
-                      </a>
+                      <Flex className="request-info_user" alignItems="center">
+                        <Avatar
+                          w={32}
+                          h={32}
+                          name={
+                            requestDetail.data.creator.user?.name ?? undefined
+                          }
+                          src={
+                            requestDetail.data.creator.user?.image ?? undefined
+                          }
+                        />
+                        <Text as="span" ml={10} fontWeight="m" color="gray.70">
+                          {requestDetail.data.creator?.user.name
+                            ? `@${requestDetail.data.creator?.user.name}`
+                            : '-'}
+                        </Text>
+                      </Flex>
                     </Link>
                   </Flex>
                 )}
@@ -846,11 +833,10 @@ ViewRequestPost.ModalLink = function ViewRequestPostModalLink({
       href={pagePath.viewPostRequest({
         requestId: `${props.requestPost.id}`,
       })}
-      passHref
+      onClick={handleModalOpen}
+      css={linkStyle}
     >
-      <a onClick={handleModalOpen} css={linkStyle}>
-        {children}
-      </a>
+      {children}
     </Link>
   );
 };

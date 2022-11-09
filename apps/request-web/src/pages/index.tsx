@@ -96,7 +96,7 @@ export default function Home({}: InferGetServerSidePropsType<
           <section className="resolved-request-post">
             <div className="section-title">
               <h2>해결된 요청</h2>
-              {/*<Link href="/src/pages" passHref>*/}
+              {/*<Link href="/src/pages" >*/}
               {/*  <a className="view-all-contents">*/}
               {/*    /!*<span>전체보기</span>*!/*/}
               {/*  </a>*/}

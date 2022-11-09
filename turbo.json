@@ -3,18 +3,18 @@
   "pipeline": {
     "build": {
       "dependsOn": [
-        "^build",
-        "^db-generate"
+        "^db-generate",
+        "^theme-generate",
+        "^build"
       ],
       "outputs": [
         ".next/**"
       ]
     },
     "theme-generate": {
-      "inputs": [
-        "prisma/schema.prisma"
-      ],
-      "cache": false
+      "inputs": ["./lib/styles/**/*"],
+      "outputs": ["./lib/types/theme.d.ts"],
+      "cache": true
     },
     "db-generate": {
       "inputs": ["prisma/schema.prisma"],
@@ -30,13 +30,6 @@
       "outputs": []
     },
     "dev": {
-      "dependsOn": [
-        "^db-generate",
-        "^theme-generate"
-      ],
-      "cache": false
-    },
-    "debug-dev": {
       "dependsOn": [
         "^db-generate",
         "^theme-generate"

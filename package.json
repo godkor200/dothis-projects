@@ -11,9 +11,9 @@
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db-push": "turbo db-push",
-    "db-generate": "turbo db-generate",
-    "theme-generate": "turbo theme-generate",
+    "db-push": "turbo db-push --parallel",
+    "db-generate": "turbo db-generate --parallel",
+    "theme-generate": "turbo theme-generate --parallel",
     "debug-dev": "turbo debug-dev"
   },
   "devDependencies": {

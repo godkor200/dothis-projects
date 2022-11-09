@@ -1,20 +1,16 @@
 import { Box, chakra } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 
-import { mediaQueries } from '../../lib/styles/chakraTheme';
+const Container = chakra(Box, {
+  baseStyle: {
+    width: '100%',
+    paddingX: {
+      base: '12px',
+      tablet: '16px',
+      pc: 'initial',
+    },
 
-const Container = styled(Box)`
-  padding: 0 12px;
-
-  ${mediaQueries.tablet} {
-    padding: 0 16px;
-  }
-
-  ${mediaQueries.pc} {
-    padding: initial;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-`;
-
+    maxW: '960px',
+    marginX: 'auto',
+  },
+});
 export default Container;
