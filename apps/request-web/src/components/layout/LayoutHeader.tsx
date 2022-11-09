@@ -4,7 +4,11 @@ import Button from '@dothis/share/components/ui/Button';
 import Drawer from '@dothis/share/components/ui/Drawer';
 import HomeLogo from '@dothis/share/components/ui/HomeLogo';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import { colors, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  mediaQueries,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,18 +29,20 @@ export default function LayoutHeader() {
   const [value, setValue] = React.useState('');
   const trpcUtils = trpc.useContext();
 
-
   const router = useRouter();
 
-  const my = trpc.useQuery(['user - get', { id: session?.user.id }], {
-    enabled: !!session?.user.id,
-  });
+  const my = trpc.user.get.useQuery(
+    { id: session?.user.id },
+    {
+      enabled: !!session?.user.id,
+    },
+  );
 
   return (
     <header css={contentsStyle}>
-      <div className='header-contents-wrapper'>
-        <Container className='header-contents'>
-          <Box className='header-logo' minW={70}>
+      <div className="header-contents-wrapper">
+        <Container className="header-contents">
+          <Box className="header-logo" minW={70}>
             <HomeLogo href={pagePath.home()} />
           </Box>
 
@@ -47,30 +53,30 @@ export default function LayoutHeader() {
                 base: 10,
                 tablet: 12,
               }}
-              alignItems='center'
+              alignItems="center"
             >
               <SearchInput
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder='크리에이터 검색'
-                onItemSelect={function(name: string) {
-                  trpcUtils
-                    .fetchQuery(['creator - match', { name }])
+                placeholder="크리에이터 검색"
+                onItemSelect={function (name: string) {
+                  trpcUtils.creator.getMatched
+                    .fetch({ name })
                     .then(({ userId }) => {
                       router.push(pagePath.user({ userId }));
                       setValue('');
                     });
                 }}
-                size='sm'
-                theme='white'
+                size="sm"
+                theme="white"
               />
 
               {session ? (
                 <>
-                  <Box className='header-new-request'>
+                  <Box className="header-new-request">
                     <NewRequestPost.ModalLink>
                       <Button
-                        theme='primary'
+                        theme="primary"
                         minW={96}
                         h={36}
                         round
@@ -92,15 +98,15 @@ export default function LayoutHeader() {
                   {/*  <SvgBell />*/}
                   {/*</Button>*/}
                   <Button
-                    aria-label='account of current user'
-                    aria-haspopup='true'
+                    aria-label="account of current user"
+                    aria-haspopup="true"
                     onClick={onOpen}
                     round
                   >
                     <UserAvatar
                       size={36}
                       user={session.user}
-                      variant='square'
+                      variant="square"
                     />
                   </Button>
                 </>
@@ -115,10 +121,10 @@ export default function LayoutHeader() {
                       }}
                     >
                       <Button
-                        theme='primary'
+                        theme="primary"
                         w={{ base: 60, tablet: 88 }}
                         h={36}
-                        fontWeight='b'
+                        fontWeight="b"
                       >
                         로그인
                       </Button>

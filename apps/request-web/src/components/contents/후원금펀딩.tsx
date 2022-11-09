@@ -4,8 +4,6 @@ import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
 import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import type { RequestPostDomain } from '@dothis/share/domain';
-import { RequestFundingDomain, UserDomain } from '@dothis/share/domain';
 import {
   colors,
   fontWeights,
@@ -29,6 +27,9 @@ import { z } from 'zod';
 import UserLink from '@/components/ui/Links/UserLink';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { trpc } from '@/utils/trpc';
+
+import type { RequestPostDomain } from '../../domain';
+import { RequestFundingDomain, UserDomain } from '../../domain';
 
 type Props = {
   user?: User;

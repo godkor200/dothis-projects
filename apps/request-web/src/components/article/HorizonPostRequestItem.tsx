@@ -1,8 +1,5 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
 import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
-import Tag from '@dothis/share/components/ui/Tag';
-import StatusTag from '@dothis/share/components/ui/Tag/StatusTag';
-import { RequestPostDomain } from '@dothis/share/domain';
 import {
   colors,
   fontWeights,
@@ -18,7 +15,10 @@ import { matchMark } from '@dothis/share/lib/utils/matchMarkList';
 import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 
+import { RequestPostDomain } from '../../domain';
 import ViewRequestPost from '../contents/ViewRequestPost';
+import Tag from '../ui/Tag';
+import StatusTag from '../ui/Tag/StatusTag';
 
 export type HorizonPostRequestItemProps = {
   requestPost: RequestPostDomain.GetItemT;

@@ -3,29 +3,44 @@
   "pipeline": {
     "build": {
       "dependsOn": [
-        "^build", "^db-generate"
+        "^build",
+        "^db-generate"
       ],
       "outputs": [
         ".next/**"
       ]
     },
     "theme-generate": {
-      "inputs": ["prisma/schema.prisma"],
-      "cache": true
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
+      "cache": false
     },
     "db-generate": {
       "inputs": ["prisma/schema.prisma"],
-      "cache": true
+      "cache": false
     },
     "db-push": {
-      "inputs": ["prisma/schema.prisma"],
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
       "cache": false
     },
     "lint": {
       "outputs": []
     },
     "dev": {
-      "dependsOn": ["^db-generate", "^theme-generate"],
+      "dependsOn": [
+        "^db-generate",
+        "^theme-generate"
+      ],
+      "cache": false
+    },
+    "debug-dev": {
+      "dependsOn": [
+        "^db-generate",
+        "^theme-generate"
+      ],
       "cache": false
     },
     "clean": {
@@ -44,7 +59,6 @@
       ]
     }
   },
-
   "globalDependencies": [
     ".env*"
   ]

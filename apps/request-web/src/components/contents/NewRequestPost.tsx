@@ -12,11 +12,6 @@ import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuB
 import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import {
-  RequestFundingDomain,
-  RequestPostDomain,
-  UserDomain,
-} from '@dothis/share/domain';
-import {
   errorMessage,
   isErrorMessage,
   isMessage,
@@ -42,6 +37,11 @@ import { toast } from '@/pages/_app';
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 
+import {
+  RequestFundingDomain,
+  RequestPostDomain,
+  UserDomain,
+} from '../../domain';
 import SearchInput from '../ui/SearchInput';
 
 const formValid = RequestPostDomain.schema

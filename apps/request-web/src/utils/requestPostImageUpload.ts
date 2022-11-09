@@ -2,7 +2,6 @@ import type {
   EditorT,
   FileLocations,
 } from '@dothis/share/components/ui/Editor';
-import { RequestPostDomain } from '@dothis/share/domain';
 import type { ErrorMessage } from '@dothis/share/lib/models';
 import {
   errorMessage,
@@ -12,6 +11,8 @@ import {
 import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';
+
+import { RequestPostDomain } from '../domain';
 
 export type imageResponseData = {
   images: FileLocations;

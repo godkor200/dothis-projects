@@ -1,6 +1,6 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
-  "types": "types/theme.d.ts",
+  "types": "./types/theme.d.ts",
   "include": [
     "**/*.ts",
     "**/*.tsx",

@@ -38,9 +38,5 @@ export const useUrlHistoryStore = create<UrlHistoryState>()(
     },
   })),
 );
-if (typeof globalThis !== 'undefined') {
-  // @ts-ignore
-  globalThis.urlHistoryStore = () => useUrlHistoryStore.getState();
-}
 
 export default useUrlHistoryStore;

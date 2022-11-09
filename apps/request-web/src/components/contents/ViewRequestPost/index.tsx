@@ -25,8 +25,6 @@ import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import YoutubeIframe from '@dothis/share/components/ui/YoutubeIframe';
-import type { RequestPostDomain } from '@dothis/share/domain';
-import { RequestFundingDomain } from '@dothis/share/domain';
 import { useModalOptStore, useModalStore } from '@dothis/share/lib/models';
 import {
   colors,
@@ -53,6 +51,8 @@ import { PAGE_KEYS, pagePath } from '@/constants';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { trpc } from '@/utils/trpc';
 
+import type { RequestPostDomain } from '../../../domain';
+import { RequestFundingDomain } from '../../../domain';
 import _CommentsArea from './_CommentsArea';
 import ViewPostRequestContainer from './ViewPostRequestContainer';
 

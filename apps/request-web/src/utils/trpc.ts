@@ -1,4 +1,3 @@
-import { createContext } from '@dothis/share/server/createContext';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { createTRPCNext } from '@trpc/next';
@@ -9,6 +8,7 @@ import superjson from 'superjson';
 
 import type { AppRouter } from '@/appRouter';
 import { appRouter } from '@/appRouter';
+import { createContext } from '@/server/createContext';
 
 export const trpc = createTRPCNext<AppRouter>({
   config({ ctx }) {
@@ -29,6 +29,7 @@ export const trpc = createTRPCNext<AppRouter>({
       ],
     };
   },
+  ssr: false,
 });
 
 export const trpcSSG = async (context?: trpcNext.CreateNextContextOptions) =>

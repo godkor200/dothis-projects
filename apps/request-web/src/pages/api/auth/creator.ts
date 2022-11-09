@@ -1,10 +1,10 @@
-import {  CreatorDomain} from '@dothis/share/domain';
 import { errorMessage } from '@dothis/share/lib/models/Message';
 import { google } from 'googleapis';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import superjson from 'superjson';
 
+import { CreatorDomain } from '@/domain';
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,7 +26,8 @@ export default async function handler(
       clientSecret,
     });
     auth.setCredentials({
-      access_token: accessToken,
+      // @ts-ignore
+      access_token,
       // refresh_token: refreshToken,
     });
 

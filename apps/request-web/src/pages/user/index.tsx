@@ -15,7 +15,6 @@ import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
 import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
 import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import { CreatorDomain, RequestPostDomain } from '@dothis/share/domain';
 import useParsedQuery from '@dothis/share/lib/hooks/useParsedQuery';
 import {
   colors,
@@ -39,6 +38,8 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
 import { trpc, trpcSSG } from '@/utils/trpc';
+
+import { CreatorDomain, RequestPostDomain } from '../../domain';
 
 export const querySchema = z
   .object({

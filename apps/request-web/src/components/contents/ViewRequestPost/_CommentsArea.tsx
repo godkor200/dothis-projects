@@ -1,13 +1,14 @@
 import { Divider, Text, VStack } from '@chakra-ui/react';
-import InputCommentTextarea from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
-import type { RequestCommentDomain } from '@dothis/share/domain';
 import type { RequestPost, User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback } from 'react';
 
 import Comment from '@/components/article/Comment';
 import ViewPostRequestContainer from '@/components/contents/ViewRequestPost/ViewPostRequestContainer';
+import InputCommentTextarea from '@/components/ui/Textarea/InputCommentTextarea';
 import { trpc } from '@/utils/trpc';
+
+import type { RequestCommentDomain } from '../../../domain';
 
 type Props = {
   requestId: RequestPost['id'];

@@ -1,9 +1,6 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
 import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
-import Tag from '@dothis/share/components/ui/Tag';
-import StatusTag from '@dothis/share/components/ui/Tag/StatusTag';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import { RequestPostDomain } from '@dothis/share/domain';
 import {
   breakpoints,
   colors,
@@ -21,6 +18,10 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import UserLink from '@/components/ui/Links/UserLink';
+
+import { RequestPostDomain } from '../../domain';
+import Tag from '../ui/Tag';
+import StatusTag from '../ui/Tag/StatusTag';
 
 type Props = {
   postRequestList: PostRequestItemProps['requestPost'][];

@@ -1,3 +1,5 @@
+import { t } from '@/server/trpc';
+
 import {
   CreatorDomain,
   RequestCommentDomain,
@@ -5,8 +7,7 @@ import {
   RequestPostDomain,
   RequestReactionDomain,
   UserDomain,
-} from '@dothis/share/domain';
-import { t } from '@dothis/share/server/trpc';
+} from '../domain';
 
 export const appRouter = t.router({
   user: UserDomain.router,

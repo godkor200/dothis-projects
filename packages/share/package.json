@@ -2,19 +2,16 @@
   "name": "@dothis/share",
   "version": "0.2.1",
   "license": "MIT",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-  },
+  "types": "./lib/types/theme.d.ts",
+  "files": [
+    "./lib/**/*",
+    "../../apps/request-web/src/domain/**/*",
+    "./components/**/*"
+  ],
   "scripts": {
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
-    "with-env": "dotenv -e ../../.env",
-    "dev": "pnpm with-env prisma studio --port 5556",
-    "db-push": "pnpm with-env prisma db push",
-    "db-generate": "pnpm with-env prisma generate",
-    "theme-generate": "pnpm chakra-cli tokens lib/styles/chakraTheme/index.ts --out ../../types/theme.d.ts"
+    "theme-generate": "pnpm chakra-cli tokens ./lib/styles/chakraTheme/index.ts --out ./lib/types/theme.d.ts"
   },
   "dependencies": {
     "@chakra-ui/cli": "^2.1.8",
@@ -26,13 +23,8 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@hookform/error-message": "^2.0.0",
-    "@prisma/client": "^4.5.0",
     "@tanstack/react-query": "^4.14.5",
     "@tinymce/tinymce-react": "^4.2.0",
-    "@trpc/client": "10.0.0-rc.6",
-    "@trpc/next": "10.0.0-rc.6",
-    "@trpc/react-query": "10.0.0-rc.6",
-    "@trpc/server": "10.0.0-rc.6",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "fp-ts": "^2.13.1",
@@ -40,8 +32,7 @@
     "hangul-js": "^0.2.6",
     "immer": "^9.0.16",
     "iron-session": "^6.3.1",
-    "next": "13.0.2",
-    "next-auth": "^4.16.3",
+    "next": "12.3.2",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.1",
@@ -59,9 +50,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
-    "dotenv-cli": "^6.0.0",
     "eslint": "^8.27.0",
-    "prisma": "^4.5.0",
     "ts-node": "^10.9.1"
   }
 }

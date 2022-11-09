@@ -6,19 +6,20 @@
   "packageManager": "pnpm@7.14.0",
   "scripts": {
     "build": "turbo run build",
-    "dev": "dotenv -- turbo run dev --parallel",
+    "dev": "turbo run dev --parallel",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db-push": "turbo db-push",
     "db-generate": "turbo db-generate",
-    "theme-generate": "turbo theme-generate"
+    "theme-generate": "turbo theme-generate",
+    "debug-dev": "turbo debug-dev"
   },
   "devDependencies": {
     "@dothis/config": "*",
     "prettier": "^2.7.1",
-    "turbo": "latest"
+    "turbo": "^1.6.3"
   },
   "dependencies": {
     "typescript": "^4.8.4"

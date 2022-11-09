@@ -1,4 +1,3 @@
-import { prisma } from '@dothis/share/prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import FacebookProvider from 'next-auth/providers/facebook';
@@ -8,10 +7,10 @@ import TwitchProvider from 'next-auth/providers/twitch';
 
 import { pagePath } from '@/constants';
 import YoutubeProvider from '@/providers/youtube';
-
+import { prisma } from '~/prisma/client';
 
 export default NextAuth({
-  adapter: PrismaAdapter(prisma), 
+  adapter: PrismaAdapter(prisma),
   debug: process.env.NODE_ENV === 'development',
   providers: [
     GoogleProvider({

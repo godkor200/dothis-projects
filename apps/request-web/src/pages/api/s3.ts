@@ -1,5 +1,4 @@
 import { S3Client } from '@aws-sdk/client-s3';
-import { RequestPostDomain } from '@dothis/share/domain';
 import { errorMessage } from '@dothis/share/lib/models';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
@@ -8,6 +7,8 @@ import nextConnect from 'next-connect';
 import superjson from 'superjson';
 import { uid } from 'uid';
 
+import { RequestPostDomain } from '../../domain';
+
 const s3Client = new S3Client({ region: 'ap-northeast-2' });
 
 const upload = multer({
@@ -15,7 +16,7 @@ const upload = multer({
     s3: s3Client,
     bucket: 'dothis-contents',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    key: function(req: NextApiRequest & Express.Request, file, cb) {
+    key: function (req: NextApiRequest & Express.Request, file, cb) {
       const id = req?.query?.['post-id'];
       if (id) {
         if (file.fieldname == 'thumbnail') {
@@ -52,7 +53,7 @@ app.post(
     { name: 'thumbnail', maxCount: 1 },
     { name: 'images', maxCount: 5 },
   ]),
-  function(req: NextApiRequest, res: NextApiResponse) {
+  function (req: NextApiRequest, res: NextApiResponse) {
     const files = (req as any).files;
     const images = files.images;
     const thumbnail = files.thumbnail;

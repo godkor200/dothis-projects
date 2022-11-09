@@ -1,5 +1,4 @@
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { useModalStore } from '@dothis/share/lib/models/modal/useModalStore';
 import { colors } from '@dothis/share/lib/styles/chakraTheme/variable';
 import { css } from '@emotion/react';
 import { chunksOf } from 'fp-ts/ReadonlyArray';

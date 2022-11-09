@@ -6,7 +6,6 @@ import {
   ModalOptProvider,
   standaloneToast,
   useModalStore,
-  useUrlHistoryEvent,
 } from '@dothis/share/lib/models';
 import chakraTheme from '@dothis/share/lib/styles/chakraTheme';
 import globalStyle from '@dothis/share/lib/styles/globalStyle';
@@ -15,15 +14,18 @@ import axios from 'axios';
 import { enableMapSet } from 'immer';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
+import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
 import { trpc } from '@/utils/trpc';
 
 // immer Map Set 사용 가능하게
 enableMapSet();
+
 // superjson으로 변환
 axios.defaults.transformResponse = (data, headers) => {
   try {
@@ -46,6 +48,7 @@ function App({
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);
+
   useEffect(() => {
     setShowChild(true);
   }, []);
