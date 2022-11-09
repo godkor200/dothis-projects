@@ -4,7 +4,6 @@ import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonP
 import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
 import Input from '@dothis/share/components/ui/Input';
 import { typo } from '@dothis/share/lib/styles/chakraTheme';
-import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -16,6 +15,7 @@ import { z } from 'zod';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
+import { withUserSessionSsr } from '@/server/session';
 import { trpc } from '@/utils/trpc';
 
 const querySchema = z.object({

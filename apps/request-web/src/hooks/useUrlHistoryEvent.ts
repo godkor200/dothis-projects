@@ -1,6 +1,7 @@
 import { useUrlHistoryStore } from '@dothis/share/lib/models';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
 export function useUrlHistoryEvent() {
   const [isInit, setIsInit] = useState(false);
   const router = useRouter();

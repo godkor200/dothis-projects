@@ -8,7 +8,7 @@ import { trpc } from '@/utils/trpc';
 
 export type SearchInputProps = Omit<MentionInputProps, 'match'>;
 const SearchInput = (props: SearchInputProps) => {
-  const creatorNames = trpc.useQuery(['creator - get all'], {
+  const creatorNames = trpc.creator.getAll.useQuery(undefined, {
     select: (data) => {
       let creatorNameArr: string[] = [];
       for (const creator of data) {

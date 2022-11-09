@@ -5,7 +5,6 @@ import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTe
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import { useModalStore } from '@dothis/share/lib/models';
 import { fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
-import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -15,6 +14,7 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
+import { withUserSessionSsr } from '@/server/session';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({

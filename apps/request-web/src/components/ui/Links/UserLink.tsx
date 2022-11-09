@@ -8,7 +8,7 @@ import type { AnchorHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { pagePath } from '@/constants';
 
 type Props = FirstParameter<typeof pagePath.user> & {
-  onClick: LinkProps['onClick'];
+  onClick?: LinkProps['onClick'];
   children: ReactNode;
 };
 const UserLink = PartialApProps(Link)(
