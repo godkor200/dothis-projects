@@ -119,6 +119,11 @@ pnpm theme-generate
 ```
 
 
+유용한 pnpm 명령어로써 하위 프로젝트의 패키지들을 일괄적으로 선택해서 업데이트 할 수 있습니다.
+```
+pnpm up -iLr
+```
+
 
 ### Remote Caching
 
