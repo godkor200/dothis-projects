@@ -38,6 +38,7 @@ API 서버, 현재 prisma, trpc로 구성되어 있는 db, api 서버단을 분�
 - [Typescript](https://www.typescriptlang.org/)
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io): code formatting
+- [dotenv](https://github.com/motdotla/dotenv): root workspace의 .env 환경변수 실행라인에 주입용
 
 ### Apps
 server & client
