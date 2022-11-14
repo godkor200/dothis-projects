@@ -107,7 +107,6 @@ pnpm studio
 database schema를 직접적으로 바꿨다면 ```pnpm db-pull```을 실행하여 프로젝트의 prisma를 서버와 맞춰야합니다.
 가능한 prisma.schema 파일을 수정 후 db-generate후 db-push를 하는 것을 추천드립니다.
 
-[추가적인 prisma 주의사항 확인](https://medium.com/prisma-korea/supabase-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-prisma%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-4017a4be920d)
 ```
 pnpm db-pull
 ```
