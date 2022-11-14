@@ -64,9 +64,15 @@ client
 ### [share](./packages/share/README.md)
 
 ## CLI
+서버를 실행하거나 빌드하기 전에 환경변수들이 정의되어 있는 .env 파일이 필요합니다. 
+해당 파일은 저에게 요청해서 받아주세요. 
+
+보안상 git에 올리면 안됍니다.
 
 ### Develop
 개발 서버 실행
+
+request-web의 경우 그 후 localhost:8800 으로 접속하면 됩니다.
 ```
 pnpm dev
 ```
