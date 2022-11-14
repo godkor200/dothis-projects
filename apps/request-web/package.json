@@ -13,8 +13,10 @@
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "db-format": "prisma format",
     "db-push": "pnpm prisma db push",
+    "db-pull": "pnpm prisma db pull",
     "db-generate": "pnpm prisma generate",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "postinstall": "pnpm run db-generate"
   },
   "dependencies": {
     "@aws-sdk/abort-controller": "^3.201.0",
