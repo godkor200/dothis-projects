@@ -1,8 +1,7 @@
 import type { ChangeEvent, ComponentProps, KeyboardEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
 
-import { removeSeparators, thousandsSeparators } from '@/lib/utils';
-
+import { removeSeparators, thousandsSeparators } from '../../../lib/utils';
 import Input from './index';
 
 const formats = {
@@ -42,7 +41,7 @@ const FormatInput = forwardRef<HTMLInputElement, Props>(
     );
     return (
       <Input
-        type='text'
+        type="text"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         {...props}

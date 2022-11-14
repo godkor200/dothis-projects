@@ -4,18 +4,20 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import * as React from 'react';
 
-import Button from '@/components/ui/Button';
-import SvgClose from '@/components/ui/Icons/SvgClose';
-import { colors, mediaQueries, typo } from '@/lib/styles/chakraTheme';
+import { prisma } from '~/prisma/client';
+
+import Button from '../../../components/ui/Button';
+import SvgClose from '../../../components/ui/Icons/SvgClose';
+import { colors, mediaQueries, typo } from '../../../lib/styles/chakraTheme';
 
 type Props = TextProps & { onClose(): void; hiddenOnMobile?: boolean };
 const ModalTitle = ({ onClose, hiddenOnMobile, ...props }: Props) => {
   return (
     <header className={clsx(hiddenOnMobile && 'hidden-on-mobile')} css={style}>
-      <Text className='ui_header-title-text' as='h3' {...props} />
+      <Text className="ui_header-title-text" as="h3" {...props} />
 
       {onClose && (
-        <Button className='ui_header-title-close-button' onClick={onClose}>
+        <Button className="ui_header-title-close-button" onClick={onClose}>
           <SvgClose />
         </Button>
       )}

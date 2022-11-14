@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
-import  { elementOnceInterval, mapIterToArr } from '@/lib/utils';
+import { elementOnceInterval, mapIterToArr } from '../../../lib/utils';
 
 export type ListMap<K> = Map<K, string>;
 

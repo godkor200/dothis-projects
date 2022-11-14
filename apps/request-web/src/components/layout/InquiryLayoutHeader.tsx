@@ -31,14 +31,12 @@ export default function InquiryLayoutHeader() {
                 isLinkActive(router, pagePath.notice()) && 'active',
               )}
             >
-              <Link href={pagePath.notice()} passHref>
-                <a>
-                  <span>공지사항</span>
-                </a>
+              <Link href={pagePath.notice()}>
+                <span>공지사항</span>
               </Link>
             </li>
             {/*<li>*/}
-            {/*  <Link href={pagePath.notice()} passHref>*/}
+            {/*  <Link href={pagePath.notice()} >*/}
             {/*    <a>고객센터</a>*/}
             {/*  </Link>*/}
             {/*</li>*/}
@@ -47,10 +45,8 @@ export default function InquiryLayoutHeader() {
                 isLinkActive(router, pagePath.account()) && 'active',
               )}
             >
-              <Link href={pagePath.account()} passHref>
-                <a>
-                  <span>계정</span>
-                </a>
+              <Link href={pagePath.account()}>
+                <span>계정</span>
               </Link>
             </li>
           </HStack>

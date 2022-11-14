@@ -1,30 +1,31 @@
 import 'swiper/css';
 
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import Modal from '@dothis/share/components/ui/Modal';
-import  { ModalOptProvider , standaloneToast, useModalStore,useUrlHistoryEvent } from '@dothis/share/lib/models';
+import {
+  ModalOptProvider,
+  standaloneToast,
+  useModalStore,
+} from '@dothis/share/lib/models';
 import chakraTheme from '@dothis/share/lib/styles/chakraTheme';
 import globalStyle from '@dothis/share/lib/styles/globalStyle';
 import { Global } from '@emotion/react';
-import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import { loggerLink } from '@trpc/client/links/loggerLink';
-import { withTRPC } from '@trpc/next';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
-import type { AppRouter } from '@/appRouter';
-
-
-
+import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
+import { trpc } from '@/utils/trpc';
 
 // immer Map Set 사용 가능하게
 enableMapSet();
+
 // superjson으로 변환
 axios.defaults.transformResponse = (data, headers) => {
   try {
@@ -47,6 +48,7 @@ function App({
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);
+
   useEffect(() => {
     setShowChild(true);
   }, []);
@@ -104,40 +106,4 @@ const ModalManager = () => {
   );
 };
 
-export default withTRPC<AppRouter>({
-  config({ ctx }) {
-    const ONE_DAY_SECONDS = 60 * 60 * 24;
-    // 서버는 Full url을 알아야 한다.
-    const url =
-      typeof window !== 'undefined'
-        ? '/api/trpc'
-        : `${process.env.NEXTAUTH_URL}/api/trpc`;
-
-    ctx?.res?.setHeader(
-      'Cache-Control',
-      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
-    );
-
-    const links = [
-      loggerLink({
-        enabled: (opts) => process.env.NODE_ENV === 'development',
-      }),
-      httpBatchLink({
-        maxBatchSize: 10,
-        url,
-      }),
-    ];
-    return {
-      queryClientConfig: {
-        defaultOptions: {
-          queries: {
-            staleTime: 30 * 1000,
-          },
-        },
-      },
-      links,
-      transformer: superjson,
-    };
-  },
-  ssr: false,
-})(App);
+export default trpc.withTRPC(App);

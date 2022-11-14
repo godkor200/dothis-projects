@@ -3,9 +3,7 @@ import Container from '@dothis/share/components/layout/Container';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
 import Input from '@dothis/share/components/ui/Input';
-import { useModalStore } from '@dothis/share/lib/models';
 import { typo } from '@dothis/share/lib/styles/chakraTheme';
-import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -17,8 +15,8 @@ import { z } from 'zod';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { t } from '@/utils/trpc';
-
+import { withUserSessionSsr } from '@/server/session';
+import { trpc } from '@/utils/trpc';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -44,7 +42,9 @@ export const getServerSideProps = withUserSessionSsr(
         // userRequest,
       },
     };
-  }, pagePath.home().pathname);
+  },
+  pagePath.home().pathname,
+);
 
 const requestPost = ({
   searchText: _searchText,
@@ -53,7 +53,7 @@ const requestPost = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchText, _setSearchText] = useState(_searchText);
   const router = useRouter();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const handleSetSearchText = useCallback(
     (_searchText: typeof searchText) => {},
     [],
@@ -69,15 +69,11 @@ const requestPost = ({
     console.log('request-post.tsx', '');
   }, []);
 
-  const modalStore = useModalStore();
-  const userSearchRequestPost = t.useInfiniteQuery(
-    [
-      'user - infinite search user request',
-      {
-        userId,
-        searchText,
-      },
-    ],
+  const userSearchRequestPost = trpc.user.getSearchRequests.useInfiniteQuery(
+    {
+      userId,
+      searchText,
+    },
     {
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;

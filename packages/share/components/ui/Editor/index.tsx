@@ -3,17 +3,21 @@ import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { Editor } from '@tinymce/tinymce-react';
 import type { ComponentProps } from 'react';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
-import { colors, fonts, typo } from '@/lib/styles/chakraTheme';
+import { colors, fonts, typo } from '../../../lib/styles/chakraTheme';
 
-
-export type EditorT = Editor
+export type EditorT = Editor;
 type Props = ComponentProps<typeof Editor> & {
   wrap?: BoxProps;
-}
+};
 
-export type FileLocations = Array<[fileName: string, location: string]>
+export type FileLocations = Array<[fileName: string, location: string]>;
 
 const _Editor = forwardRef<Editor | null, Props>(
   ({ init, wrap = {}, ...props }, ref) => {
@@ -27,7 +31,7 @@ const _Editor = forwardRef<Editor | null, Props>(
       <Box css={style} ref={wrapRef} {...wrap}>
         <Editor
           ref={editorRef}
-          tinymceScriptSrc='/tinymce/tinymce.min.js'
+          tinymceScriptSrc="/tinymce/tinymce.min.js"
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_KEY}
           scriptLoading={{ async: true }}
           init={{

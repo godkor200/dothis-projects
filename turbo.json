@@ -3,45 +3,56 @@
   "pipeline": {
     "build": {
       "dependsOn": [
+        "^db-generate",
+        "^theme-generate",
         "^build"
       ],
       "outputs": [
         ".next/**"
       ]
     },
+    "theme-generate": {
+      "inputs": ["./lib/styles/**/*"],
+      "outputs": ["./lib/types/theme.d.ts"],
+      "cache": true
+    },
+    "db-generate": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": true
+    },
+    "db-push": {
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
+      "cache": false
+    },
     "lint": {
       "outputs": []
     },
     "dev": {
+      "dependsOn": [
+        "^db-generate",
+        "^theme-generate"
+      ],
+      "cache": false
+    },
+    "clean": {
       "cache": false
     },
     "request-web": {
       "dependsOn": [
         "^build"
       ],
-      "inputs": [
-        "src/**/*.tsx",
-        "src/**/*.ts",
-        "prisma/**/client.ts",
-        "prisma/**/schema.prisma"
-      ],
       "env": [
         "DATABASE_URL",
         "NEXTAUTH_URL",
         "NEXTAUTH_SECRET",
         "AWS_ACCESS_KEY_ID",
-        "AWS_SECRET_ACCESS_KEY",
-        "GOOGLE_ID",
-        "GOOGLE_SECRET",
-        "TWITCH_CLIENT_ID",
-        "TWITCH_CLIENT_SECRET",
-        "FACEBOOK_ID",
-        "FACEBOOK_SECRET"
+        "AWS_SECRET_ACCESS_KEY"
       ]
     }
   },
-
   "globalDependencies": [
-    ".env.*"
+    ".env*"
   ]
 }

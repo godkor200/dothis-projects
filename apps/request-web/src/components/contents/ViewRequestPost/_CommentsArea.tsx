@@ -1,13 +1,14 @@
-import { Box, Divider, Text, VStack } from '@chakra-ui/react';
-import InputCommentTextarea from '@dothis/share/components/ui/Textarea/InputCommentTextarea';
-import type { RequestCommentDomain } from '@dothis/share/domain';
-import type { RequestPost, User } from '@dothis/share/generated/prisma-client';
+import { Divider, Text, VStack } from '@chakra-ui/react';
+import type { RequestPost, User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback } from 'react';
 
-import Comment from '@/components/article/Comment'
+import Comment from '@/components/article/Comment';
 import ViewPostRequestContainer from '@/components/contents/ViewRequestPost/ViewPostRequestContainer';
-import { t } from '@/utils/trpc';
+import InputCommentTextarea from '@/components/ui/Textarea/InputCommentTextarea';
+import { trpc } from '@/utils/trpc';
+
+import type { RequestCommentDomain } from '../../../domain';
 
 type Props = {
   requestId: RequestPost['id'];
@@ -17,14 +18,11 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const trpcUtils = t.useContext();
-  const orderedCommentsDetail = t.useQuery(
-    [
-      'request comment - view ordered items',
-      {
-        requestId,
-      },
-    ],
+  const trpcUtils = trpc.useContext();
+  const orderedCommentsDetail = trpc.requestComment.getOrdered.useQuery(
+    {
+      requestId,
+    },
     {
       select(data) {
         if (!data) return data;
@@ -43,24 +41,15 @@ const _CommentsArea = ({ requestId, fundingUserSet }: Props) => {
     },
   );
 
-  const heartCommentMutation = t.useMutation(
-    ['request comment - heart'],
-    {
-      onSuccess() {
-        trpcUtils.invalidateQueries([
-          'request comment - view ordered items',
-          { requestId },
-        ]);
-      },
-    },
-  );
-
-  const addCommentMutation = t.useMutation(['request comment - add'], {
+  const heartCommentMutation = trpc.requestComment.toggleHeart.useMutation({
     onSuccess() {
-      trpcUtils.invalidateQueries([
-        'request comment - view ordered items',
-        { requestId },
-      ]);
+      trpcUtils.requestComment.getOrdered.invalidate({ requestId });
+    },
+  });
+
+  const addCommentMutation = trpc.requestComment.add.useMutation({
+    onSuccess() {
+      trpcUtils.requestComment.getOrdered.invalidate({ requestId });
     },
   });
 

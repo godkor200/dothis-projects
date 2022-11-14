@@ -4,13 +4,20 @@ import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
 import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import type { RequestPostDomain } from '@dothis/share/domain';
-import { RequestFundingDomain, UserDomain } from '@dothis/share/domain';
-import type { User } from '@dothis/share/generated/prisma-client';
-import { colors, fontWeights, mediaQueries } from '@dothis/share/lib/styles/chakraTheme';
-import { isNilStr, onEnter, removeSeparators, thousandsSeparators } from '@dothis/share/lib/utils';
+import {
+  colors,
+  fontWeights,
+  mediaQueries,
+} from '@dothis/share/lib/styles/chakraTheme';
+import {
+  isNilStr,
+  onEnter,
+  removeSeparators,
+  thousandsSeparators,
+} from '@dothis/share/lib/utils';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -19,12 +26,17 @@ import { z } from 'zod';
 
 import UserLink from '@/components/ui/Links/UserLink';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
+
+import type { RequestPostDomain } from '../../domain';
+import { RequestFundingDomain, UserDomain } from '../../domain';
 
 type Props = {
   user?: User;
-  requestPost: Pick<NonNullable<RequestPostDomain.GetItemT>,
-    'id' | 'requestFundings'>;
+  requestPost: Pick<
+    NonNullable<RequestPostDomain.GetItemT>,
+    'id' | 'requestFundings'
+  >;
 };
 
 const formSchema = z.object({
@@ -51,8 +63,8 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
     resolver: zodResolver(formSchema),
   });
 
-  const fundingDetail = t.useQuery(
-    ['request post - detail item', { id: requestPost.id }],
+  const fundingDetail = trpc.requestPost.getDetail.useQuery(
+    { id: requestPost.id },
     {
       initialData: requestPost,
     },
@@ -66,20 +78,15 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
     [fundingDetail.data?.status],
   );
 
-  const trpcUtils = t.useContext();
-  const result = t.useMutation(['request funding - funding'], {
+  const trpcUtils = trpc.useContext();
+  const result = trpc.requestFunding.funding.useMutation({
     onSuccess(_, request) {
       resetField('quantity');
 
-      trpcUtils.invalidateQueries([
-        'request post - detail item',
-        { id: requestPost.id },
-      ]);
-      trpcUtils.invalidateQueries([
-        'request post - user items requested by the creator',
-      ]);
+      trpcUtils.requestPost.getDetail.invalidate({ id: requestPost.id });
+      trpcUtils.requestPost.getUserForCreator.invalidate();
       if (session?.user.id)
-        trpcUtils.invalidateQueries(['user - get', { id: session?.user?.id }]);
+        trpcUtils.user.get.invalidate({ id: session?.user?.id });
       ToastBox.toast({
         message: `${request.quantity}원을 펀딩했습니다.`,
         status: 'success',
@@ -93,10 +100,7 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
   const onSubmit: SubmitHandler<Form> = async (data) => {
     if (result.isLoading) return;
     if (!session?.user.id) throw Error('사용자 정보를 찾을 수 없습니다.');
-    const user = await trpcUtils.fetchQuery([
-      'user - get',
-      { id: session.user.id },
-    ]);
+    const user = await trpcUtils.user.get.fetch({ id: session.user.id });
 
     if (!user) throw Error('사용자 정보를 찾을 수 없습니다.');
     if (user.totalPoint < data.quantity) {
@@ -116,20 +120,20 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
         (fundingDetail.data.requestFundings.length === 0 ? (
           <Center py={24}>펀딩 내역이 없습니다.</Center>
         ) : (
-          <Box className='funding-list' as='ul'>
+          <Box className="funding-list" as="ul">
             {fundingDetail.data.requestFundings.map(({ user, quantity }) => (
               <Flex
                 key={`${user ? user.id : null}`}
-                as='li'
-                justifyContent='space-between'
-                alignItems='center'
+                as="li"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 {user ? (
                   <UserLink userId={user.id}>
                     <UserAvatar
                       size={32}
                       user={user}
-                      Text={<b className='avatar-name'>{user.name}</b>}
+                      Text={<b className="avatar-name">{user.name}</b>}
                     />
                   </UserLink>
                 ) : (
@@ -137,26 +141,24 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
                     size={32}
                     user={{ name: UserDomain.constants.resignedUserName }}
                     Text={
-                      <b className='avatar-name'>
+                      <b className="avatar-name">
                         {UserDomain.constants.resignedUserName}
                       </b>
                     }
                   />
                 )}
-                <b className='price'>
-                  {thousandsSeparators(quantity)}&nbsp;원
-                </b>
+                <b className="price">{thousandsSeparators(quantity)}&nbsp;원</b>
               </Flex>
             ))}
           </Box>
         ))}
-      <Box className='funding-form'>
-        <VStack flex='auto' spacing={4} alignItems='start'>
+      <Box className="funding-form">
+        <VStack flex="auto" spacing={4} alignItems="start">
           <FormatInput
-            format='thousandsSeparators'
+            format="thousandsSeparators"
             Right={<Center>원</Center>}
             onKeyDown={onEnter(handleSubmit(onSubmit))}
-            placeholder='200원부터 입력가능합니다.'
+            placeholder="200원부터 입력가능합니다."
             {...register('quantity', {
               setValueAs(v) {
                 if (isNilStr(v)) return undefined;
@@ -170,7 +172,7 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
           <FormValidMessage errorMessage={errors.quantity?.message} pl={2} />
         </VStack>
         <Button
-          theme='primary'
+          theme="primary"
           h={50}
           minW={100}
           fontSize={15}

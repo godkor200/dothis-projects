@@ -4,7 +4,11 @@ import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonP
 import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
 import SwiperButton from '@dothis/share/components/ui/Button/SwiperButton';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
-import { colors, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  mediaQueries,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import type { GetServerSidePropsContext } from 'next/types';
@@ -17,17 +21,16 @@ import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem'
 import MainSwiper from '@/components/article/MainSwiper';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { getTrpcSSGHelpers, t } from '@/utils/trpc';
-
+import { trpc, trpcSSG } from '@/utils/trpc';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
   () => {
     const { data } = useSession();
-    const trpcUtils = t.useContext();
+    const trpcUtils = trpc.useContext();
 
     return (
       <a
-        href='#'
+        href="#"
         onClick={async (e) => {
           e.preventDefault();
           if (!data?.user) {
@@ -36,12 +39,9 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
             );
             return;
           }
-          const my = await trpcUtils.fetchQuery([
-            'user - get',
-            {
-              id: data?.user.id,
-            },
-          ]);
+          const my = await trpcUtils.user.get.fetch({
+            id: data?.user.id,
+          });
           if (!my) return;
           if (my.creator) {
             ToastBox.errorToast('이미 크리에이터로 등록되어 있습니다.');
@@ -53,17 +53,19 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
           });
         }}
       >
-        <img src='/images/banner2.svg' alt='크리에이터 등록' />
+        <img src="/images/banner2.svg" alt="크리에이터 등록" />
       </a>
     );
   },
 ];
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const trpcSSGHelpers = await getTrpcSSGHelpers();
+  const trpcSSGHelpers = await trpcSSG();
 
-  trpcSSGHelpers.fetchQuery('request post - main solved items');
-  trpcSSGHelpers.fetchQuery('request post - main recommend items');
+  await Promise.all([
+    trpcSSGHelpers.requestPost.getSolveds.prefetch(),
+    trpcSSGHelpers.requestPost.getRecommends.prefetch(),
+  ]);
 
   return {
     props: {
@@ -72,16 +74,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({}: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) {
   const resolvedRequestSwiperRef = useRef<SwiperClass | null>(null);
-  const solvedRequests = t.useQuery([
-    'request post - main solved items',
-  ]);
-  const recommendRequests = t.useQuery([
-    'request post - main recommend items',
-  ]);
-
-  // if (!solvedRequests || !recommendRequests.data) return;
+  const solvedRequests = trpc.requestPost.getSolveds.useQuery();
+  const recommendRequests = trpc.requestPost.getRecommends.useQuery();
 
   return (
     <LayoutTemplate>
@@ -95,27 +93,27 @@ export default function Home({}: InferGetServerSidePropsType<typeof getServerSid
         {/* 해결된 요청 */}
 
         {solvedRequests.data && (
-          <section className='resolved-request-post'>
-            <div className='section-title'>
+          <section className="resolved-request-post">
+            <div className="section-title">
               <h2>해결된 요청</h2>
-              {/*<Link href="/src/pages" passHref>*/}
+              {/*<Link href="/src/pages" >*/}
               {/*  <a className="view-all-contents">*/}
               {/*    /!*<span>전체보기</span>*!/*/}
               {/*  </a>*/}
               {/*</Link>*/}
 
-              <div className='section-slide-buttons'>
+              <div className="section-slide-buttons">
                 <SwiperButton
-                  dir='prev'
+                  dir="prev"
                   onClick={() => resolvedRequestSwiperRef.current?.slidePrev()}
                 />
                 <SwiperButton
-                  dir='next'
+                  dir="next"
                   onClick={() => resolvedRequestSwiperRef.current?.slideNext()}
                 />
               </div>
             </div>
-            <div className='section-contents'>
+            <div className="section-contents">
               <ResolveRequestListSwiper
                 postRequestList={solvedRequests.data}
                 swiperRef={resolvedRequestSwiperRef}
@@ -126,11 +124,11 @@ export default function Home({}: InferGetServerSidePropsType<typeof getServerSid
 
         {/* 추천 요청 */}
         {recommendRequests.data && (
-          <section className='recommend-request-post'>
-            <div className='section-title'>
+          <section className="recommend-request-post">
+            <div className="section-title">
               <h2>🎯 추천 요청</h2>
             </div>
-            <div className='section-contents'>
+            <div className="section-contents">
               <HorizonPostRequestItemWrap>
                 {recommendRequests.data.map((request) => (
                   <HorizonPostRequestItem

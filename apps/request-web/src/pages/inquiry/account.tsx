@@ -5,7 +5,6 @@ import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTe
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import { useModalStore } from '@dothis/share/lib/models';
 import { fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
-import { withUserSessionSsr } from '@dothis/share/server/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -15,7 +14,8 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { getTrpcSSGHelpers, t } from '@/utils/trpc';
+import { withUserSessionSsr } from '@/server/session';
+import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -23,26 +23,29 @@ const querySchema = z.object({
 
 export const getServerSideProps = withUserSessionSsr(
   async (context, userSession) => {
-    const trpcSSGHelper = await getTrpcSSGHelpers();
-    trpcSSGHelper.fetchQuery('user - get', { id: userSession.id });
+    const trpcSSGHelper = await trpcSSG();
+    await trpcSSGHelper.user.get.prefetch({ id: userSession.id });
 
     return {
       props: {
         trpcState: trpcSSGHelper.dehydrate(),
       },
     };
-  }, pagePath.home().pathname);
+  },
+  pagePath.home().pathname,
+);
 
-export default function AccountPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function AccountPage({}: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
-  const my = t.useQuery(['user - get', { id: session?.user.id }]);
-  const deleteMutation = t.useMutation('user - delete', {
+  const my = trpc.user.get.useQuery({ id: session?.user.id });
+  const deleteMutation = trpc.user.delete.useMutation({
     onSuccess() {
-      if (my.data)
-        trpcUtils.invalidateQueries(['user - get', { id: my.data.id }]);
+      if (my.data) trpcUtils.user.get.invalidate({ id: my.data.id });
       router.push(pagePath.home());
       modalStore.closeAll();
       ToastBox.successToast('회원 탈퇴가 완료되었습니다.');
@@ -64,14 +67,14 @@ export default function AccountPage({}: InferGetServerSidePropsType<typeof getSe
             }
             deleteMutation.mutate({ id: my.data.id });
           }}
-          submitText='탈퇴하기'
+          submitText="탈퇴하기"
           onCancel={() => modalStore.close('delete user')}
         >
           <p>
             회원 탈퇴 후 1년간 개인정보가 임시 저장되며, 탈퇴한 계정은 복구할 수
             없습니다. 정말로 탈퇴하겠습니까?
           </p>
-          <Text as='p' color='gray.70'>
+          <Text as="p" color="gray.70">
             * 탈퇴 시에도 작성 및 참여한 데이터는 삭제되지 않습니다.
           </Text>
         </SubmitModalTemplate>
@@ -87,7 +90,7 @@ export default function AccountPage({}: InferGetServerSidePropsType<typeof getSe
         <p>로그인 계정</p>
         <strong>{my.data?.email}</strong>
         <Button
-          theme='primary'
+          theme="primary"
           h={50}
           maxW={330}
           mt={16}

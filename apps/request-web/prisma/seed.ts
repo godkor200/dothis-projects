@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 
-import { alarms } from './data/Alarms';
 import { creatorAuths, creators } from './data/Creators';
 import { faqs } from './data/Faqs';
 import { notices } from './data/Notices';
@@ -22,8 +21,8 @@ async function main() {
     where: {
       id: {
         in: users.map((user) => user.id),
-      }
-    }
+      },
+    },
   });
   await prisma.$queryRaw`ALTER TABLE users AUTO_INCREMENT = 1`;
   await prisma.user.createMany({ data: [...users] });
@@ -36,7 +35,7 @@ async function main() {
   await prisma.$queryRaw`ALTER TABLE creatorauths AUTO_INCREMENT = 1`;
   await prisma.creatorAuth.createMany({ data: creatorAuths });
 
-  const dbCreators = await prisma.creator.findMany()
+  const dbCreators = await prisma.creator.findMany();
 
   await prisma.requestPost.deleteMany();
   await prisma.$queryRaw`ALTER TABLE requestposts AUTO_INCREMENT = 1`;
@@ -44,7 +43,9 @@ async function main() {
 
   await prisma.requestApplyCreator.deleteMany();
   await prisma.$queryRaw`ALTER TABLE requestapplycreators AUTO_INCREMENT = 1`;
-  await prisma.requestApplyCreator.createMany({ data: requestApplyCreators(dbCreators) });
+  await prisma.requestApplyCreator.createMany({
+    data: requestApplyCreators(dbCreators),
+  });
 
   await prisma.requestPlatform.deleteMany();
   await prisma.$queryRaw`ALTER TABLE requestplatforms AUTO_INCREMENT = 1`;
@@ -73,9 +74,7 @@ async function main() {
   await prisma.notice.deleteMany();
   await prisma.$queryRaw`ALTER TABLE notices AUTO_INCREMENT = 1`;
   await prisma.notice.createMany({ data: notices });
-
 }
-
 
 main()
   .catch((e) => {

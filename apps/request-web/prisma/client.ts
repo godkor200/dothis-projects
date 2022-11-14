@@ -9,7 +9,7 @@ if (typeof window === 'undefined') {
     prisma = new PrismaClient();
   } else {
     if (!global.prisma) {
-      global.prisma = new PrismaClient({ log: ['error', 'warn'] });
+      global.prisma = new PrismaClient();
     }
     prisma = global.prisma;
   }

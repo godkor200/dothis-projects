@@ -1,6 +1,10 @@
 import Container from '@dothis/share/components/layout/Container';
 import HomeLogo from '@dothis/share/components/ui/HomeLogo';
-import { colors, mediaQueries, typo } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  mediaQueries,
+  typo,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import React from 'react';
@@ -59,29 +63,19 @@ export default function LayoutFooter() {
               <strong>회사</strong>
             </a> */}
             <Link href="https://dothis-world.notion.site/1a7e28e24d3d406399d784da996fa1c8">
-              <a>
-                <span>회사소개</span>
-              </a>
+              <span>회사소개</span>
             </Link>
             <Link href="/policy">
-              <a>
-                <span>서비스 이용약관</span>
-              </a>
+              <span>서비스 이용약관</span>
             </Link>
             <Link href="/privacy">
-              <a>
-                <span>개인정보 처리방침</span>
-              </a>
+              <span>개인정보 처리방침</span>
             </Link>
-            <Link href="http://pf.kakao.com/_Txcwuxj/chat">
-              <a target="_blank">
-                <span>고객센터</span>
-              </a>
+            <Link href="http://pf.kakao.com/_Txcwuxj/chat" target="_blank">
+              <span>고객센터</span>
             </Link>
             <Link href="https://dothis-world.notion.site/b19467c5c36842cb95939bb98673f20d?v=1d43683f41e84112820f6771a8b02c80">
-              <a>
-                <span>공지사항</span>
-              </a>
+              <span>공지사항</span>
             </Link>
           </div>
         </div>

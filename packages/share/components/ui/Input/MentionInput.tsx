@@ -3,32 +3,33 @@ import clsx from 'clsx';
 import type { ChangeEvent } from 'react';
 import { useCallback, useRef } from 'react';
 
-import MentionContents from '@/components/ui/Mention/MentionContents';
-import MentionTarget from '@/components/ui/Mention/MentionTarget';
-import type { UseMatchReturn } from '@/lib/hooks/useMatch';
-import { colors, shadows } from '@/lib/styles/chakraTheme';
-
+import MentionContents from '../../../components/ui/Mention/MentionContents';
+import MentionTarget from '../../../components/ui/Mention/MentionTarget';
+import type { UseMatchReturn } from '../../../lib/hooks/useMatch';
+import { colors, shadows } from '../../../lib/styles/chakraTheme';
 import Mention from '../Mention/Mention';
 import type { InputProps } from './index';
 import Input from './index';
 
 export type MentionInputProps = InputProps & {
-  match: Pick<UseMatchReturn,
-    'matchList' | 'isOpen' | 'isHidden' | 'setIsHidden' | 'setValue'>;
+  match: Pick<
+    UseMatchReturn,
+    'matchList' | 'isOpen' | 'isHidden' | 'setIsHidden' | 'setValue'
+  >;
   onItemSelect(s: string): void;
   theme?: InputProps['theme'];
   size?: 'md' | 'sm';
 };
 
 const MentionInput = ({
-                        match,
-                        onItemSelect,
-                        onChange,
-                        onKeyDown,
-                        theme = 'gray',
-                        size = 'md',
-                        ...props
-                      }: MentionInputProps) => {
+  match,
+  onItemSelect,
+  onChange,
+  onKeyDown,
+  theme = 'gray',
+  size = 'md',
+  ...props
+}: MentionInputProps) => {
   const contentsRef = useRef<HTMLUListElement>(null);
   const handleSelect = useCallback((v: string) => {
     match.setValue(v);

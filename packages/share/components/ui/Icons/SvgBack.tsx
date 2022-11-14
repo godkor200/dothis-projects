@@ -1,8 +1,6 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-import { colors } from '@/lib/styles/chakraTheme';
-
 const SvgBack = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"

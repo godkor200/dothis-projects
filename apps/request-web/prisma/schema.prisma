@@ -5,12 +5,13 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextIndex", "fullTextSearch", "interactiveTransactions"]
+  previewFeatures = ["fullTextIndex", "fullTextSearch", "interactiveTransactions", "referentialIntegrity"]
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model Account {
@@ -67,7 +68,7 @@ model User {
   rankings               Ranking[]
   creatorReviews         CreatorReview[]
   creator                Creator?
-  Log                    Log[]
+  Log                    Log[]                 @relation("sender")  
 
   @@map("users")
 }
@@ -200,7 +201,7 @@ model RequestComment {
   user             User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId           String?
   parentId         BigInt?
-  parentComment    RequestComment?       @relation("RequestCommentToRequestComment", fields: [parentId], references: [id], onDelete: SetNull)
+  parentComment    RequestComment?       @relation("RequestCommentToRequestComment", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rootId           BigInt?
   content          String                @db.Text
   createdAt        DateTime              @default(now())
@@ -214,7 +215,7 @@ model RequestComment {
 
 model RequestCommentHeart {
   id               BigInt         @id @default(autoincrement()) @db.BigInt
-  requestComment   RequestComment @relation(fields: [requestCommentId], references: [id], onDelete: Cascade)
+  requestComment   RequestComment @relation(fields: [requestCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   requestCommentId BigInt
   user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
@@ -476,7 +477,7 @@ model Log {
   logType   LogType
   message   String?      @db.Text
   senderId  String?
-  sender    User?        @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  sender    User?        @relation("sender", fields: [senderId], references: [id], onDelete: SetNull)
   isRead    Boolean?     @default(false)
   receiver  User[]       @relation("receiver")
   requestId BigInt?

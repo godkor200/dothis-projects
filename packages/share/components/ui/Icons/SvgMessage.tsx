@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-import { colors } from '@/lib/styles/chakraTheme';
+import { colors } from '../../../lib/styles/chakraTheme';
 
 const SvgMessage = (props: SVGProps<SVGSVGElement>) => (
   <svg

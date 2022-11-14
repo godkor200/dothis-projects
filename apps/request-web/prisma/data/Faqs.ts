@@ -1,5 +1,3 @@
-import { FaqType } from '@prisma/client';
-
 /**************
 id          Int         @id @default(autoincrement())
 type        FaqType
@@ -7,6 +5,7 @@ title       String      @db.VarChar(255)
 content     String      @db.LongText
 createdAt   DateTime    @default(now())
 **************/
+import { FaqType } from '@prisma/client';
 
 export const faqs = [
   {

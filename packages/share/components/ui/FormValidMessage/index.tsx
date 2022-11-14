@@ -4,17 +4,17 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import { isString } from 'fp-ts/lib/string';
 
-import { colors, typo } from '@/lib/styles/chakraTheme';
+import { colors, typo } from '../../../lib/styles/chakraTheme';
 
 type Props = BoxProps & {
   errorMessage?: boolean | string | null;
 };
 const FormValidMessage = ({
-                            className,
-                            errorMessage,
-                            children,
-                            ...props
-                          }: Props) => {
+  className,
+  errorMessage,
+  children,
+  ...props
+}: Props) => {
   const hasError = isString(errorMessage) ? true : !!errorMessage;
   return (
     <Box
@@ -23,9 +23,9 @@ const FormValidMessage = ({
       {...props}
     >
       {hasError && isString(errorMessage) && (
-        <span className='form-valid-error-message'>{errorMessage}</span>
+        <span className="form-valid-error-message">{errorMessage}</span>
       )}
-      <span className='form-valid-child-wrap'>{children}</span>
+      <span className="form-valid-child-wrap">{children}</span>
     </Box>
   );
 };

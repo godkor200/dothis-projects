@@ -1,5 +1,4 @@
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { useModalStore } from '@dothis/share/lib/models/modal/useModalStore';
 import { colors } from '@dothis/share/lib/styles/chakraTheme/variable';
 import { css } from '@emotion/react';
 import { chunksOf } from 'fp-ts/ReadonlyArray';
@@ -19,12 +18,10 @@ type Props = {
   onSlideChange?: SwiperProps['onSlideChange'];
 };
 export default function HotRequestListSwiper({
-                                               postRequestList,
-                                               swiperRef,
-                                               onSlideChange,
-                                             }: Props) {
-  const modalStore = useModalStore();
-
+  postRequestList,
+  swiperRef,
+  onSlideChange,
+}: Props) {
   return (
     <div css={swiperWrapperStyle}>
       <Swiper
@@ -43,7 +40,7 @@ export default function HotRequestListSwiper({
         {chunksOf(3)(postRequestList).map((post3arr) => (
           <SwiperSlide
             key={`${post3arr[0].id}`}
-            className='list-item-swiper_slide'
+            className="list-item-swiper_slide"
           >
             <HorizonPostRequestItemWrap>
               {post3arr.map((request) => (

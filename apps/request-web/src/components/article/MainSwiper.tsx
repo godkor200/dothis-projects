@@ -32,7 +32,7 @@ const MainSwiper = ({ Banners }: Props) => {
         }}
       >
         {Banners.map((Banner, i) => (
-          <SwiperSlide key={i} className='main-swiper_slide'>
+          <SwiperSlide key={i} className="main-swiper_slide">
             <Banner />
           </SwiperSlide>
         ))}
@@ -40,24 +40,24 @@ const MainSwiper = ({ Banners }: Props) => {
       {Banners.length > 1 && (
         <>
           <Button
-            className='main-swiper_nav-prev-button'
-            aria-label='Previous slide'
+            className="main-swiper_nav-prev-button"
+            aria-label="Previous slide"
             // disabled={swiperIndex === 0}
             onClick={() => swiper.current?.slidePrev()}
           >
             <SvgPrev />
           </Button>
           <Button
-            className='main-swiper_nav-next-button'
-            aria-label='Next slide'
+            className="main-swiper_nav-next-button"
+            aria-label="Next slide"
             // disabled={swiperIndex + 1 === banners.length}
             onClick={() => swiper.current?.slideNext()}
           >
             <SvgNext />
           </Button>
-          <div className='main-swiper_pagination'>
-            <span className='current-slide-index'>{swiperIndex + 1}</span>
-            <span className='max-slide-index'>
+          <div className="main-swiper_pagination">
+            <span className="current-slide-index">{swiperIndex + 1}</span>
+            <span className="max-slide-index">
               &nbsp;/&nbsp;{Banners.length}
             </span>
           </div>

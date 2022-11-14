@@ -8,7 +8,6 @@ import {
   RequestStatusType,
 } from '@prisma/client';
 
-import { creators } from './Creators';
 import { users } from './Users';
 
 /***********

@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import useUrlHistoryStore from './useUrlHistoryStore';
 
-let init = false;
 export function useUrlHistoryEvent() {
+  const [isInit, setIsInit] = useState(false);
   const router = useRouter();
   const historyStore = useUrlHistoryStore();
 
@@ -15,11 +15,11 @@ export function useUrlHistoryEvent() {
     ) => {
       if (!shallow) historyStore.push(url);
     };
-    if (!init) {
+    if (!isInit) {
       // @ts-ignore
       window.router = router;
       historyStore.push(router.asPath);
-      init = true;
+      setIsInit(true);
     }
 
     router.beforePopState(() => {

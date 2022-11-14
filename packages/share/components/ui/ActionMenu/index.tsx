@@ -3,22 +3,24 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import Button from '@/components/ui/Button';
-import { colors, fontWeights } from '@/lib/styles/chakraTheme';
+import Button from '../../../components/ui/Button';
+import { colors, fontWeights } from '../../../lib/styles/chakraTheme';
 
 type Props = {
-  menuItems: Array<| { text: string; Icon?: ReactNode; onClick?: () => void }
+  menuItems: Array<
+    | { text: string; Icon?: ReactNode; onClick?: () => void }
     | null
     | undefined
-    | false>;
+    | false
+  >;
   children: ReactNode;
   buttonProps?: MenuButtonProps;
 } & Omit<MenuProps, 'children'>;
 
 const ActionMenu = ({ menuItems, children, buttonProps, ...props }: Props) => {
   return (
-    <Menu placement='bottom-end' {...props}>
-      <MenuButton as={Button} h='fit-content' w='fit-content' {...buttonProps}>
+    <Menu placement="bottom-end" {...props}>
+      <MenuButton as={Button} h="fit-content" w="fit-content" {...buttonProps}>
         {children}
       </MenuButton>
       <MenuList css={listStyle}>
@@ -26,7 +28,7 @@ const ActionMenu = ({ menuItems, children, buttonProps, ...props }: Props) => {
           item ? (
             <MenuItem as={Button} key={item.text} onClick={item.onClick}>
               {item.Icon}
-              <span className='ui_action-menu-text'>{item.text}</span>
+              <span className="ui_action-menu-text">{item.text}</span>
             </MenuItem>
           ) : undefined,
         )}

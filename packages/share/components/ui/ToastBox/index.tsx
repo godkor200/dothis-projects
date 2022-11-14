@@ -1,16 +1,19 @@
-import type { BoxProps, CenterProps, UseToastOptions } from '@chakra-ui/react';
+import type { CenterProps, UseToastOptions } from '@chakra-ui/react';
 import { Center } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import clsx from 'clsx';
 import { flow } from 'fp-ts/function';
 import { pipe } from 'fp-ts/lib/function';
 import { uid } from 'uid';
 
-import SvgClose from '@/components/ui/Icons/SvgClose';
-import type { Message } from '@/lib/models';
-import { errorMessage, message, standaloneToast, successMessage } from '@/lib/models';
-import { colors, fontWeights, shadows } from '@/lib/styles/chakraTheme/variable';
-
+import SvgClose from '../../../components/ui/Icons/SvgClose';
+import type { Message } from '../../../lib/models';
+import {
+  errorMessage,
+  message,
+  standaloneToast,
+  successMessage,
+} from '../../../lib/models';
+import { colors, fontWeights, shadows } from '../../../lib/styles/chakraTheme';
 import Button from '../Button';
 
 export type ToastBoxProps = Pick<CenterProps, 'children' | 'className'> & {
@@ -83,7 +86,11 @@ ToastBox.getMessageOptions = (
     render() {
       return (
         <ToastBox
-          onClose={!overrideOpt?.isClosable ? () => standaloneToast.toast.close(id) : undefined}
+          onClose={
+            !overrideOpt?.isClosable
+              ? () => standaloneToast.toast.close(id)
+              : undefined
+          }
           className={status}
         >
           <b>{message}</b>
@@ -94,11 +101,23 @@ ToastBox.getMessageOptions = (
   };
 };
 
-ToastBox.toast = flow(message, ToastBox.getMessageOptions, standaloneToast.toast);
+ToastBox.toast = flow(
+  message,
+  ToastBox.getMessageOptions,
+  standaloneToast.toast,
+);
 ToastBox.successToast = (message: string) =>
-  pipe(successMessage({ message }), ToastBox.getMessageOptions, standaloneToast.toast);
+  pipe(
+    successMessage({ message }),
+    ToastBox.getMessageOptions,
+    standaloneToast.toast,
+  );
 ToastBox.errorToast = (message: string) =>
-  pipe(errorMessage({ message }), ToastBox.getMessageOptions, standaloneToast.toast);
+  pipe(
+    errorMessage({ message }),
+    ToastBox.getMessageOptions,
+    standaloneToast.toast,
+  );
 ToastBox.infoToast = (_message: string) =>
   pipe(
     message({ status: 'info', message: _message }),

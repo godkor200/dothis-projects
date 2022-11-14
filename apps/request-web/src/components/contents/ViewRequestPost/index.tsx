@@ -1,4 +1,12 @@
-import { Avatar, Box, Divider, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  HStack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import DotDotDotMenu from '@dothis/share/components/ui/ActionMenu/DotDotDotMenu';
 import Button from '@dothis/share/components/ui/Button';
 import SvgAccept from '@dothis/share/components/ui/Icons/SvgAccept';
@@ -17,14 +25,17 @@ import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
 import ToastBox from '@dothis/share/components/ui/ToastBox';
 import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import YoutubeIframe from '@dothis/share/components/ui/YoutubeIframe';
-import type { RequestPostDomain } from '@dothis/share/domain';
-import { RequestFundingDomain } from '@dothis/share/domain';
-import type { User } from '@dothis/share/generated/prisma-client';
 import { useModalOptStore, useModalStore } from '@dothis/share/lib/models';
-import { colors, fontSizes, fontWeights, mediaQueries } from '@dothis/share/lib/styles/chakraTheme';
+import {
+  colors,
+  fontSizes,
+  fontWeights,
+  mediaQueries,
+} from '@dothis/share/lib/styles/chakraTheme';
 import { thousandsSeparators } from '@dothis/share/lib/utils';
 import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
 import { css } from '@emotion/react';
+import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -38,8 +49,10 @@ import viewRequestModalHandlers from '@/components/contents/ViewRequestPost/view
 import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { t } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
+import type { RequestPostDomain } from '../../../domain';
+import { RequestFundingDomain } from '../../../domain';
 import _CommentsArea from './_CommentsArea';
 import ViewPostRequestContainer from './ViewPostRequestContainer';
 
@@ -49,11 +62,11 @@ type Props = {
 
 const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
   const { data: session } = useSession();
-  const trpcUtils = t.useContext();
+  const trpcUtils = trpc.useContext();
   const mustLoginFirst = useMustLoginFirst();
 
-  const requestDetail = t.useQuery(
-    ['request post - detail item', { id: _requestPost.id }],
+  const requestDetail = trpc.requestPost.getDetail.useQuery(
+    { id: _requestPost.id },
     {
       select(data) {
         if (!data) return data;
@@ -80,105 +93,82 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     },
   );
 
-  const reactionMutation = t.useMutation('request reaction - update', {
+  const reactionMutation = trpc.requestReaction.toggleUpdate.useMutation({
     onSuccess() {
-      trpcUtils.invalidateQueries([
-        'request post - detail item',
-        { id: _requestPost.id },
-      ]);
+      trpcUtils.requestPost.getDetail.invalidate({ id: _requestPost.id });
     },
   });
 
-  const statusMutation = t.useMutation(
-    ['request post - update status'],
-    {
-      onSuccess(_, requestData) {
-        trpcUtils.invalidateQueries(['request post - detail item']);
-        useModalStore.getState().closeLast();
+  const statusMutation = trpc.requestPost.updateStatus.useMutation({
+    onSuccess(_, requestData) {
+      trpcUtils.requestPost.getDetail.invalidate();
+      useModalStore.getState().closeLast();
 
-        switch (requestData.status) {
-          case 'ACCEPT':
-            ToastBox.successToast('요청을 수락했습니다.');
-            break;
-          case 'REFUSE':
-            ToastBox.successToast(
-              requestData.refusalReason
-                ? '요청을 포기했습니다.'
-                : '요청을 거절했습니다.',
-            );
-            break;
-          case 'REGISTRATION':
-            ToastBox.successToast('콘텐츠 등록에 성공했습니다.');
-            break;
-          // case 'COMPLETION':
-          //   ToastBox.successToast('콘텐츠 등록에 성공했습니다.');
-          //   break;
-        }
-      },
-      onError(e) {
-        console.error(e);
-        ToastBox.errorToast(
-          '요청 상태 변경에 실패했습니다. 다시 시도해주세요.',
-        );
-      },
+      switch (requestData.status) {
+        case 'ACCEPT':
+          ToastBox.successToast('요청을 수락했습니다.');
+          break;
+        case 'REFUSE':
+          ToastBox.successToast(
+            requestData.refusalReason
+              ? '요청을 포기했습니다.'
+              : '요청을 거절했습니다.',
+          );
+          break;
+        case 'REGISTRATION':
+          ToastBox.successToast('콘텐츠 등록에 성공했습니다.');
+          break;
+        // case 'COMPLETION':
+        //   ToastBox.successToast('콘텐츠 등록에 성공했습니다.');
+        //   break;
+      }
     },
-  );
-  const deleteRequestMutation = t.useMutation(
-    ['request post - delete'],
-    {
-      onError(e) {
-        ToastBox.toast({
-          status: 'error',
-          message: e.message,
-        });
-      },
-      onSuccess() {
-        modalStore.closeLast();
-        ToastBox.successToast('요청을 삭제했습니다.');
-        trpcUtils.invalidateQueries([
-          'request post - detail item',
-          { id: _requestPost.id },
-        ]);
-
-        trpcUtils.invalidateQueries([
-          'request post - user items requested by the creator',
-        ]);
-
-        trpcUtils.invalidateQueries(['request post - main recommend items']);
-        trpcUtils.invalidateQueries(['user - get', { id: session?.user.id }]);
-
-        modalStore.close(PAGE_KEYS.viewPostRequest);
-      },
+    onError(e) {
+      console.error(e);
+      ToastBox.errorToast('요청 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },
-  );
+  });
+  const deleteRequestMutation = trpc.requestPost.delete.useMutation({
+    onError(e) {
+      ToastBox.toast({
+        status: 'error',
+        message: e.message,
+      });
+    },
+    onSuccess() {
+      modalStore.closeLast();
+      ToastBox.successToast('요청을 삭제했습니다.');
+      trpcUtils.requestPost.getDetail.invalidate({ id: _requestPost.id });
+
+      trpcUtils.requestPost.getUserForCreator.invalidate();
+
+      trpcUtils.requestPost.getRecommends.invalidate();
+      trpcUtils.user.get.invalidate({ id: session?.user.id });
+
+      modalStore.close(PAGE_KEYS.viewPostRequest);
+    },
+  });
   const { isInnerModal } = useModalOptStore();
-  const completeRequestMutation = t.useMutation(
-    ['request post - complete'],
-    {
-      onError(e) {
-        ToastBox.toast({
-          status: 'error',
-          message: e.message,
-        });
-      },
-      onSuccess() {
-        ToastBox.successToast('요청이 성공적으로 완료되었습니다!');
-        trpcUtils.invalidateQueries([
-          'request post - detail item',
-          { id: _requestPost.id },
-        ]);
-        // TODO: 나중에 삭제
-        if (requestDetail?.data?.creator?.userId)
-          trpcUtils.invalidateQueries([
-            'user - get',
-            { id: requestDetail.data.creator.userId },
-          ]);
-      },
+  const completeRequestMutation = trpc.requestPost.complete.useMutation({
+    onError(e) {
+      ToastBox.toast({
+        status: 'error',
+        message: e.message,
+      });
     },
-  );
+    onSuccess() {
+      ToastBox.successToast('요청이 성공적으로 완료되었습니다!');
+      trpcUtils.requestPost.getDetail.invalidate({ id: _requestPost.id });
+      // TODO: 나중에 삭제
+      if (requestDetail?.data?.creator?.userId)
+        trpcUtils.user.get.invalidate({
+          id: requestDetail.data.creator.userId,
+        });
+    },
+  });
 
   const user = session?.user;
-  const my = t.useQuery(['user - get', { id: user?.id }]);
+  const my = trpc.user.get.useQuery({ id: user?.id });
 
   const handleLike = useCallback(
     () =>
@@ -351,19 +341,19 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     <>
       {isInnerModal && (
         <Box
-          position='sticky'
+          position="sticky"
           display={{ base: 'flex', tablet: 'none' }}
-          justifyContent='space-between'
+          justifyContent="space-between"
           top={0}
           left={0}
           right={0}
           h={56}
-          bg='white'
+          bg="white"
           zIndex={1}
           borderBottom={`1px solid ${colors.border['2']}`}
-          alignItems='center'
+          alignItems="center"
         >
-          <Button px={16} h='100%' onClick={modalStore.closeAll}>
+          <Button px={16} h="100%" onClick={modalStore.closeAll}>
             <SvgBack />
           </Button>
           {isMyRequest && (
@@ -379,7 +369,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       {requestDetail.data && (
         <Box css={style} pt={20} pb={24}>
           <ViewPostRequestContainer>
-            <Flex justifyContent='space-between'>
+            <Flex justifyContent="space-between">
               <PostRequestStatus status={requestDetail.data.status} />
               <Box display={{ base: 'none', tablet: 'block' }}>
                 {isMyRequest && (
@@ -387,12 +377,12 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 )}
               </Box>
             </Flex>
-            <Box as='header' mt={16}>
-              <Text as='h3' color='gray.80' fontSize={22} fontWeight='b'>
+            <Box as="header" mt={16}>
+              <Text as="h3" color="gray.80" fontSize={22} fontWeight="b">
                 {requestDetail.data.title}
               </Text>
-              <Flex mt={8} fontWeight='m'>
-                <Flex alignItems='center' color='gray.70'>
+              <Flex mt={8} fontWeight="m">
+                <Flex alignItems="center" color="gray.70">
                   {requestDetail.data.expires && (
                     <Text>
                       {format(requestDetail.data.expires, 'yy.MM.dd HH:mm ')}
@@ -402,106 +392,89 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   <Button
                     className={clsx(myReaction === 'LIKE' && '--like')}
                     p={8}
-                    fontWeight='m'
+                    fontWeight="m"
                     onClick={handleLike}
                   >
                     <SvgThumbUp width={16} height={16} />
                     &nbsp;
-                    <Text as='span' color='gray.70'>
-                      {thousandsSeparators(
-                        requestDetail.data.likeSet.size,
-                      )}
+                    <Text as="span" color="gray.70">
+                      {thousandsSeparators(requestDetail.data.likeSet.size)}
                     </Text>
                   </Button>
                   <Button
                     className={clsx(myReaction === 'DISLIKE' && '--dislike')}
                     p={8}
-                    fontWeight='m'
+                    fontWeight="m"
                     onClick={handleDislike}
                   >
                     <SvgThumbDown width={16} height={16} />
                     &nbsp;
-                    <Text as='span' color='gray.70'>
-                      {thousandsSeparators(
-                        requestDetail.data.dislikeSet.size,
-                      )}
+                    <Text as="span" color="gray.70">
+                      {thousandsSeparators(requestDetail.data.dislikeSet.size)}
                     </Text>
                   </Button>
                 </Flex>
               </Flex>
             </Box>
-            <Box className='request-info' mt={12}>
+            <Box className="request-info" mt={12}>
               <VStack
-                className='request-info_detail'
+                className="request-info_detail"
                 spacing={16}
-                alignItems='start'
+                alignItems="start"
               >
                 {requestDetail.data.user && (
-                  <Flex className='request-info-row' h={40} alignItems='center'>
+                  <Flex className="request-info-row" h={40} alignItems="center">
                     <label>요청자</label>
                     <Link
                       href={pagePath.user({
                         userId: requestDetail.data.user.id,
                       })}
+                      onClick={modalStore.closeAll}
                     >
-                      <a onClick={modalStore.closeAll}>
-                        <Flex className='request-info_user' alignItems='center'>
-                          <Avatar
-                            w={32}
-                            h={32}
-                            name={requestDetail.data.user.name ?? undefined}
-                            src={requestDetail.data.user.image ?? undefined}
-                          />
-                          <Text
-                            as='span'
-                            ml={10}
-                            fontWeight='m'
-                            color='gray.70'
-                          >
-                            {requestDetail.data.user?.name}
-                          </Text>
-                        </Flex>
-                      </a>
+                      <Flex className="request-info_user" alignItems="center">
+                        <Avatar
+                          w={32}
+                          h={32}
+                          name={requestDetail.data.user.name ?? undefined}
+                          src={requestDetail.data.user.image ?? undefined}
+                        />
+                        <Text as="span" ml={10} fontWeight="m" color="gray.70">
+                          {requestDetail.data.user?.name}
+                        </Text>
+                      </Flex>
                     </Link>
                   </Flex>
                 )}
                 {requestDetail.data.creator && (
-                  <Flex className='request-info-row' h={40} alignItems='center'>
+                  <Flex className="request-info-row" h={40} alignItems="center">
                     <label>멘션</label>
                     <Link
                       href={pagePath.user({
                         userId: requestDetail.data.creator.userId,
                       })}
+                      onClick={modalStore.closeAll}
                     >
-                      <a onClick={modalStore.closeAll}>
-                        <Flex className='request-info_user' alignItems='center'>
-                          <Avatar
-                            w={32}
-                            h={32}
-                            name={
-                              requestDetail.data.creator.user?.name ?? undefined
-                            }
-                            src={
-                              requestDetail.data.creator.user?.image ??
-                              undefined
-                            }
-                          />
-                          <Text
-                            as='span'
-                            ml={10}
-                            fontWeight='m'
-                            color='gray.70'
-                          >
-                            {requestDetail.data.creator?.user.name
-                              ? `@${requestDetail.data.creator?.user.name}`
-                              : '-'}
-                          </Text>
-                        </Flex>
-                      </a>
+                      <Flex className="request-info_user" alignItems="center">
+                        <Avatar
+                          w={32}
+                          h={32}
+                          name={
+                            requestDetail.data.creator.user?.name ?? undefined
+                          }
+                          src={
+                            requestDetail.data.creator.user?.image ?? undefined
+                          }
+                        />
+                        <Text as="span" ml={10} fontWeight="m" color="gray.70">
+                          {requestDetail.data.creator?.user.name
+                            ? `@${requestDetail.data.creator?.user.name}`
+                            : '-'}
+                        </Text>
+                      </Flex>
                     </Link>
                   </Flex>
                 )}
-                <Box className='request-info-row'>
+                <Box className="request-info-row">
                   <label>후원금</label>
                   <span>
                     {thousandsSeparators(
@@ -511,22 +484,22 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                     )}
                     &nbsp;P
                   </span>
-                  <Flex ml={{ base: 16, tablet: 80 }} alignItems='center'>
+                  <Flex ml={{ base: 16, tablet: 80 }} alignItems="center">
                     <SvgDonate />
-                    <Text as='span' ml={4} color='gray.70'>
+                    <Text as="span" ml={4} color="gray.70">
                       {requestDetail.data.requestFundings.length}
                     </Text>
                   </Flex>
                   <Button
-                    theme='primary'
+                    theme="primary"
                     w={{ base: 80, tablet: 120 }}
-                    size='md'
+                    size="md"
                     h={40}
                     ml={{ base: 16, tablet: 32 }}
                     onClick={handleOpenFundingModal}
                   >
                     <SvgHandCoin fill={colors.white} />
-                    <Text as='span' ml={10} fontWeight='b'>
+                    <Text as="span" ml={10} fontWeight="b">
                       펀딩
                     </Text>
                   </Button>
@@ -538,11 +511,11 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 {/*  </Box>*/}
                 {/*)}*/}
 
-                <Flex className='request-info-row'>
+                <Flex className="request-info-row">
                   {isRequestIGot && requestDetail.data.status === 'REQUEST' && (
                     <>
                       <Button
-                        theme='primary'
+                        theme="primary"
                         w={150}
                         h={40}
                         onClick={() =>
@@ -553,7 +526,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                         <Text ml={10}>수락</Text>
                       </Button>
                       <Button
-                        theme='white'
+                        theme="white"
                         w={150}
                         h={40}
                         ml={28}
@@ -569,7 +542,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   {isRequestIGot && requestDetail.data.status === 'ACCEPT' && (
                     <>
                       <Button
-                        theme='primary'
+                        theme="primary"
                         w={150}
                         h={40}
                         onClick={() =>
@@ -582,7 +555,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                         <Text ml={10}>콘텐츠 등록</Text>
                       </Button>
                       <Button
-                        theme='white'
+                        theme="white"
                         w={150}
                         h={40}
                         ml={28}
@@ -612,7 +585,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                   {/*)}*/}
                   {!requestDetail.data.creator && my?.data?.creator && (
                     <Button
-                      theme='primary'
+                      theme="primary"
                       w={150}
                       h={40}
                       onClick={() =>
@@ -631,24 +604,24 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
           </ViewPostRequestContainer>
 
           {requestDetail.data.solvedUrl && (
-            <Box className='reqeust-solved-contents' mt={36}>
+            <Box className="reqeust-solved-contents" mt={36}>
               <YoutubeIframe url={requestDetail.data.solvedUrl}></YoutubeIframe>
               <ViewPostRequestContainer>
                 <Text
-                  as='h3'
-                  color='gray.80'
+                  as="h3"
+                  color="gray.80"
                   fontSize={20}
-                  fontWeight='b'
+                  fontWeight="b"
                   mt={10}
                 >
                   등록된 컨텐츠
                 </Text>
-                <Flex mt={10} alignItems='center'>
+                <Flex mt={10} alignItems="center">
                   <UserAvatar
                     size={32}
                     user={requestDetail.data.creator?.user}
                     Text={
-                      <Text as='span' ml={10} mr={30}>
+                      <Text as="span" ml={10} mr={30}>
                         {requestDetail.data.creator?.user?.name}
                       </Text>
                     }
@@ -658,22 +631,22 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
             </Box>
           )}
           <ViewPostRequestContainer
-            display='flex'
-            flexDirection='column'
-            flex='auto'
+            display="flex"
+            flexDirection="column"
+            flex="auto"
           >
             <Divider my={20} />
             <Box
-              display='flex'
-              flexDirection='column'
-              flex='auto'
+              display="flex"
+              flexDirection="column"
+              flex="auto"
               dangerouslySetInnerHTML={{
                 __html: requestDetail.data?.content
                   ? requestDetail.data?.content
                   : '',
               }}
             />
-            <Flex justifyContent='center' mt={30}>
+            <Flex justifyContent="center" mt={30}>
               <Button
                 className={clsx(
                   'like-button',
@@ -681,9 +654,9 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 )}
                 onClick={handleLike}
               >
-                <Flex gap={6} alignItems='center'>
+                <Flex gap={6} alignItems="center">
                   <SvgThumbUp fill={colors.gray['50']} />
-                  <Text as='span' fontSize={14} fontWeight='sb'>
+                  <Text as="span" fontSize={14} fontWeight="sb">
                     {requestDetail?.data?.likeSet.size}
                   </Text>
                 </Flex>
@@ -697,9 +670,9 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 ml={32}
                 onClick={handleDislike}
               >
-                <Flex gap={6} alignItems='center'>
+                <Flex gap={6} alignItems="center">
                   <SvgThumbDown fill={colors.gray['50']} />
-                  <Text as='span' fontSize={14} fontWeight='sb'>
+                  <Text as="span" fontSize={14} fontWeight="sb">
                     {requestDetail?.data?.dislikeSet.size}
                   </Text>
                 </Flex>
@@ -707,13 +680,13 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
               </Button>
             </Flex>
             <HStack
-              className='request-post-actions'
-              justifyContent='center'
+              className="request-post-actions"
+              justifyContent="center"
               mt={20}
               spacing={16}
             >
               <Button
-                theme='white'
+                theme="white"
                 w={120}
                 h={40}
                 onClick={() => {
@@ -731,14 +704,14 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
                 <Text ml={10}>공유</Text>
               </Button>
               <Button
-                theme='primary'
+                theme="primary"
                 w={120}
-                size='md'
+                size="md"
                 h={40}
                 onClick={handleOpenFundingModal}
               >
                 <SvgHandCoin fill={colors.white} />
-                <Text as='span' ml={10} fontWeight='b'>
+                <Text as="span" ml={10} fontWeight="b">
                   펀딩
                 </Text>
               </Button>
@@ -795,7 +768,7 @@ const style = css`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-      //border: 1px solid ${colors.border['2']};
+    //border: 1px solid ${colors.border['2']};
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -829,7 +802,7 @@ ViewRequestPost.title = () => '요청 상세';
 ViewRequestPost.modalOpen = (props: Props) => {
   useModalStore.getState().open(PAGE_KEYS.viewPostRequest, {
     Component: () => (
-      <Box width='100vw'>
+      <Box width="100vw">
         <ViewRequestPost {...props} />
       </Box>
     ),
@@ -841,9 +814,9 @@ ViewRequestPost.modalOpen = (props: Props) => {
   });
 };
 ViewRequestPost.ModalLink = function ViewRequestPostModalLink({
-                                                                children,
-                                                                ...props
-                                                              }: {
+  children,
+  ...props
+}: {
   children: ReactNode;
 } & Props) {
   const modalStore = useModalStore();
@@ -860,11 +833,10 @@ ViewRequestPost.ModalLink = function ViewRequestPostModalLink({
       href={pagePath.viewPostRequest({
         requestId: `${props.requestPost.id}`,
       })}
-      passHref
+      onClick={handleModalOpen}
+      css={linkStyle}
     >
-      <a onClick={handleModalOpen} css={linkStyle}>
-        {children}
-      </a>
+      {children}
     </Link>
   );
 };
