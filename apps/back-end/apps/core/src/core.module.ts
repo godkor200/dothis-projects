@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppService } from './core.service';
 
 @Module({
-  imports: [],
+  imports: [AppService],
   providers: [],
   exports: [],
 })

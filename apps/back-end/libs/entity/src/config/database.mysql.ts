@@ -1,7 +1,11 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as path from 'path';
+import { User } from '../domain/user/User.entity';
 export async function createDatabaseConnection() {
-  const entityPath = path.join(__dirname, 'src/domain/**/*.entity.ts');
+  // const entityPath = path.join(
+  //   __dirname,
+  //   `/../../libs/entity/src/domain/**/*.entity.js`,
+  // );
+  // console.log(entityPath);
   return TypeOrmModule.forRoot({
     type: 'mysql',
     host: process.env.DB_HOST,
@@ -9,7 +13,7 @@ export async function createDatabaseConnection() {
     username: 'root',
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.DB_SCHEMA,
-    entities: [entityPath],
+    entities: [User],
     synchronize: false,
   });
 }

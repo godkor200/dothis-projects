@@ -9,8 +9,8 @@ export class UserApiService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) // private readonly userApiQueryRepository: UserApiQueryRepository,
-  {}
+    private readonly userApiQueryRepository: UserApiQueryRepository,
+  ) {}
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
