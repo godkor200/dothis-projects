@@ -1,6 +1,12 @@
 module.exports = {
   extends: ['turbo', 'prettier', 'next/core-web-vitals'],
-  plugins: ['@typescript-eslint', 'react', 'jsx-a11y', 'prettier', 'simple-import-sort'],
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'jsx-a11y',
+    'prettier',
+    'simple-import-sort',
+  ],
   env: {
     browser: true,
     node: true,
@@ -30,12 +36,18 @@ module.exports = {
     '@next/next/no-img-element': 'off', // We currently not using next/image because it isn't supported with SSG mode
     '@typescript-eslint/comma-dangle': 'off', // Avoid conflict rule between Eslint and Prettier
     '@typescript-eslint/consistent-type-imports': 'error', // Ensure `import type` is used when it's necessary
-
   },
-  overrides: [ // Configuration for testing
+  overrides: [
+    // Configuration for testing
     {
       files: ['**/*.test.ts', '**/*.test.tsx'],
       plugins: ['jest', 'jest-formatting', 'testing-library', 'jest-dom'],
-      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended', 'plugin:testing-library/react', 'plugin:jest-dom/recommended'],
-    }],
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest-formatting/recommended',
+        'plugin:testing-library/react',
+        'plugin:jest-dom/recommended',
+      ],
+    },
+  ],
 };
