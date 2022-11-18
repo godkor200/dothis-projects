@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ApiController } from './health.controller';
+import { HeathApiController } from './health.controller';
 import { HealthService } from '@Apps/api/src/health/health.service';
 
 describe('ApiController', () => {
-  let apiController: ApiController;
+  let apiController: HeathApiController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [ApiController],
+      controllers: [HeathApiController],
       providers: [HealthService],
     }).compile();
 
-    apiController = app.get<ApiController>(ApiController);
+    apiController = app.get<HeathApiController>(HeathApiController);
   });
 
   describe('헬스 체크', () => {
