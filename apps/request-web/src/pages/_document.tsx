@@ -30,7 +30,7 @@ function createEmotionCache() {
 }
 
 const description = '콘텐츠 요청 크리에이터 스폰서쉽 플랫폼 서비스';
-const title = '두디스 요청하기';
+const title = '두디스 리퀘스트';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -92,7 +92,7 @@ export default class MyDocument extends Document {
 
 export const AppMeta = () => (
   <>
-    <meta name="application-name" content="두디스 리퀘스트" />
+    <meta name="application-name" content={title} />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content={title} />
@@ -103,59 +103,56 @@ export const AppMeta = () => (
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content={colors.primary.default} />
 
-    <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" href="/icons/logo/logo-180.png" />
     <link
       rel="apple-touch-icon"
       sizes="152x152"
-      href="/icons/touch-icon-ipad.png"
+      href="/icons/logo/logo-152.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/icons/touch-icon-iphone-retina.png"
+      href="/icons/logo/logo-180.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="167x167"
-      href="/icons/touch-icon-ipad-retina.png"
+      href="/icons/logo/logo-167.png"
     />
 
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/icons/favicon-32x32.png"
+      href="/icons/logo/logo-32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/icons/favicon-16x16.png"
+      href="/icons/logo/logo-16.png"
     />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5" />
-    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="mask-icon" href="/icons/logo/logo-180.png" color="#fff" />
+    <link rel="shortcut icon" href="/icons/logo/logo-32.png" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content={description} />
     <meta name="twitter:url" content="https://dothis.world/" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta
       name="twitter:image"
-      content="https://yourdomain.com/icons/android-chrome-192x192.png"
+      content="https://dothis.world/icons/logo-192.png"
     />
     <meta name="twitter:creator" content="dothis" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
-    <meta
-      property="og:description"
-      content="콘텐츠 요청 크리에이터 스폰서쉽 플랫폼 서비스"
-    />
+    <meta property="og:description" content={description} />
     <meta property="og:site_name" content={title} />
     <meta property="og:url" content="https://dothis.world/" />
     <meta
       property="og:image"
-      content="https://yourdomain.com/icons/apple-touch-icon.png"
+      content="https://dothis.world/icons/logo/logo-180.png"
     />
   </>
 );
