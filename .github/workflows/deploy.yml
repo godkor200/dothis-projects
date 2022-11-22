@@ -59,10 +59,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./dothis.tar.gz ${{ secrets.AWS_S3_BUCKET_NAME }}
         working-directory: ${{ env.working-directory }}
-        
+        run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
+
       - name: deploy with AWS codeDeploy
+        working-directory: ${{ env.working-directory }}
         run: aws deploy create-deployment
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime
