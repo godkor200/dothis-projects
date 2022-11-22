@@ -26,8 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Npm Setup & Build
-        run : |
-          npm install
+        run : | 
+         cd ./apps/back-end && npm install
           
      # - name: Create Deploy Folder
       #  run : |
@@ -42,7 +42,8 @@ jobs:
           
       - name: archive dothis 
         run: tar cvfz ./dothis.tar.gz out
-
+        working-directory: ${{ env.working-directory }}
+        
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -52,7 +53,7 @@ jobs:
           
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./dothis.tar.gz ${{ secrets.AWS_S3_BUCKET_NAME }}
-#         working-directory: ${{ env.working-directory }}
+        working-directory: ${{ env.working-directory }}
         
       - name: deploy with AWS codeDeploy
         run: aws deploy create-deployment
