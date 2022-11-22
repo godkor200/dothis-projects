@@ -1,5 +1,5 @@
 {
-  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "extends": "../../packages/config/eslint-dothis-nestjs.js",
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
