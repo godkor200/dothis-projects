@@ -27,22 +27,29 @@ jobs:
       
       - name: Npm Setup & Build
         run : | 
-         cd ./apps/back-end && npm install
-          
-     # - name: Create Deploy Folder
-      #  run : |
-       #   mkdir out
-        #  cp appspec.yml out
-        #  cp start-update.sh out
-        #  cp .env.production out
-        #  cp -r .next out
-        #  cp -r public out
-        #  cp package.json out
-        #  cp next.config.mjs out
-          
-      - name: archive dothis 
-        run: tar cvfz ./dothis.tar.gz out
+         cd ${{ env.working-directory }} && npm install 
+         
+      - name: build server files
         working-directory: ${{ env.working-directory }}
+        run: |
+          npm run build
+          
+      - name: create env file
+        working-directory: ${{ env.working-directory }}
+        run: |
+          pwd
+          touch .env
+          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> .env
+          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> .env
+          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> .env
+          cat .env
+          
+      - name: zip file
+        working-directory: ${{ env.working-directory }}
+        run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./.env ./package.json
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -60,4 +67,4 @@ jobs:
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name github-action-group
-          --s3-location bucket=dothis,bundleType=tgz,key=git-archive/dothis.tar.gz
+          --s3-location bucket=dothis,bundleType=zip,key=git-archive/dothisBackEnd.zip
