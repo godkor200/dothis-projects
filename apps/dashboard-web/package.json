@@ -9,23 +9,39 @@
     "start": "next start"
   },
   "dependencies": {
+    "@dothis/share": "*",
+    "@emotion/css": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@nivo/pie": "^0.80.0",
+    "@nivo/tooltip": "^0.80.0",
+    "@tanstack/react-table": "^8.7.0",
+    "clsx": "^1.2.1",
+    "date-fns": "^2.29.3",
     "next": "13.0.2",
     "next-auth": "^4.15.1",
+    "next-pwa": "^5.6.0",
+    "next-superjson-plugin": "^0.4.9",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.5",
+    "react-intersection-observer": "^9.4.1",
     "superjson": "^1.11.0",
-    "next-superjson-plugin": "^0.4.9",
-    "zod": "^3.19.1",
-    "next-pwa": "^5.6.0",
-    "@dothis/share": "*"
+    "valtio": "^1.7.6",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@dothis/config": "*",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "typescript": "^4.9.3",
-    "@dothis/config":"*"
+    "webpack": "^5.75.0"
   },
   "ct3aMetadata": {
     "initVersion": "6.10.2"
