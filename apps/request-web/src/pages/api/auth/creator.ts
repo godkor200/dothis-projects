@@ -1,5 +1,6 @@
 import { errorMessage } from '@dothis/share/lib/models/Message';
-import { google } from 'googleapis';
+import { auth as googleAuth } from 'googleapis/build/src/apis/oauth2';
+import { youtube } from 'googleapis/build/src/apis/youtube';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import superjson from 'superjson';
@@ -21,7 +22,7 @@ export default async function handler(
     const accessToken = session?.accessToken as string;
     const userId = session.user.id as string;
 
-    const auth = new google.auth.OAuth2({
+    const auth = new googleAuth.OAuth2({
       clientId,
       clientSecret,
     });
@@ -31,7 +32,7 @@ export default async function handler(
       // refresh_token: refreshToken,
     });
 
-    const service = google.youtube('v3');
+    const service = youtube('v3');
     await service.channels.list(
       {
         auth: auth,

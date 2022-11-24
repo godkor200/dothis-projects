@@ -1,30 +1,22 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
+
+const runtimeCaching = require('next-pwa/cache');
+
 /**
  * @type {import('next').NextConfig}
  */
-const withTM = require('next-transpile-modules')(['@dothis/share']);
-// const nextConfig = {
-//   reactStrictMode: true,
-//   experimental: {
-//     transpilePackages: ['@dothis/share'],
-//   },
-//};
-const nextConfig = withTM({
+const nextConfig = {
   reactStrictMode: true,
-  // serverComponentsExternalPackages: ['@prisma/client'],
-  // webpack: (config) => {
-  //   config.externals = [...(config.externals || []), '@prisma/client'];
-  //   // Important: return the modified config
-  //   return config;
-  // },
-  // experimental: {
-  //   // appDir: true,
-  //   serverComponentsExternalPackages: ['@prisma/client'],
-  // },
-  // experimental: {
-  // Enables hot-reload and easy integration for local packages
-  // serverComponentsExternalPackages: ['@prisma/client'],
-  // transpilePackages: ['@dothis/share', '@dothis/config'],
-  // },
-});
+  pwa: {
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
+    // runtimeCaching,
+  },
+  experimental: {
+    transpilePackages: ['@dothis/share'],
+  },
+};
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

@@ -39,7 +39,7 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token: _token, account, user }) {
-      // Persist the OAuth access_token to the token right after signin
+      // Persist   the OAuth access_token to the token right after signin
       if (account) {
         _token.accessToken = account.access_token;
       }
