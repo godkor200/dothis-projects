@@ -19,7 +19,7 @@ build
 *.pem
 
 # debug
-npm-debug.log*
+npm-debug.log* 
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
@@ -41,4 +41,4 @@ workbox-*.js.map
 workbox-*.js
 sw.js.map
 sw.js
-얀ㅅ
+dist
