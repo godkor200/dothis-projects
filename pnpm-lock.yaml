@@ -132,8 +132,11 @@ importers:
       multer-s3: ^3.0.1
       next: 13.0.5
       next-auth: ^4.17.0
+      next-compose-plugins: ^2.2.1
       next-connect: ^0.13.0
       next-pwa: ^5.6.0
+      next-superjson-plugin: ^0.4.9
+      next-transpile-modules: ^10.0.0
       prettier: ^2.8.0
       prisma: ^4.6.0
       react: 18.2.0
@@ -211,7 +214,10 @@ importers:
       babel-jest: 29.3.1_@babel+core@7.20.2
       babel-plugin-superjson-next: 0.4.5_o7ninycgoz2lf73je52p7wq4ja
       jest: 29.3.1_odkjkoia5xunhxkdrka32ib6vi
+      next-compose-plugins: 2.2.1
       next-pwa: 5.6.0_mvlbnb5sz6utafrzzodeojfm2i
+      next-superjson-plugin: 0.4.9_o7ninycgoz2lf73je52p7wq4ja
+      next-transpile-modules: 10.0.0
       prettier: 2.8.0
       prisma: 4.6.1
       ts-jest: 29.0.3_cg5lxadyxwsb5nynmvaj7nmpa4
@@ -7198,7 +7204,6 @@ packages:
     dependencies:
       graceful-fs: 4.2.10
       tapable: 2.2.1
-    dev: false
 
   /entities/4.4.0:
     resolution: {integrity: sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==}
@@ -10520,6 +10525,10 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /next-compose-plugins/2.2.1:
+    resolution: {integrity: sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==}
+    dev: true
+
   /next-connect/0.13.0:
     resolution: {integrity: sha512-f2G4edY01XomjCECSrgOpb/zzQinJO6Whd8Zds0+rLUYhj5cLwkh6FVvZsQCSSbxSc4k9nCwNuk5NLIhvO1gUA==}
     dependencies:
@@ -10546,6 +10555,23 @@ packages:
       - supports-color
       - uglify-js
       - webpack
+    dev: true
+
+  /next-superjson-plugin/0.4.9_o7ninycgoz2lf73je52p7wq4ja:
+    resolution: {integrity: sha512-MSj40zj+ZRmFnZgZxOgQFD6efk3A5OQAPhU9e018JthWPjiE/Xx3HyxOsuOycoBDSxurBa6xH+m78SRr60JTXw==}
+    peerDependencies:
+      next: '>12.3.0'
+      superjson: ^1
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      next: 13.0.5_mqvh5p7ejg4taogoj6tpk3gd5a
+      superjson: 1.11.0
+    dev: true
+
+  /next-transpile-modules/10.0.0:
+    resolution: {integrity: sha512-FyeJ++Lm2Fq31gbThiRCrJlYpIY9QaI7A3TjuhQLzOix8ChQrvn5ny4MhfIthS5cy6+uK1AhDRvxVdW17y3Xdw==}
+    dependencies:
+      enhanced-resolve: 5.12.0
     dev: true
 
   /next/13.0.5_mqvh5p7ejg4taogoj6tpk3gd5a:

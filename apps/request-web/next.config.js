@@ -1,22 +1,41 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-});
+const withPWA = require('next-pwa')
+const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')(['@dothis/share']);
 
 const runtimeCaching = require('next-pwa/cache');
 
-/**
+
+const plugins =[withTM, withPWA];
+
+/** @type {import('next').NextConfig} *//**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   pwa: {
-    dest: 'public',
+    dest: "public",
+    register: true,
+    skipWaiting: true,
     disable: process.env.NODE_ENV === 'development',
-    // runtimeCaching,
+    runtimeCaching,
+    buildExcludes: [/middleware-manifest.json$/]
   },
   experimental: {
+    swcPlugins: [
+      [
+        'next-superjson-plugin',
+        {
+          excluded: [],
+        },
+      ],
+    ],
     transpilePackages: ['@dothis/share'],
   },
+  compiler:{
+    emotion: true,
+  }
 };
 
-module.exports = withPWA(nextConfig);
+
+module.exports = async (phase) => withPlugins(plugins, nextConfig)(phase, { undefined });
