@@ -2,38 +2,38 @@ name: CI-CD
 
 on:
   pull_request:
-    branches: [ deploy ]
+    branches: [deploy]
 
 jobs:
   build:
     name: Build, Deploy to S3 Bucket
     runs-on: ubuntu-latest
-    
+
     env:
       working-directory: ./apps/back-end
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.13.1]
 
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
-        
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      
+
       - name: Npm Setup & Build
-        run : | 
-         cd ${{ env.working-directory }} && npm install 
-         
+        run: |
+          cd ${{ env.working-directory }} && npm install
+
       - name: build server files
         working-directory: ${{ env.working-directory }}
         run: |
           npm run build
-          
+
       - name: create env file
         working-directory: ${{ env.working-directory }}
         run: |
@@ -46,18 +46,18 @@ jobs:
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> .env
           cat .env
-          
+
       - name: zip file
         working-directory: ${{ env.working-directory }}
         run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./.env ./package.json
-        
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-          
+
       - name: Upload to S3
         working-directory: ${{ env.working-directory }}
         run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
