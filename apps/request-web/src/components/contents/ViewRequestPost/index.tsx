@@ -34,7 +34,7 @@ import {
 } from '@dothis/share/lib/styles/chakraTheme';
 import { thousandsSeparators } from '@dothis/share/lib/utils';
 import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
-import { css } from '@emotion/react';
+import { css } from '@emotion/css';
 import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import { format } from 'date-fns';
@@ -296,6 +296,8 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
     });
   }, [requestDetail.data]);
 
+  console.log('style', style);
+
   const dotdotdotMenuItems = useMemo(() => {
     return [
       isMyRequest && {
@@ -367,7 +369,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
         </Box>
       )}
       {requestDetail.data && (
-        <Box css={style} pt={20} pb={24}>
+        <Box className={style} pt={20} pb={24}>
           <ViewPostRequestContainer>
             <Flex justifyContent="space-between">
               <PostRequestStatus status={requestDetail.data.status} />
@@ -768,7 +770,6 @@ const style = css`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    //border: 1px solid ${colors.border['2']};
     border-radius: 50%;
     width: 80px;
     height: 80px;

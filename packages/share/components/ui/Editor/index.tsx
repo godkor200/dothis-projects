@@ -149,8 +149,5 @@ const style = css`
     width: 110px;
   }
 `;
-const editorStyle = css`
-  height: 100%;
-`;
 
 export default _Editor;
