@@ -10,20 +10,21 @@ module.exports = {
       watch: true,
       env: {
         TS_NODE_BASEURL: './dist',
-        Server_PORT: 8080, //Express PORT
+        Server_PORT: 8080,
         NODE_ENV: 'development',
       },
     },
-    {
-      name: 'dothis-pd',
-      script: './dist/apps/api/src/main.js',
-      instances: 2, // 클러스터 모드
-      autorestart: true,
-      watch: true,
-      env: {
-        Server_PORT: 3000,
-        NODE_ENV: 'production',
-      },
-    },
+    // ,
+    // {
+    //   name: 'dothis-pd',
+    //   script: './dist/apps/api/src/main.js',
+    //   instances: 2, // 클러스터 모드
+    //   autorestart: true,
+    //   watch: true,
+    //   env: {
+    //     Server_PORT: 3000,
+    //     NODE_ENV: 'production',
+    //   },
+    // },
   ],
 };
