@@ -2,8 +2,9 @@ module.exports = {
   apps: [
     {
       name: 'dothis-dev',
-      script: './apps/api/src/main.js',
+      script: './dist/apps/api/src/main.js',
       instances: 2,
+      exec_mode: 'cluster',
       autorestart: true,
       watch: true,
       env: {
@@ -13,7 +14,7 @@ module.exports = {
     },
     {
       name: 'dothis-pd',
-      script: './apps/api/src/main.js',
+      script: './dist/apps/api/src/main.js',
       instances: 2, // 클러스터 모드
       autorestart: true,
       watch: true,
