@@ -3,6 +3,10 @@ module.exports = {
     {
       name: 'dothis-dev',
       script: './dist/apps/api/src/main.js',
+      node_args: '-r ts-node/register -r tsconfig-paths/register',
+      env: {
+        TS_NODE_BASEURL: './dist',
+      },
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,
