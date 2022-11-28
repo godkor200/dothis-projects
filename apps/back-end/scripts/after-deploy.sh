@@ -1,8 +1,8 @@
 #!/bin/bash
 REPOSITORY=/var/www/back-end
 
-cd $REPOSITORY
+sudo chmod -R 777 $REPOSITORY
 
-sudo npm install
+cd $REPOSITORY
 
 sudo pm2 reload ./ecosystem.config.js --only dothis-dev

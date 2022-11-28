@@ -4,15 +4,13 @@ module.exports = {
       name: 'dothis-dev',
       script: './dist/apps/api/src/main.js',
       node_args: '-r ts-node/register -r tsconfig-paths/register',
-      env: {
-        TS_NODE_BASEURL: './dist',
-      },
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,
       watch: true,
       env: {
-        Server_PORT: 3000, //Express PORT
+        TS_NODE_BASEURL: './dist',
+        Server_PORT: 8080, //Express PORT
         NODE_ENV: 'development',
       },
     },
