@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'dothis-dev',
-      script: './dist/apps/api/src/main.js',
+      script: './dist/apps/api/main.js',
       node_args: '-r ts-node/register -r tsconfig-paths/register',
       instances: 2,
       exec_mode: 'cluster',
