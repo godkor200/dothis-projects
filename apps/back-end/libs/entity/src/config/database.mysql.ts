@@ -1,5 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../domain/user/User.entity';
+import { Channel } from '../domain/channel/Channel.entity';
+import { DailyViews } from '../domain/daily_views/DailyViews.entity';
+
 export async function createDatabaseConnection() {
   // const entityPath = path.join(
   //   __dirname,
@@ -13,7 +16,7 @@ export async function createDatabaseConnection() {
     username: 'root',
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.DB_SCHEMA,
-    entities: [User],
+    entities: [User, Channel, DailyViews],
     synchronize: false,
   });
 }
