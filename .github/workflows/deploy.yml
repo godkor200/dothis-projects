@@ -49,7 +49,7 @@ jobs:
 
       - name: zip file
         working-directory: ${{ env.working-directory }}
-        run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./.env ./package.json ./ecosystem.config.js
+        run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./.env ./package.json ./ecosystem.config.js ./node_modules
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
