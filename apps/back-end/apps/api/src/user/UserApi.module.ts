@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from '@Libs/entity/src/domain/user/UserModule';
-import { UserApiController } from './UserApi.controller';
-import { UserApiService } from './UserApi.service';
-import { UserApiQueryRepository } from './UserApiQueryRepository';
+import { UserApiV1Module } from './v1/UserApi-v1.module';
+
+import { RouterModule } from '@nestjs/core';
 
 @Module({
-  imports: [UserModule],
-  controllers: [UserApiController],
-  providers: [UserApiService, UserApiQueryRepository],
+  imports: [
+    UserModule,
+    UserApiV1Module,
+    RouterModule.register([{ path: 'v1', module: UserApiV1Module }]),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class UserApiModule {}

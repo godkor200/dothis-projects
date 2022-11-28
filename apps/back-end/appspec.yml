@@ -1,19 +1,19 @@
 version: 0.0
 os: linux
 files:
-  - source:  /
+  - source: /
     destination: /var/www/back-end
     overwrite: yes
 file_exists_behavior: OVERWRITE
 
 permissions:
   - object: /
-    pattern: "**"
+    pattern: '**'
     owner: ubuntu
     group: ubuntu
 
 hooks:
-   AfterInstall:
-     - location: /start-update.sh
-       timeout: 180
-       runas: root
+  AfterInstall:
+    - location: scripts/after-deploy.sh
+      timeout: 180
+      runas: root
