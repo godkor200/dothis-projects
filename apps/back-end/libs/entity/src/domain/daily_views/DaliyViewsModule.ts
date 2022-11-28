@@ -4,6 +4,6 @@ import { DailyViews } from './DailyViews.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DailyViews])],
-  exports: [DailyViews],
+  exports: [TypeOrmModule],
 })
 export class DailyViewsModule {}
