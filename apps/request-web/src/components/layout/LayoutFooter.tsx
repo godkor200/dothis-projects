@@ -121,9 +121,5 @@ const style = css`
       display: block;
       height: 32px;
     }
-
-    /* > * > a:first-of-type {
-      margin-bottom: 12px;
-    } */
   }
 `;

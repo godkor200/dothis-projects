@@ -4,7 +4,7 @@ import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonP
 import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
 import Input from '@dothis/share/components/ui/Input';
 import { typo } from '@dothis/share/lib/styles/chakraTheme';
-import { css } from '@emotion/react';
+import { css } from '@emotion/css';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -104,7 +104,7 @@ const requestPost = ({
 
   return (
     <LayoutTemplate>
-      <Container css={style}>
+      <Container className={style}>
         <Text as="h2" my={40}>
           요청 관리
         </Text>
