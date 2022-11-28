@@ -95,7 +95,6 @@ const style = css`
     &:active {
       transform: none;
       filter: none;
-      //filter: grayscale(1) opacity(0.5);
     }
   }
 `;

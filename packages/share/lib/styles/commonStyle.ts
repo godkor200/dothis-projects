@@ -44,8 +44,8 @@ const commonStyle = {
     }
   `,
   scrollBarHidden: css`
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
 
     ::-webkit-scrollbar {
       display: none;
