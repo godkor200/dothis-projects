@@ -7,14 +7,22 @@ import { DailyViewsModule } from '@Libs/entity/src/domain/daily_views/DaliyViews
 import { createDatabaseConnection } from '@Libs/entity/src/config/database.mysql';
 import { UserQueryRepository } from '@Libs/entity/src/domain/user/UserQueryRepository';
 import { ChannelApiModule } from './channel/ChannelApi.module';
+import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
+import dbConfig from '@Libs/entity/src/config/db.env';
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV === 'development' ? '.env' : 'production.env',
+      load: [dbConfig],
+      validationSchema,
+    }),
     HealthModule,
     UserApiModule,
     ChannelApiModule,
     DailyViewsModule,
-    createDatabaseConnection(),
+    new createDatabaseConnection(dbConfig()).set(),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
   ],
 })

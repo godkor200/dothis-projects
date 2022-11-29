@@ -5,4 +5,4 @@ sudo chmod -R 777 $REPOSITORY
 
 cd $REPOSITORY
 
-sudo pm2 reload ./ecosystem.config.js --only dothis-dev
+sudo pm2 reload ./ecosystem.config.js --env production
