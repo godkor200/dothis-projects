@@ -4,7 +4,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 module.exports = {
   apps: [
     {
-      name: 'dothis-dev',
+      name: 'dothis',
       cwd: './dist/apps/api',
       script: './main.js',
       instances: 2,
