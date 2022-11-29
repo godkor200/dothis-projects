@@ -1,10 +1,10 @@
-import Container from '@dothis/share/components/layout/Container';
-import HomeLogo from '@dothis/share/components/ui/HomeLogo';
+import Container from '@dothis/share';
+import HomeLogo from '@dothis/share';
 import {
   colors,
   mediaQueries,
   typo,
-} from '@dothis/share/lib/styles/chakraTheme';
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import React from 'react';

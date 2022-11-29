@@ -1,20 +1,14 @@
 import 'swiper/css';
 
 import { ChakraProvider } from '@chakra-ui/react';
+import { ModalOptProvider, standaloneToast, useModalStore } from '@dothis/share';
 import Modal from '@dothis/share/components/ui/Modal';
-import {
-  ModalOptProvider,
-  standaloneToast,
-  useModalStore,
-} from '@dothis/share/lib/models';
-import chakraTheme from '@dothis/share/lib/styles/chakraTheme';
 import globalStyle from '@dothis/share/lib/styles/globalStyle';
 import { Global } from '@emotion/react';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
@@ -22,6 +16,8 @@ import superjson from 'superjson';
 
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
 import { trpc } from '@/utils/trpc';
+
+import dothisTheme from '../../../../packages/share/lib/styles/dothisTheme';
 
 // immer Map Set 사용 가능하게
 enableMapSet();
@@ -37,14 +33,14 @@ axios.defaults.transformResponse = (data, headers) => {
 export const toast = standaloneToast.toast;
 
 // @ts-ignore
-BigInt.prototype.toJSON = function () {
+BigInt.prototype.toJSON = function() {
   return this.toString();
 };
 
 function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps<{ session: Session | null | undefined }>) {
+               Component,
+               pageProps: { session, ...pageProps },
+             }: AppProps<{ session: Session | null | undefined }>) {
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);
@@ -61,11 +57,11 @@ function App({
   return (
     <>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
       <Global styles={globalStyle} />
       <SessionProvider session={session}>
-        <ChakraProvider theme={chakraTheme} resetCSS>
+        <ChakraProvider theme={dothisTheme} resetCSS>
           {/*<CssBaseline enableColorScheme />*/}
           <Component {...pageProps} />
           <standaloneToast.ToastContainer />

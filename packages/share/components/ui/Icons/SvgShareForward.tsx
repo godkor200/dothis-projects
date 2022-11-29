@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-const SvgShareForward = (props: SVGProps<SVGSVGElement>) => (
+export const SvgShareForward = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="25"
     height="25"
@@ -19,5 +19,3 @@ const SvgShareForward = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgShareForward;

@@ -1,14 +1,14 @@
 import { Box } from '@chakra-ui/react';
-import Container from '@dothis/share/components/layout/Container';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
-import SwiperButton from '@dothis/share/components/ui/Button/SwiperButton';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
 import {
   colors,
   mediaQueries,
   typo,
-} from '@dothis/share/lib/styles/chakraTheme';
+} from '@dothis/share';
+import ToastBox from '@dothis/share//components/ui/ToastBox';
+import Container from '@dothis/share/components/layout/Container';
+import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
+import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
+import SwiperButton from '@dothis/share/components/ui/Button/SwiperButton';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import type { GetServerSidePropsContext } from 'next/types';

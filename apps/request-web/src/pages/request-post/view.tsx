@@ -1,5 +1,4 @@
-import Container from '@dothis/share/components/layout/Container';
-import { extractQueryParams } from '@dothis/share/lib/utils';
+import Container, { extractQueryParams } from '@dothis/share';
 import { useRouter } from 'next/router';
 import type {
   GetServerSidePropsContext,

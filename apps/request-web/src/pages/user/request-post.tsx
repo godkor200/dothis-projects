@@ -1,9 +1,8 @@
 import { Box, Center, HStack, Spinner, Text } from '@chakra-ui/react';
 import Container from '@dothis/share/components/layout/Container';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import SvgSearch from '@dothis/share/components/ui/Icons/SvgSearch';
 import Input from '@dothis/share/components/ui/Input';
-import { typo } from '@dothis/share/lib/styles/chakraTheme';
+import { typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -17,6 +16,7 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import { withUserSessionSsr } from '@/server/session';
 import { trpc } from '@/utils/trpc';
+import { SvgSearch } from '@dothis/share/components/ui';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
@@ -47,15 +47,16 @@ export const getServerSideProps = withUserSessionSsr(
 );
 
 const requestPost = ({
-  searchText: _searchText,
-  userId,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+                       searchText: _searchText,
+                       userId,
+                     }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchText, _setSearchText] = useState(_searchText);
   const router = useRouter();
   const trpcUtils = trpc.useContext();
   const handleSetSearchText = useCallback(
-    (_searchText: typeof searchText) => {},
+    (_searchText: typeof searchText) => {
+    },
     [],
   );
   const debouncedSearchText = useDebouncedCallback(
@@ -105,21 +106,21 @@ const requestPost = ({
   return (
     <LayoutTemplate>
       <Container css={style}>
-        <Text as="h2" my={40}>
+        <Text as='h2' my={40}>
           요청 관리
         </Text>
         <Box>
           <HStack>
             <Input
-              key="input"
+              key='input'
               Right={
-                <Center h="100%" w={32} pr={8}>
+                <Center h='100%' w={32} pr={8}>
                   <SvgSearch />
                 </Center>
               }
-              theme="white"
-              size="sm"
-              placeholder="검색"
+              theme='white'
+              size='sm'
+              placeholder='검색'
               onChange={(e) => {
                 debouncedSearchText(e.target.value);
               }}

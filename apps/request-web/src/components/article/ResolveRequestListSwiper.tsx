@@ -1,13 +1,10 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
-import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import {
+import UserAvatar, {
   breakpoints,
   colors,
   fontWeights,
   typo,
-} from '@dothis/share/lib/styles/chakraTheme';
-import { youtubeUrlToId } from '@dothis/share/lib/utils';
+, youtubeUrlToId } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { MutableRefObject } from 'react';
 import React, { useMemo } from 'react';
@@ -18,6 +15,7 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import UserLink from '@/components/ui/Links/UserLink';
+import { SvgDonate } from '@dothis/share/components/ui';
 
 import { RequestPostDomain } from '../../domain';
 import Tag from '../ui/Tag';

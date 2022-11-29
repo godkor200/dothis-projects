@@ -5,11 +5,11 @@ import { useCallback, useRef } from 'react';
 
 import MentionContents from '../../../components/ui/Mention/MentionContents';
 import MentionTarget from '../../../components/ui/Mention/MentionTarget';
-import type { UseMatchReturn } from '../../../lib/hooks/useMatch';
-import { colors, shadows } from '../../../lib/styles/chakraTheme';
+import type { UseMatchReturn } from '../../../lib';
+import { colors, shadows } from '../../../lib';
 import Mention from '../Mention/Mention';
 import type { InputProps } from './index';
-import Input from './index';
+import { Input } from './Input';
 
 export type MentionInputProps = InputProps & {
   match: Pick<

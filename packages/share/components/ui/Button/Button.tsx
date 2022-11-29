@@ -3,7 +3,7 @@ import { Button as ChakraButton, forwardRef } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import { colors, fontWeights } from '../../../lib/styles/chakraTheme';
+import { colors, fontWeights } from '../../../lib';
 
 type ButtonThemes = 'primary' | 'primaryOutline' | 'white';
 
@@ -12,7 +12,7 @@ type Props = ButtonProps & {
   size?: 'sm' | 'md';
   round?: boolean;
 };
-const Button = forwardRef<Props, 'button'>(
+export const Button = forwardRef<Props, 'button'>(
   ({ className, theme, size = 'md', round, ...props }, ref) => {
     return (
       <ChakraButton
@@ -99,5 +99,3 @@ const style = css`
     }
   }
 `;
-
-export default Button;

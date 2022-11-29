@@ -1,13 +1,12 @@
 import { Box, Text } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import SvgClose from '@dothis/share/components/ui/Icons/SvgClose';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import Button from '@dothis/share';
+import UserAvatar from '@dothis/share';
 import {
   colors,
   fontWeights,
   typo,
-} from '@dothis/share/lib/styles/chakraTheme';
-import { isLinkActive, thousandsSeparators } from '@dothis/share/lib/utils';
+} from '@dothis/share';
+import { isLinkActive, thousandsSeparators } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -18,6 +17,7 @@ import React, { useMemo } from 'react';
 import UserLink from '@/components/ui/Links/UserLink';
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
+import { SvgClose } from '@dothis/share/components/ui';
 
 type Props = {
   onClose(): void;

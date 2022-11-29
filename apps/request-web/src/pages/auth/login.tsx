@@ -1,7 +1,7 @@
-import Container from '@dothis/share/components/layout/Container';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import { errorMessage } from '@dothis/share/lib/models';
-import { typo } from '@dothis/share/lib/styles/chakraTheme';
+import Container from '@dothis/share';
+import ToastBox from '@dothis/share';
+import { errorMessage } from '@dothis/share';
+import { typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';

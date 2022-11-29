@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-const SvgHandCoin = (props: SVGProps<SVGSVGElement>) => (
+export const SvgHandCoin = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -25,4 +25,3 @@ const SvgHandCoin = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default SvgHandCoin;

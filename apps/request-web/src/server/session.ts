@@ -1,5 +1,5 @@
-import { errorMessage } from '@dothis/share/lib/models';
-import type { PartialRequiredNotNull } from '@dothis/share/lib/types/utilityTypes';
+import type { PartialRequiredNotNull } from '@dothis/share';
+import { errorMessage } from '@dothis/share';
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import type {

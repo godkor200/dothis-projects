@@ -1,4 +1,4 @@
-import { PartialApProps } from '@dothis/share/lib/utils';
+import { PartialApProps } from '@dothis/share';
 
 import { RequestPostDomain } from '@/domain';
 

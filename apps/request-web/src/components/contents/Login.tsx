@@ -1,34 +1,30 @@
 import { Box, Divider, VStack } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import SvgFacebook from '@dothis/share/components/ui/Icons/SvgFacebook';
-import SvgInstagram from '@dothis/share/components/ui/Icons/SvgInstagram';
-import SvgTwitch from '@dothis/share/components/ui/Icons/SvgTwitch';
-import SvgYoutube from '@dothis/share/components/ui/Icons/SvgYoutube';
-import { useModalStore } from '@dothis/share/lib/models';
+import Button, { useModalStore } from '@dothis/share';
 import { css } from '@emotion/react';
 import { signIn } from 'next-auth/react';
 import React from 'react';
 
 import { PAGE_KEYS } from '@/constants';
+import { SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share/components/ui';
 
 export default function Login() {
   return (
     <VStack css={style} spacing={20}>
-      <Button theme="white" onClick={() => signIn('google')} round>
+      <Button theme='white' onClick={() => signIn('google')} round>
         <SvgYoutube />
         <strong>구글 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme="white" disabled onClick={() => signIn('instagram')} round>
+      <Button theme='white' disabled onClick={() => signIn('instagram')} round>
         <SvgInstagram />
         <strong>인스타그램 로그인</strong>
       </Button>
-      <Button theme="white" disabled onClick={() => signIn('facebook')} round>
+      <Button theme='white' disabled onClick={() => signIn('facebook')} round>
         <SvgFacebook />
         <strong>페이스북 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme="white" disabled onClick={() => signIn('twitch')} round>
+      <Button theme='white' disabled onClick={() => signIn('twitch')} round>
         <SvgTwitch />
         <strong>트위치 로그인</strong>
       </Button>

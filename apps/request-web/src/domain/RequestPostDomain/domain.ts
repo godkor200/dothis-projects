@@ -1,5 +1,5 @@
-import type { AwaitedReturn } from '@dothis/share/lib/types/utilityTypes';
-import { iterableToEnum, youtubeUrlToId } from '@dothis/share/lib/utils';
+import type { AwaitedReturn } from '@dothis/share';
+import { iterableToEnum, youtubeUrlToId } from '@dothis/share';
 import { RequestCategoryType, RequestStatusType } from '@prisma/client';
 import { z } from 'zod';
 

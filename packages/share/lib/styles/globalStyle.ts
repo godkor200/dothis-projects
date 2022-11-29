@@ -1,28 +1,8 @@
 import { css } from '@emotion/react';
 
-import { colors } from './chakraTheme';
+import { colors } from './dothisTheme';
 
-const globalStyle = css`
-  //@font-face {
-  //  font-family: 'Pretendard';
-  //  font-weight: 900;
-  //  font-display: swap;
-  //  src: local('Pretendard Black'),
-  //    url('/fonts/Pretendard-Black.woff2') format('woff2'),
-  //    url('/fonts/Pretendard-Black.woff') format('woff'),
-  //    url('/fonts/Pretendard-Black.ttf') format('truetype');
-  //}
-
-  //@font-face {
-  //  font-family: 'Pretendard';
-  //  font-weight: 800;
-  //  font-display: swap;
-  //  src: local('Pretendard ExtraBold'),
-  //    url('/fonts/Pretendard-ExtraBold.woff2') format('woff2'),
-  //    url('/fonts/Pretendard-ExtraBold.woff') format('woff'),
-  //    url('/fonts/Pretendard-ExtraBold.ttf') format('truetype');
-  //}
-
+export const globalStyle = css`
   @font-face {
     font-family: 'Pretendard';
     font-weight: 700;
@@ -63,35 +43,15 @@ const globalStyle = css`
       url('/fonts/Pretendard-Regular.ttf') format('truetype');
   }
 
-  //@font-face {
-  //  font-family: 'Pretendard';
-  //  font-weight: 300;
-  //  font-display: swap;
-  //  src: local('Pretendard Light'),
-  //    url('/fonts/Pretendard-Light.woff2') format('woff2'),
-  //    url('/fonts/Pretendard-Light.woff') format('woff'),
-  //    url('/fonts/Pretendard-Light.ttf') format('truetype');
-  //}
-  //
-  //@font-face {
-  //  font-family: 'Pretendard';
-  //  font-weight: 200;
-  //  font-display: swap;
-  //  src: local('Pretendard ExtraLight'),
-  //    url('/fonts/Pretendard-ExtraLight.woff2') format('woff2'),
-  //    url('/fonts/Pretendard-ExtraLight.woff') format('woff'),
-  //    url('/fonts/Pretendard-ExtraLight.ttf') format('truetype');
-  //}
-  //
-  //@font-face {
-  //  font-family: 'Pretendard';
-  //  font-weight: 100;
-  //  font-display: swap;
-  //  src: local('Pretendard Thin'),
-  //    url('/fonts/Pretendard-Thin.woff2') format('woff2'),
-  //    url('/fonts/Pretendard-Thin.woff') format('woff'),
-  //    url('/fonts/Pretendard-Thin.ttf') format('truetype');
-  //}
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    font-display: swap;
+    src: local('Pretendard Light'),
+      url('/fonts/Pretendard-Light.woff2') format('woff2'),
+      url('/fonts/Pretendard-Light.woff') format('woff'),
+      url('/fonts/Pretendard-Light.ttf') format('truetype');
+  }
 
   *,
   *::before,
@@ -145,4 +105,3 @@ const globalStyle = css`
   }
 `;
 
-export default globalStyle;

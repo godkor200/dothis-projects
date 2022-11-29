@@ -1,24 +1,24 @@
 import { Box, Text } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import type { EditorT } from '@dothis/share/components/ui/Editor';
-import Editor from '@dothis/share/components/ui/Editor';
-import FormErrorMessages from '@dothis/share/components/ui/FormErrorMessages';
-import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
-import Input from '@dothis/share/components/ui/Input';
-import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
-import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTemplate';
-import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
-import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
-import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
+import type { EditorT } from '@dothis/share';
+import Button from '@dothis/share';
+import Editor from '@dothis/share';
+import FormErrorMessages from '@dothis/share';
+import FormValidMessage from '@dothis/share';
+import Input from '@dothis/share';
+import FormatInput from '@dothis/share';
+import SubmitModalTemplate from '@dothis/share';
+import SelectMenu from '@dothis/share';
+import SelectMenuButton from '@dothis/share';
+import SelectMenuList from '@dothis/share';
+import ToastBox from '@dothis/share';
 import {
   errorMessage,
   isErrorMessage,
   isMessage,
   useModalOptStore,
   useModalStore,
-} from '@dothis/share/lib/models';
-import { isNilStr, removeSeparators } from '@dothis/share/lib/utils';
+} from '@dothis/share';
+import { isNilStr, removeSeparators } from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Creator, RequestPost } from '@prisma/client';

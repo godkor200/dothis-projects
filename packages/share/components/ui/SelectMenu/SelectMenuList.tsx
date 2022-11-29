@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
-import { elementOnceInterval, mapIterToArr } from '../../../lib/utils';
+import { elementOnceInterval, mapIterToArr } from '../../../lib';
 
 export type ListMap<K> = Map<K, string>;
 
@@ -16,7 +16,7 @@ type Props<K> = MenuListProps & {
   selectedItemValue: K | undefined;
   onItemSelect: (value: K) => void;
 };
-export default function SelectMenuList<K extends string>({
+export function SelectMenuList<K extends string>({
   listMap,
   selectedItemValue,
   onItemSelect,

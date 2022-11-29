@@ -1,9 +1,9 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
+import { colors } from '../../../lib/styles';
 
-const SvgAward = (props: SVGProps<SVGSVGElement>) => (
+export const SvgAlarmWarning = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="25"
     height="25"
@@ -27,5 +27,3 @@ const SvgAward = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgAward;

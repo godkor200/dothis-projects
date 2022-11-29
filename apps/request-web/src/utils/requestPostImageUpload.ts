@@ -1,13 +1,11 @@
 import type {
   EditorT,
-  FileLocations,
-} from '@dothis/share/components/ui/Editor';
-import type { ErrorMessage } from '@dothis/share/lib/models';
+ ErrorMessage,  FileLocations } from '@dothis/share';
 import {
   errorMessage,
   isErrorMessage,
   message,
-} from '@dothis/share/lib/models';
+} from '@dothis/share';
 import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';

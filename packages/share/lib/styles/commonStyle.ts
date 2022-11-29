@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-import { colors } from './chakraTheme';
+import { colors } from './dothisTheme';
 
-const commonStyle = {
+export const commonStyle = {
   grayBox: css`
     background: ${colors.bg.dark};
     border: 0 none;
@@ -57,4 +57,3 @@ const commonStyle = {
   `,
 };
 
-export default commonStyle;

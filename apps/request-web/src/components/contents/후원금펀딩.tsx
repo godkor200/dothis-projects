@@ -1,20 +1,20 @@
 import { Box, Center, Flex, VStack } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
-import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import Button from '@dothis/share';
+import FormValidMessage from '@dothis/share';
+import FormatInput from '@dothis/share';
+import ToastBox from '@dothis/share';
+import UserAvatar from '@dothis/share';
 import {
   colors,
   fontWeights,
   mediaQueries,
-} from '@dothis/share/lib/styles/chakraTheme';
+} from '@dothis/share';
 import {
   isNilStr,
   onEnter,
   removeSeparators,
   thousandsSeparators,
-} from '@dothis/share/lib/utils';
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@prisma/client';

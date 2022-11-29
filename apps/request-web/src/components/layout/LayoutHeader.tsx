@@ -1,14 +1,14 @@
 import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
-import Container from '@dothis/share/components/layout/Container';
-import Button from '@dothis/share/components/ui/Button';
-import Drawer from '@dothis/share/components/ui/Drawer';
-import HomeLogo from '@dothis/share/components/ui/HomeLogo';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
+import Container from '@dothis/share';
+import Button from '@dothis/share';
+import Drawer from '@dothis/share';
+import HomeLogo from '@dothis/share';
+import UserAvatar from '@dothis/share';
 import {
   colors,
   mediaQueries,
   typo,
-} from '@dothis/share/lib/styles/chakraTheme';
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

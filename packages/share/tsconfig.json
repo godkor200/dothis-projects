@@ -1,6 +1,5 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
-  "types": "./types/theme.d.ts",
-  "include": ["**/*.ts", "**/*.tsx", "../../types/**/*.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

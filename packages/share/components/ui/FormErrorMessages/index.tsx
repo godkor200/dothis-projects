@@ -3,7 +3,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import type { ComponentProps } from 'react';
 import type { FieldName, FieldValues } from 'react-hook-form';
 
-import FormValidMessage from '../../../components/ui/FormValidMessage';
+import { FormValidMessage } from '../FormValidMessage';
 
 type Props<T extends FieldValues> = Pick<
   ComponentProps<typeof ErrorMessage<T>>,
@@ -11,7 +11,7 @@ type Props<T extends FieldValues> = Pick<
 >;
 
 // 모든 에러를 받아서 맨 첫번째 에러를 보여줌
-const FormErrorMessages = <TFieldErrors extends FieldValues>({
+export const FormErrorMessages = <TFieldErrors extends FieldValues>({
   errors,
 }: Props<TFieldErrors>) => {
   const firstKey = errors
@@ -32,4 +32,3 @@ const FormErrorMessages = <TFieldErrors extends FieldValues>({
     </>
   );
 };
-export default FormErrorMessages;

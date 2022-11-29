@@ -1,4 +1,4 @@
-import Container from '@dothis/share/components/layout/Container';
+import Container from '@dothis/share';
 import React from 'react';
 
 import NewRequestPost from '@/components/contents/NewRequestPost';

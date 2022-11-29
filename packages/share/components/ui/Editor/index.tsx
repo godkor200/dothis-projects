@@ -1,7 +1,7 @@
 import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import { Editor } from '@tinymce/tinymce-react';
+import { Editor as TinymceEditor } from '@tinymce/tinymce-react';
 import type { ComponentProps } from 'react';
 import React, {
   forwardRef,
@@ -10,26 +10,26 @@ import React, {
   useState,
 } from 'react';
 
-import { colors, fonts, typo } from '../../../lib/styles/chakraTheme';
+import { colors, fonts, typo } from '../../../lib';
 
-export type EditorT = Editor;
-type Props = ComponentProps<typeof Editor> & {
+export type EditorT = TinymceEditor;
+type Props = ComponentProps<typeof TinymceEditor> & {
   wrap?: BoxProps;
 };
 
 export type FileLocations = Array<[fileName: string, location: string]>;
 
-const _Editor = forwardRef<Editor | null, Props>(
+export const Editor = forwardRef<TinymceEditor | null, Props>(
   ({ init, wrap = {}, ...props }, ref) => {
     const wrapRef = useRef<HTMLDivElement>(null);
     const [isInit, setIsInit] = useState(false);
-    const editorRef = useRef<Editor | null>(null);
+    const editorRef = useRef<TinymceEditor | null>(null);
     // @ts-ignore
     useImperativeHandle(ref, () => editorRef.current);
 
     return (
       <Box css={style} ref={wrapRef} {...wrap}>
-        <Editor
+        <TinymceEditor
           ref={editorRef}
           tinymceScriptSrc="/tinymce/tinymce.min.js"
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_KEY}
@@ -111,7 +111,8 @@ const _Editor = forwardRef<Editor | null, Props>(
   },
 );
 
-_Editor.displayName = 'Editor';
+Editor.displayName = 'Editor';
+
 
 const style = css`
   min-height: 260px;
@@ -149,8 +150,3 @@ const style = css`
     width: 110px;
   }
 `;
-const editorStyle = css`
-  height: 100%;
-`;
-
-export default _Editor;

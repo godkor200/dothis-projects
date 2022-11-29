@@ -3,13 +3,13 @@ import { extendTheme } from '@chakra-ui/react';
 
 import { colors } from './variable';
 
-const Divider: ComponentStyleConfig = {
+export const Divider: ComponentStyleConfig = {
   baseStyle: {
     borderColor: colors.border['2'],
     borderStyle: 'solid',
   },
 };
-const Avatar: ComponentStyleConfig = {
+export const Avatar: ComponentStyleConfig = {
   parts: ['container', 'excessLabel', 'label'],
   baseStyle: {
     container: {
@@ -30,7 +30,7 @@ const Avatar: ComponentStyleConfig = {
   sizes: {},
 };
 
-const Popover: ComponentStyleConfig = {
+export const Popover: ComponentStyleConfig = {
   parts: ['content', 'header', 'body', 'footer', 'arrow'],
   baseStyle: {
     content: {
@@ -38,5 +38,3 @@ const Popover: ComponentStyleConfig = {
     },
   },
 };
-
-export default  { Divider, Avatar, Popover };

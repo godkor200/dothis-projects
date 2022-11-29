@@ -1,16 +1,16 @@
 import { Box, Flex, HStack, Text, useBoolean } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
-import SvgHeart from '@dothis/share/components/ui/Icons/SvgHeart';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import useGlobalStore from '@dothis/share/lib/models/globalStore';
-import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
-import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share/lib/utils';
+import Button from '@dothis/share';
+import UserAvatar from '@dothis/share';
+import useGlobalStore from '@dothis/share';
+import { colors, fontWeights } from '@dothis/share';
+import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import type { Session } from 'next-auth';
 import React, { useMemo } from 'react';
+
+import { SvgDonate, SvgHeart } from '@dothis/share/components/ui';
 
 import { UserDomain } from '../../domain';
 import UserLink from '../ui/Links/UserLink';

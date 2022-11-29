@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
+export const SvgCalendar = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="16"
     height="17"
@@ -37,5 +37,3 @@ const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export default SvgPlus;

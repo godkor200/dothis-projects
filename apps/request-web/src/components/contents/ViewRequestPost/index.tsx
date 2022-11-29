@@ -7,33 +7,20 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import DotDotDotMenu from '@dothis/share/components/ui/ActionMenu/DotDotDotMenu';
-import Button from '@dothis/share/components/ui/Button';
-import SvgAccept from '@dothis/share/components/ui/Icons/SvgAccept';
-import SvgAlarmWarning from '@dothis/share/components/ui/Icons/SvgAlarmWarning';
-import SvgBack from '@dothis/share/components/ui/Icons/SvgBack';
-import SvgClose from '@dothis/share/components/ui/Icons/SvgClose';
-import SvgDelete from '@dothis/share/components/ui/Icons/SvgDelete';
-import SvgDonate from '@dothis/share/components/ui/Icons/SvgDonate';
-import SvgEdit from '@dothis/share/components/ui/Icons/SvgEdit';
-import SvgGiveUp from '@dothis/share/components/ui/Icons/SvgGiveUp';
-import SvgHandCoin from '@dothis/share/components/ui/Icons/SvgHandCoin';
-import SvgRegistration from '@dothis/share/components/ui/Icons/SvgRegistration';
-import SvgShareForward from '@dothis/share/components/ui/Icons/SvgShareForward';
-import SvgThumbDown from '@dothis/share/components/ui/Icons/SvgThumbDown';
-import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import YoutubeIframe from '@dothis/share/components/ui/YoutubeIframe';
-import { useModalOptStore, useModalStore } from '@dothis/share/lib/models';
+import DotDotDotMenu from '@dothis/share';
+import Button from '@dothis/share';
+import ToastBox from '@dothis/share';
+import UserAvatar from '@dothis/share';
+import YoutubeIframe from '@dothis/share';
+import { useModalOptStore, useModalStore } from '@dothis/share';
 import {
   colors,
   fontSizes,
   fontWeights,
   mediaQueries,
-} from '@dothis/share/lib/styles/chakraTheme';
-import { thousandsSeparators } from '@dothis/share/lib/utils';
-import { shareUrlObject } from '@dothis/share/lib/utils/appUtils';
+} from '@dothis/share';
+import { thousandsSeparators } from '@dothis/share';
+import { shareUrlObject } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { User } from '@prisma/client';
 import clsx from 'clsx';
@@ -50,6 +37,9 @@ import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { trpc } from '@/utils/trpc';
+import { SvgAccept, SvgAlarmWarning, SvgBack,
+  SvgClose, SvgDelete, SvgDonate, SvgEdit, SvgGiveUp, SvgHandCoin, SvgRegistration,
+  SvgShareForward, SvgThumbDown, SvgThumbUp } from '@dothis/share/components/ui';
 
 import type { RequestPostDomain } from '../../../domain';
 import { RequestFundingDomain } from '../../../domain';

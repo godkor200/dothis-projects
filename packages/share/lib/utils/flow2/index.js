@@ -1,4 +1,4 @@
-function flow2(abc, cd, de, ef, fg, gh, hi, ij, jk) {
+export function index(abc, cd, de, ef, fg, gh, hi, ij, jk) {
   switch (arguments.length) {
     case 1:
       return abc;
@@ -98,4 +98,3 @@ function flow2(abc, cd, de, ef, fg, gh, hi, ij, jk) {
   return;
 }
 
-module.exports.flow2 = flow2;

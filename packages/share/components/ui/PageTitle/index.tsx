@@ -3,12 +3,12 @@ import { Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import * as React from 'react';
 
-import Button from '../../../components/ui/Button';
-import SvgPrev from '../../../components/ui/Icons/SvgPrev';
-import { typo } from '../../../lib/styles/chakraTheme';
+import { Button } from '../Button';
+import { typo } from '../../../lib';
+import { SvgPrev } from '../Icons';
 
 type Props = TextProps & { onClose?: () => void };
-const PageTitle = ({ onClose, ...props }: Props) => {
+export const PageTitle = ({ onClose, ...props }: Props) => {
   return (
     <header css={style}>
       {onClose && (
@@ -38,4 +38,3 @@ const style = css`
   }
 `;
 
-export default PageTitle;

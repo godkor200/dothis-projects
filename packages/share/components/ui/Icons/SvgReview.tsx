@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-const SvgRegistration = (props: SVGProps<SVGSVGElement>) => (
+export const SvgReview = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -26,5 +26,3 @@ const SvgRegistration = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgRegistration;

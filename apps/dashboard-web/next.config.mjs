@@ -4,9 +4,7 @@
  * This is especially useful for Docker builds.
  */
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
-});
+import nextPWA from 'next-pwa'
 
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
@@ -19,6 +17,7 @@ const config = {
     defaultLocale: "ko", 
   },
   experimental: {
+    appDir: true,
     swcPlugins: [
       [
         'next-superjson-plugin',
@@ -38,4 +37,4 @@ const config = {
     emotion: true,
   }
 };
-export default config;
+export default nextPWA(config);

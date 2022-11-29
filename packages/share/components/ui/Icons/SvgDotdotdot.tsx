@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-const SvgDotdotdot = (props: SVGProps<SVGSVGElement>) => (
+export const SvgDotdotdot = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -18,5 +18,3 @@ const SvgDotdotdot = (props: SVGProps<SVGSVGElement>) => (
     <path d="M10.2128 2.58528V6.67038H14.2979V2.58528H10.2128Z" />
   </svg>
 );
-
-export default SvgDotdotdot;

@@ -1,11 +1,9 @@
 import { HStack } from '@chakra-ui/react';
-import Container from '@dothis/share/components/layout/Container';
-import {
+import Container, {
   colors,
   fontWeights,
   mediaQueries,
-} from '@dothis/share/lib/styles/chakraTheme';
-import { isLinkActive } from '@dothis/share/lib/utils';
+, isLinkActive } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';

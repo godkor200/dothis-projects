@@ -3,8 +3,8 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import Button from '../../../components/ui/Button';
-import { colors, fontWeights } from '../../../lib/styles/chakraTheme';
+import { colors, fontWeights } from '../../../lib';
+import { Button } from '../Button';
 
 type Props = {
   menuItems: Array<
@@ -17,7 +17,7 @@ type Props = {
   buttonProps?: MenuButtonProps;
 } & Omit<MenuProps, 'children'>;
 
-const ActionMenu = ({ menuItems, children, buttonProps, ...props }: Props) => {
+export const ActionMenu = ({ menuItems, children, buttonProps, ...props }: Props) => {
   return (
     <Menu placement="bottom-end" {...props}>
       <MenuButton as={Button} h="fit-content" w="fit-content" {...buttonProps}>

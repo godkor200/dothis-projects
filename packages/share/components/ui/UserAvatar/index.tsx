@@ -11,7 +11,7 @@ export type UserAvatarProps = {
 } & {
   wrapperProps?: FlexProps;
 } & Pick<AvatarProps, 'variant'>;
-const UserAvatar = ({
+export const UserAvatar = ({
   user,
   size,
   Text,
@@ -31,4 +31,3 @@ const UserAvatar = ({
     </Flex>
   );
 };
-export default UserAvatar;

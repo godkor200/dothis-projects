@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import { useModalStore } from '../../../lib/models';
-import { colors, mediaQueries } from '../../../lib/styles/chakraTheme';
+import { colors, mediaQueries } from '../../../lib/styles/dothisTheme';
 import commonStyle from '../../../lib/styles/commonStyle';
 import ModalTitle from '../ModalTitle';
 
@@ -25,7 +25,7 @@ export type ModalProps = Required<
   isFull?: boolean;
 };
 
-const Modal = ({
+export const Modal = ({
   title,
   children,
   onClose,
@@ -149,5 +149,3 @@ const style = css`
     }
   }
 `;
-
-export default Modal;

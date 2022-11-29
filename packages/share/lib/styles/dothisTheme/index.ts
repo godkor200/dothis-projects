@@ -8,7 +8,7 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
-const dothisTheme = {  
+export const dothisTheme = {  
   components,
   config,
   breakpoints,
@@ -22,4 +22,6 @@ const dothisTheme = {
 
 
 export * from './variable';
-export default dothisTheme;
+
+
+

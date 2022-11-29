@@ -1,9 +1,9 @@
 import type { SVGProps } from 'react';
 import * as React from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
+import { colors } from '../../../lib/styles/dothisTheme';
 
-const SvgDonate = (props: SVGProps<SVGSVGElement>) => (
+export const SvgDonate = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="16"
     height="17"
@@ -27,5 +27,3 @@ const SvgDonate = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgDonate;

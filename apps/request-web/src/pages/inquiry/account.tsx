@@ -1,10 +1,10 @@
 import { Text } from '@chakra-ui/react';
-import Container from '@dothis/share/components/layout/Container';
-import Button from '@dothis/share/components/ui/Button';
-import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTemplate';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import { useModalStore } from '@dothis/share/lib/models';
-import { fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
+import Container from '@dothis/share';
+import Button from '@dothis/share';
+import SubmitModalTemplate from '@dothis/share';
+import ToastBox from '@dothis/share';
+import { useModalStore } from '@dothis/share';
+import { fontWeights, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';

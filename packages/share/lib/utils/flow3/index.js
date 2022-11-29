@@ -1,4 +1,4 @@
-function flow3(abcd, de, ef, fg, gh, hi, ij, jk, kl) {
+export function index(abcd, de, ef, fg, gh, hi, ij, jk, kl) {
   switch (arguments.length) {
     case 1:
       return abcd;
@@ -181,5 +181,3 @@ function flow3(abcd, de, ef, fg, gh, hi, ij, jk, kl) {
   }
   return;
 }
-
-exports.flow3 = flow3;

@@ -4,14 +4,19 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 3666",
     "lint": "next lint",
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.4.1",
+    "@chakra-ui/styled-system": "^2.3.5",
+    "@chakra-ui/theme": "^2.2.1",
     "@dothis/share": "*",
+    "@emotion/babel-plugin": "^11.10.5",
     "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@hookform/resolvers": "^2.9.10",
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",
@@ -21,7 +26,8 @@
     "@tanstack/react-table": "^8.7.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
-    "next": "13.0.2",
+    "framer-motion": "^7.6.15",
+    "next": "13.0.5",
     "next-auth": "^4.15.1",
     "next-pwa": "^5.6.0",
     "next-superjson-plugin": "^0.4.9",
@@ -42,8 +48,5 @@
     "@types/react-dom": "^18.0.5",
     "typescript": "^4.9.3",
     "webpack": "^5.75.0"
-  },
-  "ct3aMetadata": {
-    "initVersion": "6.10.2"
   }
 }

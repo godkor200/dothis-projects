@@ -1,8 +1,8 @@
 import type { ChangeEvent, ComponentProps, KeyboardEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
 
-import { removeSeparators, thousandsSeparators } from '../../../lib/utils';
-import Input from './index';
+import { removeSeparators, thousandsSeparators } from '../../../lib';
+import { Input } from './Input';
 
 const formats = {
   thousandsSeparators: {

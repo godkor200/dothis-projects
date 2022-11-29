@@ -7,6 +7,9 @@
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
+    "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
+    "dev:share": "dotenv -e .env -- turbo run dev --filter=@dothis/share",
+    "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",

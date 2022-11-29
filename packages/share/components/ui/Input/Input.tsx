@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { forwardRef, useEffect, useRef } from 'react';
 
-import { colors, fontWeights, typo } from '../../../lib/styles/chakraTheme';
+import { colors, fontWeights, typo } from '../../../lib/styles/dothisTheme';
 import commonStyle from '../../../lib/styles/commonStyle';
 
 type Size = 'sm' | 'md' | 'lg';
@@ -23,7 +23,7 @@ export type InputProps = ChakraInputProps & {
   wrapProps?: InputGroupProps;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
