@@ -12,13 +12,12 @@ import {
   isErrorMessage,
   isMessage,
   isNilStr,
-  removeSeparators,
+  removeSeparators, SelectMenu,
+  SelectMenuButton,
+  SelectMenuList,
   SubmitModalTemplate,
-  ToastBox,
+  ToastBox
 } from '@dothis/share';
-import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
-import { SelectMenuButton } from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
-import { SelectMenuList } from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Creator, RequestPost } from '@prisma/client';
