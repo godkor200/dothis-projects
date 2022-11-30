@@ -1,4 +1,4 @@
-import Button, { colors, typo } from '@dothis/share';
+import { colors, Button, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import { useRef, useState } from 'react';
 import { A11y } from 'swiper';

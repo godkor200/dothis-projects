@@ -2,23 +2,17 @@
   "name": "@dothis/share",
   "version": "0.3.0",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    }
-  },
+  "types": "./types/global.d.ts",
+  "main": "./index.ts",
   "files": [
-    "dist"
+    "lib",
+    "components"
   ],
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
-    "build": "tsup --config \"./tsup.config.ts\"",
-    "dev": "tsup --config \"./tsup.config.ts\" --watch",
     "theme-generate": "pnpm chakra-cli tokens lib/styles/dothisTheme/index.ts"
   },
   "dependencies": {

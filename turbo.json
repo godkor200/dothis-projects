@@ -38,21 +38,7 @@
     "dev": {
       "cache": false
     },
-    "dev:request": {
-      "dependsOn": [
-        "^dev:share"
-      ]
-    },
-    "dev:dashboard": {
-      "dependsOn": [
-        "^dev:share"
-      ]
-    },
-    "dev:share": {
-      "dependsOn": [
-        "^theme-generate"
-      ]
-    },
+  
     "clean": {
       "cache": false
     }

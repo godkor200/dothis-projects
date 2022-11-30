@@ -1,5 +1,5 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
+
 
 export const SvgReview = (props: SVGProps<SVGSVGElement>) => (
   <svg

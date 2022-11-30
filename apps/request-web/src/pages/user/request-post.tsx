@@ -1,8 +1,9 @@
 import { Box, Center, HStack, Spinner, Text } from '@chakra-ui/react';
 import Container from '@dothis/share/components/layout/Container';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import Input from '@dothis/share/components/ui/Input';
-import { typo } from '@dothis/share';
+import { SvgSearch } from '@dothis/share/components/ui';
+import Input from '@dothis/share/components/ui/Input/Input';
+import { typo } from '@dothis/share/lib';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -16,7 +17,6 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import { withUserSessionSsr } from '@/server/session';
 import { trpc } from '@/utils/trpc';
-import { SvgSearch } from '@dothis/share/components/ui';
 
 const querySchema = z.object({
   searchText: z.string().optional(),

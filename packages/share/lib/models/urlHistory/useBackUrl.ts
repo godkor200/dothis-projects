@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
-import useUrlHistoryStore from '../../lib/models/urlHistory/useUrlHistoryStore';
-import type { NextjsUrl } from '../types';
+import useUrlHistoryStore from './useUrlHistoryStore';
+import type { NextjsUrl } from '../../types';
 
 type UseBackUrlOpt = {
   shallow?: boolean;

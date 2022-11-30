@@ -1,7 +1,7 @@
 import type { NextRouter } from 'next/router';
 import type { UrlObject } from 'url';
 
-import ToastBox from '../../components/ui/ToastBox';
+import { ToastBox } from '../../components';
 import { joinQueryParams } from './stringUtils';
 
 type ShareProps = {

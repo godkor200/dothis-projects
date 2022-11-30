@@ -1,9 +1,6 @@
 import 'swiper/css';
 
 import { ChakraProvider } from '@chakra-ui/react';
-import { ModalOptProvider, standaloneToast, useModalStore } from '@dothis/share';
-import Modal from '@dothis/share/components/ui/Modal';
-import globalStyle from '@dothis/share/lib/styles/globalStyle';
 import { Global } from '@emotion/react';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
@@ -16,8 +13,9 @@ import superjson from 'superjson';
 
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
 import { trpc } from '@/utils/trpc';
+import { dothisTheme, globalStyle, Modal, standaloneToast } from '@dothis/share';
+import { ModalOptProvider, useModalStore } from '@/models/Modal';
 
-import dothisTheme from '../../../../packages/share/lib/styles/dothisTheme';
 
 // immer Map Set 사용 가능하게
 enableMapSet();
@@ -80,10 +78,11 @@ const ModalManager = () => {
   return (
     <>
       {[...modalStore.modals.entries()].map(
-        ([name, { title, modalOpt, Component }]) => {
+        ([name, { title, modalOpt, Component }], i) => {
           function handleClose() {
             modalStore.close(name);
           }
+          const zIndex = 1000 + i
 
           return (
             <Modal
@@ -91,6 +90,7 @@ const ModalManager = () => {
               isOpen
               onClose={handleClose}
               title={title}
+              zIndex={zIndex}
               {...modalOpt}
             >
               <Component />

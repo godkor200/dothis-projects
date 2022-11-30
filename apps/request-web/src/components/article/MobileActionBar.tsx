@@ -1,10 +1,7 @@
 import { Box } from '@chakra-ui/react';
-import Button from '@dothis/share';
-import useScroll from '@dothis/share';
-import { mediaQueries } from '@dothis/share';
+import { mediaQueries, useScroll } from '@dothis/share';
+import { Button, SvgPlus } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
-
-import { SvgPlus } from '@dothis/share/components/ui';
 
 import NewRequestPost from '../contents/NewRequestPost';
 

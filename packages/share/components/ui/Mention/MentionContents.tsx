@@ -10,7 +10,7 @@ type Props = Omit<PopoverContentProps, 'children' | 'as'>;
 
 // as 타입을 맞추기 위해 chakra-ui의 forwardRef을 사용
 // https://chakra-ui-git-fix-typescript-autocomplete.chakra-ui.vercel.app/guides/as-prop#option-1-using-forwardref-from-chakra-uireact
-export const Mentions = forwardRef<Props, 'ul'>(({ className, ...props }, ref) => {
+export const MentionContents = forwardRef<Props, 'ul'>(({ className, ...props }, ref) => {
   const { matchList, onSelect } = useMentionContext();
 
   return (

@@ -1,4 +1,5 @@
-import HorizonPostRequestItemWrap, { colors } from '@dothis/share';
+import  { colors } from '@dothis/share';
+import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import { css } from '@emotion/react';
 import { chunksOf } from 'fp-ts/ReadonlyArray';
 import type { MutableRefObject } from 'react';

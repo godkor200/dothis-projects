@@ -1,11 +1,11 @@
 import { Box, Divider, VStack } from '@chakra-ui/react';
-import Button, { useModalStore } from '@dothis/share';
+import { Button, SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { signIn } from 'next-auth/react';
 import React from 'react';
 
 import { PAGE_KEYS } from '@/constants';
-import { SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share/components/ui';
+import { useModalStore } from '@/models/Modal';
 
 export default function Login() {
   return (

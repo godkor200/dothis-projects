@@ -10,10 +10,8 @@ import { css } from '@emotion/css';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
-import { useModalStore } from '../../../lib/models';
-import { colors, mediaQueries } from '../../../lib/styles/dothisTheme';
-import commonStyle from '../../../lib/styles/commonStyle';
-import ModalTitle from '../ModalTitle';
+import { colors, commonStyle, mediaQueries } from '../../../lib';
+import { ModalTitle } from '../ModalTitle';
 
 export type ModalProps = Required<
   Pick<ChakraModalProps, 'isOpen' | 'children' | 'onClose'>
@@ -23,6 +21,7 @@ export type ModalProps = Required<
   closeOnOverlayClick?: ChakraModalProps['closeOnOverlayClick'];
   hiddenOnMobile?: boolean;
   isFull?: boolean;
+  zIndex?: number
 };
 
 export const Modal = ({
@@ -32,10 +31,9 @@ export const Modal = ({
   closeOnOverlayClick = true,
   hiddenOnMobile = false,
   isFull,
+  zIndex = 1000,
   ...modalProps
 }: ModalProps) => {
-  const { modals } = useModalStore();
-  const zIndex = 1000 + modals.size;
   return (
     <ChakraModal
       onClose={onClose}
@@ -48,7 +46,7 @@ export const Modal = ({
         <ModalOverlay className="modal-overlay" />
         <ModalContent
           className={clsx('modal-contents', isFull && 'full')}
-          zIndex={zIndex + 1}
+          zIndex={zIndex}
         >
           {title && (
             <ModalTitle onClose={onClose} hiddenOnMobile={hiddenOnMobile}>

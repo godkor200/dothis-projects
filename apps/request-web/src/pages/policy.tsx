@@ -1,4 +1,4 @@
-import Container, { colors, typo } from '@dothis/share';
+import { colors, Container, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 

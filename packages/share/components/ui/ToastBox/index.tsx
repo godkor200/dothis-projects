@@ -5,16 +5,8 @@ import { flow } from 'fp-ts/function';
 import { pipe } from 'fp-ts/lib/function';
 import { uid } from 'uid';
 
-import {
-  colors,
-  errorMessage,
-  fontWeights,
-  message,
-  Message,
-  shadows,
-  standaloneToast,
-  successMessage,
-} from '../../../lib';
+import type { Message } from '../../../lib';
+import { colors, errorMessage, fontWeights, message, shadows, standaloneToast, successMessage } from '../../../lib';
 import { Button } from '../Button';
 import { SvgClose } from '../Icons';
 

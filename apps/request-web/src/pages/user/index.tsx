@@ -1,14 +1,8 @@
 import { Box, Center, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
-import { colors, fontSizes, fontWeights, mediaQueries, shareUrlObject } from '@dothis/share';
-import Container from '@dothis/share/components/layout/Container';
+import { colors, Container, fontSizes, fontWeights, mediaQueries, shareUrlObject, useParsedQuery } from '@dothis/share';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { SvgShareForward } from '@dothis/share/components/ui';
-import Button from '@dothis/share/components/ui/Button';
+import { Button,  SelectMenuButton, SelectMenuList, SvgShareForward, UserAvatar } from '@dothis/share/components/ui';
 import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
-import SelectMenuButton from '@dothis/share/components/ui/SelectMenu/SelectMenuButton';
-import SelectMenuList from '@dothis/share/components/ui/SelectMenu/SelectMenuList';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
-import useParsedQuery from '@dothis/share/lib/hooks/useParsedQuery';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -153,10 +147,10 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     >
                       {auth.profileUrl ? (
                         <Link href={auth.profileUrl} target='_blank'>
-                          <Component key={auth.platform} />
+                          {Component()({key: auth.platform})}
                         </Link>
                       ) : (
-                        <Component key={auth.platform} />
+                        Component()({key: auth.platform})
                       )}
                     </Button>
                   );

@@ -1,9 +1,5 @@
-import { HStack } from '@chakra-ui/react';
-import Container, {
-  colors,
-  fontWeights,
-  mediaQueries,
-, isLinkActive } from '@dothis/share';
+import { Container, HStack } from '@chakra-ui/react';
+import { colors, fontWeights, isLinkActive, mediaQueries } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';

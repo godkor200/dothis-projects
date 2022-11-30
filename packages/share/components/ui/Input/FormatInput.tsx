@@ -18,7 +18,7 @@ type Props = Omit<ComponentProps<typeof Input>, 'type'> & {
   format: keyof typeof formats;
 };
 
-const FormatInput = forwardRef<HTMLInputElement, Props>(
+export const FormatInput = forwardRef<HTMLInputElement, Props>(
   ({ onChange, onKeyDown, format, ...props }, ref) => {
     const inputFormat = useMemo(() => formats[format], [format]);
     const handleChange = useCallback(
@@ -53,4 +53,3 @@ const FormatInput = forwardRef<HTMLInputElement, Props>(
 
 FormatInput.displayName = 'FormatInput';
 
-export default FormatInput;
