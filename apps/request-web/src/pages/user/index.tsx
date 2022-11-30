@@ -1,8 +1,7 @@
 import { Box, Center, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import { colors, Container, fontSizes, fontWeights, mediaQueries, shareUrlObject, useParsedQuery } from '@dothis/share';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { Button,  SelectMenuButton, SelectMenuList, SvgShareForward, UserAvatar } from '@dothis/share/components/ui';
-import SelectMenu from '@dothis/share/components/ui/SelectMenu/SelectMenu';
+import { Button, SelectMenu,  SelectMenuButton, SelectMenuList, SvgShareForward, UserAvatar } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

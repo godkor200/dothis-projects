@@ -1,6 +1,7 @@
 import 'swiper/css';
 
 import { ChakraProvider } from '@chakra-ui/react';
+import { dothisTheme, globalStyle, Modal, standaloneToast } from '@dothis/share';
 import { Global } from '@emotion/react';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
@@ -12,9 +13,8 @@ import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
-import { trpc } from '@/utils/trpc';
-import { dothisTheme, globalStyle, Modal, standaloneToast } from '@dothis/share';
 import { ModalOptProvider, useModalStore } from '@/models/Modal';
+import { trpc } from '@/utils/trpc';
 
 
 // immer Map Set 사용 가능하게

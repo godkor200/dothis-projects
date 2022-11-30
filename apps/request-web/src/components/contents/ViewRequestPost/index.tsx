@@ -762,7 +762,6 @@ const style = css`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-      //border: 1px solid ${colors.border['2']};
     border-radius: 50%;
     width: 80px;
     height: 80px;
