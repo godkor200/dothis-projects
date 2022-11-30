@@ -373,8 +373,9 @@ export default function NewRequestPost({
         {!isEditMode && (
           <Box className='form-cell' mt={14}>
             <FormatInput
-              placeholder='후원금 (1,000P부터)'
-              format='thousandsSeparators'
+              theme="gray"
+              placeholder="후원금 (1,000P부터)"
+              format="thousandsSeparators"
               isInvalid={!!errors.quantity}
               Right={
                 <Text as='span' ml={4} display='flex' alignItems='center'>
@@ -402,7 +403,7 @@ export default function NewRequestPost({
             control={control}
             name='category'
             render={({ field }) => (
-              <SelectMenu theme='graybox'>
+              <SelectMenu theme="gray">
                 <SelectMenuButton ref={field.ref} isInvalid={!!errors.category}>
                   {field.value ? (
                     RequestPostDomain.constants.categoryKor.get(field.value)

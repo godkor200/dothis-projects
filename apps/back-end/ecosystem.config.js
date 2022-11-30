@@ -1,30 +1,38 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
 module.exports = {
   apps: [
     {
-      name: 'dothis-dev',
-      script: './dist/apps/api/main.js',
-      node_args: '-r ts-node/register -r tsconfig-paths/register',
+      name: 'dothis',
+      cwd: './dist/apps/api',
+      script: './main.js',
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      max_memory_restart: '1G',
       watch: true,
       env: {
-        TS_NODE_BASEURL: './dist',
-        Server_PORT: 8080,
+        SERVER_PORT: 8080,
         NODE_ENV: 'development',
+        MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
+        MYSQL_USER: process.env.MYSQL_USER,
+        MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
+        DB_PORT: process.env.DB_PORT,
+        DB_HOST: process.env.DB_HOST,
+        DB_SCHEMA: process.env.DB_SCHEMA,
+      },
+      env_production: {
+        SERVER_PORT: 8080,
+        NODE_ENV: 'production',
+        MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
+        MYSQL_USER: process.env.MYSQL_USER,
+        MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
+        DB_PORT: process.env.DB_PORT,
+        DB_HOST: process.env.DB_HOST,
+        DB_SCHEMA: process.env.DB_SCHEMA,
       },
     },
-    // ,
-    // {
-    //   name: 'dothis-pd',
-    //   script: './dist/apps/api/src/main.js',
-    //   instances: 2, // 클러스터 모드
-    //   autorestart: true,
-    //   watch: true,
-    //   env: {
-    //     Server_PORT: 3000,
-    //     NODE_ENV: 'production',
-    //   },
-    // },
   ],
 };

@@ -32,7 +32,6 @@ export const FormValidMessage = ({
 
 const style = css`
   display: flex;
-
   color: ${colors.gray['50']};
   ${typo.b4};
 

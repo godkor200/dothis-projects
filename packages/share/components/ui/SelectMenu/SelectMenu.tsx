@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 
 import { colors, commonStyle, fontWeights, shadows } from '../../../lib';
 
-type Theme = 'graybox' | 'transparent';
+type Theme = 'gray' | 'transparent';
 
 type Props = MenuProps & {
   theme: Theme;
@@ -59,7 +59,7 @@ const style = css`
     }
   }
 
-  &.graybox {
+  &.gray {
     .ui_select-menu-list {
       border-radius: 12px;
 
@@ -121,5 +121,3 @@ const style = css`
     }
   }
 `;
-
-export default SelectMenu;
