@@ -86,7 +86,7 @@ const style = css`
   input {
     outline: none;
     width: 100%;
-    // ${typo.t4};
+    ${typo.t4};
     font-size: 16px;
     font-weight: ${fontWeights.r};
 
@@ -122,10 +122,6 @@ const style = css`
     height: 40px;
     padding-left: 12px;
     padding-right: 12px;
-
-    //input {
-    //  font-size: 13px;
-    //}
   }
 
   &.md {

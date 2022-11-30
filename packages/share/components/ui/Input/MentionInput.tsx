@@ -5,7 +5,7 @@ import { useCallback, useRef } from 'react';
 
 import MentionContents from '../../../components/ui/Mention/MentionContents';
 import MentionTarget from '../../../components/ui/Mention/MentionTarget';
-import type { UseMatchReturn } from '../../../lib/hooks/useMatch';
+import type { UseMatchReturn } from '../../../lib/hooks';
 import { colors, shadows } from '../../../lib/styles/chakraTheme';
 import Mention from '../Mention/Mention';
 import type { InputProps } from './index';

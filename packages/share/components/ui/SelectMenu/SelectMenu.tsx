@@ -5,20 +5,19 @@ import { css } from '@emotion/react';
 import { colors, fontWeights, shadows } from '../../../lib/styles/chakraTheme';
 import commonStyle from '../../../lib/styles/commonStyle';
 
-type Theme = 'graybox' | 'transparent';
+type Theme = 'gray' | 'transparent';
 
 type Props = MenuProps & {
   theme: Theme;
   width?: BoxProps['width'];
 };
 
-const SelectMenu = ({ theme, width = 'auto', ...props }: Props) => {
-  return (
-    <Box css={style} className={theme} width={width}>
-      <Menu placement="bottom-start" strategy="fixed" {...props} />
-    </Box>
-  );
-};
+const SelectMenu = ({ theme, width = 'auto', ...props }: Props) => (
+  <Box css={style} className={theme} width={width}>
+    <Menu placement="bottom-start" strategy="fixed" {...props} />
+  </Box>
+);
+
 const style = css`
   .ui_select-menu-list {
     max-height: 220px;
@@ -60,7 +59,7 @@ const style = css`
     }
   }
 
-  &.graybox {
+  &.gray {
     .ui_select-menu-list {
       border-radius: 12px;
 
