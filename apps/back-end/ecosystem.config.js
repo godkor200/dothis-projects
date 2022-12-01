@@ -22,6 +22,8 @@ module.exports = {
         DB_PORT: process.env.DB_PORT,
         DB_HOST: process.env.DB_HOST,
         DB_SCHEMA: process.env.DB_SCHEMA,
+        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+        GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
       },
       env_production: {
         SERVER_PORT: 8080,
@@ -32,6 +34,8 @@ module.exports = {
         DB_PORT: process.env.DB_PORT,
         DB_HOST: process.env.DB_HOST,
         DB_SCHEMA: process.env.DB_SCHEMA,
+        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+        GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
       },
     },
   ],
