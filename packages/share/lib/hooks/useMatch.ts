@@ -2,7 +2,7 @@ import { useBoolean } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { matchMarkList } from '../../lib/utils/matchMarkList';
+import { matchMarkList } from '../utils';
 
 type List = string[];
 export type UseMatchParam = {

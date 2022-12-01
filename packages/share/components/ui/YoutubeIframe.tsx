@@ -9,7 +9,7 @@ type Props = {
 const iEmbedURL = 'https://www.youtube.com/embed/';
 const regexp = /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/;
 
-export default function YoutubeIframe({ url }: Props) {
+export function YoutubeIframe({ url }: Props) {
   const id = youtubeUrlToId(url);
   const isShorts = url.includes('shorts');
 

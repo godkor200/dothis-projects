@@ -2,7 +2,7 @@ import type { PopoverProps } from '@chakra-ui/react';
 import { Popover } from '@chakra-ui/react';
 import { createContext, useContext } from 'react';
 
-import type { UseMatchReturn } from '../../../lib/hooks';
+import type { UseMatchReturn } from '../../../lib';
 
 type PickMatchParams = Pick<UseMatchReturn, 'isOpen' | 'matchList'> & {
   onSelect: (s: string) => void;
@@ -20,7 +20,7 @@ export type MentionProps = PickMatchParams & {
   children: PopoverProps['children'];
 };
 
-const Mention = ({ children, ...props }: MentionProps) => {
+export const Mention = ({ children, ...props }: MentionProps) => {
   return (
     <MentionContext.Provider value={props}>
       <Popover
@@ -36,4 +36,3 @@ const Mention = ({ children, ...props }: MentionProps) => {
     </MentionContext.Provider>
   );
 };
-export default Mention;

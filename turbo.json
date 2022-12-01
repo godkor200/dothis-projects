@@ -2,32 +2,42 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^db-generate", "^theme-generate", "^build"],
-      "outputs": [".next/**"]
+      "dependsOn": [
+        "^db-generate",
+        "^build"
+      ],
+      "outputs": [
+        ".next/**" 
+      ]
     },
     "theme-generate": {
-      "inputs": ["./lib/styles/**/*"],
-      "outputs": ["./lib/types/theme.d.ts"],
+      "inputs": [
+        "./lib/styles/**/*"
+      ],
+      "outputs": [
+        "./lib/types/theme.d.ts"
+      ],
       "cache": true
     },
     "db-generate": {
-      "inputs": ["prisma/schema.prisma"],
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
       "cache": true
     },
     "db-push": {
-      "inputs": ["prisma/schema.prisma"],
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
       "cache": false
     },
     "lint": {
       "outputs": []
     },
     "dev": {
-      "dependsOn": ["^db-generate", "^theme-generate"],
       "cache": false
     },
-    "clean": {
-      "cache": false
-    },
+
     "request-web": {
       "dependsOn": ["^build"],
       "env": [
@@ -37,6 +47,10 @@
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY"
       ]
+    },
+  
+    "clean": {
+      "cache": false
     }
   },
   "globalEnv": [

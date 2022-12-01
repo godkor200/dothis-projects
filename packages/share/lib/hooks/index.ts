@@ -1,4 +1,4 @@
-export * from './useBackUrl'
+export * from '../models/urlHistory/useBackUrl'
 export * from './useIsomorphicLayoutEffect'
 export * from './useMatch'
 export * from './useParsedQuery'

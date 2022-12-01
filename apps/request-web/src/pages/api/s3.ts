@@ -1,5 +1,5 @@
 import { S3Client } from '@aws-sdk/client-s3';
-import { errorMessage } from '@dothis/share/lib/models';
+import { errorMessage } from '@dothis/share';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import type { NextApiRequest, NextApiResponse } from 'next';

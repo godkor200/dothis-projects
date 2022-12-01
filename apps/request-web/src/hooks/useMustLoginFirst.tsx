@@ -1,4 +1,4 @@
-import ToastBox from '@dothis/share/components/ui/ToastBox';
+import { ToastBox } from '@dothis/share';
 import { useSession } from 'next-auth/react';
 
 import Login from '@/components/contents/Login';

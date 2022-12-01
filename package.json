@@ -7,6 +7,8 @@
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
+    "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
+    "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
@@ -26,5 +28,11 @@
   },
   "dependencies": {
     "dotenv-cli": "^6.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "got@<11.8.5": ">=11.8.5",
+      "d3-color@<3.1.0": ">=3.1.0"
+    }
   }
 }

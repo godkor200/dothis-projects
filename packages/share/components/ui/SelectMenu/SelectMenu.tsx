@@ -2,8 +2,7 @@ import type { BoxProps, MenuProps } from '@chakra-ui/react';
 import { Box, Menu } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
-import { colors, fontWeights, shadows } from '../../../lib/styles/chakraTheme';
-import commonStyle from '../../../lib/styles/commonStyle';
+import { colors, commonStyle, fontWeights, shadows } from '../../../lib';
 
 type Theme = 'gray' | 'transparent';
 
@@ -12,12 +11,13 @@ type Props = MenuProps & {
   width?: BoxProps['width'];
 };
 
-const SelectMenu = ({ theme, width = 'auto', ...props }: Props) => (
-  <Box css={style} className={theme} width={width}>
-    <Menu placement="bottom-start" strategy="fixed" {...props} />
-  </Box>
-);
-
+export const SelectMenu = ({ theme, width = 'auto', ...props }: Props) => {
+  return (
+    <Box css={style} className={theme} width={width}>
+      <Menu placement="bottom-start" strategy="fixed" {...props} />
+    </Box>
+  );
+};
 const style = css`
   .ui_select-menu-list {
     max-height: 220px;
@@ -121,5 +121,3 @@ const style = css`
     }
   }
 `;
-
-export default SelectMenu;

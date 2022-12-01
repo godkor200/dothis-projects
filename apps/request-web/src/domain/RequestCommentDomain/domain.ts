@@ -1,4 +1,4 @@
-import type { AwaitedReturn } from '@dothis/share/lib/types/utilityTypes';
+import type { AwaitedReturn } from '@dothis/share';
 import type { RequestComment, RequestCommentHeart, User } from '@prisma/client';
 import { groupBy } from 'fp-ts/lib/NonEmptyArray';
 import { z } from 'zod';

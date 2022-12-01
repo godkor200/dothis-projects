@@ -1,17 +1,18 @@
 {
   "name": "@dothis/share",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
-  "types": "./lib/types/theme.d.ts",
+  "types": "./types/global.d.ts",
+  "main": "./index.ts",
   "files": [
-    "./lib/**/*",
-    "../../apps/request-web/src/domain/**/*",
-    "./components/**/*"
+    "lib",
+    "components"
   ],
+  "sideEffects": false,
   "scripts": {
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
-    "theme-generate": "pnpm chakra-cli tokens ./lib/styles/chakraTheme/index.ts --out ./lib/types/theme.d.ts"
+    "theme-generate": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts"
   },
   "dependencies": {
     "@chakra-ui/cli": "^2.1.8",
@@ -28,7 +29,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "fp-ts": "^2.13.1",
-    "framer-motion": "^7.6.9",
+    "framer-motion": "^7.6.15",
     "hangul-js": "^0.2.6",
     "immer": "^9.0.16",
     "iron-session": "^6.3.1",
@@ -51,6 +52,7 @@
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "eslint": "^8.27.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsup": "^6.5.0"
   }
 }

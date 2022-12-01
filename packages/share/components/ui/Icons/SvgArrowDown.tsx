@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-function SvgArrowDown(props: SVGProps<SVGSVGElement>) {
+export function SvgArrowDown(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={24}
@@ -14,4 +14,3 @@ function SvgArrowDown(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export default SvgArrowDown;

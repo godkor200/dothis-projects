@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 const FACEBOOK_VIDEO_ID_LENGTH = 15;
 const FACEBOOK_POST_ID_LENGTH = 16;
-export default function FacebookIframe({ post }: any) {
+export function FacebookIframe({ post }: any) {
   if (post === undefined) return;
 
   let postURL = ``;

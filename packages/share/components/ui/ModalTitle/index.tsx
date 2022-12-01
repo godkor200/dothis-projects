@@ -2,14 +2,14 @@ import type { TextProps } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
-import * as React from 'react';
+import * as React from 'react'; 
 
-import Button from '../../../components/ui/Button';
-import SvgClose from '../../../components/ui/Icons/SvgClose';
-import { colors, mediaQueries, typo } from '../../../lib/styles/chakraTheme';
+import { colors, mediaQueries, typo } from '../../../lib';
+import { Button } from '../Button';
+import { SvgClose } from '../Icons';
 
 type Props = TextProps & { onClose(): void; hiddenOnMobile?: boolean };
-const ModalTitle = ({ onClose, hiddenOnMobile, ...props }: Props) => {
+export const ModalTitle = ({ onClose, hiddenOnMobile, ...props }: Props) => {
   return (
     <header className={clsx(hiddenOnMobile && 'hidden-on-mobile')} css={style}>
       <Text className='ui_header-title-text' as='h3' {...props} />
@@ -51,4 +51,3 @@ const style = css`
   }
 `;
 
-export default ModalTitle;
