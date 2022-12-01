@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HealthModule } from '@Apps/api/src/health/health.module';
 import { UserApiModule } from '@Apps/api/src/user/UserApi.module';
+import { AuthApiModule } from '@Apps/api/src/auth/AuthApi.module';
+
 import { TypeOrmExModule } from '@Libs/commons/typeorm/type-orm-ext.module';
 import { DailyViewsModule } from '@Libs/entity/src/domain/daily_views/DaliyViewsModule';
 import { createDatabaseConnection } from '@Libs/entity/src/config/database.mysql';
@@ -22,6 +24,7 @@ import dbConfig from '@Libs/entity/src/config/db.env';
     UserApiModule,
     ChannelApiModule,
     DailyViewsModule,
+    AuthApiModule,
     new createDatabaseConnection(dbConfig()).set(),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
   ],
