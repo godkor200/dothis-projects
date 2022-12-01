@@ -1,6 +1,6 @@
 import type { ThemeConfig } from '@chakra-ui/react';
-import { Avatar, Divider, Popover } from './components';
 
+import { Avatar, Divider, Popover } from './components';
 import { breakpoints, colors, fonts, fontSizes, fontWeights, lineHeights, shadows } from './variable';
 
 const config: ThemeConfig = {
@@ -29,5 +29,7 @@ export const dothisTheme = {
 
 export * from './variable';
 
+
+export default dothisTheme
 
 

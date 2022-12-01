@@ -9,11 +9,10 @@
     "components"
   ],
   "sideEffects": false,
-  "type": "module",
   "scripts": {
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
-    "theme-generate": "pnpm chakra-cli tokens lib/styles/dothisTheme/index.ts"
+    "theme-generate": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts"
   },
   "dependencies": {
     "@chakra-ui/cli": "^2.1.8",
