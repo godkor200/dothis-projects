@@ -4,10 +4,10 @@ import { UserApiController } from './UserApi.controller';
 import { UserApiService } from '../UserApi.service';
 import { UserApiQueryRepository } from '../UserApiQueryRepository';
 import { ConfigModule } from '@nestjs/config';
-import { GoogleStrategy } from '@Libs/commons/oauth/google.strategy';
+
 @Module({
   imports: [UserModule, ConfigModule.forRoot()],
   controllers: [UserApiController],
-  providers: [UserApiService, UserApiQueryRepository, GoogleStrategy],
+  providers: [UserApiService, UserApiQueryRepository],
 })
 export class UserApiV1Module {}
