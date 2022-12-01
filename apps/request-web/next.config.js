@@ -21,6 +21,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
+    outputFileTracingIgnores: ['**swc/core**'], // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
     swcPlugins: [
       [
         'next-superjson-plugin',
@@ -32,7 +33,10 @@ const nextConfig = {
     transpilePackages: ['@dothis/share'],
   },
   compiler:{
-    emotion: true,
+    emotion: {
+      labelFormat: '[dirname]-[fildname]-[local]',
+    },
+    
   }
 };
 
