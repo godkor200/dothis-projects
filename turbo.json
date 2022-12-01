@@ -38,6 +38,17 @@
     "dev": {
       "cache": false
     },
+
+    "request-web": {
+      "dependsOn": ["^build"],
+      "env": [
+        "DATABASE_URL",
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY"
+      ]
+    },
   
     "clean": {
       "cache": false
