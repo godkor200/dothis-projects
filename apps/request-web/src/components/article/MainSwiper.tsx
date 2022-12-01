@@ -1,11 +1,10 @@
-import { colors, Button, typo } from '@dothis/share';
+import { Button, colors, typo } from '@dothis/share';
+import { SvgNext , SvgPrev } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { useRef, useState } from 'react';
 import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperClass } from 'swiper/types';
-
-import { SvgNext , SvgPrev } from '@dothis/share/components/ui';
 
 type Props = {
   Banners: React.ComponentType[];

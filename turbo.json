@@ -4,7 +4,6 @@
     "build": {
       "dependsOn": [
         "^db-generate",
-        "^theme-generate",
         "^build"
       ],
       "outputs": [

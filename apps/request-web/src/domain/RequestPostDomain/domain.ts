@@ -1,13 +1,12 @@
 import type { AwaitedReturn } from '@dothis/share';
+import { youtubeUrlToId } from '@dothis/share/lib/utils/appUtils';
 import { iterableToEnum } from '@dothis/share/lib/utils/zodUtils';
-
 import { RequestCategoryType, RequestStatusType } from '@prisma/client';
 import { z } from 'zod';
 
 import { schema as creatorSchema } from '../CreatorDomain/domain';
 import { schema as userSchema } from '../UserDomain/domain';
 import type { db } from './index';
-import { youtubeUrlToId } from '@dothis/share/lib/utils/appUtils';
 
 const _categoryKor = new Map<RequestCategoryType, string>([ 
   ['GAME', '게임'],
