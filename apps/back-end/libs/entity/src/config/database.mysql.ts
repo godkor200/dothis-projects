@@ -29,7 +29,6 @@ export class createDatabaseConnection {
     });
   }
   set() {
-    console.log('!!!!', this.db);
     return this.db;
   }
 }
