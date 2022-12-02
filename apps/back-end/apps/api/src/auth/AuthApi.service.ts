@@ -25,10 +25,16 @@ export class AuthApiService {
   async validateUser(user: UserType) {
     const res = await this.userRepository.findOneBy({ userEmail: user.email });
     if (res) return res;
-
     const newUser = this.userRepository.create({
-      userId: Number(user.id),
       userEmail: user.email,
+      channelId: 1231231,
+      tokenRefresh: user.refreshToken,
+      tokenExpires: '3000',
+      tokenAccess: user.accessToken,
+      agreePromotion: '',
+      plan: '11',
+      isAdmin: true,
+      status: 'vitality',
     });
     return this.userRepository.save(newUser);
   }
