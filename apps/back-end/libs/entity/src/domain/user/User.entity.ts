@@ -29,7 +29,7 @@ export class User {
   @Column({ name: 'is_admin' })
   isAdmin: boolean;
 
-  @Column({ name: 'is_admin' })
+  @Column({ name: 'status' })
   status: string;
 
   @Column({ name: 'date_sign_in' })
