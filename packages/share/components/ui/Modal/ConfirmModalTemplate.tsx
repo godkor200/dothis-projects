@@ -15,7 +15,7 @@ export const ConfirmModalTemplate = ({
 }: ConfirmTemplateProps) => {
   return (
     <Box px={{ base: 16, tablet: 24 }} py={24}>
-      <Box>{children}</Box>
+      <Box >{children}</Box>
       <Flex mt={24} gap={16}>
         <Button theme="white" onClick={onConfirm}>
           {confirmText}

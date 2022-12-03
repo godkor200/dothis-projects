@@ -3,14 +3,19 @@
   "pipeline": {
     "build": {
       "dependsOn": [
-        "^db-generate",
+        "^db-gen",
         "^build"
       ],
       "outputs": [
-        ".next/**" 
+        ".next/**"
       ]
     },
-    "theme-generate": {
+    "build-storybook": {
+      "outputs": [
+        "storybook-static/**"
+      ]
+    },
+    "theme-gen": {
       "inputs": [
         "./lib/styles/**/*"
       ],
@@ -19,7 +24,7 @@
       ],
       "cache": true
     },
-    "db-generate": {
+    "db-gen": {
       "inputs": [
         "prisma/schema.prisma"
       ],

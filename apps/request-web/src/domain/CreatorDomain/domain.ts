@@ -1,6 +1,6 @@
 import type { AwaitedReturn} from '@dothis/share';
 import { SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share';
-import { AuthPlatformType } from '@prisma/client';
+import type { AuthPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
 import { schema as userSchema } from '../UserDomain/domain';
