@@ -2,7 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
 import { AuthApiService } from '@Apps/api/src/auth/AuthApi.service';
 import { Injectable, Inject } from '@nestjs/common';
-import { User } from '@Apps/api/src/auth/v1/dto/user.dto';
+import { UserDto } from '@Libs/entity/src/models/user/user.model';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -27,14 +27,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     done: VerifyCallback,
   ) {
     const { id, name, emails, photos } = profile;
-    const user: User = {
-      id: id,
-      email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
-      picture: photos[0].value,
-      accessToken,
-      refreshToken,
+    const user: UserDto = {
+      userId: Number(id),
+      userEmail: emails[0].value,
+      tokenAccess: accessToken,
+      tokenRefresh: refreshToken,
     };
     const res = await this.authApiService.validateUser(user);
     done(null, res);
