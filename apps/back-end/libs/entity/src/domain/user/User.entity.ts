@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'user' })
 export class User {
@@ -15,7 +20,7 @@ export class User {
   tokenRefresh: string;
 
   @Column({ name: 'token_expires' })
-  tokenExpires: string;
+  tokenExpires: number;
 
   @Column({ name: 'token_access' })
   tokenAccess: string;
@@ -33,5 +38,6 @@ export class User {
   status: string;
 
   @Column({ name: 'date_sign_in' })
+  @CreateDateColumn()
   dateSignIn: Date;
 }
