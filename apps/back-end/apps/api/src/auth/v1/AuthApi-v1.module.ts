@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from '@Libs/entity/src/domain/user/UserModule';
-import { GoogleStrategy } from '@Libs/commons/oauth/google.strategy';
+import { GoogleStrategy } from '@Libs/commons/src/oauth/google.strategy';
 import { AuthApiController } from './AuthApi-v1.controller';
 import { AuthApiService } from '../AuthApi.service';
 import { ConfigModule } from '@nestjs/config';
