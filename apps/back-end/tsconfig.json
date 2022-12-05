@@ -3,8 +3,18 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@Apps/*": ["apps/*"],
-      "@Libs/*": ["libs/*"]
+      "@Apps/*": [
+        "apps/*"
+      ],
+      "@Libs/*": [
+        "libs/*"
+      ],
+      "commons/commons": [
+        "libs/commons/src"
+      ],
+      "commons/commons/*": [
+        "libs/commons/src/*"
+      ]
     }
   }
 }

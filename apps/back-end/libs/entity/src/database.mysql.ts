@@ -1,18 +1,16 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../domain/user/User.entity';
-import { Channel } from '../domain/channel/Channel.entity';
-import { DailyViews } from '../domain/daily_views/DailyViews.entity';
 import { Inject } from '@nestjs/common';
-import dbConfig from '@Libs/entity/src/config/db.env';
 import { ConfigType } from '@nestjs/config';
+import dbConfig from '@Libs/entity/src/config/db.env';
+import * as path from 'path';
 
 export class createDatabaseConnection {
-  // const entityPath = path.join(
-  //   __dirname,
-  //   `/../../libs/entity/src/domain/**/*.entity.js`,
-  // );
-  // console.log(entityPath);
-  db;
+  entityPath = path.join(
+    __dirname,
+    `/../../libs/entity/src/domain/**/*.entity.js`,
+  );
+
+  private db;
 
   constructor(
     @Inject(dbConfig.KEY) private config: ConfigType<typeof dbConfig>,
@@ -24,7 +22,7 @@ export class createDatabaseConnection {
       username: 'root',
       password: config.MYSQL_ROOT_PASSWORD,
       database: config.DB_SCHEMA,
-      entities: [User, Channel, DailyViews],
+      entities: [this.entityPath],
       synchronize: false,
     });
   }

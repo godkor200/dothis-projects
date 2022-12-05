@@ -4,13 +4,14 @@ import { HealthModule } from '@Apps/api/src/health/health.module';
 import { UserApiModule } from '@Apps/api/src/user/UserApi.module';
 import { AuthApiModule } from '@Apps/api/src/auth/AuthApi.module';
 
-import { TypeOrmExModule } from '@Libs/commons/typeorm/type-orm-ext.module';
+import { TypeOrmExModule } from '@Libs/commons/src/typeorm/type-orm-ext.module';
 import { DailyViewsModule } from '@Libs/entity/src/domain/daily_views/DaliyViewsModule';
-import { createDatabaseConnection } from '@Libs/entity/src/config/database.mysql';
+import { createDatabaseConnection } from '@Libs/entity/src/database.mysql';
 import { UserQueryRepository } from '@Libs/entity/src/domain/user/UserQueryRepository';
 import { ChannelApiModule } from './channel/ChannelApi.module';
 import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
 import dbConfig from '@Libs/entity/src/config/db.env';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +26,7 @@ import dbConfig from '@Libs/entity/src/config/db.env';
     ChannelApiModule,
     DailyViewsModule,
     AuthApiModule,
+
     new createDatabaseConnection(dbConfig()).set(),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
   ],
