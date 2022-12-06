@@ -1,7 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Channel } from '../channel/Channel.entity';
+import { DailyViews } from '@Libs/entity/src/domain/daily_views/DailyViews.entity';
 @Entity({ name: 'video' })
-export class Videos {
+export class Video {
   @PrimaryGeneratedColumn({ name: 'video_id' })
   videoId: string;
 
@@ -51,5 +59,12 @@ export class Videos {
   videoAverageViews: number;
 
   @Column({ name: 'video_timestamp' })
-  video_timestamp: Date;
+  videoTimestamp: Date;
+
+  @ManyToOne((type) => Channel, (channel) => channel.Video)
+  @JoinColumn({ name: 'channelIndex' })
+  Channel: Channel;
+
+  @OneToMany((type) => DailyViews, (dailyViews) => dailyViews.videoId)
+  DailyViews: DailyViews[];
 }
