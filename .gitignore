@@ -42,3 +42,4 @@ workbox-*.js
 sw.js.map
 sw.js
 dist
+storybook-static

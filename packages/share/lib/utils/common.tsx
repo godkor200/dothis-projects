@@ -5,12 +5,6 @@ import type { Merge } from '../../lib/types/utilityTypes';
 export function isNil(v: unknown) {
   return v === undefined || v === null;
 }
-
-export const strictlyOnlyRecordKey =
-  <K extends string>() =>
-  <S, T extends Record<K, S> & Record<Exclude<keyof T, K>, never>>(t: T) =>
-    t;
-
 // 부분적으로 props 적용
 export const PartialProps =
   <A extends {}>(_Component: ComponentType<A>) =>

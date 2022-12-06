@@ -1,20 +1,18 @@
 import { Box, Center, Flex, VStack } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import FormValidMessage from '@dothis/share/components/ui/FormValidMessage';
-import FormatInput from '@dothis/share/components/ui/Input/FormatInput';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import UserAvatar from '@dothis/share/components/ui/UserAvatar';
 import {
+  Button,
   colors,
   fontWeights,
-  mediaQueries,
-} from '@dothis/share/lib/styles/chakraTheme';
-import {
+  FormatInput,
+  FormValidMessage,
   isNilStr,
+  mediaQueries,
   onEnter,
   removeSeparators,
   thousandsSeparators,
-} from '@dothis/share/lib/utils';
+  ToastBox,
+  UserAvatar,
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@prisma/client';
@@ -120,20 +118,20 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
         (fundingDetail.data.requestFundings.length === 0 ? (
           <Center py={24}>펀딩 내역이 없습니다.</Center>
         ) : (
-          <Box className="funding-list" as="ul">
+          <Box className='funding-list' as='ul'>
             {fundingDetail.data.requestFundings.map(({ user, quantity }) => (
               <Flex
                 key={`${user ? user.id : null}`}
-                as="li"
-                justifyContent="space-between"
-                alignItems="center"
+                as='li'
+                justifyContent='space-between'
+                alignItems='center'
               >
                 {user ? (
                   <UserLink userId={user.id}>
                     <UserAvatar
                       size={32}
                       user={user}
-                      Text={<b className="avatar-name">{user.name}</b>}
+                      Text={<b className='avatar-name'>{user.name}</b>}
                     />
                   </UserLink>
                 ) : (
@@ -141,24 +139,24 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
                     size={32}
                     user={{ name: UserDomain.constants.resignedUserName }}
                     Text={
-                      <b className="avatar-name">
+                      <b className='avatar-name'>
                         {UserDomain.constants.resignedUserName}
                       </b>
                     }
                   />
                 )}
-                <b className="price">{thousandsSeparators(quantity)}&nbsp;원</b>
+                <b className='price'>{thousandsSeparators(quantity)}&nbsp;원</b>
               </Flex>
             ))}
           </Box>
         ))}
-      <Box className="funding-form">
-        <VStack flex="auto" spacing={4} alignItems="start">
+      <Box className='funding-form'>
+        <VStack flex='auto' spacing={4} alignItems='start'>
           <FormatInput
-            format="thousandsSeparators"
+            format='thousandsSeparators'
             Right={<Center>원</Center>}
             onKeyDown={onEnter(handleSubmit(onSubmit))}
-            placeholder="200원부터 입력가능합니다."
+            placeholder='200원부터 입력가능합니다.'
             {...register('quantity', {
               setValueAs(v) {
                 if (isNilStr(v)) return undefined;
@@ -172,7 +170,7 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
           <FormValidMessage errorMessage={errors.quantity?.message} pl={2} />
         </VStack>
         <Button
-          theme="primary"
+          theme='primary'
           h={50}
           minW={100}
           fontSize={15}

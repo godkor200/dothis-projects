@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 
-import { colors } from './chakraTheme';
+import { colors } from './dothisTheme';
 
-const globalStyle = css`
-
+export const globalStyle = css`
   @font-face {
     font-family: 'Pretendard';
     font-weight: 700;
@@ -44,7 +43,6 @@ const globalStyle = css`
       url('/fonts/Pretendard-Regular.ttf') format('truetype');
   }
   
-
   *,
   *::before,
   *::after {
@@ -96,4 +94,3 @@ const globalStyle = css`
   }
 `;
 
-export default globalStyle;

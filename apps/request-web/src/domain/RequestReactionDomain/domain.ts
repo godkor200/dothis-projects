@@ -1,4 +1,3 @@
-import { strictlyOnlyRecordKey } from '@dothis/share/lib/utils';
 import { ReactionType } from '@prisma/client';
 import { z } from 'zod';
 
@@ -12,9 +11,11 @@ export const schema = z.object({
   createdAt: z.date(),
 });
 
+const reactionTypeKor = {
+  LIKE: '좋아요',
+  DISLIKE: '싫어요',
+} satisfies Record<ReactionType, unknown>;
+
 export const constants = {
-  reactionTypeKor: strictlyOnlyRecordKey<ReactionType>()({
-    LIKE: '좋아요',
-    DISLIKE: '싫어요',
-  }),
+  reactionTypeKor,
 };

@@ -1,10 +1,9 @@
+import { colors } from '@dothis/share';
 import createCache from '@emotion/cache';
 import createEmotionServer from '@emotion/server/create-instance';
 import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
-
-import { colors } from '~/../../packages/share/lib/styles/chakraTheme';
 
 const isBrowser = typeof document !== 'undefined';
 

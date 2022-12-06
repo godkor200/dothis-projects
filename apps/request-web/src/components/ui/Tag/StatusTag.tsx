@@ -1,9 +1,9 @@
-import { PartialApProps } from '@dothis/share/lib/utils';
+import { PartialApProps } from '@dothis/share';
 
 import { RequestPostDomain } from '@/domain';
 
-import type { TagTheme } from './index';
-import Tag from './index';
+import type { TagTheme } from './';
+import Tag from './';
 
 type StatusKeys = keyof typeof RequestPostDomain.constants.requestStatusType;
 const requestStatusToColor: Record<StatusKeys, TagTheme> = {

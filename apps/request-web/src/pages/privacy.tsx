@@ -1,5 +1,4 @@
-import Container from '@dothis/share/components/layout/Container';
-import { typo } from '@dothis/share/lib/styles/chakraTheme';
+import { Container, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 

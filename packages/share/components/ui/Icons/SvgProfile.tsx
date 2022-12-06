@@ -1,9 +1,9 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
 
-const SvgProfile = (props: SVGProps<SVGSVGElement>) => (
+import { colors } from '../../../lib/styles';
+
+export const SvgProfile = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"
@@ -20,5 +20,3 @@ const SvgProfile = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export default SvgProfile;

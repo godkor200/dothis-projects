@@ -4,12 +4,12 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import { isString } from 'fp-ts/lib/string';
 
-import { colors, typo } from '../../../lib/styles/chakraTheme';
+import { colors, typo } from '../../../lib';
 
 type Props = BoxProps & {
   errorMessage?: boolean | string | null;
 };
-const FormValidMessage = ({
+export const FormValidMessage = ({
   className,
   errorMessage,
   children,
@@ -32,7 +32,6 @@ const FormValidMessage = ({
 
 const style = css`
   display: flex;
-
   color: ${colors.gray['50']};
   ${typo.b4};
 
@@ -44,4 +43,3 @@ const style = css`
     margin-left: auto;
   }
 `;
-export default FormValidMessage;
