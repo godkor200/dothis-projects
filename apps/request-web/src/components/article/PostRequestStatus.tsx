@@ -1,9 +1,5 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
-import SvgAward from '@dothis/share/components/ui/Icons/SvgAward';
-import SvgCheck from '@dothis/share/components/ui/Icons/SvgCheck';
-import SvgSendPlane from '@dothis/share/components/ui/Icons/SvgSendPlane';
-import SvgThumbUp from '@dothis/share/components/ui/Icons/SvgThumbUp';
-import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
+import { colors, fontWeights , SvgAward, SvgCheck, SvgSendPlane, SvgThumbUp } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { RequestPost, RequestStatusType } from '@prisma/client';
 import clsx from 'clsx';

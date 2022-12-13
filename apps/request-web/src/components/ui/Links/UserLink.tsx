@@ -1,11 +1,11 @@
-import { useModalStore } from '@dothis/share/lib/models';
-import type { FirstParameter } from '@dothis/share/lib/types/utilityTypes';
-import { PartialApProps } from '@dothis/share/lib/utils';
+import type { FirstParameter } from '@dothis/share';
+import { PartialApProps  } from '@dothis/share';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
 import type { AnchorHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 
 import { pagePath } from '@/constants';
+import { useModalStore } from '@/models/Modal';
 
 type Props = FirstParameter<typeof pagePath.user> & {
   onClick?: LinkProps['onClick'];

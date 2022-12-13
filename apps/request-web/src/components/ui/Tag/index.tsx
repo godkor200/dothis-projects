@@ -1,6 +1,6 @@
 import type { TagProps as ChakraTagProps } from '@chakra-ui/react';
 import { Tag as ChakraTag } from '@chakra-ui/react';
-import { colors, typo } from '@dothis/share/lib/styles/chakraTheme';
+import { colors, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 

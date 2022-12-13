@@ -15,7 +15,7 @@ type Props = {
   children: ReactNode;
 } & DrawerProps;
 
-export default function Drawer({ isOpen, onClose, children, ...props }: Props) {
+export function Drawer({ isOpen, onClose, children, ...props }: Props) {
   return (
     <ChakraDrawer
       placement="right"

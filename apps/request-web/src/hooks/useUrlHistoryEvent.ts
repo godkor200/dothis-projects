@@ -1,4 +1,4 @@
-import { useUrlHistoryStore } from '@dothis/share/lib/models';
+import { useUrlHistoryStore } from '@dothis/share';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 

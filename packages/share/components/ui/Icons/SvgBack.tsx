@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
 
-const SvgBack = (props: SVGProps<SVGSVGElement>) => (
+
+export const SvgBack = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -13,4 +13,3 @@ const SvgBack = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default SvgBack;

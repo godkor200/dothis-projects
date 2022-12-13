@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useScroll({
+export function useScroll({
   el = document.body,
   scrollEl = typeof window === 'undefined' ? undefined : window,
   defaultDirection = 'UP' as 'DOWN' | 'UP',

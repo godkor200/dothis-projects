@@ -1,11 +1,18 @@
-const withPWA = require('next-pwa')
+
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['@dothis/share']);
 
 const runtimeCaching = require('next-pwa/cache');
 
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  // disable: process.env.NODE_ENV === 'development',
+  runtimeCaching,
+  buildExcludes: [/middleware-manifest.json$/]
+})
 
-const plugins =[withTM, withPWA];
 
 /** @type {import('next').NextConfig} *//**
  * @type {import('next').NextConfig}
@@ -13,15 +20,8 @@ const plugins =[withTM, withPWA];
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === 'development',
-    runtimeCaching,
-    buildExcludes: [/middleware-manifest.json$/]
-  },
   experimental: {
+    outputFileTracingIgnores: ['**swc/core**'], // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
     swcPlugins: [
       [
         'next-superjson-plugin',
@@ -33,9 +33,11 @@ const nextConfig = {
     transpilePackages: ['@dothis/share'],
   },
   compiler:{
-    emotion: true,
+    emotion: {
+      labelFormat: '[dirname]-[fildname]-[local]',
+    },
+    
   }
 };
 
-
-module.exports = async (phase) => withPlugins(plugins, nextConfig)(phase, { undefined });
+module.exports = withPlugins([withTM, withPWA], nextConfig);

@@ -2,7 +2,7 @@ import type { BoxProps } from '@chakra-ui/react';
 import { Box, Flex } from '@chakra-ui/react';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-import Button from '../../../components/ui/Button';
+import { Button } from '../Button';
 
 export type SubmitTemplateProps = {
   children: ReactNode;
@@ -11,7 +11,7 @@ export type SubmitTemplateProps = {
   cancelText?: string;
   onCancel: MouseEventHandler<HTMLButtonElement>;
 } & BoxProps;
-const SubmitModalTemplate = ({
+export const SubmitModalTemplate = ({
   children,
   submitText = '확인',
   onSubmit,
@@ -33,5 +33,3 @@ const SubmitModalTemplate = ({
     </Box>
   );
 };
-
-export default SubmitModalTemplate;

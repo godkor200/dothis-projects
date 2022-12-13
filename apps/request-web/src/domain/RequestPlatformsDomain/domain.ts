@@ -1,4 +1,3 @@
-import { strictlyOnlyRecordKey } from '@dothis/share/lib/utils';
 import { RequestPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
@@ -10,11 +9,13 @@ export const schema = z.object({
   name: z.nativeEnum(RequestPlatformType),
 });
 
+const platformTypeKor = {
+  YOUTUBE: '유튜브',
+  TWITCH: '트위치',
+  INSTAGRAM: '인스타그램',
+  FACEBOOK: '페이스북',
+} satisfies Record<RequestPlatformType, unknown>;
+
 export const constants = {
-  platformTypeKor: strictlyOnlyRecordKey<RequestPlatformType>()({
-    YOUTUBE: '유튜브',
-    TWITCH: '트위치',
-    INSTAGRAM: '인스타그램',
-    FACEBOOK: '페이스북',
-  } as const),
+  platformTypeKor,
 };

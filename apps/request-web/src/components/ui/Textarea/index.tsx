@@ -1,7 +1,6 @@
 import type { TextareaProps as ChakraTextareaProps } from '@chakra-ui/react';
 import { forwardRef, Textarea as ChakraTextarea } from '@chakra-ui/react';
-import { colors, fontWeights } from '@dothis/share/lib/styles/chakraTheme';
-import commonStyle from '@dothis/share/lib/styles/commonStyle';
+import { colors, commonStyle, fontWeights } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 

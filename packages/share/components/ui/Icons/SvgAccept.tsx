@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
 
-const SvgAccept = (props: SVGProps<SVGSVGElement>) => (
+
+export const SvgAccept = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -20,4 +20,3 @@ const SvgAccept = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default SvgAccept;

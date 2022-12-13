@@ -1,10 +1,5 @@
 import { Text } from '@chakra-ui/react';
-import Container from '@dothis/share/components/layout/Container';
-import Button from '@dothis/share/components/ui/Button';
-import SubmitModalTemplate from '@dothis/share/components/ui/Modal/SubmitModalTemplate';
-import ToastBox from '@dothis/share/components/ui/ToastBox';
-import { useModalStore } from '@dothis/share/lib/models';
-import { fontWeights, typo } from '@dothis/share/lib/styles/chakraTheme';
+import { Button, Container, fontWeights, SubmitModalTemplate, ToastBox, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -14,6 +9,7 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
+import { useModalStore } from '@/models/Modal';
 import { withUserSessionSsr } from '@/server/session';
 import { trpc, trpcSSG } from '@/utils/trpc';
 

@@ -3,15 +3,14 @@ import { Box, Button, forwardRef, PopoverContent } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 
-import { shadows } from '../../../lib/styles/chakraTheme';
-import commonStyle from '../../../lib/styles/commonStyle';
+import { commonStyle,shadows } from '../../../lib';
 import { useMentionContext } from './Mention';
 
 type Props = Omit<PopoverContentProps, 'children' | 'as'>;
 
 // as 타입을 맞추기 위해 chakra-ui의 forwardRef을 사용
 // https://chakra-ui-git-fix-typescript-autocomplete.chakra-ui.vercel.app/guides/as-prop#option-1-using-forwardref-from-chakra-uireact
-const Mentions = forwardRef<Props, 'ul'>(({ className, ...props }, ref) => {
+export const MentionContents = forwardRef<Props, 'ul'>(({ className, ...props }, ref) => {
   const { matchList, onSelect } = useMentionContext();
 
   return (
@@ -53,5 +52,3 @@ const style = css`
     height: 100%;
   }
 `;
-
-export default Mentions;
