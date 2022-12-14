@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '@Libs/entity/src/domain/user/User.entity';
 
 @Entity({ name: 'subscribe' })
 export class Subscribe {
@@ -25,4 +32,8 @@ export class Subscribe {
 
   @Column({ name: 'created_at' })
   createdAt: Date;
+
+  @ManyToOne((type) => User, (user) => user.UserChannelData)
+  @JoinColumn({ name: 'userId' })
+  User: User;
 }

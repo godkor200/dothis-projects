@@ -1,5 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '@Libs/entity/src/domain/user/User.entity';
 @Entity()
 export class UserChannelData {
   @PrimaryGeneratedColumn({ name: 'channel_id' })
@@ -28,4 +34,8 @@ export class UserChannelData {
 
   @Column({ name: 'channel_tags' })
   channelTags: string;
+
+  @ManyToOne((type) => User, (user) => user.UserChannelData)
+  @JoinColumn({ name: 'userId' })
+  User: User;
 }
