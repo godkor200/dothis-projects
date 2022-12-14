@@ -7,7 +7,7 @@ import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
   patchNestjsSwagger();
   await app.listen(8080);
 }

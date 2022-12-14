@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
+import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
+import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
 @Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn({ name: 'user_id' })
@@ -38,6 +41,17 @@ export class User {
   status: string;
 
   @Column({ name: 'date_sign_in' })
-  @CreateDateColumn()
   dateSignIn: Date;
+
+  @OneToMany(
+    (type) => UserChannelData,
+    (userChanelData) => userChanelData.userId,
+  )
+  UserChannelData: UserChannelData[];
+
+  @OneToMany((type) => Subscribe, (subscribe) => subscribe.userId)
+  Subscribe: Subscribe[];
+
+  @OneToMany((type) => Channel, (channel) => channel.userId)
+  Channel: Channel[];
 }

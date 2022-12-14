@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from '@Libs/entity/src/domain/user/UserModule';
 import { AuthApiV1Module } from './v1/AuthApi-v1.module';
+import { JwtModule } from '@nestjs/jwt';
 import { RouterModule } from '@nestjs/core';
 
 @Module({
@@ -8,6 +9,7 @@ import { RouterModule } from '@nestjs/core';
     UserModule,
     AuthApiV1Module,
     RouterModule.register([{ path: 'v1', module: AuthApiV1Module }]),
+    JwtModule.register({ secret: process.env.JWT_SECRET }),
   ],
   controllers: [],
   providers: [],

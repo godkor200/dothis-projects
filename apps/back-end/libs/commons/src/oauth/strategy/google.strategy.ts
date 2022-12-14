@@ -12,12 +12,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `http://${
+      callbackURL: `http${
+        process.env.NODE_ENV === 'development' ? '' : 's'
+      }://${
         process.env.NODE_ENV === 'development'
           ? 'localhost:8080'
           : 'api.dothis.world'
       }/v1/auth/google-redirect`,
-      scope: ['email', 'profile'],
+      scope: ['email', 'profile'], //=> 유튜브데이터 받아오면 수정
     });
   }
   async validate(

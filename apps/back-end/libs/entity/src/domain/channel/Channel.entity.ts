@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { User } from '@Libs/entity/src/domain/user/User.entity';
+import { Video } from '@Libs/entity/src/domain/videos/Videos.entity';
 
 @Entity({ name: 'channel' })
 export class Channel {
@@ -37,4 +46,11 @@ export class Channel {
 
   @Column({ name: 'channel_link' })
   channelLink: string;
+
+  @ManyToOne((type) => User, (user) => user.UserChannelData)
+  @JoinColumn({ name: 'userId' })
+  User: User;
+
+  @OneToMany((type) => Channel, (channel) => channel.channelId)
+  Video: Video[];
 }
