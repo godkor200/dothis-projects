@@ -26,7 +26,6 @@ import dbConfig from '@Libs/entity/src/config/db.env';
     ChannelApiModule,
     DailyViewsModule,
     AuthApiModule,
-
     new createDatabaseConnection(dbConfig()).set(),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
   ],

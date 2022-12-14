@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Subscribe } from './Subscribe.entity';
+import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 
 @Module({

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { User } from './User.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserQueryRepository } from './UserQueryRepository';
-import { UserChannelData } from '@Libs/entity/src/domain/UserChannelData/UserChannelData.entity';
-import { Subscribe } from '@Libs/entity/src/domain/Subscribe/Subscribe.entity';
+import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
 @Module({
   imports: [

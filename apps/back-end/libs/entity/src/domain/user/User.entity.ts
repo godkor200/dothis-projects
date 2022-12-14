@@ -5,8 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserChannelData } from '@Libs/entity/src/domain/UserChannelData/UserChannelData.entity';
-import { Subscribe } from '@Libs/entity/src/domain/Subscribe/Subscribe.entity';
+import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
 @Entity({ name: 'user' })
 export class User {
@@ -41,7 +41,6 @@ export class User {
   status: string;
 
   @Column({ name: 'date_sign_in' })
-  // @CreateDateColumn()
   dateSignIn: Date;
 
   @OneToMany(
