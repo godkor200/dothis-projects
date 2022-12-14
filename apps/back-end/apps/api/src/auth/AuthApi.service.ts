@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 import { UserDto } from '@Libs/entity/src/models/user/user.model';
 import { Request } from 'express';
+import { take } from 'rxjs';
 
 @Injectable()
 export class AuthApiService {
@@ -14,7 +15,7 @@ export class AuthApiService {
     private readonly jwtService: JwtService,
   ) {}
 
-  googleLogin(req: Request) {
+  async googleLogin(req: Request) {
     if (!req.user) {
       return 'No user from google';
     }
@@ -25,6 +26,8 @@ export class AuthApiService {
 
     const { token: refreshToken, maxAge: refreshTokenMaxAge } =
       this.refreshToken(userId);
+
+    await this.setCurrentRefreshToken(refreshToken, userId);
 
     return {
       message: 'User information from google',
@@ -90,7 +93,12 @@ export class AuthApiService {
     };
   }
 
-  async setCurrentRefreshToken(refreshToken: string, id: number) {}
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    await this.userRepository.update(
+      { userId: id },
+      { tokenRefresh: refreshToken },
+    );
+  }
 
   async getUserIfRefreshTokenMatches(refreshToken: string, id: number) {}
 }

@@ -19,7 +19,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           ? 'localhost:8080'
           : 'api.dothis.world'
       }/v1/auth/google-redirect`,
-      scope: ['email', 'profile'],
+      scope: ['email', 'profile'], //=> 유튜브데이터 받아오면 수정
     });
   }
   async validate(
