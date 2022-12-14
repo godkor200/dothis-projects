@@ -1,9 +1,9 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
 
-const SvgThumbDown = (props: SVGProps<SVGSVGElement>) => (
+import { colors } from '../../../lib/styles';
+
+export const SvgThumbDown = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"
@@ -27,5 +27,3 @@ const SvgThumbDown = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgThumbDown;

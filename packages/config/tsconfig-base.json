@@ -15,9 +15,10 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+    "typeRoots": [
+      "../../node_modules/@types",
+      "../../node_modules/@chakra-ui/styled-system/dist",
+    ],
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": ["../../types/**/*.d.ts"]
+  "include": ["eslint-dothis-nestjs.js", "eslint-dothis-nextjs.js"]
 }

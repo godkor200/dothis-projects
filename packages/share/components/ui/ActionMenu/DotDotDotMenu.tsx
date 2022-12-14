@@ -1,11 +1,10 @@
 import { Center } from '@chakra-ui/react';
 
-import ActionMenu from '../../../components/ui/ActionMenu/index';
-import SvgDotdotdot from '../../../components/ui/Icons/SvgDotdotdot';
-import { colors } from '../../../lib/styles/chakraTheme';
-import { PartialProps } from '../../../lib/utils';
+import { colors, PartialProps  } from '../../../lib';
+import { SvgDotdotdot } from '../Icons';
+import { ActionMenu } from './ActionMenu';
 
-const DotDotDotMenu = PartialProps(ActionMenu)({
+export const DotDotDotMenu = PartialProps(ActionMenu)({
   children: (
     <Center as='div' w={40} h={40}>
       <SvgDotdotdot fill={colors.gray['90']} />
@@ -13,4 +12,3 @@ const DotDotDotMenu = PartialProps(ActionMenu)({
   ),
 });
 
-export default DotDotDotMenu;

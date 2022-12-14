@@ -3,13 +3,11 @@ import clsx from 'clsx';
 import type { ChangeEvent } from 'react';
 import { useCallback, useRef } from 'react';
 
-import MentionContents from '../../../components/ui/Mention/MentionContents';
-import MentionTarget from '../../../components/ui/Mention/MentionTarget';
-import type { UseMatchReturn } from '../../../lib/hooks/useMatch';
-import { colors, shadows } from '../../../lib/styles/chakraTheme';
-import Mention from '../Mention/Mention';
+import type { UseMatchReturn } from '../../../lib';
+import { colors, shadows } from '../../../lib';
+import { Mention, MentionContents,MentionTarget } from '../Mention';
 import type { InputProps } from './index';
-import Input from './index';
+import { Input } from './Input';
 
 export type MentionInputProps = InputProps & {
   match: Pick<
@@ -21,7 +19,7 @@ export type MentionInputProps = InputProps & {
   size?: 'md' | 'sm';
 };
 
-const MentionInput = ({
+export const MentionInput = ({
   match,
   onItemSelect,
   onChange,
@@ -90,5 +88,3 @@ const style = css`
     }
   }
 `;
-
-export default MentionInput;

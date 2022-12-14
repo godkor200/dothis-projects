@@ -1,4 +1,4 @@
-import { errorMessage } from '@dothis/share/lib/models/Message';
+import { errorMessage } from '@dothis/share';
 import { auth as googleAuth } from 'googleapis/build/src/apis/oauth2';
 import { youtube } from 'googleapis/build/src/apis/youtube';
 import type { NextApiRequest, NextApiResponse } from 'next';

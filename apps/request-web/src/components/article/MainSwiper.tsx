@@ -1,7 +1,5 @@
-import Button from '@dothis/share/components/ui/Button';
-import SvgNext from '@dothis/share/components/ui/Icons/SvgNext';
-import SvgPrev from '@dothis/share/components/ui/Icons/SvgPrev';
-import { colors, typo } from '@dothis/share/lib/styles/chakraTheme/variable';
+import { Button, colors, typo } from '@dothis/share';
+import { SvgNext , SvgPrev } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { useRef, useState } from 'react';
 import { A11y } from 'swiper';

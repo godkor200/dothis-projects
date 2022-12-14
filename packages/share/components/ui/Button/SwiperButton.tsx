@@ -2,16 +2,15 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import type { ComponentProps } from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
-import SvgNext from '../Icons/SvgNext';
-import SvgPrev from '../Icons/SvgPrev';
-import Button from './index';
+import { colors } from '../../../lib';
+import { SvgNext, SvgPrev } from '../Icons';
+import { Button } from './Button';
 
 type Props = ComponentProps<typeof Button> & {
   size?: 'full' | 'md';
   dir: 'prev' | 'next';
 };
-export default function SwiperButton({
+export function SwiperButton({
   size = 'md',
   dir,
   className,

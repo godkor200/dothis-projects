@@ -1,9 +1,9 @@
 import type { SVGProps } from 'react';
-import * as React from 'react';
 
-import { colors } from '../../../lib/styles/chakraTheme';
 
-const SvgMessage = (props: SVGProps<SVGSVGElement>) => (
+import { colors } from '../../../lib/styles';
+
+export const SvgMessage = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="25"
     height="25"
@@ -27,5 +27,3 @@ const SvgMessage = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
-export default SvgMessage;

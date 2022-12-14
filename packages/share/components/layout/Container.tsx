@@ -1,6 +1,6 @@
 import { Box, chakra } from '@chakra-ui/react';
 
-const Container = chakra(Box, {
+export const Container = chakra(Box, {
   baseStyle: {
     width: '100%',
     paddingX: {
@@ -13,4 +13,3 @@ const Container = chakra(Box, {
     marginX: 'auto',
   },
 });
-export default Container;

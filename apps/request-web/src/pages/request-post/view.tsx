@@ -1,10 +1,6 @@
-import Container from '@dothis/share/components/layout/Container';
-import { extractQueryParams } from '@dothis/share/lib/utils';
+import { Container, extractQueryParams } from '@dothis/share';
 import { useRouter } from 'next/router';
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next/types';
+import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { z } from 'zod';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
@@ -41,8 +37,8 @@ export const getServerSideProps = async (
 };
 
 export default function RequestViewPage({
-  requestDetail,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+                                          requestDetail,
+                                        }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const query = querySchema.parse(extractQueryParams(router.asPath));
 

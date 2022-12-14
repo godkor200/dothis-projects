@@ -1,0 +1,47 @@
+{
+  "name": "dashboard-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3666",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.4.1",
+    "@chakra-ui/styled-system": "^2.3.5",
+    "@chakra-ui/theme": "^2.2.1",
+    "@dothis/share": "*",
+    "@emotion/babel-plugin": "^11.10.5",
+    "@emotion/css": "^11.10.5",
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "clsx": "^1.2.1",
+    "date-fns": "^2.29.3",
+    "framer-motion": "^7.6.15",
+    "next": "13.0.5",
+    "next-auth": "^4.15.1",
+    "next-pwa": "^5.6.0",
+    "next-superjson-plugin": "^0.4.9",
+    "prop-types": "^15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.39.5",
+    "react-intersection-observer": "^9.4.1",
+    "superjson": "^1.11.0",
+    "valtio": "^1.7.6",
+    "zod": "^3.19.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@dothis/config": "*",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0"
+  }
+}

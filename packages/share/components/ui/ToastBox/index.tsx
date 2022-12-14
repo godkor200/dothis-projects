@@ -5,26 +5,20 @@ import { flow } from 'fp-ts/function';
 import { pipe } from 'fp-ts/lib/function';
 import { uid } from 'uid';
 
-import SvgClose from '../../../components/ui/Icons/SvgClose';
-import type { Message } from '../../../lib/models';
-import {
-  errorMessage,
-  message,
-  standaloneToast,
-  successMessage,
-} from '../../../lib/models';
-import { colors, fontWeights, shadows } from '../../../lib/styles/chakraTheme';
-import Button from '../Button';
+import type { Message } from '../../../lib';
+import { colors, errorMessage, fontWeights, message, shadows, standaloneToast, successMessage } from '../../../lib';
+import { Button } from '../Button';
+import { SvgClose } from '../Icons';
 
 export type ToastBoxProps = Pick<CenterProps, 'children' | 'className'> & {
   onClose?: () => void;
 };
 
-const ToastBox = ({ onClose, children, ...props }: ToastBoxProps) => (
+export const ToastBox = ({ onClose, children, ...props }: ToastBoxProps) => (
   <Center css={style} {...props}>
     <div>{children}</div>
     {onClose && (
-      <Button className="ui_toast-close-button" onClick={onClose}>
+      <Button className='ui_toast-close-button' onClick={onClose}>
         <SvgClose fill={colors.white} />
       </Button>
     )}
@@ -47,9 +41,11 @@ const style = css`
   &.success {
     background-color: ${colors.success.default};
   }
+
   &.error {
     background-color: ${colors.primary.default};
   }
+
   &.info {
     background-color: ${colors.bg.dark};
     color: ${colors.gray['70']};
@@ -64,6 +60,7 @@ const style = css`
       height: 40px;
     }
   }
+
   &.waring {
   }
 
@@ -125,4 +122,3 @@ ToastBox.infoToast = (_message: string) =>
     standaloneToast.toast,
   );
 
-export default ToastBox;
