@@ -12,7 +12,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `http://${
+      callbackURL: `http${
+        process.env.NODE_ENV === 'development' ? '' : 's'
+      }://${
         process.env.NODE_ENV === 'development'
           ? 'localhost:8080'
           : 'api.dothis.world'
