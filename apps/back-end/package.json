@@ -18,7 +18,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/back-end/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/back-end/test/jest-e2e.json",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./libs/commons/src/typeorm/typeormConfig.ts",
+    "typeorm:generate-migration": "npm run typeorm -- -d ./libs/commons/src/typeorm/typeormConfig.ts migration:generate ./libs/commons/src/typeorm/migrations/$npm_config_name",
+    "typeorm:create-migration": "npm run typeorm -- migration:create ./libs/commons/src/typeorm/migrations/$npm_config_name",
+    "typeorm:revert-migration": "npm run typeorm -- -d ./libs/commons/src/typeorm/typeormConfig.ts migration:revert"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "^1.8.0",
@@ -43,7 +48,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.10",
+    "typeorm": "^0.3.11",
     "zod": "^3.19.1"
   },
   "devDependencies": {
