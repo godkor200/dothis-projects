@@ -16,6 +16,7 @@ module.exports = {
       env: {
         SERVER_PORT: 8080,
         NODE_ENV: 'development',
+        MYSQL_ROOT_USER: process.env.MYSQL_ROOT_USER,
         MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
         MYSQL_USER: process.env.MYSQL_USER,
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
@@ -31,6 +32,7 @@ module.exports = {
       env_production: {
         SERVER_PORT: 8080,
         NODE_ENV: 'production',
+        MYSQL_ROOT_USER: process.env.MYSQL_ROOT_USER,
         MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
         MYSQL_USER: process.env.MYSQL_USER,
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,

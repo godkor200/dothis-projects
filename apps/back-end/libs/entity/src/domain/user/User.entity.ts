@@ -22,11 +22,11 @@ export class User {
   @Column({ name: 'token_refresh' })
   tokenRefresh: string;
 
-  @Column({ name: 'token_expires' })
-  tokenExpires: number;
+  // @Column({ name: 'token_expires' })
+  // tokenExpires: number;
 
-  @Column({ name: 'token_access' })
-  tokenAccess: string;
+  // @Column({ name: 'token_access' })
+  // tokenAccess: string;
 
   @Column({ name: 'agree_promotion' })
   agreePromotion: string;
