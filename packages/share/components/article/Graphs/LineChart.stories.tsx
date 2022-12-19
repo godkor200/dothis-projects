@@ -13,6 +13,7 @@ export default {
 
 export const Basic: ComponentStory<typeof LineChart> = () => (
   <>
+    LineChart
     <LineChart data={data} />
   </>
 );
