@@ -39,17 +39,17 @@ jobs:
         run: |
           pwd
           touch production.env
-          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> .env
-          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> .env
-          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> .env
-          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> .env
-          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
-          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
-          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> .env
-          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> .env          
+          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
+          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
+          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
+          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
+          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
+          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
+          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
+          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
           cat production.env
 
       - name: zip file

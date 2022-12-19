@@ -15,7 +15,7 @@ export default new DataSource({
   type: 'mysql',
   host: configService.get('DB_HOST'),
   port: configService.get('DB_PORT'),
-  username: 'root',
+  username: configService.get('MYSQL_ROOT_USER'),
   password: configService.get('MYSQL_ROOT_PASSWORD'),
   database: configService.get('DB_SCHEMA'),
   entities: [User, UserChannelData, Subscribe, DailyViews, Channel, Video],
