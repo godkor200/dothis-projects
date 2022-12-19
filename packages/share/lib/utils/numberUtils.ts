@@ -17,7 +17,7 @@ export function random(length = 7) {
 }
 export const predRandom =
   (pred: (num: number) => boolean) =>
-  (length = 7) =>
+  (max: number) =>
   () => {
     let n: number;
 

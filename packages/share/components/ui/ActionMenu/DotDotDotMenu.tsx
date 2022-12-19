@@ -1,6 +1,6 @@
 import { Center } from '@chakra-ui/react';
+import { colors, PartialProps  } from 'lib';
 
-import { colors, PartialProps  } from '../../../lib';
 import { SvgDotdotdot } from '../Icons';
 import { ActionMenu } from './ActionMenu';
 

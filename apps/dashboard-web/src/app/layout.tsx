@@ -1,10 +1,12 @@
-import { Flex } from '@chakra-ui/react';
-import Button from '@dothis/share/components/ui/Button';
-import globalStyle from '@dothis/share/lib/styles/globalStyle';
-import { Global } from '@emotion/react';
+import './globalStyle.css';
+
 import { clsx } from 'clsx';
-import {} from 'next/';
 import type { ReactNode } from 'react';
+
+import Footer from '@/app/components/Footer';
+
+import ClientContext from './ClientContext';
+import GNB from './components/GNB';
 
 type Props = {
   children: ReactNode;
@@ -13,11 +15,13 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={clsx()}>
-      <head />
-
-      <Global styles={globalStyle} />
-
-      <Flex>{children}</Flex>
+      <body>
+        <ClientContext>
+          <GNB />
+          {children}
+          <Footer />
+        </ClientContext>
+      </body>
     </html>
   );
 }

@@ -1,9 +1,9 @@
 import type { MenuButtonProps, MenuProps } from '@chakra-ui/react';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { css } from '@emotion/react';
+import { colors, fontWeights } from 'lib';
 import type { ReactNode } from 'react';
 
-import { colors, fontWeights } from '../../../lib';
 import { Button } from '../Button';
 
 type Props = {

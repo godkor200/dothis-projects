@@ -1,0 +1,25 @@
+.app_footer {
+    margin-right: 0;
+    border-top:  1px solid #DCE1E5;
+    padding-top: 38px;
+    padding-bottom: 56px;
+
+    .footer-info-contents {
+        margin: 24px 0;
+        line-height: 24px; 
+    }
+
+    .footer-copyright {
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 61px;
+
+        a {
+            display: block;
+            height: 32px;
+        }
+    }
+}
+
