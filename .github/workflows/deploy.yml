@@ -39,6 +39,7 @@ jobs:
         run: |
           pwd
           touch production.env
+          echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
           echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
           echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
           echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
