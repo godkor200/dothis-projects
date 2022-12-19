@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 import { UserDto } from '@Libs/entity/src/models/user/user.model';
 import { Request } from 'express';
-import { take } from 'rxjs';
 
 @Injectable()
 export class AuthApiService {
@@ -53,8 +52,8 @@ export class AuthApiService {
       userEmail: user.userEmail,
       channelId: 1231231,
       tokenRefresh: user.tokenRefresh,
-      tokenExpires: 3000,
-      tokenAccess: user.tokenAccess,
+      // tokenExpires: 3000,
+      // tokenAccess: user.tokenAccess,
       agreePromotion: '',
       plan: '11',
       isAdmin: true,
