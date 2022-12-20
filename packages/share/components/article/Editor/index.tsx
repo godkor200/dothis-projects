@@ -3,14 +3,9 @@ import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { Editor as TinymceEditor } from '@tinymce/tinymce-react';
 import type { ComponentProps } from 'react';
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
-import { colors, fonts, typo } from 'lib';
+import { colors, fonts, typo } from '../../../lib';
 
 export type EditorT = TinymceEditor;
 type Props = ComponentProps<typeof TinymceEditor> & {
@@ -111,7 +106,6 @@ export const Editor = forwardRef<TinymceEditor | null, Props>(
 );
 
 Editor.displayName = 'Editor';
-
 
 const style = css`
   min-height: 260px;
