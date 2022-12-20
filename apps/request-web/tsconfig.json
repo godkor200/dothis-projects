@@ -9,7 +9,8 @@
         "./*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "jsxImportSource": "@emotion/react"
   },
   "references": [
     {

@@ -1,5 +1,5 @@
 import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
-import { Button, colors, Container,Drawer, HomeLogo, mediaQueries, typo, UserAvatar } from '@dothis/share';
+import { Button, colors, Container,Drawer, SvgDothisLogo, mediaQueries, typo, UserAvatar } from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,6 +13,7 @@ import Login from '../contents/Login';
 import NewRequestPost from '../contents/NewRequestPost';
 import SideProfile from '../contents/SideProfile';
 import SearchInput from '../ui/SearchInput';
+import { HomeLogo } from '@/components/ui/HomeLogo';
 
 export default function LayoutHeader() {
   const { data: session, status } = useSession();
