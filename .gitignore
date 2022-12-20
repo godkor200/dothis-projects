@@ -36,7 +36,6 @@ yarn-error.log*
 .turbo
 .vercel
 .idea
-package-lock.json
 
 
 workbox-*.js.map
@@ -45,4 +44,3 @@ sw.js.map
 sw.js
 dist
 storybook-static
-pnpm-lock.yaml
