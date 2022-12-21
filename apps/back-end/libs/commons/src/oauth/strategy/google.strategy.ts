@@ -19,7 +19,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           ? 'localhost:8080'
           : 'api.dothis.world'
       }/v1/auth/google-redirect`,
-      scope: ['email', 'profile'], //=> 유튜브데이터 받아오면 수정
+      scope: ['email', 'profile'],
     });
   }
   async validate(
@@ -29,12 +29,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     done: VerifyCallback,
   ) {
     const { id, name, emails, photos } = profile;
+
     const user: UserDto = {
       userId: Number(id),
       userEmail: emails[0].value,
       tokenAccess: accessToken,
       tokenRefresh: refreshToken,
     };
+
     const res = await this.authApiService.validateUser(user);
     done(null, res);
   }

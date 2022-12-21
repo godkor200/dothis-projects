@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
@@ -15,9 +15,12 @@ export class AuthApiService {
   ) {}
 
   async googleLogin(req: Request) {
-    if (!req.user) {
-      return 'No user from google';
-    }
+    if (!req.user)
+      return {
+        message: 'No user from google',
+        user: null,
+        siteToken: null,
+      };
     const userId = (req.user as User).userId;
 
     const { token: accessToken, maxAge: accessTokenMaxAge } =
@@ -44,21 +47,14 @@ export class AuthApiService {
     const res = await this.userRepository.findOneBy({
       userEmail: user.userEmail,
     });
+
     if (res) return res;
-    /**
-     * 현재 채널아이디가 오지 않기 때문에 임의로 데이터를 넣음
-     */
+
     const newUser = this.userRepository.create({
       userEmail: user.userEmail,
-      channelId: 1231231,
-      tokenRefresh: user.tokenRefresh,
-      // tokenExpires: 3000,
-      // tokenAccess: user.tokenAccess,
-      agreePromotion: '',
-      plan: '11',
-      isAdmin: true,
-      status: 'vitality',
+      isAdmin: false,
     });
+
     return this.userRepository.save(newUser);
   }
 
@@ -98,6 +94,23 @@ export class AuthApiService {
       { tokenRefresh: refreshToken },
     );
   }
+  decodeToken(token: string) {
+    const res = this.jwtService.decode(token);
+    if (!res || typeof res === 'string')
+      throw new HttpException('message', HttpStatus.UNAUTHORIZED);
+    return res;
+  }
 
-  async getUserIfRefreshTokenMatches(refreshToken: string, id: number) {}
+  async getUserDataById(id: string) {
+    return await this.userRepository.findOneBy({ userId: +id });
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, id: string) {
+    /**
+     * 쿼리로 함수 따로 만들기
+     */
+    const userData = await this.getUserDataById(id);
+
+    return userData.tokenRefresh === refreshToken;
+  }
 }
