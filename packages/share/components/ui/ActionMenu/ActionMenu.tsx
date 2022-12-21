@@ -17,7 +17,12 @@ type Props = {
   buttonProps?: MenuButtonProps;
 } & Omit<MenuProps, 'children'>;
 
-export const ActionMenu = ({ menuItems, children, buttonProps, ...props }: Props) => {
+export const ActionMenu = ({
+  menuItems,
+  children,
+  buttonProps,
+  ...props
+}: Props) => {
   return (
     <Menu placement="bottom-end" {...props}>
       <MenuButton as={Button} h="fit-content" w="fit-content" {...buttonProps}>

@@ -42,9 +42,16 @@
     "dev": {
       "cache": false
     },
-
+    "dev-mock": {
+      "cache": false
+    },
+    "storybook": {
+      "cache": false
+    },
     "request-web": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "env": [
         "DATABASE_URL",
         "NEXTAUTH_URL",
@@ -53,7 +60,6 @@
         "AWS_SECRET_ACCESS_KEY"
       ]
     },
-  
     "clean": {
       "cache": false
     }

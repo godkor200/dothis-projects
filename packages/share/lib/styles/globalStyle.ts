@@ -42,7 +42,7 @@ export const globalStyle = css`
       url('/fonts/Pretendard-Regular.woff') format('woff'),
       url('/fonts/Pretendard-Regular.ttf') format('truetype');
   }
-  
+
   *,
   *::before,
   *::after {
@@ -59,6 +59,7 @@ export const globalStyle = css`
     padding: 0;
     margin: 0;
     min-height: 100vh;
+    height: 100%;
   }
 
   #__next {
@@ -83,6 +84,7 @@ export const globalStyle = css`
     outline: ${colors.primary.default} auto 1px;
     outline-offset: 1px;
   }
+
   mark {
     background: transparent;
     color: ${colors.blue.default};
@@ -93,4 +95,3 @@ export const globalStyle = css`
     z-index: 2000 !important;
   }
 `;
-

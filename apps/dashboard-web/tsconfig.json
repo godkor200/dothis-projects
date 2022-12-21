@@ -1,6 +1,7 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
   "compilerOptions": {
+    "jsxImportSource": "react",
     "paths": {
       "@/*": [
         "./src/*"
@@ -9,18 +10,18 @@
         "./*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "references": [
-    {
-      "path": "../../packages/share",
-      "declarationMap": true
-    }
-  ],
   "include": [
     "./src/**/*",
     "next-env.d.ts",
-    "../../types/**/*.d.ts"
+    "../../types/**/*.d.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

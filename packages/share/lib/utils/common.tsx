@@ -1,10 +1,11 @@
 import type { ComponentType } from 'react';
 
-import type { Merge } from '../../lib/types/utilityTypes';
+import type { Merge } from '../../lib/types';
 
 export function isNil(v: unknown) {
   return v === undefined || v === null;
 }
+
 // 부분적으로 props 적용
 export const PartialProps =
   <A extends {}>(_Component: ComponentType<A>) =>
@@ -22,7 +23,7 @@ export const PartialProps =
     return Component;
   };
 
-// props를 받아 partial props를 반환하는 Lazy한 함수를 받아 props 합성
+// props를 받아 partial props를 반환하는 함수를 받아 props 합성
 export const PartialApProps =
   <A extends {}>(_Component: ComponentType<A>) =>
   <OtherArgs, CalcArgs extends Partial<A>>(

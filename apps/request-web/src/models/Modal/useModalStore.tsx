@@ -1,4 +1,4 @@
-import type { ModalProps } from '@dothis/share/components/ui/Modal';
+import type { ModalProps } from '../../../../../packages/share/components/article/Modal';
 import { enableMapSet } from 'immer';
 import type React from 'react';
 import create from 'zustand';

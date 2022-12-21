@@ -1,4 +1,4 @@
-export function index(abcd, de, ef, fg, gh, hi, ij, jk, kl) {
+export function flow3(abcd, de, ef, fg, gh, hi, ij, jk, kl) {
   switch (arguments.length) {
     case 1:
       return abcd;
