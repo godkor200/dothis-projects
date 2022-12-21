@@ -1,4 +1,3 @@
-
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['@dothis/share']);
 
@@ -10,11 +9,11 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
   // disable: process.env.NODE_ENV === 'development',
   runtimeCaching,
-  buildExcludes: [/middleware-manifest.json$/]
-})
+  buildExcludes: [/middleware-manifest.json$/],
+});
 
-
-/** @type {import('next').NextConfig} *//**
+/** @type {import('next').NextConfig} */
+/**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
@@ -22,7 +21,7 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
-    outputFileTracingIgnores: ['**swc/core**'], 
+    outputFileTracingIgnores: ['**swc/core**'],
     swcPlugins: [
       [
         'next-superjson-plugin',
@@ -33,11 +32,9 @@ const nextConfig = {
     ],
     transpilePackages: ['@dothis/share'],
   },
-  compiler:{
-    emotion: {
-      labelFormat: '[dirname]-[fildname]-[local]',
-    },
-  }
+  compiler: {
+    emotion: true,
+  },
 };
 
 module.exports = withPlugins([withTM, withPWA], nextConfig);
