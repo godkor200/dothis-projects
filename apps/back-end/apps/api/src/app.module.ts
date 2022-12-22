@@ -11,7 +11,7 @@ import { ChannelApiModule } from './channel/ChannelApi.module';
 import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
 import dbConfig from '@Libs/entity/src/config/db.env';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { createDatabaseConnection } from '@Libs/entity/src/database.mysql';
+import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +27,7 @@ import { createDatabaseConnection } from '@Libs/entity/src/database.mysql';
     DailyViewsModule,
     AuthApiModule,
     TypeOrmModule.forRoot(
-      new createDatabaseConnection(dbConfig()).getTypeOrmConfig(),
+      new CreateDatabaseConnection(dbConfig()).getTypeOrmConfig(),
     ),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
   ],

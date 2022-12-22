@@ -12,6 +12,8 @@ importers:
   .:
     specifiers:
       '@dothis/config': '*'
+      '@dothis/libs': '*'
+      '@dothis/share': '*'
       '@types/passport-jwt': ^3.0.7
       dotenv-cli: ^6.0.0
       prettier: ^2.8.0
@@ -21,6 +23,8 @@ importers:
       dotenv-cli: 6.0.0
     devDependencies:
       '@dothis/config': link:packages/config
+      '@dothis/libs': link:packages/libs
+      '@dothis/share': link:packages/share
       '@types/passport-jwt': 3.0.8
       prettier: 2.8.1
       turbo: 1.6.3
@@ -30,6 +34,7 @@ importers:
     specifiers:
       '@anatine/zod-nestjs': ^1.8.0
       '@anatine/zod-openapi': ^1.10.0
+      '@dothis/libs': '*'
       '@nestjs/cli': ^9.0.0
       '@nestjs/common': ^9.0.0
       '@nestjs/config': ^2.2.0
@@ -41,6 +46,7 @@ importers:
       '@nestjs/swagger': ^6.1.3
       '@nestjs/testing': ^9.0.0
       '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-parser': ^1.4.3
       '@types/express': ^4.17.13
       '@types/jest': 28.1.8
       '@types/node': ^16.0.0
@@ -51,6 +57,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.44.0
       '@typescript-eslint/parser': ^5.44.0
       class-validator: ^0.13.2
+      cookie-parser: ^1.4.6
       cross-env: ^7.0.3
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
@@ -81,6 +88,7 @@ importers:
     dependencies:
       '@anatine/zod-nestjs': 1.8.0_e6lllaboa6liuejcv4ka6xegbu
       '@anatine/zod-openapi': 1.11.0_26f3syjlpe3aomwtusmxknd77u
+      '@dothis/libs': link:../../packages/libs
       '@nestjs/common': 9.2.1_glt6otmez4zoecyy5ktjxkg6bi
       '@nestjs/config': 2.2.0_b4pxbpa7chblgbyake5iz5rdmu
       '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
@@ -107,6 +115,7 @@ importers:
       '@nestjs/cli': 9.1.5
       '@nestjs/schematics': 9.0.3_typescript@4.9.4
       '@nestjs/testing': 9.2.1_wdbvfsxfdwzlwdfiyh2gynjl4m
+      '@types/cookie-parser': 1.4.3
       '@types/express': 4.17.15
       '@types/jest': 28.1.8
       '@types/node': 16.18.9
@@ -116,6 +125,7 @@ importers:
       '@types/supertest': 2.0.12
       '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
       '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
+      cookie-parser: 1.4.6
       cross-env: 7.0.3
       eslint: 8.29.0
       eslint-config-prettier: 8.5.0_eslint@8.29.0
@@ -390,6 +400,12 @@ importers:
       eslint-plugin-testing-library: 5.9.1_ha6vam6werchizxrnqvarmz2zu
       prettier: 2.8.1
       typescript: 4.9.4
+
+  packages/libs:
+    specifiers:
+      '@nestjs/common': ^9.0.0
+    dependencies:
+      '@nestjs/common': 9.2.1_mnr6j2del53muneqly5h4y27ai
 
   packages/share:
     specifiers:
@@ -5517,6 +5533,29 @@ packages:
       tslib: 2.4.1
       uuid: 9.0.0
 
+  /@nestjs/common/9.2.1_mnr6j2del53muneqly5h4y27ai:
+    resolution: {integrity: sha512-nZuo3oDsSSlC5mti/M2aCWTEIfHPGDXmBwWgPeCpRbrNz3IWd109rkajll+yxgidVjznAdBS9y00JkAVJblNYw==}
+    peerDependencies:
+      cache-manager: <=5
+      class-transformer: '*'
+      class-validator: '*'
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      cache-manager:
+        optional: true
+      class-transformer:
+        optional: true
+      class-validator:
+        optional: true
+    dependencies:
+      iterare: 1.2.1
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      tslib: 2.4.1
+      uuid: 9.0.0
+    dev: false
+
   /@nestjs/config/2.2.0_b4pxbpa7chblgbyake5iz5rdmu:
     resolution: {integrity: sha512-78Eg6oMbCy3D/YvqeiGBTOWei1Jwi3f2pSIZcZ1QxY67kYsJzTRTkwRT8Iv30DbK0sGKc1mcloDLD5UXgZAZtg==}
     peerDependencies:
@@ -8415,6 +8454,12 @@ packages:
     resolution: {integrity: sha512-v6LCdKfK6BwcqMo+wYW05rLS12S0ZO0Fl4w1h4aaZMD7bqT3gVUns6FvLJKGZHQmYn3SX55JWGpziwJRwVgutA==}
     dev: false
 
+  /@types/cookie-parser/1.4.3:
+    resolution: {integrity: sha512-CqSKwFwefj4PzZ5n/iwad/bow2hTCh0FlNAeWLtQM3JA/NX/iYagIpWG2cf1bQKQ2c9gU2log5VUCrn7LDOs0w==}
+    dependencies:
+      '@types/express': 4.17.15
+    dev: true
+
   /@types/cookie/0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
     dev: false
@@ -10996,8 +11041,21 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
+  /cookie-parser/1.4.6:
+    resolution: {integrity: sha512-z3IzaNjdwUC2olLIB5/ITd0/setiaFMLYiZJle7xg5Fe9KWAceil7xszYfHHBtDFYLSgJduS2Ty0P1uJdPDJeA==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.0.6
+    dev: true
+
   /cookie-signature/1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
+    engines: {node: '>= 0.6'}
+    dev: true
 
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
