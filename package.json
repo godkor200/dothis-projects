@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "@dothis/config": "*",
+    "@dothis/share": "*",
+    "@dothis/libs": "*",
     "@types/passport-jwt": "^3.0.7",
     "prettier": "^2.8.0",
     "turbo": "^1.6.3",

@@ -2,29 +2,17 @@
   "extends": "@dothis/config/tsconfig-nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "~/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     },
     "incremental": true,
     "jsxImportSource": "@emotion/react"
   },
   "references": [
     {
-      "path": "../../packages/share",
-      "declarationMap": true
+      "path": "../../packages/share"
     }
   ],
-  "include": [
-    "./src/**/*",
-    "next-env.d.ts",
-    "../../types/**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "./public/**/*"
-  ]
+  "include": ["./src/**/*", "next-env.d.ts", "../../types/**/*.d.ts"],
+  "exclude": ["node_modules", "./public/**/*"]
 }
