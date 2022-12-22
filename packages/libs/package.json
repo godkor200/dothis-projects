@@ -1,0 +1,19 @@
+{
+  "name": "@dothis/libs",
+  "version": "1.0.0",
+  "main": "./index.ts",
+  "type": "module",
+  "files": [
+    "health"
+  ],
+  "sideEffects": false,
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0"
+  }
+}
