@@ -1,0 +1,9 @@
+{
+  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "include": ["./*.ts", "./src"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../../apps/back-end/dist/apps/api"
+  }
+}

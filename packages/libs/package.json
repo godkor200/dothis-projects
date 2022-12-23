@@ -1,18 +1,23 @@
 {
   "name": "@dothis/libs",
   "version": "1.0.0",
-  "type": "module",
+  "main": "dist/index",
+  "types": "dist/index",
   "files": [
-    "health"
+    "dist"
   ],
   "sideEffects": false,
-  "scripts": {},
+  "scripts": {
+    "compile": "tsc -p ./src/tsconfig.lib.json",
+    "prepublishOnly": "pnpm run build"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^9.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.27.0"
+    "eslint": "^8.27.0",
+    "typescript": "^4.9.4"
   }
 }

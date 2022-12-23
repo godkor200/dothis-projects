@@ -4,9 +4,8 @@
     "rootDir": "./",
     "baseUrl": "./",
     "paths": {
-      "@Apps/*": ["apps/*"],
-      "@Libs/*": ["libs/*"],
-      "@package/*": ["@dothis/libs"]
+      "@Apps/*": ["./apps/*"],
+      "@Libs/*": ["./libs/*"]
     }
   },
   "references": [

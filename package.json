@@ -22,7 +22,8 @@
     "db-push": "turbo db-push --parallel",
     "db-gen": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
-    "debug-dev": "turbo debug-dev"
+    "debug-dev": "turbo debug-dev",
+    "dev:back-end": "dotenv -e .env -- turbo run start:dev"
   },
   "devDependencies": {
     "@dothis/config": "*",
