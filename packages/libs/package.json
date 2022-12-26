@@ -8,13 +8,13 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "compile": "tsc -p ./src/tsconfig.lib.json",
     "prepublishOnly": "pnpm run build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nestjs/common": "^9.0.0"
+    "@anatine/zod-nestjs": "^1.8.0",
+    "@anatine/zod-openapi": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^8.27.0",

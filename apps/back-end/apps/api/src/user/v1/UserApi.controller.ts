@@ -1,4 +1,4 @@
-import { UserDto } from '@Libs/entity/src/models/user/user.model';
+import { UserDto } from '@dothis/libs/src/model/user/user.model';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserApiService } from '../UserApi.service';

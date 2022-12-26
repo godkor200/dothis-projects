@@ -1,6 +1,6 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HealthModule } from 'api';
+import { HealthApiModule } from '@Apps/api/src/health/healthApi.module';
 import { UserApiModule } from '@Apps/api/src/user/UserApi.module';
 import { AuthApiModule } from '@Apps/api/src/auth/AuthApi.module';
 
@@ -21,7 +21,7 @@ import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
       load: [dbConfig],
       validationSchema,
     }),
-    forwardRef(() => HealthModule),
+    HealthApiModule,
     UserApiModule,
     ChannelApiModule,
     DailyViewsModule,

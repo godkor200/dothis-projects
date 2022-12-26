@@ -37,7 +37,6 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.3",
     "@nestjs/typeorm": "^9.0.1",
-    "api": "workspace:*",
     "class-validator": "^0.13.2",
     "joi": "^17.7.0",
     "mysql2": "^2.3.3",
