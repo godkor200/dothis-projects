@@ -28,7 +28,6 @@
   "dependencies": {
     "@anatine/zod-nestjs": "^1.8.0",
     "@anatine/zod-openapi": "^1.10.0",
-    "@dothis/libs": "workspace:*",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",

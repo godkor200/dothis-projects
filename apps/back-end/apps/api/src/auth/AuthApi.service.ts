@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
-import { UserDto } from '@Libs/entity/src/models/user/user.model';
+import { UserDto } from '@dothis/share/lib/dto';
 import { Request } from 'express';
 
 @Injectable()

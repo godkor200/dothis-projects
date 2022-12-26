@@ -1,4 +1,4 @@
-import { UserDto } from '@dothis/libs/src/model/user/user.model';
+import { UserDto } from '@dothis/share/lib/dto';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserApiService } from '../UserApi.service';
@@ -13,5 +13,10 @@ export class UserApiController {
   @ApiResponse({ type: [UserDto] })
   async getUsers() {
     return await this.userApiService.findAll();
+  }
+
+  @Get('/channel-data')
+  async getChannelData() {
+    return 'OK';
   }
 }
