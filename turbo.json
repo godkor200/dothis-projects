@@ -2,38 +2,23 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^db-gen",
-        "^build"
-      ],
-      "outputs": [
-        ".next/**"
-      ]
+      "dependsOn": ["^db-gen", "^build"],
+      "outputs": [".next/**"]
     },
     "build-storybook": {
-      "outputs": [
-        "storybook-static/**"
-      ]
+      "outputs": ["storybook-static/**"]
     },
     "theme-gen": {
-      "inputs": [
-        "./lib/styles/**/*"
-      ],
-      "outputs": [
-        "./lib/types/theme.d.ts"
-      ],
+      "inputs": ["./lib/styles/**/*"],
+      "outputs": ["./lib/types/theme.d.ts"],
       "cache": true
     },
     "db-gen": {
-      "inputs": [
-        "prisma/schema.prisma"
-      ],
+      "inputs": ["prisma/schema.prisma"],
       "cache": true
     },
     "db-push": {
-      "inputs": [
-        "prisma/schema.prisma"
-      ],
+      "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
     "lint": {
@@ -49,9 +34,7 @@
       "cache": false
     },
     "request-web": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "env": [
         "DATABASE_URL",
         "NEXTAUTH_URL",
@@ -62,6 +45,10 @@
     },
     "clean": {
       "cache": false
+    },
+    "start:dev": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
     }
   },
   "globalEnv": [
