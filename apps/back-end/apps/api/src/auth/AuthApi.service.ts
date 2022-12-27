@@ -2,8 +2,11 @@ import { Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
-import { UserDto } from '@Libs/entity/src/models/user/user.model';
+import {
+  User,
+  UserWithGoogleToken,
+} from '@Libs/entity/src/domain/user/User.entity';
+import { UserDto } from '@dothis/share/lib/dto';
 import { Request } from 'express';
 
 @Injectable()
@@ -21,7 +24,12 @@ export class AuthApiService {
         user: null,
         siteToken: null,
       };
-    const userId = (req.user as User).userId;
+
+    const {
+      userId,
+      accessToken: googleAccessToken,
+      refreshToken: googleRefreshToken,
+    } = req.user as UserWithGoogleToken;
 
     const { token: accessToken, maxAge: accessTokenMaxAge } =
       this.accessToken(userId);
@@ -34,6 +42,10 @@ export class AuthApiService {
     return {
       message: 'User information from google',
       user: req.user,
+      googleToken: {
+        googleAccessToken,
+        googleRefreshToken,
+      },
       siteToken: {
         accessToken,
         accessTokenMaxAge,

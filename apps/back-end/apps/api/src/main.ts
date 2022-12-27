@@ -6,6 +6,7 @@ import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
+  console.log(process.env.NODE_ENV);
   const app = await NestFactory.create(AppModule);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

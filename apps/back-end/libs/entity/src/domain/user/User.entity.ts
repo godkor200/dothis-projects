@@ -1,10 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
@@ -54,4 +48,10 @@ export class User {
 
   @OneToMany((type) => Channel, (channel) => channel.userId)
   Channel: Channel[];
+}
+
+export class UserWithGoogleToken extends User {
+  accessToken: string;
+
+  refreshToken: string;
 }

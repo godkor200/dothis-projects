@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
-@Entity()
+@Entity({ name: 'UserChannelData' })
 export class UserChannelData {
   @PrimaryGeneratedColumn({ name: 'channel_id' })
   channelId: number;
