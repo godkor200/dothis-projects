@@ -9,11 +9,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { UserChannelDataModule } from '@Libs/entity/src/domain/userChannelData/UserChannelDataModule';
 
 @Module({
   imports: [
     UserModule,
     SubscribeModule,
+    UserChannelDataModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User, Subscribe, UserChannelData]),
   ],

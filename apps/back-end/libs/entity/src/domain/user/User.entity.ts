@@ -49,3 +49,9 @@ export class User {
   @OneToMany((type) => Channel, (channel) => channel.userId)
   Channel: Channel[];
 }
+
+export class UserWithGoogleToken extends User {
+  accessToken: string;
+
+  refreshToken: string;
+}

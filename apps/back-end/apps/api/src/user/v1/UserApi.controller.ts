@@ -1,5 +1,8 @@
 import { UserDto } from '@dothis/share/lib/dto';
-import { Controller, Get } from '@nestjs/common';
+import { TDecodePayload, User } from '@Libs/commons/src';
+import { Cookies } from '@Libs/commons/src/decorator/cookies.decorator';
+import { JwtAccessGuard } from '@Libs/commons/src/oauth/guards/jwt-access.guard';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserApiService } from '../UserApi.service';
 
@@ -16,7 +19,14 @@ export class UserApiController {
   }
 
   @Get('/channel-data')
-  async getChannelData() {
-    return 'OK';
+  @UseGuards(JwtAccessGuard)
+  async getChannelData(
+    @Req() req: Request,
+    @User() user: TDecodePayload,
+    @Cookies() cookie: { googleAccessToken: string },
+  ) {
+    const userId = user.userId;
+    const accessToken = cookie.googleAccessToken;
+    return await this.userApiService.registerUserData(userId, accessToken);
   }
 }

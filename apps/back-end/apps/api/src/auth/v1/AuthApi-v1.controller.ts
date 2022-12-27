@@ -34,10 +34,15 @@ export class AuthApiController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const authUser = await this.authApiService.googleLogin(req);
+    res.cookie('google_refreshToken', authUser.googleToken.googleRefreshToken);
+    res.cookie('google_accessToken', authUser.googleToken.googleAccessToken);
     res.cookie('refreshToken', authUser.siteToken.refreshToken);
+    res.cookie('accessToken', authUser.siteToken.accessToken);
+
     return {
       message: authUser.message,
       accessToken: authUser.siteToken.accessToken,
+      googleAccessToken: authUser.googleToken.googleAccessToken,
     };
   }
 
