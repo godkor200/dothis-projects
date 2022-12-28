@@ -12,6 +12,7 @@ importers:
   .:
     specifiers:
       '@dothis/config': '*'
+      '@dothis/share': '*'
       '@types/passport-jwt': ^3.0.7
       dotenv-cli: ^6.0.0
       prettier: ^2.8.0
@@ -21,6 +22,7 @@ importers:
       dotenv-cli: 6.0.0
     devDependencies:
       '@dothis/config': link:packages/config
+      '@dothis/share': link:packages/share
       '@types/passport-jwt': 3.0.8
       prettier: 2.8.1
       turbo: 1.6.3
@@ -41,22 +43,28 @@ importers:
       '@nestjs/swagger': ^6.1.3
       '@nestjs/testing': ^9.0.0
       '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-parser': ^1.4.3
       '@types/express': ^4.17.13
       '@types/jest': 28.1.8
       '@types/node': ^16.0.0
       '@types/passport-google-oauth20': ^2.0.11
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
+      '@types/reflect-metadata': ^0.1.0
       '@types/supertest': ^2.0.11
       '@typescript-eslint/eslint-plugin': ^5.44.0
       '@typescript-eslint/parser': ^5.44.0
+      axios: ^1.2.0
       class-validator: ^0.13.2
+      cookie-parser: ^1.4.6
       cross-env: ^7.0.3
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
+      googleapis: ^107.0.0
       jest: 28.1.3
       joi: ^17.7.0
+      libs: 0.1.2
       mysql2: ^2.3.3
       nestjs-zod: ^1.2.1
       openapi3-ts: ^3.1.2
@@ -89,7 +97,9 @@ importers:
       '@nestjs/platform-express': 9.2.1_hjcqpoaebdr7gdo5hgc22hthbe
       '@nestjs/swagger': 6.1.4_6gny5ctcrvy7j3lhfzrffcgh2a
       '@nestjs/typeorm': 9.0.1_hkapd3a3mi37wyf4vtt5y4i2ye
+      axios: 1.2.1
       class-validator: 0.13.2
+      googleapis: 107.0.0
       joi: 17.7.0
       mysql2: 2.3.3
       nestjs-zod: 1.2.1_btbeejr5ab652u2znmwwiuqzke
@@ -107,20 +117,24 @@ importers:
       '@nestjs/cli': 9.1.5
       '@nestjs/schematics': 9.0.3_typescript@4.9.4
       '@nestjs/testing': 9.2.1_wdbvfsxfdwzlwdfiyh2gynjl4m
+      '@types/cookie-parser': 1.4.3
       '@types/express': 4.17.15
       '@types/jest': 28.1.8
       '@types/node': 16.18.9
       '@types/passport-google-oauth20': 2.0.11
       '@types/passport-jwt': 3.0.6
       '@types/passport-local': 1.0.34
+      '@types/reflect-metadata': 0.1.0
       '@types/supertest': 2.0.12
       '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
       '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
+      cookie-parser: 1.4.6
       cross-env: 7.0.3
       eslint: 8.29.0
       eslint-config-prettier: 8.5.0_eslint@8.29.0
       eslint-plugin-prettier: 4.2.1_5dgjrgoi64tgrv3zzn3walur3u
       jest: 28.1.3_gf6zimgeamfhxmgdphbwcn4tse
+      libs: 0.1.2
       prettier: 2.8.1
       source-map-support: 0.5.21
       supertest: 6.3.3
@@ -391,8 +405,23 @@ importers:
       prettier: 2.8.1
       typescript: 4.9.4
 
+  packages/libs:
+    specifiers:
+      '@anatine/zod-nestjs': ^1.8.0
+      '@anatine/zod-openapi': ^1.10.0
+      eslint: ^8.27.0
+      typescript: ^4.9.4
+    dependencies:
+      '@anatine/zod-nestjs': 1.8.0_e6lllaboa6liuejcv4ka6xegbu
+      '@anatine/zod-openapi': 1.11.0_26f3syjlpe3aomwtusmxknd77u
+    devDependencies:
+      eslint: 8.29.0
+      typescript: 4.9.4
+
   packages/share:
     specifiers:
+      '@anatine/zod-nestjs': ^1.8.0
+      '@anatine/zod-openapi': ^1.10.0
       '@babel/core': ^7.20.2
       '@babel/preset-env': ^7.20.2
       '@babel/preset-react': ^7.18.6
@@ -458,6 +487,8 @@ importers:
       zod: ^3.20.2
       zustand: ^4.1.4
     dependencies:
+      '@anatine/zod-nestjs': 1.8.0_e6lllaboa6liuejcv4ka6xegbu
+      '@anatine/zod-openapi': 1.11.0_26f3syjlpe3aomwtusmxknd77u
       '@chakra-ui/cli': 2.2.1_ewfw2lwfc3dwdvz7r6yz2ssqyi
       '@chakra-ui/react': 2.4.4_6z66u6efdgokrdxyuxkwijcyzq
       '@chakra-ui/styled-system': 2.5.0
@@ -4522,7 +4553,6 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-loong64/0.15.18:
@@ -4531,7 +4561,6 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@eslint/eslintrc/1.3.3:
@@ -8181,6 +8210,12 @@ packages:
     resolution: {integrity: sha512-v6LCdKfK6BwcqMo+wYW05rLS12S0ZO0Fl4w1h4aaZMD7bqT3gVUns6FvLJKGZHQmYn3SX55JWGpziwJRwVgutA==}
     dev: false
 
+  /@types/cookie-parser/1.4.3:
+    resolution: {integrity: sha512-CqSKwFwefj4PzZ5n/iwad/bow2hTCh0FlNAeWLtQM3JA/NX/iYagIpWG2cf1bQKQ2c9gU2log5VUCrn7LDOs0w==}
+    dependencies:
+      '@types/express': 4.17.15
+    dev: true
+
   /@types/cookie/0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
     dev: false
@@ -8517,6 +8552,13 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
+
+  /@types/reflect-metadata/0.1.0:
+    resolution: {integrity: sha512-bXltFLY3qhzCnVYP5iUpeSICagQ8rc9K2liS+8M0lBcz54BHs3O6W5UvqespVSuebo1BXLi+/y9ioELAW9SC2A==}
+    deprecated: This is a stub types definition for reflect-metadata (https://github.com/rbuckton/ReflectDecorators). reflect-metadata provides its own type definitions, so you don't need @types/reflect-metadata installed!
+    dependencies:
+      reflect-metadata: 0.1.13
+    dev: true
 
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
@@ -9674,7 +9716,7 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.75.0
+      webpack: 5.75.0_esbuild@0.15.18
 
   /babel-plugin-add-react-displayname/0.0.5:
     resolution: {integrity: sha512-LY3+Y0XVDYcShHHorshrDbt4KFWL4bSeniCtl4SYZbask+Syngk1uMPCeN9+nSiZo6zX5s0RTq/J9Pnaaf/KHw==}
@@ -10774,7 +10816,7 @@ packages:
     dev: false
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concat-stream/1.6.2:
     resolution: {integrity: sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==}
@@ -10828,8 +10870,21 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
+  /cookie-parser/1.4.6:
+    resolution: {integrity: sha512-z3IzaNjdwUC2olLIB5/ITd0/setiaFMLYiZJle7xg5Fe9KWAceil7xszYfHHBtDFYLSgJduS2Ty0P1uJdPDJeA==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.0.6
+    dev: true
+
   /cookie-signature/1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
+    engines: {node: '>= 0.6'}
+    dev: true
 
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
@@ -11329,6 +11384,10 @@ packages:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
     engines: {node: '>=0.11'}
     dev: false
+
+  /dateformat/1.0.2-1.2.3:
+    resolution: {integrity: sha512-AXvW8g7tO4ilk5HgOWeDmPi/ZPaCnMJ+9Cg1I3p19w6mcvAAXBuuGEXAxybC+Djj1PSZUiHUcyoYu7WneCX8gQ==}
+    dev: true
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -11915,7 +11974,6 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-android-arm64/0.15.18:
@@ -11924,7 +11982,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-darwin-64/0.15.18:
@@ -11933,7 +11990,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-darwin-arm64/0.15.18:
@@ -11942,7 +11998,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-freebsd-64/0.15.18:
@@ -11951,7 +12006,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-freebsd-arm64/0.15.18:
@@ -11960,7 +12014,6 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-32/0.15.18:
@@ -11969,7 +12022,6 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-64/0.15.18:
@@ -11978,7 +12030,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-arm/0.15.18:
@@ -11987,7 +12038,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-arm64/0.15.18:
@@ -11996,7 +12046,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-mips64le/0.15.18:
@@ -12005,7 +12054,6 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-ppc64le/0.15.18:
@@ -12014,7 +12062,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-riscv64/0.15.18:
@@ -12023,7 +12070,6 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-linux-s390x/0.15.18:
@@ -12032,7 +12078,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-netbsd-64/0.15.18:
@@ -12041,7 +12086,6 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-openbsd-64/0.15.18:
@@ -12050,7 +12094,6 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-sunos-64/0.15.18:
@@ -12059,7 +12102,6 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-windows-32/0.15.18:
@@ -12068,7 +12110,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-windows-64/0.15.18:
@@ -12077,7 +12118,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild-windows-arm64/0.15.18:
@@ -12086,7 +12126,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /esbuild/0.15.18:
@@ -12117,7 +12156,6 @@ packages:
       esbuild-windows-32: 0.15.18
       esbuild-windows-64: 0.15.18
       esbuild-windows-arm64: 0.15.18
-    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -16099,6 +16137,12 @@ packages:
 
   /libphonenumber-js/1.10.15:
     resolution: {integrity: sha512-sLeVLmWX17VCKKulc+aDIRHS95TxoTsKMRJi5s5gJdwlqNzMWcBCtSHHruVyXjqfi67daXM2SnLf2juSrdx5Sg==}
+
+  /libs/0.1.2:
+    resolution: {integrity: sha512-Ta4F048KEHj1duFoiK7BCmysrOgGhWe3Z2VdioaUT3zn4eGmk5qnwmxxDY6B+tvRUXHs5wxUwk0dceVp6i6oTg==}
+    dependencies:
+      dateformat: 1.0.2-1.2.3
+    dev: true
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
@@ -20728,7 +20772,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.1
       webpack: 5.75.0_esbuild@0.15.18
-    dev: true
 
   /terser-webpack-plugin/5.3.6_webpack@5.74.0:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -22266,7 +22309,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /whatwg-encoding/2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}

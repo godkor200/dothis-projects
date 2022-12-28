@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HealthModule } from '@Apps/api/src/health/health.module';
+import { HealthApiModule } from '@Apps/api/src/health/healthApi.module';
 import { UserApiModule } from '@Apps/api/src/user/UserApi.module';
 import { AuthApiModule } from '@Apps/api/src/auth/AuthApi.module';
 
@@ -11,7 +11,8 @@ import { ChannelApiModule } from './channel/ChannelApi.module';
 import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
 import dbConfig from '@Libs/entity/src/config/db.env';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { createDatabaseConnection } from '@Libs/entity/src/database.mysql';
+import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
+import { UserChannelDataModule } from './user-channel-data/user-channel-data.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,15 +22,16 @@ import { createDatabaseConnection } from '@Libs/entity/src/database.mysql';
       load: [dbConfig],
       validationSchema,
     }),
-    HealthModule,
+    HealthApiModule,
     UserApiModule,
     ChannelApiModule,
     DailyViewsModule,
     AuthApiModule,
     TypeOrmModule.forRoot(
-      new createDatabaseConnection(dbConfig()).getTypeOrmConfig(),
+      new CreateDatabaseConnection(dbConfig()).getTypeOrmConfig(),
     ),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
+    UserChannelDataModule,
   ],
 })
 export class AppModule {}

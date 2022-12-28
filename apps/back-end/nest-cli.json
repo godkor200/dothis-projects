@@ -2,11 +2,10 @@
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/api/src",
-  "monorepo": true,
   "root": "apps/api",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/api/tsconfig.app.json",
+    "tsConfigPath": "apps/api/tsconfig.json",
     "assets": [
       {
         "include": "./.env",
@@ -30,7 +29,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/api/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/api/tsconfig.app.json"
+        "tsConfigPath": "apps/api/tsconfig.json"
       }
     },
     "entity": {
