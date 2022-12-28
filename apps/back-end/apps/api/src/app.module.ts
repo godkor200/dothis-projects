@@ -12,6 +12,7 @@ import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
 import dbConfig from '@Libs/entity/src/config/db.env';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
+import { UserChannelDataModule } from './user-channel-data/user-channel-data.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
       new CreateDatabaseConnection(dbConfig()).getTypeOrmConfig(),
     ),
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
+    UserChannelDataModule,
   ],
 })
 export class AppModule {}

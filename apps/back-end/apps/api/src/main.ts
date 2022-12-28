@@ -4,6 +4,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { config } from '@Libs/commons/src/util/swagger';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import * as cookieParser from 'cookie-parser';
+import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 
 async function bootstrap() {
   console.log(process.env.NODE_ENV);
@@ -12,6 +13,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   patchNestjsSwagger();
   app.use(cookieParser());
+  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(8080);
 }
 bootstrap();

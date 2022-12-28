@@ -9,9 +9,9 @@ import { User } from '@Libs/entity/src/domain/user/User.entity';
 @Entity({ name: 'UserChannelData' })
 export class UserChannelData {
   @PrimaryGeneratedColumn({ name: 'channel_id' })
-  channelId: number;
+  channelId: string;
 
-  @Column({ name: 'user_id' })
+  @Column('int', { name: 'user_id' })
   userId: number;
 
   @Column({ name: 'channel_name' })
@@ -35,7 +35,7 @@ export class UserChannelData {
   @Column({ name: 'channel_tags' })
   channelTags: string;
 
+  @JoinColumn({ name: 'user_id' })
   @ManyToOne((type) => User, (user) => user.UserChannelData)
-  @JoinColumn({ name: 'userId' })
   User: User;
 }

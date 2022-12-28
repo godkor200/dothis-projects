@@ -21,41 +21,47 @@ export class UserApiService {
   }
 
   async registerUserData(userId: string, token: string) {
+    const conflictCheck = await this.userChannelData.findOne({
+      where: { userId: +userId },
+    });
+
+    if (conflictCheck) throw new HttpException('conflict', HttpStatus.CONFLICT);
+
     const youtube = google.youtube({
       version: 'v3',
       headers: { Authorization: token },
       auth: process.env.GOOGLE_APIKEY,
     });
 
-    return youtube.channels.list(
-      {
-        part: [
-          'id',
-          'snippet',
-          'brandingSettings',
-          'contentDetails',
-          'statistics',
-          'topicDetails',
-        ],
-        mine: true,
-      },
-      async (err, res) => {
-        if (err) throw new HttpException('message', HttpStatus.BAD_REQUEST);
+    const res = await youtube.channels.list({
+      part: [
+        'id',
+        'snippet',
+        'brandingSettings',
+        'contentDetails',
+        'statistics',
+        'topicDetails',
+      ],
+      mine: true,
+    });
 
-        const { snippet, statistics, brandingSettings, id } = res.data.items[0];
+    if (res.statusText === 'OK' && res.status === 200) {
+      const { snippet, statistics, brandingSettings, id } = res.data.items[0];
+      const newUserChannelData = new UserChannelData();
+      newUserChannelData.channelId = id;
+      newUserChannelData.userId = Number(userId);
+      newUserChannelData.channelName = snippet.title;
+      newUserChannelData.channelVideos = Number(statistics.videoCount);
+      newUserChannelData.channelDescriber = Number(statistics.subscriberCount);
+      newUserChannelData.channelViews = Number(statistics.viewCount);
+      newUserChannelData.channelKeywords = brandingSettings.channel.keywords;
 
-        const newUserChannelData = this.userChannelData.create({
-          channelId: Number(123123123123),
-          userId: Number(3),
-          channelName: snippet.title,
-          channelVideos: Number(statistics.videoCount),
-          channelDescriber: Number(statistics.subscriberCount),
-          channelViews: Number(statistics.viewCount),
-          channelKeywords: brandingSettings.channel.keywords,
-        });
-        console.log(newUserChannelData);
-        return await this.userChannelData.save(newUserChannelData);
-      },
-    );
+      return await this.userChannelData.save(newUserChannelData);
+    } else {
+      throw new HttpException(
+        'google server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
