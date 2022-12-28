@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserApiController } from './UserApi.controller';
+import { UserApiController } from '../UserApi.controller';
 
 describe('ApiController', () => {
   let controller: UserApiController;
