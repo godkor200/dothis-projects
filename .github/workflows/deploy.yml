@@ -39,7 +39,7 @@ jobs:
         working-directory: ./
         options: --user root
         run: |
-          pnpm build --filter back-end
+          sudo chown -R ubuntu:ubuntu ./ && pnpm build --filter back-end
 
       - name: create env file
         working-directory: ./apps/back-end
