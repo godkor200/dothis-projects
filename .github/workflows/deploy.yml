@@ -27,6 +27,8 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
 
       - name: Install dependencies
         working-directory: ./
@@ -34,6 +36,8 @@ jobs:
           pnpm install
 
       - name: build server files
+        working-directory: ./
+        options: --user root
         run: |
           pnpm build --filter back-end
 
