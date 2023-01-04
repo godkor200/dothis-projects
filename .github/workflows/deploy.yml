@@ -25,7 +25,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Npm Setup & Build
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+
+      - name: Install dependencies
+        working-directory: ./
         run: |
           pnpm install
 
