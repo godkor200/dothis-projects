@@ -38,7 +38,7 @@ jobs:
       - name: build server files
         working-directory: ./
         run: |
-          sudo chown -R root ./ && pnpm build --filter back-end
+          sudo chmod -R 777 ./ && pnpm build --filter back-end
 
       - name: create env file
         working-directory: ./apps/back-end
