@@ -6,7 +6,7 @@ import {
   User,
   UserWithGoogleToken,
 } from '@Libs/entity/src/domain/user/User.entity';
-import { UserDto } from '@dothis/share/lib/dto';
+import { UserDto } from '@Libs/commons/src/types/dto.types';
 import { Request } from 'express';
 
 @Injectable()
