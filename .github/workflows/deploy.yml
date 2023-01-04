@@ -27,12 +27,12 @@ jobs:
 
       - name: Npm Setup & Build
         run: |
-          cd ${{ env.working-directory }} && npm install
+          pnpm install
 
       - name: build server files
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./
         run: |
-          npm run build
+          pnpm build --filter back-end
 
       - name: create env file
         working-directory: ${{ env.working-directory }}
