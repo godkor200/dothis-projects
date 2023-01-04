@@ -10,7 +10,7 @@
   },
   "references": [
     {
-      "path": "../../packages/libs"
+      "path": "../../packages/share"
     },
     {
       "path": "./libs"
