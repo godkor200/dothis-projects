@@ -2,7 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
 import { AuthApiService } from '@Apps/api/src/auth/AuthApi.service';
 import { Injectable, Inject } from '@nestjs/common';
-import { UserDto } from '@dothis/share/lib/dto';
+import { UserDto } from '@Libs/commons/src/types/dto.types';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -12,7 +12,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:8080/v1/auth/google-redirect',
+      callbackURL: `http${
+        process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
+          ? ''
+          : 's'
+      }://${
+        process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
+          ? 'localhost:8080'
+          : 'api.dothis.world'
+      }/v1/auth/google-redirect`,
 
       scope: [
         'email',
@@ -22,15 +30,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       ],
     });
   }
-  // `http${
-  //   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
-  //     ? ''
-  //     : 's'
-  // }://${
-  //   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
-  //     ? 'localhost:8080'
-  //     : 'api.dothis.world'
-  // }/v1/auth/google-redirect`,
+
   async validate(
     accessToken: string,
     refreshToken: string,

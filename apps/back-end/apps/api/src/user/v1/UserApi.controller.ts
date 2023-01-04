@@ -1,4 +1,4 @@
-import { UserDto } from '@dothis/share/lib/dto';
+import { UserDto } from '@Libs/commons/src/types/dto.types';
 import { TDecodePayload, User } from '@Libs/commons/src';
 import { Cookies } from '@Libs/commons/src/decorator/cookies.decorator';
 import { JwtAccessGuard } from '@Libs/commons/src/oauth/guards/jwt-access.guard';
