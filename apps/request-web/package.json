@@ -6,6 +6,7 @@
     "dev": "next dev -p 8800",
     "debug-dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "analyze": "ANALYZE=true next build",
     "start": "next start -p 3000",
     "lint": "next lint",
     "clean": "rm -rf .next .turbo node_modules",

@@ -41,6 +41,11 @@
         "prisma/schema.prisma"
       ]
     },
+    "analyze": {
+      "inputs": [
+        ".next/**"
+      ]
+    },
     "lint": {
       "outputs": []
     },

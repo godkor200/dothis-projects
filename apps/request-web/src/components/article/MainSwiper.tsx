@@ -1,5 +1,6 @@
+import { AspectRatio } from '@chakra-ui/react';
 import { Button, colors, typo } from '@dothis/share';
-import { SvgNext , SvgPrev } from '@dothis/share/components/ui';
+import { SvgNext, SvgPrev } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { useRef, useState } from 'react';
 import { A11y } from 'swiper';
@@ -29,11 +30,15 @@ const MainSwiper = ({ Banners }: Props) => {
           swiper.current = swiperIns;
         }}
       >
-        {Banners.map((Banner, i) => (
-          <SwiperSlide key={i} className="main-swiper_slide">
-            <Banner />
-          </SwiperSlide>
-        ))}
+        <AspectRatio ratio={960 / 240} slot="container-start">
+          <div>
+            {Banners.map((Banner, i) => (
+              <SwiperSlide key={i} className="main-swiper_slide">
+                <Banner />
+              </SwiperSlide>
+            ))}
+          </div>
+        </AspectRatio>
       </Swiper>
       {Banners.length > 1 && (
         <>

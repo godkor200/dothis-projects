@@ -1,11 +1,26 @@
 import { colors } from '@dothis/share';
 import createCache from '@emotion/cache';
 import createEmotionServer from '@emotion/server/create-instance';
+import axios from 'axios';
+import { enableMapSet } from 'immer';
 import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
+import superjson from 'superjson';
 
 const isBrowser = typeof document !== 'undefined';
+
+// immer Map Set 사용 가능하게
+enableMapSet();
+
+// superjson으로 변환
+axios.defaults.transformResponse = (data, headers) => {
+  try {
+    return typeof data === 'string' ? superjson.parse(data) : data;
+  } catch (e) {
+    return data;
+  }
+};
 
 // On the client side, Create a meta tag at the top of the <head> and set it as insertionPoint.
 // This assures that MUI styles are loaded first.

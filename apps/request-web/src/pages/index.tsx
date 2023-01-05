@@ -7,18 +7,18 @@ import {
   ToastBox,
   typo,
 } from '@dothis/share';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
+import Image from 'next/image';
 import type { GetServerSidePropsContext } from 'next/types';
 import { signIn, useSession } from 'next-auth/react';
 import type { ComponentProps } from 'react';
 import React, { useRef } from 'react';
 import type { Swiper as SwiperClass } from 'swiper/types';
 
-import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import MainSwiper from '@/components/article/MainSwiper';
+import RecommendRequests from '@/components/article/RecommendRequests';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { trpc, trpcSSG } from '@/utils/trpc';
@@ -53,7 +53,12 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
           });
         }}
       >
-        <img src="/images/banner2.svg" alt="크리에이터 등록" />
+        <Image
+          sizes="cover"
+          fill
+          src="/images/banner2.svg"
+          alt="크리에이터 등록"
+        />
       </a>
     );
   },
@@ -123,27 +128,16 @@ export default function Home({}: InferGetServerSidePropsType<
         )}
 
         {/* 추천 요청 */}
-        {recommendRequests.data && (
-          <section className="recommend-request-post">
-            <div className="section-title">
-              <h2>🎯 추천 요청</h2>
-            </div>
-            <div className="section-contents">
-              <HorizonPostRequestItemWrap>
-                {recommendRequests.data.map((request) => (
-                  <HorizonPostRequestItem
-                    key={`${request.id}`}
-                    requestPost={request}
-                  />
-                ))}
-              </HorizonPostRequestItemWrap>
-            </div>
-          </section>
-        )}
+        <RecommendRequests
+          recommendRequests={
+            recommendRequests.data ? recommendRequests.data : []
+          }
+        />
       </Container>
     </LayoutTemplate>
   );
 }
+
 const contentsStyle = css`
   section {
     padding-bottom: 28px;
