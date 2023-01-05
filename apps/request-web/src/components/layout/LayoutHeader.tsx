@@ -1,11 +1,20 @@
 import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
-import { Button, colors, Container,Drawer, SvgDothisLogo, mediaQueries, typo, UserAvatar } from '@dothis/share';
+import {
+  Button,
+  colors,
+  Container,
+  Drawer,
+  mediaQueries,
+  typo,
+  UserAvatar,
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
+import { HomeLogo } from '@/components/ui/HomeLogo';
 import { pagePath } from '@/constants';
 import { trpc } from '@/utils/trpc';
 
@@ -13,7 +22,6 @@ import Login from '../contents/Login';
 import NewRequestPost from '../contents/NewRequestPost';
 import SideProfile from '../contents/SideProfile';
 import SearchInput from '../ui/SearchInput';
-import { HomeLogo } from '@/components/ui/HomeLogo';
 
 export default function LayoutHeader() {
   const { data: session, status } = useSession();
@@ -79,6 +87,7 @@ export default function LayoutHeader() {
                     </NewRequestPost.ModalLink>
                   </Box>
 
+                  {/* 알림 */}
                   {/*<Button*/}
                   {/*  theme="white"*/}
                   {/*  minW={36}*/}
