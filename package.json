@@ -16,7 +16,7 @@
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
-    "studio": "turbo run studio",
+    "studio": "dotenv -e .env -- turbo run studio",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db-pull": "turbo db-pull --parallel",
     "db-push": "turbo db-push --parallel",

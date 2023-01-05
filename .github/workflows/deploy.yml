@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      working-directory: ./apps/back-end
+      working-directory: ./
 
     strategy:
       matrix:
@@ -25,17 +25,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Npm Setup & Build
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+
+      - name: Install dependencies
+        working-directory: ./
         run: |
-          cd ${{ env.working-directory }} && npm install
+          pnpm install
 
       - name: build server files
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./
         run: |
-          npm run build
+          sudo chmod -R 777 ./ && pnpm build --filter back-end
 
       - name: create env file
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./apps/back-end
         run: |
           pwd
           touch production.env
@@ -54,7 +60,7 @@ jobs:
           cat production.env
 
       - name: zip file
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./apps/back-end
         run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./.env ./package.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json ./node_modules
 
       - name: Configure AWS credentials
@@ -65,11 +71,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload to S3
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./apps/back-end
         run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
 
       - name: deploy with AWS codeDeploy
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./apps/back-end
         run: aws deploy create-deployment
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime
