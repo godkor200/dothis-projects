@@ -24,7 +24,7 @@
       ],
       "cache": true
     },
-    "db-gen": {
+    "db-generate": {
       "inputs": [
         "prisma/schema.prisma"
       ],
