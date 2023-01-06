@@ -9,7 +9,13 @@ import { uid } from 'uid';
 
 import { RequestPostDomain } from '../../domain';
 
-const s3Client = new S3Client({ region: 'ap-northeast-2' });
+const s3Client = new S3Client({
+  region: 'ap-northeast-2',
+  credentials: {
+    accessKeyId: process.env.DOTHIS_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DOTHIS_AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 const upload = multer({
   storage: multerS3({
