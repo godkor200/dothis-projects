@@ -44,7 +44,7 @@ export type FileLocations = Array<[fileName: string, location: string]>;
 
 const app = nextConnect<NextApiRequest, NextApiResponse>({
   onError(error, req, res) {
-    console.log(`${error.message}`);
+    console.error(`${error.message}`);
     res
       .status(500)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -86,7 +86,7 @@ app.post(
       images: imagesInfo,
     };
 
-    return res.send(superjson.stringify(uploadInfos));
+    return res.send(uploadInfos);
   },
 );
 

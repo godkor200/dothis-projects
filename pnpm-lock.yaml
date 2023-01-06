@@ -279,7 +279,6 @@ importers:
       next-connect: ^0.13.0
       next-pwa: ^5.6.0
       next-superjson-plugin: ^0.5.3
-      next-transpile-modules: ^10.0.0
       prettier: ^2.8.0
       prisma: ^4.8.0
       react: 18.2.0
@@ -359,7 +358,6 @@ importers:
       next-compose-plugins: 2.2.1
       next-pwa: 5.6.0_ahmdtuodic5adnwwi3itzzoy64
       next-superjson-plugin: 0.5.3_4jth3s7cpp4vevq7cz6bexafye
-      next-transpile-modules: 10.0.0
       prettier: 2.8.1
       prisma: 4.8.1
       ts-jest: 29.0.3_lpdtk6tcorkuyzgotacsdxtnxm
@@ -17172,12 +17170,6 @@ packages:
       hoist-non-react-statics: 3.3.2
       next: 13.1.1_pjwopsidmaokadturxaafygjp4
       superjson: 1.12.1
-    dev: true
-
-  /next-transpile-modules/10.0.0:
-    resolution: {integrity: sha512-FyeJ++Lm2Fq31gbThiRCrJlYpIY9QaI7A3TjuhQLzOix8ChQrvn5ny4MhfIthS5cy6+uK1AhDRvxVdW17y3Xdw==}
-    dependencies:
-      enhanced-resolve: 5.12.0
     dev: true
 
   /next/13.1.1_pjwopsidmaokadturxaafygjp4:
