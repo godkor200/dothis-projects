@@ -21,7 +21,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db-pull": "turbo db-pull --parallel",
     "db-push": "turbo db-push --parallel",
-    "db-gen": "dotenv -e .env -- turbo db-generate --parallel",
+    "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e .env -- turbo run start:dev"
