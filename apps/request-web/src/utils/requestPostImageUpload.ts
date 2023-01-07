@@ -1,11 +1,5 @@
-import type {
-  EditorT,
- ErrorMessage,  FileLocations } from '@dothis/share';
-import {
-  errorMessage,
-  isErrorMessage,
-  message,
-} from '@dothis/share';
+import type { EditorT, ErrorMessage, FileLocations } from '@dothis/share';
+import { errorMessage, isErrorMessage, message } from '@dothis/share';
 import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';
@@ -15,6 +9,22 @@ import { RequestPostDomain } from '../domain';
 export type imageResponseData = {
   images: FileLocations;
   thumbnailLocation: string | undefined;
+};
+
+interface BlobInfo {
+  id: () => string;
+  name: () => string;
+  filename: () => string;
+  blob: () => Blob;
+  base64: () => string;
+  blobUri: () => string;
+  uri: () => string | undefined;
+}
+
+type FileInfo = {
+  readonly file: File;
+  readonly blobInfo: BlobInfo;
+  readonly image: HTMLImageElement;
 };
 
 export async function requestPostImageUpload(
@@ -56,8 +66,8 @@ export async function requestPostImageUpload(
   for (const [key, img] of imageMap) {
     // 최초 Form에 리사이징된 썸네일 이미지 추가
     if (!formData.has('images')) {
-      const thumbnailImg = getThumbnailImage(img.image);
-      formData.append('thumbnail', await thumbnailImg, uid(7));
+      const thumbnailImg = await getThumbnailImage(img);
+      formData.append('thumbnail', thumbnailImg, uid(7));
     }
     formData.append('images', img.file, key);
   }
@@ -72,6 +82,7 @@ export async function requestPostImageUpload(
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
+  console.log('result', result);
   if (isErrorMessage(result.data)) return result.data;
 
   // 콘텐츠 이미지 정보 획득 + 이미지 URL 업데이트
@@ -89,40 +100,90 @@ export async function requestPostImageUpload(
   } as imageResponseData;
 }
 
-async function getThumbnailImage(image: HTMLImageElement): Promise<File> {
+async function getThumbnailImage({
+  blobInfo,
+  image,
+}: Pick<FileInfo, 'blobInfo' | 'image'>): Promise<File> {
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const imageFileType = blobInfo.blob().type;
 
+  const context = canvas.getContext('2d');
   if (!context) throw Error('context is null');
 
+  const img = document.createElement('img');
+
+  img.src = blobInfo.blobUri();
   canvas.width = RequestPostDomain.constants.maxThumbnailWidth;
   canvas.height = RequestPostDomain.constants.maxThumbnailHeight;
 
-  let imageWidth = image.width;
-  let imageHeight = image.height;
-  let imagePosX = 0;
-  let imagePosY = 0;
+  const file = await new Promise<File>((resolve) => {
+    img.onload = () => {
+      // canvas에 마치 objectFit: cover 한 것 처럼 넣기 위해 이미지 자르기
+      const { width, height, x, y } = coverCrop(
+        {
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+        },
+        {
+          width: canvas.width,
+          height: canvas.height,
+        },
+      );
 
-  //이미지 크기 조정
-  if (imageWidth > imageHeight) {
-    // 가로가 길 경우
-    if (imageWidth > canvas.width) {
-      imageWidth *= canvas.height / imageHeight;
-      imageHeight = canvas.height;
-      imagePosX = canvas.width / 2 - imageWidth / 2;
-    }
-  } else {
-    // 세로가 길 경우
-    if (imageHeight > canvas.height) {
-      imageHeight *= canvas.width / imageWidth;
-      imageWidth = canvas.width;
-      imagePosY = canvas.height / 2 - imageHeight / 2;
-    }
-  }
+      console.log('{ width, height, x, y }', { width, height, x, y });
 
-  //이미지 크롭 및 중앙 정렬
-  context.drawImage(image, imagePosX, imagePosY, imageWidth, imageHeight);
-  const blob: any = await new Promise((resolve) => canvas.toBlob(resolve));
+      context.drawImage(img, x, y, width, height);
+      canvas.toBlob((blob) => {
+        console.log('blob', blob);
+        if (!blob) throw Error('blob is null');
+        resolve(
+          new File([blob], 'thumbnail', {
+            type: imageFileType,
+          }),
+        );
+      }, imageFileType);
+    };
+  });
 
-  return new File([blob], 'thumbnail');
+  img.remove();
+
+  return file;
+}
+
+type ImgSize = {
+  width: number;
+  height: number;
+};
+type CanvasOptions = {
+  width: number;
+  height: number;
+  align?: [number, number];
+};
+
+// cover 형태로 이미지 자르기
+export default function coverCrop(
+  imgSize: ImgSize,
+  { align = [0.5, 0.5], ...canvasSize }: CanvasOptions,
+) {
+  const ratio = imgSize.width / imgSize.height;
+
+  const isHorizontal = ratio > canvasSize.width / canvasSize.height;
+
+  const size = {
+    width: isHorizontal
+      ? imgSize.width * (canvasSize.height / imgSize.height)
+      : canvasSize.width,
+    height: isHorizontal
+      ? canvasSize.height
+      : imgSize.height * (canvasSize.width / imgSize.width),
+  };
+  const position = {
+    x: isHorizontal ? (canvasSize.width - size.width) * align[0] : 0,
+    y: isHorizontal ? 0 : (canvasSize.height - size.height) * align[1],
+  };
+
+  return {
+    ...size,
+    ...position,
+  };
 }

@@ -49,8 +49,10 @@ import NewRequestPost from '@/components/contents/NewRequestPost';
 import viewRequestModalHandlers from '@/components/contents/ViewRequestPost/viewRequestModalHandlers';
 import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
+import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { useModalOptStore, useModalStore } from '@/models/Modal';
+import requestPost from '@/pages/user/request-post';
 import { trpc } from '@/utils/trpc';
 
 import type { RequestPostDomain } from '../../../domain';
@@ -141,13 +143,22 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       modalStore.closeLast();
       ToastBox.successToast('요청을 삭제했습니다.');
       trpcUtils.requestPost.getDetail.invalidate({ id: _requestPost.id });
-
-      trpcUtils.requestPost.getUserForCreator.invalidate();
-
       trpcUtils.requestPost.getRecommends.invalidate();
-      trpcUtils.user.get.invalidate({ id: session?.user.id });
 
       modalStore.close(PAGE_KEYS.viewPostRequest);
+
+      if (!session?.user) return;
+
+      trpcUtils.user.getSearchRequests.invalidate({
+        userId: session?.user.id,
+      });
+      trpcUtils.user.get.invalidate({ id: session?.user.id });
+      if (requestDetail.data?.creator) {
+        trpcUtils.requestPost.getUserForCreator.invalidate({
+          userId: session?.user.id,
+          creatorUserId: requestDetail.data.creator.userId,
+        });
+      }
     },
   });
   const { isInnerModal } = useModalOptStore();

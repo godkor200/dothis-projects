@@ -191,7 +191,7 @@ const contentsStyle = css`
     margin-right: 16px;
 
     ${mediaQueries.tablet} {
-      width: 113px;
+      max-width: 113px;
     }
   }
 

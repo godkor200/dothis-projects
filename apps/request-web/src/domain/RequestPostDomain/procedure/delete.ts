@@ -48,7 +48,7 @@ export default t.procedure
       });
     }
 
-    Promise.all([
+    await Promise.all([
       prisma.requestPost.delete({
         where: {
           id,
