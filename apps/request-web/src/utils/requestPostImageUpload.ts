@@ -130,11 +130,8 @@ async function getThumbnailImage({
         },
       );
 
-      console.log('{ width, height, x, y }', { width, height, x, y });
-
       context.drawImage(img, x, y, width, height);
       canvas.toBlob((blob) => {
-        console.log('blob', blob);
         if (!blob) throw Error('blob is null');
         resolve(
           new File([blob], 'thumbnail', {
