@@ -153,6 +153,11 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
         userId: session?.user.id,
       });
       trpcUtils.user.get.invalidate({ id: session?.user.id });
+      if (requestDetail.data?.creator?.userId) {
+        trpcUtils.creator.getRequests.invalidate({
+          userId: requestDetail.data.creator.userId,
+        });
+      }
       if (requestDetail.data?.creator) {
         trpcUtils.requestPost.getUserForCreator.invalidate({
           userId: session?.user.id,

@@ -24,6 +24,7 @@ import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
 import { isString } from 'fp-ts/lib/string';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import type { ReactNode } from 'react';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -77,6 +78,7 @@ export default function NewRequestPost({
   creatorId,
   onSubmit,
 }: Props) {
+  const router = useRouter();
   const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
   const { data: session } = useSession();
@@ -93,8 +95,10 @@ export default function NewRequestPost({
     trpc.requestPost.update.useMutation({
       onSuccess() {
         trpcUtils.requestPost.getUserForCreator.invalidate();
-        trpcUtils.creator.getRequests.invalidate();
         trpcUtils.user.getSearchRequests.invalidate();
+
+        trpcUtils.creator.getRequests.invalidate();
+        trpcUtils.requestPost.getRecommends.invalidate();
         if (session?.user.id)
           trpcUtils.user.get.invalidate({ id: session?.user.id });
         if (editRequestPostId)
@@ -256,6 +260,13 @@ export default function NewRequestPost({
               modalStore.close(PAGE_KEYS.newPostRequest);
               reset();
               onSubmit?.();
+
+              if (data.creator?.userId) {
+                const isCreatorPage = router.asPath.includes(
+                  data.creator?.userId,
+                );
+                if (isCreatorPage) return;
+              }
 
               modalStore.open('view modal submit', {
                 title: '요청 내역 확인',
