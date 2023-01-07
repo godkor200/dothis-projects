@@ -1,5 +1,4 @@
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@dothis/share']);
 
 const runtimeCaching = require('next-pwa/cache');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -33,11 +32,11 @@ const nextConfig = {
         },
       ],
     ],
-    // transpilePackages: ['@dothis/share'],
+    transpilePackages: ['@dothis/share'],
   },
   compiler: {
     emotion: true,
   },
 };
 
-module.exports = withPlugins([withTM, withPWA, withBundleAnalyzer], nextConfig);
+module.exports = withPlugins([withPWA, withBundleAnalyzer], nextConfig);
