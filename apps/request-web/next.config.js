@@ -1,14 +1,16 @@
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@dothis/share']);
 
 const runtimeCaching = require('next-pwa/cache');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
   // disable: process.env.NODE_ENV === 'development',
-  runtimeCaching,
+  // runtimeCaching,
   buildExcludes: [/middleware-manifest.json$/],
 });
 
@@ -37,4 +39,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins([withTM, withPWA], nextConfig);
+module.exports = withPlugins([withPWA, withBundleAnalyzer], nextConfig);

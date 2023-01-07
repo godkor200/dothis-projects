@@ -3,12 +3,12 @@ import {
   Button,
   colors,
   Container,
-  Drawer,
   mediaQueries,
   typo,
   UserAvatar,
 } from '@dothis/share';
 import { css } from '@emotion/react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
@@ -22,6 +22,13 @@ import Login from '../contents/Login';
 import NewRequestPost from '../contents/NewRequestPost';
 import SideProfile from '../contents/SideProfile';
 import SearchInput from '../ui/SearchInput';
+
+const Drawer = dynamic(
+  () => import('@dothis/share/components/ui/Drawer').then((mod) => mod.Drawer),
+  {
+    ssr: false,
+  },
+);
 
 export default function LayoutHeader() {
   const { data: session, status } = useSession();
@@ -184,7 +191,7 @@ const contentsStyle = css`
     margin-right: 16px;
 
     ${mediaQueries.tablet} {
-      width: 113px;
+      max-width: 113px;
     }
   }
 

@@ -8,7 +8,7 @@ import { schema as creatorSchema } from '../CreatorDomain/domain';
 import { schema as userSchema } from '../UserDomain/domain';
 import type { db } from './index';
 
-const _categoryKor = new Map<RequestCategoryType, string>([ 
+const _categoryKor = new Map<RequestCategoryType, string>([
   ['GAME', '게임'],
   ['LIFE_TALK', '일상/토크'],
   ['COOK_EAT', '요리/먹방'],

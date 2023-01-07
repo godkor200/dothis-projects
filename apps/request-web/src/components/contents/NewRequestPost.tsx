@@ -1,6 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import type {
-  EditorT} from '@dothis/share';
+import type { EditorT } from '@dothis/share';
 import {
   Button,
   Editor,
@@ -12,11 +11,12 @@ import {
   isErrorMessage,
   isMessage,
   isNilStr,
-  removeSeparators, SelectMenu,
+  removeSeparators,
+  SelectMenu,
   SelectMenuButton,
   SelectMenuList,
   SubmitModalTemplate,
-  ToastBox
+  ToastBox,
 } from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -39,7 +39,6 @@ import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 
 import SearchInput from '../ui/SearchInput';
-
 
 const formValid = RequestPostDomain.schema
   .pick({
@@ -74,10 +73,10 @@ type Props = {
   onSubmit?: () => void;
 };
 export default function NewRequestPost({
-                                         editRequestPostId,
-                                         creatorId,
-                                         onSubmit,
-                                       }: Props) {
+  editRequestPostId,
+  creatorId,
+  onSubmit,
+}: Props) {
   const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
   const { data: session } = useSession();
@@ -262,7 +261,7 @@ export default function NewRequestPost({
                 title: '요청 내역 확인',
                 Component: () => (
                   <SubmitModalTemplate
-                    submitText='보기'
+                    submitText="보기"
                     onSubmit={() => {
                       modalStore.close('view modal submit');
                       ViewRequestPost.modalOpen({
@@ -297,11 +296,11 @@ export default function NewRequestPost({
     <>
       <form css={style} className={clsx(isInnerModal && 'in-modal')}>
         {/* 제목 */}
-        <div className='form-cell'>
+        <div className="form-cell">
           <div>
             <Input
               isInvalid={!!errors.title}
-              placeholder='제목 *'
+              placeholder="제목 *"
               {...register('title')}
             />
 
@@ -312,7 +311,7 @@ export default function NewRequestPost({
         </div>
 
         {/* 내용 */}
-        <Box className='form-cell' mt={14}>
+        <Box className="form-cell" mt={14}>
           <Editor
             init={{ placeholder: '내용 *' }}
             // initialValue={editRequestPost?.data?.content}
@@ -351,14 +350,14 @@ export default function NewRequestPost({
         </Box>
         {/* 크리에이터 */}
         {!isEditMode && !creatorId && (
-          <Box className='form-cell' mt={4}>
+          <Box className="form-cell" mt={4}>
             <Controller
               control={control}
-              name='creatorName'
+              name="creatorName"
               render={({ field }) => (
                 <SearchInput
                   isInvalid={!!errors.creatorName}
-                  placeholder='크리에이터 지정(선택사항)'
+                  placeholder="크리에이터 지정(선택사항)"
                   onItemSelect={(v) => {
                     field.onChange(v);
                   }}
@@ -370,14 +369,14 @@ export default function NewRequestPost({
         )}
         {/* 후원금 */}
         {!isEditMode && (
-          <Box className='form-cell' mt={14}>
+          <Box className="form-cell" mt={14}>
             <FormatInput
               theme="gray"
               placeholder="후원금 (1,000P부터)"
               format="thousandsSeparators"
               isInvalid={!!errors.quantity}
               Right={
-                <Text as='span' ml={4} display='flex' alignItems='center'>
+                <Text as="span" ml={4} display="flex" alignItems="center">
                   Point
                 </Text>
               }
@@ -397,17 +396,17 @@ export default function NewRequestPost({
           </Box>
         )}
         {/* 카테고리 */}
-        <Box className='form-cell' mt={4}>
+        <Box className="form-cell" mt={4}>
           <Controller
             control={control}
-            name='category'
+            name="category"
             render={({ field }) => (
               <SelectMenu theme="gray">
                 <SelectMenuButton ref={field.ref} isInvalid={!!errors.category}>
                   {field.value ? (
                     RequestPostDomain.constants.categoryKor.get(field.value)
                   ) : (
-                    <Text color='gray.60'>카테고리 선택 *</Text>
+                    <Text color="gray.60">카테고리 선택 *</Text>
                   )}
                 </SelectMenuButton>
                 <SelectMenuList
@@ -428,7 +427,7 @@ export default function NewRequestPost({
           <FormErrorMessages errors={errors} />
         </div>
         <Button
-          theme='primary'
+          theme="primary"
           onClick={isEditMode ? submitEditRequestPost : submitCreateRequestPost}
           w={120}
           h={50}
@@ -472,9 +471,9 @@ const footerStyle = css`
 
 NewRequestPost.title = () => '새로운 요청 등록';
 NewRequestPost.ModalLink = function NewRequestPostModalLink({
-                                                              children,
-                                                              ...props
-                                                            }: Props & { children: ReactNode }) {
+  children,
+  ...props
+}: Props & { children: ReactNode }) {
   const modalStore = useModalStore();
   const handleModalOpen = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {

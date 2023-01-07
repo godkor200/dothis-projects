@@ -9,7 +9,13 @@ import { uid } from 'uid';
 
 import { RequestPostDomain } from '../../domain';
 
-const s3Client = new S3Client({ region: 'ap-northeast-2' });
+const s3Client = new S3Client({
+  region: 'ap-northeast-2',
+  credentials: {
+    accessKeyId: process.env.DOTHIS_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DOTHIS_AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 const upload = multer({
   storage: multerS3({
@@ -38,7 +44,7 @@ export type FileLocations = Array<[fileName: string, location: string]>;
 
 const app = nextConnect<NextApiRequest, NextApiResponse>({
   onError(error, req, res) {
-    console.log(`${error.message}`);
+    console.error(`${error.message}`);
     res
       .status(500)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -80,7 +86,7 @@ app.post(
       images: imagesInfo,
     };
 
-    return res.send(superjson.stringify(uploadInfos));
+    return res.send(uploadInfos);
   },
 );
 

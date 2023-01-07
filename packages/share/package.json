@@ -14,8 +14,7 @@
     "clean": "rm -rf .turbo node_modules",
     "theme-gen": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts",
     "storybook": "start-storybook -p 6600",
-    "build-storybook": "build-storybook",
-    "postinstall": "pnpm theme-gen"
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "^1.8.0",
@@ -44,7 +43,7 @@
     "hangul-js": "^0.2.6",
     "immer": "^9.0.16",
     "iron-session": "^6.3.1",
-    "next": "13.0.7",
+    "next": "13.1.1",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.0",
@@ -63,6 +62,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@dothis/config": "*",
     "@emotion/babel-preset-css-prop": "^11.10.0",
+    "@next/bundle-analyzer": "^13.1.1",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-interactions": "^6.5.15",

@@ -1,44 +1,34 @@
 import 'swiper/css';
 
 import { ChakraProvider } from '@chakra-ui/react';
-import { dothisTheme, globalStyle, Modal, standaloneToast } from '@dothis/share';
+import {
+  dothisTheme,
+  globalStyle,
+  Modal,
+  standaloneToast,
+} from '@dothis/share';
 import { Global } from '@emotion/react';
-import axios from 'axios';
-import { enableMapSet } from 'immer';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import superjson from 'superjson';
 
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
 import { ModalOptProvider, useModalStore } from '@/models/Modal';
 import { trpc } from '@/utils/trpc';
 
-
-// immer Map Set 사용 가능하게
-enableMapSet();
-
-// superjson으로 변환
-axios.defaults.transformResponse = (data, headers) => {
-  try {
-    return typeof data === 'string' ? superjson.parse(data) : data;
-  } catch (e) {
-    return data;
-  }
-};
 export const toast = standaloneToast.toast;
 
 // @ts-ignore
-BigInt.prototype.toJSON = function() {
+BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
 function App({
-               Component,
-               pageProps: { session, ...pageProps },
-             }: AppProps<{ session: Session | null | undefined }>) {
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session | null | undefined }>) {
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);
@@ -55,7 +45,7 @@ function App({
   return (
     <>
       <Head>
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Global styles={globalStyle} />
       <SessionProvider session={session}>
@@ -82,7 +72,8 @@ const ModalManager = () => {
           function handleClose() {
             modalStore.close(name);
           }
-          const zIndex = 1000 + i
+
+          const zIndex = 1000 + i;
 
           return (
             <Modal

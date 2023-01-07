@@ -3,12 +3,27 @@
   "pipeline": {
     "build": {
       "dependsOn": [
-        "^db-gen",
+        "^build"
+      ]
+    },
+    "dev": {
+      "cache": false
+    },
+    "request-web#build": {
+      "dependsOn": [
+        "^db-generate",
         "^build"
       ],
       "outputs": [
         ".next/**"
       ]
+    },
+    "request-web#dev": {
+      "dependsOn": [
+        "^theme-gen",
+        "^db-generate"
+      ],
+      "cache": false
     },
     "build-storybook": {
       "outputs": [
@@ -22,13 +37,13 @@
       "outputs": [
         "./lib/types/theme.d.ts"
       ],
-      "cache": true
+      "cache": false
     },
-    "db-gen": {
+    "db-generate": {
       "inputs": [
         "prisma/schema.prisma"
       ],
-      "cache": true
+      "cache": false
     },
     "db-push": {
       "inputs": [
@@ -41,12 +56,15 @@
         "prisma/schema.prisma"
       ]
     },
+    "analyze": {
+      "inputs": [
+        ".next/**"
+      ]
+    },
     "lint": {
       "outputs": []
     },
-    "dev": {
-      "cache": false
-    },
+   
     "dev-mock": {
       "cache": false
     },
@@ -61,8 +79,8 @@
         "DATABASE_URL",
         "NEXTAUTH_URL",
         "NEXTAUTH_SECRET",
-        "AWS_ACCESS_KEY_ID",
-        "AWS_SECRET_ACCESS_KEY"
+        "DOTHIS_AWS_ACCESS_KEY_ID",
+        "DOTHIS_AWS_SECRET_ACCESS_KEY"
       ]
     },
     "clean": {

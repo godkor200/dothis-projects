@@ -7,6 +7,7 @@
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
+    "analyze": "dotenv -e .env -- turbo run analyze --parallel",
     "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "dev:dashboard-mock": "dotenv -e .env -- turbo run dev-mock --filter=dashboard-web",
@@ -18,9 +19,9 @@
     "lint": "turbo run lint",
     "studio": "dotenv -e .env -- turbo run studio",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db-pull": "turbo db-pull --parallel",
-    "db-push": "turbo db-push --parallel",
-    "db-gen": "dotenv -e .env -- turbo db-generate --parallel",
+    "db-pull": "dotenv -e .env -- turbo db-pull --parallel",
+    "db-push": "dotenv -e .env -- turbo db-push --parallel",
+    "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e .env -- turbo run start:dev"

@@ -12,30 +12,30 @@ export const db = {
     requestId: RequestPost['id'];
     quantity: RequestFunding['quantity'];
   }) {
-    return prisma.user.update({
-      where: { id: userId },
-      data: {
-        totalPoint: {
-          decrement: quantity,
+    return prisma.$transaction([
+      prisma.user.update({
+        where: { id: userId },
+        data: {
+          totalPoint: {
+            decrement: quantity,
+          },
         },
-        requestPosts: {
-          update: {
-            where: { id: requestId },
-            data: {
-              totalQuantity: {
-                increment: quantity,
-              },
-              requestFundings: {
-                create: {
-                  userId,
-                  quantity,
-                },
-              },
+      }),
+      prisma.requestPost.update({
+        where: { id: requestId },
+        data: {
+          totalQuantity: {
+            increment: quantity,
+          },
+          requestFundings: {
+            create: {
+              userId,
+              quantity,
             },
           },
         },
-      },
-    });
+      }),
+    ]);
   },
   refundFundings(requestFundings: (RequestFunding & { user: User | null })[]) {
     const userRefundQuantity = requestFundings.reduce(
