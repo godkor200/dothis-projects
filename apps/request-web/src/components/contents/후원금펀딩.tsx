@@ -15,7 +15,7 @@ import {
 } from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { User } from '@prisma/client';
+import type { RequestPost, User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -24,16 +24,18 @@ import { z } from 'zod';
 
 import UserLink from '@/components/ui/Links/UserLink';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
+import requestPost from '@/pages/user/request-post';
 import { trpc } from '@/utils/trpc';
 
 import type { RequestPostDomain } from '../../domain';
 import { RequestFundingDomain, UserDomain } from '../../domain';
+import type { RequestStatusType } from '.prisma/client/index';
 
 type Props = {
   user?: User;
   requestPost: Pick<
     NonNullable<RequestPostDomain.GetItemT>,
-    'id' | 'requestFundings'
+    'id' | 'requestFundings' | 'status'
   >;
 };
 
@@ -43,6 +45,19 @@ const formSchema = z.object({
   }),
 });
 type Form = z.infer<typeof formSchema>;
+
+const fundingPlaceholderMessage = (status: RequestStatusType) => {
+  switch (status) {
+    case 'COMPLETION':
+      return '요청이 완료되어 후원이 마감되었습니다.';
+    case 'EXPIRATION':
+    case 'REFUSE':
+      return '요청이 거절되어 후원이 마감되었습니다.';
+
+    default:
+      return '200원부터 후원 가능합니다.';
+  }
+};
 
 const 후원금펀딩 = ({ requestPost }: Props) => {
   const { data: session, status } = useSession();
@@ -118,20 +133,20 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
         (fundingDetail.data.requestFundings.length === 0 ? (
           <Center py={24}>펀딩 내역이 없습니다.</Center>
         ) : (
-          <Box className='funding-list' as='ul'>
+          <Box className="funding-list" as="ul">
             {fundingDetail.data.requestFundings.map(({ user, quantity }) => (
               <Flex
                 key={`${user ? user.id : null}`}
-                as='li'
-                justifyContent='space-between'
-                alignItems='center'
+                as="li"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 {user ? (
                   <UserLink userId={user.id}>
                     <UserAvatar
                       size={32}
                       user={user}
-                      Text={<b className='avatar-name'>{user.name}</b>}
+                      Text={<b className="avatar-name">{user.name}</b>}
                     />
                   </UserLink>
                 ) : (
@@ -139,24 +154,24 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
                     size={32}
                     user={{ name: UserDomain.constants.resignedUserName }}
                     Text={
-                      <b className='avatar-name'>
+                      <b className="avatar-name">
                         {UserDomain.constants.resignedUserName}
                       </b>
                     }
                   />
                 )}
-                <b className='price'>{thousandsSeparators(quantity)}&nbsp;원</b>
+                <b className="price">{thousandsSeparators(quantity)}&nbsp;원</b>
               </Flex>
             ))}
           </Box>
         ))}
-      <Box className='funding-form'>
-        <VStack flex='auto' spacing={4} alignItems='start'>
+      <Box className="funding-form">
+        <VStack flex="auto" spacing={4} alignItems="start">
           <FormatInput
-            format='thousandsSeparators'
-            Right={<Center>원</Center>}
+            format="thousandsSeparators"
+            Right={isFundingDisabled ? <></> : <Center>원</Center>}
             onKeyDown={onEnter(handleSubmit(onSubmit))}
-            placeholder='200원부터 입력가능합니다.'
+            placeholder={fundingPlaceholderMessage(requestPost.status)}
             {...register('quantity', {
               setValueAs(v) {
                 if (isNilStr(v)) return undefined;
@@ -170,7 +185,7 @@ const 후원금펀딩 = ({ requestPost }: Props) => {
           <FormValidMessage errorMessage={errors.quantity?.message} pl={2} />
         </VStack>
         <Button
-          theme='primary'
+          theme="primary"
           h={50}
           minW={100}
           fontSize={15}

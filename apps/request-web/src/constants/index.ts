@@ -40,10 +40,11 @@ export const pagePath = {
 
   /* user */
   // 유저 , 크리에이터 페이지
-  [PAGE_KEYS.user]: (query: { userId: string }) => ({
-    pathname: '/user',
-    query,
-  }),
+  [PAGE_KEYS.user]: (query: { userId: string }) =>
+    ({
+      pathname: '/user',
+      query,
+    } as const),
   // 유저 요청글
   [PAGE_KEYS.userRequestPost]: (query?: { searchText?: string }) => ({
     pathname: '/user/request-post',

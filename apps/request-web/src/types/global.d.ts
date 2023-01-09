@@ -9,7 +9,7 @@ declare const global: Global & { prisma?: PrismaClient };
 
 declare module 'next-auth' {
   interface Session {
-    user: { id?: string | null } & DefaultSession['user'];
+    user: { id: string } & DefaultSession['user'];
   }
 }
 
