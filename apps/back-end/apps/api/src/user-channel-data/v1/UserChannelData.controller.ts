@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { UserChannelDataService } from '../user-channel-data.service';
+import { UserChannelDataService } from '../UserChannelDataApi.service';
 import { CreateUserChannelDatumDto } from '../dto/create-user-channel-datum.dto';
 import { UpdateUserChannelDatumDto } from '../dto/update-user-channel-datum.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('user-channel-data')
+@ApiTags('user-channel-data')
+@Controller('/user-channel-data')
 export class UserChannelDataController {
   constructor(
     private readonly userChannelDataService: UserChannelDataService,
