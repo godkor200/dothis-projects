@@ -21,7 +21,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       // class-validator 발생 에러
       return response.status(status).json({
         success: false,
-        code: status,
         data: err.message,
       });
     }
@@ -29,7 +28,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     // 사용자 정의 에러(HttpException, BadRequestException 등..)
     response.status(status).json({
       success: false,
-      code: status,
       data: err,
     });
   }

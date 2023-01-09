@@ -43,7 +43,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const user: UserDto = {
       userId: Number(id),
       userEmail: emails[0].value,
-      tokenAccess: accessToken,
+      // tokenAccess: accessToken,
       tokenRefresh: refreshToken,
     };
     const res = await this.authApiService.validateUser(user);
