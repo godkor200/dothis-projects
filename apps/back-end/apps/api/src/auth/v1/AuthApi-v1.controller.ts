@@ -13,7 +13,14 @@ import { Request, Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtRefreshGuard } from '@Libs/commons/src/oauth/guards/jwt-refresh.guard';
 import { JwtAccessGuard } from '@Libs/commons/src/oauth/guards/jwt-access.guard';
+import { apiUser } from '@dothis/share/lib/dto';
+import { Api, ApiDecorator, initNestServer, JsonQuery } from '@ts-rest/nest';
 
+const s = initNestServer(apiUser);
+
+type ControllerShape = typeof s.controllerShape;
+type RouteShape = typeof s.routeShapes;
+@JsonQuery()
 @ApiTags('auth')
 @Controller('/auth')
 export class AuthApiController {
@@ -46,15 +53,18 @@ export class AuthApiController {
     };
   }
 
-  @Post('/verify-access')
   @UseGuards(JwtAccessGuard)
+  @Api(s.route.verifyAccessTokenPost)
   async verifyAccessToken(@Req() req: Request) {
     return { message: 'authorized' };
   }
 
-  @Post('/verify-refresh')
   @UseGuards(JwtRefreshGuard)
-  async verifyRefreshToken(@Req() req: Request) {
+  @Api(s.route.verifyRefreshTokenPost)
+  async verifyRefreshToken(
+    @Req() req: Request,
+    @ApiDecorator() {}: RouteShape['verifyRefreshTokenPost'],
+  ) {
     const authUser = await this.authApiService.googleLogin(req);
     return {
       message: 'authorized',
