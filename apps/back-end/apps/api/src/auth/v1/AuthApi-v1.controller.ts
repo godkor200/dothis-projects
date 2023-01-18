@@ -1,24 +1,15 @@
-import {
-  Controller,
-  Get,
-  UseGuards,
-  Req,
-  Inject,
-  Res,
-  Post,
-} from '@nestjs/common';
-import { GoogleOAuthGuard } from '@Libs/commons/src/oauth/guards/google-oauth.guard';
-import { AuthApiService } from '../AuthApi.service';
-import { Request, Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, UseGuards, Req, Inject, Res } from '@nestjs/common';
+import { Api, ApiDecorator, initNestServer, JsonQuery } from '@ts-rest/nest';
 import { JwtRefreshGuard } from '@Libs/commons/src/oauth/guards/jwt-refresh.guard';
 import { JwtAccessGuard } from '@Libs/commons/src/oauth/guards/jwt-access.guard';
+import { GoogleOAuthGuard } from '@Libs/commons/src/oauth/guards/google-oauth.guard';
+import { Request, Response } from 'express';
+import { AuthApiService } from '../AuthApi.service';
 import { apiUser } from '@dothis/share/lib/dto';
-import { Api, ApiDecorator, initNestServer, JsonQuery } from '@ts-rest/nest';
+import { ApiTags } from '@nestjs/swagger';
 
 const s = initNestServer(apiUser);
 
-type ControllerShape = typeof s.controllerShape;
 type RouteShape = typeof s.routeShapes;
 @JsonQuery()
 @ApiTags('auth')
