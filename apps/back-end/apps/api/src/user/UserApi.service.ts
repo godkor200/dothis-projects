@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
-import { UserApiQueryRepository } from './UserApiQueryRepository';
+import { UserRepository } from './v1/db/user.repository';
 import { google } from 'googleapis';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 
@@ -13,7 +13,7 @@ export class UserApiService {
     private userRepository: Repository<User>,
     @InjectRepository(UserChannelData)
     private userChannelData: Repository<UserChannelData>,
-    private readonly userApiQueryRepository: UserApiQueryRepository,
+    private readonly userApiQueryRepository: UserRepository,
   ) {}
 
   async findAll(): Promise<User[]> {

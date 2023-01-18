@@ -35,6 +35,7 @@ importers:
       '@nestjs/common': ^9.0.0
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.0.0
+      '@nestjs/cqrs': ^9.0.1
       '@nestjs/jwt': ^9.0.0
       '@nestjs/passport': ^9.0.0
       '@nestjs/platform-express': ^9.0.0
@@ -93,18 +94,15 @@ importers:
       '@nestjs/common': 9.2.1_glt6otmez4zoecyy5ktjxkg6bi
       '@nestjs/config': 2.2.0_b4pxbpa7chblgbyake5iz5rdmu
       '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
+      '@nestjs/cqrs': 9.0.1_fyic65utxiftcghm7bf7rrj4z4
       '@nestjs/jwt': 9.0.0_@nestjs+common@9.2.1
       '@nestjs/passport': 9.0.0_6o47igfla2pj7yzh7agpvpttka
       '@nestjs/platform-express': 9.2.1_hjcqpoaebdr7gdo5hgc22hthbe
       '@nestjs/swagger': 6.1.4_6gny5ctcrvy7j3lhfzrffcgh2a
       '@nestjs/typeorm': 9.0.1_hkapd3a3mi37wyf4vtt5y4i2ye
-<<<<<<< HEAD
       '@ts-rest/nest': 3.12.0_uyiyeasygfuoluux3a5lmiuc2i
       '@ts-rest/open-api': 3.12.0_o3bpusrbl6eazoguhtagzrcilq
-      axios: 1.2.1
-=======
       axios: 1.2.2
->>>>>>> 9d1779a15884494ec07351d5687ed20b7dc1767b
       class-validator: 0.13.2
       dotenv: 16.0.3
       googleapis: 107.0.0
@@ -4637,6 +4635,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64/0.15.18:
@@ -4645,6 +4644,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@eslint/eslintrc/1.4.1:
@@ -5500,6 +5500,21 @@ packages:
       uuid: 9.0.0
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/cqrs/9.0.1_fyic65utxiftcghm7bf7rrj4z4:
+    resolution: {integrity: sha512-DsqkAaIHy9+Ot4FJybmlDQk0HBDTGztz0F3LcMnatFDQv1X56W0Y2+R/7jjwHsmHzQfbffT2FGyCOx2/9apFCg==}
+    peerDependencies:
+      '@nestjs/common': ^9.0.0
+      '@nestjs/core': ^9.0.0
+      reflect-metadata: 0.1.13
+      rxjs: ^7.2.0
+    dependencies:
+      '@nestjs/common': 9.2.1_glt6otmez4zoecyy5ktjxkg6bi
+      '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      uuid: 8.3.2
+    dev: false
 
   /@nestjs/jwt/9.0.0_@nestjs+common@9.2.1:
     resolution: {integrity: sha512-ZsXGY/wMYKzEhymw2+dxiwrHTRKIKrGszx6r2EjQqNLypdXMQu0QrujwZJ8k3+XQV4snmuJwwNakQoA2ILfq8w==}
@@ -9943,23 +9958,6 @@ packages:
       webpack: 4.46.0
     dev: true
 
-<<<<<<< HEAD
-  /babel-loader/8.3.0_ztqwsvkb6z73luspkai6ilstpu:
-    resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
-    engines: {node: '>= 8.9'}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-      webpack: '>=2'
-    dependencies:
-      '@babel/core': 7.20.5
-      find-cache-dir: 3.3.2
-      loader-utils: 2.0.4
-      make-dir: 3.1.0
-      schema-utils: 2.7.1
-      webpack: 5.75.0_esbuild@0.15.18
-
-=======
->>>>>>> 9d1779a15884494ec07351d5687ed20b7dc1767b
   /babel-plugin-add-react-displayname/0.0.5:
     resolution: {integrity: sha512-LY3+Y0XVDYcShHHorshrDbt4KFWL4bSeniCtl4SYZbask+Syngk1uMPCeN9+nSiZo6zX5s0RTq/J9Pnaaf/KHw==}
     dev: true
@@ -12231,6 +12229,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-android-arm64/0.15.18:
@@ -12239,6 +12238,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-64/0.15.18:
@@ -12247,6 +12247,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-arm64/0.15.18:
@@ -12255,6 +12256,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-64/0.15.18:
@@ -12263,6 +12265,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-arm64/0.15.18:
@@ -12271,6 +12274,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-32/0.15.18:
@@ -12279,6 +12283,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-64/0.15.18:
@@ -12287,6 +12292,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm/0.15.18:
@@ -12295,6 +12301,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm64/0.15.18:
@@ -12303,6 +12310,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-mips64le/0.15.18:
@@ -12311,6 +12319,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-ppc64le/0.15.18:
@@ -12319,6 +12328,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-riscv64/0.15.18:
@@ -12327,6 +12337,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-s390x/0.15.18:
@@ -12335,6 +12346,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-netbsd-64/0.15.18:
@@ -12343,6 +12355,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-openbsd-64/0.15.18:
@@ -12351,6 +12364,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-sunos-64/0.15.18:
@@ -12359,6 +12373,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-32/0.15.18:
@@ -12367,6 +12382,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-64/0.15.18:
@@ -12375,6 +12391,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-arm64/0.15.18:
@@ -12383,6 +12400,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild/0.15.18:
@@ -12413,6 +12431,7 @@ packages:
       esbuild-windows-32: 0.15.18
       esbuild-windows-64: 0.15.18
       esbuild-windows-arm64: 0.15.18
+    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -21114,6 +21133,7 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.1
       webpack: 5.75.0_esbuild@0.15.18
+    dev: true
 
   /terser-webpack-plugin/5.3.6_webpack@5.75.0:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -22575,6 +22595,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /whatwg-encoding/2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
