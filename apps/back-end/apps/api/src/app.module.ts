@@ -22,17 +22,18 @@ import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
       load: [dbConfig],
       validationSchema,
     }),
-    HealthApiModule,
-    UserApiModule,
-    ChannelApiModule,
-    AuthApiModule,
-    UserChannelDataApiModule,
 
     TypeOrmModule.forRoot(
       new CreateDatabaseConnection(dbConfig()).getTypeOrmConfig(),
     ),
 
     TypeOrmExModule.forCustomRepository([UserQueryRepository]),
+    //module
+    HealthApiModule,
+    UserApiModule,
+    ChannelApiModule,
+    AuthApiModule,
+    UserChannelDataApiModule,
   ],
 })
 export class AppModule {}
