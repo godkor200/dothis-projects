@@ -19,6 +19,8 @@ export const zUser = z.object({
     .describe('The date which the user was created'),
 });
 
+export type UserModel = z.TypeOf<typeof zUser>;
+
 const c = initContract();
 
 export const apiUser = c.router({
