@@ -3,7 +3,8 @@ import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 import { Injectable } from '@nestjs/common';
 import { UserModel, zUser } from '@dothis/share/lib/dto';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository
@@ -12,5 +13,10 @@ export class UserRepository
 {
   protected tableName = 'User';
   protected schema = zUser;
-  protected readonly repository: Repository<User>;
+
+  @InjectRepository(User) protected readonly repository: Repository<User>;
+
+  constructor(dataSource: DataSource) {
+    super(dataSource);
+  }
 }
