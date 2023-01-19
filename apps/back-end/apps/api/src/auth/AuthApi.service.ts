@@ -26,18 +26,18 @@ export class AuthApiService {
       };
 
     const {
-      userId,
+      id,
       accessToken: googleAccessToken,
       refreshToken: googleRefreshToken,
     } = req.user as UserWithGoogleToken;
 
     const { token: accessToken, maxAge: accessTokenMaxAge } =
-      this.accessToken(userId);
+      this.accessToken(id);
 
     const { token: refreshToken, maxAge: refreshTokenMaxAge } =
-      this.refreshToken(userId);
+      this.refreshToken(id);
 
-    await this.setCurrentRefreshToken(refreshToken, userId);
+    await this.setCurrentRefreshToken(refreshToken, id);
 
     return {
       message: 'User information from google',
@@ -101,10 +101,7 @@ export class AuthApiService {
   }
 
   async setCurrentRefreshToken(refreshToken: string, id: number) {
-    await this.userRepository.update(
-      { userId: id },
-      { tokenRefresh: refreshToken },
-    );
+    await this.userRepository.update({ id }, { tokenRefresh: refreshToken });
   }
   decodeToken(token: string) {
     const res = this.jwtService.decode(token);
@@ -114,7 +111,7 @@ export class AuthApiService {
   }
 
   async getUserDataById(id: string) {
-    return await this.userRepository.findOneBy({ userId: +id });
+    return await this.userRepository.findOneBy({ id: +id });
   }
 
   async getUserIfRefreshTokenMatches(refreshToken: string, id: string) {
