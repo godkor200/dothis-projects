@@ -10,8 +10,8 @@ import { Channel } from '../channel/Channel.entity';
 import { DailyViews } from '@Libs/entity/src/domain/daily_views/DailyViews.entity';
 @Entity({ name: 'video' })
 export class Video {
-  @PrimaryGeneratedColumn({ name: 'video_id' })
-  videoId: string;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: string;
 
   @Column({ name: 'channel_index' })
   channelIndex: number;
