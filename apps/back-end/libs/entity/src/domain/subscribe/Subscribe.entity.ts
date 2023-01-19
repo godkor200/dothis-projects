@@ -9,8 +9,8 @@ import { User } from '@Libs/entity/src/domain/user/User.entity';
 
 @Entity({ name: 'subscribe' })
 export class Subscribe {
-  @PrimaryGeneratedColumn({ name: 'sub_id' })
-  subId: number;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: number;
 
   @Column({ name: 'user_id' })
   userId: number;

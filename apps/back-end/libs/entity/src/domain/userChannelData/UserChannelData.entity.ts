@@ -8,8 +8,8 @@ import {
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 @Entity({ name: 'UserChannelData' })
 export class UserChannelData {
-  @PrimaryGeneratedColumn({ name: 'channel_id' })
-  channelId: string;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: string;
 
   @Column('int', { name: 'user_id' })
   userId: number;
