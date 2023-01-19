@@ -48,7 +48,7 @@ export class UserApiService {
     if (res.statusText === 'OK' && res.status === 200) {
       const { snippet, statistics, brandingSettings, id } = res.data.items[0];
       const newUserChannelData = new UserChannelData();
-      newUserChannelData.channelId = id;
+      newUserChannelData.id = id;
       newUserChannelData.userId = Number(userId);
       newUserChannelData.channelName = snippet.title;
       newUserChannelData.channelVideos = Number(statistics.videoCount);

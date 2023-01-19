@@ -2,7 +2,7 @@ import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
 export const zUser = z.object({
-  userId: z.number().nullable().describe('The id of user'),
+  id: z.number().nullable().describe('The id of user'),
   userEmail: z.string().email().max(30).nullable().describe('user email'),
   channelId: z.number().nullable().describe('User Channel-id'),
   tokenRefresh: z.string().max(110).nullable().describe('refresh token'),

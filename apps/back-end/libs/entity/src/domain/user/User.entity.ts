@@ -4,8 +4,8 @@ import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
 @Entity({ name: 'user' })
 export class User {
-  @PrimaryGeneratedColumn({ name: 'user_id' })
-  userId: number;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: number;
 
   @Column({ name: 'user_email' })
   userEmail: string;
