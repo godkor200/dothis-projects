@@ -11,7 +11,7 @@ export interface getChannelDataCommandDto {
   accessToken: string;
 }
 
-export class GetChannelDataService
+export class GetChannelDataCommandHandler
   implements ICommandHandler<getChannelDataCommandDto>
 {
   constructor(
@@ -52,7 +52,7 @@ export class GetChannelDataService
     const { snippet, statistics, brandingSettings, id } = res.data.items[0];
 
     const newUserChannelData = new UserChannelData();
-    newUserChannelData.channelId = id;
+    newUserChannelData.id = id;
     newUserChannelData.userId = Number(command.userId);
     newUserChannelData.channelName = snippet.title;
     newUserChannelData.channelVideos = Number(statistics.videoCount);

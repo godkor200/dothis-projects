@@ -1,22 +1,17 @@
 import {
-  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
+  constructor(private dataSource: DataSource) {}
+
   protected abstract tableName: string;
-
   protected abstract schema: ZodObject<any>;
-  protected readonly repository: Repository<E>;
-  protected readonly dataSource: DataSource;
+  protected abstract repository: Repository<E>;
 
-  constructor(dataSource: DataSource) {
-    this.repository = dataSource.getRepository(this['tableName']);
-  }
   async delete(id: string): Promise<boolean> {
     const res = await this.repository
       .createQueryBuilder(this.tableName)
@@ -28,7 +23,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   }
 
   async findAll(): Promise<E[]> {
-    return await this.repository.createQueryBuilder(this.tableName).getMany();
+    return await this.repository.find();
   }
   //TODO: 오프셋 필요할시 구현 Promise<Paginated<E>>
   async findAllPaginated(params: PaginatedQueryParams): Promise<any> {
@@ -46,8 +41,8 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   async findOneById(id: string): Promise<E> {
     return await this.repository
       .createQueryBuilder(this.tableName)
-      .where({ id })
-      .getOne();
+      .where({ id: id })
+      .execute();
   }
 
   async insert(entity: E): Promise<void> {
@@ -59,6 +54,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .execute();
   }
 
+  //TODO: 트랜젝션 구현 아직안됨!
   async transaction<T>(handler: () => Promise<T>): Promise<T | void> {
     const queryRunner = this.dataSource.createQueryRunner();
 

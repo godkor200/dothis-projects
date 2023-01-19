@@ -12,17 +12,28 @@ import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 import { UserChannelDataModule } from '@Libs/entity/src/domain/userChannelData/UserChannelDataModule';
 import { USER_REPOSITORY } from '@Apps/api/src/user/user.di-token';
-import { GetUserQueryHandler } from '@Apps/api/src/user/v1/commands/get-user/get-user.service';
+import { GetUserCommandHandler } from '@Apps/api/src/user/v1/commands/get-user/get-user.service';
+import { GetChannelDataCommandHandler } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.service';
 import { GetChannelDataHttpController } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.http.controller';
+import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
+import { UserChannelDataRepository } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository';
 
 const httpControllers = [GetUserHttpController, GetChannelDataHttpController];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
+  {
+    provide: USER_CHANNEL_DATA_REPOSITORY,
+    useClass: UserChannelDataRepository,
+  },
 ];
 
-const commandHandlers: Provider[] = [GetUserQueryHandler];
+const commandHandlers: Provider[] = [
+  GetChannelDataCommandHandler,
+  GetUserCommandHandler,
+];
 
+const queryHandlers: Provider[] = [];
 @Module({
   imports: [
     CqrsModule,
@@ -33,6 +44,6 @@ const commandHandlers: Provider[] = [GetUserQueryHandler];
     TypeOrmModule.forFeature([User, Subscribe, UserChannelData]),
   ],
   controllers: [...httpControllers],
-  providers: [...repositories, ...commandHandlers],
+  providers: [...repositories, ...commandHandlers, ...queryHandlers],
 })
 export class UserApiV1Module {}

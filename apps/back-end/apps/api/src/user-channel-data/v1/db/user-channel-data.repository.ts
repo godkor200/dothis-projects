@@ -3,7 +3,8 @@ import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { UserChannelDataModel, zUserChannelData } from '@dothis/share/lib/dto';
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserChannelDataRepository
@@ -12,8 +13,12 @@ export class UserChannelDataRepository
 {
   protected tableName = 'UserChannelData';
   protected schema = zUserChannelData;
-  protected readonly repository: Repository<UserChannelData>;
 
+  @InjectRepository(UserChannelData)
+  protected readonly repository: Repository<UserChannelData>;
+  constructor(dataSource: DataSource) {
+    super(dataSource);
+  }
   async findOneByUserId(userId: string): Promise<UserChannelData> {
     return await this.repository
       .createQueryBuilder('UserChannelData')
