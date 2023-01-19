@@ -12,7 +12,7 @@ export class FindUserCommand {
 }
 
 @CommandHandler(FindUserCommand)
-export class GetUserQueryHandler implements ICommandHandler<FindUserCommand> {
+export class GetUserCommandHandler implements ICommandHandler<FindUserCommand> {
   constructor(
     @Inject(USER_REPOSITORY)
     protected readonly userRepo: UserRepositoryPort,
