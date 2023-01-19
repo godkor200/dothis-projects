@@ -11,7 +11,7 @@ export interface getChannelDataCommandDto {
   accessToken: string;
 }
 
-export class GetChannelDataService
+export class GetChannelDataCommandHandler
   implements ICommandHandler<getChannelDataCommandDto>
 {
   constructor(
