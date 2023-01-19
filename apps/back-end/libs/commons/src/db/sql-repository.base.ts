@@ -1,21 +1,18 @@
 import {
-  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract tableName: string;
-
   protected abstract schema: ZodObject<any>;
   protected readonly repository: Repository<E>;
   protected readonly dataSource: DataSource;
 
-  constructor(dataSource: DataSource) {
-    this.repository = dataSource.getRepository(this['tableName']);
+  constructor(repository: Repository<E>) {
+    this.repository = repository;
   }
   async delete(id: string): Promise<boolean> {
     const res = await this.repository
