@@ -36,4 +36,9 @@ export const apiUser = c.router({
     responses: { 200: z.string() },
     body: z.object({ message: z.string(), accessToken: z.string() }),
   },
+  verifyTokenGet: {
+    method: 'GET',
+    path: '/verify-token',
+    responses: { 200: z.string() },
+  },
 });

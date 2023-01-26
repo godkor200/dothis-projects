@@ -7,7 +7,6 @@ import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserCha
 
 export interface getChannelDataCommandDto {
   userId: string;
-
   accessToken: string;
 }
 

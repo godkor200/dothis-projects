@@ -2,7 +2,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
-@Entity({ name: 'user' })
+import { UserInfoCommandDto } from '@Apps/api/src/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+@Entity({ name: 'User' })
 export class User {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
@@ -15,12 +16,6 @@ export class User {
 
   @Column({ name: 'token_refresh' })
   tokenRefresh: string;
-
-  // @Column({ name: 'token_expires' })
-  // tokenExpires: number;
-
-  // @Column({ name: 'token_access' })
-  // tokenAccess: string;
 
   @Column({ name: 'agree_promotion' })
   agreePromotion: string;
@@ -48,10 +43,15 @@ export class User {
 
   @OneToMany((type) => Channel, (channel) => channel.userId)
   Channel: Channel[];
+
+  static create(user: UserInfoCommandDto) {
+    const newUser = new User();
+    newUser.userEmail = user.userEmail;
+    return newUser;
+  }
 }
 
 export class UserWithGoogleToken extends User {
   accessToken: string;
-
   refreshToken: string;
 }
