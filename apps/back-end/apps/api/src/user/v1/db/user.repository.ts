@@ -19,4 +19,11 @@ export class UserRepository
   constructor(dataSource: DataSource) {
     super(dataSource);
   }
+
+  async findOneByEmail(userEmail: string): Promise<User> {
+    return await this.repository.findOneBy({ userEmail });
+  }
+  async updateRefreshToken(id: number, token: string): Promise<void> {
+    await this.repository.update({ id }, { tokenRefresh: token });
+  }
 }

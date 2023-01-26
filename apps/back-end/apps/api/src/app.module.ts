@@ -10,7 +10,7 @@ import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
 import dbConfig from '@Libs/entity/src/config/db.env';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
-import { DataSource } from 'typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [

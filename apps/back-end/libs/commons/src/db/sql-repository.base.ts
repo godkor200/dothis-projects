@@ -59,7 +59,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
-
+    await queryRunner.startTransaction();
     try {
       await handler();
       await queryRunner.commitTransaction();

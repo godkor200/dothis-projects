@@ -19,30 +19,30 @@ export class AuthApiController {
     @Inject('AUTH_SERVICE') private readonly authApiService: AuthApiService,
   ) {}
 
-  @Get('/google-login')
-  @UseGuards(GoogleOAuthGuard)
-  googleAuth() {
-    return { message: 'Google Authentication' };
-  }
+  // @Get('/google-login')
+  // @UseGuards(GoogleOAuthGuard)
+  // googleAuth() {
+  //   return { message: 'Google Authentication' };
+  // }
 
-  @Get('/google-redirect')
-  @UseGuards(GoogleOAuthGuard)
-  async googleAuthRedirect(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const authUser = await this.authApiService.googleLogin(req);
-    res.cookie('google_refreshToken', authUser.googleToken.googleRefreshToken);
-    res.cookie('google_accessToken', authUser.googleToken.googleAccessToken);
-    res.cookie('refreshToken', authUser.siteToken.refreshToken);
-    res.cookie('accessToken', authUser.siteToken.accessToken);
-
-    return {
-      message: authUser.message,
-      accessToken: authUser.siteToken.accessToken,
-      googleAccessToken: authUser.googleToken.googleAccessToken,
-    };
-  }
+  // @Get('/google-redirect')
+  // @UseGuards(GoogleOAuthGuard)
+  // async googleAuthRedirect(
+  //   @Req() req: Request,
+  //   @Res({ passthrough: true }) res: Response,
+  // ) {
+  //   const authUser = await this.authApiService.googleLogin(req);
+  //   res.cookie('google_refreshToken', authUser.googleToken.googleRefreshToken);
+  //   res.cookie('google_accessToken', authUser.googleToken.googleAccessToken);
+  //   res.cookie('refreshToken', authUser.siteToken.refreshToken);
+  //   res.cookie('accessToken', authUser.siteToken.accessToken);
+  //
+  //   return {
+  //     message: authUser.message,
+  //     accessToken: authUser.siteToken.accessToken,
+  //     googleAccessToken: authUser.googleToken.googleAccessToken,
+  //   };
+  // }
 
   @UseGuards(JwtAccessGuard)
   @Api(s.route.verifyAccessTokenPost)
