@@ -42,7 +42,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     return await this.repository
       .createQueryBuilder(this.tableName)
       .where({ id: id })
-      .execute();
+      .getOne();
   }
 
   async insert(entity: E): Promise<void> {
@@ -54,7 +54,6 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .execute();
   }
 
-  //TODO: 트랜젝션 구현 아직안됨!
   async transaction<T>(handler: () => Promise<T>): Promise<T | void> {
     const queryRunner = this.dataSource.createQueryRunner();
 

@@ -3,7 +3,7 @@ import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserCha
 import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
 import { UserInfoCommandDto } from '@Apps/api/src/auth/v1/commands/google-login-redirect/google-login-redirect.service';
-@Entity({ name: 'user' })
+@Entity({ name: 'User' })
 export class User {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
