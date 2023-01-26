@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "../../dist/libs/commons"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*","../../apps/api/src/**/**/**/**/*","*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

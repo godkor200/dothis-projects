@@ -1,4 +1,5 @@
-import { format, getISODay } from 'date-fns/fp';
+import format from 'date-fns/esm/format';
+import getISODay from 'date-fns/esm/getISODay';
 
 const second = 600;
 const minutes = 60 * second;
@@ -20,7 +21,7 @@ export function toKoDayOfWeek(date: Date) {
   return KOR_DAY_OF_WEEK[getISODay(date) - 1];
 }
 export function formatLocalISO(date: Date) {
-  return format('yyyy-MM-dd')(date) + 'T' + format('HH:mm:ss')(date);
+  return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'HH:mm:ss');
 }
 
 export function toKoAboutDateAgo(nowDate: Date, pastDate: Date) {
@@ -32,15 +33,3 @@ export function toKoAboutDateAgo(nowDate: Date, pastDate: Date) {
   if (diff < month) return Math.floor(diff / day) + '일 전';
   return Math.floor(diff / month) + '달 전';
 }
-
-// yyyy.MM.dd
-export const toDateString = (separator = '.') =>
-  format(`yyyy${separator}MM${separator}dd`);
-// MM.dd
-export const toMonthDate = (separator = '.') => format(`MM${separator}dd`);
-// yyyy.MM
-export const toYearMonth = (separator = '.') => format(`yyyy${separator}MM`);
-
-export const toKoMonthDay = format('MM월 dd일');
-export const toKoMonth = format('MM월');
-

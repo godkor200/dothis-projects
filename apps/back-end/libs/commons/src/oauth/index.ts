@@ -5,4 +5,3 @@ export * from './guards/jwt-refresh.guard';
 export * from './strategy/accessToken.strategy';
 export * from './strategy/google.strategy';
 export * from './strategy/local.strategy';
-export * from './strategy/refreshToken.strategy';
