@@ -1,5 +1,4 @@
 export * from './commons.module';
-export * from './commons.service';
 export * from './decorator';
 // export * from './filter';
 export * from './oauth';
