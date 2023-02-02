@@ -2,11 +2,11 @@ import { Controller, Req, Res } from '@nestjs/common';
 import { Api, initNestServer } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { Request, Response } from 'express';
-import { apiUser } from '@dothis/share/lib/dto';
+import { authApi } from '@dothis/share/lib/dto/auth/auth.api';
 import { Cookies } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/api/src/auth/v1/commands/verify-token/verify-token.service';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-const s = initNestServer(apiUser);
+const s = initNestServer(authApi);
 
 @Controller('/auth')
 export class VerifyTokenHttpController {
@@ -20,7 +20,7 @@ export class VerifyTokenHttpController {
   @ApiOperation({
     summary: '토큰 확인(accessToken,refreshToken) 후 갱신된 토큰 리턴',
   })
-  @Api(s.route.verifyTokenGet)
+  @Api(s.route.getVerifyToken)
   async verifyAccessToken(
     @Req() req: Request,
     @Res({ passthrough: true })

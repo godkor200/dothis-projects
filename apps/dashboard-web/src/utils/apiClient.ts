@@ -1,4 +1,4 @@
-import { apiUser } from '@dothis/share/lib/dto';
+import { authApi } from '@dothis/share/lib/dto';
 import { c } from '@dothis/share/lib/dto/contract';
 import type { ApiResponseForRoute, AppRoute, AppRouter } from '@ts-rest/core';
 import { getRouteResponses, isAppRoute } from '@ts-rest/core';
@@ -16,7 +16,7 @@ import { apiBaseUrl } from '@/constants/dev';
 // export const apiHooks = new ZodiosHooks('myAPI', apiClient);
 
 export const apiRouter = c.router({
-  user: apiUser,
+  user: authApi,
 });
 
 type RecurApiRouterResponse<R extends AppRouter> = {

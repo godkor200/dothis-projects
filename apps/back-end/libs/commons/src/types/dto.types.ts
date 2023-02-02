@@ -1,15 +1,15 @@
 import { createZodDto } from '@anatine/zod-nestjs';
-import { zUser } from '@dothis/share/lib/dto';
+import { userModel } from '@dothis/share/lib/dto';
 
-export class UserDto extends createZodDto(zUser) {}
+export class UserDto extends createZodDto(userModel) {}
 export class CreateUserInput extends createZodDto(
-  zUser.omit({
+  userModel.omit({
     dateSignIn: true,
   }),
 ) {}
 
 export class UpdateUserInput extends createZodDto(
-  zUser.omit({
+  userModel.omit({
     dateSignIn: true,
   }),
 ) {}
