@@ -41,7 +41,6 @@
     "axios": "^1.2.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
-    "fp-ts": "^2.13.1",
     "framer-motion": "^7.10.3",
     "googleapis": "^107.0.0",
     "hangul-js": "^0.2.6",

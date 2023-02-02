@@ -19,10 +19,10 @@ import {
   ToastBox,
 } from '@dothis/share';
 import { css } from '@emotion/react';
+import { isString } from '@fp-ts/core/String';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
-import { isString } from 'fp-ts/lib/string';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';

@@ -3,7 +3,8 @@ import { getPathMatch } from 'next/dist/shared/lib/router/utils/path-match';
 import type { z } from 'zod';
 
 import { mockApiPathname } from '@/constants/dev';
-import { getUser, getUsers } from '@/domain/User';
+import type { ApiRouterResponse } from '@/utils/apiClient';
+import { apiRouter } from '@/utils/apiClient';
 
 const urlMatchDynamicPath = (url: string) => (dynamicPath: string) =>
   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);
@@ -24,10 +25,12 @@ export default function handler(
 
   switch (method) {
     case 'GET':
-      if (matchDynamicPath(getUser.path)) return res200.json(mockUsers[0]);
-      if (matchDynamicPath(getUsers.path)) return res200.json(mockUsers);
+      if (matchDynamicPath(apiRouter.user.verifyTokenGet.path))
+        return res200.json(mockToken);
       break;
     case 'POST':
+      // if (matchDynamicPath(apiRouter.user.verifyAccessTokenPost.path))
+      //   return res200.json(mockUsers);
       break;
     case 'PUT':
       break;
@@ -38,7 +41,10 @@ export default function handler(
   }
 }
 
-const mockUsers: z.infer<typeof getUsers['response']> = [
+const mockToken: ApiRouterResponse['user']['verifyTokenGet']['body'] =
+  'kajsdlkfjlksdjflkjslkfjksdl';
+
+const mockUsers = [
   {
     id: 'dkdlel1',
     name: '홍길동',

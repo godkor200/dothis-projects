@@ -2,19 +2,19 @@ import { apiClient } from '@/utils/apiClient';
 
 import ClientTest from './ClientTest';
 
-export function getData() {
-  return apiClient.getUsers();
-}
+// export function getData() {
+//   return apiClient.user.verifyAccessTokenPost.mutation({
+//     body: {
+//       message: 'hi',
+//     },
+//   });
+// }
 
 export default async function RootPage() {
-  const data = await getData();
+  // const data = await getData();
   return (
     <div>
-      {data.map((d) => (
-        <p key={d.id}>
-          users: {d.id} {d.name}
-        </p>
-      ))}
+      <div></div>
       <ClientTest />
     </div>
   );

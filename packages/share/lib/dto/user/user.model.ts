@@ -1,5 +1,6 @@
-import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
+
+import { c } from '../contract';
 
 export const zUser = z.object({
   id: z.number().nullable().describe('The id of user'),
@@ -21,20 +22,25 @@ export const zUser = z.object({
 
 export type UserModel = z.TypeOf<typeof zUser>;
 
-const c = initContract();
-
 export const apiUser = c.router({
   verifyAccessTokenPost: {
     method: 'POST',
     path: '/verify-access',
     responses: { 200: z.string() },
-    body: z.object({ message: z.string() }),
+    body: z.object({
+      message: z.string(),
+    }),
+    summary: '',
   },
   verifyRefreshTokenPost: {
     method: 'POST',
     path: '/verify-refresh',
     responses: { 200: z.string() },
-    body: z.object({ message: z.string(), accessToken: z.string() }),
+    body: z.object({
+      message: z.string(),
+      accessToken: z.string(),
+    }),
+    summary: '',
   },
   verifyTokenGet: {
     method: 'GET',
