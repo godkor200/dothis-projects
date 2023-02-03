@@ -9,10 +9,13 @@ import {
 import { User } from '@Libs/entity/src/domain/user/User.entity';
 import { Video } from '@Libs/entity/src/domain/videos/Videos.entity';
 
-@Entity({ name: 'channel' })
+@Entity({ name: 'Channel' })
 export class Channel {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
+
+  @Column('varchar', { name: 'channel_id' })
+  channelId: string;
 
   @Column({ name: 'user_id' })
   userId: number;
@@ -20,35 +23,38 @@ export class Channel {
   @Column({ name: 'channel_name' })
   channelName: string;
 
-  @Column({ name: 'channel_url' })
-  channelUrl: string;
+  @Column({ name: 'url' })
+  url: string;
 
-  @Column({ name: 'channel_subscriber' })
-  channelSubsciber: number;
+  @Column({ name: 'subscriber' })
+  subscriber: number;
 
-  @Column({ name: 'channel_description' })
-  channelDescription: string;
+  @Column({ name: 'description' })
+  description: string;
 
-  @Column({ name: 'channel_since' })
-  channelSince: Date;
+  @Column({ name: 'since' })
+  since: Date;
 
-  @Column({ name: 'channel_total_views' })
-  channelTotalWiews: number;
+  @Column({ name: 'total_views' })
+  totalViews: number;
 
-  @Column({ name: 'channel_total_videos' })
-  channelTotalVideos: number;
+  @Column({ name: 'total_videos' })
+  totalVideos: number;
 
-  @Column({ name: 'channel_normal_videos' })
-  channelNomalVideos: number;
+  @Column({ name: 'country' })
+  country: string;
 
-  @Column({ name: 'channel_country' })
-  channelCountry: string;
+  @Column({ name: 'link' })
+  link: string;
 
-  @Column({ name: 'channel_link' })
-  channelLink: string;
+  @Column({ name: 'keyword' })
+  keyword: string;
+
+  @Column({ name: 'total_normal_videos' })
+  totalNormalVideos: number;
 
   @ManyToOne((type) => User, (user) => user.UserChannelData)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   User: User;
 
   @OneToMany((type) => Channel, (channel) => channel.id)

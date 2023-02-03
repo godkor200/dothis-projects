@@ -1,10 +1,11 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
 import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository.port';
 import { google } from 'googleapis';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
-import { throws } from 'assert';
+import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
+import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-token';
 
 export class GetChannelDataCommandDto {
   userId: string;
@@ -25,6 +26,9 @@ export class GetChannelDataCommandHandler
   constructor(
     @Inject(USER_CHANNEL_DATA_REPOSITORY)
     protected readonly userChannnelDataRepo: UserChannelDataRepositoryPort,
+
+    @Inject(CHANNEL_DATA_REPOSITORY)
+    protected readonly channelDataRepo: ChannelDataRepositoryPost,
   ) {}
   async execute(command: GetChannelDataCommandDto) {
     const conflictCheck = await this.userChannnelDataRepo.findOneByUserId(
@@ -57,17 +61,28 @@ export class GetChannelDataCommandHandler
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const { snippet, statistics, brandingSettings, id } = res.data.items[0];
+    const {
+      snippet,
+      statistics,
+      brandingSettings,
+      id: channelId,
+    } = res.data.items[0];
+    /**
+     * UC8vwYHACnWfhMt9iclBJaDw 더미 채널
+     * */
 
-    console.log(res.data.items[0]);
-    const newUserChannelData = new UserChannelData();
-    newUserChannelData.id = id;
-    newUserChannelData.userId = Number(command.userId);
-    newUserChannelData.channelName = snippet.title;
-    newUserChannelData.channelVideos = Number(statistics.videoCount);
-    newUserChannelData.channelDescriber = Number(statistics.subscriberCount);
-    newUserChannelData.channelViews = Number(statistics.viewCount);
-    newUserChannelData.channelKeywords = brandingSettings.channel.keywords;
+    const { channelName, totalVideos, subscriber, totalViews, keyword } =
+      await this.channelDataRepo.findOneByChannelId('UC8vwYHACnWfhMt9iclBJaDw');
+
+    const newUserChannelData = new UserChannelData(
+      channelId,
+      Number(command.userId),
+      channelName,
+      totalVideos,
+      subscriber,
+      totalViews,
+      keyword,
+    );
 
     return await this.userChannnelDataRepo.insert(newUserChannelData);
   }

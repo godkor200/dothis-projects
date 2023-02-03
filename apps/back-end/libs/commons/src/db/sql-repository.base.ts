@@ -12,7 +12,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string): boolean {
     const res = await this.repository
       .createQueryBuilder(this.tableName)
       .delete()
@@ -22,7 +22,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     return res.raw > 0;
   }
 
-  async findAll(): Promise<E[]> {
+  async findAll(): Promise<User>[] {
     return await this.repository.find();
   }
   //TODO: 오프셋 필요할시 구현 Promise<Paginated<E>>

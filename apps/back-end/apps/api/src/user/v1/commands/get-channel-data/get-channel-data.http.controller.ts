@@ -19,7 +19,7 @@ export class GetChannelDataHttpController {
     @User() user: TDecodePayload,
     @Cookies() cookie: { google_access_token: string },
   ) {
-    const { userId, userEmail } = user;
+    const { id: userId, userEmail } = user;
     const accessToken = cookie.google_access_token;
     return await this.commandBus.execute(
       new GetChannelDataCommandDto({ userId, userEmail, accessToken }),

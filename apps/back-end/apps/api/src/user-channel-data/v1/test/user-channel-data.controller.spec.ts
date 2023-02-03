@@ -1,18 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserChannelDataController } from './user-channel-data.controller';
-import { UserChannelDataService } from '../user-channel-data.service';
+import { GetUserChannelDataHttpController } from '../commands/get-user-channel-data/get-user-channel-data.http.controller';
 
 describe('UserChannelDataController', () => {
-  let controller: UserChannelDataController;
+  let controller: GetUserChannelDataHttpController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserChannelDataController],
-      providers: [UserChannelDataService],
+      controllers: [GetUserChannelDataHttpController],
+      providers: [],
     }).compile();
 
-    controller = module.get<UserChannelDataController>(
-      UserChannelDataController,
+    controller = module.get<GetUserChannelDataHttpController>(
+      GetUserChannelDataHttpController,
     );
   });
 
