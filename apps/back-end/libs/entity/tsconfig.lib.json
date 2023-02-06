@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "../../dist/libs/entity"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

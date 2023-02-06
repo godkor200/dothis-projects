@@ -9,7 +9,10 @@ import { User } from '@Libs/entity/src/domain/user/User.entity';
 @Entity({ name: 'UserChannelData' })
 export class UserChannelData {
   @PrimaryGeneratedColumn({ name: 'id' })
-  id: string;
+  id: number;
+
+  @Column('varchar', { name: 'channel_id' })
+  channelId: string;
 
   @Column('int', { name: 'user_id' })
   userId: number;
@@ -38,4 +41,22 @@ export class UserChannelData {
   @JoinColumn({ name: 'user_id' })
   @ManyToOne((type) => User, (user) => user.UserChannelData)
   User: User;
+
+  constructor(
+    channelId: string,
+    userId: number,
+    channelName: string = null,
+    channelVideos: number,
+    channelDescriber: number,
+    channelViews: number,
+    channelKeywords: string,
+  ) {
+    this.channelId = channelId;
+    this.userId = userId;
+    this.channelName = channelName;
+    this.channelVideos = channelVideos;
+    this.channelDescriber = channelDescriber;
+    this.channelViews = channelViews;
+    this.channelKeywords = channelKeywords;
+  }
 }

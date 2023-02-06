@@ -13,6 +13,7 @@ export class AtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JwtPayload) {
+    console.log(payload);
     /** 유저정보 리턴 */
     return payload;
   }
