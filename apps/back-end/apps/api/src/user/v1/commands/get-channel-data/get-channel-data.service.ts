@@ -1,23 +1,35 @@
-import { ICommandHandler } from '@nestjs/cqrs';
+import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
 import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository.port';
 import { google } from 'googleapis';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
+import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-token';
 
-export interface getChannelDataCommandDto {
+export class GetChannelDataCommandDto {
   userId: string;
   accessToken: string;
+  userEmail: string;
+  constructor(props: GetChannelDataCommandDto) {
+    this.userId = props.userId;
+    this.accessToken = props.accessToken;
+    this.userEmail = props.userEmail;
+  }
 }
 
+@CommandHandler(GetChannelDataCommandDto)
 export class GetChannelDataCommandHandler
-  implements ICommandHandler<getChannelDataCommandDto>
+  implements ICommandHandler<GetChannelDataCommandDto>
 {
   constructor(
     @Inject(USER_CHANNEL_DATA_REPOSITORY)
     protected readonly userChannnelDataRepo: UserChannelDataRepositoryPort,
+
+    @Inject(CHANNEL_DATA_REPOSITORY)
+    protected readonly channelDataRepo: ChannelDataRepositoryPost,
   ) {}
-  async execute(command: getChannelDataCommandDto) {
+  async execute(command: GetChannelDataCommandDto) {
     const conflictCheck = await this.userChannnelDataRepo.findOneByUserId(
       command.userId,
     );
@@ -26,10 +38,9 @@ export class GetChannelDataCommandHandler
 
     const youtube = google.youtube({
       version: 'v3',
-      headers: { Authorization: command.accessToken },
+      headers: { Authorization: 'Bearer ' + command.accessToken },
       auth: process.env.GOOGLE_APIKEY,
     });
-
     const res = await youtube.channels.list({
       part: [
         'id',
@@ -48,16 +59,23 @@ export class GetChannelDataCommandHandler
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const { snippet, statistics, brandingSettings, id } = res.data.items[0];
+    const { id: channelId } = res.data.items[0];
+    /**
+     * UCfsqglnMY55Rf8B_E3TLV-A 더미 채널
+     * */
 
-    const newUserChannelData = new UserChannelData();
-    newUserChannelData.id = id;
-    newUserChannelData.userId = Number(command.userId);
-    newUserChannelData.channelName = snippet.title;
-    newUserChannelData.channelVideos = Number(statistics.videoCount);
-    newUserChannelData.channelDescriber = Number(statistics.subscriberCount);
-    newUserChannelData.channelViews = Number(statistics.viewCount);
-    newUserChannelData.channelKeywords = brandingSettings.channel.keywords;
+    const { channelName, totalVideos, subscriber, totalViews, keyword } =
+      await this.channelDataRepo.findOneByChannelId(channelId);
+
+    const newUserChannelData = new UserChannelData(
+      channelId,
+      Number(command.userId),
+      channelName,
+      totalVideos,
+      subscriber,
+      totalViews,
+      keyword,
+    );
 
     return await this.userChannnelDataRepo.insert(newUserChannelData);
   }
