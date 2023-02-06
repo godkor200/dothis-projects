@@ -1,5 +1,5 @@
+import { groupBy } from '@fp-ts/core/ReadonlyArray';
 import { TRPCError } from '@trpc/server';
-import { groupBy } from 'fp-ts/NonEmptyArray';
 
 import { t } from '@/server/trpc';
 import { prisma } from '~/prisma/client';

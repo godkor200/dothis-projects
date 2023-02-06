@@ -1,10 +1,10 @@
+import { sort } from '@fp-ts/core/ReadonlyArray';
+import { fromCompare } from '@fp-ts/core/typeclass/Order';
 import type {
   RequestFunding,
   RequestFundingStatus,
   User,
 } from '@prisma/client';
-import { sort } from 'fp-ts/Array';
-import { fromCompare } from 'fp-ts/Ord';
 import { z } from 'zod';
 
 import { schema as userSchema } from '../UserDomain/domain';

@@ -1,7 +1,7 @@
-import  { colors } from '@dothis/share';
+import { colors } from '@dothis/share';
 import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import { css } from '@emotion/react';
-import { chunksOf } from 'fp-ts/ReadonlyArray';
+import { chunksOf } from '@fp-ts/core/ReadonlyArray';
 import type { MutableRefObject } from 'react';
 import React from 'react';
 import { A11y } from 'swiper';

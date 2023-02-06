@@ -17,7 +17,7 @@ export function useUrlHistoryEvent() {
     };
     if (!isInit) {
       // @ts-ignore
-      window.router = router;
+      // window.router = router;
       historyStore.push(router.asPath);
       setIsInit(true);
     }

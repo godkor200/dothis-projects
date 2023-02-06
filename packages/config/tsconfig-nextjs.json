@@ -10,8 +10,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "declaration": false,
-    "declarationMap": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
@@ -26,7 +24,7 @@
       "@emotion/react/types/css-prop",
       "reflect-metadata",
       "jest",
-      "node"
+      "node",
     ]
   }
 }
