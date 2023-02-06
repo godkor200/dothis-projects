@@ -53,6 +53,9 @@ export class Channel {
   @Column({ name: 'total_normal_videos' })
   totalNormalVideos: number;
 
+  @Column({ name: 'tag' })
+  tag: string;
+
   @ManyToOne((type) => User, (user) => user.UserChannelData)
   @JoinColumn({ name: 'user_id' })
   User: User;

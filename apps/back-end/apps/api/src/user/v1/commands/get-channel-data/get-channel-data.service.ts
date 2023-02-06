@@ -10,7 +10,6 @@ import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-t
 export class GetChannelDataCommandDto {
   userId: string;
   accessToken: string;
-
   userEmail: string;
   constructor(props: GetChannelDataCommandDto) {
     this.userId = props.userId;
@@ -42,7 +41,6 @@ export class GetChannelDataCommandHandler
       headers: { Authorization: 'Bearer ' + command.accessToken },
       auth: process.env.GOOGLE_APIKEY,
     });
-
     const res = await youtube.channels.list({
       part: [
         'id',
@@ -61,18 +59,13 @@ export class GetChannelDataCommandHandler
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const {
-      snippet,
-      statistics,
-      brandingSettings,
-      id: channelId,
-    } = res.data.items[0];
+    const { id: channelId } = res.data.items[0];
     /**
-     * UC8vwYHACnWfhMt9iclBJaDw 더미 채널
+     * UCfsqglnMY55Rf8B_E3TLV-A 더미 채널
      * */
 
     const { channelName, totalVideos, subscriber, totalViews, keyword } =
-      await this.channelDataRepo.findOneByChannelId('UC8vwYHACnWfhMt9iclBJaDw');
+      await this.channelDataRepo.findOneByChannelId(channelId);
 
     const newUserChannelData = new UserChannelData(
       channelId,

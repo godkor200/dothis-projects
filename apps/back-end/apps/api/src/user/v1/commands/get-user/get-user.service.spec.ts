@@ -1,47 +1,6 @@
 import { GetUserCommandHandler } from './get-user.service';
-import { UserRepositoryPort } from '@Apps/api/src/user/v1/db/user.repository.port';
 import { User } from '@Libs/entity/src/domain/user/User.entity';
-
-class MockGetUser implements UserRepositoryPort {
-  private readonly result: User;
-
-  constructor(result: User) {
-    this.result = result;
-  }
-
-  findOneById(id: string): Promise<User> {
-    return Promise.resolve(this.result);
-  }
-
-  delete(id: string): boolean {
-    return !!this.result;
-  }
-
-  findAll(): Promise<User>[] {
-    return [Promise.resolve(this.result)];
-  }
-
-  findAllPaginated(params: any): any {
-    return Promise.resolve(undefined);
-  }
-
-  findOneByEmail(userEmail: string): Promise<User> {
-    return Promise.resolve(undefined);
-  }
-
-  insert(entity: User): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
-  transaction<T>(handler: () => Promise<T>): Promise<void | T> {
-    return Promise.resolve(undefined);
-  }
-
-  updateRefreshToken(id: number, token: string): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-}
-
+import { MockGetUser } from '@Apps/api/src/user/__mock__/getUser.mock';
 describe('get-user spec', () => {
   test('유저 하나를 리턴한다.', async () => {
     const user: User = {
