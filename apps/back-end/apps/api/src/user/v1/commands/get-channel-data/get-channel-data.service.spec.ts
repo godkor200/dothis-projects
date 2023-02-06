@@ -1,12 +1,10 @@
-import {
-  GetChannelDataCommandDto,
-  GetChannelDataCommandHandler,
-} from './get-channel-data.service';
+import { GetChannelDataCommandHandler } from './get-channel-data.service';
 import {
   ChannelDataMock,
   UserChannelDataMock,
 } from '@Apps/api/src/user/__mock__/get-channel-data.mock';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
+import { GetChannelDataCommandDto } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { google } from 'googleapis';
 
 jest.mock('googleapis', () => {
