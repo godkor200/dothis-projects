@@ -1,7 +1,7 @@
-import { c } from '@lib/dto/contract';
-import { userModel } from '@lib/dto/user/user.model';
+import { c } from '../contract';
+import { userModel } from './user.model';
 
-export const baseApiUrl = '/v1/user';
+export const baseApiUrl = '/user';
 
 export const userApi = c.router({
   getUser: {

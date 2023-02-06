@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { c } from '../contract';
 
-export const baseApiUrl = '/v1/auth';
+export const baseApiUrl = '/auth';
 
 export const authApi = c.router({
   getGoogleLogin: {
