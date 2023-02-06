@@ -48,6 +48,7 @@
     "uid": "^2.0.1",
     "use-debounce": "^9.0.2",
     "zod": "^3.20.2",
+    "@ts-rest/core": "^3.12.0",
     "@visx/axis": "^3.0.0",
     "@visx/bounds": "^3.0.0",
     "@visx/curve": "^3.0.0",
