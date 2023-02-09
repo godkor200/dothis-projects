@@ -6,17 +6,7 @@ import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserCha
 import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-token';
-
-export class GetChannelDataCommandDto {
-  userId: string;
-  accessToken: string;
-  userEmail: string;
-  constructor(props: GetChannelDataCommandDto) {
-    this.userId = props.userId;
-    this.accessToken = props.accessToken;
-    this.userEmail = props.userEmail;
-  }
-}
+import { GetChannelDataCommandDto } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 
 @CommandHandler(GetChannelDataCommandDto)
 export class GetChannelDataCommandHandler

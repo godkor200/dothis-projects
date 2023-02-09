@@ -1,4 +1,3 @@
-import { getRouteResponses, initContract } from '@ts-rest/core';
-import { authApi } from 'lib/dto/auth/auth.model';
+import { initContract } from '@ts-rest/core';
 
 export const c = initContract();

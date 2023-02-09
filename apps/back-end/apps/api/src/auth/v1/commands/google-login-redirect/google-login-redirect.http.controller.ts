@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { Cookies, GoogleOAuthGuard, User } from '@Libs/commons/src';
+import { GoogleOAuthGuard, User } from '@Libs/commons/src';
 import { CommandBus } from '@nestjs/cqrs';
 import { UserInfoCommandDto } from '@Apps/api/src/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
@@ -24,6 +24,7 @@ export class GoogleLoginRedirectHttpController {
   ) {
     const token: { accessToken: string; refreshToken: string } =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
+
     res.setHeader('Authorization', 'Bearer ' + token.accessToken);
     res.cookie('refreshToken', token.refreshToken);
     res.cookie('google_access_token', userInfo.goolgleAccessToken);
