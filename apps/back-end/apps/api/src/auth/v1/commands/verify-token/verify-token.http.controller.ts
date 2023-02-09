@@ -5,22 +5,28 @@ import { Request, Response } from 'express';
 import { authApi } from '@dothis/share/lib/dto/auth/auth.api';
 import { Cookies } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/api/src/auth/v1/commands/verify-token/verify-token.service';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-const s = nestControllerContract(authApi);
-
+import {
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+const { getVerifyToken } = nestControllerContract(authApi);
+const { pathParams, description, summary, responses } = getVerifyToken;
 @Controller()
 export class VerifyTokenHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @ApiTags('auth')
-  @ApiOkResponse({
-    description:
-      '갱신된 토큰을 accessToken은 해더로 refreshToken은 쿠키로 보내어진다.',
-  })
+  @ApiTags(pathParams)
+  @ApiOkResponse({ description: responses[200] })
+  @ApiUnauthorizedResponse({ description: responses[401] })
+  @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({
-    summary: '토큰 확인(accessToken,refreshToken) 후 갱신된 토큰 리턴',
+    summary,
+    description,
   })
-  @TsRest(s.getVerifyToken)
+  @TsRest(getVerifyToken)
   async verifyAccessToken(
     @Req() req: Request,
     @Res({ passthrough: true })

@@ -18,5 +18,5 @@ export default new DataSource({
   password: configService.get('MYSQL_ROOT_PASSWORD'),
   database: configService.get('DB_SCHEMA'),
   entities: [User, UserChannelData, Subscribe, DailyViews, Channel, Video],
-  migrations: [__dirname + '/migrations/1675324634077-migrations.ts'],
+  migrations: [__dirname + '/migrations/1675933116633-migrations.ts'],
 });

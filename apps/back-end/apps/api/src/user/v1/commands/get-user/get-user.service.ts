@@ -18,7 +18,7 @@ export class GetUserCommandHandler implements ICommandHandler<FindUserCommand> {
     protected readonly userRepo: UserRepositoryPort,
   ) {}
   async execute(command: FindUserCommand) {
-    const found = await this.userRepo.findOneById(command.userId);
+    const found = await this.userRepo.findOneWithRelations(command.userId);
     if (!found) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     return found;
   }

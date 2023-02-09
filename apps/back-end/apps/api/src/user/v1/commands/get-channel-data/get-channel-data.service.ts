@@ -50,9 +50,6 @@ export class GetChannelDataCommandHandler
       );
 
     const { id: channelId } = res.data.items[0];
-    /**
-     * UCfsqglnMY55Rf8B_E3TLV-A 더미 채널
-     * */
 
     const { channelName, totalVideos, subscriber, totalViews, keyword } =
       await this.channelDataRepo.findOneByChannelId(channelId);
