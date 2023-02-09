@@ -40,4 +40,8 @@ export class MockGetUser implements UserRepositoryPort {
   updateRefreshToken(id: number, token: string): Promise<void> {
     return Promise.resolve(undefined);
   }
+
+  findOneWithRelations(id: string): Promise<User> {
+    return Promise.resolve(this.result);
+  }
 }

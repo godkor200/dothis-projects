@@ -17,9 +17,6 @@ export class Channel {
   @Column('varchar', { name: 'channel_id' })
   channelId: string;
 
-  @Column({ name: 'user_id' })
-  userId: number;
-
   @Column({ name: 'channel_name' })
   channelName: string;
 
@@ -56,10 +53,10 @@ export class Channel {
   @Column({ name: 'tag' })
   tag: string;
 
-  @ManyToOne((type) => User, (user) => user.UserChannelData)
-  @JoinColumn({ name: 'user_id' })
-  User: User;
+  @ManyToOne((type) => User, (user) => user.channel)
+  @JoinColumn({ name: 'channel_id', referencedColumnName: 'channelId' })
+  user: User;
 
   @OneToMany((type) => Channel, (channel) => channel.id)
-  Video: Video[];
+  video: Video[];
 }

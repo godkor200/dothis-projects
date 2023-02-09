@@ -26,4 +26,10 @@ export class UserRepository
   async updateRefreshToken(id: number, token: string): Promise<void> {
     await this.repository.update({ id }, { tokenRefresh: token });
   }
+  async findOneWithRelations(id: string): Promise<User> {
+    return await this.repository.findOneOrFail({
+      where: { id: Number(id) },
+      relations: { channel: true },
+    });
+  }
 }

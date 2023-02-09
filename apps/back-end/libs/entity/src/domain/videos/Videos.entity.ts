@@ -61,7 +61,7 @@ export class Video {
   @Column({ name: 'video_timestamp' })
   videoTimestamp: Date;
 
-  @ManyToOne((type) => Channel, (channel) => channel.Video)
+  @ManyToOne((type) => Channel, (channel) => channel.video)
   @JoinColumn({ name: 'channelIndex' })
   Channel: Channel;
 

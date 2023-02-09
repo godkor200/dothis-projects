@@ -38,7 +38,6 @@ describe('get-channel-data service', () => {
       const channelDummy: Channel = {
         id: 4131,
         channelId: 'UCfsqglnMY55Rf8B_E3TLV-A',
-        userId: null,
         channelName: 'Su chan Shu chan',
         url: 'https://www.youtube.com/c/shumovie%E5%9B%BD%E9%9A%9B%E7%B5%90%E5%A9%9A%E6%97%A5%E9%9F%93',
         subscriber: 56000,
@@ -52,8 +51,8 @@ describe('get-channel-data service', () => {
         link: "['tps://www.youtube.com/redirect?q=https://www.instagram.com/shutan4&v=UpqSKXwM4n4&redir_token=V48se2MH0vQAHARLimx7dzEQAEh8MTU1MjgyNzAzNkAxNTUyNzQwNjM2&event=video_description', 'https://twitter.com/shu_movie']",
         keyword: null,
         totalNormalVideos: 657,
-        User: null,
-        Video: null,
+        user: null,
+        video: null,
       };
 
       const getChannelDataService = new GetChannelDataCommandHandler(
