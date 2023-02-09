@@ -44,7 +44,7 @@ export class GetChannelDataHttpController {
     description: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',
   })
   @ApiConflictResponse({
-    description: '채널에 이미 저장된 데이터가 있다면 리턴한다.',
+    description: '채널에 이미 저장된 데이터가 있다면 오류를 리턴한다.',
   })
   @ApiInternalServerErrorResponse({
     description:
