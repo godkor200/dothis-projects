@@ -31,6 +31,13 @@ export class GetChannelDataCommandHandler
       headers: { Authorization: 'Bearer ' + command.accessToken },
       auth: process.env.GOOGLE_APIKEY,
     });
+
+    if (!youtube)
+      throw new HttpException(
+        'Google accessToken or apikey is weird',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+
     const res = await youtube.channels.list({
       part: [
         'id',

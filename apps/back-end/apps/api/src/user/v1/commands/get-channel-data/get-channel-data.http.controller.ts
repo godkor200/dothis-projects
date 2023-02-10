@@ -16,19 +16,22 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { GetChannelDataCommandDto } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.command.dto';
-
-@ApiTags('user')
-@Controller('/user')
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
+import { userApi } from '@dothis/share/lib/dto/user/user.api';
+const c = nestControllerContract(userApi);
+const { getUserChannelData } = c;
+const { responses, description, summary, pathParams } = getUserChannelData;
+@ApiTags(pathParams)
+@Controller()
 @ApiCookieAuth()
 export class GetChannelDataHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Post('/get-channel-data')
+  @TsRest(getUserChannelData)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
-    summary: '유저 채널 데이터 저장하기',
-    description:
-      '유저가 채널 데이터를 가져오기 하면 크롤링된 channel 테이블에서 userChannelData 테이블로 이동, 추후 로직이 변경 될수 있음(2023.02.06일 기준)',
+    summary,
+    description,
   })
   @ApiHeaders([
     {
@@ -41,14 +44,13 @@ export class GetChannelDataHttpController {
     },
   ])
   @ApiOkResponse({
-    description: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',
+    description: responses[200],
   })
   @ApiConflictResponse({
-    description: '채널에 이미 저장된 데이터가 있다면 오류를 리턴한다.',
+    description: responses[401],
   })
   @ApiInternalServerErrorResponse({
-    description:
-      '구글 서버에 문제가 있거나 구글 auth 내용이 비정상적이라면 리턴한다.',
+    description: responses[500],
   })
   async getChannelData(
     @Req() req: Request,
