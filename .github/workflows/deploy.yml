@@ -63,7 +63,7 @@ jobs:
       - name: build server files
         working-directory: ./apps/back-end
         run: |
-          sudo chmod -R 777 ./ && npm run build
+          npm run build
 
       - name: zip file
         working-directory: ./apps/back-end
