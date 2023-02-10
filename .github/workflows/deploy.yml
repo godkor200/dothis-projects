@@ -63,7 +63,7 @@ jobs:
       - name: build server files
         working-directory: ./
         run: |
-          pnpm build:back-end
+          sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: zip file
         working-directory: ./apps/back-end
