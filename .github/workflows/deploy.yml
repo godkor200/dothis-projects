@@ -5,6 +5,13 @@ on:
     branches: [deploy]
 
 jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo The PR was merged
+
   build:
     name: Build, Deploy to S3 Bucket
     runs-on: ubuntu-latest
@@ -38,7 +45,7 @@ jobs:
       - name: build server files
         working-directory: ./
         run: |
-          sudo chmod -R 777 ./ && pnpm build --filter back-end
+          sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: create env file
         working-directory: ./apps/back-end
