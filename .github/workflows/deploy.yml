@@ -1,7 +1,7 @@
 name: CI-CD
 
 on:
-  merge_group:
+  pull_request:
     branches: [deploy]
 
 jobs:
