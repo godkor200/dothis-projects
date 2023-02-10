@@ -13,7 +13,8 @@ export type Tokens = {
 
 export type TDecodePayload = {
   [key: string]: any;
-  userId: string;
+  id: string;
+  userEmail: string;
   iat: number;
   exp: number;
 };

@@ -37,7 +37,7 @@ export class GoogleLoginRedirectCommandHandler
   async execute(command: UserInfoCommandDto) {
     let checkUser = await this.userRepository.findOneByEmail(command.userEmail);
 
-    if (!checkUser.id) {
+    if (!checkUser) {
       const user = User.create(command);
 
       await this.userRepository.transaction(

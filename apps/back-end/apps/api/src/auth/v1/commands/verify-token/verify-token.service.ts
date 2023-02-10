@@ -33,7 +33,7 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
     const refresh = this.jwtService.decode(command.refreshToken);
     const user = await this.userRepository.findOneById(access.id);
     if (!access || user.tokenRefresh !== command.refreshToken || !refresh)
-      throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Invalid Credential', HttpStatus.UNAUTHORIZED);
     else {
       const newRefreshToken = this.jwtService.sign({ id: access.id });
       await this.userRepository.updateRefreshToken(access.id, newRefreshToken);

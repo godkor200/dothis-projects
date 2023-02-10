@@ -4,10 +4,10 @@ import {
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
+import { IResDto } from '@Libs/commons/src/types/res.types';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   constructor(private dataSource: DataSource) {}
-
   protected abstract tableName: string;
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
@@ -45,13 +45,14 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .getOne();
   }
 
-  async insert(entity: E): Promise<void> {
-    await this.repository
+  async insert(entity: E): Promise<IResDto> {
+    const res = await this.repository
       .createQueryBuilder(this.tableName)
       .insert()
       .into(this.tableName)
       .values(entity)
       .execute();
+    return { success: res.raw > 0 };
   }
 
   async transaction<T>(handler: () => Promise<T>): Promise<T | void> {

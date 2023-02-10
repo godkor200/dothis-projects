@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
 import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
 import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
@@ -12,7 +18,7 @@ export class User {
   userEmail: string;
 
   @Column({ name: 'channel_id' })
-  channelId: number;
+  channelId: string;
 
   @Column({ name: 'token_refresh' })
   tokenRefresh: string;
@@ -41,8 +47,8 @@ export class User {
   @OneToMany((type) => Subscribe, (subscribe) => subscribe.userId)
   Subscribe: Subscribe[];
 
-  @OneToMany((type) => Channel, (channel) => channel.userId)
-  Channel: Channel[];
+  @OneToMany((type) => Channel, (channel) => channel.user)
+  channel: Channel[];
 
   static create(user: UserInfoCommandDto) {
     const newUser = new User();

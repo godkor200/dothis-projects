@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ChannelModule } from '@Libs/entity/src/domain/channel/ChannelModule';
-import { ChannelApiV1Module } from './v1/channelApi-v1.module';
+import { ChannelApiV1Module } from './v1/channel-api-v1.module';
 
 import { RouterModule } from '@nestjs/core';
 

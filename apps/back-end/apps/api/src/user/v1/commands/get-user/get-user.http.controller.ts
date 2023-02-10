@@ -1,26 +1,50 @@
-import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
+import { Controller, HttpStatus, Param } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindUserCommand } from '@Apps/api/src/user/v1/commands/get-user/get-user.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserDto } from '@Libs/commons/src/types/dto.types';
+import {
+  nestControllerContract,
+  TsRest,
+  NestRequestShapes,
+} from '@ts-rest/nest';
+import { userApi } from '@dothis/share/lib/dto/user/user.api';
 
-@Controller('/user')
+const c = nestControllerContract(userApi);
+const { getUser } = c;
+const { pathParams, summary, responses, description } = getUser;
+type RequestShapes = NestRequestShapes<typeof c>;
+@ApiTags(pathParams)
+@Controller()
 export class GetUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Get('/:id')
-  @ApiOperation({ summary: '유저를 가져옵니다.' })
-  @ApiResponse({
-    description: '유저를 찾습니다.',
-    status: HttpStatus.OK,
+  @TsRest(getUser)
+  @ApiParam({ name: 'id', required: true, description: '유저 아이디' })
+  @ApiOperation({
+    summary,
+    description,
+  })
+  @ApiOkResponse({
+    description: '유저 찾아옵니다.',
     type: [UserDto],
   })
-  @ApiResponse({
+  @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'Not Found',
+    description: responses[401],
   })
-  async getUser(@Param('id') id: string) {
-    const command = new FindUserCommand({ userId: id });
+  @ApiInternalServerErrorResponse({
+    description: responses[500],
+  })
+  async getUser(@Param('id') id: RequestShapes['getUser']) {
+    const command = new FindUserCommand({ userId: id.toString() });
     const res = await this.commandBus.execute(command);
     return res;
   }
