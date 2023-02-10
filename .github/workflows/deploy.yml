@@ -8,6 +8,12 @@ jobs:
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    steps:
+      - run: build
+
+  build:
+    name: Build, Deploy to S3 Bucket
+    runs-on: ubuntu-latest
 
     env:
       working-directory: ./
