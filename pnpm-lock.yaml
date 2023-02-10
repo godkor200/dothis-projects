@@ -120,6 +120,7 @@ importers:
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.8.0
+      tsc-alias: 1.8.2
       typeorm: 0.3.11_pa4ea3wjef6s4gsskhbyci3cte
       uuid: 9.0.0
       zod: 3.20.2
@@ -151,7 +152,6 @@ importers:
       ts-jest: 29.0.3_ehrjq5j3p3w6ehmmrpkazz7pvu
       ts-loader: 9.4.2_3fkjkrd3audxnith3e7fo4fnxi
       ts-node: 10.9.1_stlh3dt2tdhuvazetwmdudbwqe
-      tsc-alias: 1.8.2
       tsconfig-paths: 4.1.2
       typescript: 4.9.4
 
@@ -17320,7 +17320,7 @@ packages:
   /mylas/2.1.13:
     resolution: {integrity: sha512-+MrqnJRtxdF+xngFfUUkIMQrUUL0KsxbADUkn23Z/4ibGg192Q+z+CQyiYwvWTsYjJygmMR8+w3ZDa98Zh6ESg==}
     engines: {node: '>=12.0.0'}
-    dev: true
+    dev: false
 
   /mysql2/2.3.3:
     resolution: {integrity: sha512-wxJUev6LgMSgACDkb/InIFxDprRa6T95+VEoR+xPvtngtccNH2dGjEB/fVZ8yg1gWv1510c9CvXuJHi5zUm0ZA==}
@@ -18407,7 +18407,7 @@ packages:
     resolution: {integrity: sha512-Eb/MqCb1Iv/ok4m1FqIXqvUKPISufcjZ605hl3KM/n8GaX8zfhtgdLwZU3vKjuHGh2O9Rjog/bHTq8ofIShdng==}
     dependencies:
       queue-lit: 1.5.0
-    dev: true
+    dev: false
 
   /pluralize/8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
@@ -19556,7 +19556,7 @@ packages:
 
   /queue-lit/1.5.0:
     resolution: {integrity: sha512-IslToJ4eiCEE9xwMzq3viOO5nH8sUWUCwoElrhNMozzr9IIt2qqvB4I+uHu/zJTQVqc9R5DFwok4ijNK1pU3fA==}
-    dev: true
+    dev: false
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -21753,7 +21753,7 @@ packages:
       mylas: 2.1.13
       normalize-path: 3.0.0
       plimit-lit: 1.5.0
-    dev: true
+    dev: false
 
   /tsconfig-paths-webpack-plugin/4.0.0:
     resolution: {integrity: sha512-fw/7265mIWukrSHd0i+wSwx64kYUSAKPfxRDksjKIYTxSAp9W9/xcZVBF4Kl0eqQd5eBpAQ/oQrc5RyM/0c1GQ==}
