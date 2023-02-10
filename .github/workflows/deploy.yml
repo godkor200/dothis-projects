@@ -1,7 +1,7 @@
 name: CI-CD
 
 on:
-  pull_request:
+  merge_group:
     branches: [deploy]
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
       - name: build server files
         working-directory: ./
         run: |
-          sudo chmod -R 777 ./ && pnpm build --filter back-end
+          sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: create env file
         working-directory: ./apps/back-end
