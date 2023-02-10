@@ -86,7 +86,7 @@ jobs:
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name github-action-group
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},bundleType=zip,key=git-archive/dothisBackEnd.zip
+          --s3-location bucket=dothis,bundleType=zip,key=git-archive/dothisBackEnd.zip
 
       - uses: actions/checkout@v3
         with:
