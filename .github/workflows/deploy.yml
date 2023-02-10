@@ -8,13 +8,6 @@ jobs:
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo The PR was merged
-
-  build:
-    name: Build, Deploy to S3 Bucket
-    runs-on: ubuntu-latest
 
     env:
       working-directory: ./
@@ -88,7 +81,7 @@ jobs:
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name github-action-group
           --s3-location bucket=dothis,bundleType=zip,key=git-archive/dothisBackEnd.zip
-          
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
