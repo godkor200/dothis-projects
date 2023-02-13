@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         working-directory: ./apps/back-end
         run: |
-          npm cl
+          npm ci
 
       - name: build server files
         working-directory: ./
