@@ -65,6 +65,11 @@ jobs:
           echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
           cat production.env
 
+      - name: build server files
+        working-directory: ./
+        run: |
+          sudo chmod -R 777 ./ && pnpm build:back-end
+
       - name: zip file
         working-directory: ./apps/back-end
         run: zip -r dothisBackEnd.zip ./dist ./apps ./libs ./scripts ./appspec.yml ./.env ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
