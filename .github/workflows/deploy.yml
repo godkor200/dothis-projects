@@ -23,73 +23,66 @@ jobs:
         node-version: [18.13.0]
 
     steps:
-              - name: Git Checkout
-                uses: actions/checkout@v3
+      - name: Git Checkout
+        uses: actions/checkout@v3
 
-              - name: Use Node.js ${{ matrix.node-version }}
-                uses: actions/setup-node@v1
-                with:
-                  node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-              - name: Setup pnpm
-                uses: pnpm/action-setup@v2.2.4
-                with:
-                  version: latest
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
 
-              - name: Install dependencies
-                working-directory: ./
-                run: |
-                  pnpm install
+      - name: create env file
+        working-directory: ./apps/back-end
+        run: |
+          pwd
+          touch production.env
+          echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
+          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
+          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
+          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
+          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
+          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
+          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
+          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
+          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
+          cat production.env
 
-              - name: build server files
-                working-directory: ./
-                run: |
-                  sudo chmod -R 777 ./ && pnpm build --filter back-end
+      - name: build
+        working-directory: ./
+        run: |
+          pnpm build:back-end
 
-              - name: create env file
-                working-directory: ./apps/back-end
-                run: |
-                  pwd
-                  touch production.env
-                  echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
-                  echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
-                  echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
-                  echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
-                  echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
-                  echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
-                  echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
-                  echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
-                  echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
-                  echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
-                  echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
-                  echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
-                  cat production.env
+      - name: zip file
+        working-directory: ./apps/back-end
+        run: zip -r dothisBackEnd.zip ./dist ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
-              - name: zip file
-                working-directory: ./apps/back-end
-                run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./package.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-              - name: Configure AWS credentials
-                uses: aws-actions/configure-aws-credentials@v1
-                with:
-                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  aws-region: ${{ secrets.AWS_REGION }}
+      - name: Upload to S3
+        working-directory: ./apps/back-end
+        run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
 
-              - name: Upload to S3
-                working-directory: ./apps/back-end
-                run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
+      - name: deploy with AWS codeDeploy
+        working-directory: ./apps/back-end
+        run: aws deploy create-deployment
+          --application-name github-action
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name github-action-group
+          --s3-location bucket=dothis,bundleType=zip,key=git-archive/dothisBackEnd.zip
 
-              - name: deploy with AWS codeDeploy
-                working-directory: ./apps/back-end
-                run: aws deploy create-deployment
-                  --application-name github-action
-                  --deployment-config-name CodeDeployDefault.OneAtATime
-                  --deployment-group-name github-action-group
-                  --s3-location bucket=dothis,bundleType=zip,key=git-archive/dothisBackEnd.zip
-
-              - uses: actions/checkout@v3
-                with:
-                  fetch-depth: 0
-              - name: 'Qodana Scan'
-                uses: JetBrains/qodana-action@v2022.3.0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@v2022.3.0
