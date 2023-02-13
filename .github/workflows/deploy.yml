@@ -33,6 +33,9 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.4
+        
+      - name: install dev
+        run: pnpm i
 
       - name: create env file
         working-directory: ./apps/back-end
