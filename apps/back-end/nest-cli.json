@@ -9,7 +9,7 @@
     "assets": [
       {
         "include": "./.env",
-        "outDir": "./dist/"
+        "outDir": "./dist"
       }
     ]
   },
