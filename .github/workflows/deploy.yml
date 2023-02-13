@@ -37,7 +37,7 @@ jobs:
       - name: install dev
         working-directory: ./
         run: |
-            pnpm i
+            pnpm i --no-frozen-lockfile
             
       - name: create env file
         working-directory: ./apps/back-end
