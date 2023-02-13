@@ -4,7 +4,7 @@
   "sourceRoot": "apps/api/src",
   "root": "apps/api",
   "compilerOptions": {
-    "webpack": true,
+    "entryFile": "apps/api/src/main",
     "tsConfigPath": "apps/api/tsconfig.json",
     "assets": [
       {
