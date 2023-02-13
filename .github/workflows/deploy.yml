@@ -53,6 +53,7 @@ jobs:
 
       - name: zip file
         working-directory: ./apps/back-end
+        if: ./dist === true
         run: zip -r dothisBackEnd.zip ./apps ./libs ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
