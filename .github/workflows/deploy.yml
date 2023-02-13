@@ -31,6 +31,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
 
       - name: create env file
         working-directory: ./apps/back-end
@@ -50,11 +52,15 @@ jobs:
           echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
           echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
           cat production.env
-
+          
+      - name: build
+        working-directory: ./
+        run: |
+            pnpm build --filter back-end --if-present
+        
       - name: zip file
         working-directory: ./apps/back-end
-        if: ./dist === true
-        run: zip -r dothisBackEnd.zip ./apps ./libs ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
+        run: zip -r dothisBackEnd.zip ./dist ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
