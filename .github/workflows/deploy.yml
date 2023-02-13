@@ -67,7 +67,7 @@ jobs:
 
       - name: zip file
         working-directory: ./apps/back-end
-        run: zip -r dothisBackEnd.zip ./dist ./scripts ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
+        run: zip -r dothisBackEnd.zip ./scripts ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json ./dist
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
