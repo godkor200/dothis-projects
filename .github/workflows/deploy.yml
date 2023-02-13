@@ -44,7 +44,7 @@ jobs:
       - name: build server files
         working-directory: ./apps/back-end
         run: |
-          sudo chmod -R 777 ./ && npm i
+          sudo chmod -R 777 ./ && npm install
 
       - name: create env file
         working-directory: ./apps/back-end
