@@ -31,33 +31,29 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-#      - name: create env file
-#        working-directory: ./apps/back-end
-#        run: |
-#          pwd
-#          touch production.env
-#          echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
-#          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
-#          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
-#          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
-#          echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
-#          echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
-#          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
-#          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
-#          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
-#          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
-#          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
-#          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env
-#          cat production.env
 
-#      - name: build server files
-#        working-directory: ./
-#        run: |
-#          sudo chmod -R 777 ./ && pnpm build:back-end
+      - name: create env file
+        working-directory: ./apps/back-end
+        run: |
+          pwd
+          touch production.env
+          echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
+          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
+          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
+          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
+          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
+          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
+          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
+          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
+          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
+          cat production.env
 
       - name: zip file
         working-directory: ./apps/back-end
-        run: zip -r dothisBackEnd.zip ./apps ./libs ./scripts ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
+        run: zip -r dothisBackEnd.zip ./apps ./libs ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
