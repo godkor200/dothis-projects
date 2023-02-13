@@ -41,6 +41,11 @@ jobs:
         run: |
           pnpm install
 
+      - name: build server files
+        working-directory: ./
+        run: |
+          sudo chmod -R 777 ./ && pnpm build:back-end
+
       - name: create env file
         working-directory: ./apps/back-end
         run: |
@@ -67,7 +72,7 @@ jobs:
 
       - name: zip file
         working-directory: ./apps/back-end
-        run: zip -r dothisBackEnd.zip ./scripts ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json ./dist
+        run: zip -r dothisBackEnd.zip ./dist ./apps ./libs ./scripts ./appspec.yml ./.env ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
