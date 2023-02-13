@@ -41,10 +41,6 @@ jobs:
         run: |
           npm ci
 
-      - name: build server files
-        working-directory: ./apps/back-end
-        run: |
-          sudo chmod -R 777 ./ && npm install
 
       - name: create env file
         working-directory: ./apps/back-end
@@ -64,11 +60,11 @@ jobs:
           echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
           echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
           cat production.env
-
+          
       - name: build server files
-        working-directory: ./
+        working-directory: ./apps/back-end
         run: |
-          sudo chmod -R 777 ./ && pnpm build:back-end
+          sudo chmod -R 777 ./ && npm install
 
       - name: zip file
         working-directory: ./apps/back-end
