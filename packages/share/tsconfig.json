@@ -1,6 +1,6 @@
 {
   "extends": "@dothis/config/tsconfig-nextjs.json",
-  "include": ["**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "../../**/*.d.ts","*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "baseUrl": "./",
