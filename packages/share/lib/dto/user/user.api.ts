@@ -2,13 +2,13 @@ import { c } from '../contract';
 import { z } from 'zod';
 import { userModel } from './user.model';
 
-export const baseApiUrl = '/user';
+export const userBaseApiUrl = '/user';
 
 export const userApi = c.router({
   getUser: {
     method: 'GET',
-    path: `${baseApiUrl}/:id`,
-    pathParams: baseApiUrl,
+    path: `${userBaseApiUrl}/:id`,
+    pathParams: userBaseApiUrl,
     query: { id: z.string() },
     responses: {
       200: userModel,
@@ -20,8 +20,8 @@ export const userApi = c.router({
   },
   getUserChannelData: {
     method: 'POST',
-    path: `${baseApiUrl}/get-channel-data`,
-    pathParams: baseApiUrl,
+    path: `${userBaseApiUrl}/get-channel-data`,
+    pathParams: userBaseApiUrl,
     body: {},
     responses: {
       200: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',

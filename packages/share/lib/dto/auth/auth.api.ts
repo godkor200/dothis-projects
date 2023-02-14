@@ -1,12 +1,12 @@
 import { c } from '../contract';
 
-export const baseApiUrl = '/auth';
+export const authBaseApiUrl = '/auth';
 
 export const authApi = c.router({
   getGoogleLogin: {
     method: 'GET',
-    path: `${baseApiUrl}/google-login`,
-    pathParams: baseApiUrl,
+    path: `${authBaseApiUrl}/google-login`,
+    pathParams: authBaseApiUrl,
     responses: {
       //TODO: 모듈화 필요
       200: 'Google Authentication',
@@ -18,8 +18,8 @@ export const authApi = c.router({
   },
   getGoogleRedirect: {
     method: 'GET',
-    path: `${baseApiUrl}/google-redirect`,
-    pathParams: baseApiUrl,
+    path: `${authBaseApiUrl}/google-redirect`,
+    pathParams: authBaseApiUrl,
     responses: { 200: 'Dothis Authentication' },
     summary: '유저 로그인 후 토큰 리턴',
     description:
@@ -27,8 +27,8 @@ export const authApi = c.router({
   },
   getVerifyToken: {
     method: 'GET',
-    path: `${baseApiUrl}/verify-token`,
-    pathParams: baseApiUrl,
+    path: `${authBaseApiUrl}/verify-token`,
+    pathParams: authBaseApiUrl,
     responses: {
       //TODO: 모듈화 필요
       200: 'authorized',
