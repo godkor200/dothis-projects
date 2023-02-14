@@ -10,7 +10,6 @@ const lazyImports = [
   '@nestjs/microservices/microservices-module',
   '@nestjs/websockets/socket-module',
   '@nestjs/platform-express',
-  'swagger-ui-express',
   'class-transformer/storage', // https://github.com/nestjs/mapped-types/issues/486#issuecomment-932715880
 ];
 
