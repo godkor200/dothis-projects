@@ -15,7 +15,7 @@ const lazyImports = [
 module.exports = (options, webpack) => ({
   ...options,
   mode: 'production',
-  target: 'node14',
+  target: 'node18',
   // entry: {
   //   index: './lib/lambda.js',
   // },
