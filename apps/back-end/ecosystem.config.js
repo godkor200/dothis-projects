@@ -6,7 +6,7 @@ module.exports = {
     {
       name: 'dothis',
       cwd: './dist/apps/api',
-      script: './main.js',
+      script: 'ts-node ./main.js',
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,
