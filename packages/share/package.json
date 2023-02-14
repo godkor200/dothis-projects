@@ -10,7 +10,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup ./index.ts --format cjs --dts",
+    "build": "tsup ./index.ts --format cjs",
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
     "theme-gen": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts",
