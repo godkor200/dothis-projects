@@ -1,5 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Req, UseGuards } from '@nestjs/common';
 import {
   Cookies,
   JwtAccessGuard,
@@ -17,7 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { GetChannelDataCommandDto } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { userApi } from '@dothis/share/lib/dto/user/user.api';
+import { userApi } from '@dothis/share/dist/index';
 const c = nestControllerContract(userApi);
 const { getUserChannelData } = c;
 const { responses, description, summary, pathParams } = getUserChannelData;

@@ -4,7 +4,7 @@ import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import {
   UserChannelDataModel,
   zUserChannelData,
-} from '@dothis/share/lib/dto/user-channel-data/user-channel-data.model';
+} from '@dothis/share/dist/index';
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
