@@ -10,7 +10,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup ./index.ts --format cjs",
+    "prebuild": "rimraf dist",
+    "build": "tsup ./lib/dto/index.ts --format cjs --dts",
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules",
     "theme-gen": "pnpm chakra-cli tokens ./lib/styles/dothisTheme/index.ts",
