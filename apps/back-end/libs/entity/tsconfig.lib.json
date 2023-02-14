@@ -1,9 +1,9 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
+    "experimentalDecorators": true,
     "outDir": "../../dist/libs/entity"
   },
   "include": ["../../"],
-  "exclude": ["node_modules", "dist", "test", "**/*.spec.ts"]
 }

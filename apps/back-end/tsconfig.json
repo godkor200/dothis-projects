@@ -4,19 +4,18 @@
     "rootDir": "./",
     "baseUrl": "./",
     "paths": {
-      "@Apps/*": ["./apps/*"],
-      "@Libs/*": ["./libs/*"]
+      "@Apps/*": [
+        "./apps/*"
+      ],
+      "@Libs/*": [
+        "./libs/*"
+      ]
     }
   },
-  "references": [
-    {
-      "path": "../../packages/share"
-    },
-    {
-      "path": "./libs"
-    }
+  "include": [
+    "./"
   ],
-
-  "include": ["./"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
