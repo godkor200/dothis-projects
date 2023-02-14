@@ -33,6 +33,9 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.4
+        
+      - name: install dev
+        run: pnpm i
 
       - name: create env file
         working-directory: ./apps/back-end
@@ -56,11 +59,11 @@ jobs:
       - name: build
         working-directory: ./
         run: |
-          pnpm build:back-end
+         sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: zip file
         working-directory: ./apps/back-end
-        run: zip -r dothisBackEnd.zip ./dist ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
+        run: zip -r dothisBackEnd.zip ./dist ./apps ./libs ./node_modules ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
