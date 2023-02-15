@@ -1,5 +1,12 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, 'production.env') });
+require('dotenv').config({
+  path: path.join(
+    __dirname,
+    process.env.NODE_ENV === 'development'
+      ? 'development.env'
+      : 'production.env',
+  ),
+});
 
 module.exports = {
   apps: [
@@ -21,7 +28,7 @@ module.exports = {
         MYSQL_USER: process.env.MYSQL_USER,
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
         DB_PORT: process.env.DB_PORT,
-        DB_HOST: process.env.DB_HOST,
+        DB_HOST: process.env.DB_HOST_LOCAL,
         DB_SCHEMA: process.env.DB_SCHEMA,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
