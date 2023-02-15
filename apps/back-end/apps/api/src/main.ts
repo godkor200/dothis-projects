@@ -6,7 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 
 async function bootstrap() {
-  console.log(process.env.NODE_ENV);
+  console.log('Execution Environment:', process.env.NODE_ENV);
   const app = await NestFactory.create(AppModule);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
