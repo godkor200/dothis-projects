@@ -14,6 +14,7 @@ export class CreateDatabaseConnection {
   ) {}
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
+    console.log('this.config=====>', this.config);
     return {
       type: 'mysql',
       host: this.config.DB_HOST,
