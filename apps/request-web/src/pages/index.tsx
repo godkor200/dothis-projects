@@ -35,6 +35,12 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
     return (
       <a
         href="#"
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+        }}
         onClick={async (e) => {
           e.preventDefault();
           if (!data?.user) {
@@ -56,6 +62,7 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
         }}
       >
         <Image
+          priority={true}
           sizes="cover"
           fill
           src="/images/banner2.svg"
@@ -93,14 +100,6 @@ export default function Home({
   const recommendRequests = trpc.requestPost.getRecommends.useQuery();
 
   useMessageToast(session_message);
-  useEffect(() => {
-    standaloneToast.toast(
-      ToastBox.getMessageOptions(
-        { message: 'hh', status: 'info' },
-        { duration: 1000000000 },
-      ),
-    );
-  }, []);
 
   return (
     <LayoutTemplate>

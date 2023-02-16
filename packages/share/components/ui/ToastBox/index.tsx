@@ -1,5 +1,5 @@
 import type { CenterProps, UseToastOptions } from '@chakra-ui/react';
-import { Center } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { flow } from 'fp-ts/function';
 import { pipe } from 'fp-ts/lib/function';
@@ -26,9 +26,9 @@ export const ToastBox = ({ onClose, children, ...props }: ToastBoxProps) => (
   <Center css={style} {...props}>
     <div>{children}</div>
     {onClose && (
-      <Button className="ui_toast-close-button" onClick={onClose}>
+      <button className="ui_toast-close-button" onClick={onClose}>
         <SvgClose fill={colors.white} />
-      </Button>
+      </button>
     )}
   </Center>
 );
@@ -46,6 +46,22 @@ const style = css`
   font-weight: ${fontWeights.b};
   box-shadow: ${shadows.base};
 
+  .ui_toast-close-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+
+    svg {
+      min-width: 24px;
+    }
+    svg path {
+      fill: ${colors.white};
+    }
+    width: 40px;
+    height: 40px;
+  }
+
   &.success {
     background-color: ${colors.success.default};
   }
@@ -59,22 +75,12 @@ const style = css`
     color: ${colors.gray['70']};
     font-weight: ${fontWeights.sb};
 
-    .ui_toast-close-button {
-      path {
-        fill: ${colors.gray['60']};
-      }
-
-      width: 40px;
-      height: 40px;
+    .ui_toast-close-button svg path {
+      fill: ${colors.gray['60']};
     }
   }
 
   &.waring {
-  }
-
-  .ui_toast-close-button {
-    width: 40px;
-    height: 40px;
   }
 `;
 
@@ -102,7 +108,11 @@ ToastBox.getMessageOptions = (
         </ToastBox>
       );
     },
-    icon: <SvgClose />,
+    icon: (
+      <Box minW={24}>
+        <SvgClose />
+      </Box>
+    ),
     ...overrideOpt,
   };
 };
