@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider nest build --webpack && tsc-alias -p tsconfig.build.json",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider cross-env NODE_ENV=development nest build --webpack && tsc-alias -p tsconfig.build.json",
     "clean": "rm -rf node_modules",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
