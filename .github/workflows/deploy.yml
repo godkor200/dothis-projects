@@ -41,10 +41,10 @@ jobs:
       - name: install npm dev
         working-directory: ./apps/back-end
         run: npm i
-        
+
       - name: install @dothis/share
-        working-directory: ./apps/back-end
-        run: npm i --prefix ../../packages/share @dothis/share
+        working-directory: ./
+        run: pnpm add --filter back-end @dothis/share
 
       - name: build
         working-directory: ./
