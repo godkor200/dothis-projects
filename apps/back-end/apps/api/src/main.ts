@@ -6,7 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
-
+declare const module: any;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
@@ -30,5 +30,9 @@ async function bootstrap() {
   logger.log(`Database uri ${databaseUri}`, 'NestApplication');
 
   logger.log(`==========================================================`);
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 bootstrap();
