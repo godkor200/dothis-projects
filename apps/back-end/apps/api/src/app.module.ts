@@ -15,10 +15,10 @@ import { HealthService } from '@Apps/api/src/health.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'development'
-          ? 'development.env'
-          : 'production.env',
+      envFilePath: 'development.env',
+      // process.env.NODE_ENV === 'development'
+      //   ? 'development.env'
+      //   : 'production.env',
       load: [dbConfig],
       validationSchema,
     }),
