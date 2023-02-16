@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '@Libs/entity/src/domain/user/UserModule';
+import { UserModule } from '@Apps/api/src/config/database/domain/user/UserModule';
 import { AuthApiV1Module } from './v1/AuthApi-v1.module';
 import { JwtModule } from '@nestjs/jwt';
 import { RouterModule } from '@nestjs/core';

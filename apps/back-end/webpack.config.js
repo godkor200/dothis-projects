@@ -1,45 +1,105 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-// Documentation:
-// https://docs.nestjs.com/faq/serverless#serverless
-// https://github.com/nestjs/swagger/issues/1334#issuecomment-836488125
-
-// Tell webpack to ignore specific imports that aren't
-// used by our Lambda but imported by NestJS (can cause packing errors).
 const lazyImports = [
+  // '@nestjs/microservices',
+  // 'cache-manager',
   '@nestjs/microservices/microservices-module',
   '@nestjs/websockets/socket-module',
   'class-transformer/storage', // https://github.com/nestjs/mapped-types/issues/486#issuecomment-932715880
+  'class-validator',
+  'class-transformer',
 ];
+const tsConfigFile = 'tsconfig.build.json';
 
-module.exports = (options, webpack) => ({
-  ...options,
-  mode: 'production',
-  target: 'node18',
-  // entry: {
-  //   index: './lib/lambda.js',
-  // },
-  // output: {
-  //   filename: '[name].js',
-  //   libraryTarget: 'umd',
-  //   path: path.join(process.cwd(), 'build/dist'),
-  // },
-  // externals: {
-  //   'aws-sdk': 'aws-sdk',
-  // },
-  plugins: [
-    ...options.plugins,
-    new webpack.IgnorePlugin({
-      checkResource(resource) {
-        if (lazyImports.includes(resource)) {
+module.exports = function (options, webpack) {
+  if (process.env.NODE_ENV === 'production') {
+    options.devtool = 'source-map';
+    options.entry = {
+      main: `./apps/api/src/main.ts`,
+    };
+    options.optimization.minimize = true;
+    options.optimization.minimizer = [
+      new TerserPlugin({
+        terserOptions: {
+          keep_classnames: true,
+          keep_fnames: true,
+        },
+      }),
+    ];
+  } else if (process.env.NODE_ENV === 'development') {
+    options.entry = ['webpack/hot/poll?100', options.entry];
+    options.plugins = [
+      ...options.plugins,
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.WatchIgnorePlugin({
+        paths: [/\.js$/, /\.d\.ts$/],
+      }),
+      new RunScriptWebpackPlugin({
+        name: options.output.filename,
+      }),
+    ];
+  }
+
+  return {
+    ...options,
+    output: {
+      filename: `[name].js`,
+      path: path.join(__dirname, 'dist'),
+    },
+    externals: [
+      nodeExternals({
+        allowlist: ['webpack/hot/poll?100'],
+      }),
+    ],
+    module: {
+      rules: [
+        {
+          test: /.ts?$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+                configFile: tsConfigFile,
+              },
+            },
+          ],
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      plugins: [
+        new TsconfigPathsPlugin({
+          configFile: tsConfigFile,
+        }),
+      ],
+    },
+    plugins: [
+      ...options.plugins,
+      new webpack.ProgressPlugin(),
+      new webpack.IgnorePlugin({
+        checkResource(resource) {
+          if (!lazyImports.includes(resource)) {
+            return false;
+          }
           try {
-            require.resolve(resource);
+            require.resolve(resource, {
+              paths: [process.cwd()],
+            });
           } catch (err) {
             return true;
           }
-        }
-        return false;
-      },
-    }),
-  ],
-});
+          return false;
+        },
+      }),
+      new CleanWebpackPlugin(),
+    ],
+  };
+};

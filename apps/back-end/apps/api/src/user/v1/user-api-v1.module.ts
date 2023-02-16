@@ -1,14 +1,14 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserModule } from '@Libs/entity/src/domain/user/UserModule';
-import { SubscribeModule } from '@Libs/entity/src/domain/subscribe/SubscribeModule';
+import { UserModule } from '@Apps/api/src/config/database/domain/user/UserModule';
+import { SubscribeModule } from '@Apps/api/src/config/database/domain/subscribe/SubscribeModule';
 import { GetUserHttpController } from '@Apps/api/src/user/v1/commands/get-user/get-user.http.controller';
 import { UserRepository } from './db/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
-import { Subscribe } from '@Libs/entity/src/domain/subscribe/Subscribe.entity';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
-import { UserChannelDataModule } from '@Libs/entity/src/domain/userChannelData/UserChannelDataModule';
+import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
+import { Subscribe } from '@Apps/api/src/config/database/domain/subscribe/Subscribe.entity';
+import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
+import { UserChannelDataModule } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelDataModule';
 import { GetUserCommandHandler } from '@Apps/api/src/user/v1/commands/get-user/get-user.service';
 import { GetChannelDataCommandHandler } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.service';
 import { GetChannelDataHttpController } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.http.controller';
@@ -44,7 +44,7 @@ const queryHandlers: Provider[] = [];
     UserModule,
     SubscribeModule,
     UserChannelDataModule,
-    TypeOrmModule.forFeature([User, Subscribe, UserChannelData]),
+    // TypeOrmModule.forFeature([User, Subscribe, UserChannelData]),
   ],
   controllers: [...httpControllers],
   providers: [...repositories, ...commandHandlers, ...queryHandlers],

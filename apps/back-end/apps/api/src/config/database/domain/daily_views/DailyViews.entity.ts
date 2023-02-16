@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Video } from '@Libs/entity/src/domain/videos/Videos.entity';
+import { Video } from '@Apps/api/src/config/database/domain/videos/Videos.entity';
 @Entity({ name: 'daily_views' })
 export class DailyViews {
   @PrimaryGeneratedColumn({ name: 'id' })

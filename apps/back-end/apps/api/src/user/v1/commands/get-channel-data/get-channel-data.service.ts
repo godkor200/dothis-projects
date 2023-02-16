@@ -2,7 +2,7 @@ import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository.port';
 import { google } from 'googleapis';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
 import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-token';
