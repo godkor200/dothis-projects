@@ -4,10 +4,6 @@ import { UserModule } from '@Apps/api/src/config/database/domain/user/UserModule
 import { MembershipModule } from '@Apps/api/src/config/database/domain/membership/MembershipModule';
 import { GetUserHttpController } from '@Apps/api/src/app/user/v1/commands/get-user/get-user.http.controller';
 import { UserRepository } from './db/user.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
-import { Subscribe } from '@Apps/api/src/config/database/domain/membership/Membership.entity';
-import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
 import { UserChannelDataModule } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelDataModule';
 import { GetUserCommandHandler } from '@Apps/api/src/app/user/v1/commands/get-user/get-user.service';
 import { GetChannelDataCommandHandler } from '@Apps/api/src/app/user/v1/commands/get-channel-data/get-channel-data.service';
@@ -39,13 +35,7 @@ const commandHandlers: Provider[] = [
 
 const queryHandlers: Provider[] = [];
 @Module({
-  imports: [
-    CqrsModule,
-    UserModule,
-    MembershipModule,
-    UserChannelDataModule,
-    // TypeOrmModule.forFeature([User, Subscribe, UserChannelData]),
-  ],
+  imports: [CqrsModule, UserModule, MembershipModule, UserChannelDataModule],
   controllers: [...httpControllers],
   providers: [...repositories, ...commandHandlers, ...queryHandlers],
 })

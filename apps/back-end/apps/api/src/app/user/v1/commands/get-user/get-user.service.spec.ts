@@ -15,7 +15,7 @@ describe('get-user spec', () => {
       status: null,
       dateSignIn: new Date('2023-01-25 16:22:23'),
       UserChannelData: null,
-      Subscribe: null,
+      Membership: null,
       channel: null,
     };
     const getOneUserService = new GetUserCommandHandler(new MockGetUser(user));
