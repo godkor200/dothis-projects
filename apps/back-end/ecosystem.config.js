@@ -12,7 +12,7 @@ module.exports = {
   apps: [
     {
       name: 'dothis',
-      cwd: './dist/apps/api',
+      cwd: './dist',
       script: './main.js',
       instances: 2,
       exec_mode: 'cluster',
