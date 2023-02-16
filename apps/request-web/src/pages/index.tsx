@@ -3,6 +3,7 @@ import {
   colors,
   Container,
   mediaQueries,
+  standaloneToast,
   SwiperButton,
   ToastBox,
   typo,
@@ -14,13 +15,16 @@ import Image from 'next/image';
 import type { GetServerSidePropsContext } from 'next/types';
 import { signIn, useSession } from 'next-auth/react';
 import type { ComponentProps } from 'react';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { Swiper as SwiperClass } from 'swiper/types';
 
 import MainSwiper from '@/components/article/MainSwiper';
 import RecommendRequests from '@/components/article/RecommendRequests';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import useMessageToast from '@/hooks/useMessageToast';
+import { flushMessageSession, withSessionSSR } from '@/server/session';
+import { youtubeSignIn } from '@/utils/auth';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
@@ -48,9 +52,7 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
             return;
           }
 
-          signIn('youtube', {
-            callbackUrl: '/api/auth/creator',
-          });
+          youtubeSignIn();
         }}
       >
         <Image
@@ -64,27 +66,41 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
   },
 ];
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const trpcSSGHelpers = await trpcSSG();
+export const getServerSideProps = withSessionSSR(
+  async (context: GetServerSidePropsContext) => {
+    const trpcSSGHelpers = await trpcSSG();
+    const messageProps = await flushMessageSession(context.req);
 
-  await Promise.all([
-    trpcSSGHelpers.requestPost.getSolveds.prefetch(),
-    trpcSSGHelpers.requestPost.getRecommends.prefetch(),
-  ]);
+    await Promise.all([
+      trpcSSGHelpers.requestPost.getSolveds.prefetch(),
+      trpcSSGHelpers.requestPost.getRecommends.prefetch(),
+    ]);
 
-  return {
-    props: {
-      trpcState: trpcSSGHelpers.dehydrate(),
-    },
-  };
-}
+    return {
+      props: {
+        trpcState: trpcSSGHelpers.dehydrate(),
+        ...messageProps,
+      },
+    };
+  },
+);
 
-export default function Home({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function Home({
+  session_message,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const resolvedRequestSwiperRef = useRef<SwiperClass | null>(null);
   const solvedRequests = trpc.requestPost.getSolveds.useQuery();
   const recommendRequests = trpc.requestPost.getRecommends.useQuery();
+
+  useMessageToast(session_message);
+  useEffect(() => {
+    standaloneToast.toast(
+      ToastBox.getMessageOptions(
+        { message: 'hh', status: 'info' },
+        { duration: 1000000000 },
+      ),
+    );
+  }, []);
 
   return (
     <LayoutTemplate>

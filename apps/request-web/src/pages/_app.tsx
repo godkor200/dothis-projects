@@ -18,8 +18,6 @@ import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
 import { ModalOptProvider, useModalStore } from '@/models/Modal';
 import { trpc } from '@/utils/trpc';
 
-export const toast = standaloneToast.toast;
-
 // @ts-ignore
 BigInt.prototype.toJSON = function () {
   return this.toString();

@@ -6,7 +6,15 @@ import { pipe } from 'fp-ts/lib/function';
 import { uid } from 'uid';
 
 import type { Message } from '../../../lib';
-import { colors, errorMessage, fontWeights, message, shadows, standaloneToast, successMessage } from '../../../lib';
+import {
+  colors,
+  errorMessage,
+  fontWeights,
+  message,
+  shadows,
+  standaloneToast,
+  successMessage,
+} from '../../../lib';
 import { Button } from '../Button';
 import { SvgClose } from '../Icons';
 
@@ -18,7 +26,7 @@ export const ToastBox = ({ onClose, children, ...props }: ToastBoxProps) => (
   <Center css={style} {...props}>
     <div>{children}</div>
     {onClose && (
-      <Button className='ui_toast-close-button' onClick={onClose}>
+      <Button className="ui_toast-close-button" onClick={onClose}>
         <SvgClose fill={colors.white} />
       </Button>
     )}
@@ -94,6 +102,7 @@ ToastBox.getMessageOptions = (
         </ToastBox>
       );
     },
+    icon: <SvgClose />,
     ...overrideOpt,
   };
 };
@@ -121,4 +130,3 @@ ToastBox.infoToast = (_message: string) =>
     ToastBox.getMessageOptions,
     standaloneToast.toast,
   );
-

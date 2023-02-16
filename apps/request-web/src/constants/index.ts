@@ -45,6 +45,7 @@ export const pagePath = {
       pathname: '/user',
       query,
     } as const),
+
   // 유저 요청글
   [PAGE_KEYS.userRequestPost]: (query?: { searchText?: string }) => ({
     pathname: '/user/request-post',
