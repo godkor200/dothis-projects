@@ -1,5 +1,5 @@
 import { UserRepositoryPort } from '@Apps/api/src/user/v1/db/user.repository.port';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
+import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 
 export class MockGetUser implements UserRepositoryPort {
@@ -39,5 +39,9 @@ export class MockGetUser implements UserRepositoryPort {
 
   updateRefreshToken(id: number, token: string): Promise<void> {
     return Promise.resolve(undefined);
+  }
+
+  findOneWithRelations(id: string): Promise<User> {
+    return Promise.resolve(this.result);
   }
 }

@@ -1,11 +1,11 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, 'production.env') });
-
+require('dotenv').config();
+console.log(process.env.NODE_ENV);
 module.exports = {
   apps: [
     {
       name: 'dothis',
-      cwd: './dist/apps/api',
+      cwd: './dist',
       script: './main.js',
       instances: 2,
       exec_mode: 'cluster',
@@ -13,7 +13,7 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       max_memory_restart: '1G',
       watch: true,
-      env: {
+      env_development: {
         SERVER_PORT: 8080,
         NODE_ENV: 'development',
         MYSQL_ROOT_USER: process.env.MYSQL_ROOT_USER,

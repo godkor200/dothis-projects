@@ -1,37 +1,34 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HealthApiModule } from '@Apps/api/src/health/healthApi.module';
 import { UserApiModule } from '@Apps/api/src/user/UserApi.module';
 import { AuthApiModule } from '@Apps/api/src/auth/AuthApi.module';
 import { ChannelApiModule } from './channel/channel-api.module';
 import { UserChannelDataApiModule } from '@Apps/api/src/user-channel-data/user-channel-data-api.module';
-import { TypeOrmExModule } from '@Libs/commons/src/typeorm/type-orm-ext.module';
-import { validationSchema } from '@Libs/entity/src/config/validationsSchema';
-import dbConfig from '@Libs/entity/src/config/db.env';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CreateDatabaseConnection } from '@Libs/entity/src/database.mysql';
+import { validationSchema } from '@Apps/api/src/config/database/config/validationsSchema';
+import dbConfig from '@Apps/api/src/config/database/config/db.env';
+import { TypeormModule } from '@Apps/api/src/config/database/database.mysql';
+import { HeathApiController } from '@Apps/api/src/health.controller';
+import { HealthService } from '@Apps/api/src/health.service';
 
 @Module({
+  controllers: [HeathApiController],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'development' ? '.env' : 'production.env',
+      envFilePath: 'development.env',
+      // process.env.NODE_ENV === 'development'
+      //   ? 'development.env'
+      //   : 'production.env',
       load: [dbConfig],
       validationSchema,
     }),
-
-    TypeOrmModule.forRoot(
-      new CreateDatabaseConnection(dbConfig()).getTypeOrmConfig(),
-    ),
-
-    TypeOrmExModule.forCustomRepository([]),
+    TypeormModule,
     //module
-    HealthApiModule,
     UserApiModule,
     ChannelApiModule,
     AuthApiModule,
     UserChannelDataApiModule,
   ],
+  providers: [HealthService],
 })
 export class AppModule {}

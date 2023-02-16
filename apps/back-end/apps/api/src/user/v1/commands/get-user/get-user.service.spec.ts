@@ -1,5 +1,5 @@
 import { GetUserCommandHandler } from './get-user.service';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
+import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
 import { MockGetUser } from '@Apps/api/src/user/__mock__/getUser.mock';
 describe('get-user spec', () => {
   test('유저 하나를 리턴한다.', async () => {
@@ -16,7 +16,7 @@ describe('get-user spec', () => {
       dateSignIn: new Date('2023-01-25 16:22:23'),
       UserChannelData: null,
       Subscribe: null,
-      Channel: null,
+      channel: null,
     };
     const getOneUserService = new GetUserCommandHandler(new MockGetUser(user));
 

@@ -1,6 +1,6 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
-import { ChannelModel, zChannelData } from '@dothis/share/lib/dto';
+import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
+import { ChannelModel, zChannelData } from '@dothis/share/dist/index';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,7 +19,6 @@ export class ChannelDataRepository
   }
 
   async findOneByChannelId(channelId: string): Promise<Channel> {
-    console.log('channelId=====>', channelId);
     return await this.repository
       .createQueryBuilder(this.tableName)
       .where({ channelId })

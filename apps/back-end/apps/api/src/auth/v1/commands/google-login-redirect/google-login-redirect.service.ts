@@ -2,7 +2,7 @@ import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/api/src/user/user.di-token';
 import { UserRepositoryPort } from '@Apps/api/src/user/v1/db/user.repository.port';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
+import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ApiProperty } from '@nestjs/swagger';
 export class UserInfoCommandDto {
@@ -37,7 +37,7 @@ export class GoogleLoginRedirectCommandHandler
   async execute(command: UserInfoCommandDto) {
     let checkUser = await this.userRepository.findOneByEmail(command.userEmail);
 
-    if (!checkUser.id) {
+    if (!checkUser) {
       const user = User.create(command);
 
       await this.userRepository.transaction(

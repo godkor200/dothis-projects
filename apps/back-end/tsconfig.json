@@ -1,22 +1,21 @@
 {
-  "extends": "../../packages/config/tsconfig-nestjs.json",
+  "extends": "@dothis/config/tsconfig-nestjs.json",
   "compilerOptions": {
     "rootDir": "./",
     "baseUrl": "./",
     "paths": {
-      "@Apps/*": ["./apps/*"],
-      "@Libs/*": ["./libs/*"]
+      "@Apps/*": [
+        "./apps/*"
+      ],
+      "@Libs/*": [
+        "./libs/*"
+      ]
     }
   },
-  "references": [
-    {
-      "path": "../../packages/share"
-    },
-    {
-      "path": "./libs"
-    }
+  "include": [
+    "./","../../"
   ],
-
-  "include": ["./apps/**/**/**/*","./libs/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

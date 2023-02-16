@@ -2,21 +2,11 @@ import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository.port';
 import { google } from 'googleapis';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
 import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/user-channel-data/user-channel-data.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/channel/channel-data.di-token';
-
-export class GetChannelDataCommandDto {
-  userId: string;
-  accessToken: string;
-  userEmail: string;
-  constructor(props: GetChannelDataCommandDto) {
-    this.userId = props.userId;
-    this.accessToken = props.accessToken;
-    this.userEmail = props.userEmail;
-  }
-}
+import { GetChannelDataCommandDto } from '@Apps/api/src/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 
 @CommandHandler(GetChannelDataCommandDto)
 export class GetChannelDataCommandHandler
@@ -41,6 +31,13 @@ export class GetChannelDataCommandHandler
       headers: { Authorization: 'Bearer ' + command.accessToken },
       auth: process.env.GOOGLE_APIKEY,
     });
+
+    if (!youtube)
+      throw new HttpException(
+        'Google accessToken or apikey is weird',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+
     const res = await youtube.channels.list({
       part: [
         'id',
@@ -60,9 +57,6 @@ export class GetChannelDataCommandHandler
       );
 
     const { id: channelId } = res.data.items[0];
-    /**
-     * UCfsqglnMY55Rf8B_E3TLV-A 더미 채널
-     * */
 
     const { channelName, totalVideos, subscriber, totalViews, keyword } =
       await this.channelDataRepo.findOneByChannelId(channelId);
