@@ -2,10 +2,10 @@
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/api/src",
+  "entryFile": "./main",
   "monorepo": true,
-  "root": "apps/api",
+  "root": "./",
   "compilerOptions": {
-    "entryFile": "apps/api/src/main",
     "tsConfigPath": "apps/api/tsconfig.json",
     "assets": [
       {
