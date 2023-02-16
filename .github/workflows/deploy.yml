@@ -42,14 +42,15 @@ jobs:
         working-directory: ./apps/back-end
         run: npm i
 
+      - name: install @dothis/share
+        working-directory: ./
+        run: pnpm add --filter back-end @dothis/share
+
       - name: build
         working-directory: ./
         run: |
          sudo chmod -R 777 ./ && pnpm build:back-end
 
-      - name: install @dothis/share
-        working-directory: ./apps/back-end
-        run: npm i --prefix ../../packages/share @dothis/share
 
       - name: create env file
         working-directory: ./apps/back-end
