@@ -9,7 +9,7 @@ import {
 import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
 import { Video } from '@Apps/api/src/config/database/domain/videos/Videos.entity';
 
-@Entity({ name: 'Channel' })
+@Entity({ name: 'channel' })
 export class Channel {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
