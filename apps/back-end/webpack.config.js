@@ -49,7 +49,7 @@ module.exports = function (options, webpack) {
     ...options,
     output: {
       filename: `[name].js`,
-      path: path.join(__dirname, 'dist'),
+      path: path.join(__dirname, 'dist/apps/api'),
     },
     externals: [
       nodeExternals({
