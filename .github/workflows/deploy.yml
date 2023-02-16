@@ -42,6 +42,15 @@ jobs:
         working-directory: ./apps/back-end
         run: npm i
 
+      - name: build
+        working-directory: ./
+        run: |
+         sudo chmod -R 777 ./ && pnpm build:back-end
+
+      - name: install @dothis/share
+        working-directory: ./apps/back-end
+        run: npm i --prefix ../../packages/share @dothis/share
+
       - name: create env file
         working-directory: ./apps/back-end
         run: |
@@ -61,10 +70,6 @@ jobs:
           echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
           cat production.env
 
-      - name: build
-        working-directory: ./
-        run: |
-         sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: zip file
         working-directory: ./apps/back-end
