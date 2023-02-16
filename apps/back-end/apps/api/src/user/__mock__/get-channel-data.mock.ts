@@ -1,8 +1,8 @@
 import { UserChannelDataRepositoryPort } from '@Apps/api/src/user-channel-data/v1/db/user-channel-data.repository.port';
 import { Paginated, PaginatedQueryParams } from '@Libs/commons/src';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
 import { ChannelDataRepositoryPost } from '@Apps/api/src/channel/v1/db/channel-data.repository.post';
-import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
+import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 
 export class UserChannelDataMock implements UserChannelDataRepositoryPort {

@@ -1,5 +1,5 @@
 import { RepositoryPort } from '@Libs/commons/src/ddd/repository.port';
-import { UserChannelData } from '@Libs/entity/src/domain/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
 
 export interface UserChannelDataRepositoryPort
   extends RepositoryPort<UserChannelData> {

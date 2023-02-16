@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Channel } from '@Libs/entity/src/domain/channel/Channel.entity';
-import { DailyViews } from '@Libs/entity/src/domain/daily_views/DailyViews.entity';
+import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
+import { DailyViews } from '@Apps/api/src/config/database/domain/daily_views/DailyViews.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Channel, DailyViews])],

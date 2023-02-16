@@ -6,8 +6,8 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from '@Libs/entity/src/domain/user/User.entity';
-import { Video } from '@Libs/entity/src/domain/videos/Videos.entity';
+import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
+import { Video } from '@Apps/api/src/config/database/domain/videos/Videos.entity';
 
 @Entity({ name: 'Channel' })
 export class Channel {
