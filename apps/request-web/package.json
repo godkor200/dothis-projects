@@ -65,6 +65,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "@babel/core": "^7.20.2",
     "@chakra-ui/cli": "^2.2.1",
     "@dothis/config": "workspace:*",
