@@ -22,13 +22,14 @@ export default async function handler(
     const accessToken = session?.accessToken as string;
     const userId = session.user.id as string;
 
+    console.log('session', session);
     const auth = new googleAuth.OAuth2({
       clientId,
       clientSecret,
     });
     auth.setCredentials({
       // @ts-ignore
-      access_token,
+      access_token: accessToken,
       // refresh_token: refreshToken,
     });
 
@@ -43,22 +44,18 @@ export default async function handler(
         if (err) {
           console.log('The API returned an error: ' + err);
           return res.send(
-            superjson.stringify(
-              errorMessage({
-                message: '크리에이터 인증 과정에서 에러가 발생했습니다.',
-              }),
-            ),
+            errorMessage({
+              message: '크리에이터 인증 과정에서 에러가 발생했습니다.',
+            }),
           );
         }
 
         const channels = response.data.items;
-        if (channels.length == 0) {
+        if (!channels || channels.length == 0) {
           return res.send(
-            superjson.stringify(
-              errorMessage({
-                message: '보유하고 계신 채널이 없습니다.',
-              }),
-            ),
+            errorMessage({
+              message: '보유하고 계신 채널이 없습니다.',
+            }),
           );
         } else {
           let maxSubscriberIndex = 0;

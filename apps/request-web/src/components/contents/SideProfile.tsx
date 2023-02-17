@@ -1,5 +1,13 @@
 import { Box, Text } from '@chakra-ui/react';
-import { Button, colors, fontWeights, isLinkActive, thousandsSeparators, typo, UserAvatar } from '@dothis/share';
+import {
+  Button,
+  colors,
+  fontWeights,
+  isLinkActive,
+  thousandsSeparators,
+  typo,
+  UserAvatar,
+} from '@dothis/share';
 import { SvgClose } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
@@ -10,6 +18,7 @@ import React, { useMemo } from 'react';
 
 import UserLink from '@/components/ui/Links/UserLink';
 import { pagePath } from '@/constants';
+import { youtubeSignIn } from '@/utils/auth';
 import type { inferQueryOutput } from '@/utils/trpc';
 
 type Props = {
@@ -29,26 +38,26 @@ export default function SideProfile({ onClose, user }: Props) {
   return (
     <div css={style}>
       <Button
-        className='profile-drawer-close-button'
-        aria-label='profile close button'
+        className="profile-drawer-close-button"
+        aria-label="profile close button"
         onClick={onClose}
       >
         <SvgClose />
       </Button>
-      <Link className='profile_my-user-page' href={pagePath.account()}>
+      <Link className="profile_my-user-page" href={pagePath.account()}>
         <UserAvatar
           user={user}
           size={48}
           Text={
-            <Text as='b' ml={16} fontSize={18}>
+            <Text as="b" ml={16} fontSize={18}>
               {user.name}
             </Text>
           }
         />
       </Link>
-      <div className='profile-cache'>
+      <div className="profile-cache">
         <label>보유 포인트</label>
-        <div className='cache-contents'>
+        <div className="cache-contents">
           <Box h={30} />
           {/*<div className="primary-round-circle">*/}
           {/*  <SvgPlus />*/}
@@ -58,31 +67,26 @@ export default function SideProfile({ onClose, user }: Props) {
       </div>
       {!user.creator && (
         <Button
-          theme='primary'
-          w='100%'
+          theme="primary"
+          w="100%"
           h={50}
           mt={24}
-          fontWeight='b'
-          onClick={() =>
-            signIn('youtube', {
-              // scope:
-              // 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly',
-              // redirect: false,
-              callbackUrl: '/api/auth/creator',
-            })
-          }
+          fontWeight="b"
+          onClick={youtubeSignIn}
         >
           크리에이터 등록
         </Button>
       )}
 
-      <ul className='side-profile-links'>
-        <li
-          className={clsx(isLinkActive(router, profilePageUrl) && 'active')}
-          data-matchUrl={profilePageUrl}
-        >
-          <UserLink userId={user.id}>프로필 관리</UserLink>
-        </li>
+      <ul className="side-profile-links">
+        {user.creator && (
+          <li
+            className={clsx(isLinkActive(router, profilePageUrl) && 'active')}
+            data-matchUrl={profilePageUrl}
+          >
+            <UserLink userId={user.id}>프로필 관리</UserLink>
+          </li>
+        )}
         <li
           className={clsx(
             isLinkActive(router, pagePath.userRequestPost()) && 'active',

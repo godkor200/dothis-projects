@@ -99,7 +99,6 @@ importers:
     dependencies:
       '@abitia/zod-dto': 0.4.0_hzhsigmk4iy6sskcueekjromie
       '@anatine/zod-nestjs': 1.9.2_xqqbhsk4a6267vmo3aquhwlxwu
-      '@dothis/share': link:../../packages/share
       '@nestjs/common': 9.3.8_glt6otmez4zoecyy5ktjxkg6bi
       '@nestjs/config': 2.3.1_6sysrfnceog466mrogtvxnbmxe
       '@nestjs/core': 9.3.8_ipxltqen5qjqvoypk3nliqq6xe
@@ -287,7 +286,7 @@ importers:
       clsx: ^1.2.1
       date-fns: ^2.29.3
       framer-motion: ^7.10.3
-      googleapis: ^107.0.0
+      googleapis: ^111.0.0
       hangul-js: ^0.2.6
       immer: ^9.0.16
       iron-session: ^6.3.1
@@ -295,7 +294,7 @@ importers:
       jest-environment-jsdom: ^29.2.2
       multer: 1.4.5-lts.1
       multer-s3: ^3.0.1
-      next: 13.1.1
+      next: 13.1.6
       next-auth: ^4.17.0
       next-compose-plugins: ^2.2.1
       next-connect: ^0.13.0
@@ -333,7 +332,7 @@ importers:
       '@prisma/client': 4.8.1_prisma@4.8.1
       '@tanstack/react-query': 4.20.9_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.7.0_@trpc+server@10.7.0
-      '@trpc/next': 10.7.0_feu6xodxtgd2hktgc23del3mna
+      '@trpc/next': 10.7.0_pijfkl6lqhgw46ulvyvrawc57i
       '@trpc/react-query': 10.7.0_voi52uzzn4btzulk52fuvwecw4
       '@trpc/server': 10.7.0
       '@types/multer': 1.4.7
@@ -342,15 +341,15 @@ importers:
       clsx: 1.2.1
       date-fns: 2.29.3
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
-      googleapis: 107.0.0
+      googleapis: 111.0.0
       hangul-js: 0.2.6
       immer: 9.0.17
-      iron-session: 6.3.1_next@13.1.1
+      iron-session: 6.3.1_next@13.1.6
       jest-environment-jsdom: 29.3.1
       multer: 1.4.5-lts.1
       multer-s3: 3.0.1_wejncgctuel2hm4jayheuys7am
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
-      next-auth: 4.18.7_q76c2b4vyoegvsbrcwkfvimnai
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
+      next-auth: 4.18.7_3vryta7zmbcsw4rrqf4axjqggm
       next-connect: 0.13.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -374,11 +373,11 @@ importers:
       '@types/node': 18.11.15
       '@types/react': 18.0.26
       babel-jest: 29.3.1_@babel+core@7.20.12
-      babel-plugin-superjson-next: 0.4.5_4jth3s7cpp4vevq7cz6bexafye
+      babel-plugin-superjson-next: 0.4.5_twne6kh5hh4477qavbpxwowlma
       jest: 29.3.1_44rj7wggyet6z6jbc7gz35fedq
       next-compose-plugins: 2.2.1
-      next-pwa: 5.6.0_ahmdtuodic5adnwwi3itzzoy64
-      next-superjson-plugin: 0.5.3_4jth3s7cpp4vevq7cz6bexafye
+      next-pwa: 5.6.0_k2seot55bsmlm52vxz6m7rtrky
+      next-superjson-plugin: 0.5.3_twne6kh5hh4477qavbpxwowlma
       prettier: 2.8.1
       prisma: 4.8.1
       ts-jest: 29.0.3_lpdtk6tcorkuyzgotacsdxtnxm
@@ -6047,7 +6046,7 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.8.1_prisma@4.8.1
-      next-auth: 4.18.7_q76c2b4vyoegvsbrcwkfvimnai
+      next-auth: 4.18.7_3vryta7zmbcsw4rrqf4axjqggm
     dev: false
 
   /@next/bundle-analyzer/13.1.1:
@@ -6061,10 +6060,10 @@ packages:
 
   /@next/env/13.1.1:
     resolution: {integrity: sha512-vFMyXtPjSAiOXOywMojxfKIqE3VWN5RCAx+tT3AS3pcKjMLFTCJFUWsKv8hC+87Z1F4W3r68qTwDFZIFmd5Xkw==}
+    dev: false
 
   /@next/env/13.1.6:
     resolution: {integrity: sha512-s+W9Fdqh5MFk6ECrbnVmmAOwxKQuhGMT7xXHrkYIBMBcTiOqNWhv5KbJIboKR5STXxNXl32hllnvKaffzFaWQg==}
-    dev: false
 
   /@next/eslint-plugin-next/13.1.1:
     resolution: {integrity: sha512-SBrOFS8PC3nQ5aeZmawJkjKkWjwK9RoxvBSv/86nZp0ubdoVQoko8r8htALd9ufp16NhacCdqhu9bzZLDWtALQ==}
@@ -6082,6 +6081,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-android-arm-eabi/13.1.6:
@@ -6090,7 +6090,6 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-android-arm64/13.1.1:
@@ -6099,6 +6098,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-android-arm64/13.1.6:
@@ -6107,7 +6107,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-darwin-arm64/13.1.1:
@@ -6116,6 +6115,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-darwin-arm64/13.1.6:
@@ -6124,7 +6124,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-darwin-x64/13.1.1:
@@ -6133,6 +6132,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-darwin-x64/13.1.6:
@@ -6141,7 +6141,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-freebsd-x64/13.1.1:
@@ -6150,6 +6149,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-freebsd-x64/13.1.6:
@@ -6158,7 +6158,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-linux-arm-gnueabihf/13.1.1:
@@ -6167,6 +6166,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-linux-arm-gnueabihf/13.1.6:
@@ -6175,7 +6175,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-linux-arm64-gnu/13.1.1:
@@ -6184,6 +6183,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-linux-arm64-gnu/13.1.6:
@@ -6192,7 +6192,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-linux-arm64-musl/13.1.1:
@@ -6201,6 +6200,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-linux-arm64-musl/13.1.6:
@@ -6209,7 +6209,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-linux-x64-gnu/13.1.1:
@@ -6218,6 +6217,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-linux-x64-gnu/13.1.6:
@@ -6226,7 +6226,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-linux-x64-musl/13.1.1:
@@ -6235,6 +6234,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-linux-x64-musl/13.1.6:
@@ -6243,7 +6243,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-win32-arm64-msvc/13.1.1:
@@ -6252,6 +6251,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-win32-arm64-msvc/13.1.6:
@@ -6260,7 +6260,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-win32-ia32-msvc/13.1.1:
@@ -6269,6 +6268,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-win32-ia32-msvc/13.1.6:
@@ -6277,7 +6277,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@next/swc-win32-x64-msvc/13.1.1:
@@ -6286,6 +6285,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /@next/swc-win32-x64-msvc/13.1.6:
@@ -6294,7 +6294,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -8545,7 +8544,7 @@ packages:
       '@trpc/server': 10.7.0
     dev: false
 
-  /@trpc/next/10.7.0_feu6xodxtgd2hktgc23del3mna:
+  /@trpc/next/10.7.0_pijfkl6lqhgw46ulvyvrawc57i:
     resolution: {integrity: sha512-ZLY4J9IgEHN2op0UM14NCwCDyodRUw8Pmxgnpr62+UMIhDll6uggb2an8Op87l9EeYdKhKe2VavDWphI8vFGgw==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -8560,7 +8559,7 @@ packages:
       '@trpc/client': 10.7.0_@trpc+server@10.7.0
       '@trpc/react-query': 10.7.0_voi52uzzn4btzulk52fuvwecw4
       '@trpc/server': 10.7.0
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-ssr-prepass: 1.5.0_react@18.2.0
@@ -10521,7 +10520,7 @@ packages:
       - supports-color
     dev: true
 
-  /babel-plugin-superjson-next/0.4.5_4jth3s7cpp4vevq7cz6bexafye:
+  /babel-plugin-superjson-next/0.4.5_twne6kh5hh4477qavbpxwowlma:
     resolution: {integrity: sha512-k7S99Qpsbi3OSdlCMXEiklzxepM6QbYEIUsrjgSkpx+ksT0iNfdY2r1kCzBK2UjG8fLN6NZEKpDA8XpG2pbDSA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -10531,7 +10530,7 @@ packages:
       '@babel/helper-module-imports': 7.18.6
       '@babel/types': 7.20.5
       hoist-non-react-statics: 3.3.2
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       superjson: 1.12.1
     dev: true
 
@@ -14306,6 +14305,17 @@ packages:
       - supports-color
     dev: false
 
+  /googleapis/111.0.0:
+    resolution: {integrity: sha512-nIIH+J/o/xjIscJcv3H3BCYgsFiI5ziM3Nbh2lHOWglYGqXE0Nqdt2lfCt4hX257QHEyC1y1iODDkmAMPWDYlw==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      google-auth-library: 8.7.0
+      googleapis-common: 6.0.4
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
   /gopd/1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
@@ -17618,7 +17628,7 @@ packages:
       zod: 3.14.3
     dev: false
 
-  /next-auth/4.18.7_q76c2b4vyoegvsbrcwkfvimnai:
+  /next-auth/4.18.7_3vryta7zmbcsw4rrqf4axjqggm:
     resolution: {integrity: sha512-kR3s1JVPMaDuSAlFxcGyv7Ec3fdE6za71r1F77IOII5zJmW2wfkIA2xj223fM0D20ip2pzFpHfk/qN4L6l5XMA==}
     engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0}
     peerDependencies:
@@ -17634,7 +17644,7 @@ packages:
       '@panva/hkdf': 1.0.2
       cookie: 0.5.0
       jose: 4.11.2
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       oauth: 0.9.15
       openid-client: 5.3.1
       preact: 10.11.3
@@ -17653,28 +17663,6 @@ packages:
     dependencies:
       trouter: 3.2.0
     dev: false
-
-  /next-pwa/5.6.0_ahmdtuodic5adnwwi3itzzoy64:
-    resolution: {integrity: sha512-XV8g8C6B7UmViXU8askMEYhWwQ4qc/XqJGnexbLV68hzKaGHZDMtHsm2TNxFcbR7+ypVuth/wwpiIlMwpRJJ5A==}
-    peerDependencies:
-      next: '>=9.0.0'
-    dependencies:
-      babel-loader: 8.3.0_la66t7xldg4uecmyawueag5wkm
-      clean-webpack-plugin: 4.0.0_webpack@5.75.0
-      globby: 11.1.0
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
-      terser-webpack-plugin: 5.3.6_webpack@5.75.0
-      workbox-webpack-plugin: 6.5.4_webpack@5.75.0
-      workbox-window: 6.5.4
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@swc/core'
-      - '@types/babel__core'
-      - esbuild
-      - supports-color
-      - uglify-js
-      - webpack
-    dev: true
 
   /next-pwa/5.6.0_k2seot55bsmlm52vxz6m7rtrky:
     resolution: {integrity: sha512-XV8g8C6B7UmViXU8askMEYhWwQ4qc/XqJGnexbLV68hzKaGHZDMtHsm2TNxFcbR7+ypVuth/wwpiIlMwpRJJ5A==}
@@ -17696,16 +17684,15 @@ packages:
       - supports-color
       - uglify-js
       - webpack
-    dev: false
 
-  /next-superjson-plugin/0.5.3_4jth3s7cpp4vevq7cz6bexafye:
+  /next-superjson-plugin/0.5.3_twne6kh5hh4477qavbpxwowlma:
     resolution: {integrity: sha512-vHN+96TKEVxKUfcgX40W/w/UJhwaPFcrJTggDDN0JuN7pNvyFXqJwVJCTeiuMUeSFJnwNYcd4mRM5jVlw8GjAA==}
     peerDependencies:
       next: ^13
       superjson: ^1
     dependencies:
       hoist-non-react-statics: 3.3.2
-      next: 13.1.1_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       superjson: 1.12.1
     dev: true
 
@@ -17751,6 +17738,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
 
   /next/13.1.6_pjwopsidmaokadturxaafygjp4:
     resolution: {integrity: sha512-hHlbhKPj9pW+Cymvfzc15lvhaOZ54l+8sXDXJWm3OBNBzgrVj6hwGPmqqsXg40xO1Leq+kXpllzRPuncpC0Phw==}
@@ -17794,7 +17782,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: false
 
   /nice-try/1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
