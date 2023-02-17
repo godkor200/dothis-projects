@@ -36,7 +36,7 @@ export default async function handler(
     const service = youtube('v3');
     await service.channels.list(
       {
-        auth: auth,
+        auth,
         part: 'snippet,contentDetails,statistics'.split(','),
         mine: true,
       },

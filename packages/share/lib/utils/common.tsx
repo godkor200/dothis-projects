@@ -1,7 +1,5 @@
 import type { ComponentType } from 'react';
 
-import type { Merge } from '../../lib/types';
-
 export function isNil(v: unknown) {
   return v === undefined || v === null;
 }
