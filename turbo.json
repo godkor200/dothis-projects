@@ -11,7 +11,7 @@
     },
     "request-web#build": {
       "dependsOn": [
-        "^db-generate",
+        "^request-web#db-generate",
         "^build"
       ],
       "outputs": [
@@ -21,7 +21,7 @@
     "request-web#dev": {
       "dependsOn": [
         "^theme-gen",
-        "^db-generate"
+        "^request-web#db-generate"
       ],
       "cache": false
     },
