@@ -39,21 +39,21 @@
       ],
       "cache": false
     },
-    "db-generate": {
+    "request-web#db-generate": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ],
       "cache": false
     },
-    "db-push": {
+    "request-web#db-push": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ],
       "cache": false
     },
     "studio": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ]
     },
     "analyze": {
