@@ -43,7 +43,7 @@ export default async function handler(
       async function (err: Error | null, response: any) {
         if (err) {
           console.log('The API returned an error: ' + err);
-          return res.send(
+          return res.status(403).send(
             errorMessage({
               message: '크리에이터 인증 과정에서 에러가 발생했습니다.',
             }),
@@ -51,8 +51,8 @@ export default async function handler(
         }
 
         const channels = response.data.items;
-        if (!channels || channels.length == 0) {
-          return res.send(
+        if (!channels) {
+          return res.status(400).send(
             errorMessage({
               message: '보유하고 계신 채널이 없습니다.',
             }),
@@ -75,7 +75,7 @@ export default async function handler(
             channels[maxSubscriberIndex].id,
           );
 
-          return res.redirect('/');
+          return res.status(200).redirect('/');
           // res.setHeader('Content-Type', 'text/html; charset=utf-8');
           // return res.send(superjson.stringify(channels));
         }
