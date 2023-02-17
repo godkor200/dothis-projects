@@ -5,6 +5,7 @@ import {
   fontWeights,
   isLinkActive,
   thousandsSeparators,
+  ToastBox,
   typo,
   UserAvatar,
 } from '@dothis/share';
@@ -72,7 +73,11 @@ export default function SideProfile({ onClose, user }: Props) {
           h={50}
           mt={24}
           fontWeight="b"
-          onClick={youtubeSignIn}
+          onClick={() =>
+            youtubeSignIn().then(() =>
+              ToastBox.successToast('크리에이터 등록이 완료되었습니다.'),
+            )
+          }
         >
           크리에이터 등록
         </Button>

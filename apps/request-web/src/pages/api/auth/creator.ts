@@ -22,7 +22,6 @@ export default async function handler(
     const accessToken = session?.accessToken as string;
     const userId = session.user.id as string;
 
-    console.log('session', session);
     const auth = new googleAuth.OAuth2({
       clientId,
       clientSecret,
@@ -36,7 +35,7 @@ export default async function handler(
     const service = youtube('v3');
     await service.channels.list(
       {
-        auth: auth,
+        auth,
         part: 'snippet,contentDetails,statistics'.split(','),
         mine: true,
       },
