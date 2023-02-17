@@ -53,7 +53,7 @@ export default function AccountPage({}: InferGetServerSidePropsType<
       modalStore.closeAll();
       ToastBox.successToast('회원 탈퇴가 완료되었습니다.');
 
-      setTimeout(signOut, 200);
+      setTimeout(signOut, 500);
       // router.push(pagePath.home());
     },
   });

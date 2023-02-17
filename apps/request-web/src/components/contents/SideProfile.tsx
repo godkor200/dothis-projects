@@ -72,15 +72,8 @@ export default function SideProfile({ onClose, user }: Props) {
           w="100%"
           h={50}
           mt={24}
-          fontWeight='b'
-          onClick={() =>
-            signIn('youtube', {
-              // scope:
-              // 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly',
-              // redirect: false,
-              callbackUrl: '/api/auth/creator',
-            })
-          }
+          fontWeight="b"
+          onClick={youtubeSignIn}
         >
           크리에이터 등록
         </Button>

@@ -58,9 +58,7 @@ const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
             return;
           }
 
-          youtubeSignIn().then(() =>
-            ToastBox.successToast('크리에이터 등록이 완료되었습니다.'),
-          );
+          youtubeSignIn();
         }}
       >
         <Image
