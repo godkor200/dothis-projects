@@ -21,10 +21,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/back-end/test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
-    "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./libs/commons/src/typeorm/typeormConfig.ts",
-    "typeorm:generate-migration": "npm run typeorm -- -d ./libs/commons/src/typeorm/typeormConfig.ts migration:generate ./libs/commons/src/typeorm/migrations/$npm_config_name",
-    "typeorm:create-migration": "npm run typeorm -- migration:create ./libs/commons/src/typeorm/migrations/$npm_config_name",
-    "typeorm:revert-migration": "npm run typeorm -- -d ./libs/commons/src/typeorm/typeormConfig.ts migration:revert"
+    "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./libs/commons/src/migrations/dataSource.ts",
+    "typeorm:generate-migration": "npm run typeorm -- -d ./libs/commons/src/migrations/dataSource.ts migration:generate libs/commons/src/migrations/generate",
+    "typeorm:create-migration": "npm run typeorm -- migration:create libs/commons/src/migrations/migrations",
+    "typeorm:revert-migration": "npm ts-typeorm migration:revert"
   },
   "dependencies": {
     "@abitia/zod-dto": "^0.4.0",

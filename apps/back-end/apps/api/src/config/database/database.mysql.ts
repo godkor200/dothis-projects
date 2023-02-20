@@ -1,9 +1,4 @@
-import {
-  TypeOrmModule,
-  TypeOrmModuleAsyncOptions,
-  TypeOrmModuleOptions,
-  TypeOrmOptionsFactory,
-} from '@nestjs/typeorm';
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
@@ -12,7 +7,7 @@ import { Membership } from '@Apps/api/src/config/database/domain/membership/Memb
 import { DailyViews } from '@Apps/api/src/config/database/domain/daily_views/DailyViews.entity';
 import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
 import { Video } from '@Apps/api/src/config/database/domain/videos/Videos.entity';
-import { TypeOrmExModule } from '@Libs/commons/src';
+import { DataSourceOptions } from 'typeorm';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -38,23 +33,3 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   providers: [TypeOrmConfigService],
 })
 export class MySqlConfigModule {}
-export const typeOrmConfigAsync: TypeOrmModuleAsyncOptions = {
-  imports: [MySqlConfigModule],
-  useClass: TypeOrmConfigService,
-  inject: [TypeOrmConfigService],
-};
-
-@Module({
-  imports: [
-    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
-    TypeOrmExModule.forCustomRepository([
-      User,
-      UserChannelData,
-      Membership,
-      DailyViews,
-      Channel,
-      Video,
-    ]),
-  ],
-})
-export class TypeormModule {}

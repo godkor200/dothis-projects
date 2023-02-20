@@ -11,4 +11,4 @@ import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.en
   exports: [TypeOrmModule],
   providers: [],
 })
-export class UserModule {}
+export class UserEntityModule {}
