@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserApiModule } from '@Apps/api/src/app/user/UserApi.module';
-import { AuthApiModule } from '@Apps/api/src/app/auth/AuthApi.module';
-import { ChannelApiModule } from './app/channel/channel-api.module';
-import { UserChannelDataApiModule } from '@Apps/api/src/app/user-channel-data/user-channel-data-api.module';
+import { UserApiModule } from '@Apps/api/src/modules/user/user.module';
+import { AuthApiModule } from '@Apps/api/src/modules/auth/AuthApi.module';
+import { ChannelApiModule } from './modules/channel/channel-api.module';
+import { UserChannelDataApiModule } from '@Apps/api/src/modules/user-channel-data/user-channel-data-api.module';
 import { validationSchema } from '@Apps/api/src/config/database/config/validationsSchema';
 import dbConfig from '@Apps/api/src/config/database/config/db.env';
-import { TypeormModule } from '@Apps/api/src/config/database/database.mysql';
+import { TypeormModule } from '@Apps/api/src/config/database/database.module';
 import { HeathApiController } from '@Apps/api/src/health.controller';
 import { HealthService } from '@Apps/api/src/health.service';
 
