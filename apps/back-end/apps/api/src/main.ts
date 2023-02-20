@@ -10,7 +10,6 @@ declare const module: any;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  console.log('Execution Environment:', process.env.NODE_ENV);
   const databaseUri: string = configService.get<string>('db.DB_HOST');
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
@@ -21,7 +20,7 @@ async function bootstrap() {
 
   logger.log(`==========================================================`);
 
-  logger.log(`Environment Variable`, 'NestApplication');
+  logger.log(`Environment Variable`, process.env.NODE_ENV);
   logger.log('NestApplication');
 
   logger.log(`==========================================================`);
