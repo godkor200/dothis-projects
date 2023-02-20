@@ -5,6 +5,10 @@ import {
   ToastBox,
   typo,
 } from '@dothis/share';
+import {
+  flushMessageSession,
+  withSessionSSR,
+} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -13,7 +17,6 @@ import { useEffect } from 'react';
 import Login from '@/components/contents/Login';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import useMessageToast from '@/hooks/useMessageToast';
-import { flushMessageSession, withSessionSSR } from '@/server/session';
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {
   const messageProps = await flushMessageSession(req);

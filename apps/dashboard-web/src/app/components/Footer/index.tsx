@@ -8,7 +8,7 @@ import { pagePath } from '@/constants/pagePath';
 
 export default function Footer() {
   return (
-    <footer className="app_footer">
+    <footer className="self-end">
       <div className="footer__inner">
         <div className="footer-container">
           <div className="footer-info">

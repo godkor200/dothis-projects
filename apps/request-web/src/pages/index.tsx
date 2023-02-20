@@ -3,19 +3,22 @@ import {
   colors,
   Container,
   mediaQueries,
-  standaloneToast,
   SwiperButton,
   ToastBox,
   typo,
 } from '@dothis/share';
 import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
+import {
+  flushMessageSession,
+  withSessionSSR,
+} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import type { GetServerSidePropsContext } from 'next/types';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import type { ComponentProps } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { Swiper as SwiperClass } from 'swiper/types';
 
 import MainSwiper from '@/components/article/MainSwiper';
@@ -23,7 +26,6 @@ import RecommendRequests from '@/components/article/RecommendRequests';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import useMessageToast from '@/hooks/useMessageToast';
-import { flushMessageSession, withSessionSSR } from '@/server/session';
 import { youtubeSignIn } from '@/utils/auth';
 import { trpc, trpcSSG } from '@/utils/trpc';
 

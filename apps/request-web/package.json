@@ -21,7 +21,7 @@
   "dependencies": {
     "@aws-sdk/abort-controller": "^3.226.0",
     "@aws-sdk/client-s3": "^3.245.0",
-    "@chakra-ui/react": "^2.4.4",
+    "@chakra-ui/react": "^2.5.1",
     "@dothis/share": "*",
     "@emotion/cache": "^11.10.5",
     "@emotion/css": "^11.10.5",

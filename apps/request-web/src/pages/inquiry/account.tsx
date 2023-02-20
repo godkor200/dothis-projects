@@ -7,6 +7,7 @@ import {
   ToastBox,
   typo,
 } from '@dothis/share';
+import { withUserSessionSSR } from '@dothis/share/lib/utils/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -17,7 +18,6 @@ import { z } from 'zod';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
 import { useModalStore } from '@/models/Modal';
-import { withUserSessionSSR } from '@/server/session';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({

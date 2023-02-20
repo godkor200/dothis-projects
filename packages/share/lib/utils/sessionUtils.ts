@@ -1,5 +1,3 @@
-import type { Message, PartialRequiredNotNull } from '@dothis/share';
-import { errorMessage, isMessage } from '@dothis/share';
 import type { IncomingMessage } from 'http';
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
@@ -10,7 +8,9 @@ import type {
 } from 'next';
 import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
-import { UrlObject } from 'url';
+
+import type { PartialRequiredNotNull } from '..';
+import { errorMessage, isMessage } from '..';
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,
