@@ -1,7 +1,6 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import AnimatedNumber from 'components/ui/AnimatedNumber/index';
 import { useState } from 'react';
-
-import AnimatedNumber from '@/components/ui/AnimatedNumber/index';
 
 export default {
   /* 👇 The title prop is optional.

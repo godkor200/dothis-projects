@@ -10,5 +10,5 @@ export function useBoolean(initialState = false) {
     }),
     [],
   );
-  return [value, callbacks];
+  return [value, callbacks] as [typeof value, typeof callbacks];
 }

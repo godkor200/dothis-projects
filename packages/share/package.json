@@ -18,7 +18,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@hookform/error-message": "^2.0.1",
     "@tanstack/react-table": "^8.7.9",
     "@ts-rest/core": "^3.12.0",
     "@visx/axis": "^3.0.0",
@@ -42,9 +41,7 @@
     "next": "13.1.6",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.1",
-    "superjson": "^1.12.2",
-    "typescript": "^4.9.4",
+    "typescript": "^4.9.5",
     "uid": "^2.0.1",
     "use-debounce": "^9.0.2",
     "zod": "^3.20.2"
@@ -56,7 +53,6 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@dothis/config": "*",
-    "@next/bundle-analyzer": "^13.1.6",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-interactions": "^6.5.15",
