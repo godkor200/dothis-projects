@@ -1,6 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserModule } from '@Apps/api/src/config/database/domain/user/UserModule';
+import { UserEntityModule } from '@Apps/api/src/config/database/domain/user/UserModule';
 import { MembershipModule } from '@Apps/api/src/config/database/domain/membership/MembershipModule';
 import { GetUserHttpController } from '@Apps/api/src/modules/user/v1/commands/get-user/get-user.http.controller';
 import { UserRepository } from './db/user.repository';
@@ -35,7 +35,12 @@ const commandHandlers: Provider[] = [
 
 const queryHandlers: Provider[] = [];
 @Module({
-  imports: [CqrsModule, UserModule, MembershipModule, UserChannelDataModule],
+  imports: [
+    CqrsModule,
+    UserEntityModule,
+    MembershipModule,
+    UserChannelDataModule,
+  ],
   controllers: [...httpControllers],
   providers: [...repositories, ...commandHandlers, ...queryHandlers],
 })

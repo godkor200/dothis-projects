@@ -1,7 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
-import { UserModule } from '@Apps/api/src/config/database/domain/user/UserModule';
+import { UserEntityModule } from '@Apps/api/src/config/database/domain/user/UserModule';
 import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
-import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { GoogleLoginHttpController } from '@Apps/api/src/modules/auth/v1/commands/google-login/goolgle-login.http.controller';
 import { GoogleLoginRedirectHttpController } from '@Apps/api/src/modules/auth/v1/commands/google-login-redirect/google-login-redirect.http.controller';
@@ -32,7 +31,7 @@ const repositories: Provider[] = [
   controllers: [...httpControllers],
   imports: [
     CqrsModule,
-    UserModule,
+    UserEntityModule,
     // ConfigModule.forRoot(),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
