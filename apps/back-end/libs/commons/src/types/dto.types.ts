@@ -1,5 +1,5 @@
 import { createZodDto } from '@anatine/zod-nestjs';
-import { userModel } from '@dothis/share/dist/index';
+import { userModel } from '@dothis/share/lib/dto';
 
 export class UserDto extends createZodDto(userModel) {}
 export class CreateUserInput extends createZodDto(

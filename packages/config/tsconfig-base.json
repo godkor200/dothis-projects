@@ -2,9 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": false,
     "composite": false,
     "declaration": true,
-    "preserveSymlinks": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,6 +21,8 @@
       "../../node_modules/@types",
       "../../node_modules/@chakra-ui/styled-system/dist",
     ],
+
+   
   },
   "include": ["eslint-dothis-nestjs.js", "eslint-dothis-nextjs.js"]
 }

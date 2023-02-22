@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
+    "noEmit": true,
     "outDir": "../../dist/apps/core"
   },
   "include": ["src/**/*"],

@@ -1,5 +1,5 @@
-import { c } from '../contract';
 import { z } from 'zod';
+import { c } from '../contract';
 import { userModel } from './user.model';
 
 export const userBaseApiUrl = '/user';

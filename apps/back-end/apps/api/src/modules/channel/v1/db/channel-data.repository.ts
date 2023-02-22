@@ -1,6 +1,6 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
-import { ChannelModel, zChannelData } from '@dothis/share/dist';
+import { ChannelModel, zChannelData } from '@dothis/share/lib/dto';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,7 +11,7 @@ export class ChannelDataRepository
   implements ChannelDataRepositoryPost
 {
   @InjectRepository(Channel) protected repository: Repository<Channel>;
-  protected tableName: string = 'Channel';
+  protected tableName = 'Channel';
   protected schema: ZodObject<any> = zChannelData;
 
   constructor(dataSource: DataSource) {
