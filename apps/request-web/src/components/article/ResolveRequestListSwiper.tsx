@@ -87,7 +87,11 @@ function VerticalPostRequestItem({ requestPost }: PostRequestItemProps) {
           <AspectRatio ratio={16 / 9} bg="bg.dark">
             <Box className="item-img-wrap">
               {youtubeId && (
-                <img src={makeThumbnail(youtubeId)} alt="thumbnail image" />
+                <img
+                  src={makeThumbnail(youtubeId)}
+                  loading="lazy"
+                  alt="thumbnail image"
+                />
               )}
             </Box>
           </AspectRatio>

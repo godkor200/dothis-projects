@@ -97,6 +97,7 @@ export default function HorizonPostRequestItem({
               <img
                 src={requestPost.thumbnailUrl}
                 alt={`${requestPost.title} thumbnail`}
+                loading="lazy"
               ></img>
             </div>
           </AspectRatio>
