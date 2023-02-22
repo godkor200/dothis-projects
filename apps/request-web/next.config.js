@@ -34,6 +34,10 @@ const nextConfig = {
     ],
     transpilePackages: ['@dothis/share'],
   },
+
+  eslint: {
+    dirs: ['src'],
+  },
   compiler: {
     emotion: true,
   },

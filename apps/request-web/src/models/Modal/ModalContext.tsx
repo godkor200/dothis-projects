@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { StoreApi } from 'zustand';
-import create from 'zustand';
+import { create } from 'zustand';
 import createContext from 'zustand/context';
 
 interface ModalConfigStore {

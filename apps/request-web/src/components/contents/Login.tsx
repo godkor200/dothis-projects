@@ -4,14 +4,15 @@ import { signIn } from 'next-auth/react';
 import React from 'react';
 
 import {
-  Button,
   SvgFacebook,
   SvgInstagram,
   SvgTwitch,
   SvgYoutube,
-} from '@/components/ui';
+} from '@/components/ui/Icons';
 import { PAGE_KEYS } from '@/constants';
 import { useModalStore } from '@/models/Modal';
+
+import { Button } from '../ui/Button';
 
 export default function Login() {
   return (

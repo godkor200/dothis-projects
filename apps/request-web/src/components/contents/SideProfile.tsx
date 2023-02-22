@@ -1,14 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import {
-  Button,
-  colors,
-  fontWeights,
-  isLinkActive,
-  thousandsSeparators,
-  ToastBox,
-  typo,
-  UserAvatar,
-} from '@dothis/share';
+import { thousandsSeparators } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -16,11 +7,15 @@ import { useRouter } from 'next/router';
 import { signIn, signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
-import { SvgClose } from '@/components/ui';
+import { SvgClose } from '@/components/ui/Icons';
 import UserLink from '@/components/ui/Links/UserLink';
 import { pagePath } from '@/constants';
 import { youtubeSignIn } from '@/utils/auth';
 import type { inferQueryOutput } from '@/utils/trpc';
+import { Button } from '../ui/Button';
+import { UserAvatar } from '../ui/UserAvatar';
+import { isLinkActive } from '@/utils/appUtils';
+import { colors, fontWeights, typo } from '@/styles/dothisTheme';
 
 type Props = {
   onClose(): void;

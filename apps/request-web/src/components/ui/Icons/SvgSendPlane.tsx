@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-import { colors } from '../../../styles';
+import { colors } from '@/styles';
 
 export const SvgSendPlane = (props: SVGProps<SVGSVGElement>) => (
   <svg

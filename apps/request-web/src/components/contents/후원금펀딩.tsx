@@ -1,34 +1,31 @@
 import { Box, Center, Flex, VStack } from '@chakra-ui/react';
 import {
-  Button,
-  colors,
-  fontWeights,
-  FormatInput,
-  FormValidMessage,
   isNilStr,
-  mediaQueries,
   onEnter,
   removeSeparators,
   thousandsSeparators,
-  ToastBox,
-  UserAvatar,
 } from '@dothis/share';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { RequestPost, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { FormValidMessage } from '@/components/ui/FormValidMessage';
 import UserLink from '@/components/ui/Links/UserLink';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import requestPost from '@/pages/user/request-post';
+import { colors, fontWeights, mediaQueries } from '@/styles';
 import { trpc } from '@/utils/trpc';
 
 import type { RequestPostDomain } from '../../domain';
 import { RequestFundingDomain, UserDomain } from '../../domain';
+import { Button } from '../ui/Button';
+import { FormatInput } from '../ui/Input';
+import { ToastBox } from '../ui/ToastBox';
+import { UserAvatar } from '../ui/UserAvatar';
 import type { RequestStatusType } from '.prisma/client/index';
 
 type Props = {

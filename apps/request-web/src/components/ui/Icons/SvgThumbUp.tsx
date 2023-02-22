@@ -1,5 +1,6 @@
-import { colors } from '@dothis/share/lib/styles/dothisTheme';
 import type { SVGProps } from 'react';
+
+import { colors } from '@/styles/dothisTheme';
 
 export const SvgThumbUp = (props: SVGProps<SVGSVGElement>) => (
   <svg

@@ -13,7 +13,7 @@ type Props = ButtonProps & {
   round?: boolean;
 };
 export const Button = forwardRef<Props, 'button'>(
-  ({ className, theme, size = 'md', round, ...props }, ref) => {
+  ({ className, theme, size = 'md', round, disabled, ...props }, ref) => {
     return (
       <ChakraButton
         type="button"
@@ -22,8 +22,9 @@ export const Button = forwardRef<Props, 'button'>(
         className={clsx(theme, size, className, round && 'round')}
         fontSize={size === 'sm' ? 12 : 14}
         fontWeight={fontWeights.b}
-        onClick={props?.disabled ? undefined : props?.onClick}
-        tabIndex={props?.disabled ? -1 : 0}
+        onClick={disabled ? undefined : props?.onClick}
+        tabIndex={disabled ? -1 : 0}
+        isDisabled={disabled}
         {...props}
       />
     );
@@ -83,10 +84,12 @@ const style = css`
   &.primary:disabled,
   &.gray:disabled {
     background: ${colors.gray['20']};
+
     > * {
       filter: grayscale(1) opacity(0.3);
     }
   }
+
   &:disabled {
     cursor: default;
 

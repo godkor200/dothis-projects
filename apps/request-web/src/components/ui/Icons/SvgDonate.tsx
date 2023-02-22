@@ -1,4 +1,4 @@
-import { colors } from '@dothis/share/lib/styles/dothisTheme';
+import { colors } from '@/styles/dothisTheme';
 import type { SVGProps } from 'react';
 
 export const SvgDonate = (props: SVGProps<SVGSVGElement>) => (
