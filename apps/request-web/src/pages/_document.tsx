@@ -1,8 +1,5 @@
-import createCache from '@emotion/cache';
-import createEmotionServer from '@emotion/server/create-instance';
 import axios from 'axios';
 import { enableMapSet } from 'immer';
-import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 import superjson from 'superjson';
@@ -33,7 +30,6 @@ export default class MyDocument extends Document {
           <meta name="title" content={title} />
           <meta name="description" content={description} />
           <AppMeta />
-          {/*<meta name="emotion-insertion-point" content="" />*/}
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>
@@ -58,7 +54,6 @@ export const AppMeta = () => (
     <meta name="msapplication-TileColor" content={colors.primary.default} />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content={colors.primary.default} />
-
     <link rel="apple-touch-icon" href="/icons/logo/logo-180.png" />
     <link
       rel="apple-touch-icon"

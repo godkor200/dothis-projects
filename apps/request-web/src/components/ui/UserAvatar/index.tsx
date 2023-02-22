@@ -23,6 +23,7 @@ export const UserAvatar = ({
       <Avatar
         w={size}
         h={size}
+        loading="lazy"
         name={user?.name ?? undefined}
         src={user?.image ?? undefined}
         {...props}
