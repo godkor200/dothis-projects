@@ -10,12 +10,13 @@ import React, { useMemo } from 'react';
 import { SvgClose } from '@/components/ui/Icons';
 import UserLink from '@/components/ui/Links/UserLink';
 import { pagePath } from '@/constants';
+import { colors, fontWeights, typo } from '@/styles/dothisTheme';
+import { isLinkActive } from '@/utils/appUtils';
 import { youtubeSignIn } from '@/utils/auth';
 import type { inferQueryOutput } from '@/utils/trpc';
+
 import { Button } from '../ui/Button';
 import { UserAvatar } from '../ui/UserAvatar';
-import { isLinkActive } from '@/utils/appUtils';
-import { colors, fontWeights, typo } from '@/styles/dothisTheme';
 
 type Props = {
   onClose(): void;

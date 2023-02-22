@@ -1,5 +1,6 @@
-import { colors } from '@/styles/dothisTheme';
 import type { SVGProps } from 'react';
+
+import { colors } from '@/styles/dothisTheme';
 
 export const SvgHeart = (props: SVGProps<SVGSVGElement>) => (
   <svg

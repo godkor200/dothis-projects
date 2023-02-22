@@ -15,6 +15,7 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 import MainSwiper from '@/components/article/MainSwiper';
 import RecommendRequests from '@/components/article/RecommendRequests';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import OnlyPcContainer from '@/components/layout/OnlyPcContainer';
 import { SwiperButton } from '@/components/ui/Button/SwiperButton';
@@ -23,7 +24,6 @@ import useMessageToast from '@/hooks/useMessageToast';
 import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
 import { youtubeSignIn } from '@/utils/auth';
 import { trpc, trpcSSG } from '@/utils/trpc';
-import { Container } from '@/components/layout/Container';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
   () => {

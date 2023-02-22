@@ -7,9 +7,9 @@ import type {
 import { z } from 'zod';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { trpcSSG } from '@/utils/trpc';
-import { Container } from '@/components/layout/Container';
 
 const querySchema = z.object({
   requestId: z.string().transform(BigInt),

@@ -1,12 +1,13 @@
-import {
-  SvgYoutube,
-  SvgInstagram,
-  SvgTwitch,
-  SvgFacebook,
-} from '@/components/ui/Icons';
 import type { AwaitedReturn } from '@dothis/share';
 import type { AuthPlatformType } from '@prisma/client';
 import { z } from 'zod';
+
+import {
+  SvgFacebook,
+  SvgInstagram,
+  SvgTwitch,
+  SvgYoutube,
+} from '@/components/ui/Icons';
 
 import { schema as userSchema } from '../UserDomain/domain';
 import type { db } from './db';
