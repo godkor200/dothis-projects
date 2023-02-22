@@ -3,6 +3,7 @@
     "module": "commonjs",
     "declaration": true,    
     "declarationMap": true,
+    "preserveSymlinks": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,      
