@@ -1,10 +1,4 @@
-import {
-  Container,
-  errorMessage,
-  standaloneToast,
-  ToastBox,
-  typo,
-} from '@dothis/share';
+import { errorMessage, standaloneToast } from '@dothis/share';
 import {
   flushMessageSession,
   withSessionSSR,
@@ -16,6 +10,7 @@ import { useEffect } from 'react';
 
 import Login from '@/components/contents/Login';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {

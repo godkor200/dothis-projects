@@ -32,10 +32,10 @@
     },
     "theme-gen": {
       "inputs": [
-        "./lib/styles/**/*"
+        "./src/styles/**/*"
       ],
       "outputs": [
-        "./lib/types/theme.d.ts"
+        "./src/types/theme.d.ts"
       ],
       "cache": false
     },

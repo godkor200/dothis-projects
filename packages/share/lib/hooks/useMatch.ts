@@ -1,8 +1,8 @@
-import { useBoolean } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { matchMarkList } from '../utils';
+import { useBoolean } from './useBoolean';
 
 type List = string[];
 export type UseMatchParam = {

@@ -1,8 +1,11 @@
 import { Center } from '@chakra-ui/react';
-import type { MentionInputProps} from '@dothis/share';
-import { MentionInput,SvgSearch, useMatch } from '@dothis/share';
+import { useMatch } from '@dothis/share';
 
 import { trpc } from '@/utils/trpc';
+
+import { SvgSearch } from '../Icons';
+import type { MentionInputProps } from '../Input';
+import { MentionInput } from '../Input';
 
 export type SearchInputProps = Omit<MentionInputProps, 'match'>;
 const SearchInput = (props: SearchInputProps) => {

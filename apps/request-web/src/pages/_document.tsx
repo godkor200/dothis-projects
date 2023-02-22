@@ -1,4 +1,3 @@
-import { colors } from '@dothis/share';
 import createCache from '@emotion/cache';
 import createEmotionServer from '@emotion/server/create-instance';
 import axios from 'axios';
@@ -7,6 +6,8 @@ import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 import superjson from 'superjson';
+
+import { colors } from '@/styles/dothisTheme';
 
 const isBrowser = typeof document !== 'undefined';
 

@@ -6,11 +6,8 @@ import type {
   GetServerSidePropsResult,
   NextApiHandler,
 } from 'next';
-import type { Session } from 'next-auth';
-import { getSession } from 'next-auth/react';
 
-import type { PartialRequiredNotNull } from '..';
-import { errorMessage, isMessage } from '..';
+import { isMessage } from '..';
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,
@@ -40,32 +37,3 @@ export const flushMessageSession = async (req: IncomingMessage) => {
   }
   return null;
 };
-
-export const withUserSessionSSR = <
-  P extends Record<string, unknown> = Record<string, unknown>,
->(
-  handler: (
-    context: GetServerSidePropsContext,
-    userSession: PartialRequiredNotNull<Session['user'], 'id' | 'name'>,
-  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
-  fallbackUrl: string,
-) =>
-  withIronSessionSsr(async (context) => {
-    const session = await getSession(context);
-    if (!session?.user.id || !session?.user.name) {
-      context.req.session.message = errorMessage({
-        message: '로그인이 필요한 서비스입니다.',
-      });
-      await context.req.session.save();
-      return {
-        redirect: {
-          destination: fallbackUrl,
-          permanent: false,
-        },
-      };
-    }
-    return handler(
-      context,
-      session.user as PartialRequiredNotNull<Session['user'], 'id' | 'name'>,
-    );
-  }, sessionOptions);

@@ -1,4 +1,4 @@
-import './index.css';
+import 'src/components/article/Graphs/LineRanking/index.css';
 
 import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
@@ -7,7 +7,6 @@ import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import clsx from 'clsx';
 import { extent } from 'd3-array';
 import React, { useReducer } from 'react';
-
 import type {
   Actions,
   GroupHandleEvents,
@@ -16,9 +15,13 @@ import type {
   RankData,
   State,
   TooltipData,
-} from './common';
-import { ActionKind, colors, initialState } from './common';
-import RankingLine from './RankingLine';
+} from 'src/components/article/Graphs/LineRanking/common';
+import {
+  ActionKind,
+  colors,
+  initialState,
+} from 'src/components/article/Graphs/LineRanking/common';
+import RankingLine from 'src/components/article/Graphs/LineRanking/RankingLine';
 
 const itemByWidth = 100;
 const itemByHeight = 50;

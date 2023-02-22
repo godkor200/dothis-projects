@@ -1,10 +1,10 @@
+import { useAnimatedNumber } from '@lib/hooks';
+import { radToDeg, tau } from '@lib/utils/mathUtils/common';
 import { Group } from '@visx/group';
 import * as Scale from '@visx/scale';
 import { Pie } from '@visx/shape';
 import type { PieProps } from '@visx/shape/lib/shapes/Pie';
 import { Text } from '@visx/text';
-import { useAnimatedNumber } from 'lib/hooks';
-import { radToDeg, tau } from 'lib/utils/mathUtils/common';
 import { useState } from 'react';
 
 export type TachometerData = Array<{

@@ -9,7 +9,6 @@ import {
   typo,
   UserAvatar,
 } from '@dothis/share';
-import { SvgClose } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -17,6 +16,7 @@ import { useRouter } from 'next/router';
 import { signIn, signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
+import { SvgClose } from '@/components/ui';
 import UserLink from '@/components/ui/Links/UserLink';
 import { pagePath } from '@/constants';
 import { youtubeSignIn } from '@/utils/auth';

@@ -1,9 +1,8 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { useEffect, useRef, useState } from 'react';
-
-import type { TachometerGraphProps } from './index';
-import { TachometerGraph } from './index';
-import { defaultPercentValueInfo } from './utils';
+import type { TachometerGraphProps } from 'src/components/article/Graphs/TachometerGraph/Tachometer/index';
+import { TachometerGraph } from 'src/components/article/Graphs/TachometerGraph/Tachometer/index';
+import { defaultPercentValueInfo } from 'src/components/article/Graphs/TachometerGraph/Tachometer/utils';
 
 export default {
   /* 👇 The title prop is optional.

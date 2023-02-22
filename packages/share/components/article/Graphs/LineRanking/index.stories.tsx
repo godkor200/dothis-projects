@@ -1,7 +1,6 @@
 import type { ComponentMeta } from '@storybook/react';
 import format from 'date-fns/format';
-
-import { LineRanking } from './index';
+import { LineRanking } from 'src/components/article/Graphs/LineRanking/index';
 
 type Ranking = {
   date: string;

@@ -4,9 +4,6 @@ import { Text } from '@visx/text';
 import clsx from 'clsx';
 import type { ReactElement } from 'react';
 import React from 'react';
-
-import AreaCircle from '../SvgParts/AreaCircle';
-import AreaLine from '../SvgParts/AreaLine';
 import type {
   DateByRankingData,
   GroupHandleEvents,
@@ -14,7 +11,9 @@ import type {
   RankCircleHandleEvents,
   RankData,
   State,
-} from './common';
+} from 'src/components/article/Graphs/LineRanking/common';
+import AreaCircle from 'src/components/article/Graphs/SvgParts/AreaCircle';
+import AreaLine from 'src/components/article/Graphs/SvgParts/AreaLine';
 
 type Props<D extends RankData> = {
   color: string;

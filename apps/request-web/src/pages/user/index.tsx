@@ -1,7 +1,21 @@
-import { Box, Center, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
-import { colors, Container, fontSizes, fontWeights, mediaQueries, shareUrlObject, useParsedQuery } from '@dothis/share';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { Button, SelectMenu,  SelectMenuButton, SelectMenuList, SvgShareForward, UserAvatar } from '@dothis/share/components/ui';
+import {
+  Box,
+  Center,
+  Divider,
+  Flex,
+  HStack,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
+import {
+  colors,
+  Container,
+  fontSizes,
+  fontWeights,
+  mediaQueries,
+  shareUrlObject,
+  useParsedQuery,
+} from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,7 +27,16 @@ import { z } from 'zod';
 
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
 import NewRequestPost from '@/components/contents/NewRequestPost';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import {
+  Button,
+  SelectMenu,
+  SelectMenuButton,
+  SelectMenuList,
+  SvgShareForward,
+  UserAvatar,
+} from '@/components/ui';
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
 import { trpc, trpcSSG } from '@/utils/trpc';
@@ -102,15 +125,15 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   return (
     <LayoutTemplate>
       <Container css={style} mt={40} mb={68}>
-        <Box className='creator-profile' position='relative'>
+        <Box className="creator-profile" position="relative">
           <UserAvatar
             size={80}
             user={creatorUser}
             Text={
               <Text
-                as='h3'
-                fontSize='h1'
-                fontWeight='b'
+                as="h3"
+                fontSize="h1"
+                fontWeight="b"
                 ml={20}
                 maxW={{ base: 'auto', tablet: 360 }}
                 noOfLines={2}
@@ -138,24 +161,24 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     <Button
                       key={auth.platform}
                       disabled={!auth.profileUrl}
-                      theme='white'
-                      size='sm'
+                      theme="white"
+                      size="sm"
                       w={32}
                       h={32}
                       round
                     >
                       {auth.profileUrl ? (
-                        <Link href={auth.profileUrl} target='_blank'>
-                          {Component()({key: auth.platform})}
+                        <Link href={auth.profileUrl} target="_blank">
+                          {Component()({ key: auth.platform })}
                         </Link>
                       ) : (
-                        Component()({key: auth.platform})
+                        Component()({ key: auth.platform })
                       )}
                     </Button>
                   );
                 })}
                 <Button
-                  theme='primary'
+                  theme="primary"
                   h={36}
                   w={96}
                   onClick={() =>
@@ -167,8 +190,8 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     })
                   }
                 >
-                  <SvgShareForward fill='white' />
-                  <Text as='span' ml={4}>
+                  <SvgShareForward fill="white" />
+                  <Text as="span" ml={4}>
                     요청 주소
                   </Text>
                 </Button>
@@ -176,7 +199,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
             )}
           </Box>
 
-          <Box color='gray.80' mt={32}>
+          <Box color="gray.80" mt={32}>
             {creatorUser.introduction}
           </Box>
         </Box>
@@ -189,7 +212,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
               }}
               mb={30}
             />
-            <Text as='h3' mb={20} fontSize='t1' fontWeight='m'>
+            <Text as="h3" mb={20} fontSize="t1" fontWeight="m">
               {NewRequestPost.title()}
             </Text>
             <NewRequestPost
@@ -203,19 +226,19 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
         {myRequests?.data && myRequests?.data.length > 0 && (
           <>
             <Divider mt={8} mb={30} />
-            <Box as='section'>
+            <Box as="section">
               <Flex
-                as='header'
-                alignItems='center'
-                justifyContent='space-between'
+                as="header"
+                alignItems="center"
+                justifyContent="space-between"
                 h={48}
                 mb={20}
               >
-                <Text as='h2' fontSize='h3' fontWeight='b'>
+                <Text as="h2" fontSize="h3" fontWeight="b">
                   내 요청
                 </Text>
                 <Link
-                  className='view-more-request'
+                  className="view-more-request"
                   href={pagePath.userRequestPost({
                     searchText: creatorUser.name ? creatorUser.name : undefined,
                   })}
@@ -238,19 +261,19 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
         {creatorUser.creator && (
           <>
             <Divider my={30} />
-            <Box as='section'>
+            <Box as="section">
               <Flex
-                as='header'
+                as="header"
                 alignItems={{ base: 'start', tablet: 'center' }}
                 flexDirection={{ base: 'column', tablet: 'row' }}
-                justifyContent='space-between'
+                justifyContent="space-between"
                 mb={20}
               >
-                <Text as='h2' fontSize='h3' fontWeight='b'>
+                <Text as="h2" fontSize="h3" fontWeight="b">
                   받은 요청
                 </Text>
                 <HStack spacing={30} marginTop={{ base: 12, tablet: 0 }}>
-                  <SelectMenu theme='transparent' width={120}>
+                  <SelectMenu theme="transparent" width={120}>
                     <SelectMenuButton>
                       {RequestPostDomain.constants.categoryFilter.get(
                         categoryFilter,
@@ -270,7 +293,7 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                       }}
                     />
                   </SelectMenu>
-                  <SelectMenu theme='transparent' width={113}>
+                  <SelectMenu theme="transparent" width={113}>
                     <SelectMenuButton>
                       {RequestPostDomain.constants.requestFilter.get(
                         requestFilter,
@@ -320,14 +343,14 @@ const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
                     {creatorRequests.data?.pages.map(({ items }) =>
                       items
                         ? items.map(
-                          (request) =>
-                            request && (
-                              <HorizonPostRequestItem
-                                key={`${request.id}`}
-                                requestPost={request}
-                              />
-                            ),
-                        )
+                            (request) =>
+                              request && (
+                                <HorizonPostRequestItem
+                                  key={`${request.id}`}
+                                  requestPost={request}
+                                />
+                              ),
+                          )
                         : null,
                     )}
                     <div ref={ref}></div>

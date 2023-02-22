@@ -6,13 +6,10 @@
       "~/*": ["./*"]
     },
     "incremental": true,
-    "jsxImportSource": "@emotion/react"
+    "declaration": true,
+    "declarationMap": true,
+    "jsxImportSource": "@emotion/react",
   },
-  "references": [
-    {
-      "path": "../../packages/share"
-    }
-  ],
   "include": ["./src/**/*", "next-env.d.ts", "../../types/**/*.d.ts"],
-  "exclude": ["node_modules", "./public/**/*"]
+  "exclude": ["node_modules", "./public/**/*", "dist", "node_modules"]
 }

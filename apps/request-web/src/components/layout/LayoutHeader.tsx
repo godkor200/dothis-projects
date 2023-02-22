@@ -1,12 +1,4 @@
 import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
-import {
-  Button,
-  colors,
-  Container,
-  mediaQueries,
-  typo,
-  UserAvatar,
-} from '@dothis/share';
 import { css } from '@emotion/react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -16,19 +8,20 @@ import React from 'react';
 
 import { HomeLogo } from '@/components/ui/HomeLogo';
 import { pagePath } from '@/constants';
+import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
 import { trpc } from '@/utils/trpc';
 
 import Login from '../contents/Login';
 import NewRequestPost from '../contents/NewRequestPost';
 import SideProfile from '../contents/SideProfile';
+import { Button } from '../ui/Button';
 import SearchInput from '../ui/SearchInput';
+import { UserAvatar } from '../ui/UserAvatar';
+import { Container } from './Container';
 
-const Drawer = dynamic(
-  () => import('@dothis/share/components/ui/Drawer').then((mod) => mod.Drawer),
-  {
-    ssr: false,
-  },
-);
+const Drawer = dynamic(() => import('../ui/Drawer').then((mod) => mod.Drawer), {
+  ssr: false,
+});
 
 export default function LayoutHeader() {
   const { data: session, status } = useSession();

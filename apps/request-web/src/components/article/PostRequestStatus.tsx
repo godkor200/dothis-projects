@@ -1,11 +1,16 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
-import { colors, fontWeights , SvgAward, SvgCheck, SvgSendPlane, SvgThumbUp } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { RequestPost, RequestStatusType } from '@prisma/client';
 import clsx from 'clsx';
 import React from 'react';
 
+import { colors, fontWeights } from '@/styles/dothisTheme';
+
 import { RequestPostDomain } from '../../domain';
+import { SvgAward } from '../ui/Icons/SvgAward';
+import { SvgCheck } from '../ui/Icons/SvgCheck';
+import { SvgSendPlane } from '../ui/Icons/SvgSendPlane';
+import { SvgThumbUp } from '../ui/Icons/SvgThumbUp';
 
 const { statusTypeKor, statusStep, requestStatusType } =
   RequestPostDomain.constants;
@@ -89,7 +94,7 @@ const PostRequestStatus = ({ status }: Pick<RequestPost, 'status'>) => {
         )}
       >
         <Box className="request-status-icon">
-          <SvgThumbUp></SvgThumbUp>
+          <SvgThumbUp />
         </Box>
         <Text className="request-status-info" as="span">
           {statusTypeKor.get('COMPLETION')}

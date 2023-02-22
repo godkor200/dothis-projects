@@ -1,16 +1,22 @@
 import { Box, Flex, HStack, Text, useBoolean } from '@chakra-ui/react';
-import { colors, fontWeights, thousandsSeparators, toKoAboutDateAgo, useGlobalStore } from '@dothis/share';
-import { Button, SvgDonate, SvgHeart, UserAvatar } from '@dothis/share/components/ui';
+import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import type { Session } from 'next-auth';
 import React, { useMemo } from 'react';
 
+import { Button } from '@/components/ui/Button';
+import { useGlobalStore } from '@/models/globalStore';
+import { colors, fontWeights } from '@/styles/dothisTheme';
+
 import { UserDomain } from '../../domain';
+import { SvgDonate } from '../ui/Icons/SvgDonate';
+import { SvgHeart } from '../ui/Icons/SvgHeart';
 import UserLink from '../ui/Links/UserLink';
 import type { InputCommentTextareaProps } from '../ui/Textarea/InputCommentTextarea';
 import InputCommentTextarea from '../ui/Textarea/InputCommentTextarea';
+import { UserAvatar } from '../ui/UserAvatar';
 
 export type CommentProps = {
   comment: {
@@ -39,14 +45,14 @@ export type CommentProps = {
   // onEdit(): void;
 };
 const Comment = ({
-                   comment,
-                   isHearted,
-                   isDonated,
-                   onReply,
-                   onHeart,
-                   heartCount,
-                   currentUser,
-                 }: CommentProps) => {
+  comment,
+  isHearted,
+  isDonated,
+  onReply,
+  onHeart,
+  heartCount,
+  currentUser,
+}: CommentProps) => {
   const { user } = comment;
   const isActiveUser = useMemo(() => !!user, [user]);
   const [isWriteReply, isWriteReplyFlag] = useBoolean(false);
@@ -68,28 +74,28 @@ const Comment = ({
           />
         </Box>
       )}
-      <Box className='comment-contents'>
-        <Text as='b' fontWeight='b'>
+      <Box className="comment-contents">
+        <Text as="b" fontWeight="b">
           {isActiveUser ? (
             <UserLink userId={user!.id}>{user!.name}</UserLink>
           ) : (
             UserDomain.constants.resignedUserName
           )}
         </Text>
-        <Text as='p' mt={2}>
+        <Text as="p" mt={2}>
           {comment.parentComment && comment.parentComment?.user?.name && (
-            <Text as='mark' fontWeight='sb' mr={6}>
+            <Text as="mark" fontWeight="sb" mr={6}>
               @{comment.parentComment.user.name}
             </Text>
           )}
           {comment.content}
         </Text>
-        <HStack className='comment-etc-info' spacing={8} pt={4}>
-          <Text as='span' fontWeight={fontWeights.m}>
+        <HStack className="comment-etc-info" spacing={8} pt={4}>
+          <Text as="span" fontWeight={fontWeights.m}>
             {toKoAboutDateAgo(now, comment.createdAt)}
           </Text>
           {isActiveUser && isDonated && (
-            <Box className='comment-donate'>
+            <Box className="comment-donate">
               <SvgDonate fill={colors.primary.default} />
               <span>후원중</span>
             </Box>
@@ -108,12 +114,12 @@ const Comment = ({
             </Button>
           }
           {currentUser && !isWriteReply && (
-            <Button className='comment-reply' onClick={isWriteReplyFlag.on}>
+            <Button className="comment-reply" onClick={isWriteReplyFlag.on}>
               답글
             </Button>
           )}
           {currentUser && isWriteReply && (
-            <Button className='comment-reply' onClick={isWriteReplyFlag.off}>
+            <Button className="comment-reply" onClick={isWriteReplyFlag.off}>
               취소
             </Button>
           )}

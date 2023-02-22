@@ -15,11 +15,12 @@ const requestStatusToColor: Record<StatusKeys, TagTheme> = {
   REFUSE: 'gray',
 };
 
-const StatusTag = ChangeProps(Tag)(
-  ({ requestStatus }: { requestStatus: StatusKeys }) => ({
-    theme: requestStatusToColor[requestStatus],
-    children: RequestPostDomain.constants.showStatusTypeKor.get(requestStatus),
-  }),
-);
+const StatusTag = ChangeProps(
+  Tag,
+  'StatusTag',
+)(({ requestStatus }: { requestStatus: StatusKeys }) => ({
+  theme: requestStatusToColor[requestStatus],
+  children: RequestPostDomain.constants.showStatusTypeKor.get(requestStatus),
+}));
 
 export default StatusTag;

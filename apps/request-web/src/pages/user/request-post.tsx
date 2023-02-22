@@ -1,7 +1,5 @@
 import { Box, Center, HStack, Spinner, Text } from '@chakra-ui/react';
 import { Container, typo } from '@dothis/share';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { Input, SvgSearch } from '@dothis/share/components/ui';
 import { withUserSessionSSR } from '@dothis/share/lib/utils/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
@@ -12,7 +10,9 @@ import { useDebouncedCallback } from 'use-debounce';
 import { z } from 'zod';
 
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { Input, SvgSearch } from '@/components/ui';
 import { pagePath } from '@/constants';
 import { trpc } from '@/utils/trpc';
 

@@ -9,6 +9,7 @@
     "analyze": "ANALYZE=true next build",
     "start": "next start -p 3000",
     "lint": "next lint",
+    "theme-gen": "pnpm chakra-cli tokens ./src/styles/dothisTheme/index.ts",
     "clean": "rm -rf .next .turbo node_modules",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
@@ -16,13 +17,15 @@
     "db-push": "pnpm prisma db push",
     "db-pull": "pnpm prisma db pull",
     "db-generate": "pnpm prisma generate",
+    "postinstall": "pnpm theme-gen && pnpm db-generate",
     "studio": "prisma studio"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^4.2.0",
     "@aws-sdk/abort-controller": "^3.226.0",
     "@aws-sdk/client-s3": "^3.245.0",
     "@chakra-ui/react": "^2.5.1",
-    "@dothis/share": "*",
+    "@dothis/share": "workspace:*",
     "@emotion/cache": "^11.10.5",
     "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.10.5",
@@ -38,6 +41,7 @@
     "@trpc/server": "10.7.0",
     "@types/multer": "^1.4.7",
     "@types/multer-s3": "^3.0.0",
+    "@hookform/error-message": "^2.0.1",
     "axios": "^1.2.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
@@ -47,6 +51,8 @@
     "immer": "^9.0.16",
     "iron-session": "^6.3.1",
     "jest-environment-jsdom": "^29.2.2",
+    "zustand": "^4.3.3",
+    
     "multer": "1.4.5-lts.1",
     "multer-s3": "^3.0.1",
     "next": "13.1.6",
@@ -67,7 +73,7 @@
   "devDependencies": {
     "dotenv": "^16.0.3",
     "@babel/core": "^7.20.2",
-    "@chakra-ui/cli": "^2.2.1",
+    "@chakra-ui/cli": "^2.3.0",
     "@dothis/config": "workspace:*",
     "@emotion/babel-plugin": "^11.10.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -85,10 +91,7 @@
     "prisma": "^4.8.0",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.3",
+    "typescript": "^4.9.5",
     "webpack": "^5.75.0"
-  },
-  "bundledDependencies": [
-    "@dothis/share"
-  ]
+  }
 }

@@ -1,20 +1,18 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
 import {
-  colors,
   cutOverflowStr,
-  fontWeights,
   matchMark,
-  mediaQueries,
   removeHTMLTag,
   thousandsSeparators,
-  typo,
 } from '@dothis/share';
-import { SvgDonate } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 
+import { colors, fontWeights, mediaQueries, typo } from '@/styles/dothisTheme';
+
 import { RequestPostDomain } from '../../domain';
 import ViewRequestPost from '../contents/ViewRequestPost';
+import { SvgDonate } from '../ui/Icons/SvgDonate';
 import Tag from '../ui/Tag';
 import StatusTag from '../ui/Tag/StatusTag';
 

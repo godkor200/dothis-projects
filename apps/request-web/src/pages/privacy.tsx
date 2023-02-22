@@ -1,8 +1,9 @@
-import { Container, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { typo } from '@/styles/dothisTheme';
 
 export default function Privacy() {
   return (
