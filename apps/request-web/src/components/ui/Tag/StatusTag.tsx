@@ -1,4 +1,4 @@
-import { PartialApProps } from '@dothis/share';
+import { ChangeProps } from '@dothis/share';
 
 import { RequestPostDomain } from '@/domain';
 
@@ -15,7 +15,7 @@ const requestStatusToColor: Record<StatusKeys, TagTheme> = {
   REFUSE: 'gray',
 };
 
-const StatusTag = PartialApProps(Tag)(
+const StatusTag = ChangeProps(Tag)(
   ({ requestStatus }: { requestStatus: StatusKeys }) => ({
     theme: requestStatusToColor[requestStatus],
     children: RequestPostDomain.constants.showStatusTypeKor.get(requestStatus),

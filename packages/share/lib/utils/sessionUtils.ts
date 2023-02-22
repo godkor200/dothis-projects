@@ -1,5 +1,4 @@
-import type { PartialRequiredNotNull } from '@dothis/share';
-import { errorMessage } from '@dothis/share';
+import type { IncomingMessage } from 'http';
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import type {
@@ -9,7 +8,9 @@ import type {
 } from 'next';
 import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
-import { UrlObject } from 'url';
+
+import type { PartialRequiredNotNull } from '..';
+import { errorMessage, isMessage } from '..';
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,
@@ -20,15 +21,27 @@ export const sessionOptions: IronSessionOptions = {
 export const withSessionRoute = (handler: NextApiHandler) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
-export const withSessionSsr = <
+export const withSessionSSR = <
   P extends Record<string, unknown> = Record<string, unknown>,
 >(
-  handler: (
-    context: GetServerSidePropsContext,
-  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
+  handler: ServerSideHandler<P>,
 ) => withIronSessionSsr(handler, sessionOptions);
 
-export const withUserSessionSsr = <
+type ServerSideHandler<P> = (
+  context: GetServerSidePropsContext,
+) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>;
+
+export const flushMessageSession = async (req: IncomingMessage) => {
+  const { message } = req.session;
+  if (isMessage(message)) {
+    delete req.session.message;
+    await req.session.save();
+    return { session_message: message };
+  }
+  return null;
+};
+
+export const withUserSessionSSR = <
   P extends Record<string, unknown> = Record<string, unknown>,
 >(
   handler: (

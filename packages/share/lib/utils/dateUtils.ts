@@ -1,5 +1,5 @@
-import format from 'date-fns/esm/format';
-import getISODay from 'date-fns/esm/getISODay';
+import format from 'date-fns/format';
+import getISODay from 'date-fns/getISODay';
 
 const second = 600;
 const minutes = 60 * second;

@@ -1,4 +1,14 @@
-import { Container, errorMessage, ToastBox, typo } from '@dothis/share';
+import {
+  Container,
+  errorMessage,
+  standaloneToast,
+  ToastBox,
+  typo,
+} from '@dothis/share';
+import {
+  flushMessageSession,
+  withSessionSSR,
+} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -6,36 +16,29 @@ import { useEffect } from 'react';
 
 import Login from '@/components/contents/Login';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { toast } from '@/pages/_app';
-import { withSessionSsr } from '@/server/session';
+import useMessageToast from '@/hooks/useMessageToast';
 
-export const getServerSideProps = withSessionSsr(async ({ req }) => {
-  const { message = null } = req.session;
-  delete req.session.message;
-  await req.session.save();
+export const getServerSideProps = withSessionSSR(async ({ req }) => {
+  const messageProps = await flushMessageSession(req);
 
   return {
     props: {
-      message,
+      ...messageProps,
     },
   };
 });
 
 const LoginPage = ({
-  message,
+  session_message,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { error } = router.query;
 
-  useEffect(() => {
-    if (message) {
-      toast(ToastBox.getMessageOptions(message));
-    }
-  }, []);
+  useMessageToast(session_message);
 
   useEffect(() => {
     if (error != undefined) {
-      toast(
+      standaloneToast.toast(
         ToastBox.getMessageOptions(
           errorMessage({ message: `Error : ${error}` }),
         ),

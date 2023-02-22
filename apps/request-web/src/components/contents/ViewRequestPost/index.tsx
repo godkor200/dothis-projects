@@ -132,6 +132,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       ToastBox.errorToast('요청 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },
   });
+
   const deleteRequestMutation = trpc.requestPost.delete.useMutation({
     onError(e) {
       ToastBox.toast({

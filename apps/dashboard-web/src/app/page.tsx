@@ -14,7 +14,6 @@ export default async function RootPage() {
   // const data = await getData();
   return (
     <div>
-      <div></div>
       <ClientTest />
     </div>
   );

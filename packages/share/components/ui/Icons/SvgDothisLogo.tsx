@@ -8,7 +8,7 @@ export function SvgDothisLogo(props: SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_2769_1400)">
+      <g clipPath="url(#clip0_2769_1400)">
         <path
           d="M18.6168 3.91766C17.3283 2.73886 15.8683 1.88913 14.3002 1.40401C12.9051 0.928163 10.6 0.65625 7.97663 0.65625H0V25.9318H7.91484C10.5583 25.9318 12.834 25.6769 14.1426 25.2366C15.6458 24.7654 17.095 23.9218 18.4515 22.726C21.1644 20.3282 22.541 17.1549 22.541 13.294C22.541 9.43317 21.22 6.29381 18.6152 3.91766H18.6168ZM17.2248 13.294C17.2248 15.6223 16.46 17.4531 14.8872 18.8868C14.1256 19.5758 13.265 20.0841 12.3411 20.3962C11.4559 20.6774 9.82595 20.8582 8.18984 20.8582H5.2884V5.7299H8.18984C11.1376 5.7299 13.5879 6.42977 14.9089 7.6472C16.4662 9.09483 17.2232 10.9426 17.2232 13.294H17.2248Z"
           fill="#EC1B36"
@@ -63,8 +63,8 @@ export function SvgDothisLogo(props: SVGProps<SVGSVGElement>) {
           y2="20.0904"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97051B" />
-          <stop offset="1" stop-color="#EC1B36" />
+          <stop stopColor="#97051B" />
+          <stop offset="1" stopColor="#EC1B36" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_2769_1400"
@@ -74,8 +74,8 @@ export function SvgDothisLogo(props: SVGProps<SVGSVGElement>) {
           y2="7.39228"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EC1B36" />
-          <stop offset="1" stop-color="#97051B" />
+          <stop stopColor="#EC1B36" />
+          <stop offset="1" stopColor="#97051B" />
         </linearGradient>
         <clipPath id="clip0_2769_1400">
           <rect width="113" height="26.5888" fill="white" />

@@ -22,43 +22,40 @@ export default async function handler(
     const accessToken = session?.accessToken as string;
     const userId = session.user.id as string;
 
+    console.log('session', session);
     const auth = new googleAuth.OAuth2({
       clientId,
       clientSecret,
     });
     auth.setCredentials({
       // @ts-ignore
-      access_token,
+      access_token: accessToken,
       // refresh_token: refreshToken,
     });
 
     const service = youtube('v3');
     await service.channels.list(
       {
-        auth: auth,
+        auth,
         part: 'snippet,contentDetails,statistics'.split(','),
         mine: true,
       },
       async function (err: Error | null, response: any) {
         if (err) {
           console.log('The API returned an error: ' + err);
-          return res.send(
-            superjson.stringify(
-              errorMessage({
-                message: '크리에이터 인증 과정에서 에러가 발생했습니다.',
-              }),
-            ),
+          return res.status(403).send(
+            errorMessage({
+              message: '크리에이터 인증 과정에서 에러가 발생했습니다.',
+            }),
           );
         }
 
         const channels = response.data.items;
-        if (channels.length == 0) {
-          return res.send(
-            superjson.stringify(
-              errorMessage({
-                message: '보유하고 계신 채널이 없습니다.',
-              }),
-            ),
+        if (!channels) {
+          return res.status(400).send(
+            errorMessage({
+              message: '보유하고 계신 채널이 없습니다.',
+            }),
           );
         } else {
           let maxSubscriberIndex = 0;
@@ -78,7 +75,7 @@ export default async function handler(
             channels[maxSubscriberIndex].id,
           );
 
-          return res.redirect('/');
+          return res.status(200).redirect('/');
           // res.setHeader('Content-Type', 'text/html; charset=utf-8');
           // return res.send(superjson.stringify(channels));
         }
