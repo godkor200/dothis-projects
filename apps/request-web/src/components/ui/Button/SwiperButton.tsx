@@ -3,8 +3,7 @@ import clsx from 'clsx';
 import type { ComponentProps } from 'react';
 
 import { Button } from '@/components/ui/Button/Button';
-import { SvgNext } from '@/components/ui/Icons/SvgNext';
-import { SvgPrev } from '@/components/ui/Icons/SvgPrev';
+import { SvgNext, SvgPrev } from '@/components/ui/Icons';
 import { colors } from '@/styles/dothisTheme';
 
 type Props = ComponentProps<typeof Button> & {

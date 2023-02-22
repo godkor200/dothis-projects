@@ -1,4 +1,4 @@
-import { errorMessage, standaloneToast } from '@dothis/share';
+import { errorMessage } from '@dothis/share';
 import {
   flushMessageSession,
   withSessionSSR,
@@ -9,9 +9,12 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import Login from '@/components/contents/Login';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
+import { standaloneToast } from '@/models/toast';
+import { typo } from '@/styles';
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {
   const messageProps = await flushMessageSession(req);

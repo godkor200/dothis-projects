@@ -1,7 +1,7 @@
-import { ToastBox } from '@dothis/share';
 import { useSession } from 'next-auth/react';
 
 import Login from '@/components/contents/Login';
+import { ToastBox } from '@/components/ui/ToastBox';
 
 export default function useMustLoginFirst() {
   const { data } = useSession();

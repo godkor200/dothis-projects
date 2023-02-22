@@ -1,5 +1,10 @@
-import type { AwaitedReturn} from '@dothis/share';
-import { SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share';
+import {
+  SvgYoutube,
+  SvgInstagram,
+  SvgTwitch,
+  SvgFacebook,
+} from '@/components/ui/Icons';
+import type { AwaitedReturn } from '@dothis/share';
 import type { AuthPlatformType } from '@prisma/client';
 import { z } from 'zod';
 
@@ -31,7 +36,6 @@ const platformDetail = {
     Component: () => SvgTwitch,
   },
 } satisfies Record<AuthPlatformType, unknown>;
-
 
 export const constants = {
   platformDetail,

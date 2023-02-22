@@ -7,15 +7,7 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import {
-  colors,
-  Container,
-  fontSizes,
-  fontWeights,
-  mediaQueries,
-  shareUrlObject,
-  useParsedQuery,
-} from '@dothis/share';
+import { useParsedQuery } from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -29,19 +21,28 @@ import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem'
 import NewRequestPost from '@/components/contents/NewRequestPost';
 import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import {
-  Button,
-  SelectMenu,
-  SelectMenuButton,
-  SelectMenuList,
-  SvgShareForward,
-  UserAvatar,
-} from '@/components/ui';
+
 import { pagePath } from '@/constants';
 import type { inferQueryOutput } from '@/utils/trpc';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 import { CreatorDomain, RequestPostDomain } from '../../domain';
+import { Container } from '@/components/layout/Container';
+import { shareUrlObject } from '@/utils/appUtils';
+import { UserAvatar } from '@/components/ui/UserAvatar';
+import { Button } from '@/components/ui/Button';
+import { SvgShareForward } from '@/components/ui/Icons';
+import {
+  SelectMenuButton,
+  SelectMenuList,
+  SelectMenu,
+} from '@/components/ui/SelectMenu';
+import {
+  fontWeights,
+  colors,
+  mediaQueries,
+  fontSizes,
+} from '@/styles/dothisTheme';
 
 export const querySchema = z
   .object({

@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import {
   flushMessageSession,
   withSessionSSR,
@@ -23,6 +23,7 @@ import useMessageToast from '@/hooks/useMessageToast';
 import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
 import { youtubeSignIn } from '@/utils/auth';
 import { trpc, trpcSSG } from '@/utils/trpc';
+import { Container } from '@/components/layout/Container';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
   () => {
@@ -122,11 +123,11 @@ export default function Home({
               <div className="section-slide-buttons">
                 <SwiperButton
                   dir="prev"
-                  onClick={resolvedRequestSwiperRef.current.slidePrev}
+                  onClick={() => resolvedRequestSwiperRef.current!.slidePrev()}
                 />
                 <SwiperButton
                   dir="next"
-                  onClick={resolvedRequestSwiperRef.current.slideNext}
+                  onClick={() => resolvedRequestSwiperRef.current!.slideNext()}
                 />
               </div>
             </div>

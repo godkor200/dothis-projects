@@ -3,7 +3,7 @@ import type React from 'react';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import type { ModalProps } from '../../components/article/Modal';
+import type { ModalProps } from '@/components/article/Modal';
 
 enableMapSet();
 

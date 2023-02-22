@@ -1,2 +1,3 @@
-export * from 'src/models/urlHistory/useUrlHistoryEvent';
-export * from 'src/models/urlHistory/useUrlHistoryStore';
+export * from './useUrlHistoryEvent';
+export * from './useUrlHistoryStore';
+export * from './useBackUrl';
