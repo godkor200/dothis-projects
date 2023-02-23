@@ -56,23 +56,23 @@ module.exports = function (options, webpack) {
         allowlist: ['webpack/hot/poll?100'],
       }),
     ],
-    module: {
-      rules: [
-        {
-          test: /.ts?$/,
-          use: [
-            {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true,
-                configFile: tsConfigFile,
-              },
-            },
-          ],
-          exclude: /node_modules/,
-        },
-      ],
-    },
+    // module: {
+    //   rules: [
+    //     {
+    //       test: /.ts?$/,
+    //       use: [
+    //         {
+    //           loader: 'ts-loader',
+    //           options: {
+    //             transpileOnly: true,
+    //             configFile: tsConfigFile,
+    //           },
+    //         },
+    //       ],
+    //       exclude: /node_modules/,
+    //     },
+    //   ],
+    // },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
       plugins: [
