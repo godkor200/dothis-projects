@@ -51,7 +51,7 @@ import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { useModalOptStore, useModalStore } from '@/models/Modal';
+import { useModalOptStore, useModalStore } from '@/dto/Modal';
 import requestPost from '@/pages/user/request-post';
 import { trpc } from '@/utils/trpc';
 

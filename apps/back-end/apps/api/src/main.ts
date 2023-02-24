@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '@Apps/api/src/app.module';
+import { AppModule } from '@Apps/app.module';
 import { SwaggerModule } from '@nestjs/swagger';
 import { config } from '@Libs/commons/src/util/swagger';
 import cookieParser from 'cookie-parser';

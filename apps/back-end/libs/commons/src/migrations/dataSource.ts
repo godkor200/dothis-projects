@@ -1,12 +1,12 @@
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
-import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
-import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
-import { Membership } from '@Apps/api/src/config/database/domain/membership/Membership.entity';
-import { DailyViews } from '@Apps/api/src/config/database/domain/daily_views/DailyViews.entity';
-import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
-import { Video } from '@Apps/api/src/config/database/domain/videos/Videos.entity';
+import { User } from '@Apps/config/database/domain/user/User.entity';
+import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
+import { Membership } from '@Apps/config/database/domain/membership/Membership.entity';
+import { DailyViews } from '@Apps/config/database/domain/daily_views/DailyViews.entity';
+import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
+import { Video } from '@Apps/config/database/domain/videos/Videos.entity';
 
 const configService = new ConfigService();
 config();

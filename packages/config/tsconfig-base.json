@@ -21,8 +21,6 @@
       "../../node_modules/@types",
       "../../node_modules/@chakra-ui/styled-system/dist",
     ],
-
-   
   },
   "include": ["eslint-dothis-nestjs.js", "eslint-dothis-nextjs.js"]
 }

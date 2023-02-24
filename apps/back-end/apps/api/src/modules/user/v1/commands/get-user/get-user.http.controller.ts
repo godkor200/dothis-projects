@@ -1,6 +1,6 @@
 import { Controller, HttpStatus, Param } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { FindUserCommand } from '@Apps/api/src/modules/user/v1/commands/get-user/get-user.service';
+import { FindUserCommand } from '@Apps/modules/user/v1/commands/get-user/get-user.service';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -15,7 +15,7 @@ import {
   TsRest,
   NestRequestShapes,
 } from '@ts-rest/nest';
-import { userApi } from '@dothis/share/lib/dto';
+import { userApi } from '@dothis/dto/lib';
 
 const c = nestControllerContract(userApi);
 const { getUser } = c;

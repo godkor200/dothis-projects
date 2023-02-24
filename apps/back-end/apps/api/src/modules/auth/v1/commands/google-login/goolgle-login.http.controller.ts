@@ -6,7 +6,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { authApi } from '@dothis/share/lib/dto';
+import { authApi } from '@dothis/dto/lib';
 import { GoogleOAuthGuard } from '@Libs/commons/src';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const { getGoogleLogin } = nestControllerContract(authApi);

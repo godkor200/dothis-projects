@@ -1,4 +1,4 @@
-import { UserRepositoryPort } from '@Apps/api/src/modules/user/v1/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
 import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 

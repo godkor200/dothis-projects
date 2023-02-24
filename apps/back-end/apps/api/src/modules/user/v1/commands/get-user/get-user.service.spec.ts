@@ -1,6 +1,6 @@
 import { GetUserCommandHandler } from './get-user.service';
-import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
-import { MockGetUser } from '@Apps/api/src/modules/user/__mock__/getUser.mock';
+import { User } from '@Apps/config/database/domain/user/User.entity';
+import { MockGetUser } from '@Apps/modules/user/__mock__/getUser.mock';
 describe('get-user spec', () => {
   test('유저 하나를 리턴한다.', async () => {
     const user: User = {

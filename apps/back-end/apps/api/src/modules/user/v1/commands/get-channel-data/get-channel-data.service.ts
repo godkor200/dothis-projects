@@ -1,12 +1,12 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { UserChannelDataRepositoryPort } from '@Apps/api/src/modules/user-channel-data/v1/db/user-channel-data.repository.port';
+import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
 import { google } from 'googleapis';
-import { UserChannelData } from '@Apps/api/src/config/database/domain/userChannelData/UserChannelData.entity';
-import { ChannelDataRepositoryPost } from '@Apps/api/src/modules/channel/v1/db/channel-data.repository.post';
-import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/modules/user-channel-data/user-channel-data.di-token';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/api/src/modules/channel/channel-data.di-token';
-import { GetChannelDataCommandDto } from '@Apps/api/src/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
+import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
+import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
+import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/channel-data.di-token';
+import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 
 @CommandHandler(GetChannelDataCommandDto)
 export class GetChannelDataCommandHandler

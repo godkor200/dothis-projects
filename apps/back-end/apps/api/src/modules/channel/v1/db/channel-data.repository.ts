@@ -1,10 +1,10 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { Channel } from '@Apps/api/src/config/database/domain/channel/Channel.entity';
-import { ChannelModel, zChannelData } from '@dothis/share/lib/dto';
+import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
+import { ChannelModel, zChannelData } from '@dothis/dto/lib';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ChannelDataRepositoryPost } from '@Apps/api/src/modules/channel/v1/db/channel-data.repository.post';
+import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
 
 export class ChannelDataRepository
   extends SqlRepositoryBase<Channel, ChannelModel>

@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Channel } from '../channel/Channel.entity';
-import { DailyViews } from '@Apps/api/src/config/database/domain/daily_views/DailyViews.entity';
+import { DailyViews } from '@Apps/config/database/domain/daily_views/DailyViews.entity';
 @Entity({ name: 'video' })
 export class Video {
   @PrimaryGeneratedColumn({ name: 'id' })

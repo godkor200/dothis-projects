@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import {
   MySqlConfigModule,
   TypeOrmConfigService,
-} from '@Apps/api/src/config/database/database.mysql';
+} from '@Apps/config/database/database.mysql';
 
 export const typeOrmConfigAsync: TypeOrmModuleAsyncOptions = {
   imports: [MySqlConfigModule],

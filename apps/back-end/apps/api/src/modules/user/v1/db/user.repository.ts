@@ -1,8 +1,8 @@
-import { UserRepositoryPort } from '@Apps/api/src/modules/user/v1/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { User } from '@Apps/api/src/config/database/domain/user/User.entity';
+import { User } from '@Apps/config/database/domain/user/User.entity';
 import { Injectable } from '@nestjs/common';
-import { UserModel, userModel } from '@dothis/share/lib/dto';
+import { UserModel, userModel } from '@dothis/dto/lib';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 

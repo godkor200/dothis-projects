@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserApiModule } from '@Apps/api/src/modules/user/user.module';
+import { UserApiModule } from '@Apps/modules/user/user.module';
 import { AuthApiModule } from '@Apps/api/src/modules/auth/AuthApi.module';
 import { ChannelApiModule } from './modules/channel/channel-api.module';
 import { UserChannelDataApiModule } from '@Apps/api/src/modules/user-channel-data/user-channel-data-api.module';

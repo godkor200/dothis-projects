@@ -2,10 +2,10 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { GoogleOAuthGuard, User } from '@Libs/commons/src';
 import { CommandBus } from '@nestjs/cqrs';
-import { UserInfoCommandDto } from '@Apps/api/src/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { authApi } from '@dothis/share/lib/dto';
+import { authApi } from '@dothis/dto/lib';
 const { getGoogleRedirect } = nestControllerContract(authApi);
 const { pathParams, description, summary, responses } = getGoogleRedirect;
 
