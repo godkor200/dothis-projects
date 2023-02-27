@@ -17,7 +17,7 @@
     "db-push": "pnpm prisma db push",
     "db-pull": "pnpm prisma db pull",
     "db-generate": "pnpm prisma generate",
-    "postinstall": "pnpm theme-gen && pnpm db-generate",
+    "gen": "pnpm theme-gen && pnpm db-generate",
     "studio": "prisma studio"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "@trpc/server": "10.7.0",
     "@types/multer": "^1.4.7",
     "@types/multer-s3": "^3.0.0",
+    "@fp-ts/core": "^0.2.1",
     "@hookform/error-message": "^2.0.1",
     "axios": "^1.2.0",
     "clsx": "^1.2.1",

@@ -27,7 +27,6 @@
     "jsx": "preserve",
     "module": "esnext",
     "types": [
-      "@emotion/react/types/css-prop",
       "reflect-metadata",
       "jest",
       "node"

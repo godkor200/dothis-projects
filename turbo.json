@@ -26,6 +26,9 @@
       "cache": false
     },
     "build-storybook": {
+      "inputs": [
+        "src/components/**/*.stories.tsx"
+      ],
       "outputs": [
         "storybook-static/**"
       ]

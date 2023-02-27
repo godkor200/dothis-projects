@@ -1,6 +1,6 @@
-import { extendTheme, theme } from '@chakra-ui/react';
+import { theme } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import { map } from 'fp-ts/lib/Record';
+import { map } from '@fp-ts/core/ReadonlyRecord';
 
 export const colors = {
   white: '#fff',
