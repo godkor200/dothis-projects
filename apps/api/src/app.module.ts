@@ -11,6 +11,7 @@ import { TypeormModule } from '@Apps/config/database/database.module';
 import { HeathApiController } from '@Apps/health.controller';
 import { HealthService } from '@Apps/health.service';
 import { CacheConfigModule } from '@Apps/config/cashe/cashe.config.module';
+import { CacheApiModule } from '@Apps/modules/cache/cache.module';
 
 @Module({
   controllers: [HeathApiController],
@@ -31,6 +32,7 @@ import { CacheConfigModule } from '@Apps/config/cashe/cashe.config.module';
     ChannelApiModule,
     AuthApiModule,
     UserChannelDataApiModule,
+    CacheApiModule,
   ],
   providers: [HealthService],
 })

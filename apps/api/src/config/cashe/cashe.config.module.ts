@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RedisModule, RedisModuleAsyncOptions } from '@liaoliaots/nestjs-redis';
 import { RedisConfigService } from '@Apps/config/cashe/config/cashe.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CacheService } from '@Apps/modules/cashe/cache.service';
+import { CacheService } from '@Apps/modules/cache/cache.service';
 
 @Module({
   imports: [RedisModule],
