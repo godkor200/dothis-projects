@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import React from 'react';
 
 import { PAGE_KEYS } from '@/constants';
-import { useModalStore } from '@/models/Modal';
+import { useModalStore } from '@/dto/Modal';
 
 export default function Login() {
   return (

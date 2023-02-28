@@ -86,7 +86,7 @@
     "clean": {
       "cache": false
     },
-    "start:dev": {
+    "start:dev-api": {
       "cache": false,
       "outputs": [
         "dist/**/*"

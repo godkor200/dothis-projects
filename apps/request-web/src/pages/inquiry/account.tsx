@@ -17,7 +17,7 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { useModalStore } from '@/models/Modal';
+import { useModalStore } from '@/dto/Modal';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({
