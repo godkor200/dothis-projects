@@ -1,0 +1,25 @@
+{
+  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@Apps/*": [
+        "./src/*"
+      ],
+      "@Libs/*": [
+        "./libs/*"
+      ],
+      "@dothis/dto": ["../../packages/dto/*"]
+    }
+  },
+  "files": [
+    "./src/main.ts"
+  ],
+  "include": [
+    "./", "../../packages/dto/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [{ "path": "../../packages/dto/package.json" }]
+}
