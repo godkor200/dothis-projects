@@ -1,5 +1,5 @@
-import { authApi, userApi } from '@dothis/share/lib/dto';
-import { c } from '@dothis/share/lib/dto/contract';
+import { authApi, userApi } from 'packages/dto/lib';
+import { c } from 'packages/dto/lib/contract';
 import type { ApiRouteResponse } from '@ts-rest/core';
 import type { InitClientReturn } from '@ts-rest/react-query';
 import { initQueryClient } from '@ts-rest/react-query';

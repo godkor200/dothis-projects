@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useModalStore } from '@/models/Modal';
+import { useModalStore } from '@/dto/Modal';
 
 import { RequestPostDomain } from '../../../domain';
 import Textarea from '../../ui/Textarea';

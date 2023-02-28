@@ -35,7 +35,7 @@ import type { z } from 'zod';
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@/domain';
-import { useModalOptStore, useModalStore } from '@/models/Modal';
+import { useModalOptStore, useModalStore } from '@/dto/Modal';
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 

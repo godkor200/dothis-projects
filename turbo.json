@@ -86,7 +86,7 @@
     "clean": {
       "cache": false
     },
-    "start:dev": {
+    "start:dev-api": {
       "cache": false,
       "outputs": [
         "dist/**/*"
@@ -99,5 +99,11 @@
     "NEXTAUTH_SECRET",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY"
+  ],
+  "globalDependencies": [
+    "$NODE_ENV",
+    ".env", 
+    ".env.local",
+    "tsconfig.json"
   ]
 }

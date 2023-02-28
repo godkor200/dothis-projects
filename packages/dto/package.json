@@ -1,0 +1,15 @@
+{
+  "name": "@dothis/dto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsup ./lib/index.ts --format cjs --dts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

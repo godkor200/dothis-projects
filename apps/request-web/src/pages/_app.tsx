@@ -15,7 +15,7 @@ import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
-import { ModalOptProvider, useModalStore } from '@/models/Modal';
+import { ModalOptProvider, useModalStore } from '@/dto/Modal';
 import { trpc } from '@/utils/trpc';
 
 // @ts-ignore
