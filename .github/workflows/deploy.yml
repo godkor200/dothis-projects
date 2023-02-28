@@ -38,21 +38,13 @@ jobs:
         working-directory: ./
         run: pnpm i
 
-      - name: install npm dev
-        working-directory: ./apps/back-end
-        run: npm i
-
-      - name: install @dothis/share
-        working-directory: ./
-        run: pnpm add --filter back-end @dothis/share
-
       - name: build
         working-directory: ./
         run: |
          sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: create env file
-        working-directory: ./apps/back-end
+        working-directory: ./apps/api
         run: |
           pwd
           touch production.env
@@ -72,7 +64,7 @@ jobs:
 
 
       - name: zip file
-        working-directory: ./apps/back-end
+        working-directory: ./apps/api
         run: zip -r dothisBackEnd.zip ./dist ./node_modules ./scripts ./production.env ./appspec.yml ./package.json ./package-lock.json ./ecosystem.config.js ./tsconfig.json ./tsconfig.build.json
 
       - name: Configure AWS credentials
@@ -83,11 +75,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload to S3
-        working-directory: ./apps/back-end
+        working-directory: ./apps/api
         run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
 
       - name: deploy with AWS codeDeploy
-        working-directory: ./apps/back-end
+        working-directory: ./apps/api
         run: aws deploy create-deployment
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime
