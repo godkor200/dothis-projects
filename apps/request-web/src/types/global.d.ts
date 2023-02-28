@@ -3,7 +3,7 @@ import '@emotion/react';
 import type { PrismaClient } from '@prisma/client';
 import type { DefaultSession } from 'next-auth';
 
-import type { Message } from '@/lib/models/Message';
+import type { Message } from '@/lib/dto/Message';
 
 declare const global: Global & { prisma?: PrismaClient };
 

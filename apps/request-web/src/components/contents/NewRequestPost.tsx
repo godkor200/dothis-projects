@@ -15,6 +15,7 @@ import {
   SelectMenu,
   SelectMenuButton,
   SelectMenuList,
+  standaloneToast,
   SubmitModalTemplate,
   ToastBox,
 } from '@dothis/share';
@@ -34,8 +35,7 @@ import type { z } from 'zod';
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@/domain';
-import { useModalOptStore, useModalStore } from '@/models/Modal';
-import { toast } from '@/pages/_app';
+import { useModalOptStore, useModalStore } from '@/dto/Modal';
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 
@@ -182,7 +182,7 @@ export default function NewRequestPost({
       );
     } catch (e) {
       console.error(e);
-      toast(
+      standaloneToast.toast(
         ToastBox.getMessageOptions(
           errorMessage({
             message: isString(e) ? e : '요청 중 에러가 발생했습니다.',
@@ -292,7 +292,7 @@ export default function NewRequestPost({
         console.error(e);
         // 에러시 컨텐츠 없이 생성했던 요청 삭제
         deleteMutation.mutate({ id: newRequestId });
-        toast(
+        standaloneToast.toast(
           ToastBox.getMessageOptions(
             errorMessage({
               message: isString(e) ? e : '요청 중 에러가 발생했습니다.',

@@ -1,7 +1,5 @@
 import type { ComponentType } from 'react';
 
-import type { Merge } from '../../lib/types';
-
 export function isNil(v: unknown) {
   return v === undefined || v === null;
 }
@@ -23,19 +21,12 @@ export const PartialProps =
     return Component;
   };
 
-// props를 받아 partial props를 반환하는 함수를 받아 props 합성
-export const PartialApProps =
+// 다른 props로 부터 해당 컴포넌트의 props를 생성
+export const ChangeProps =
   <A extends {}>(_Component: ComponentType<A>) =>
-  <OtherArgs, CalcArgs extends Partial<A>>(
-    makeArgsFn: (a: OtherArgs) => CalcArgs,
-  ) => {
-    const Component = (args: Merge<Omit<A, keyof CalcArgs>, OtherArgs>) => {
-      const totalArgs = Object.assign(
-        {},
-        args,
-        makeArgsFn(args),
-      ) as unknown as A;
-      return <_Component {...totalArgs} />;
+  <OtherProps,>(makeArgsFn: (a: OtherProps) => A) => {
+    const Component = (props: OtherProps) => {
+      return <_Component {...makeArgsFn(props)} />;
     };
     Component.displayName = _Component.displayName;
 

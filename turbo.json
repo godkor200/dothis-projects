@@ -11,7 +11,7 @@
     },
     "request-web#build": {
       "dependsOn": [
-        "^db-generate",
+        "^request-web#db-generate",
         "^build"
       ],
       "outputs": [
@@ -21,7 +21,7 @@
     "request-web#dev": {
       "dependsOn": [
         "^theme-gen",
-        "^db-generate"
+        "^request-web#db-generate"
       ],
       "cache": false
     },
@@ -39,21 +39,21 @@
       ],
       "cache": false
     },
-    "db-generate": {
+    "request-web#db-generate": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ],
       "cache": false
     },
-    "db-push": {
+    "request-web#db-push": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ],
       "cache": false
     },
     "studio": {
       "inputs": [
-        "prisma/schema.prisma"
+        "/apps/request-web/prisma/schema.prisma"
       ]
     },
     "analyze": {
@@ -86,7 +86,7 @@
     "clean": {
       "cache": false
     },
-    "start:dev": {
+    "start:dev-api": {
       "cache": false,
       "outputs": [
         "dist/**/*"
@@ -99,5 +99,11 @@
     "NEXTAUTH_SECRET",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY"
+  ],
+  "globalDependencies": [
+    "$NODE_ENV",
+    ".env", 
+    ".env.local",
+    "tsconfig.json"
   ]
 }

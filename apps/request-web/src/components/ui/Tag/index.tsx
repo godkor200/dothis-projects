@@ -6,9 +6,11 @@ import clsx from 'clsx';
 
 export type TagTheme = 'orange' | 'red' | 'purple' | 'green' | 'gray';
 type Props = ChakraTagProps & { theme?: TagTheme };
-const Tag = ({ className, theme = 'orange', ...props }: Props) => (
-  <ChakraTag className={clsx(theme, className)} css={tagStyle} {...props} />
-);
+const Tag = ({ className, theme = 'orange', ...props }: Props) => {
+  return (
+    <ChakraTag className={clsx(theme, className)} css={tagStyle} {...props} />
+  );
+};
 
 const tagStyle = css`
   padding: 3px 6px;

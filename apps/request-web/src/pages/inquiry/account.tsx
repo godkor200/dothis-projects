@@ -1,5 +1,13 @@
 import { Text } from '@chakra-ui/react';
-import { Button, Container, fontWeights, SubmitModalTemplate, ToastBox, typo } from '@dothis/share';
+import {
+  Button,
+  Container,
+  fontWeights,
+  SubmitModalTemplate,
+  ToastBox,
+  typo,
+} from '@dothis/share';
+import { withUserSessionSSR } from '@dothis/share/lib/utils/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -9,15 +17,14 @@ import { z } from 'zod';
 
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { pagePath } from '@/constants';
-import { useModalStore } from '@/models/Modal';
-import { withUserSessionSsr } from '@/server/session';
+import { useModalStore } from '@/dto/Modal';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({
   searchText: z.string().optional(),
 });
 
-export const getServerSideProps = withUserSessionSsr(
+export const getServerSideProps = withUserSessionSSR(
   async (context, userSession) => {
     const trpcSSGHelper = await trpcSSG();
     await trpcSSGHelper.user.get.prefetch({ id: userSession.id });
@@ -39,14 +46,14 @@ export default function AccountPage({}: InferGetServerSidePropsType<
   const trpcUtils = trpc.useContext();
   const modalStore = useModalStore();
   const my = trpc.user.get.useQuery({ id: session?.user.id });
-  const deleteMutation = trpc.user.delete.useMutation({
+  const deleteUserMutation = trpc.user.delete.useMutation({
     onSuccess() {
       if (my.data) trpcUtils.user.get.invalidate({ id: my.data.id });
       router.push(pagePath.home());
       modalStore.closeAll();
       ToastBox.successToast('회원 탈퇴가 완료되었습니다.');
 
-      setTimeout(signOut, 200);
+      setTimeout(signOut, 500);
       // router.push(pagePath.home());
     },
   });
@@ -61,7 +68,7 @@ export default function AccountPage({}: InferGetServerSidePropsType<
               ToastBox.errorToast('회원탈퇴에 실패했습니다.');
               return;
             }
-            deleteMutation.mutate({ id: my.data.id });
+            deleteUserMutation.mutate({ id: my.data.id });
           }}
           submitText="탈퇴하기"
           onCancel={() => modalStore.close('delete user')}
@@ -76,7 +83,7 @@ export default function AccountPage({}: InferGetServerSidePropsType<
         </SubmitModalTemplate>
       ),
     });
-  }, [deleteMutation, my.data]);
+  }, [deleteUserMutation, my.data]);
 
   return (
     <LayoutTemplate>

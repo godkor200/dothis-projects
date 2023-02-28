@@ -1,5 +1,5 @@
 import type { ComponentMeta } from '@storybook/react';
-import format from 'date-fns/esm/format';
+import format from 'date-fns/format';
 
 import { LineRanking } from './index';
 

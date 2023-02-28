@@ -24,8 +24,8 @@
     "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
-    "dev:back-end": "dotenv -e .env -- turbo run start:dev",
-    "build:back-end": "dotenv -e ./apps/back-end/.env -- turbo run build --filter back-end"
+    "dev:back-end": "dotenv -e .env -- turbo run start:dev-api",
+    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter api"
   },
   "devDependencies": {
     "@dothis/config": "*",
@@ -36,6 +36,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
+    "@dothis/dto": "workspace:^1.0.0",
     "dotenv-cli": "^6.0.0"
   },
   "pnpm": {

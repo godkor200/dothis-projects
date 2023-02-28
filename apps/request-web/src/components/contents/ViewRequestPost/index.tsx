@@ -51,7 +51,7 @@ import 후원금펀딩 from '@/components/contents/후원금펀딩';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
-import { useModalOptStore, useModalStore } from '@/models/Modal';
+import { useModalOptStore, useModalStore } from '@/dto/Modal';
 import requestPost from '@/pages/user/request-post';
 import { trpc } from '@/utils/trpc';
 
@@ -132,6 +132,7 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
       ToastBox.errorToast('요청 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },
   });
+
   const deleteRequestMutation = trpc.requestPost.delete.useMutation({
     onError(e) {
       ToastBox.toast({
