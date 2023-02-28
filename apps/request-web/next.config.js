@@ -43,4 +43,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins([withPWA, withBundleAnalyzer], nextConfig);
+module.exports = withPlugins([withPWA /* ,withBundleAnalyzer */], nextConfig);
