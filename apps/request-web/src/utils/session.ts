@@ -1,6 +1,5 @@
 import type { PartialRequiredNotNull } from '@dothis/share';
 import { errorMessage } from '@dothis/share';
-import { sessionOptions } from '@dothis/share/lib/utils/sessionUtils';
 import { withIronSessionSsr } from 'iron-session/next';
 import type {
   GetServerSidePropsContext,
@@ -8,6 +7,8 @@ import type {
 } from 'next/types';
 import type { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
+
+import { sessionOptions } from './sessionUtils';
 
 // user Session의 데이터가 올바르지 않은 경우 로그인페이지로 보냄
 export const withUserSessionSSR = <

@@ -25,5 +25,3 @@ declare module 'iron-session' {
     message?: Message | undefined;
   }
 }
-
-declare module '';

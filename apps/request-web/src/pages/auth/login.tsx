@@ -1,8 +1,4 @@
 import { errorMessage } from '@dothis/share';
-import {
-  flushMessageSession,
-  withSessionSSR,
-} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -15,6 +11,7 @@ import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
 import { standaloneToast } from '@/models/toast';
 import { typo } from '@/styles';
+import { flushMessageSession, withSessionSSR } from '@/utils/sessionUtils';
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {
   const messageProps = await flushMessageSession(req);

@@ -1,8 +1,4 @@
 import { Box } from '@chakra-ui/react';
-import {
-  flushMessageSession,
-  withSessionSSR,
-} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
@@ -23,6 +19,7 @@ import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
 import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
 import { youtubeSignIn } from '@/utils/auth';
+import { flushMessageSession, withSessionSSR } from '@/utils/sessionUtils';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [

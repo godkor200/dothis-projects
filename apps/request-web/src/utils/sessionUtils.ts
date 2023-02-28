@@ -1,3 +1,4 @@
+import { isMessage } from '@dothis/share';
 import type { IncomingMessage } from 'http';
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
@@ -6,8 +7,6 @@ import type {
   GetServerSidePropsResult,
   NextApiHandler,
 } from 'next';
-
-import { isMessage } from '..';
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.NEXTAUTH_SECRET as string,
