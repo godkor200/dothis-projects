@@ -1,4 +1,5 @@
-import type { IncomingMessage, IronSessionOptions } from 'iron-session';
+import type { IncomingMessage } from 'http';
+import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import type {
   GetServerSidePropsContext,
@@ -29,10 +30,10 @@ type ServerSideHandler<P> = (
 
 export const flushMessageSession = async (req: IncomingMessage) => {
   const message = req?.session?.message;
-  if (isMessage(session.message)) {
+  if (isMessage(message)) {
     delete req.session.message;
     await req.session.save();
-    return { session_message: session.message };
+    return { session_message: message };
   }
   return null;
 };
