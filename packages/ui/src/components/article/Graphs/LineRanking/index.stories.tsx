@@ -110,7 +110,7 @@ const myDateFormatter = (d: Date) => format(d, 'yyyy-MM-dd');
 export const Sample: Story = {
   args: {
     data: parsedData,
-    dateFormatter: (d) => format(d, 'yyyy-MM-dd'),
+    dateFormatter: myDateFormatter,
     Tooltip: ({ name, data }) => (
       <div>
         <p>{myDateFormatter(data.date)}</p>
