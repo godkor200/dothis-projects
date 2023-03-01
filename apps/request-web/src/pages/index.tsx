@@ -1,17 +1,4 @@
 import { Box } from '@chakra-ui/react';
-import {
-  colors,
-  Container,
-  mediaQueries,
-  SwiperButton,
-  ToastBox,
-  typo,
-} from '@dothis/share';
-import OnlyPcContainer from '@dothis/share/components/layout/OnlyPcContainer';
-import {
-  flushMessageSession,
-  withSessionSSR,
-} from '@dothis/share/lib/utils/sessionUtils';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
@@ -24,9 +11,15 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 import MainSwiper from '@/components/article/MainSwiper';
 import RecommendRequests from '@/components/article/RecommendRequests';
 import ResolveRequestListSwiper from '@/components/article/ResolveRequestListSwiper';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import OnlyPcContainer from '@/components/layout/OnlyPcContainer';
+import { SwiperButton } from '@/components/ui/Button/SwiperButton';
+import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
+import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
 import { youtubeSignIn } from '@/utils/auth';
+import { flushMessageSession, withSessionSSR } from '@/utils/sessionUtils';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const Banners: ComponentProps<typeof MainSwiper>['Banners'] = [
@@ -114,7 +107,7 @@ export default function Home({
       <Container css={contentsStyle}>
         {/* 해결된 요청 */}
 
-        {solvedRequests.data && (
+        {solvedRequests.data && resolvedRequestSwiperRef.current && (
           <section className="resolved-request-post">
             <div className="section-title">
               <h2>해결된 요청</h2>
@@ -127,11 +120,11 @@ export default function Home({
               <div className="section-slide-buttons">
                 <SwiperButton
                   dir="prev"
-                  onClick={() => resolvedRequestSwiperRef.current?.slidePrev()}
+                  onClick={() => resolvedRequestSwiperRef.current!.slidePrev()}
                 />
                 <SwiperButton
                   dir="next"
-                  onClick={() => resolvedRequestSwiperRef.current?.slideNext()}
+                  onClick={() => resolvedRequestSwiperRef.current!.slideNext()}
                 />
               </div>
             </div>

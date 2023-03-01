@@ -1,5 +1,5 @@
 import { sort } from '@fp-ts/core/ReadonlyArray';
-import { fromCompare } from '@fp-ts/core/typeclass/Order';
+import * as Order from '@fp-ts/core/typeclass/Order';
 import type {
   RequestFunding,
   RequestFundingStatus,
@@ -11,7 +11,7 @@ import { schema as userSchema } from '../UserDomain/domain';
 
 type RequestFundingIncludeUser = RequestFunding & { user: User | null };
 const _quantityAmountDesc = sort(
-  fromCompare<Pick<RequestFunding, 'quantity'>>((x, y) =>
+  Order.make<Pick<RequestFunding, 'quantity'>>((x, y) =>
     x.quantity > y.quantity ? -1 : x.quantity < y.quantity ? 1 : 0,
   ),
 );

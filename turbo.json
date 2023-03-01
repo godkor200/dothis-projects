@@ -26,16 +26,19 @@
       "cache": false
     },
     "build-storybook": {
+      "inputs": [
+        "src/components/**/*.stories.tsx"
+      ],
       "outputs": [
         "storybook-static/**"
       ]
     },
     "theme-gen": {
       "inputs": [
-        "./lib/styles/**/*"
+        "./src/styles/**/*"
       ],
       "outputs": [
-        "./lib/types/theme.d.ts"
+        "./src/types/theme.d.ts"
       ],
       "cache": false
     },

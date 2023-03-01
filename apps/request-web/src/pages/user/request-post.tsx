@@ -1,8 +1,4 @@
 import { Box, Center, HStack, Spinner, Text } from '@chakra-ui/react';
-import { Container, typo } from '@dothis/share';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-import { Input, SvgSearch } from '@dothis/share/components/ui';
-import { withUserSessionSSR } from '@dothis/share/lib/utils/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -12,8 +8,14 @@ import { useDebouncedCallback } from 'use-debounce';
 import { z } from 'zod';
 
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
+import { Container } from '@/components/layout/Container';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { SvgSearch } from '@/components/ui/Icons';
+import { Input } from '@/components/ui/Input';
 import { pagePath } from '@/constants';
+import { typo } from '@/styles/dothisTheme';
+import { withUserSessionSSR } from '@/utils/session';
 import { trpc } from '@/utils/trpc';
 
 const querySchema = z.object({
@@ -51,11 +53,6 @@ const requestPost = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchText, _setSearchText] = useState(_searchText);
   const router = useRouter();
-  const trpcUtils = trpc.useContext();
-  const handleSetSearchText = useCallback(
-    (_searchText: typeof searchText) => {},
-    [],
-  );
   const debouncedSearchText = useDebouncedCallback(
     (_searchText: typeof searchText) => {
       _setSearchText(_searchText === '' ? undefined : inputRef.current?.value);
@@ -63,9 +60,6 @@ const requestPost = ({
     },
     500,
   );
-  useEffect(() => {
-    console.log('request-post.tsx', '');
-  }, []);
 
   const userSearchRequestPost = trpc.user.getSearchRequests.useInfiniteQuery(
     {

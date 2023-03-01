@@ -27,6 +27,7 @@
     "typeorm:revert-migration": "npm ts-typeorm migration:revert"
   },
   "dependencies": {
+    "@dothis/share": "workspace: *",
     "@abitia/zod-dto": "^0.4.0",
     "@anatine/zod-nestjs": "^1.9.2",
     "@nestjs/common": "^9.3.8",
@@ -68,6 +69,7 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
+    "@dothis/config": "workspace: *",
     "@nestjs/cli": "^9.2.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",

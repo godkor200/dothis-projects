@@ -1,3 +1,1 @@
-export * from './common'
-export * from './utilityTypes'
-
+export * from './utilityTypes';

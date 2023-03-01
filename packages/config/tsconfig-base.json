@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": false,
     "declaration": true,
     "preserveSymlinks": true,
@@ -16,10 +17,15 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+
+    "paths": {
+      "@dothis/share/*": ["../../packages/share/*"],
+      "@dothis/config/*": ["../../packages/config/*"]
+    },
     "typeRoots": [
       "../../node_modules/@types",
-      "../../node_modules/@chakra-ui/styled-system/dist",
-    ],
+      "../../node_modules/@chakra-ui/styled-system/dist"
+    ]
   },
   "include": ["eslint-dothis-nestjs.js", "eslint-dothis-nextjs.js"]
 }

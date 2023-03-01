@@ -1,13 +1,4 @@
 import { Text } from '@chakra-ui/react';
-import {
-  Button,
-  Container,
-  fontWeights,
-  SubmitModalTemplate,
-  ToastBox,
-  typo,
-} from '@dothis/share';
-import { withUserSessionSSR } from '@dothis/share/lib/utils/session';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -15,9 +6,15 @@ import { signOut, useSession } from 'next-auth/react';
 import React, { useCallback } from 'react';
 import { z } from 'zod';
 
+import { SubmitModalTemplate } from '@/components/article/Modal/SubmitModalTemplate';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { Button } from '@/components/ui/Button';
+import { ToastBox } from '@/components/ui/ToastBox';
 import { pagePath } from '@/constants';
 import { useModalStore } from '@/models/Modal';
+import { fontWeights, typo } from '@/styles/dothisTheme';
+import { withUserSessionSSR } from '@/utils/session';
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({

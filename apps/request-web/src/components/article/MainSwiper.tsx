@@ -1,11 +1,15 @@
 import { AspectRatio } from '@chakra-ui/react';
-import { Button, colors, typo } from '@dothis/share';
-import { SvgNext, SvgPrev } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { useRef, useState } from 'react';
 import { A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperClass } from 'swiper/types';
+
+import { colors, typo } from '@/styles/dothisTheme';
+
+import { Button } from '../ui/Button';
+import { SvgNext } from '../ui/Icons/SvgNext';
+import { SvgPrev } from '../ui/Icons/SvgPrev';
 
 type Props = {
   Banners: React.ComponentType[];
