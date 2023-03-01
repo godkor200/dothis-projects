@@ -65,7 +65,7 @@
     "eslint-plugin-storybook": "^0.6.11",
     "prop-types": "^15.7.2",
     "require-from-string": "^2.0.2",
-    "storybook": "^7.0.0-beta.54",
+    "storybook": "^6.5.16",
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "webpack": "^5.75.0"
