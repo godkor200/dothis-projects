@@ -1,8 +1,10 @@
-import type { EditorT, ErrorMessage, FileLocations } from '@dothis/share';
+import type { ErrorMessage } from '@dothis/share';
 import { errorMessage, isErrorMessage, message } from '@dothis/share';
 import type { RequestPost } from '@prisma/client';
 import axios from 'axios';
 import { uid } from 'uid';
+
+import type { EditorT, FileLocations } from '@/components/article/Editor';
 
 import { RequestPostDomain } from '../domain';
 

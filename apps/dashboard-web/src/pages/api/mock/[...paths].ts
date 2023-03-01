@@ -25,7 +25,7 @@ export default function handler(
 
   switch (method) {
     case 'GET':
-      if (matchDynamicPath(apiRouter.user.verifyTokenGet.path))
+      if (matchDynamicPath(apiRouter.auth.getGoogleLogin.path))
         return res200.json(mockToken);
       break;
     case 'POST':

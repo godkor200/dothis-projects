@@ -1,11 +1,13 @@
 import { Box } from '@chakra-ui/react';
-import { colors, Container, mediaQueries, typo } from '@dothis/share';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import React from 'react';
 
 import { HomeLogo } from '@/components/ui/HomeLogo';
 import { pagePath } from '@/constants';
+import { colors, mediaQueries, typo } from '@/styles/dothisTheme';
+
+import { Container } from './Container';
 
 export default function LayoutFooter() {
   return (
