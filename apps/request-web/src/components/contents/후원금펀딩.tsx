@@ -1,10 +1,6 @@
 import { Box, Center, Flex, VStack } from '@chakra-ui/react';
-import {
-  isNilStr,
-  onEnter,
-  removeSeparators,
-  thousandsSeparators,
-} from '@dothis/share';
+import { isNilStr, removeSeparators, thousandsSeparators } from '@dothis/share';
+import { onEnter } from '@dothis/ui/src/utils/domUtils';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@prisma/client';

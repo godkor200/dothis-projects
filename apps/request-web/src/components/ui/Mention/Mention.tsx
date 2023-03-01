@@ -1,6 +1,6 @@
 import type { PopoverProps } from '@chakra-ui/react';
 import { Popover } from '@chakra-ui/react';
-import type { UseMatchReturn } from '@dothis/share';
+import type { UseMatchReturn } from '@dothis/ui/src/hooks';
 import { createContext, useContext } from 'react';
 
 type PickMatchParams = Pick<UseMatchReturn, 'isOpen' | 'matchList'> & {

@@ -5,7 +5,8 @@ import {
   MenuOptionGroup,
   useMenuContext,
 } from '@chakra-ui/react';
-import { elementOnceInterval, mapIterToArr } from '@dothis/share';
+import { mapIterToArr } from '@dothis/share';
+import { elementOnceInterval } from '@dothis/ui/src/utils/domUtils';
 import { useEffect, useRef } from 'react';
 
 export type ListMap<K> = Map<K, string>;

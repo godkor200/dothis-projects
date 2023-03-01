@@ -1,4 +1,4 @@
-import type { UseMatchReturn } from '@dothis/share/lib/hooks';
+import type { UseMatchReturn } from '@dothis/ui/src/hooks';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import type { ChangeEvent } from 'react';

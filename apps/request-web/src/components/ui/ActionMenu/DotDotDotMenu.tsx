@@ -1,5 +1,5 @@
 import { Center } from '@chakra-ui/react';
-import { PartialProps } from '@dothis/share/lib/utils/componentUtils';
+import { PartialProps } from '@dothis/ui/src/utils/componentUtils';
 
 import { SvgDotdotdot } from '@/components/ui/Icons';
 import { colors } from '@/styles/dothisTheme';

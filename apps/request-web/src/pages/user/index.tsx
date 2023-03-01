@@ -7,7 +7,7 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import { useParsedQuery } from '@dothis/share';
+import { useParsedQuery } from '@dothis/ui/src/hooks';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -90,6 +90,7 @@ type Props = {
 const CreatorPage = ({ creatorUserId, creatorUser }: Props) => {
   const { data: session } = useSession();
   const router = useRouter();
+  // @ts-ignore
   const query = useParsedQuery(querySchema);
 
   const categoryFilter = useMemo(

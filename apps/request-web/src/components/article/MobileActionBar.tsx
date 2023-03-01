@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useScroll } from '@dothis/share';
+import { useScroll } from '@dothis/ui/src/hooks';
 import { css } from '@emotion/react';
 
 import { mediaQueries } from '@/styles/dothisTheme';

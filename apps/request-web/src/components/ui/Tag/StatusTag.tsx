@@ -1,4 +1,4 @@
-import { ChangeProps } from '@dothis/share';
+import { ChangeProps } from '@dothis/ui/src/utils/componentUtils';
 
 import { RequestPostDomain } from '@/domain';
 

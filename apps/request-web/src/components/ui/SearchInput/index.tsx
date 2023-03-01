@@ -1,5 +1,5 @@
 import { Center } from '@chakra-ui/react';
-import { useMatch } from '@dothis/share';
+import { useMatch } from '@dothis/ui/src/hooks';
 
 import { trpc } from '@/utils/trpc';
 

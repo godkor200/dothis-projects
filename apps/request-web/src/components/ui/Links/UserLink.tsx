@@ -1,5 +1,5 @@
 import type { FirstParameter } from '@dothis/share';
-import { ChangeProps } from '@dothis/share';
+import { ChangeProps } from '@dothis/ui/src/utils/componentUtils';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
 import type { AnchorHTMLAttributes, MouseEventHandler, ReactNode } from 'react';

@@ -1,10 +1,7 @@
 import { AspectRatio, Box, Flex, Text } from '@chakra-ui/react';
-import {
-  cutOverflowStr,
-  matchMark,
-  removeHTMLTag,
-  thousandsSeparators,
-} from '@dothis/share';
+import { cutOverflowStr, thousandsSeparators } from '@dothis/share';
+import { removeHTMLTag } from '@dothis/ui/src/utils/domUtils';
+import { matchMark } from '@dothis/ui/src/utils/matchMarkList';
 import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 

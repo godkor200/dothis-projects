@@ -7,8 +7,7 @@ import {
   successMessage,
 } from '@dothis/share/lib/models/Message';
 import { css } from '@emotion/react';
-import { flow } from 'fp-ts/function';
-import { pipe } from 'fp-ts/lib/function';
+import { flow, pipe } from '@fp-ts/core/Function';
 import { uid } from 'uid';
 
 import { SvgClose } from '@/components/ui/Icons';
@@ -84,7 +83,7 @@ const style = css`
 `;
 
 ToastBox.getMessageOptions = (
-  { status, message }: Omit<Message, 'kind' | '_URI'>,
+  { status, message }: Pick<Message, 'status' | 'message'>,
   overrideOpt?: UseToastOptions,
 ): UseToastOptions => {
   const id = uid(7);

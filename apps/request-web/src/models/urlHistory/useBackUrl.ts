@@ -1,4 +1,4 @@
-import type { NextjsUrl } from '@dothis/share/lib/types';
+import type { NextjsUrl } from '@dothis/ui/src/types/common';
 import { useRouter } from 'next/router';
 
 import useUrlHistoryStore from '@/models/urlHistory/useUrlHistoryStore';

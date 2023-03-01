@@ -1,8 +1,8 @@
 import type { BoxProps } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
+import { isString } from '@fp-ts/core/String';
 import clsx from 'clsx';
-import { isString } from 'fp-ts/lib/string';
 
 import { colors, typo } from '@/styles/dothisTheme';
 
