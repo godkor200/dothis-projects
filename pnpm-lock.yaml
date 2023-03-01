@@ -267,6 +267,7 @@ importers:
       '@chakra-ui/react': ^2.5.1
       '@dothis/config': workspace:*
       '@dothis/share': workspace:*
+      '@dothis/ui': workspace:*
       '@emotion/babel-plugin': ^11.10.5
       '@emotion/css': ^11.10.5
       '@emotion/react': ^11.10.5
@@ -334,6 +335,7 @@ importers:
       '@aws-sdk/client-s3': 3.245.0
       '@chakra-ui/react': 2.5.1_6z66u6efdgokrdxyuxkwijcyzq
       '@dothis/share': link:../../packages/share
+      '@dothis/ui': link:../../packages/ui
       '@emotion/css': 11.10.5_@babel+core@7.20.12
       '@emotion/react': 11.10.5_jp5qgyg6plq757v5hojp7ls2oe
       '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
@@ -11648,7 +11650,7 @@ packages:
       webpack: '>=4.0.0 <6.0.0'
     dependencies:
       del: 4.1.1
-      webpack: 5.75.0_esbuild@0.17.10
+      webpack: 5.75.0
 
   /clear-any-console/1.16.2:
     resolution: {integrity: sha512-OL/7wZpNy9x0GBSzz3poWja84Nr7iaH8aYNsJ5Uet2BVLj6Lm1zvWpZN/yH46Vv3ae7YfHmLLMmfHj911fshJg==}
