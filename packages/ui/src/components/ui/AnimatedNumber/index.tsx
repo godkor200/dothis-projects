@@ -27,6 +27,7 @@ function AnimatedNumber({
     value,
     springOpt: {
       duration,
+      bounce: 0,
     },
     subscribe: (latest) => {
       const showValue = latest.toFixed(toFixed);

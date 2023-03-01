@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "storybook": "start-storybook -p 6600",
-    "build-storybook": "build-storybook -s ./storybook-static"
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@dothis/share": "*",
