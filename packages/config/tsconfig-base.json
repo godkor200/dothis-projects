@@ -5,7 +5,6 @@
     "baseUrl": ".",
     "composite": false,
     "declaration": true,
-    "preserveSymlinks": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
