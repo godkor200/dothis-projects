@@ -25,8 +25,9 @@
       ],
       "cache": false
     },
-    "build-storybook": {
+    "build-storybook": { 
       "inputs": [
+        ".storybook/**/*",
         "src/components/**/*.stories.tsx"
       ],
       "outputs": [
