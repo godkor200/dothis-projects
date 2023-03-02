@@ -1,6 +1,6 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Inject, Injectable } from '@nestjs/common';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/v1/constants/channel-data.di-token.constants';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { USER_REPOSITORY } from '@Apps/modules/user/constrants/user.di-token';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
 import { JwtService } from '@nestjs/jwt';
 
@@ -38,15 +38,10 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
       const newRefreshToken = this.jwtService.sign({ id: access.id });
       await this.userRepository.updateRefreshToken(access.id, newRefreshToken);
       return {
-        accessToken: this.jwtService.sign(
-          {
-            id: access.id,
-            userEmail: access.userEmail,
-          },
-          {
-            expiresIn: '15m',
-          },
-        ),
+        accessToken: this.jwtService.sign({
+          id: access.id,
+          userEmail: access.userEmail,
+        }),
         refreshToken: newRefreshToken,
       };
     }

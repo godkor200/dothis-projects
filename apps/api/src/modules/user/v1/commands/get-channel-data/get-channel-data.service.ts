@@ -4,7 +4,7 @@ import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v
 import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
 import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/v1/constants/channel-data.di-token.constants';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { google } from 'googleapis';
 
@@ -26,11 +26,7 @@ export class GetChannelDataCommandHandler
 
     if (conflictCheck) throw new HttpException('conflict', HttpStatus.CONFLICT);
 
-    const youtube = google.youtube({
-      version: 'v3',
-      headers: { Authorization: 'Bearer ' + command.accessToken },
-      auth: process.env.GOOGLE_APIKEY,
-    });
+    const youtube = google.youtube('v3');
 
     if (!youtube)
       throw new HttpException(
@@ -38,17 +34,22 @@ export class GetChannelDataCommandHandler
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const res = await youtube.channels.list({
-      part: [
-        'id',
-        'snippet',
-        'brandingSettings',
-        'contentDetails',
-        'statistics',
-        'topicDetails',
-      ],
-      mine: true,
-    });
+    const res = await youtube.channels.list(
+      {
+        auth: process.env.GOOGLE_APIKEY,
+      },
+      {
+        part: [
+          'id',
+          'snippet',
+          'brandingSettings',
+          'contentDetails',
+          'statistics',
+          'topicDetails',
+        ],
+        mine: true,
+      },
+    );
 
     if (res.status !== 200)
       throw new HttpException(

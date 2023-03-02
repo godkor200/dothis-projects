@@ -30,8 +30,8 @@ export class GoogleLoginRedirectHttpController {
 
     res.setHeader('Authorization', 'Bearer ' + token.accessToken);
     res.cookie('refreshToken', token.refreshToken);
-    res.cookie('google_access_token', userInfo.goolgleAccessToken);
-    res.cookie('google_refresh_token', userInfo.goolgleRefreshToken);
+    res.cookie('google_access_token', userInfo.googleAccessToken);
+    res.cookie('google_refresh_token', userInfo.googleRefreshToken);
 
     return {
       message: 'Dothis Authentication',

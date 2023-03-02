@@ -10,9 +10,9 @@ import { GetChannelDataCommandHandler } from '@Apps/modules/user/v1/commands/get
 import { GetChannelDataHttpController } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.http.controller';
 import { UserChannelDataRepository } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository';
 import { ChannelDataRepository } from '@Apps/modules/channel/v1/db/channel-data.repository';
-import { USER_REPOSITORY } from '@Apps/modules/user/constrants/user.di-token';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/v1/constants/channel-data.di-token.constants';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 
 const httpControllers = [GetUserHttpController, GetChannelDataHttpController];
 

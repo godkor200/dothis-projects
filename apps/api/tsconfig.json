@@ -10,7 +10,8 @@
         "./libs/*"
       ],
       "@dothis/dto": ["../../packages/dto/*"]
-    }
+    },
+    "types": ["webpack-env"]
   },
   "files": [
     "./src/main.ts"

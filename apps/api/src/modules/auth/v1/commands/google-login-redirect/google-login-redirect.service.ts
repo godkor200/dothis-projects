@@ -1,6 +1,6 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { USER_REPOSITORY } from '@Apps/modules/user/constrants/user.di-token';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
 import { User } from '@Apps/config/database/domain/user/User.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -13,15 +13,15 @@ export class UserInfoCommandDto {
   @ApiProperty()
   readonly tokenRefresh: string | null;
   @ApiProperty()
-  readonly goolgleAccessToken: string;
+  readonly googleAccessToken: string;
   @ApiProperty()
-  readonly goolgleRefreshToken: string;
+  readonly googleRefreshToken: string;
   constructor(props: UserInfoCommandDto) {
     this.id = props.id;
     this.userEmail = props.userEmail;
     this.tokenRefresh = props.tokenRefresh;
-    this.goolgleAccessToken = props.goolgleAccessToken;
-    this.goolgleRefreshToken = props.goolgleRefreshToken;
+    this.googleAccessToken = props.googleAccessToken;
+    this.googleRefreshToken = props.googleRefreshToken;
   }
 }
 @CommandHandler(UserInfoCommandDto)
@@ -53,15 +53,10 @@ export class GoogleLoginRedirectCommandHandler
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
 
     return {
-      accessToken: this.jwtService.sign(
-        {
-          id: checkUser.id,
-          userEmail: checkUser.userEmail,
-        },
-        {
-          expiresIn: '15m',
-        },
-      ),
+      accessToken: this.jwtService.sign({
+        id: checkUser.id,
+        userEmail: checkUser.userEmail,
+      }),
       refreshToken,
     };
   }

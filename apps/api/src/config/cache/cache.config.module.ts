@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { RedisModule, RedisModuleAsyncOptions } from '@liaoliaots/nestjs-redis';
-import { RedisConfigService } from '@Apps/config/cashe/config/cashe.config';
+import { RedisConfigService } from '@Apps/config/cache/config/cache.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CacheService } from '@Apps/modules/cache/cache.service';
+import { FindDicTermImplement } from "@Apps/modules/cache/v1/infra/find-dic-term.implement";
 
 @Module({
   imports: [RedisModule],
-  providers: [CacheService],
-  exports: [CacheService],
+  providers: [FindDicTermImplement],
+  exports: [FindDicTermImplement],
 })
 export class CacheModule {}
 export const cacheConfigAsync: RedisModuleAsyncOptions = {

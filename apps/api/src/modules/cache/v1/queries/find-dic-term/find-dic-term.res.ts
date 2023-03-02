@@ -1,5 +1,2 @@
-import { IQueryResult } from '@nestjs/cqrs';
+export type FindDicTermRes  = Record<string, string>
 
-export class FindDicTermRes implements IQueryResult {
-  constructor(readonly dicTerm: Readonly<Record<string, string>>) {}
-}

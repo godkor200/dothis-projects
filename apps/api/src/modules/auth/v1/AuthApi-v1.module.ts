@@ -7,7 +7,7 @@ import { GoogleLoginRedirectHttpController } from '@Apps/modules/auth/v1/command
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserRepository } from '@Apps/modules/user/v1/db/user.repository';
 import { GoogleLoginRedirectCommandHandler } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
-import { USER_REPOSITORY } from '@Apps/modules/user/constrants/user.di-token';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
 import { VerifyTokenHttpController } from '@Apps/modules/auth/v1/commands/verify-token/verify-token.http.controller';
 import { VerifyTokenCommandHandler } from '@Apps/modules/auth/v1/commands/verify-token/verify-token.service';
 
