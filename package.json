@@ -24,8 +24,8 @@
     "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
-    "dev:back-end": "dotenv -e .env -- turbo run start:dev-api",
-    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter api"
+    "dev:back-end": "dotenv -e ./apps/api/.env -- turbo run start:dev-api",
+    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api"
   },
   "devDependencies": {
     "@dothis/config": "*",

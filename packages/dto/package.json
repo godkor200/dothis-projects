@@ -9,6 +9,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf .turbo node_modules"
   },
+  "dependencies": {
+    "zod": "^3.20.6",
+    "@ts-rest/core": "^3.18.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
