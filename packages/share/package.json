@@ -9,11 +9,6 @@
   ],
   "sideEffects": false,
   "scripts": {
-<<<<<<< HEAD
-    "prebuild": "rimraf dist",
-    "build": "tsup ../dto/lib/index.ts --format cjs --dts",
-=======
->>>>>>> origin/main
     "lint": "eslint ./**/*.{ts,tsx}",
     "clean": "rm -rf .turbo node_modules"
   },
