@@ -7,34 +7,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import {
-  Button,
-  colors,
-  fontSizes,
-  fontWeights,
-  mediaQueries,
-  shareUrlObject,
-  thousandsSeparators,
-  ToastBox,
-  UserAvatar,
-  YoutubeIframe,
-} from '@dothis/share';
-import {
-  DotDotDotMenu,
-  SvgAccept,
-  SvgAlarmWarning,
-  SvgBack,
-  SvgClose,
-  SvgDelete,
-  SvgDonate,
-  SvgEdit,
-  SvgGiveUp,
-  SvgHandCoin,
-  SvgRegistration,
-  SvgShareForward,
-  SvgThumbDown,
-  SvgThumbUp,
-} from '@dothis/share/components/ui';
+import { thousandsSeparators } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { User } from '@prisma/client';
 import clsx from 'clsx';
@@ -48,11 +21,38 @@ import PostRequestStatus from '@/components/article/PostRequestStatus';
 import NewRequestPost from '@/components/contents/NewRequestPost';
 import viewRequestModalHandlers from '@/components/contents/ViewRequestPost/viewRequestModalHandlers';
 import 후원금펀딩 from '@/components/contents/후원금펀딩';
+import { DotDotDotMenu } from '@/components/ui/ActionMenu';
+import { Button } from '@/components/ui/Button';
+import {
+  SvgAccept,
+  SvgAlarmWarning,
+  SvgBack,
+  SvgClose,
+  SvgDelete,
+  SvgDonate,
+  SvgEdit,
+  SvgGiveUp,
+  SvgHandCoin,
+  SvgRegistration,
+  SvgShareForward,
+  SvgThumbDown,
+  SvgThumbUp,
+} from '@/components/ui/Icons';
+import { ToastBox } from '@/components/ui/ToastBox';
+import { UserAvatar } from '@/components/ui/UserAvatar';
+import { YoutubeIframe } from '@/components/ui/YoutubeIframe';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { useModalOptStore, useModalStore } from '@/dto/Modal';
 import requestPost from '@/pages/user/request-post';
+import {
+  colors,
+  fontSizes,
+  fontWeights,
+  mediaQueries,
+} from '@/styles/dothisTheme';
+import { shareUrlObject } from '@/utils/appUtils';
 import { trpc } from '@/utils/trpc';
 
 import type { RequestPostDomain } from '../../../domain';

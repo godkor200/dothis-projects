@@ -3,7 +3,10 @@
   "display": "Default",
   "compilerOptions": {
     "baseUrl": ".",
+<<<<<<< HEAD
     "noEmit": false,
+=======
+>>>>>>> origin/main
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -17,10 +20,15 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+
+    "paths": {
+      "@dothis/share/*": ["../../packages/share/*"],
+      "@dothis/config/*": ["../../packages/config/*"]
+    },
     "typeRoots": [
       "../../node_modules/@types",
-      "../../node_modules/@chakra-ui/styled-system/dist",
-    ],
+      "../../node_modules/@chakra-ui/styled-system/dist"
+    ]
   },
   "include": ["eslint-dothis-nestjs.js", "eslint-dothis-nextjs.js"]
 }

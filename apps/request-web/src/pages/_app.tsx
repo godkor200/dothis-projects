@@ -1,12 +1,6 @@
 import 'swiper/css';
 
 import { ChakraProvider } from '@chakra-ui/react';
-import {
-  dothisTheme,
-  globalStyle,
-  Modal,
-  standaloneToast,
-} from '@dothis/share';
 import { Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -14,8 +8,16 @@ import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 
+import { Modal } from '@/components/article/Modal/Modal';
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
+<<<<<<< HEAD
 import { ModalOptProvider, useModalStore } from '@/dto/Modal';
+=======
+import { ModalOptProvider, useModalStore } from '@/models/Modal';
+import { standaloneToast } from '@/models/toast';
+import dothisTheme from '@/styles/dothisTheme';
+import { globalStyle } from '@/styles/globalStyle';
+>>>>>>> origin/main
 import { trpc } from '@/utils/trpc';
 
 // @ts-ignore

@@ -1,22 +1,17 @@
-import {
-  Container,
-  errorMessage,
-  standaloneToast,
-  ToastBox,
-  typo,
-} from '@dothis/share';
-import {
-  flushMessageSession,
-  withSessionSSR,
-} from '@dothis/share/lib/utils/sessionUtils';
+import { errorMessage } from '@dothis/share';
 import { css } from '@emotion/react';
 import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import Login from '@/components/contents/Login';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { ToastBox } from '@/components/ui/ToastBox';
 import useMessageToast from '@/hooks/useMessageToast';
+import { standaloneToast } from '@/models/toast';
+import { typo } from '@/styles';
+import { flushMessageSession, withSessionSSR } from '@/utils/sessionUtils';
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {
   const messageProps = await flushMessageSession(req);

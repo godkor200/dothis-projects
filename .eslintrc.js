@@ -1,10 +1,11 @@
+const opts = require('@dothis/config/eslint-dothis-nextjs');
+
 module.exports = {
-  ...require('@dothis/config/eslint-dothis-nextjs'),
+  ...opts,
   root: true,
-  // This tells ESLint to load the config from the package `eslint-config-custom`
   settings: {
     next: {
-      rootDir: ["apps/*/"],
+      rootDir: ['apps/*/'],
     },
   },
 };

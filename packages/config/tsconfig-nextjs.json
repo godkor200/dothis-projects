@@ -9,22 +9,27 @@
 //    "composite": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
     "strict": true,
+
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "inlineSources": true,  
+    "inlineSourceMap": true,
     "esModuleInterop": true,
-    "jsx": "preserve",
-    "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
     "noUncheckedIndexedAccess": true,
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "module": "esnext",
     "types": [
-      "@emotion/react/types/css-prop",
       "reflect-metadata",
       "jest",
-      "node",
+      "node"
     ]
   }
 }

@@ -1,8 +1,10 @@
 import type { TextareaProps as ChakraTextareaProps } from '@chakra-ui/react';
 import { forwardRef, Textarea as ChakraTextarea } from '@chakra-ui/react';
-import { colors, commonStyle, fontWeights } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
+
+import { commonStyle } from '@/styles/commonStyle';
+import { colors, fontWeights } from '@/styles/dothisTheme';
 
 export type TextareaProps = ChakraTextareaProps & {
   isInvalid?: boolean;

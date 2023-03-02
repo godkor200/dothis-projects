@@ -1,9 +1,13 @@
-import { Container, extractQueryParams } from '@dothis/share';
+import { extractQueryParams } from '@dothis/share';
 import { useRouter } from 'next/router';
-import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next/types';
 import { z } from 'zod';
 
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
+import { Container } from '@/components/layout/Container';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { trpcSSG } from '@/utils/trpc';
 
@@ -37,8 +41,8 @@ export const getServerSideProps = async (
 };
 
 export default function RequestViewPage({
-                                          requestDetail,
-                                        }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  requestDetail,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const query = querySchema.parse(extractQueryParams(router.asPath));
 

@@ -1,11 +1,17 @@
 import { Text } from '@chakra-ui/react';
-import { FormValidMessage, Input, SubmitModalTemplate } from '@dothis/share';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+<<<<<<< HEAD
 import { useModalStore } from '@/dto/Modal';
+=======
+import { SubmitModalTemplate } from '@/components/article/Modal';
+import { FormValidMessage } from '@/components/ui/FormValidMessage';
+import { Input } from '@/components/ui/Input';
+import { useModalStore } from '@/models/Modal';
+>>>>>>> origin/main
 
 import { RequestPostDomain } from '../../../domain';
 import Textarea from '../../ui/Textarea';
