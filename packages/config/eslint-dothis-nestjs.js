@@ -1,22 +1,15 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    sourceType: 'module',
-  },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
-    'turbo',
-    'prettier',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
-  root: true,
   env: {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js','.eslint-dothis-nestjs.js'],
   rules: {
     'no-console': 'warn',
     '@typescript-eslint/interface-name-prefix': 'off',
