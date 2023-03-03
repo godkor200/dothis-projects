@@ -24,12 +24,8 @@ import { Editor } from '@/components/article/Editor';
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
 import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@/domain';
-<<<<<<< HEAD
-import { useModalOptStore, useModalStore } from '@/dto/Modal';
-=======
 import { useModalOptStore, useModalStore } from '@/models/Modal';
 import { standaloneToast } from '@/models/toast';
->>>>>>> origin/main
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 

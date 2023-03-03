@@ -12,13 +12,9 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { Button } from '@/components/ui/Button';
 import { ToastBox } from '@/components/ui/ToastBox';
 import { pagePath } from '@/constants';
-<<<<<<< HEAD
-import { useModalStore } from '@/dto/Modal';
-=======
 import { useModalStore } from '@/models/Modal';
 import { fontWeights, typo } from '@/styles/dothisTheme';
 import { withUserSessionSSR } from '@/utils/session';
->>>>>>> origin/main
 import { trpc, trpcSSG } from '@/utils/trpc';
 
 const querySchema = z.object({
