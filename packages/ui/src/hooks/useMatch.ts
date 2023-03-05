@@ -24,7 +24,7 @@ export function useMatch({
   const [matchList, setMatchList] = useState<ReturnType<typeof matchMarkList>>(
     [],
   );
-  const pureValue = useMemo(() => value.replaceAll('@', ''), [value]);
+  const pureValue = useMemo(() => value.replace(/@/g, ''), [value]);
 
   const debounceFn = useDebouncedCallback(async (v) => {
     if (v.length === 0) return setMatchList([]);

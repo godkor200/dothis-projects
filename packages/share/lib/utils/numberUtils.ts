@@ -16,9 +16,7 @@ export function random(length = 7) {
   return Math.round(n);
 }
 export const predRandom =
-  (pred: (num: number) => boolean) =>
-  (max: number) =>
-  () => {
+  (pred: (num: number) => boolean) => (max: number) => () => {
     let n: number;
 
     while (true) {

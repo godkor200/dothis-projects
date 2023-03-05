@@ -1,4 +1,4 @@
-import { radToDeg } from "./common";
+import { radToDeg } from './common';
 
 export type Point = {
   x: number;

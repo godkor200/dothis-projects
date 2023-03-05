@@ -1,11 +1,8 @@
 import { sort } from '@fp-ts/core/ReadonlyArray';
 import * as Order from '@fp-ts/core/typeclass/Order';
-import type {
-  RequestFunding,
-  RequestFundingStatus,
-  User,
-} from '@prisma/client';
 import { z } from 'zod';
+
+import type { RequestFunding, RequestFundingStatus, User } from '@/prisma/gen';
 
 import { schema as userSchema } from '../UserDomain/domain';
 

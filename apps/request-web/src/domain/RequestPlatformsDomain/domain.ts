@@ -1,5 +1,6 @@
-import { RequestPlatformType } from '@prisma/client';
 import { z } from 'zod';
+
+import { RequestPlatformType } from '@/prisma/gen';
 
 import { schema as requestPostSchema } from '../RequestPostDomain/domain';
 

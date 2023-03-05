@@ -1,5 +1,8 @@
 {
-  "extends": "@dothis/config/tsconfig-nextjs.json",
-  "include": ["lib/types/global.d.ts", "**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
+  "extends": "../../tsconfig/tsconfig-base.json",
+  "include": ["./lib/types/global.d.ts", "**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
   "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+  }
 }

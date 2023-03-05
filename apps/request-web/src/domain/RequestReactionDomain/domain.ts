@@ -1,5 +1,6 @@
-import { ReactionType } from '@prisma/client';
 import { z } from 'zod';
+
+import { ReactionType } from '@/prisma/gen';
 
 import { schema as requestPostSchema } from '../RequestPostDomain/domain';
 import { schema as userSchema } from '../UserDomain/domain';

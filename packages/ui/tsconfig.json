@@ -1,13 +1,15 @@
 {
-  "extends": "@dothis/config/tsconfig-nextjs.json",
-  "include": ["**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
-  "exclude": ["dist", "node_modules"],
+  "extends": "../../tsconfig/tsconfig-base.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "jsx": "react",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "paths": {
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"],
-    },
+      "@utils/*": ["./src/utils/*"]
+    }
   },
 }

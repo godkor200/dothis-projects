@@ -120,7 +120,7 @@ export const 등록콘텐츠URL = (onSubmit: (solvedUrl: string) => void) => {
       });
 
       const submit = handleSubmit(({ solvedUrl }) => {
-        onSubmit(solvedUrl);
+        if (solvedUrl) onSubmit(solvedUrl);
       });
 
       return (

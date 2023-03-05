@@ -1,6 +1,6 @@
-import type { CenterProps, UseToastOptions } from '@chakra-ui/react';
+import type { CenterProps, ToastId, UseToastOptions } from '@chakra-ui/react';
 import { Box, Center } from '@chakra-ui/react';
-import type { Message } from '@dothis/share/lib/models/Message';
+import type { Message, MessageParams } from '@dothis/share/lib/models/Message';
 import {
   errorMessage,
   message,
@@ -18,7 +18,19 @@ export type ToastBoxProps = Pick<CenterProps, 'children' | 'className'> & {
   onClose?: () => void;
 };
 
-export const ToastBox = ({ onClose, children, ...props }: ToastBoxProps) => (
+export declare interface ToastBox {
+  (p: ToastBoxProps): JSX.Element;
+  toast: (params: MessageParams) => ToastId;
+  successToast: (message: string) => ToastId;
+  errorToast: (message: string) => ToastId;
+  infoToast: (message: string) => ToastId;
+  getMessageOptions: (
+    message: Pick<Message, 'status' | 'message'>,
+    overrideOpt?: UseToastOptions,
+  ) => UseToastOptions;
+}
+
+export const ToastBox: ToastBox = ({ onClose, children, ...props }) => (
   <Center css={style} {...props}>
     <div>{children}</div>
     {onClose && (

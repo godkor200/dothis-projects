@@ -1,8 +1,8 @@
 import type { AwaitedReturn } from '@dothis/share';
 import { iterableToEnum } from '@dothis/share/lib/utils/zodUtils';
-import { RequestCategoryType, RequestStatusType } from '@prisma/client';
 import { z } from 'zod';
 
+import { RequestCategoryType, RequestStatusType } from '@/db';
 import { youtubeUrlToId } from '@/utils/appUtils';
 
 import { schema as creatorSchema } from '../CreatorDomain/domain';

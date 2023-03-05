@@ -1,6 +1,8 @@
-import { Box, chakra } from '@chakra-ui/react';
+import type { ChakraComponent } from '@chakra-ui/react';
 
-export const Container = chakra(Box, {
+import { Box, styled } from '@chakra-ui/react';
+
+export const Container = styled(Box, {
   baseStyle: {
     width: '100%',
     paddingX: {
@@ -12,4 +14,4 @@ export const Container = chakra(Box, {
     maxW: '960px',
     marginX: 'auto',
   },
-});
+}) as ChakraComponent<'div', {}>;

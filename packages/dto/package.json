@@ -1,0 +1,22 @@
+{
+  "name": "@dothis/dto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts", 
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsup ./lib/index.ts --format cjs --dts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "dependencies": {
+    "zod": "^3.20.6",
+    "@ts-rest/core": "^3.18.0"
+  },
+  "devDependencies": {
+    "eslint-config-dothis-nestjs": "workspace:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -4,7 +4,6 @@ export interface Message {
   status: 'success' | 'error' | 'info' | 'warning';
   message: string;
 }
-
 export interface ErrorMessage extends Omit<Message, 'status'> {
   status: 'error';
 }
@@ -13,9 +12,11 @@ export interface SuccessMessage extends Omit<Message, 'status'> {
 }
 const _URI = 'Message' as const;
 
-type MessageParams = Omit<Message, '_URI' | 'kind' | 'message'> &
+export type MessageParams = Omit<Message, '_URI' | 'kind' | 'message'> &
   Partial<Pick<Message, 'kind' | 'message'>>;
+
 const defaultData = { kind: '', message: '' };
+
 export function message(params: MessageParams) {
   return { _URI, ...defaultData, ...params } as Message;
 }

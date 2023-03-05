@@ -1,6 +1,6 @@
-import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
+import type { Prisma } from '@/prisma/gen';
 import { t } from '@/server/trpc';
 import { prisma } from '~/prisma/client';
 

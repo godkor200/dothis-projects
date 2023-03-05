@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {
   args: {
+    // @ts-ignore
     value: 0,
     duration: 1000,
   },

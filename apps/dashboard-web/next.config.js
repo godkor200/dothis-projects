@@ -37,11 +37,12 @@ const config = {
 
     return config;
   },
+  transpilePackages: ['@dothis/share'],
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
     outputFileTracingIgnores: ['**swc/core**'],
     appDir: true,
-    transpilePackages: ['@dothis/share'],
+    typedRoutes: true,
   },
 };
 module.exports = config;

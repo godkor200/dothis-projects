@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useRef, useState } from 'react';
 
 import type { TachometerGraphProps } from '.';
 import { TachometerGraph } from '.';
@@ -30,6 +29,7 @@ const valueInfo: TachometerGraphProps['valueInfo'] = {
 
 export const Sample: Story = {
   args: {
+    // @ts-ignore
     data,
     valueInfo,
     value: 0,

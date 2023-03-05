@@ -4,7 +4,7 @@ import * as Scale from '@visx/scale';
 import { Pie } from '@visx/shape';
 import type { PieProps } from '@visx/shape/lib/shapes/Pie';
 import { Text } from '@visx/text';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { useAnimatedNumber } from '../../../../../hooks';
 

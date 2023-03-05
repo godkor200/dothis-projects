@@ -3,7 +3,6 @@ import { isNilStr, removeSeparators, thousandsSeparators } from '@dothis/share';
 import { onEnter } from '@dothis/ui/src/utils/domUtils';
 import { css } from '@emotion/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -12,6 +11,7 @@ import { z } from 'zod';
 
 import { FormValidMessage } from '@/components/ui/FormValidMessage';
 import UserLink from '@/components/ui/Links/UserLink';
+import type { User } from '@/db';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { colors, fontWeights, mediaQueries } from '@/styles';
 import { trpc } from '@/utils/trpc';

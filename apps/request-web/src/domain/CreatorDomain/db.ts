@@ -1,5 +1,4 @@
-import type { Creator, Prisma } from '@prisma/client';
-
+import type { Creator, Prisma } from '@/prisma/gen';
 import { prisma } from '~/prisma/client';
 
 export const db = {

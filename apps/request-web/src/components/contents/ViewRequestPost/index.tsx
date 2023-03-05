@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { thousandsSeparators } from '@dothis/share';
 import { css } from '@emotion/react';
-import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -42,10 +41,9 @@ import { ToastBox } from '@/components/ui/ToastBox';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 import { YoutubeIframe } from '@/components/ui/YoutubeIframe';
 import { PAGE_KEYS, pagePath } from '@/constants';
-import getUserForCreator from '@/domain/RequestPostDomain/procedure/getUserForCreator';
+import type { User } from '@/db';
 import useMustLoginFirst from '@/hooks/useMustLoginFirst';
 import { useModalOptStore, useModalStore } from '@/models/Modal';
-import requestPost from '@/pages/user/request-post';
 import {
   colors,
   fontSizes,

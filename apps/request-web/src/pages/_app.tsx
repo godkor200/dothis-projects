@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Modal } from '@/components/article/Modal/Modal';
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
-import { ModalOptProvider, useModalStore } from '@/models/Modal';
+import { ModalOptProvider, useModalStore } from '@/dto/Modal';
 import { standaloneToast } from '@/models/toast';
 import dothisTheme from '@/styles/dothisTheme';
 import { globalStyle } from '@/styles/globalStyle';
