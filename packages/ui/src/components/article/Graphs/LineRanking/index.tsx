@@ -6,7 +6,7 @@ import * as Scale from '@visx/scale';
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import clsx from 'clsx';
 import { extent } from 'd3-array';
-import React, { useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 
 import type {
   Actions,
@@ -18,7 +18,7 @@ import type {
   TooltipData,
 } from './common';
 import { ActionKind, colors, initialState } from './common';
-import RankingLine from './RankingLine';
+import Line from './Line';
 
 const itemByWidth = 100;
 const itemByHeight = 50;
@@ -78,8 +78,8 @@ export const LineRanking = <RD extends RankData>({
     initialState,
   );
 
-  const isInvisible = !!activeItem.activeId;
-  const isBlockHoverEvent = activeItem.isClicked;
+  const isInvisible = useMemo(() => !!activeItem.activeId, [activeItem]);
+  const isBlockHoverEvent = useMemo(() => activeItem.isClicked, [activeItem]);
 
   const {
     tooltipOpen,
@@ -120,12 +120,18 @@ export const LineRanking = <RD extends RankData>({
   });
 
   const groupEventGenerator: GroupHandleEvents<RD> = (itemID: string) => ({
-    onMouseEnter() {
+    onMouseEnter(e) {
+      e.stopPropagation();
+      e.preventDefault();
       if (isBlockHoverEvent) return;
+      console.log('on Mouse Enter', itemID);
       dispatchActiveItem({ type: ActionKind.HOVER, payload: itemID });
     },
-    onMouseLeave() {
+    onMouseLeave(e) {
+      e.stopPropagation();
+      e.preventDefault();
       if (isBlockHoverEvent) return;
+      console.log('on Mouse Leave', itemID);
       dispatchActiveItem({ type: ActionKind.HOVER, payload: null });
     },
     onClick(e) {
@@ -184,13 +190,13 @@ export const LineRanking = <RD extends RankData>({
         }}
       >
         <Group
-          className={clsx('line-ranking-contents', isInvisible && 'invisible')}
+          className={clsx('line-ranking-contents', isInvisible && 'focue-mode')}
           top={padding.top}
           left={padding.left}
         >
           {dateSortedData.map((item, i) => (
-            <RankingLine
-              key={`${item.name}-${i}`}
+            <Line
+              key={`${item.name}`}
               color={colors[i % (colors.length + 1)]!}
               datum={item}
               activeItem={activeItem}
