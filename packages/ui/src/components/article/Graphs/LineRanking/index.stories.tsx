@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import format from 'date-fns/format';
+import React from 'react';
 
 import { LineRanking } from '.';
 

@@ -1,3 +1,4 @@
+/** @type { import('@storybook/react').StorybookConfig } */
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -5,11 +6,9 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-webpack5',
-  },
-  features: {
-    storyStoreV7: true,
+  framework: { name: '@storybook/react-webpack5', options: {} },
+  features: {},
+  docs: {
+    autodocs: true,
   },
 };
