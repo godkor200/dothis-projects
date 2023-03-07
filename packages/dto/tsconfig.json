@@ -1,13 +1,12 @@
 {
   "extends": "../../tsconfig/tsconfig-base.json",
   "include": [
-    "src/lib/*","src/lib/**/*"
+    "src/*.ts","src/lib/**/*.ts"
   ],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src",
-    "outDir": "dist",
     "noEmit": false,
     "composite": true
   }
