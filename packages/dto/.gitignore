@@ -9,6 +9,7 @@
 /src/lib/**/*.model.js
 /src/lib/**/*.api.js
 /src/lib/*.js
+/src/*.js
 
 
 # Logs
@@ -48,3 +49,4 @@ lerna-debug.log*
 
 .env
 *.env
+/tsconfig.tsbuildinfo
