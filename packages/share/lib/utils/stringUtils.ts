@@ -23,11 +23,11 @@ export function toDashedPhone(phone: string) {
 
 export const additionSearchParams =
   <SearchParams extends Record<string, string>>(path: string) =>
-    (searchParams: SearchParams) =>
-      [...Object.entries(searchParams)].reduce(
-        (pv, cv, i) => `${pv}${i === 0 ? '?' : '&'}${cv.join('=')}`,
-        path,
-      );
+  (searchParams: SearchParams) =>
+    [...Object.entries(searchParams)].reduce(
+      (pv, cv, i) => `${pv}${i === 0 ? '?' : '&'}${cv.join('=')}`,
+      path,
+    );
 
 // string url -> 쿼리 추출
 export const extractQueryParams = (asPath: string) => {
@@ -45,5 +45,3 @@ export const joinQueryParams = (query: Record<string, unknown>) =>
   Object.entries(query)
     .map((arr) => arr.join('='))
     .join('&');
-
-

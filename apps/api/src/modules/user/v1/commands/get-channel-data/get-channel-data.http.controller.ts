@@ -17,8 +17,8 @@ import {
 } from '@nestjs/swagger';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { userApi } from '@dothis/dto/lib';
-const c = nestControllerContract(userApi);
+import { apiRouter } from '@dothis/dto/lib/apiRouter';
+const c = nestControllerContract(apiRouter.user);
 const { getUserChannelData } = c;
 const { responses, description, summary, pathParams } = getUserChannelData;
 @ApiTags(pathParams)

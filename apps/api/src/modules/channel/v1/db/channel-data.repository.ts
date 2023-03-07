@@ -1,6 +1,6 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
-import { ChannelModel, zChannelData } from '@dothis/dto/lib';
+import { ChannelModel, zChannelData } from '@dothis/dto';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';

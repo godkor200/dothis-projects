@@ -82,20 +82,20 @@ export function scrollToY(
 
   smooth
     ? scrollEl.scrollTo({
-      behavior: 'smooth',
-      top: positionValue,
-    })
+        behavior: 'smooth',
+        top: positionValue,
+      })
     : (scrollEl.scrollTop = positionValue);
 }
 
 export const onEnter =
   (fn: React.KeyboardEventHandler<HTMLInputElement>) =>
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
-        e.preventDefault();
-        return fn(e);
-      }
-    };
+  (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+      e.preventDefault();
+      return fn(e);
+    }
+  };
 
 export function elementOnceInterval<E>(
   findElFn: () => E,

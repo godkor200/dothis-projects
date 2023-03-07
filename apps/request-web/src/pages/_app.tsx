@@ -10,14 +10,10 @@ import React, { useEffect, useState } from 'react';
 
 import { Modal } from '@/components/article/Modal/Modal';
 import { useUrlHistoryEvent } from '@/hooks/useUrlHistoryEvent';
-<<<<<<< HEAD
 import { ModalOptProvider, useModalStore } from '@/dto/Modal';
-=======
-import { ModalOptProvider, useModalStore } from '@/models/Modal';
 import { standaloneToast } from '@/models/toast';
 import dothisTheme from '@/styles/dothisTheme';
 import { globalStyle } from '@/styles/globalStyle';
->>>>>>> origin/main
 import { trpc } from '@/utils/trpc';
 
 // @ts-ignore
@@ -26,9 +22,9 @@ BigInt.prototype.toJSON = function () {
 };
 
 function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps<{ session: Session | null | undefined }>) {
+               Component,
+               pageProps: { session, ...pageProps },
+             }: AppProps<{ session: Session | null | undefined }>) {
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);

@@ -1,7 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindDicTermQuery } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.query';
-import { RedisService } from '@liaoliaots/nestjs-redis';
-import { Redis } from 'ioredis';
 import { FindDicTermRes } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.res';
 import { Inject } from '@nestjs/common';
 import { CACHE_FIND_ALL_QUERY } from '@Apps/modules/cache/constants/cache.contants';

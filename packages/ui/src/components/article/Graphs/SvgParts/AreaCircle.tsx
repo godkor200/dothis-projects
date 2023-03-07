@@ -1,9 +1,10 @@
-import { Circle } from "@visx/shape";
-import type { ComponentProps } from "react";
+import { Circle } from '@visx/shape';
+import type { ComponentProps } from 'react';
+import React from 'react';
 
 type CircleProps = ComponentProps<typeof Circle>;
 export type AreaCircleProps = ComponentProps<typeof Circle> & {
-  areaR: CircleProps["r"];
+  areaR: CircleProps['r'];
   areaCircleProps?: Partial<CircleProps>;
 };
 

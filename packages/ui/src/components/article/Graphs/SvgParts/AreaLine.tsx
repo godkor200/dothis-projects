@@ -1,9 +1,11 @@
-import { Line } from "@visx/shape";
-import type { ComponentProps } from "react";
+import { Line } from '@visx/shape';
+import type { ComponentProps } from 'react';
+import React from 'react';
 
 type SvgLineProps = ComponentProps<typeof Line>;
+
 export type AreaLineProps = SvgLineProps & {
-  areaStrokeWidth: SvgLineProps["strokeWidth"];
+  areaStrokeWidth: SvgLineProps['strokeWidth'];
   areaLineProps?: Partial<SvgLineProps>;
 };
 

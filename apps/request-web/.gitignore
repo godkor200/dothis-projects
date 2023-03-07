@@ -22,6 +22,8 @@
 .env.*
 /v8-compile-cache-0/
 
+.schema/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

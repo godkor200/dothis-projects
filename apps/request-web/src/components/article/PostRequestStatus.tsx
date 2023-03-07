@@ -1,9 +1,9 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import type { RequestPost, RequestStatusType } from '@prisma/client';
 import clsx from 'clsx';
 import React from 'react';
 
+import type { RequestPost, RequestStatusType } from '@/db';
 import { colors, fontWeights } from '@/styles/dothisTheme';
 
 import { RequestPostDomain } from '../../domain';

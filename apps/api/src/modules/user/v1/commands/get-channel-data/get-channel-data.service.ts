@@ -26,7 +26,7 @@ export class GetChannelDataCommandHandler
 
     if (conflictCheck) throw new HttpException('conflict', HttpStatus.CONFLICT);
 
-    const youtube = google.youtube('v3');
+     const youtube = google.youtube("v3");
 
     if (!youtube)
       throw new HttpException(
@@ -37,8 +37,6 @@ export class GetChannelDataCommandHandler
     const res = await youtube.channels.list(
       {
         auth: process.env.GOOGLE_APIKEY,
-      },
-      {
         part: [
           'id',
           'snippet',

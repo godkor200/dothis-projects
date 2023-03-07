@@ -9,7 +9,6 @@ import {
 import { css } from '@emotion/react';
 import { isString } from '@fp-ts/core/String';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,6 +22,7 @@ import type { EditorT } from '@/components/article/Editor';
 import { Editor } from '@/components/article/Editor';
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
+import type { Creator, RequestPost } from '@/db';
 import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@/domain';
 import { useModalOptStore, useModalStore } from '@/models/Modal';
 import { standaloneToast } from '@/models/toast';

@@ -1,9 +1,9 @@
 import '@emotion/react';
 
-import type { PrismaClient } from '@prisma/client';
 import type { DefaultSession } from 'next-auth';
 
-import type { Message } from '@/lib/models/Message';
+import type { Message } from '@/lib/dto/Message';
+import type { PrismaClient } from '@/prisma/gen';
 
 declare const global: Global & { prisma?: PrismaClient };
 

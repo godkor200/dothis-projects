@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signIn, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import { SvgClose } from '@/components/ui/Icons';

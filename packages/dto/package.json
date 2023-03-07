@@ -5,15 +5,22 @@
   "main": "index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsup ./lib/index.ts --format cjs --dts",
+    "build": "tsc --build tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "zod": "^3.20.6",
-    "@ts-rest/core": "^3.18.0"
+    "@ts-rest/core": "^3.18.0",
+    "@types/node": "^18.14.6",
+    "zod": "^3.20.6"
+  },
+  "devDependencies": {
+    "eslint-config-dothis-nestjs": "workspace:*",
+    "rimraf": "^4.3.0",
+    "ts-loader": "9.3.1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "composite": true
 }

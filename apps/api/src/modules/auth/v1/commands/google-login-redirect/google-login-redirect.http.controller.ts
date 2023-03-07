@@ -5,8 +5,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { authApi } from '@dothis/dto/lib';
-const { getGoogleRedirect } = nestControllerContract(authApi);
+import { apiRouter } from '@dothis/dto/lib/apiRouter';
+const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getGoogleRedirect;
 
 @ApiTags(pathParams)

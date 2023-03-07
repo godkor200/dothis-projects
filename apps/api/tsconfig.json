@@ -1,6 +1,7 @@
 {
-  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "extends": "../../tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
+    "types": ["webpack-env"],
     "baseUrl": "./",
     "paths": {
       "@Apps/*": [
@@ -8,10 +9,8 @@
       ],
       "@Libs/*": [
         "./libs/*"
-      ],
-      "@dothis/dto": ["../../packages/dto/*"]
-    },
-    "types": ["webpack-env"]
+      ]
+    }
   },
   "files": [
     "./src/main.ts"

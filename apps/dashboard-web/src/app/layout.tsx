@@ -4,8 +4,6 @@ import localFont from '@next/font/local';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
-import Footer from '@/app/components/Footer';
-
 import ClientContext from './ClientContext';
 import GNB from './components/GNB';
 

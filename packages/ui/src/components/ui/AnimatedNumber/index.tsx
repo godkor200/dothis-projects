@@ -1,6 +1,6 @@
 import { thousandsSeparators } from '@dothis/share/lib/utils/numberUtils';
 import type { ComponentPropsWithRef } from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 import type { UseAnimateNumberProps } from '../../../hooks';
 import { useAnimatedNumber } from '../../../hooks';

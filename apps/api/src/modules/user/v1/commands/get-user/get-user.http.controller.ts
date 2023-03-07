@@ -15,18 +15,16 @@ import {
   TsRest,
   NestRequestShapes,
 } from '@ts-rest/nest';
-import { userApi } from '@dothis/dto/lib';
-
-const c = nestControllerContract(userApi);
-const { getUser } = c;
-const { pathParams, summary, responses, description } = getUser;
+import { apiRouter } from '@dothis/dto/lib/apiRouter';
+const c = nestControllerContract(apiRouter.user);
+const { pathParams, summary, responses, description } = c.getUser;
 type RequestShapes = NestRequestShapes<typeof c>;
 @ApiTags(pathParams)
 @Controller()
 export class GetUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @TsRest(getUser)
+  @TsRest(c.getUser)
   @ApiParam({ name: 'id', required: true, description: '유저 아이디' })
   @ApiOperation({
     summary,

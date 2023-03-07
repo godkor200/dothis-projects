@@ -6,10 +6,10 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { authApi } from '@dothis/dto/lib';
+import { apiRouter } from '@dothis/dto/lib/apiRouter';
 import { GoogleOAuthGuard } from '@Libs/commons/src';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-const { getGoogleLogin } = nestControllerContract(authApi);
+const { getGoogleLogin } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getGoogleLogin;
 @ApiTags(pathParams)
 @Controller()

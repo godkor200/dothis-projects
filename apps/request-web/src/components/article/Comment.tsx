@@ -1,12 +1,12 @@
 import { Box, Flex, HStack, Text, useBoolean } from '@chakra-ui/react';
 import { thousandsSeparators, toKoAboutDateAgo } from '@dothis/share';
 import { css } from '@emotion/react';
-import type { User } from '@prisma/client';
 import clsx from 'clsx';
 import type { Session } from 'next-auth';
 import React, { useMemo } from 'react';
 
 import { Button } from '@/components/ui/Button';
+import type { User } from '@/db';
 import { useGlobalStore } from '@/models/globalStore';
 import { colors, fontWeights } from '@/styles/dothisTheme';
 

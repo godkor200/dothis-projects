@@ -10,7 +10,9 @@ export class FindDicTermHandler {
   async handler(
     @Query() queryParams: FindDicTermQuery,
   ): Promise<FindDicTermRes> {
-    const query = new FindDicTermQuery(queryParams);
+    const query = new FindDicTermQuery({
+      ...queryParams,
+    });
     return await this.queryBus.execute(query);
   }
 }

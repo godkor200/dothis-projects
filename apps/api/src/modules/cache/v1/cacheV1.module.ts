@@ -16,6 +16,7 @@ const infra: Provider[] = [
 ];
 
 const providers: Provider[] = [...infra];
+
 @Module({
   imports: [CqrsModule],
   controllers,

@@ -1,6 +1,6 @@
 import Hangul from 'hangul-js';
 import type { ReactNode } from 'react';
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 type MatchRange = Array<[number, number]>;
 

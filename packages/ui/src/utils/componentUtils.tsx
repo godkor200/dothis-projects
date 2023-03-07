@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import React from 'react';
 
 // 부분적으로 props 적용
 export const PartialProps =
