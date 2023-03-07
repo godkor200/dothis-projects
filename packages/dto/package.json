@@ -2,7 +2,8 @@
   "name": "@dothis/dto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --build tsconfig.json",
@@ -11,10 +12,10 @@
   },
   "dependencies": {
     "@ts-rest/core": "^3.18.0",
-    "@types/node": "^18.14.6",
     "zod": "^3.20.6"
   },
   "devDependencies": {
+    "@types/node": "^18.14.6",
     "eslint-config-dothis-nestjs": "workspace:*",
     "rimraf": "^4.3.0",
     "ts-loader": "9.3.1"

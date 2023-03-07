@@ -2,7 +2,7 @@ import { Controller, Req, Res } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { Request, Response } from 'express';
-import { apiRouter } from '@dothis/dto/lib/apiRouter';
+import { apiRouter } from '@dothis/dto';
 import { Cookies } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/modules/auth/v1/commands/verify-token/verify-token.service';
 import {

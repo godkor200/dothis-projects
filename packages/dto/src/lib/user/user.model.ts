@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 export const userModel = z.object({
   id: z.number().nullable().describe('The id of user'),
   userEmail: z.string().email().max(30).nullable().describe('user email'),
