@@ -3,5 +3,5 @@
   "compilerOptions": {
     "noUnusedLocals": false,
     "noEmit": true
-  }
+  },
 }
