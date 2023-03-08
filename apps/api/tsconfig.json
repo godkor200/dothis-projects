@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig/tsconfig-nestjs.json",
+  "extends": "../../config/tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
     "types": ["webpack-env"],
     "baseUrl": "./",
