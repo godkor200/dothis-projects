@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const importsRule = require("./dist");
+const importsRule = require('./src');
 
 module.exports = {
-   importsRule,
+  importsRule,
 };
