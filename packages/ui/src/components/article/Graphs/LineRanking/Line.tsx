@@ -30,7 +30,7 @@ type Props<D extends RankData> = {
 const groupBaseName = 'group-ranking';
 const dotBaseName = 'ranking-dot';
 
-export default function RankingLine<D extends RankData>({
+export default function Line<D extends RankData>({
   color,
   datum,
   activeItem,

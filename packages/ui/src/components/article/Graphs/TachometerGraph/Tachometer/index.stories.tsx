@@ -7,7 +7,7 @@ import { defaultPercentValueInfo } from './utils';
 const meta = {
   title: 'visx/TachometerGraph',
   component: TachometerGraph,
-} as Meta<typeof TachometerGraph>;
+} satisfies Meta<typeof TachometerGraph>;
 
 export default meta;
 
@@ -29,7 +29,6 @@ const valueInfo: TachometerGraphProps['valueInfo'] = {
 
 export const Sample: Story = {
   args: {
-    // @ts-ignore
     data,
     valueInfo,
     value: 0,

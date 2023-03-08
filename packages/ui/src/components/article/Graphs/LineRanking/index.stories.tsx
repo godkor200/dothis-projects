@@ -1,5 +1,10 @@
+import type {
+  RankData,
+  TooltipData,
+} from '@components/article/Graphs/LineRanking/common';
 import type { Meta, StoryObj } from '@storybook/react';
 import format from 'date-fns/format';
+import React from 'react';
 
 import { LineRanking } from '.';
 
@@ -107,18 +112,18 @@ const parsedData = data.map((d) => ({
 }));
 const myDateFormatter = (d: Date) => format(d, 'yyyy-MM-dd');
 
+const Tooltip = ({ name, data }: TooltipData<RankData>) => (
+  <div>
+    <p>{myDateFormatter(data.date)}</p>
+    <p>
+      <strong>{name}</strong>: {data.rank}위
+    </p>
+  </div>
+);
 export const Sample: Story = {
   args: {
     data: parsedData,
     dateFormatter: myDateFormatter,
-    Tooltip: ({ name, data }) => (
-      <div>
-        <p>{myDateFormatter(data.date)}</p>
-
-        <p>
-          <strong>{name}</strong>: {data.rank}위
-        </p>
-      </div>
-    ),
+    Tooltip,
   },
 };

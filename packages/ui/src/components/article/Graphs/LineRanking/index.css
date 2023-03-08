@@ -5,19 +5,19 @@
     dominant-baseline: middle;
 }
 
-.line-ranking-contents.invisible line, .line-ranking-contents.invisible circle, .line-ranking-contents.invisible text {
+.line-ranking-contents.focue-mode line, .line-ranking-contents.focue-mode circle, .line-ranking-contents.focue-mode text {
     transition: .1s all;
     filter: blur(1px);
-    opacity: .5;
+    opacity: .6;
     cursor: pointer;
 }
 
-.line-ranking-contents.invisible .active-group line, .line-ranking-contents.invisible .active-group circle, .line-ranking-contents.invisible .active-group text {
+.line-ranking-contents.focue-mode .active-group line, .line-ranking-contents.focue-mode .active-group circle, .line-ranking-contents.focue-mode .active-group text {
     filter: none;
     opacity: 1;
 }
 
-.line-ranking-contents.invisible .active-dot {
+.line-ranking-contents.focue-mode .active-dot {
     filter: none;
     opacity: 1;
 }
