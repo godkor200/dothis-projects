@@ -15,7 +15,7 @@ import {
   TsRest,
   NestRequestShapes,
 } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto/lib/apiRouter';
+import { apiRouter } from '@dothis/dto';
 const c = nestControllerContract(apiRouter.user);
 const { pathParams, summary, responses, description } = c.getUser;
 type RequestShapes = NestRequestShapes<typeof c>;
@@ -32,7 +32,7 @@ export class GetUserHttpController {
   })
   @ApiOkResponse({
     description: '유저 찾아옵니다.',
-    type: [UserDto],
+    type: UserDto,
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
