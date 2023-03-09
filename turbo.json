@@ -71,7 +71,16 @@
     "dev-mock": {
       "cache": false
     },
+    "build:theme": {
+        "outputs": [
+            "./dist/**/*"
+        ],
+        "cache": true
+    },
     "storybook": {
+      "dependsOn": [
+        "^build:theme"
+      ],
       "cache": false
     },
     "request-web": {
