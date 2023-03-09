@@ -1,16 +1,14 @@
 import { FindDicTermQuery } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.query';
-import { DicTermQuery } from '@Apps/modules/cache/v1/queries/find-dic-term/dic-term.query';
+import { FindDicTermAdapter } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.adapter';
 import { FindDicTermRes } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.res';
-import { Redis } from 'ioredis';
-import { RedisService } from '@liaoliaots/nestjs-redis';
-import { Injectable } from "@nestjs/common";
+import { RedisClientService } from '@Apps/modules/cache/v1/infra/redis.client.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class FindDicTermImplement implements DicTermQuery {
-  private readonly redisClient: Redis;
-  constructor(private readonly redisService: RedisService) {
-    this.redisClient = redisService.getClient();
-  }
+export class FindDicTermImplement
+  extends RedisClientService
+  implements FindDicTermAdapter
+{
   findAll(options: FindDicTermQuery): Promise<FindDicTermRes> {
     return this.redisClient.hgetall(options.key);
   }
