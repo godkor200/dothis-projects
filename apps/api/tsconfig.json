@@ -1,7 +1,7 @@
 {
   "extends": "../../config/tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
-    "types": ["webpack-env"],
+    "types": ["webpack-env","jest", "node"],
     "baseUrl": "./",
     "paths": {
       "@Apps/*": [
@@ -19,7 +19,7 @@
     "./", "../../packages/dto/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules","dist"
   ],
   "references": [{ "path": "../../packages/dto/package.json" }]
 }
