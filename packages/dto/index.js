@@ -1,6 +1,6 @@
 'use strict';
 
-const importsRule = require('./src');
+const importsRule = require('./dist');
 
 module.exports = {
   importsRule,
