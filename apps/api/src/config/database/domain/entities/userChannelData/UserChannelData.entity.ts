@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '@Apps/config/database/domain/user/User.entity';
+import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 @Entity({ name: 'UserChannelData' })
 export class UserChannelData {
   @PrimaryGeneratedColumn({ name: 'id' })

@@ -6,8 +6,8 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { Channel } from '../channel/Channel.entity';
-import { DailyViews } from '@Apps/config/database/domain/daily_views/DailyViews.entity';
+import { Channel } from '../channel/channel.entity';
+import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 @Entity({ name: 'video' })
 export class Video {
   @PrimaryGeneratedColumn({ name: 'id' })

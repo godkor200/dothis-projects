@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
-import { Membership } from '@Apps/config/database/domain/membership/Membership.entity';
-import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
+import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
+import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 
 @Entity({ name: 'user' })
