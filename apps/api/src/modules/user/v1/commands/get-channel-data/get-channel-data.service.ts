@@ -1,7 +1,7 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
-import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
 import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
@@ -26,7 +26,7 @@ export class GetChannelDataCommandHandler
 
     if (conflictCheck) throw new HttpException('conflict', HttpStatus.CONFLICT);
 
-     const youtube = google.youtube("v3");
+    const youtube = google.youtube('v3');
 
     if (!youtube)
       throw new HttpException(
@@ -34,20 +34,18 @@ export class GetChannelDataCommandHandler
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
-    const res = await youtube.channels.list(
-      {
-        auth: process.env.GOOGLE_APIKEY,
-        part: [
-          'id',
-          'snippet',
-          'brandingSettings',
-          'contentDetails',
-          'statistics',
-          'topicDetails',
-        ],
-        mine: true,
-      },
-    );
+    const res = await youtube.channels.list({
+      auth: process.env.GOOGLE_APIKEY,
+      part: [
+        'id',
+        'snippet',
+        'brandingSettings',
+        'contentDetails',
+        'statistics',
+        'topicDetails',
+      ],
+      mine: true,
+    });
 
     if (res.status !== 200)
       throw new HttpException(

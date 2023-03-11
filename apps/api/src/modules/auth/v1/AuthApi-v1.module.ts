@@ -1,5 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
-import { UserEntityModule } from '@Apps/config/database/domain/user/UserModule';
+import { UserEntityModule } from '@Apps/config/database/domain/entities/user/user.entity.module';
 import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { GoogleLoginHttpController } from '@Apps/modules/auth/v1/commands/google-login/goolgle-login.http.controller';
