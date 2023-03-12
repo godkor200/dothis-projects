@@ -5,13 +5,12 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: '.',
   },
-  extends: ['turbo', 'prettier', 'plugin:@next/next/recommended'],
+  extends: ['turbo', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],
   plugins: [
     'turbo',
     '@typescript-eslint',
     'react',
     'jsx-a11y',
-    'prettier',
     'simple-import-sort',
   ],
   env: {
@@ -26,6 +25,7 @@ module.exports = {
   },
   ignorePatterns: ['.next', 'node_modules', '**/*.js', '**.*.cjs'],
   rules: {
+    "prettier/prettier": "warn",
     'react/jsx-pascal-case': 'off',
     'react/function-component-definition': 'off',
     'react/prop-types': 'off',
