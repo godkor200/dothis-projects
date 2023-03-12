@@ -5,7 +5,7 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: '.',
   },
-  extends: ['turbo', 'prettier', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],
+  extends: ['turbo', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],
   plugins: [
     'turbo',
     '@typescript-eslint',
