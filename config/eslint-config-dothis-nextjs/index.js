@@ -30,9 +30,6 @@ module.exports = {
     'react/function-component-definition': 'off',
     'react/prop-types': 'off',
     'no-multi-assign': 'off',
-    'import/first': 'error',
-    'import/newline-after-import': 'warn',
-    'import/no-duplicates': 'error',
     'react/destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
     'jsx-a11y/anchor-is-valid': 'off', // Next.js use his own internal link system
     'react/require-default-props': 'off', // Allow non-defined react props as undefined
