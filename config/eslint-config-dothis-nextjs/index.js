@@ -5,7 +5,7 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: '.',
   },
-  extends: ['next', 'turbo', 'prettier', 'next/core-web-vitals'],
+  extends: ['turbo', 'prettier', 'plugin:@next/next/recommended'],
   plugins: [
     'turbo',
     '@typescript-eslint',
@@ -24,7 +24,7 @@ module.exports = {
       rootDir: ['apps/*/', 'packages/*/'],
     },
   },
-  ignorePatterns: ['.next', 'node_modules', '**/*.js', '**/*.mjs', '**/*.jsx'],
+  ignorePatterns: ['.next', 'node_modules', '**/*.js', '**.*.cjs'],
   rules: {
     'react/jsx-pascal-case': 'off',
     'react/function-component-definition': 'off',
