@@ -3,7 +3,7 @@ import {
   ChannelDataMock,
   UserChannelDataMock,
 } from '@Apps/modules/user/__mock__/get-channel-data.mock';
-import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
+import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { google } from 'googleapis';
 

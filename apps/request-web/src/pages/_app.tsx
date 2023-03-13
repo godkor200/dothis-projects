@@ -22,9 +22,9 @@ BigInt.prototype.toJSON = function () {
 };
 
 function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps<{ session: Session | null | undefined }>) {
+               Component,
+               pageProps: { session, ...pageProps },
+             }: AppProps<{ session: Session | null | undefined }>) {
   useUrlHistoryEvent();
   /* START - next.js와 react 18버전 충돌에 따른 예외 처리 */
   const [showChild, setShowChild] = useState(false);

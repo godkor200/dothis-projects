@@ -1,12 +1,12 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { User } from '@Apps/config/database/domain/user/User.entity';
-import { UserChannelData } from '@Apps/config/database/domain/userChannelData/UserChannelData.entity';
-import { Membership } from '@Apps/config/database/domain/membership/Membership.entity';
-import { DailyViews } from '@Apps/config/database/domain/daily_views/DailyViews.entity';
-import { Channel } from '@Apps/config/database/domain/channel/Channel.entity';
-import { Video } from '@Apps/config/database/domain/videos/Videos.entity';
+import { User } from '@Apps/config/database/domain/entities/user/user.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
+import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
+import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
+import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
 import { DataSourceOptions } from 'typeorm';
 
 @Injectable()

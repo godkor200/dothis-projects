@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { UserChannelDataV1ApiModule } from './v1/user-channel-data-v1.module';
-import { UserChannelDataModule as UserChannelDataEntityModule } from '@Apps/config/database/domain/userChannelData/UserChannelDataModule';
+import { UserChannelDataModule as UserChannelDataEntityModule } from '@Apps/config/database/domain/entities/userChannelData/UserChannelDataModule';
 
 @Module({
   imports: [

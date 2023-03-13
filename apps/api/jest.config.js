@@ -12,7 +12,7 @@ module.exports = {
   rootDir: './',
   verbose: true,
   moduleNameMapper: {
-    '@Apps/(.*)$': '<rootDir>/apps/$1',
+    '@Apps/(.*)$': '<rootDir>/src/$1',
     '@Libs/(.*)$': '<rootDir>/libs/$1',
   },
 };
