@@ -1,1 +1,3 @@
 export const CHANNEL_DATA_REPOSITORY = Symbol('CHANNEL_DATA_REPOSITORY');
+
+export const CHANNEL_TERM = Symbol('CHANNEL_TERM');
