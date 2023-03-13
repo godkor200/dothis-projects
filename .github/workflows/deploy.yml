@@ -31,17 +31,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.4
+#       - name: Setup pnpm
+#         uses: pnpm/action-setup@v2.2.4
         
-      - name: install pnpm dev
-        working-directory: ./
-        run: pnpm i
+#       - name: install pnpm dev
+#         working-directory: ./
+#         run: pnpm i
 
-      - name: build
-        working-directory: ./
-        run: |
-         sudo chmod -R 777 ./ && pnpm build:back-end
+#       - name: build
+#         working-directory: ./
+#         run: |
+#          sudo chmod -R 777 ./ && pnpm build:back-end
 
       - name: create env file
         working-directory: ./apps/api
@@ -65,7 +65,7 @@ jobs:
 
       - name: zip file
         working-directory: ./
-        run: zip -r dothisBackEnd.zip ./
+        run: zip -r dothisBackEnd.zip ./ -x "**/node_modules/*"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
