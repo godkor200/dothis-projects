@@ -10,7 +10,7 @@ import {
   SvgYoutube,
 } from '@/components/ui/Icons';
 import { PAGE_KEYS } from '@/constants';
-import { useModalStore } from '@/models/Modal';
+import { useModalStore } from '@/dto/Modal';
 
 import { Button } from '../ui/Button';
 

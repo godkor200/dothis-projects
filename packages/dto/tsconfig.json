@@ -1,8 +1,14 @@
 {
   "extends": "../../config/tsconfig/tsconfig-base.json",
-  "include": ["lib/types/global.d.ts", "**/*.ts", "**/*.tsx", "../../**/*.d.ts"],
+  "include": [
+    "src/*.ts","src/lib/**/*.ts","src/*.ts"
+  ],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "./dist",
+    "noEmit": false,
+    "composite": true
   }
 }

@@ -1,5 +1,5 @@
 import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
-import { User } from '@Apps/config/database/domain/user/User.entity';
+import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 
 export class MockGetUser implements UserRepositoryPort {
