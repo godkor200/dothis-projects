@@ -1,1 +1,5 @@
-export type SetDicTermCommand = 'OK';
+export type SetDicTermCommandOutput = 'OK';
+
+export class SetDicTermCommand {
+  public dicTerm = 'dicTerm';
+}
