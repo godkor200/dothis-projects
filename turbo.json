@@ -7,7 +7,8 @@
       ]
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "request-web#build": {
       "dependsOn": [
@@ -71,8 +72,18 @@
     "dev-mock": {
       "cache": false
     },
+    "build:theme": {
+        "outputs": [
+            "./dist/**/*"
+        ],
+        "cache": true
+    },
     "storybook": {
-      "cache": false
+      "dependsOn": [
+        "^build:theme"
+      ],
+      "cache": false,
+      "persistent": true
     },
     "request-web": {
       "dependsOn": [

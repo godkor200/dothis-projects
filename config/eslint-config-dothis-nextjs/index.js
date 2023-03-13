@@ -5,13 +5,12 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: '.',
   },
-  extends: ['next', 'turbo', 'prettier', 'next/core-web-vitals'],
+  extends: ['turbo', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],
   plugins: [
     'turbo',
     '@typescript-eslint',
     'react',
     'jsx-a11y',
-    'prettier',
     'simple-import-sort',
   ],
   env: {
@@ -24,15 +23,13 @@ module.exports = {
       rootDir: ['apps/*/', 'packages/*/'],
     },
   },
-  ignorePatterns: ['.next', 'node_modules', '**/*.js', '**/*.mjs', '**/*.jsx'],
+  ignorePatterns: ['.next', 'node_modules', '**/*.js', '**.*.cjs'],
   rules: {
+    "prettier/prettier": "warn",
     'react/jsx-pascal-case': 'off',
     'react/function-component-definition': 'off',
     'react/prop-types': 'off',
     'no-multi-assign': 'off',
-    'import/first': 'error',
-    'import/newline-after-import': 'warn',
-    'import/no-duplicates': 'error',
     'react/destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
     'jsx-a11y/anchor-is-valid': 'off', // Next.js use his own internal link system
     'react/require-default-props': 'off', // Allow non-defined react props as undefined

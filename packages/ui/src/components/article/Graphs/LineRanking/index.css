@@ -6,9 +6,9 @@
 }
 
 .line-ranking-contents.focue-mode line, .line-ranking-contents.focue-mode circle, .line-ranking-contents.focue-mode text {
-    transition: .1s all;
+    transition: .12s all;
     filter: blur(1px);
-    opacity: .6;
+    opacity: .4;
     cursor: pointer;
 }
 
