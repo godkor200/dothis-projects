@@ -4,7 +4,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { FindDicTermRes } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.res';
 
 @Controller('/cache')
-export class FindDicTermHandler {
+export class FindDicTermHttpController {
   constructor(private readonly queryBus: QueryBus) {}
   @Get('term')
   async handler(
