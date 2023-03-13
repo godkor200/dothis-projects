@@ -1,0 +1,23 @@
+.line-ranking-contents text {
+
+    font-weight: bold;
+    text-anchor: start;
+    dominant-baseline: middle;
+}
+
+.line-ranking-contents.focue-mode line, .line-ranking-contents.focue-mode circle, .line-ranking-contents.focue-mode text {
+    transition: .12s all;
+    filter: blur(1px);
+    opacity: .4;
+    cursor: pointer;
+}
+
+.line-ranking-contents.focue-mode .active-group line, .line-ranking-contents.focue-mode .active-group circle, .line-ranking-contents.focue-mode .active-group text {
+    filter: none;
+    opacity: 1;
+}
+
+.line-ranking-contents.focue-mode .active-dot {
+    filter: none;
+    opacity: 1;
+}

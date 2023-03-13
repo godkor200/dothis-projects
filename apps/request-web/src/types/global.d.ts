@@ -1,9 +1,9 @@
 import '@emotion/react';
 
-import type { PrismaClient } from '@prisma/client';
 import type { DefaultSession } from 'next-auth';
 
 import type { Message } from '@/lib/dto/Message';
+import type { PrismaClient } from '@/prisma/gen';
 
 declare const global: Global & { prisma?: PrismaClient };
 
@@ -25,5 +25,3 @@ declare module 'iron-session' {
     message?: Message | undefined;
   }
 }
-
-declare module '';

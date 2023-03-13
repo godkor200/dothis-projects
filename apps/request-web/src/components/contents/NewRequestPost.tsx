@@ -1,28 +1,14 @@
 import { Box, Text } from '@chakra-ui/react';
-import type { EditorT } from '@dothis/share';
 import {
-  Button,
-  Editor,
   errorMessage,
-  FormatInput,
-  FormErrorMessages,
-  FormValidMessage,
-  Input,
   isErrorMessage,
   isMessage,
   isNilStr,
   removeSeparators,
-  SelectMenu,
-  SelectMenuButton,
-  SelectMenuList,
-  standaloneToast,
-  SubmitModalTemplate,
-  ToastBox,
 } from '@dothis/share';
 import { css } from '@emotion/react';
 import { isString } from '@fp-ts/core/String';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Creator, RequestPost } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -32,14 +18,25 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import type { EditorT } from '@/components/article/Editor';
+import { Editor } from '@/components/article/Editor';
 import ViewRequestPost from '@/components/contents/ViewRequestPost';
 import { PAGE_KEYS, pagePath } from '@/constants';
+import type { Creator, RequestPost } from '@/db';
 import { RequestFundingDomain, RequestPostDomain, UserDomain } from '@/domain';
-import { useModalOptStore, useModalStore } from '@/dto/Modal';
+import { useModalOptStore, useModalStore } from '@/models/Modal';
+import { standaloneToast } from '@/models/toast';
 import { requestPostImageUpload } from '@/utils/requestPostImageUpload';
 import { trpc } from '@/utils/trpc';
 
+import { SubmitModalTemplate } from '../article/Modal';
+import { Button } from '../ui/Button';
+import { FormErrorMessages } from '../ui/FormErrorMessages';
+import { FormValidMessage } from '../ui/FormValidMessage';
+import { FormatInput, Input } from '../ui/Input';
 import SearchInput from '../ui/SearchInput';
+import { SelectMenu, SelectMenuButton, SelectMenuList } from '../ui/SelectMenu';
+import { ToastBox } from '../ui/ToastBox';
 
 const formValid = RequestPostDomain.schema
   .pick({

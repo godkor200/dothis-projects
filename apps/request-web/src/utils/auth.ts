@@ -1,5 +1,6 @@
-import { ToastBox } from '@dothis/share';
 import { signIn } from 'next-auth/react';
+
+import { ToastBox } from '@/components/ui/ToastBox';
 
 export const youtubeSignIn = () =>
   signIn('youtube', {

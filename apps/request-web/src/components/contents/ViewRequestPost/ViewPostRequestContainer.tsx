@@ -1,10 +1,11 @@
-import { Box } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import type { ChakraComponent } from '@chakra-ui/react';
 
-const ViewPostRequestContainer = styled(Box)`
-  padding-left: 16px;
-  padding-right: 16px;
-`;
+import { styled } from '@chakra-ui/react';
 
-export default ViewPostRequestContainer; 
- 
+const ViewPostRequestContainer = styled('div', {
+  baseStyle: {
+    paddingX: '16px',
+  },
+}) as ChakraComponent<'div', {}>;
+
+export default ViewPostRequestContainer;

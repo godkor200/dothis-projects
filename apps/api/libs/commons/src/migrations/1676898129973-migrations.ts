@@ -1,3 +1,4 @@
+
 import { MigrationInterface, QueryRunner } from "typeorm"
 
 export class migrations1676898129973 implements MigrationInterface {

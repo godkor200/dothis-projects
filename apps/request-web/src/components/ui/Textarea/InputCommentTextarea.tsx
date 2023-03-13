@@ -1,12 +1,19 @@
-import type { FlexProps } from '@chakra-ui/react';
+import type { ComponentWithAs, FlexProps } from '@chakra-ui/react';
 import { Box, Flex, forwardRef } from '@chakra-ui/react';
-import type { Optional,UserAvatarProps  } from '@dothis/share';
-import { Button, SvgSendPlane, ToastBox, UserAvatar } from '@dothis/share/components/ui';
-import type { RequestComment } from '@prisma/client';
+import type { Optional } from '@dothis/share';
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
+import type {
+  UserAvatarProps,
+  UserAvatarProps,
+} from '@/components/ui/UserAvatar';
+import { UserAvatar, UserAvatar } from '@/components/ui/UserAvatar';
+import type { RequestComment } from '@/db';
 import type { RequestCommentDomain } from '@/domain';
 
+import { Button } from '../Button';
+import { SvgSendPlane } from '../Icons';
+import { ToastBox } from '../ToastBox';
 import type { TextareaProps } from './index';
 import Textarea from './index';
 
@@ -20,7 +27,10 @@ export type InputCommentTextareaProps = Omit<FlexProps, 'onSubmit'> & {
   rootId?: RequestComment['rootId'];
 };
 
-const InputCommentTextarea = forwardRef<InputCommentTextareaProps, 'textarea'>(
+const InputCommentTextarea: ComponentWithAs<
+  'textarea',
+  InputCommentTextareaProps
+> = forwardRef(
   ({ onSubmit, textarea, parentId, rootId, user, ...props }, ref) => {
     const areaRef = useRef<HTMLTextAreaElement>(null);
     useImperativeHandle(ref, () => areaRef.current);

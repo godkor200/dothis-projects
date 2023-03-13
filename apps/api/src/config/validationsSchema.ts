@@ -8,7 +8,7 @@ export const validationSchema = Joi.object({
   DB_PORT: Joi.number().required(),
   DB_HOST: Joi.string().required(),
   DB_SCHEMA: Joi.string().required(),
-
+  APP_PORT: Joi.number().required(),
   REDIS_PORT: Joi.number().required(),
   REDIS_HOSTNAME: Joi.string().required(),
   REDIS_PASSWORD: Joi.string().required(),

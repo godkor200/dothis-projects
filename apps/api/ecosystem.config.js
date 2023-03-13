@@ -1,4 +1,3 @@
-const path = require('path');
 require('dotenv').config();
 console.log(process.env.NODE_ENV);
 module.exports = {
@@ -28,6 +27,9 @@ module.exports = {
         JWT_SECRET: process.env.JWT_SECRET,
         ACCESS_TOKEN_EXPIRESIN: process.env.ACCESS_TOKEN_EXPIRESIN,
         REFRESH_TOKEN_EXPIRESIN: process.env.REFRESH_TOKEN_EXPIRESIN,
+        REDIS_PORT: process.env.REDIS_PORT,
+        REDIS_HOSTNAME: process.env.REDIS_HOSTNAME,
+        REDIS_PASSWORD: process.env.REDIS_PASSWORD,
       },
       env_production: {
         SERVER_PORT: 8080,
@@ -44,6 +46,9 @@ module.exports = {
         JWT_SECRET: process.env.JWT_SECRET,
         ACCESS_TOKEN_EXPIRESIN: process.env.ACCESS_TOKEN_EXPIRESIN,
         REFRESH_TOKEN_EXPIRESIN: process.env.REFRESH_TOKEN_EXPIRESIN,
+        REDIS_PORT: process.env.REDIS_PORT,
+        REDIS_HOSTNAME: process.env.REDIS_HOSTNAME,
+        REDIS_PASSWORD: process.env.REDIS_PASSWORD,
       },
     },
   ],

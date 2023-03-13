@@ -1,6 +1,5 @@
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
-
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
 import type { inferQueryOutput } from '@/utils/trpc';
 
 type Props = {

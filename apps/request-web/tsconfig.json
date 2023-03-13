@@ -1,18 +1,14 @@
 {
-  "extends": "@dothis/config/tsconfig-nextjs.json",
+  "extends": "../../config/tsconfig/tsconfig-nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "jsxImportSource": "@emotion/react",
     "paths": {
+      "@/db": ["./prisma/db"],
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    },
-    "incremental": true,
-    "jsxImportSource": "@emotion/react"
-  },
-  "references": [
-    {
-      "path": "../../packages/share"
     }
-  ],
-  "include": ["./src/**/*", "next-env.d.ts", "../../types/**/*.d.ts"],
-  "exclude": ["node_modules", "./public/**/*"]
+  },
+  "include": ["./src/**/*", "next-env.d.ts"],
+  "exclude": ["node_modules", "dist", "./public/**/*", "src/**/*.stories.(tsx|jsx)"]
 }

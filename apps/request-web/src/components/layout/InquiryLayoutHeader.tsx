@@ -1,5 +1,4 @@
 import { Container, HStack } from '@chakra-ui/react';
-import { colors, fontWeights, isLinkActive, mediaQueries } from '@dothis/share';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -7,6 +6,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { pagePath } from '@/constants';
+import { colors, fontWeights, mediaQueries } from '@/styles';
+import { isLinkActive } from '@/utils/appUtils';
 
 export default function InquiryLayoutHeader() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/db';
 
 declare const global: Global & { prisma?: PrismaClient };
 

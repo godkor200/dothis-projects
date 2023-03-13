@@ -12,8 +12,9 @@
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "dev:dashboard-mock": "dotenv -e .env -- turbo run dev-mock --filter=dashboard-web",
     "storybook": "turbo run storybook",
-    "storybook:share": "turbo run storybook --filter='@dothis/share'",
-    "build-storybook:share": "turbo run build-storybook --filter='@dothis/share'",
+    "storybook:ui": "turbo run storybook --filter='@dothis/ui'",
+    "build-storybook:ui": "turbo run build-storybook --filter='@dothis/ui'",
+    "build:theme": "pnpm run build --filter=@dothis/theme",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
@@ -24,20 +25,27 @@
     "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
-    "dev:back-end": "dotenv -e .env -- turbo run start:dev-api",
-    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter api"
+    "dev:back-end": "dotenv -e ./apps/api/.env -- turbo run start:dev-api",
+    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api"
   },
   "devDependencies": {
-    "@dothis/config": "*",
-    "@dothis/share": "*",
-    "@types/passport-jwt": "^3.0.7",
+    "@dothis/theme": "workspace:*",
+    "eslint-config-dothis-nestjs": "workspace:*",
+    "dotenv-cli": "^6.0.0",
+    "turbo": "^1.8.3",
+    "eslint": "^8.35.0",
     "prettier": "^2.8.0",
-    "turbo": "^1.6.3",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "@dothis/dto": "workspace:^1.0.0",
-    "dotenv-cli": "^6.0.0"
+    "typescript": "^4.9.5",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-turbo": "^0.0.9",
+    "eslint-plugin-turbo": "^0.0.9",
+    "eslint-config-next": "13.2.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "pnpm": {
     "overrides": {

@@ -1,9 +1,12 @@
 import { Box } from '@chakra-ui/react';
-import { mediaQueries, useScroll } from '@dothis/share';
-import { Button, SvgPlus } from '@dothis/share/components/ui';
+import { useScroll } from '@dothis/ui/src/hooks';
 import { css } from '@emotion/react';
 
+import { mediaQueries } from '@/styles/dothisTheme';
+
 import NewRequestPost from '../contents/NewRequestPost';
+import { Button } from '../ui/Button';
+import { SvgPlus } from '../ui/Icons/SvgPlus';
 
 const MobileActionBar = () => {
   const { scrollDirection } = useScroll();
@@ -12,13 +15,13 @@ const MobileActionBar = () => {
       <Box className={scrollDirection === 'UP' ? 'active' : ''} css={style}>
         <NewRequestPost.ModalLink>
           <Button
-            theme='primary'
+            theme="primary"
             width={36}
             h={36}
-            borderRadius='50%'
+            borderRadius="50%"
             tabIndex={-1}
           >
-            <SvgPlus fill='white' width={36} height={36} />
+            <SvgPlus fill="white" width={36} height={36} />
           </Button>
         </NewRequestPost.ModalLink>
       </Box>

@@ -1,5 +1,4 @@
-import type { Prisma } from '@prisma/client';
-
+import type { Prisma } from '@/prisma/gen';
 import { prisma } from '~/prisma/client';
 
 import { RequestFundingDomain } from '../index';

@@ -1,3 +1,4 @@
 module.exports = {
-  ...require('@dothis/config/eslint-dothis-nextjs'),
-}
+  extends: 'eslint-config-dothis-nextjs',
+  root: true,
+};

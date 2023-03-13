@@ -1,30 +1,37 @@
 import { Box, Divider, VStack } from '@chakra-ui/react';
-import { Button, SvgFacebook, SvgInstagram, SvgTwitch, SvgYoutube } from '@dothis/share/components/ui';
 import { css } from '@emotion/react';
 import { signIn } from 'next-auth/react';
 import React from 'react';
 
+import {
+  SvgFacebook,
+  SvgInstagram,
+  SvgTwitch,
+  SvgYoutube,
+} from '@/components/ui/Icons';
 import { PAGE_KEYS } from '@/constants';
 import { useModalStore } from '@/dto/Modal';
+
+import { Button } from '../ui/Button';
 
 export default function Login() {
   return (
     <VStack css={style} spacing={20}>
-      <Button theme='white' onClick={() => signIn('google')} round>
+      <Button theme="white" onClick={() => signIn('google')} round>
         <SvgYoutube />
         <strong>구글 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme='white' disabled onClick={() => signIn('instagram')} round>
+      <Button theme="white" disabled onClick={() => signIn('instagram')} round>
         <SvgInstagram />
         <strong>인스타그램 로그인</strong>
       </Button>
-      <Button theme='white' disabled onClick={() => signIn('facebook')} round>
+      <Button theme="white" disabled onClick={() => signIn('facebook')} round>
         <SvgFacebook />
         <strong>페이스북 로그인</strong>
       </Button>
       <Divider></Divider>
-      <Button theme='white' disabled onClick={() => signIn('twitch')} round>
+      <Button theme="white" disabled onClick={() => signIn('twitch')} round>
         <SvgTwitch />
         <strong>트위치 로그인</strong>
       </Button>

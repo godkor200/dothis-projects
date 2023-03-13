@@ -1,7 +1,8 @@
 import type { AwaitedReturn } from '@dothis/share';
 import { groupBy } from '@fp-ts/core/ReadonlyArray';
-import type { RequestComment, RequestCommentHeart, User } from '@prisma/client';
 import { z } from 'zod';
+
+import type { RequestComment, RequestCommentHeart, User } from '@/prisma/gen';
 
 import { schema as userSchema } from '../UserDomain/domain';
 import type { db } from './index';

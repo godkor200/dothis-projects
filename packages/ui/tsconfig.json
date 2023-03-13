@@ -1,0 +1,15 @@
+{
+  "extends": "../../config/tsconfig/tsconfig-base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  }
+}

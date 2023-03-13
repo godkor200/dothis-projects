@@ -1,8 +1,10 @@
-import type { ModalProps } from '../../../../../packages/share/components/article/Modal';
 import { enableMapSet } from 'immer';
 import type React from 'react';
-import create from 'zustand';
-import { immer } from 'zustand/middleware/immer';
+import type { ModalProps } from '@/components/article/Modal';
+import { immer } from 'zustand/middleware/immer'; 
+import { create } from 'zustand';
+
+import type { ModalProps } from '@/components/article/Modal';
 
 enableMapSet();
 
@@ -13,9 +15,9 @@ export interface ModalItem {
 }
 
 type ModalKey = string;
-export type ModalMap = Map<ModalKey, ModalItem>;
+export type ModalMap = Map<ModalKey, ModalItem>; 
 
-export type ModalState = {
+export type ModalState = { 
   modals: ModalMap;
   get(key: ModalKey): ModalItem | undefined;
   open(key: ModalKey, data: ModalItem): void;

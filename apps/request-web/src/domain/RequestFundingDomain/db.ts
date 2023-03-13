@@ -1,5 +1,4 @@
-import type { Prisma, RequestFunding, RequestPost, User } from '@prisma/client';
-
+import type { Prisma, RequestFunding, RequestPost, User } from '@/prisma/gen';
 import { prisma } from '~/prisma/client';
 
 export const db = {

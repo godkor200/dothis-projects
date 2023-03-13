@@ -5,8 +5,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { authApi } from '@dothis/dto/lib';
-const { getGoogleRedirect } = nestControllerContract(authApi);
+import { apiRouter } from '@dothis/dto';
+const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getGoogleRedirect;
 
 @ApiTags(pathParams)
@@ -30,8 +30,8 @@ export class GoogleLoginRedirectHttpController {
 
     res.setHeader('Authorization', 'Bearer ' + token.accessToken);
     res.cookie('refreshToken', token.refreshToken);
-    res.cookie('google_access_token', userInfo.goolgleAccessToken);
-    res.cookie('google_refresh_token', userInfo.goolgleRefreshToken);
+    res.cookie('google_access_token', userInfo.googleAccessToken);
+    res.cookie('google_refresh_token', userInfo.googleRefreshToken);
 
     return {
       message: 'Dothis Authentication',

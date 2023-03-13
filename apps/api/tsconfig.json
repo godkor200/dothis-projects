@@ -1,6 +1,7 @@
 {
-  "extends": "@dothis/config/tsconfig-nestjs.json",
+  "extends": "../../config/tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
+    "types": ["webpack-env","jest", "node"],
     "baseUrl": "./",
     "paths": {
       "@Apps/*": [
@@ -8,8 +9,7 @@
       ],
       "@Libs/*": [
         "./libs/*"
-      ],
-      "@dothis/dto": ["../../packages/dto/*"]
+      ]
     }
   },
   "files": [
@@ -19,7 +19,7 @@
     "./", "../../packages/dto/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules","dist"
   ],
   "references": [{ "path": "../../packages/dto/package.json" }]
 }

@@ -1,5 +1,3 @@
-import { colors } from '@dothis/share';
-import HorizonPostRequestItemWrap from '@dothis/share/components/layout/HorizonPostRequestItemWrap';
 import { css } from '@emotion/react';
 import { chunksOf } from '@fp-ts/core/ReadonlyArray';
 import type { MutableRefObject } from 'react';
@@ -11,6 +9,8 @@ import type { Swiper as SwiperClass } from 'swiper/types';
 
 import type { HorizonPostRequestItemProps } from '@/components/article/HorizonPostRequestItem';
 import HorizonPostRequestItem from '@/components/article/HorizonPostRequestItem';
+import HorizonPostRequestItemWrap from '@/components/layout/HorizonPostRequestItemWrap';
+import { colors } from '@/styles/dothisTheme';
 
 type Props = {
   postRequestList: HorizonPostRequestItemProps['requestPost'][];

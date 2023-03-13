@@ -43,8 +43,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
     done(null, {
       ...info,
-      goolgleAccessToken: accessToken,
-      goolgleRefreshToken: refreshToken,
+      googleAccessToken: accessToken,
+      googleRefreshToken: refreshToken,
     });
   }
 }

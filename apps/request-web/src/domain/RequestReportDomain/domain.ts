@@ -1,5 +1,6 @@
-import { RequestReportStatus, RequestReportType } from '@prisma/client';
 import { z } from 'zod';
+
+import { RequestReportStatus, RequestReportType } from '@/prisma/gen';
 
 import { schema as requestPostSchema } from '../RequestPostDomain/domain';
 import { schema as userSchema } from '../UserDomain/domain';
