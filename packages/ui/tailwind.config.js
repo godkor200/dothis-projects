@@ -1,8 +1,9 @@
-const theme = require('@dothis/theme/dashboard').default;
+const dashboard = require('@dothis/theme/dashboard/index.js');
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} **/
 module.exports = {
-  content: ['./src/components/**/*.{jsx,tsx}', './.storybook/**/*.{jsx,tsx}'],
-  theme,
+  content: ['./src/components/**/*.tsx'],
+ 
   plugins: [],
+  theme: dashboard.theme,
 };

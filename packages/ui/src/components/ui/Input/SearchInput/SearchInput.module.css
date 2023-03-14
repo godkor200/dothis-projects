@@ -1,0 +1,10 @@
+
+.root {
+    @apply flex h-11;
+    input {
+        @apply text-gray90 caret-primary60;
+    }
+    input::placeholder {
+        @apply text-gray20 font-regular;
+    }
+}
