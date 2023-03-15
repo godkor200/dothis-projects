@@ -21,10 +21,10 @@ import { ScheduleModule } from '@nestjs/schedule';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'development.env',
-      // process.env.NODE_ENV === 'development'
-      //   ? 'development.env'
-      //   : 'production.env',
+      envFilePath:
+        process.env.NODE_ENV === 'development'
+          ? 'development.env'
+          : 'production.env',
       load: [dbConfig, cacheConfig, appConfig],
       validationSchema,
     }),
