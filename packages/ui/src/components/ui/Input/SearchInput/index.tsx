@@ -46,7 +46,6 @@ const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
           {...props}
           data-hasvalue={hasValue}
           id={id}
-          className="ml-2"
           ref={inputRef}
         />
         <button

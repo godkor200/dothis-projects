@@ -2,7 +2,7 @@
     @apply flex h-11 items-center pl-4 pr-2 py-2.5 bg-background10 rounded-10;
     
     > input {
-        @apply text-grey90 caret-primary60;
+        @apply text-grey90 caret-primary60 ml-2;
         
         &::placeholder {
             @apply text-grey20 font-regular;
