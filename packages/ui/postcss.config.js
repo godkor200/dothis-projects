@@ -3,6 +3,7 @@ module.exports = {
     require('postcss-import'),
     require('tailwindcss/nesting', 'postcss-nesting'),
     require('tailwindcss'),
+    
     /** @type {import('postcss-preset-env').pluginOptions} **/
     require('postcss-preset-env')({
       stage: 2,
@@ -14,8 +15,8 @@ module.exports = {
       },
     }),
     process.env.NODE_ENV === 'production' &&
-      require('cssnano')({
-        preset: 'default',
-      }),
+    require('cssnano')({
+      preset: 'default',
+    }),
   ],
 };

@@ -11,12 +11,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const databaseUri: string = configService.get<string>('db.DB_HOST');
+  const appPort = configService.get<number | string>('app.APP_PORT');
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   const logger = new Logger();
   app.use(cookieParser());
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(8080);
+  await app.listen(appPort);
 
   logger.log(`==========================================================`);
 

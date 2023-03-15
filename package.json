@@ -12,9 +12,9 @@
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "dev:dashboard-mock": "dotenv -e .env -- turbo run dev-mock --filter=dashboard-web",
     "storybook": "turbo run storybook",
-    "storybook:ui": "turbo run storybook --filter='@dothis/ui'",
-    "build-storybook:ui": "turbo run build-storybook --filter='@dothis/ui'",
-    "build:theme": "pnpm run build --filter=@dothis/theme",
+    "storybook:ui": "turbo run storybook --filter=@dothis/ui",
+    "build-storybook:ui": "turbo run build-storybook --filter=@dothis/ui",
+    "build:theme": "turbo run build --filter=@dothis/theme",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",
@@ -26,14 +26,15 @@
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e ./apps/api/.env -- turbo run start:dev-api",
-    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api"
+    "dev:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run start:dev-api",
+    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api",
+    "build:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run build --filter=api"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",
     "eslint-config-dothis-nestjs": "workspace:*",
     "dotenv-cli": "^6.0.0",
     "turbo": "^1.8.3",
-    
     "eslint": "^8.35.0",
     "prettier": "^2.8.0",
     "typescript": "^4.9.5",

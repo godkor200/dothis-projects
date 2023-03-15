@@ -1,6 +1,5 @@
 @import "@dothis/theme/dashboard/global.css";
 
-
-#storybook-root {
-    @apply relative ;
+#storybook-root { 
+    @apply relative;
 }

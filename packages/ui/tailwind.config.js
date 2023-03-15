@@ -1,9 +1,8 @@
-const dashboard = require('@dothis/theme/dashboard/index.js');
+const { theme, utilityPlugin } = require('@dothis/theme/dashboard/index.js');
 
 /** @type {import('tailwindcss').Config} **/
 module.exports = {
-  content: ['./src/components/**/*.tsx'],
- 
-  plugins: [],
-  theme: dashboard.theme,
+  content: ['./src/components/**/*.{jsx,tsx}', './.storybook/**/*.{jsx,tsx}'],
+  theme,
+  plugins: [utilityPlugin],
 };
