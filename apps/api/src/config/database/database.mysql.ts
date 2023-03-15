@@ -7,7 +7,7 @@ import { Membership } from '@Apps/config/database/domain/entities/membership/mem
 import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
-import { DataSourceOptions } from 'typeorm';
+import { C_channelEntity } from '@Apps/config/database/domain/entities/c_channel/c_channel.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -22,7 +22,15 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: this.configService.get('db.MYSQL_ROOT_USER'),
       password: this.configService.get('db.MYSQL_PASSWORD'),
       database: this.configService.get('db.DB_SCHEMA'),
-      entities: [User, UserChannelData, Membership, DailyViews, Channel, Video],
+      entities: [
+        User,
+        UserChannelData,
+        Membership,
+        DailyViews,
+        Channel,
+        C_channelEntity,
+        Video,
+      ],
       migrations: [__dirname + '/migrations/1676006541148-migrations.ts'],
       synchronize: false,
     };
