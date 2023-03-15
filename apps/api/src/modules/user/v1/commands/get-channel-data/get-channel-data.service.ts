@@ -55,16 +55,16 @@ export class GetChannelDataCommandHandler
 
     const { id: channelId } = res.data.items[0];
 
-    const { channelName, totalVideos, subscriber, totalViews, keyword } =
+    const { channelName, subscriber, keyword } =
       await this.channelDataRepo.findOneByChannelId(channelId);
 
     const newUserChannelData = new UserChannelData(
       channelId,
       Number(command.userId),
       channelName,
-      totalVideos,
+      undefined,
       subscriber,
-      totalViews,
+      undefined,
       keyword,
     );
 

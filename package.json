@@ -26,7 +26,9 @@
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e ./apps/api/.env -- turbo run start:dev-api",
-    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api"
+    "dev:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run start:dev-api",
+    "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api",
+    "build:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run build --filter=api"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",
