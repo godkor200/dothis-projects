@@ -26,46 +26,9 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-#       - name: Setup pnpm
-#         uses: pnpm/action-setup@v2.2.4
-        
-#       - name: install pnpm dev
-#         working-directory: ./
-#         run: pnpm i
-
-#       - name: build
-#         working-directory: ./
-#         run: |
-#          sudo chmod -R 777 ./ && pnpm build:back-end
-
-      - name: create env file
-        working-directory: ./apps/api
-        run: |
-          pwd
-          touch production.env
-          echo MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }} >> production.env
-          echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
-          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
-          echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
-          echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
-          echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
-          echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
-          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> production.env
-          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> production.env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> production.env
-          echo ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }} >> production.env
-          echo REFRESH_TOKEN_EXPIRESIN=${{ secrets.REFRESH_TOKEN_EXPIRESIN }} >> production.env          
-          cat production.env
-
-
       - name: zip file
         working-directory: ./
-        run: zip -r dothisBackEnd.zip ./ -x "**/node_modules/*"
+        run: zip -r dothisBackEnd.zip ./ -x "apps/dashboard-web" -x "apps/request-web" -x "packages/share" -x "packages/ui"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
