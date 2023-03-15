@@ -41,17 +41,17 @@ export const theme = {
   },
   colors: {
     /* gray */
-    gray90: '#131313',
-    gray80: '#2b2b2b',
-    gray70: '#424242',
-    gray60: '#5A5A5A',
-    gray50: '#717171',
-    gray40: '#898989',
-    gray30: '#A1A1A1',
-    gray20: '#B8B8B8',
-    gray10: '#D0D0D0',
-    gray05: '#E7E7E7',
-    gray00: '#FFFFFF',
+    grey90: '#131313',
+    grey80: '#2b2b2b',
+    grey70: '#424242',
+    grey60: '#5A5A5A',
+    grey50: '#717171',
+    grey40: '#898989',
+    grey30: '#A1A1A1',
+    grey20: '#B8B8B8',
+    grey10: '#D0D0D0',
+    grey05: '#E7E7E7',
+    grey00: '#FFFFFF',
 
     /* background */
     background20: '#F1F1F1',
@@ -66,8 +66,15 @@ export const theme = {
     primary20: '#FDE7EB',
     primary10: '#FEF3F5',
 
-    /* other */
-    danger: '#FC5555',
+    /* system */
+    error: '#FC5555',
+    success: '#45D08B',
+
+    /* sub */
+    yellow: '#FFCE7B',
+    orange: '#FD7B59',
+    purple: '#C56CF0',
+    indigo: '#636DF8',
   },
   lineHeight: {
     16: px2rem(16),
@@ -80,6 +87,12 @@ export const theme = {
     42: px2rem(42),
     48: px2rem(48),
     54: px2rem(54),
+  },
+  boxShadow: {
+    grey12: '0px 4px 12px rgba(113, 113, 113, 0.15)',
+    grey24: '0px 6px 24px rgba(113, 113, 113, 0.15)',
+    red12: '0px 4px 12px rgba(151, 5, 27, 0.1)',
+    red24: '0px 6px 24px rgba(151, 5, 27, 0.1)',
   },
 } satisfies Config['theme'];
 
