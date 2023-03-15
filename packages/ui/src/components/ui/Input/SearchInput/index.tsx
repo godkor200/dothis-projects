@@ -36,7 +36,7 @@ const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
         className={styles.root}
         onClick={(e) => {
           e.stopPropagation();
-          document.getElementById(id)?.focus();
+          inputRef.current.focus();
         }}
       >
         <label htmlFor={id}>
