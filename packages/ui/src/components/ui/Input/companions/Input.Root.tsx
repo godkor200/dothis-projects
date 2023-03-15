@@ -5,7 +5,10 @@ import React from 'react';
 
 import style from './Input.Root.module.css';
 
-type Props = Pick<PolymorphicComponentProps<'div'>, 'className' | 'children'>;
+type Props = Pick<
+  PolymorphicComponentProps<'div'>,
+  'className' | 'children' | 'onClick'
+>;
 const InputRoot = (props: Props) => {
   return <div {...props} />;
 };

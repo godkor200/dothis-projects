@@ -3,7 +3,11 @@ import { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 export const theme = {
-  extend: {},
+  extend: {
+    borderRadius: {
+      '10': px2rem(10),
+    },
+  },
   fontSize: {
     /* heading */
     h1: px2rem(36),
@@ -40,6 +44,8 @@ export const theme = {
     30: px2rem(30),
   },
   colors: {
+    transparent: 'transparent',
+
     /* gray */
     grey90: '#131313',
     grey80: '#2b2b2b',

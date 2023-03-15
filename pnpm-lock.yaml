@@ -195,10 +195,11 @@ importers:
       '@babel/core': ^7.21.0
       '@dothis/dto': workspace:*
       '@dothis/share': workspace:*
+      '@dothis/theme': workspace:*
       '@dothis/ui': workspace:*
       '@effect/data': ^0.3.3
       '@hookform/resolvers': ^2.9.11
-      '@next/font': ^13.2.3
+      '@next/font': ^13.2.4
       '@svgr/webpack': ^6.5.1
       '@tanstack/react-query': ^4.24.4
       '@tanstack/react-query-devtools': ^4.24.9
@@ -239,6 +240,8 @@ importers:
       zod-to-json-schema: ^3.20.4
     dependencies:
       '@dothis/share': link:../../packages/share
+      '@dothis/theme': link:../../config/theme
+      '@dothis/ui': link:../../packages/ui
       '@effect/data': 0.3.3
       '@hookform/resolvers': 2.9.11_react-hook-form@7.43.5
       '@next/font': 13.2.4
@@ -264,7 +267,6 @@ importers:
     devDependencies:
       '@babel/core': 7.21.0
       '@dothis/dto': link:../../packages/dto
-      '@dothis/ui': link:../../packages/ui
       '@svgr/webpack': 6.5.1
       '@types/node': 18.15.1
       '@types/react': 18.0.28
