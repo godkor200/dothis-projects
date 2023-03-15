@@ -1,11 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "@dothis/theme/dashboard/global.css";
 
-html, body {
-    @apply m-0 p-0 text-[16px];
-}
-
-#storybook-root {
-    @apply relative ;
+#storybook-root { 
+    @apply relative;
 }

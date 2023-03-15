@@ -2,11 +2,18 @@
   "name": "@dothis/theme",
   "version": "0.0.0",
   "private": true,
+  "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "require": "./dist/*"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "clean": "rimraf node_modules"
+    "clean": "rimraf node_modules",
+    "build": "tsc --build tsconfig.build.json" 
   },
   "devDependencies": {
     "rimraf": "^4.3.1",
