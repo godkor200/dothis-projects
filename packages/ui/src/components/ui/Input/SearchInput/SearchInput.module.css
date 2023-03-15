@@ -1,9 +1,32 @@
 .root {
-    @apply flex h-11 items-center px-4 py-2.5 bg-background10 rounded-10;
-    input {
+    @apply flex h-11 items-center pl-4 pr-2 py-2.5 bg-background10 rounded-10;
+    
+    > input {
         @apply text-grey90 caret-primary60;
+        
+        &::placeholder {
+            @apply text-grey20 font-regular;
+        }
     }
-    input::placeholder {
-        @apply text-grey20 font-regular;
+
+    > input[data-hasvalue="true"] + button {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) rotateZ(0);
+    }
+    > button {
+        transition: .18s all;
+        visibility: hidden;
+        opacity: 0;
+        transform: scale(0)  rotateZ(-360deg);
+        
+        @apply flex items-center justify-center w-8 h-full;
+        
+        circle {
+            transition: .1s all;
+        }
+        &:hover circle {
+            @apply fill-grey40;
+        }
     }
 }

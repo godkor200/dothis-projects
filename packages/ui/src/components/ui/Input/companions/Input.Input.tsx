@@ -1,9 +1,9 @@
 import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
 import clsx from 'clsx';
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
 type Props = {
-  onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onEnter?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 const Input = polymorphicForwardRefPropsAsIs('input')<Props>()(
   ({ onEnter, ...props }, ref) => {
@@ -12,8 +12,8 @@ const Input = polymorphicForwardRefPropsAsIs('input')<Props>()(
         {...props}
         className={clsx('w-full bg-transparent', props.className)}
         ref={ref}
-        onKeyUp={(e) => {
-          props.onKeyUp?.(e);
+        onKeyDown={(e) => {
+          props.onKeyDown?.(e);
           if (e.key === 'Enter') onEnter?.(e);
         }}
       />

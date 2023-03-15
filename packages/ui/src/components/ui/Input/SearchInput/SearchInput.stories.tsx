@@ -15,5 +15,8 @@ type Story = StoryObj<typeof meta>;
 export const SearchInputStory: Story = {
   args: {
     placeholder: 'Search',
+    onEnter(e) {
+      alert('enter! ' + (e.target as HTMLInputElement).value);
+    },
   },
 };
