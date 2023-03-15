@@ -17,6 +17,7 @@ import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/v1/command
 import { ChannelDataRepository } from '@Apps/modules/channel/v1/db/channel-data.repository';
 import { ChannelEntityModule } from '@Apps/config/database/domain';
 import { SetDicTermHttpController } from '@Apps/modules/cache/v1/commands/set-dic-term/set-dic-term.http.controller';
+import { C_ChannelEntityModule } from '@Apps/config/database/domain/entities/c_channel/c_channel.entity.module';
 
 const controllers = [FindDicTermHttpController, SetDicTermHttpController];
 
@@ -43,7 +44,11 @@ const infra: Provider[] = [
 const providers: Provider[] = [...infra, SetDicTermHandler];
 
 @Module({
-  imports: [CqrsModule, ChannelEntityModule],
+  imports: [
+    CqrsModule,
+    //  ChannelEntityModule
+    C_ChannelEntityModule,
+  ],
   controllers,
   providers,
 })
