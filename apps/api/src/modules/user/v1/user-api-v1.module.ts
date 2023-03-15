@@ -13,6 +13,7 @@ import { ChannelDataRepository } from '@Apps/modules/channel/v1/db/channel-data.
 import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+import { C_ChannelEntityModule } from '@Apps/config/database/domain/entities/c_channel/c_channel.entity.module';
 
 const httpControllers = [GetUserHttpController, GetChannelDataHttpController];
 
@@ -40,6 +41,7 @@ const queryHandlers: Provider[] = [];
     UserEntityModule,
     MembershipEntityModule,
     UserChannelDataModule,
+    C_ChannelEntityModule,
   ],
   controllers: [...httpControllers],
   providers: [...repositories, ...commandHandlers, ...queryHandlers],
