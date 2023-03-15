@@ -32,6 +32,7 @@
     "next": "^13.2.4",
     "@dothis/share": "workspace:*",
     "@effect/data": "^0.4.1",
+    "@svgr/webpack": "^6.5.1",
     "@tanstack/react-table": "^8.7.9",
     "@visx/axis": "^3.1.0",
     "@visx/bounds": "^3.0.0",
