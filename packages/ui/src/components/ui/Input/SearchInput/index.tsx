@@ -1,20 +1,13 @@
+import InputCompound from '@components/ui/Input/compound/index';
 import { useBoolean } from '@hooks/useBoolean';
-import { isBrowser } from '@utils/domUtils';
 import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
-import React, {
-  useEffect,
-  useId,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useId, useImperativeHandle, useRef } from 'react';
 
 import CloseCircleIcon from '../../../../assets/icon/close-circle.svg';
 import SearchIcon from '../../../../assets/icon/search.svg';
-import InputCompanions from '../companions/index';
 import styles from './SearchInput.module.css';
 
-const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
+const SearchInput = polymorphicForwardRefPropsAsIs(InputCompound.Input)()(
   (props, ref) => {
     const uniqueId = useId();
     const inputRef = useRef<HTMLInputElement | null>();
@@ -28,11 +21,13 @@ const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
         if (inputRef.current.value.length > 0) return hasValueFlag.on();
         hasValueFlag.off();
       }
+
       inputRef.current.addEventListener('keyup', event);
       return () => inputRef.current.removeEventListener('keyup', event);
     }, [inputRef.current, hasValueFlag]);
+
     return (
-      <InputCompanions.Root
+      <InputCompound.Root
         className={styles.root}
         onClick={(e) => {
           e.stopPropagation();
@@ -42,7 +37,7 @@ const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
         <label htmlFor={id}>
           <SearchIcon />
         </label>
-        <InputCompanions.Input
+        <InputCompound.Input
           {...props}
           data-hasvalue={hasValue}
           id={id}
@@ -59,9 +54,9 @@ const SearchInput = polymorphicForwardRefPropsAsIs(InputCompanions.Input)()(
             e.stopPropagation();
           }}
         >
-          <CloseCircleIcon />
+          <CloseCircleIcon width={14} height={14} viewBox="0 0 12 12" />
         </button>
-      </InputCompanions.Root>
+      </InputCompound.Root>
     );
   },
 );

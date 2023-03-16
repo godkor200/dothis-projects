@@ -1,6 +1,6 @@
 import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
 import clsx from 'clsx';
-import React, { ChangeEventHandler } from 'react';
+import React from 'react';
 
 type Props = {
   onEnter?: React.KeyboardEventHandler<HTMLInputElement>;

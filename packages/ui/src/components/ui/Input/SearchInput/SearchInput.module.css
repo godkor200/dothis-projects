@@ -10,20 +10,23 @@
     }
 
     > input[data-hasvalue="true"] + button {
-        @apply visible opacity-1;
-        transform: scale(1) rotateZ(0);
+        @apply visible opacity-100;
+        transform: scale(1) rotate(0);
+        
     }
     > button {
         @apply flex items-center justify-center w-8 h-full invisible opacity-0;
-        transition: .18s all;
-        transform: scale(0)  rotateZ(-360deg);
+        transition: .16s all;
+        transform: scale(0);
         
         circle {
             transition: .1s all;
         }
         
-        &:hover circle {
-            @apply fill-grey40;
+        &:hover, &:focus  {
+            circle{
+                @apply fill-grey30;
+            }
         }
     }
 }
