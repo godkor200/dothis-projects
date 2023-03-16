@@ -2,7 +2,7 @@ const { theme, utilityPlugin } = require('@dothis/theme/dashboard/index.js');
 
 /** @type {import('tailwindcss').Config} **/
 module.exports = {
-  content: ['./src/components/**/*.{jsx,tsx}', './.storybook/**/*.{jsx,tsx}'],
+  content: ['./src/components/**/*.{tsx}'],
   theme,
   plugins: [utilityPlugin],
 };

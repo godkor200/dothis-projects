@@ -1,11 +1,21 @@
 import { px2rem } from '../utils/unit';
 import { Config } from 'tailwindcss';
+import { borderRadius } from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
 
 export const theme = {
   extend: {
     borderRadius: {
+      '8': px2rem(8),
       '10': px2rem(10),
+      none: borderRadius.none,
+      full: borderRadius.full,
+    },
+    borderWidth: {
+      1: '1px',
+    },
+    height: {
+      '9.5': px2rem(38),
     },
   },
   fontSize: {
