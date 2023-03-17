@@ -26,9 +26,8 @@ const Button = polymorphicForwardRefPropsAsIs('button')<Props>()(
         className={clsx(styles.button, className)}
         ref={ref}
       >
-        {/* TODO: 로딩 소스 구하면 그걸로 적용시켜야함 */}
         {isLoading ? (
-          <Player src={buttonLoadingLottie} autoplay={true} loop={true} />
+          <Player src={buttonLoadingLottie} autoplay loop />
         ) : (
           children
         )}

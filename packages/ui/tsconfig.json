@@ -2,11 +2,11 @@
   "extends": "../../config/tsconfig/tsconfig-nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "resolveJsonModule": true,
     "paths": {
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@assets/*": ["./src/assets/*"]
     }
   },
   "include": [
