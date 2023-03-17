@@ -26,7 +26,7 @@
     &[data-theme="primary"] {
         @apply bg-primary50 text-grey00;
         
-        &:hover, &:focus {
+        &:hover {
             @apply bg-primary40;
         }
         
@@ -48,7 +48,7 @@
     &[data-theme="secondary"] {
         @apply bg-transparent border-1 border-grey05;
 
-        &:hover, &:focus {
+        &:hover {
             @apply bg-background10;
         }
 
@@ -71,7 +71,7 @@
     &[data-theme="transparent"] {
         @apply bg-transparent text-grey60 font-regular rounded-none;
 
-        &:hover, &:focus {
+        &:hover {
             @apply text-grey70;
             
             path {
