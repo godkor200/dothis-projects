@@ -50,7 +50,7 @@
     "hangul-js": "^0.2.6",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.0.0",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "uid": "^2.0.1",
     "use-debounce": "^9.0.3"
   },
@@ -69,6 +69,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.0",
+    "@lottiefiles/react-lottie-player": "^3.5.2",
     "postcss": "^8.4.21",
     "postcss-preset-env": "^8.0.1",
     "postcss-import": "^15.1.0",

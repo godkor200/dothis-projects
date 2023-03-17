@@ -1,7 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
     sourceType: 'module'
   },
   extends: ['turbo', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],

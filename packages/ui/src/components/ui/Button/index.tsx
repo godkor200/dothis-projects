@@ -1,9 +1,9 @@
-import InputCompound from '@components/ui/Input/compound/index';
-import { useBoolean } from '@hooks/useBoolean';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
 import clsx from 'clsx';
-import React, { useEffect, useId, useImperativeHandle, useRef } from 'react';
+import React from 'react';
 
+import buttonLoadingLottie from '../../../assets/lottie/button-loading.json';
 import styles from './Button.module.css';
 
 type Props = {
@@ -13,17 +13,25 @@ type Props = {
 };
 
 const Button = polymorphicForwardRefPropsAsIs('button')<Props>()(
-  ({ size, theme, isLoading, className, children, ...props }, ref) => {
+  (
+    { size, theme, isLoading, className, children, disabled, ...props },
+    ref,
+  ) => {
     return (
       <button
         {...props}
         data-theme={theme}
         data-size={size}
+        disabled={isLoading || disabled}
         className={clsx(styles.button, className)}
         ref={ref}
       >
         {/* TODO: 로딩 소스 구하면 그걸로 적용시켜야함 */}
-        {isLoading ? 'loading' : children}
+        {isLoading ? (
+          <Player src={buttonLoadingLottie} autoplay={true} loop={true} />
+        ) : (
+          children
+        )}
       </button>
     );
   },
