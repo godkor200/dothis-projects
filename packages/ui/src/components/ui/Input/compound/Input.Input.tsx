@@ -6,11 +6,11 @@ type Props = {
   onEnter?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 const Input = polymorphicForwardRefPropsAsIs('input')<Props>()(
-  ({ onEnter, ...props }, ref) => {
+  ({ onEnter, className, ...props }, ref) => {
     return (
       <input
         {...props}
-        className={clsx('w-full bg-transparent', props.className)}
+        className={clsx('w-full bg-transparent', className)}
         ref={ref}
         onKeyDown={(e) => {
           props.onKeyDown?.(e);
