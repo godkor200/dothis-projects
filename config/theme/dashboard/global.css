@@ -7,6 +7,13 @@ html, body {
 }
 
 input {
-    @apply outline-0 border-0;
+    @apply border-0;
+    
+    &:focus-within {
+        @apply outline-0;
+    }
+}
+button:focus-within {
+    @apply outline-primary40;
 }
 

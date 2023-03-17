@@ -1,5 +1,14 @@
 @import "@dothis/theme/dashboard/global.css";
 
-#storybook-root { 
-    @apply relative;
+@font-face {
+    font-family: 'pretendard';
+    src: url('/fonts/PretendardVariable.ttf') format('ttf');
+    font-style: normal;
+    font-weight: normal;
 }
+
+html, body {  
+    @apply relative;
+    font-family: pretendard, serif;
+}
+
