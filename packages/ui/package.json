@@ -45,6 +45,7 @@
     "@visx/text": "^3.0.0",
     "@visx/tooltip": "^3.0.0",
     "@visx/wordcloud": "^3.0.0",
+    "@radix-ui/react-popover": "^1.0.5",
     "clsx": "^1.2.1",
     "d3-array": "^3.2.2",
     "hangul-js": "^0.2.6",

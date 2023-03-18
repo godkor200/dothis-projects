@@ -1,5 +1,5 @@
 .button {
-    @apply flex items-center justify-center px-4 rounded-8 font-bold;
+    @apply flex items-center justify-center rounded-8 font-bold;
     transition: .16s all;
 
     &:active {
@@ -12,6 +12,9 @@
     
     
     /* sizes */
+    &[data-size] {
+        @apply px-4;
+    }
     &[data-size="small"] {
         @apply h-9.5 py-2;
     }
