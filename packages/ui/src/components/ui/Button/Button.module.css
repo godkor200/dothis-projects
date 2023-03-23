@@ -1,6 +1,8 @@
 .button {
     @apply flex items-center justify-center rounded-8 font-bold;
     transition: .16s all;
+    
+    
 
     &:active {
         transform: translateY(1px);

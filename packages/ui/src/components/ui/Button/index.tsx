@@ -1,5 +1,5 @@
 import { Player } from '@lottiefiles/react-lottie-player';
-import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
+import { createPolymorphicComponentWithAllProps } from '@utils/reactUtils';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -12,7 +12,7 @@ type Props = {
   size?: 'small' | 'medium' | 'large';
 };
 
-const Button = polymorphicForwardRefPropsAsIs('button')<Props>()(
+const Button = createPolymorphicComponentWithAllProps('button')<Props>()(
   (
     { size, theme, isLoading, className, children, disabled, ...props },
     ref,

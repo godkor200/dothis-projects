@@ -1,11 +1,11 @@
-import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
+import { createPolymorphicComponentWithAllProps } from '@utils/reactUtils';
 import clsx from 'clsx';
 import React from 'react';
 
 type Props = {
   onEnter?: React.KeyboardEventHandler<HTMLInputElement>;
 };
-const Input = polymorphicForwardRefPropsAsIs('input')<Props>()(
+const Input = createPolymorphicComponentWithAllProps('input')<Props>()(
   ({ onEnter, className, ...props }, ref) => {
     return (
       <input
