@@ -26,15 +26,7 @@
       ],
       "cache": false
     },
-    "build-storybook": {
-      "inputs": [
-        ".storybook/**/*",
-        "src/components/**/*.stories.tsx"
-      ],
-      "outputs": [
-        "build/**"
-      ]
-    },
+
     "theme-gen": {
       "inputs": [
         "./src/styles/**/*"
@@ -46,19 +38,19 @@
     },
     "request-web#db-generate": {
       "inputs": [
-        "/apps/request-web/prisma/schema.prisma"
+        "./prisma/schema.prisma"
       ],
       "cache": false
     },
     "request-web#db-push": {
       "inputs": [
-        "/apps/request-web/prisma/schema.prisma"
+        "./prisma/schema.prisma"
       ],
       "cache": false
     },
     "studio": {
       "inputs": [
-        "/apps/request-web/prisma/schema.prisma"
+        "./prisma/schema.prisma"
       ]
     },
     "analyze": {
@@ -72,18 +64,37 @@
     "dev-mock": {
       "cache": false
     },
-    "build:theme": {
-        "outputs": [
-            "./dist/**/*"
-        ],
-        "cache": true
+    "@dothis/theme#build": {
+      "outputs": [
+          "./dist/**/*"
+      ],
+      "inputs": [
+        "./dashboard/**/*", "./utils/**/*"
+      ],
+      "cache": true
     },
     "storybook": {
-      "dependsOn": [
-        "^build:theme"
-      ],
       "cache": false,
       "persistent": true
+    },
+    "@dothis/ui#storybook": {
+      "dependsOn": [
+        "@dothis/theme#build"
+      ]
+    },
+    "build-storybook": {
+      "inputs": [
+        ".storybook/**/*",
+        "src/components/**/*.stories.tsx"
+      ],
+      "outputs": [
+        "storybook-static/**"
+      ]
+    },
+    "@dothis/ui#build-storybook": {
+      "dependsOn": [
+        "@dothis/theme#build"
+      ]
     },
     "request-web": {
       "dependsOn": [
