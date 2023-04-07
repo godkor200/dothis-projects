@@ -2,11 +2,12 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@Apps/config/database/domain/entities/user/user.entity';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/UserChannelData/UserChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
 import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
 import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { RelatedWordsEntity } from './domain/entities/related_words/related_words.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -28,6 +29,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         DailyViews,
         ChannelEntity,
         Video,
+        RelatedWordsEntity,
       ],
       migrations: [__dirname + '/migrations/1676006541148-migrations.ts'],
       synchronize: false,
