@@ -1,4 +1,4 @@
-import { UserChannelDataModule } from '@Apps/config/database/domain/entities/userChannelData/UserChannelDataModule';
+import { UserChannelDataModule } from '@Apps/config/database/domain/entities/UserChannelData/UserChannelDataModule';
 import { UserChannelDataRepository } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository';
 import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
 import { Module, Provider } from '@nestjs/common';
