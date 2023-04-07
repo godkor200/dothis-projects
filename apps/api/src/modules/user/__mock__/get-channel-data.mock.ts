@@ -1,8 +1,8 @@
 import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
 import { Paginated, PaginatedQueryParams } from '@Libs/commons/src';
 import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
-import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
-import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/db/channel-data.repository.port';
+import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 
 export class UserChannelDataMock implements UserChannelDataRepositoryPort {
@@ -41,32 +41,34 @@ export class UserChannelDataMock implements UserChannelDataRepositoryPort {
   }
 }
 
-export class ChannelDataMock implements ChannelDataRepositoryPost {
-  private readonly result: Channel;
-  constructor(result: Channel) {
+export class ChannelDataMock implements ChannelDataRepositoryPort {
+  private readonly result: ChannelEntity;
+  constructor(result: ChannelEntity) {
     this.result = result;
   }
   delete(id: string): Promise<boolean> {
     return Promise.resolve(false);
   }
 
-  findAll(): Promise<Channel[]> {
+  findAll(): Promise<ChannelEntity[]> {
     return Promise.resolve([]);
   }
 
-  findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Channel>> {
+  findAllPaginated(
+    params: PaginatedQueryParams,
+  ): Promise<Paginated<ChannelEntity>> {
     return Promise.resolve(undefined);
   }
 
-  findOneByChannelId(channelId: string): Promise<Channel> {
+  findOneByChannelId(channelId: string): Promise<ChannelEntity> {
     return Promise.resolve(this.result);
   }
 
-  findOneById(id: string): Promise<Channel> {
+  findOneById(id: string): Promise<ChannelEntity> {
     return Promise.resolve(undefined);
   }
 
-  insert(entity: Channel): Promise<IResDto> {
+  insert(entity: ChannelEntity): Promise<IResDto> {
     return Promise.resolve({ success: true });
   }
 

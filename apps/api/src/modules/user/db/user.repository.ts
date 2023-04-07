@@ -1,4 +1,4 @@
-import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/db/user.repository.port';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 import { Injectable } from '@nestjs/common';
