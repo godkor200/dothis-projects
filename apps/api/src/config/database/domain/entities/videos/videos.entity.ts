@@ -6,7 +6,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { Channel } from '../channel/channel.entity';
+import { ChannelEntity } from '../channel/channel.entity';
 import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 @Entity({ name: 'video' })
 export class Video {
@@ -61,9 +61,9 @@ export class Video {
   @Column({ name: 'video_timestamp' })
   videoTimestamp: Date;
 
-  @ManyToOne((type) => Channel, (channel) => channel.video)
+  @ManyToOne((type) => ChannelEntity, (channel) => channel)
   @JoinColumn({ name: 'channelIndex' })
-  Channel: Channel;
+  Channel: ChannelEntity;
 
   @OneToMany((type) => DailyViews, (dailyViews) => dailyViews.videoId)
   DailyViews: DailyViews[];

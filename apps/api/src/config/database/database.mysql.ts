@@ -5,9 +5,8 @@ import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
 import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
-import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
-import { C_channelEntity } from '@Apps/config/database/domain/entities/c_channel/c_channel.entity';
+import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -27,8 +26,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         UserChannelData,
         Membership,
         DailyViews,
-        Channel,
-        C_channelEntity,
+        ChannelEntity,
         Video,
       ],
       migrations: [__dirname + '/migrations/1676006541148-migrations.ts'],
