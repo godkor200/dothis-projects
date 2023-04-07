@@ -1,7 +1,11 @@
-import { Column } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { IdBaseEntityAbstract } from '../../abstract/id.base-entity.abstract';
 
-export class RelatedWordsEntity extends IdBaseEntityAbstract {
+@Entity({ name: 'related_words' })
+export class RelatedWordsEntity {
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: number;
+
   @Column({ name: 'keyword' })
   keyword: string;
 

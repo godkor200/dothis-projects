@@ -2,5 +2,5 @@ import { RelatedWordsEntity } from '@Apps/config/database/domain/entities/relate
 import { FindRelQuery } from './find-rel.query-handler';
 
 export interface FindRelAdapter {
-  findOne: (option: FindRelQuery) => Promise<RelatedWordsEntity>;
+  findOneByKeyword: (option: FindRelQuery) => Promise<RelatedWordsEntity>;
 }
