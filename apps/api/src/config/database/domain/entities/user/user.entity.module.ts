@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common';
 import { User } from './user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
-import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, UserChannelData, Membership, Channel]),
+    TypeOrmModule.forFeature([
+      User,
+      UserChannelData,
+      Membership,
+      ChannelEntity,
+    ]),
   ],
   exports: [TypeOrmModule],
   providers: [],

@@ -120,6 +120,8 @@ export function elementOnceInterval<E>(
   };
 }
 
+export const isBrowser = typeof window !== 'undefined';
+
 export function elementOnceFrame<E>(findElFn: () => E, maxTimeout = 500) {
   let stop = false;
   let timeout: NodeJS.Timeout;

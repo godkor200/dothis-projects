@@ -1,7 +1,7 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
-import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/db/user.repository.port';
 import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ApiProperty } from '@nestjs/swagger';

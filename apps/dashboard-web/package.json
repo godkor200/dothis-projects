@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@dothis/share": "workspace:*",
+    "@dothis/theme": "workspace:*",
+    "@dothis/ui": "workspace:*",
     "@hookform/resolvers": "^2.9.11",
     "next": "13.2.4",
-    "@next/font": "^13.2.3",
+    "@next/font": "^13.2.4",
     "@tanstack/react-query": "^4.24.4",
     "@tanstack/react-query-devtools": "^4.24.9",
     "@ts-rest/core": "^3.18.1",
@@ -38,7 +40,6 @@
   },
   "devDependencies": {
     "eslint-config-dothis-nextjs": "workspace:*",
-    "@dothis/ui": "workspace:*",
     "@dothis/dto": "workspace:*",
     "@babel/core": "^7.21.0",
     "@svgr/webpack": "^6.5.1",

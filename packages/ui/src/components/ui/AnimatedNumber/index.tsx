@@ -40,7 +40,7 @@ function AnimatedNumber({
   });
 
   return (
-    <span ref={ref} {...props}>
+    <span ref={ref} {...props} className="typo-h3">
       {comma ? thousandsSeparators(value) : value}
     </span>
   );

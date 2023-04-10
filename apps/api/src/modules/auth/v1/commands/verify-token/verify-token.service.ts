@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
-import { UserRepositoryPort } from '@Apps/modules/user/v1/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/db/user.repository.port';
 import { JwtService } from '@nestjs/jwt';
 
 export class TokenDto {

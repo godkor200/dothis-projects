@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Channel } from './channel.entity';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
-import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
+import { ChannelEntity } from './channel.entity';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Video, Channel])],
+  imports: [TypeOrmModule.forFeature([ChannelEntity])],
   exports: [TypeOrmModule],
   providers: [],
 })

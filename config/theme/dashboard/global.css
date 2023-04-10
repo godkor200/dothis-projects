@@ -1,0 +1,19 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+html, body {
+    @apply m-0 p-0 text-b1 leading-24 antialiased;
+}
+
+input {
+    @apply border-0;
+    
+    &:focus-within {
+        @apply outline-0;
+    }
+}
+button:focus-within {
+    @apply outline-primary40;
+}
+
