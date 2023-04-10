@@ -5,19 +5,18 @@ import {
   CACHE_FIND_ALL_QUERY,
   CACHE_SET_DIC_TERM,
 } from '@Apps/modules/cache/constants/cache.di-token';
-import { FindDicTermImplement } from '@Apps/modules/cache/v1/infra/find-dic-term.implement';
+import { FindDicTermImplement } from '@Apps/modules/cache/infra/find-dic-term.implement';
 import { FindDicTermService } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.service';
-import { SetDicTermImplement } from '@Apps/modules/cache/v1/infra/set-dic-term.implement';
+import { SetDicTermImplement } from '@Apps/modules/cache/infra/set-dic-term.implement';
 import { SetDicTermHandler } from '@Apps/modules/cache/v1/commands/set-dic-term/set-dic-term.service';
 import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_TERM,
 } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/v1/commands/get-dic-search-term/get-dic-searth-term.service';
-import { ChannelDataRepository } from '@Apps/modules/channel/v1/db/channel-data.repository';
-import { ChannelEntityModule } from '@Apps/config/database/domain';
+import { ChannelDataRepository } from '@Apps/modules/channel/db/channel-data.repository';
 import { SetDicTermHttpController } from '@Apps/modules/cache/v1/commands/set-dic-term/set-dic-term.http.controller';
-import { C_ChannelEntityModule } from '@Apps/config/database/domain/entities/c_channel/c_channel.entity.module';
+import { ChannelEntityModule } from '@Apps/config/database/domain/entities/channel/channel.entity.module';
 
 const controllers = [FindDicTermHttpController, SetDicTermHttpController];
 
@@ -47,7 +46,7 @@ const providers: Provider[] = [...infra, SetDicTermHandler];
   imports: [
     CqrsModule,
     //  ChannelEntityModule
-    C_ChannelEntityModule,
+    ChannelEntityModule,
   ],
   controllers,
   providers,

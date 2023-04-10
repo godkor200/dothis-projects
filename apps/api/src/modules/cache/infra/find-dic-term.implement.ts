@@ -1,7 +1,7 @@
 import { FindDicTermQuery } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.query';
 import { FindDicTermAdapter } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.adapter';
 import { FindDicTermRes } from '@Apps/modules/cache/v1/queries/find-dic-term/find-dic-term.res';
-import { RedisClientService } from '@Apps/modules/cache/v1/infra/redis.client.service';
+import { RedisClientService } from '@Apps/modules/cache/infra/redis.client.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisConfigService } from '@Apps/config/cache/config/cache.config';
-import { dicTermDummy } from '@Apps/modules/cache/v1/infra/spec/__mock__/dic-term.dummy';
+import { dicTermDummy } from '@Apps/modules/cache/infra/spec/__mock__/dic-term.dummy';
 
 describe('SetDicTermImplement', () => {
   let setDicTermImplement: SetDicTermImplement;

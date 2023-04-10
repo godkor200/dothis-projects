@@ -28,7 +28,7 @@ jobs:
 
       - name: zip file
         working-directory: ./
-        run: zip -r dothisBackEnd.zip ./ -x "apps/dashboard-web" -x "apps/request-web" -x "packages/share" -x "packages/ui"
+        run: zip -r dothisBackEnd.zip ./ -x "./apps/dashboard-web/**" -x "./apps/request-web/**" -x "./packages/share/**" -x "./packages/ui/**"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -42,7 +42,7 @@ jobs:
         run: aws s3 cp --region ap-northeast-2 ./dothisBackEnd.zip ${{ secrets.AWS_S3_BUCKET_NAME }}
 
       - name: deploy with AWS codeDeploy
-        working-directory: ./apps/api
+        working-directory: ./
         run: aws deploy create-deployment
           --application-name github-action
           --deployment-config-name CodeDeployDefault.OneAtATime

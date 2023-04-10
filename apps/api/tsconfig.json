@@ -1,25 +1,15 @@
 {
   "extends": "../../config/tsconfig/tsconfig-nestjs.json",
   "compilerOptions": {
-    "types": ["webpack-env","jest", "node"],
+    "types": ["webpack-env", "jest", "node"],
     "baseUrl": "./",
     "paths": {
-      "@Apps/*": [
-        "./src/*"
-      ],
-      "@Libs/*": [
-        "./libs/*"
-      ]
+      "@Apps/*": ["./src/*"],
+      "@Libs/*": ["./libs/*"]
     }
   },
-  "files": [
-    "./src/main.ts"
-  ],
-  "include": [
-    "./", "../../packages/dto/**/*"
-  ],
-  "exclude": [
-    "node_modules","dist"
-  ],
+  "files": ["./src/main.ts"],
+  "include": ["./", "../../packages/dto/**/*"],
+  "exclude": ["node_modules", "dist"],
   "references": [{ "path": "../../packages/dto/package.json" }]
 }

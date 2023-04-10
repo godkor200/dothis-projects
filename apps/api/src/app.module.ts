@@ -15,6 +15,7 @@ import { HealthService } from '@Apps/health.service';
 import { CacheConfigModule } from '@Apps/config/cache/cache.config.module';
 import { CacheApiModule } from '@Apps/modules/cache/cache.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { RelWordsApiModules } from './modules/rel-words/rel-words.module';
 
 @Module({
   controllers: [HeathApiController],
@@ -37,6 +38,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthApiModule,
     UserChannelDataApiModule,
     CacheApiModule,
+    RelWordsApiModules,
   ],
   providers: [HealthService],
 })

@@ -1,62 +1,50 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
-import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
+import { User } from '../user/user.entity';
+import { Video } from '../videos/videos.entity';
 
 @Entity({ name: 'channel' })
-export class Channel {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
-
-  @Column('varchar', { name: 'channel_id' })
+export class ChannelEntity {
+  @PrimaryGeneratedColumn({ name: 'channel_id' })
   channelId: string;
 
-  @Column({ name: 'channel_name' })
+  @Column('varchar', { name: 'channel_name' })
   channelName: string;
 
-  @Column({ name: 'url' })
-  url: string;
-
-  @Column({ name: 'subscriber' })
-  subscriber: number;
-
-  @Column({ name: 'description' })
-  description: string;
-
-  @Column({ name: 'since' })
-  since: Date;
-
-  @Column({ name: 'total_views' })
-  totalViews: number;
-
-  @Column({ name: 'total_videos' })
-  totalVideos: number;
-
-  @Column({ name: 'country' })
+  @Column('varchar', { name: 'channel_country' })
   country: string;
 
-  @Column({ name: 'link' })
-  link: string;
+  @Column('varchar', { name: 'channel_description' })
+  description: string;
 
-  @Column({ name: 'keyword' })
+  @Column('varchar', { name: 'channel_keyword' })
   keyword: string;
 
-  @Column({ name: 'total_normal_videos' })
-  totalNormalVideos: number;
+  @Column('varchar', { name: 'channel_link' })
+  link: string;
 
-  @Column({ name: 'tag' })
+  @Column('date', { name: 'channel_since' })
+  since: Date;
+
+  @Column({ name: 'channel_subscriber' })
+  subscriber: number;
+
+  @Column('varchar', { name: 'channel_tag' })
   tag: string;
+
+  @Column('varchar', { name: 'channel_url' })
+  url: string;
 
   @ManyToOne((type) => User, (user) => user.channel)
   @JoinColumn({ name: 'channel_id', referencedColumnName: 'channelId' })
   user: User;
 
-  @OneToMany((type) => Channel, (channel) => channel.id)
+  @OneToMany((type) => ChannelEntity, (channel) => channel.channelId)
   video: Video[];
 }

@@ -3,7 +3,7 @@ import {
   SetDicTermCommand,
   SetDicTermCommandOutput,
 } from '@Apps/modules/cache/v1/commands/set-dic-term/set-dic-term.command';
-import { RedisClientService } from '@Apps/modules/cache/v1/infra/redis.client.service';
+import { RedisClientService } from '@Apps/modules/cache/infra/redis.client.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
