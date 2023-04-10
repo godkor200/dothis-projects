@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IdBaseEntityAbstract } from '../../abstract/id.base-entity.abstract';
 
 @Entity({ name: 'related_words' })
 export class RelatedWordsEntity {

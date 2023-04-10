@@ -15,7 +15,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FindRelQuery } from './find-rel.query-handler';
-import { Cookies } from '@Libs/commons/src';
 
 @ApiTags('연관어')
 @ApiCookieAuth()
