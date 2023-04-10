@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserChannelData } from '@Apps/config/database/domain/entities/UserChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
 import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';

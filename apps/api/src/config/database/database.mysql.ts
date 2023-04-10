@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@Apps/config/database/domain/entities/user/user.entity';
-import { UserChannelData } from '@Apps/config/database/domain/entities/UserChannelData/UserChannelData.entity';
+import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
 import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';

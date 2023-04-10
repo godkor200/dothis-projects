@@ -1,6 +1,5 @@
 import { RelatedWordsEntity } from '@Apps/config/database/domain/entities/related_words/related_words.entity';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
-import { RelatedWordsRepositoryPort } from '@Apps/modules/rel-words/db/rel-words.repository.port';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelAdapter } from './find-rel.adapter';
