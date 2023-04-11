@@ -13,7 +13,7 @@ import { Video } from '@Apps/config/database/domain/entities/videos/videos.entit
 @Entity({ name: 'channel' })
 export class ChannelEntity {
   @PrimaryGeneratedColumn({ name: 'channel_id' })
-  channelId: string;
+  id: string;
 
   @Column('int', { name: 'user_id' })
   userId: number;
@@ -49,6 +49,6 @@ export class ChannelEntity {
   @JoinColumn({ name: 'channel_id', referencedColumnName: 'channelId' })
   user: User;
 
-  @OneToMany((type) => ChannelEntity, (channel) => channel.channelId)
+  @OneToMany((type) => ChannelEntity, (channel) => channel.id)
   video: Video[];
 }
