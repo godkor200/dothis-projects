@@ -1,6 +1,7 @@
 import {
   PaginatedQueryParams,
   RepositoryPort,
+  updateObject,
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
@@ -12,6 +13,15 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
 
+  async updateOne(column: updateObject): Promise<IResDto> {
+    const res = await this.repository
+      .createQueryBuilder()
+      .update(this.tableName)
+      .set(column)
+      .where({ id: column.id })
+      .execute();
+    return { success: res.raw > 0 };
+  }
   async delete(id: string): Promise<boolean> {
     const res = await this.repository
       .createQueryBuilder(this.tableName)
