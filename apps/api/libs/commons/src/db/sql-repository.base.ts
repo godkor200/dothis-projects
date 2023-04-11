@@ -13,12 +13,12 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
 
-  async updateOne(column: updateObject): Promise<IResDto> {
+  async updateOne(params: updateObject): Promise<IResDto> {
     const res = await this.repository
       .createQueryBuilder()
       .update(this.tableName)
-      .set(column)
-      .where({ id: column.id })
+      .set(params)
+      .where({ id: params.id })
       .execute();
     return { success: res.raw > 0 };
   }
