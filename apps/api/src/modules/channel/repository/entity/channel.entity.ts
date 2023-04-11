@@ -6,13 +6,17 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
-import { Video } from '../videos/videos.entity';
+
+import { User } from '@Apps/modules/user/repository/entity/user.entity';
+import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
 
 @Entity({ name: 'channel' })
 export class ChannelEntity {
   @PrimaryGeneratedColumn({ name: 'channel_id' })
   channelId: string;
+
+  @Column('int', { name: 'user_id' })
+  userId: number;
 
   @Column('varchar', { name: 'channel_name' })
   channelName: string;

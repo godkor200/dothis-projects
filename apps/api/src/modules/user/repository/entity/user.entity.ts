@@ -1,12 +1,12 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
-import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { UserInfoCommandDto } from '@Apps/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
 
 @Entity({ name: 'user' })
 export class User {
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn({ name: 'user_id' })
   id: number;
 
   @Column({ name: 'user_email' })
