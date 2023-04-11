@@ -12,7 +12,7 @@ export class ChannelDataRepository
 {
   @InjectRepository(ChannelEntity)
   protected repository: Repository<ChannelEntity>;
-  protected tableName = 'Channel';
+  protected tableName = 'channel';
   protected schema: ZodObject<any> = zChannelData;
 
   constructor(dataSource: DataSource) {
