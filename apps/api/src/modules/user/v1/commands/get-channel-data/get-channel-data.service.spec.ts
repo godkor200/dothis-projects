@@ -3,7 +3,7 @@ import {
   ChannelDataMock,
   UserChannelDataMock,
 } from '@Apps/modules/user/__mock__/get-channel-data.mock';
-import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { google } from 'googleapis';
 
@@ -35,9 +35,8 @@ describe('get-channel-data service', () => {
         userEmail: 'godkor200@gmail.com',
       });
       const userChannelDataDummy = null;
-      const channelDummy: Channel = {
-        id: 4131,
-        channelId: 'UCfsqglnMY55Rf8B_E3TLV-A',
+      const channelDummy: ChannelEntity = {
+        id: 'UCfsqglnMY55Rf8B_E3TLV-A',
         channelName: 'Su chan Shu chan',
         url: 'https://www.youtube.com/c/shumovie%E5%9B%BD%E9%9A%9B%E7%B5%90%E5%A9%9A%E6%97%A5%E9%9F%93',
         subscriber: 56000,
