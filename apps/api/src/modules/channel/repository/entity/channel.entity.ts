@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { User } from '@Apps/modules/user/repository/entity/user.entity';
-import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
+import { VideoEntity } from '@Apps/modules/video/repository/db/videos.entity';
 
 @Entity({ name: 'channel' })
 export class ChannelEntity {
@@ -50,5 +50,5 @@ export class ChannelEntity {
   user: User;
 
   @OneToMany((type) => ChannelEntity, (channel) => channel.id)
-  video: Video[];
+  video: VideoEntity[];
 }
