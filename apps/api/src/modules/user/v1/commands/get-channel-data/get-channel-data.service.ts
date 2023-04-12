@@ -1,9 +1,6 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
-import { ChannelDataRepositoryPort } from '@Apps/modules/channel/db/channel-data.repository.port';
-import { USER_CHANNEL_DATA_REPOSITORY } from '@Apps/modules/user-channel-data/user-channel-data.di-token';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/v1/commands/get-channel-data/get-channel-data.command.dto';
 import { google } from 'googleapis';
@@ -13,19 +10,10 @@ export class GetChannelDataCommandHandler
   implements ICommandHandler<GetChannelDataCommandDto>
 {
   constructor(
-    @Inject(USER_CHANNEL_DATA_REPOSITORY)
-    protected readonly userChannnelDataRepo: UserChannelDataRepositoryPort,
-
     @Inject(CHANNEL_DATA_REPOSITORY)
     protected readonly channelDataRepo: ChannelDataRepositoryPort,
   ) {}
   async execute(command: GetChannelDataCommandDto) {
-    const conflictCheck = await this.userChannnelDataRepo.findOneByUserId(
-      command.userId,
-    );
-
-    if (conflictCheck) throw new HttpException('conflict', HttpStatus.CONFLICT);
-
     const youtube = google.youtube('v3');
 
     if (!youtube)
@@ -35,6 +23,7 @@ export class GetChannelDataCommandHandler
       );
 
     const res = await youtube.channels.list({
+      access_token: command.accessToken,
       auth: process.env.GOOGLE_APIKEY,
       part: [
         'id',
@@ -49,25 +38,18 @@ export class GetChannelDataCommandHandler
 
     if (res.status !== 200)
       throw new HttpException(
-        'google server error',
+        'Google server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 
     const { id: channelId } = res.data.items[0];
+    //TODO: 추후 api로 가져온 태그 담는 컬럼도 필요함
+    await this.channelDataRepo.updateOne({
+      id: channelId,
+      userId: command.userId,
+    });
+    //TODO: 추후 api로 가져온 태그 담는 컬럼도 필요함
 
-    const { channelName, subscriber, keyword } =
-      await this.channelDataRepo.findOneByChannelId(channelId);
-
-    const newUserChannelData = new UserChannelData(
-      channelId,
-      Number(command.userId),
-      channelName,
-      undefined,
-      subscriber,
-      undefined,
-      keyword,
-    );
-
-    return await this.userChannnelDataRepo.insert(newUserChannelData);
+    return await this.channelDataRepo.findOneById(channelId);
   }
 }

@@ -1,3 +1,4 @@
+import { User } from '@Apps/modules/user/repository/entity/user.entity';
 import {
   Column,
   Entity,
@@ -5,10 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
+
 @Entity({ name: 'UserChannelData' })
 export class UserChannelData {
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn({ name: 'channel_id' })
   id: number;
 
   @Column('varchar', { name: 'channel_id' })

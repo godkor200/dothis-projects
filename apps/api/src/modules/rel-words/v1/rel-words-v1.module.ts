@@ -1,7 +1,7 @@
 import { Module, Provider } from '@nestjs/common';
 import { RELWORDS_DI_TOKEN } from '../constants/rel-words.enum.di-token.constant';
-import { RelatedWordsModule } from '@Apps/config/database/domain/entities/related_words/related_words.entity.module';
-import { RelatedWordsRepository } from '../db/rel-words.repository';
+import { RelatedWordsModule } from '@Apps/modules/rel-words/repository/entity/related_words.entity.module';
+import { RelatedWordsRepository } from '../repository/db/rel-words.repository';
 import { FindRelHttpController } from './queries/find-rel/find-rel.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { FindRelQueryHandler } from './queries/find-rel/find-rel.query-handler';

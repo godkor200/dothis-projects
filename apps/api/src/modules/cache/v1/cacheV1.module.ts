@@ -14,9 +14,9 @@ import {
   CHANNEL_TERM,
 } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/v1/commands/get-dic-search-term/get-dic-searth-term.service';
-import { ChannelDataRepository } from '@Apps/modules/channel/db/channel-data.repository';
+import { ChannelDataRepository } from '@Apps/modules/channel/repository/db/channel-data.repository';
 import { SetDicTermHttpController } from '@Apps/modules/cache/v1/commands/set-dic-term/set-dic-term.http.controller';
-import { ChannelEntityModule } from '@Apps/config/database/domain/entities/channel/channel.entity.module';
+import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/channel.entity.module';
 
 const controllers = [FindDicTermHttpController, SetDicTermHttpController];
 

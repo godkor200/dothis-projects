@@ -1,7 +1,7 @@
 import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
 import { Paginated, PaginatedQueryParams } from '@Libs/commons/src';
 import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
-import { ChannelDataRepositoryPort } from '@Apps/modules/channel/db/channel-data.repository.port';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
 import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 

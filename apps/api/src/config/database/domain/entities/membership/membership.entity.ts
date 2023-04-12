@@ -1,3 +1,4 @@
+import { User } from '@Apps/modules/user/repository/entity/user.entity';
 import {
   Column,
   Entity,
@@ -5,7 +6,6 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 
 @Entity({ name: 'membership' })
 export class Membership {

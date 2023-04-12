@@ -3,7 +3,8 @@ import { User } from './user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
-import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
