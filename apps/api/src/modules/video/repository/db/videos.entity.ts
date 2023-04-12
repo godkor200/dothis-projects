@@ -7,11 +7,11 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { DailyViewsEntity } from '@Apps/modules/daily_views/repository/entity/daily-views.entity';
 @Entity({ name: 'video' })
-export class Video {
-  @PrimaryGeneratedColumn({ name: 'id' })
+export class VideoEntity {
+  @PrimaryGeneratedColumn({ name: 'video_id' })
   id: string;
 
   @Column({ name: 'channel_index' })
@@ -59,13 +59,13 @@ export class Video {
   @Column({ name: 'video_average_views' })
   videoAverageViews: number;
 
-  @Column({ name: 'video_timestamp' })
-  videoTimestamp: Date;
+  @Column({ name: 'crawl_update_at' })
+  crawlUpdateAt: Date;
 
   @ManyToOne((type) => ChannelEntity, (channel) => channel)
   @JoinColumn({ name: 'channelIndex' })
   Channel: ChannelEntity;
 
-  @OneToMany((type) => DailyViews, (dailyViews) => dailyViews.videoId)
-  DailyViews: DailyViews[];
+  @OneToMany((type) => DailyViewsEntity, (dailyViews) => dailyViews.videoId)
+  DailyViews: DailyViewsEntity[];
 }

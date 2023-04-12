@@ -1,13 +1,13 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
 import { Membership } from '@Apps/config/database/domain/entities/membership/membership.entity';
-import { DailyViews } from '@Apps/config/database/domain/entities/daily_views/daily-views.entity';
-import { Video } from '@Apps/config/database/domain/entities/videos/videos.entity';
+import { DailyViewsEntity } from '@Apps/modules/daily_views/repository/entity/daily-views.entity';
+
 import { User } from '@Apps/modules/user/repository/entity/user.entity';
 import { RelatedWordsEntity } from '@Apps/modules/rel-words/repository/entity/related_words.entity';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { VideoEntity } from '@Apps/modules/video/repository/db/videos.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -24,11 +24,10 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get('db.DB_SCHEMA'),
       entities: [
         User,
-        UserChannelData,
         Membership,
-        DailyViews,
+        DailyViewsEntity,
         ChannelEntity,
-        Video,
+        VideoEntity,
         RelatedWordsEntity,
       ],
       migrations: [__dirname + '/migrations/1676006541148-migrations.ts'],
