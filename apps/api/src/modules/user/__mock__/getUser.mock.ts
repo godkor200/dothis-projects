@@ -1,12 +1,16 @@
 import { UserRepositoryPort } from '@Apps/modules/user/repository/db/user.repository.port';
-import { User } from '@Apps/config/database/domain/entities/user/user.entity';
 import { IResDto } from '@Libs/commons/src/types/res.types';
+import { updateObject } from '@Libs/commons/src';
+import { User } from '../repository/entity/user.entity';
 
 export class MockGetUser implements UserRepositoryPort {
   private readonly result: User;
 
   constructor(result: User) {
     this.result = result;
+  }
+  updateOne(option: updateObject): Promise<IResDto> {
+    throw new Error('Method not implemented.');
   }
 
   findOneById(id: string): Promise<User> {
