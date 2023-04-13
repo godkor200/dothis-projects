@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import { timeout } from 'rxjs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
