@@ -1,8 +1,8 @@
 import { Module, Provider } from '@nestjs/common';
-import { ChannelEntityModule } from '@Apps/config/database/domain/entities/channel/channel.entity.module';
+import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/channel.entity.module';
 import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/v1/commands/get-dic-search-term/get-dic-searth-term.service';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
-import { ChannelDataRepository } from '@Apps/modules/channel/db/channel-data.repository';
+import { ChannelDataRepository } from '@Apps/modules/channel/repository/db/channel-data.repository';
 
 const controllers = [];
 const repositories: Provider[] = [

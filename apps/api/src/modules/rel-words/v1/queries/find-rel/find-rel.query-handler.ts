@@ -1,8 +1,8 @@
-import { RelatedWordsEntity } from '@Apps/config/database/domain/entities/related_words/related_words.entity';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindRelAdapter } from './find-rel.adapter';
+import { FindRelAdapter } from '../../../interface/find-rel.adapter';
+import { RelatedWordsEntity } from '@Apps/modules/rel-words/repository/entity/related_words.entity';
 
 export class FindRelQuery {
   readonly keyword: string;

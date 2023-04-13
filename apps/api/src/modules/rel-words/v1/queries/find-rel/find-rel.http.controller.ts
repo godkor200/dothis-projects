@@ -1,4 +1,4 @@
-import { Controller, Param, Query } from '@nestjs/common';
+import { Controller, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { FindRelRequestDto } from './find-rel.request.dto';
 import { apiRouter } from '@dothis/dto';
@@ -27,9 +27,9 @@ export class FindRelHttpController {
     summary,
     description,
   })
-  // @ApiOkResponse({
-  //   description: responses[200],
-  // })
+  @ApiOkResponse({
+    description: `데이터를 보냅니다.`,
+  })
   @ApiConflictResponse({
     description: responses[401],
   })

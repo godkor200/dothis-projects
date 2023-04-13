@@ -1,50 +1,19 @@
-import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
-import { Paginated, PaginatedQueryParams } from '@Libs/commons/src';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/userChannelData.entity';
-import { ChannelDataRepositoryPort } from '@Apps/modules/channel/db/channel-data.repository.port';
-import { ChannelEntity } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import {
+  Paginated,
+  PaginatedQueryParams,
+  updateObject,
+} from '@Libs/commons/src';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
 import { IResDto } from '@Libs/commons/src/types/res.types';
-
-export class UserChannelDataMock implements UserChannelDataRepositoryPort {
-  private readonly result: UserChannelData;
-  constructor(result: UserChannelData) {
-    this.result = result;
-  }
-  findOneByUserId(userId: string): Promise<UserChannelData> {
-    return Promise.resolve(this.result);
-  }
-  delete(id: string): Promise<boolean> {
-    return Promise.resolve(false);
-  }
-
-  findAll(): Promise<UserChannelData[]> {
-    return Promise.resolve([this.result]);
-  }
-
-  findAllPaginated(
-    params: PaginatedQueryParams,
-  ): Promise<Paginated<UserChannelData>> {
-    return Promise.resolve(undefined);
-  }
-
-  findOneById(id: string): Promise<UserChannelData> {
-    return Promise.resolve(this.result);
-  }
-
-  insert(entity: UserChannelData): Promise<IResDto> {
-    Promise.resolve(this.result);
-    return Promise.resolve({ success: true });
-  }
-
-  transaction<T>(handler: () => Promise<T>): Promise<void | T> {
-    return Promise.resolve(undefined);
-  }
-}
+import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
 
 export class ChannelDataMock implements ChannelDataRepositoryPort {
   private readonly result: ChannelEntity;
   constructor(result: ChannelEntity) {
     this.result = result;
+  }
+  updateOne(option: updateObject): Promise<IResDto> {
+    throw new Error('Method not implemented.');
   }
   delete(id: string): Promise<boolean> {
     return Promise.resolve(false);
