@@ -6,5 +6,6 @@ export * from './lib/cache';
 export * from './lib/daily-views';
 export * from './lib/video';
 export * from './lib/rel-words';
+export * from './lib/channel-history';
 export * from './lib/apiRouter';
 export * from './lib/contract';

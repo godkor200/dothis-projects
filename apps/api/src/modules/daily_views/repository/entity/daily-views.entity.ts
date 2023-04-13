@@ -11,9 +11,6 @@ export class DailyViewsEntity extends IdBaseEntityAbstract {
   @Column({ name: 'video_id' })
   videoId: number;
 
-  @Column('date', { name: 'date' })
-  date: Date;
-
   @Column('int', { name: 'views' })
   views: number;
 
