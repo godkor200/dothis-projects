@@ -9,9 +9,9 @@ import { DailyViewsEntity } from '@Apps/modules/daily_views/repository/entity/da
 export class FindDailyViewsQuery {
   readonly relationKeyword: string;
 
-  readonly from: string;
+  readonly from: Date;
 
-  readonly to: string;
+  readonly to: Date;
 
   constructor(props: FindDailyViewsQuery) {
     this.relationKeyword = props.relationKeyword;
@@ -30,7 +30,9 @@ export class FindDailyViewsQueryHandler
   @Inject(VIDEO_DI_TOKEN.FIND_BY_VIDEO_ID)
   private readonly video: FindVideoAdapter;
 
-  async execute(query: FindDailyViewsQuery): Promise<any> {
-    return await this.video.findManyVideo(query.relationKeyword);
+  async execute(query: FindDailyViewsQuery): Promise<DailyViewsEntity[]> {
+    const videoIdx = await this.video.findManyVideo(query.relationKeyword);
+
+    return await this.dailyViews.findDailyView(videoIdx, query.from, query.to);
   }
 }
