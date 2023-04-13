@@ -1,4 +1,4 @@
-import { IsString, Matches, MaxLength } from 'class-validator';
+import { IsDate, IsString, Matches, MaxLength } from 'class-validator';
 
 export class FindDailyViewsRequestDto {
   @MaxLength(50)
@@ -8,7 +8,8 @@ export class FindDailyViewsRequestDto {
 }
 
 export class FindDailyViewsRequestQuery {
-  from: string;
-
-  to: string;
+  @IsDate({ message: 'not Date' })
+  from: Date;
+  @IsDate({ message: 'not Date' })
+  to: Date;
 }
