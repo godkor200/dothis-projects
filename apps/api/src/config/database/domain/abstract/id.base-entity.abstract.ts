@@ -9,6 +9,6 @@ export class IdBaseEntityAbstract
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ name: 'date' })
-  date: Date;
+  @Column({ name: 'crawl_update_at' })
+  crawlUpdateAt: Date;
 }
