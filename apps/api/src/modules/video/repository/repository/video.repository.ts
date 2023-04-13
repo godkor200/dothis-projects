@@ -1,10 +1,10 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { VideoEntity } from '../db/videos.entity';
+import { VideoRepositoryPort } from './video.repository.port';
 import { VideoModel, zVideoModel } from '@dothis/dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { VideoEntity } from '../db/videos.entity';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
-import { VideoRepositoryPort } from './video.repository.port';
-import { InjectRepository } from '@nestjs/typeorm';
 
 export class VideoRepository
   extends SqlRepositoryBase<VideoEntity, VideoModel>
@@ -21,12 +21,15 @@ export class VideoRepository
     super(dataSource);
   }
 
-  async findManyVideo(tag: string) {
+  async findManyVideo(tag: string): Promise<string[]> {
     return await this.repository
       .createQueryBuilder(this.tableName)
-      .select('video_id')
+      .select('video_id', 'res')
       .where('video_tag LIKE :name', { name: `%${tag}%` })
       .orWhere('video_title LIKE :name', { name: `%${tag}%` })
-      .getRawMany();
+      .getRawMany()
+      .then((res) =>
+        Object.values(JSON.parse(JSON.stringify(res))).map((e) => e['res']),
+      );
   }
 }
