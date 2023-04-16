@@ -58,7 +58,7 @@ export class GetChannelDataHttpController {
     @Cookies() cookie: { google_access_token: string },
   ) {
     const { id: userId, userEmail } = user;
-    const accessToken = cookie.google_access_token;
+    const accessToken = cookie?.google_access_token;
     return await this.commandBus.execute(
       new GetChannelDataCommandDto({ userId, userEmail, accessToken }),
     );

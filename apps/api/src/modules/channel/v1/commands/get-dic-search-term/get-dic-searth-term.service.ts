@@ -1,12 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
-import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
 @Injectable()
 export class GetDicSearchTermCommandHandler {
   private readonly logger = new Logger(GetDicSearchTermCommandHandler.name);
   constructor(
     @Inject(CHANNEL_DATA_REPOSITORY)
-    protected readonly channelDataRepo: ChannelDataRepositoryPost,
+    protected readonly channelDataRepo: ChannelDataRepositoryPort,
   ) {}
 
   async execute() {

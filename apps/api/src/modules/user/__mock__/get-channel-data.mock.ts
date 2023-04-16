@@ -1,72 +1,43 @@
-import { UserChannelDataRepositoryPort } from '@Apps/modules/user-channel-data/v1/db/user-channel-data.repository.port';
-import { Paginated, PaginatedQueryParams } from '@Libs/commons/src';
-import { UserChannelData } from '@Apps/config/database/domain/entities/userChannelData/UserChannelData.entity';
-import { ChannelDataRepositoryPost } from '@Apps/modules/channel/v1/db/channel-data.repository.post';
-import { Channel } from '@Apps/config/database/domain/entities/channel/channel.entity';
+import {
+  Paginated,
+  PaginatedQueryParams,
+  updateObject,
+} from '@Libs/commons/src';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
 import { IResDto } from '@Libs/commons/src/types/res.types';
+import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
 
-export class UserChannelDataMock implements UserChannelDataRepositoryPort {
-  private readonly result: UserChannelData;
-  constructor(result: UserChannelData) {
+export class ChannelDataMock implements ChannelDataRepositoryPort {
+  private readonly result: ChannelEntity;
+  constructor(result: ChannelEntity) {
     this.result = result;
   }
-  findOneByUserId(userId: string): Promise<UserChannelData> {
-    return Promise.resolve(this.result);
+  updateOne(option: updateObject): Promise<IResDto> {
+    throw new Error('Method not implemented.');
   }
   delete(id: string): Promise<boolean> {
     return Promise.resolve(false);
   }
 
-  findAll(): Promise<UserChannelData[]> {
-    return Promise.resolve([this.result]);
+  findAll(): Promise<ChannelEntity[]> {
+    return Promise.resolve([]);
   }
 
   findAllPaginated(
     params: PaginatedQueryParams,
-  ): Promise<Paginated<UserChannelData>> {
+  ): Promise<Paginated<ChannelEntity>> {
     return Promise.resolve(undefined);
   }
 
-  findOneById(id: string): Promise<UserChannelData> {
+  findOneByChannelId(channelId: string): Promise<ChannelEntity> {
     return Promise.resolve(this.result);
   }
 
-  insert(entity: UserChannelData): Promise<IResDto> {
-    Promise.resolve(this.result);
-    return Promise.resolve({ success: true });
-  }
-
-  transaction<T>(handler: () => Promise<T>): Promise<void | T> {
-    return Promise.resolve(undefined);
-  }
-}
-
-export class ChannelDataMock implements ChannelDataRepositoryPost {
-  private readonly result: Channel;
-  constructor(result: Channel) {
-    this.result = result;
-  }
-  delete(id: string): Promise<boolean> {
-    return Promise.resolve(false);
-  }
-
-  findAll(): Promise<Channel[]> {
-    return Promise.resolve([]);
-  }
-
-  findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Channel>> {
+  findOneById(id: string): Promise<ChannelEntity> {
     return Promise.resolve(undefined);
   }
 
-  findOneByChannelId(channelId: string): Promise<Channel> {
-    return Promise.resolve(this.result);
-  }
-
-  findOneById(id: string): Promise<Channel> {
-    return Promise.resolve(undefined);
-  }
-
-  insert(entity: Channel): Promise<IResDto> {
+  insert(entity: ChannelEntity): Promise<IResDto> {
     return Promise.resolve({ success: true });
   }
 
