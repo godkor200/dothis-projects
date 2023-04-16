@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@dothis/dto": "workspace:*",
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
     "@dothis/ui": "workspace:*",
