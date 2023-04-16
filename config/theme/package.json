@@ -22,7 +22,6 @@
     "tailwindcss": "^3.2.7"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist"
+    "access": "public"
   }
 }
