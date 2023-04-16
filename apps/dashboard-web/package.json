@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@dothis/dto": "workspace:*",
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
     "@dothis/ui": "workspace:*",
@@ -58,7 +59,7 @@
     "tailwindcss": "^3.2.7",
     "ts-node": "^10.9.1",
     "type-fest": "^3.6.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "webpack": "^5.75.0"
   },
   "peerDependencies": {

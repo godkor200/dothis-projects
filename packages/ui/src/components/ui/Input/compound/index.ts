@@ -1,9 +1,9 @@
-import InputInput from '@components/ui/Input/compound/Input.Input';
-import InputRoot from '@components/ui/Input/compound/Input.Root';
+import Input from '@components/ui/Input/compound/Input';
+import Root from '@components/ui/Input/compound/Root';
 
 const InputCompound = {
-  Input: InputInput,
-  Root: InputRoot,
+  Input,
+  Root,
 };
 
 export default InputCompound;

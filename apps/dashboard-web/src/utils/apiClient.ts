@@ -1,4 +1,4 @@
-import { apiRouter } from '@dothis/dto';
+import { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { ApiRouteResponse } from '@ts-rest/core';
 import { initQueryClient } from '@ts-rest/react-query';
 import type { Method } from 'axios';
