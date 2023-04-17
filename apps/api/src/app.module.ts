@@ -7,6 +7,7 @@ import { validationSchema } from '@Apps/config/validationsSchema';
 import dbConfig from '@Apps/config/database/config/db.env';
 import cacheConfig from '@Apps/config/cache/config/cache.env';
 import appConfig from '@Apps/config/app/config/app.env';
+import awsConfig from '@Apps/config/aws/aws.env';
 
 import { TypeormModule } from '@Apps/config/database/database.module';
 import { HeathApiController } from '@Apps/health.controller';
@@ -26,7 +27,7 @@ import { DailyViewsApiModule } from './modules/daily_views/daily-views-api.modul
         process.env.NODE_ENV === 'development'
           ? 'development.env'
           : 'production.env',
-      load: [dbConfig, cacheConfig, appConfig],
+      load: [dbConfig, cacheConfig, appConfig, awsConfig],
       validationSchema,
     }),
     ScheduleModule.forRoot(),

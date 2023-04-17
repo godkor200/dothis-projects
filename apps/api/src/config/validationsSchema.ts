@@ -12,4 +12,6 @@ export const validationSchema = Joi.object({
   REDIS_PORT: Joi.number().required(),
   REDIS_HOSTNAME: Joi.string().required(),
   REDIS_PASSWORD: Joi.string().required(),
+  AWS_CREDENTIAL_KEY: Joi.string().required(),
+  AWS_CREDENTIAL_SECRET: Joi.string().required(),
 });
