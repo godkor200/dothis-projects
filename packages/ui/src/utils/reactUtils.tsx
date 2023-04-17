@@ -28,7 +28,7 @@ export type PolymorphicComponentProps<
  *    <MyInput {...props} ref={ref} />
  * </div>);
  ***/
-export const polymorphicForwardRefPropsAsIs =
+export const createPolymorphicComponentWithAllProps =
   <T extends React.ElementType = 'div'>(com: T) =>
   <ExtensionProps = {},>() =>
     forwardRef<
@@ -36,7 +36,7 @@ export const polymorphicForwardRefPropsAsIs =
       React.ComponentPropsWithoutRef<T> & ExtensionProps
     >;
 
-export const polymorphicForwardRef =
+export const createPolymorphicComponent =
   <T extends React.ElementType = 'div'>(com: T) =>
-  <ExtensionProps = {},>() =>
-    forwardRef<ComponentRef<T>, ExtensionProps>;
+  <props = {},>() =>
+    forwardRef<ComponentRef<T>, props>;

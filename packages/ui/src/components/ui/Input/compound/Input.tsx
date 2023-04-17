@@ -1,16 +1,16 @@
-import { polymorphicForwardRefPropsAsIs } from '@utils/reactUtils';
+import { createPolymorphicComponentWithAllProps } from '@utils/reactUtils';
 import clsx from 'clsx';
 import React from 'react';
 
 type Props = {
   onEnter?: React.KeyboardEventHandler<HTMLInputElement>;
 };
-const Input = polymorphicForwardRefPropsAsIs('input')<Props>()(
-  ({ onEnter, ...props }, ref) => {
+const Input = createPolymorphicComponentWithAllProps('input')<Props>()(
+  ({ onEnter, className, ...props }, ref) => {
     return (
       <input
         {...props}
-        className={clsx('w-full bg-transparent', props.className)}
+        className={clsx('w-full bg-transparent', className)}
         ref={ref}
         onKeyDown={(e) => {
           props.onKeyDown?.(e);
