@@ -22,7 +22,6 @@
   "dependencies": {
     "@anatine/zod-nestjs": "^1.9.2",
     "@anatine/zod-openapi": "^1.12.0",
-    "@aws-sdk/client-athena": "^3.312.0",
     "@dothis/dto": "workspace:*",
     "@googleapis/youtube": "^8.0.2",
     "@liaoliaots/nestjs-redis": "^9.0.5",
@@ -40,6 +39,8 @@
     "@ts-rest/nest": "^3.18.0",
     "@ts-rest/open-api": "^3.18.1",
     "@types/webpack-env": "^1.18.0",
+    "athena-express": "^7.1.5",
+    "aws-sdk": "^2.1360.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "clean-webpack-plugin": "^4.0.0",
