@@ -11,7 +11,7 @@ module.exports = {
       minimumVendorImplementations: 2,
       features: {
         autoprefixer: true,
-        'nesting-rules': false,
+        'nesting-rules': false, 
       },
     }),
     process.env.NODE_ENV === 'production' &&
