@@ -32,3 +32,15 @@ services:
       - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
     ports:
       - 6379:6379
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+
+networks:
+  elasticsearch-network:
+    name: elasticsearch-network

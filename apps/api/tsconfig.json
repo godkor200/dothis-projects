@@ -11,5 +11,5 @@
   "files": ["./src/main.ts"],
   "include": ["./", "../../packages/dto/**/*"],
   "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "../../packages/dto/package.json" }]
+  "references": [{ "path": "../../packages/dto" }]
 }
