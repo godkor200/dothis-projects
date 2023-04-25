@@ -11,10 +11,10 @@ import { VideoService } from '@Apps/modules/video/repository/repository/video.se
 const controllers = [FindDailyViewsAntenaHttpController];
 const repositories: Provider[] = [
   FindDailyViewsQueryAthenaHandler,
-  //   {
-  //     provide: DAILY_VIEWS_DI_TOKEN.FIND,
-  //     useClass: DailyViewsRepository,
-  //   },
+  {
+    provide: DAILY_VIEWS_DI_TOKEN.FIND,
+    useClass: DailyViewsRepository,
+  },
   {
     provide: VIDEO_DI_TOKEN.ATHENA_FIND_BY_VIDEO_ID,
     useClass: VideoService,

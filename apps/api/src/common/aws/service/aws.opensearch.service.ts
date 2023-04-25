@@ -1,9 +1,8 @@
 import { Client } from '@opensearch-project/opensearch';
 import { AwsSigv4Signer } from '@opensearch-project/opensearch/aws';
-import aws from 'aws-sdk';
-
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import aws from 'aws-sdk';
 
 @Injectable()
 export class AwsOpensearchService {
@@ -26,15 +25,11 @@ export class AwsOpensearchService {
             region: this.configService.get<string>('aws.region'),
             credentials: awsCredentials,
           });
-          return new Promise((resolve, reject) => {
-            aws.config.getCredentials((err, credentials) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(credentials);
-              }
-            });
-          });
+          return new Promise((resolve, reject) =>
+            aws.config.getCredentials((err, credentials) =>
+              err ? reject(err) : resolve(credentials),
+            ),
+          );
         },
       }),
       node: `https://search-dothis-js7jgo2actyuzihx7zz335k2nq.ap-northeast-2.es.amazonaws.com/`,

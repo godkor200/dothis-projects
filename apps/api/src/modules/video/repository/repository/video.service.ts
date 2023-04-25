@@ -1,25 +1,39 @@
-import { AwsAthenaService } from '@Apps/common/aws/service/aws.athena.service';
-import { ConfigService } from '@nestjs/config';
+import { from, lastValueFrom, map, mergeMap, pluck, toArray } from 'rxjs';
 import { VideoServicePort } from './video.service.port';
-import { InternalServerErrorException } from '@nestjs/common';
-import { AthenaExpress } from 'athena-express';
+import { AwsOpensearchService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { error } from 'console';
 
 export class VideoService
-  extends AwsAthenaService<{ video_id: string }>
+  extends AwsOpensearchService
   implements VideoServicePort
 {
-  protected athenaClient: AthenaExpress<{ video_id: string }>;
+  async findManyVideo(tag: string): Promise<string[]> {
+    const searchQuery = {
+      index: 'video',
+      body: {
+        query: {
+          bool: {
+            should: [
+              {
+                wildcard: {
+                  video_tag: `*${tag}*`,
+                },
+              },
+              {
+                wildcard: {
+                  video_title: `*${tag}*`,
+                },
+              },
+            ],
+          },
+        },
+        _source: 'video_id',
+      },
+    };
+    const observable$ = from(
+      this.client.search(searchQuery).then((res) => res.body.hits.hits),
+    ).pipe(map((hits) => hits.map((hit) => hit._source.video_id)));
 
-  constructor(configService: ConfigService) {
-    super(configService);
-  }
-  async findManyVideo(tag: string): Promise<any[]> {
-    const query = `SELECT video_id FROM dothis.video WHERE (video_title like '%${tag}%' or video_title like '${tag}%' or video_title like '%${tag}' or video_tag like '%${tag}%' or video_tag like '${tag}%' or video_tag like '%${tag}')`;
-    try {
-      const res = await this.athenaClient.query(query);
-      return res.Items.map((e) => e.video_id);
-    } catch (error) {
-      throw new InternalServerErrorException(error);
-    }
+    return await lastValueFrom(observable$);
   }
 }

@@ -22,18 +22,17 @@ export class FindDailyViewsQuery {
 
 @QueryHandler(FindDailyViewsQuery)
 export class FindDailyViewsQueryAthenaHandler
-  implements IQueryHandler<FindDailyViewsQuery, void>
+  implements IQueryHandler<FindDailyViewsQuery, DailyViewsEntity[]>
 {
-  // @Inject(DAILY_VIEWS_DI_TOKEN.FIND)
-  // private readonly dailyViews: FindDailyViewsAdapter;
+  @Inject(DAILY_VIEWS_DI_TOKEN.FIND)
+  private readonly dailyViews: FindDailyViewsAdapter;
 
   @Inject(VIDEO_DI_TOKEN.ATHENA_FIND_BY_VIDEO_ID)
   private readonly video: FindVideoAdapter;
 
-  async execute(query: FindDailyViewsQuery): Promise<void> {
+  async execute(query: FindDailyViewsQuery): Promise<DailyViewsEntity[]> {
     const videoIdx = await this.video.findManyVideo(query.relationKeyword);
-    console.log('videoIdx', videoIdx);
 
-    // return await this.dailyViews.findDailyView(videoIdx, query.from, query.to);
+    return await this.dailyViews.findDailyView(videoIdx, query.from, query.to);
   }
 }
