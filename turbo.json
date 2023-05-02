@@ -2,61 +2,39 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "request-web#build": {
-      "dependsOn": [
-        "^request-web#db-generate",
-        "^build"
-      ],
-      "outputs": [
-        ".next/**"
-      ]
+      "dependsOn": ["^request-web#db-generate", "^build"],
+      "outputs": [".next/**"]
     },
     "request-web#dev": {
-      "dependsOn": [
-        "^theme-gen",
-        "^request-web#db-generate"
-      ],
+      "dependsOn": ["^theme-gen", "^request-web#db-generate"],
       "cache": false
     },
 
     "theme-gen": {
-      "inputs": [
-        "./src/styles/**/*"
-      ],
-      "outputs": [
-        "./src/types/theme.d.ts"
-      ],
+      "inputs": ["./src/styles/**/*"],
+      "outputs": ["./src/types/theme.d.ts"],
       "cache": false
     },
     "request-web#db-generate": {
-      "inputs": [
-        "./prisma/schema.prisma"
-      ],
+      "inputs": ["./prisma/schema.prisma"],
       "cache": false
     },
     "request-web#db-push": {
-      "inputs": [
-        "./prisma/schema.prisma"
-      ],
+      "inputs": ["./prisma/schema.prisma"],
       "cache": false
     },
     "studio": {
-      "inputs": [
-        "./prisma/schema.prisma"
-      ]
+      "inputs": ["./prisma/schema.prisma"]
     },
     "analyze": {
-      "inputs": [
-        ".next/**"
-      ]
+      "inputs": [".next/**"]
     },
     "lint": {
       "outputs": []
@@ -65,12 +43,8 @@
       "cache": false
     },
     "@dothis/theme#build": {
-      "outputs": [
-          "./dist/**/*"
-      ],
-      "inputs": [
-        "./dashboard/**/*", "./utils/**/*"
-      ],
+      "outputs": ["./dist/**/*"],
+      "inputs": ["./dashboard/**/*", "./utils/**/*"],
       "cache": true
     },
     "storybook": {
@@ -78,37 +52,28 @@
       "persistent": true
     },
     "@dothis/ui#storybook": {
-      "dependsOn": [
-        "@dothis/theme#build"
-      ]
+      "dependsOn": ["@dothis/theme#build"]
     },
     "build-storybook": {
-      "inputs": [
-        ".storybook/**/*",
-        "src/components/**/*.stories.tsx"
-      ],
-      "outputs": [
-        "storybook-static/**"
-      ]
+      "inputs": [".storybook/**/*", "src/components/**/*.stories.tsx"],
+      "outputs": ["storybook-static/**"]
     },
     "@dothis/ui#build-storybook": {
-      "dependsOn": [
-        "@dothis/theme#build"
-      ]
+      "dependsOn": ["@dothis/theme#build"]
     },
     "request-web": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "clean": {
       "cache": false
     },
     "start:dev-api": {
       "cache": false,
-      "outputs": [
-        "dist/**/*"
-      ]
+      "outputs": ["dist/**/*"]
+    },
+    "start:dev-scheduler": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
     }
   },
   "globalEnv": [
@@ -119,9 +84,5 @@
     "AWS_SECRET_ACCESS_KEY",
     "NODE_ENV"
   ],
-  "globalDependencies": [
-    ".env",
-    ".env.local",
-    "tsconfig.json"
-  ]
+  "globalDependencies": [".env", ".env.local", "tsconfig.json"]
 }
