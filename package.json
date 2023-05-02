@@ -28,6 +28,8 @@
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e ./apps/api/.env -- turbo run start:dev-api",
     "dev:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run start:dev-api",
+    "dev:back-end-scheduler": "dotenv -e ./apps/api/.env -- turbo run start:dev-scheduler",
+    "dev:back-end-scheduler:prod": "dotenv -e ./apps/api/production.env -- turbo run start:dev-scheduler",
     "build:back-end": "dotenv -e ./apps/api/.env -- turbo run build --filter=api",
     "build:back-end:prod": "dotenv -e ./apps/api/production.env -- turbo run build --filter=api"
   },
