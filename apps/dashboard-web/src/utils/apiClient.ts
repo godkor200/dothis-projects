@@ -6,13 +6,6 @@ import axios from 'axios';
 
 import { apiBaseUrl } from '@/constants/dev';
 
-// export const apiClient = new Zodios(
-//   apiBaseUrl,
-//   // API definition
-//   [...User.api],
-// );
-// export const apiHooks = new ZodiosHooks('myAPI', apiClient);
-
 export type ApiRouterResponse = ApiRouteResponse<typeof apiRouter>;
 
 export const myAxios = axios.create({

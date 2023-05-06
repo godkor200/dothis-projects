@@ -1,13 +1,21 @@
 'use client';
 
+import { z } from 'zod';
+
 import { apiClient } from '@/utils/apiClient';
 
 export default function clientTest() {
-  // const { data, isLoading } = apiClient.auth.getVerifyToken(['verifyTokenGet']);
-  // if (!isLoading) console.log('data', data);
+  const { data, isLoading } = apiClient.user.getUser.useQuery(['user'], {
+    params: {
+      id: '1',
+    },
+  });
+  if (!isLoading) console.log('data', data);
 
   return (
-    // <div>{!isLoading && <p>current UserToken: {String(data?.body)}</p>}</div>
-    <div>clientTest</div>
+    <>
+      <div>{!isLoading && <p>current userData: {String(data?.body)}</p>}</div>
+      <div>clientTest</div>
+    </>
   );
 }

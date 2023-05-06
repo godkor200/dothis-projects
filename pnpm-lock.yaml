@@ -86,6 +86,9 @@ importers:
       '@next/font':
         specifier: ^13.4.1
         version: 13.4.1
+      '@tanstack/query-core':
+        specifier: ^4.29.5
+        version: 4.29.5
       '@tanstack/react-query':
         specifier: ^4.29.5
         version: 4.29.5(react-dom@18.2.0)(react@18.2.0)
@@ -10603,7 +10606,7 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.76.1(esbuild@0.17.11)
+      webpack: 5.76.1(esbuild@0.17.18)
 
   /babel-loader@8.3.0(@babel/core@7.21.0)(webpack@5.82.0):
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
@@ -22175,7 +22178,7 @@ packages:
       fast-json-stable-stringify: 2.1.0
       pretty-bytes: 5.6.0
       upath: 1.2.0
-      webpack: 5.76.1(esbuild@0.17.11)
+      webpack: 5.76.1(esbuild@0.17.18)
       webpack-sources: 1.4.3
       workbox-build: 6.5.4
     transitivePeerDependencies:
