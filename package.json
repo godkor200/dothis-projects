@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "main": "./prisma/client.ts",
-  "packageManager": "pnpm@7.15.0",
+  "packageManager": "^pnpm@8.4.0",
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",

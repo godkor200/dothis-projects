@@ -10,6 +10,7 @@ export default function clientTest() {
       id: '1',
     },
   });
+
   if (!isLoading) console.log('data', data);
 
   return (
