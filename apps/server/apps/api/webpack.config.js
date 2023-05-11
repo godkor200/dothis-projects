@@ -19,9 +19,7 @@ const tsConfigFile = './tsconfig.build.json';
 module.exports = function (options, webpack) {
   if (process.env.NODE_ENV === 'production') {
     options.devtool = 'source-map';
-    options.entry = {
-      main: `apps/api/src/main.ts`,
-    };
+    options.entry = {};
     options.optimization.minimize = true;
     options.optimization.minimizer = [
       new TerserPlugin({
@@ -32,7 +30,10 @@ module.exports = function (options, webpack) {
       }),
     ];
   } else if (process.env.NODE_ENV === 'development') {
-    options.entry = ['webpack/hot/poll?100', options.entry];
+    Object.keys(options.entry).forEach(
+      (key) =>
+        (options.entry[key] = ['webpack/hot/poll?100', options.entry[key]]),
+    );
     options.plugins = [
       ...options.plugins,
       new webpack.HotModuleReplacementPlugin(),
@@ -40,16 +41,16 @@ module.exports = function (options, webpack) {
         paths: [/\.js$/, /\.d\.ts$/],
       }),
       new RunScriptWebpackPlugin({
-        name: options.output.filename,
+        name: 'main.js',
       }),
     ];
   }
-  console.log(__dirname);
+
   return {
     ...options,
     output: {
       filename: `[name].js`,
-      path: path.join(__dirname, 'dist/apps/api'),
+      path: path.join(__dirname, '../../dist/apps/api'),
     },
     externals: [
       nodeExternals({
