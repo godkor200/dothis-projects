@@ -1,0 +1,67 @@
+.header{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.searchBarContainer{
+
+    position: relative;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.searchBar{
+    width:420px;
+    height:24px;
+    padding: 24px 12px;
+    border-radius: 8px;
+    border: 1px solid #A1A1AA; /*변수로 대체*/
+
+}
+
+.searchBarButton{
+    width:32px;
+    height:32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border-radius: 8px;
+}
+
+.plus{
+    background-color: #F0516D;
+    color: white;
+    stroke: white;
+    fill: white;
+    
+    position:absolute;
+    right: 42px;
+}
+
+.enter{
+    background-color: #FDE7EB;
+    color: #F0516D;
+    stroke: #F0516D;
+    fill: #F0516D;
+    margin-left:4px;
+}
+
+.ButtonsContainer{
+    gap:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+
+}
+
+.grey{
+    background-color: grey;
+}
