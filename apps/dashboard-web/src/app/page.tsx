@@ -14,8 +14,7 @@ export default async function RootPage() {
   // const data = await getData();
   return (
     <div>
-      <ClientTest />
+    메인 크기만큼 늘어납니다
     </div>
   );
-  // return <div>ㅇㅇㅇ</div>;
 }
