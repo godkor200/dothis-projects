@@ -23,7 +23,7 @@
             transition: .1s all;
         }
         
-        &:hover, &:focus  {
+        &:hover, &:focus  { 
             circle{
                 @apply fill-grey30;
             }

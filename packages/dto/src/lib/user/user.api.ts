@@ -9,7 +9,7 @@ export const userApi = c.router({
     method: 'GET',
     path: `${userBaseApiUrl}/:id`,
     pathParams: userBaseApiUrl,
-    query: { id: z.string() },
+    query: null,
     responses: {
       200: userModel,
       401: 'Not Found',

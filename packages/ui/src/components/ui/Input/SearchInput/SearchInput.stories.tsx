@@ -16,8 +16,5 @@ export const SearchInputStory: Story = {
   args: {
     placeholder: 'Search',
     defaultValue: '',
-    onEnter(e) {
-      alert('enter! ' + (e.target as HTMLInputElement).value);
-    },
   },
 };
