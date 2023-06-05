@@ -1,10 +1,13 @@
 import SvgComp from '@/components/share/SvgComp';
 
-export default function Login() {
+function LoginPage() {
   return (
     <div>
       로그인
-      <SvgComp icon="LogoSvg" />
+      <br />
+      <SvgComp icon="LogoSvg" size={60} />
     </div>
   );
 }
+
+export default LoginPage;
