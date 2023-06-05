@@ -5,11 +5,8 @@ import localFont from '@next/font/local';
 import clsx from 'clsx';
 import type react from 'react';
 
+import StyledComponentsRegistry from '../constants/registry';
 import ClientContext from './ClientContext';
-
-import StyledComponentsRegistry from './lib/registry';
-
-
 
 // nextjs font 최적화
 const font = localFont({
@@ -27,9 +24,7 @@ export default function RootLayout({ children }: Props) {
       <body className="flex min-h-screen">
         <ClientContext>
           <StyledComponentsRegistry>
-            <div>
-              {children}
-            </div>
+            <div>{children}</div>
           </StyledComponentsRegistry>
         </ClientContext>
       </body>
