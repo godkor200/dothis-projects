@@ -1,5 +1,5 @@
 import './style.css';
-import "../../tempcss.css";
+import '../../tempcss.css';
 
 import Image from 'next/image';
 import Link from 'next/link';

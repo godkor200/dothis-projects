@@ -3,15 +3,13 @@ import './tempcss.css';
 
 import localFont from '@next/font/local';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type react from 'react';
 
 import ClientContext from './ClientContext';
-import Footer from './components/Footer';
-import GNB from './components/GNB';
-import Header from './components/Header';
-import Main from './components/Main';
-import Sidebar from './components/Sidebar';
+
 import StyledComponentsRegistry from './lib/registry';
+
+
 
 // nextjs font 최적화
 const font = localFont({
@@ -20,7 +18,7 @@ const font = localFont({
 });
 
 type Props = {
-  children: ReactNode;
+  children: react.ReactNode;
 };
 
 export default function RootLayout({ children }: Props) {
@@ -29,11 +27,8 @@ export default function RootLayout({ children }: Props) {
       <body className="flex min-h-screen">
         <ClientContext>
           <StyledComponentsRegistry>
-            <div className="template">
-              <Sidebar />
-              <Header />
-              <Main children={children} />
-              <div className="footer">footer</div>
+            <div>
+              {children}
             </div>
           </StyledComponentsRegistry>
         </ClientContext>
