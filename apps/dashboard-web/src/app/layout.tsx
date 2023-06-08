@@ -21,7 +21,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={clsx(font.className, 'text-[16px]')}>
-      <body>
+      <body suppressHydrationWarning={true}>
         <ClientContext>
           <StyledComponentsRegistry>
             <div>{children}</div>
