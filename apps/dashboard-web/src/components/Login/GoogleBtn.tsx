@@ -6,18 +6,24 @@ import SvgComp from '../share/SvgComp';
 
 function GoogleBtn() {
   return (
-    <Container>
-      <Button>
-        <SvgComp icon="GoogleSvg" size={26} />
-        <Text>
-          <a href="https://api.dothis.kr/v1/auth/google-login">Google 로그인</a>
-        </Text>
-      </Button>
-    </Container>
+    <GoogleLink href="https://api.dothis.kr/v1/auth/google-login">
+      <Container>
+        <Button>
+          <SvgComp icon="GoogleSvg" size={26} />
+          <Text>Google 로그인</Text>
+        </Button>
+      </Container>
+    </GoogleLink>
   );
 }
 
 export default GoogleBtn;
+
+const GoogleLink = styled.a`
+  display: block;
+  width: 100%;
+  margin-top: 3.75rem;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -25,8 +31,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin-top: 3.75rem;
 
   padding: 1rem 0;
 
