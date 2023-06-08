@@ -50,7 +50,7 @@ module.exports = function (options, webpack) {
     ...options,
     output: {
       filename: `[name].js`,
-      path: path.join(__dirname, '../../dist/apps/scbeduler'),
+      path: path.join(__dirname, '../../dist/apps/scheduler'),
     },
     externals: [
       nodeExternals({
