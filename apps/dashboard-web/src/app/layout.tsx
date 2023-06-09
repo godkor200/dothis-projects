@@ -1,11 +1,12 @@
 import './global.css';
+import './tempcss.css';
 
 import localFont from '@next/font/local';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type react from 'react';
 
+import StyledComponentsRegistry from '../constants/registry';
 import ClientContext from './ClientContext';
-import GNB from './components/GNB';
 
 // nextjs font 최적화
 const font = localFont({
@@ -14,17 +15,17 @@ const font = localFont({
 });
 
 type Props = {
-  children: ReactNode;
+  children: react.ReactNode;
 };
 
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={clsx(font.className, 'text-[16px]')}>
-      <body className="flex min-h-screen">
+      <body suppressHydrationWarning={true}>
         <ClientContext>
-          <GNB />
-          {children}
-          {/*<Footer />*/}
+          <StyledComponentsRegistry>
+            <div>{children}</div>
+          </StyledComponentsRegistry>
         </ClientContext>
       </body>
     </html>

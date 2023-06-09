@@ -1,3 +1,4 @@
+import Landing from '@/components/Landing';
 import { apiClient } from '@/utils/apiClient';
 
 import ClientTest from './ClientTest';
@@ -12,10 +13,5 @@ import ClientTest from './ClientTest';
 
 export default async function RootPage() {
   // const data = await getData();
-  return (
-    <div>
-      <ClientTest />
-    </div>
-  );
-  // return <div>ㅇㅇㅇ</div>;
+  return <Landing />;
 }

@@ -1,4 +1,5 @@
 import './style.css';
+import '../../tempcss.css';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,7 +9,7 @@ import { pagePath } from '@/constants/pagePath';
 
 export default function Footer() {
   return (
-    <footer className="self-end">
+    <footer className="footer">
       <div className="footer__inner">
         <div className="footer-container">
           <div className="footer-info">
