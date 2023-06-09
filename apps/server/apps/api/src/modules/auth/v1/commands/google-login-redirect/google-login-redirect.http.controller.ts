@@ -32,6 +32,7 @@ export class GoogleLoginRedirectHttpController {
     res.cookie('refreshToken', token.refreshToken);
     res.cookie('google_access_token', userInfo.googleAccessToken);
     res.cookie('google_refresh_token', userInfo.googleRefreshToken);
+    res.redirect('http://localhost:3666');
 
     return {
       message: 'Dothis Authentication',
