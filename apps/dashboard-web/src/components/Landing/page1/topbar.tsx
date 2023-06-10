@@ -1,23 +1,30 @@
 import Image from 'next/image';
 
-import { Contact, Magicpen, User } from '@/assets';
-
 export default function Topbar() {
   return (
     <div>
-      <Image src={'/images/landing/logo_medium.png'} alt={'logo_medium'} />
+      <Image
+        src={'/images/landing/logo_medium.png'}
+        alt={'logo_medium'}
+        width={100}
+        height={100}
+      />
       <div>
         <button>
-          <Contact /> <p>text</p>
+          <Image src={'./content.svg'} alt={''} width={100} height={100} />{' '}
+          <p>text</p>
         </button>
         <button>
-          <Magicpen /> <p>text</p>
+          <Image src={'./magicpen.svg'} alt={''} width={100} height={100} />{' '}
+          <p>text</p>
         </button>
         <button>
-          <User /> <p>text</p>
+          <Image src={'./user.svg'} alt={''} width={100} height={100} />{' '}
+          <p>text</p>
         </button>
         <button>
-          <Contact /> <p>text</p>
+          <Image src={'./contact.svg'} alt={''} width={100} height={100} />{' '}
+          <p>text</p>
         </button>
       </div>
     </div>

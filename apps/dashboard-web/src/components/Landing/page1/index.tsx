@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import { Search } from '@/assets';
-
 import Topbar from './topbar';
 
 export default function Page1() {
@@ -19,11 +17,16 @@ export default function Page1() {
         <p>text text</p>
         <div>
           <button>
-            <Image src={'/images/landing/logo_small.png'} alt={'logo_small'} />
+            <Image
+              src={'/images/landing/logo_small.png'}
+              alt={'logo_small'}
+              width={100}
+              height={100}
+            />
             <p>button</p>
           </button>
           <button>
-            <Search />
+            <Image src={'./search.svg'} alt={''} width={100} height={100} />
             <p>button</p>
           </button>
         </div>

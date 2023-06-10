@@ -17,7 +17,12 @@ export default function Page5() {
           <p>{desc}</p>
         </div>
 
-        <Image src={`images/landing/${src}.png`} alt={''} />
+        <Image
+          src={`/images/landing/${src}.png`}
+          alt={''}
+          width={100}
+          height={100}
+        />
       </div>
     );
   };

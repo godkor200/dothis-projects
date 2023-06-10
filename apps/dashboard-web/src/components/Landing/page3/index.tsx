@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export function Page3() {
+export default function Page3() {
   const [state, setState] = useState<number>(0);
   const titles = ['test', 'test', 'test', 'test', 'test'];
 
@@ -28,6 +28,8 @@ export function Page3() {
         <Image
           src={`/images/landing/page3_${state}.png`}
           alt={`${state} image`}
+          width={100}
+          height={100}
         />
         <button
           onClick={() => {
