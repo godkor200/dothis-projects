@@ -1,3 +1,9 @@
+import Page1 from './page1';
+
 export default function Landing() {
-  return <>랜딩</>;
+  return (
+    <>
+      <Page1 />
+    </>
+  );
 }
