@@ -35,7 +35,7 @@ const CategroiesContainer = styled.nav`
 
 const Category = styled.button<{ select: number }>`
   font-size: 20px;
-  color: ${(props) => (props.select ? 'black' : 'red')};
+  color: ${(props) => (props.select ? 'black' : 'rgba(161, 161, 170, 1)')};
 `;
 
 const MoreButton = styled.button`
