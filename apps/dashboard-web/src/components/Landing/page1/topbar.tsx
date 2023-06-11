@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-const Bar = styled.div`
+const Bar = styled.nav`
   position: absolute;
   top: 0;
   width: 100vw;
