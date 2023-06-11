@@ -16,7 +16,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 
-  h2 {
+  h3 {
     font-size: 36px;
     font-weight: bolder;
   }
@@ -65,7 +65,7 @@ export default function Page3() {
   return (
     <Background>
       <Main>
-        <h2>🔎 내 관심사 그대로 맞춤 키워드 분석</h2>
+        <h3>🔎 내 관심사 그대로 맞춤 키워드 분석</h3>
         <p>
           <b>내 채널의 관심사</b>부터 시작해 앞으로 다룰만한 콘텐츠 소재의{' '}
           <b>조회수 예측</b>까지 알 수 있어요

@@ -16,7 +16,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 
-  h2 {
+  h3 {
     font-size: 36px;
     font-weight: bolder;
   }
@@ -60,7 +60,7 @@ export default function Page4() {
   return (
     <Background>
       <Main>
-        <h2>📊 한 눈에 보이는 트렌드</h2>
+        <h3>📊 한 눈에 보이는 트렌드</h3>
         <CategroiesContainer>
           {titles.map((value: string, key: number) => {
             return (

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Background = styled.div`
   width: 100vw;
   height: 80vh;
-  background-color: black;
+  background-color: rgba(24, 24, 27, 1);
   color: white;
 
   display: flex;
@@ -18,7 +18,7 @@ const Main = styled.main`
   margin-left: 196px;
   gap: 40px;
 
-  h2 {
+  h3 {
     font-size: 36px;
     font-weight: bolder;
   }
@@ -44,9 +44,9 @@ export default function Page2() {
         height={560}
       />
       <Main>
-        <h2>
+        <h3>
           유튜브 콘텐츠, <br /> 10분만에 기획을 간단하게
-        </h2>
+        </h3>
         <p>
           조회수 높이는 맞춤형 소재부터 포맷에 따른 <br />
           스토리보드 도구까지 한곳에서 간편하게!
