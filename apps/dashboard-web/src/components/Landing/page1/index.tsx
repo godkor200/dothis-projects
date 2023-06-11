@@ -5,11 +5,12 @@ import Topbar from './topbar';
 
 const Background = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 1080px;
   background-color: white;
 
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 const Main = styled.main`

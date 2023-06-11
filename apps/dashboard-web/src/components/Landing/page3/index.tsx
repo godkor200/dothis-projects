@@ -4,11 +4,13 @@ import styled from 'styled-components';
 
 const Background = styled.div`
   width: 100vw;
-  height: 90vh;
+  height: 900px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 `;
 
 const Main = styled.main`
@@ -90,7 +92,7 @@ export default function Page3() {
           <Image
             src={`/images/landing/page3_${state + 1}.png`}
             alt={`${state} image`}
-            width={700}
+            width={569}
             height={431}
           />
         </ImageBox>

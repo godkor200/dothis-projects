@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 const Background = styled.div`
   width: 100vw;
-  height: 190vh;
+  height: 1901px;
   background-color: rgba(34, 34, 34, 1);
   color: white;
 
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 const Main = styled.main`
