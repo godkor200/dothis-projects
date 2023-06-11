@@ -24,6 +24,7 @@
     "@tanstack/react-query-devtools": "^4.29.6",
     "@ts-rest/core": "^3.19.3",
     "@ts-rest/react-query": "^3.19.3",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
