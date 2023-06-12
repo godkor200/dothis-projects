@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const Bar = styled.nav`
   position: absolute;
+  width: 100%;
   top: 0;
-  width: 100vw;
   padding-top: 36px;
   display: flex;
   justify-content: space-between;

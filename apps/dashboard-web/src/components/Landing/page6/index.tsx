@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 700px;
 
   display: flex;

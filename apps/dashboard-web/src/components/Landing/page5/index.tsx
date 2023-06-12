@@ -2,7 +2,6 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  width: 100vw;
   height: 1901px;
   background-color: rgba(34, 34, 34, 1);
   color: white;
@@ -46,12 +45,10 @@ const Container = styled.div`
 `;
 
 const ContainerA = styled(Container)`
-  width: 676px;
   height: 766px;
 `;
 
 const ContainerB = styled(Container)`
-  width: 1392px;
   height: 645px;
   padding-bottom: 80px;
 `;
@@ -77,7 +74,7 @@ const Texts = styled.div`
 const Containers = styled.div`
   display: grid;
   grid-template-rows: 766px 645px;
-  grid-template-columns: 676px 676px;
+  grid-template-columns: 1fr 1fr;
   margin-top: 50px;
   gap: 40px;
 

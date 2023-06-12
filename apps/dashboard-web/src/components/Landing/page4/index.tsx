@@ -3,7 +3,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  width: 100vw;
   height: 900px;
   background-color: rgba(249, 249, 249, 1);
   display: flex;

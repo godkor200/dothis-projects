@@ -2,7 +2,6 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  width: 100vw;
   height: 800px;
   background-color: rgba(24, 24, 27, 1);
   color: white;

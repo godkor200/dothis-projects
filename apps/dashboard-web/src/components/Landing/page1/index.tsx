@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Topbar from './topbar';
 
 const Background = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 1080px;
   background-color: white;
 
