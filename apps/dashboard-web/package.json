@@ -12,10 +12,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@dothis/dto": "workspace:*",
-    "@dothis/share": "workspace:*",
-    "@dothis/theme": "workspace:*",
-    "@dothis/ui": "workspace:*",
     "@effect/data": "^0.12.2",
     "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.4.1",
@@ -24,10 +20,10 @@
     "@tanstack/react-query-devtools": "^4.29.6",
     "@ts-rest/core": "^3.19.3",
     "@ts-rest/react-query": "^3.19.3",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
-    "framer-motion": "^10.12.8",
     "iron-session": "^6.3.1",
     "next": "13.4.1",
     "next-auth": "^4.17.0",
@@ -44,7 +40,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
-    "@dothis/dto": "workspace:*",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.14.2",
     "@types/react": "^18.2.6",
