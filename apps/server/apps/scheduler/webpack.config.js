@@ -14,7 +14,6 @@ const lazyImports = [
   'class-validator',
   'class-transformer',
 ];
-const tsConfigFile = './tsconfig.build.json';
 
 module.exports = function (options, webpack) {
   if (process.env.NODE_ENV === 'production') {
