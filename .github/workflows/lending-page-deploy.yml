@@ -50,4 +50,4 @@ jobs:
 
       - name: Deploy Next.js app
         run: |
-          cd ./apps/dashboard-web && npm run deploy
+          cd ./apps/dashboard-web && npm run lending:deploy

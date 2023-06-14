@@ -10,7 +10,7 @@
     "dev": "run-p dev:*",
     "lint": "next lint",
     "start": "next start",
-    "deploy": "cross-env NODE_ENV=production components-v1"
+    "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
   },
   "dependencies": {
     "@dothis/dto": "workspace:^",
@@ -43,6 +43,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@serverless/cli": "^1.6.0",
+    "@serverless/components": "^3.18.2",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.14.2",
     "@types/react": "^18.2.6",
