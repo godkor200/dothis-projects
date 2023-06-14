@@ -1,0 +1,10 @@
+dothis-lending-ServerlessNext:
+  component: "@sls-next/serverless-component"
+  name:
+    defaultLambda: dothis-lending-lambda
+    apiLambda: dothis-lending-api-lambda
+    imageLambda: dothis-lending-iamge-lambda
+  inputs:
+    bucketName: "dothis-lending"
+#    cloudfront:
+#      distributionId: E1HUKBIKHKCZ4L
