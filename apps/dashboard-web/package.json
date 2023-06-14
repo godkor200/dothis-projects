@@ -10,7 +10,7 @@
     "dev": "run-p dev:*",
     "lint": "next lint",
     "start": "next start",
-    "deploy": "cross-env NODE_ENV=production serverless"
+    "deploy": "cross-env NODE_ENV=production components-v1"
   },
   "dependencies": {
     "@dothis/dto": "workspace:^",
