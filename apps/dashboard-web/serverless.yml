@@ -1,9 +1,9 @@
 service: dothis-lending
 frameworkVersion: '3'
 
-provider:
-  name: aws
-  runtime: nodejs18.x
+# provider:
+#   name: aws
+#   runtime: nodejs18.x
 
 dothis-lending-ServerlessNext:
   component: "@sls-next/serverless-component@latest"
