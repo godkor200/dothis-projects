@@ -11,6 +11,7 @@
     "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "dev:dashboard-mock": "dotenv -e .env -- turbo run dev-mock --filter=dashboard-web",
+    "dev:dashboard:deploy": "dotenv -e .env -- turbo run lending:deploy --filter=dashboard-web",
     "storybook": "turbo run storybook",
     "storybook:ui": "turbo run storybook --filter=@dothis/ui",
     "build-storybook:ui": "turbo run build-storybook --filter=@dothis/ui",

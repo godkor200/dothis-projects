@@ -42,6 +42,9 @@
     "dev-mock": {
       "cache": false
     },
+    "lending:deploy": {
+      "cache": false
+    },
     "@dothis/theme#build": {
       "outputs": ["./dist/**/*"],
       "inputs": ["./dashboard/**/*", "./utils/**/*"],
