@@ -1,9 +1,9 @@
 service: dothis-lending
 frameworkVersion: '3'
 
-provider:
-  name: aws
-  runtime: nodejs18.x
+#provider:
+#  name: aws
+#  runtime: nodejs18.x
 
 dothis-lending-ServerlessNext:
   component: "@sls-next/serverless-component@latest"
@@ -12,6 +12,7 @@ dothis-lending-ServerlessNext:
     apiLambda: dothis-lending-api-lambda
     imageLambda: dothis-lending-iamge-lambda
   inputs:
-    bucketName: "dothis-lending"
+    domain: "dothis.kr"
+    bucketName: "dothis-lending-dev-serverlessdeploymentbucket-nftrxd0xzs43"
     cloudfront:
-      distributionId: E2UHPKE9FT1F77
+      distributionId: E2GGNL0Q7RGXH9
