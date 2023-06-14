@@ -7,14 +7,14 @@ name: dothis-lending-page CD
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
-    branches: [ lending/deploy ]
+    branches: [ "lending/deploy" ]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - run: main
+      - run: build
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -26,7 +26,7 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@master
         with:
-          ref: master
+          ref: main
 
       - name: Install Dependencies
         run: |
