@@ -36,7 +36,7 @@ const MoreButton = styled.button`
 
 const Container = styled.div`
   border-radius: 30px;
-  background-color: black;
+  background-color: rgba(45, 45, 45, 1);
   display: flex;
   flex-direction: column;
   justify-content: center;

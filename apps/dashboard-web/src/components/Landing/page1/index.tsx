@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import Topbar from './topbar';
 
 const Background = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 1080px;
   background-color: white;
 
   display: flex;
   justify-content: center;
-  position: relative;
+  align-items: center;
 `;
 
 const Main = styled.main`
@@ -40,9 +40,6 @@ const Buttons = styled.div`
 `;
 
 const Texts = styled.div`
-  position: absolute;
-  top: 678px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,19 +54,28 @@ const Texts = styled.div`
   }
 `;
 
+const ImgBox = styled.div`
+  @media (max-width: 1280px) {
+    width: 1180px;
+    height: 490px;
+  }
+`;
+
 export default function Page1() {
   return (
     <Background>
       <Topbar />
       <Main>
-        <Image
-          src="/images/landing/page1.png"
-          width={1285}
-          height={358}
-          alt={'page1 image'}
-        />
+        <ImgBox>
+          <Image
+            src="/images/landing/page1.png"
+            width={1285}
+            height={358}
+            sizes="(max-width:1285px) 100%"
+            alt={'page1 image'}
+          />
+        </ImgBox>
         <Texts>
-          <h1>어떤 영상을 찍어야 조회수가 잘 나올까?</h1>
           <h3>
             콘텐츠 기획부터 키워드 추천, 트렌드 분석까지 바로 지금 Do this
             하세요
