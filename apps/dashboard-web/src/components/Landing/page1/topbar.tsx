@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import Contact from './contact.svg';
+import Content from './content.svg';
+import Magicpen from './magicpen.svg';
+import User from './user.svg';
+
 const Bar = styled.nav`
   position: absolute;
   width: 100%;
@@ -50,19 +55,19 @@ export default function Topbar() {
       />
       <ButtonsContainer>
         <button>
-          <SVG src={'./content.svg'} />
+          <Content width={32} height={32} />
           <p>콘텐츠 분석</p>
         </button>
         <button>
-          <SVG src={'./magicpen.svg'} />
+          <Magicpen width={32} height={32} />
           <p>키워드 분석</p>
         </button>
         <button>
-          <SVG src={'./user.svg'} />
+          <User width={32} height={32} />
           <p>내 채널 분석</p>
         </button>
         <button>
-          <SVG src={'./contact.svg'} />
+          <Contact width={32} height={32} />
           <p>Contact</p>
         </button>
       </ButtonsContainer>

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import Search from './search.svg';
 import Topbar from './topbar';
 
 const Background = styled.div`
@@ -26,8 +27,6 @@ const Buttons = styled.div`
   margin-top: 30px;
 
   button {
-    width: 195px;
-    height: 62px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,6 +35,7 @@ const Buttons = styled.div`
     gap: 8px;
     font-size: 20px;
     font-weight: bolder;
+    padding: 16px 24px;
   }
 `;
 
@@ -91,7 +91,7 @@ export default function Page1() {
               <p>무료 체험하기</p>
             </button>
             <button>
-              <Image src={'./search.svg'} alt={''} width={30} height={30} />
+              <Search width={30} height={30} />
               <p>요금제 알아보기</p>
             </button>
           </Buttons>
