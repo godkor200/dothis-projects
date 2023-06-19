@@ -40,7 +40,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
+  padding: 80px 50px;
   padding-top: 80px;
 `;
 
@@ -76,6 +76,7 @@ const Containers = styled.div`
   grid-template-rows: 766px 645px;
   grid-template-columns: 1fr 1fr;
   margin-top: 50px;
+  padding: 0px 50px;
   gap: 40px;
 
   div:nth-child(3) {

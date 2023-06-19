@@ -10,6 +10,10 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 800px) {
+    display: block;
+  }
+
   position: relative;
 `;
 
@@ -18,6 +22,11 @@ const Main = styled.main`
   flex-direction: column;
   margin-left: 196px;
   gap: 40px;
+  padding-right: 101px;
+
+  @media (max-width: 1280px) {
+    margin-left: 80px;
+  }
 
   h3 {
     font-size: 36px;
@@ -35,15 +44,24 @@ const Main = styled.main`
   }
 `;
 
+const ImageBox = styled.div`
+  width: 680px;
+  height: 560px;
+  padding-left: 50px;
+`;
+
 export default function Page2() {
   return (
     <Background>
-      <Image
-        src={'/images/landing/page2.png'}
-        alt={''}
-        width={680}
-        height={560}
-      />
+      <ImageBox>
+        <Image
+          src={'/images/landing/page2.png'}
+          alt={''}
+          width={680}
+          height={560}
+          sizes="100%"
+        />
+      </ImageBox>
       <Main>
         <h3>
           유튜브 콘텐츠, <br /> 10분만에 기획을 간단하게

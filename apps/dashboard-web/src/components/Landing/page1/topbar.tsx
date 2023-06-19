@@ -10,7 +10,7 @@ const Bar = styled.nav`
   position: absolute;
   width: 100%;
   top: 0;
-  padding-top: 36px;
+  padding: 36px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
