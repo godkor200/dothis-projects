@@ -581,7 +581,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/hj/work/dothis-projects/apps/request-web/prisma/db",
+      "value": "/Users/yubyeong-gug/Desktop/project/dothis/apps/request-web/prisma/db",
       "fromEnvVar": null
     },
     "config": {
@@ -595,8 +595,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
-    "schemaEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "..",
   "clientVersion": "4.11.0",

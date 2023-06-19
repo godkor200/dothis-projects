@@ -13,6 +13,9 @@
     "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
   },
   "dependencies": {
+    "@dothis/ui": "workspace:*",
+    "@dothis/share": "workspace:*",
+    "@dothis/theme": "workspace:*",
     "@dothis/dto": "workspace:^",
     "@effect/data": "^0.12.2",
     "@hookform/resolvers": "^3.1.0",

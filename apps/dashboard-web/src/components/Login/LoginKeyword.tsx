@@ -29,33 +29,31 @@ function LoginKeyword({ keyword }: KeywordSchema) {
     <FormProvider {...methods}>
       <Keywords keyword={keyword} />
 
-      <Button>{keywords.length > 0 && keywords.length + '개'} 작성 </Button>
+      <Button disabledBtn={keywords.length}>
+        {keywords.length > 0 && keywords.length + '개'} 작성
+      </Button>
     </FormProvider>
   );
 }
 
 export default LoginKeyword;
 
-const Button = styled.button`
-  width: 15rem;
-  height: 2rem;
-  margin: 0;
-  border: 0;
-  outline: 0;
+const Button = styled.button<{ disabledBtn: number }>`
+  display: block;
 
-  font-size: 0.875rem;
-  background-color: transparent;
-  border: 0.125rem solid red;
-  border-radius: 5rem;
+  width: 100%;
 
-  ${({ style }) => css`
-    &::placeholder {
-      color: black;
-    }
-  `}
+  padding: 1rem;
 
-  @media (min-width: 768px) {
-    height: 2.25rem;
-    font-size: 1rem;
-  }
+  border-radius: 0.5rem;
+
+  background-color: #fde7eb;
+  color: #f7b4c0;
+
+  ${({ style, disabledBtn }) =>
+    disabledBtn &&
+    css`
+      background-color: #ff647d;
+      color: white;
+    `}
 `;
