@@ -1,17 +1,13 @@
 import styled from 'styled-components';
-import { BackgroundDefault } from '../style';
+import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
   height: 1080px;
   background-color: white;
 `;
 
-export const Main = styled.main`
-  width: 100%;
+export const Main = styled(MainDefault)`
   margin-top: 240px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 export const Buttons = styled.div`

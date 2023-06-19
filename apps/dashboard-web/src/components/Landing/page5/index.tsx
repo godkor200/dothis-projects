@@ -1,96 +1,14 @@
 import Image from 'next/image';
-import styled from 'styled-components';
-
-const Background = styled.div`
-  height: 1901px;
-  background-color: rgba(34, 34, 34, 1);
-  color: white;
-
-  display: flex;
-  justify-content: center;
-  position: relative;
-`;
-
-const Main = styled.main`
-  margin-top: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h2 {
-    font-size: 44px;
-    font-weight: bolder;
-  }
-`;
-const MoreButton = styled.button`
-  width: 140px;
-  height: 54px;
-  border-radisu: 4px;
-  border: 1px solid white;
-  background-color: inherit;
-  color: white;
-  font-size: 20px;
-
-  margin-top: 40px;
-`;
-
-const Container = styled.div`
-  border-radius: 30px;
-  background-color: rgba(45, 45, 45, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 50px;
-  padding-top: 80px;
-`;
-
-const ContainerA = styled(Container)`
-  height: 766px;
-`;
-
-const ContainerB = styled(Container)`
-  height: 645px;
-  padding-bottom: 80px;
-`;
-
-const Texts = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 67px;
-
-  h3 {
-    font-size: 30px;
-    font-weight: bolder;
-  }
-
-  p {
-    color: rgba(161, 161, 170, 1);
-    font-size: 20px;
-  }
-`;
-
-const Containers = styled.div`
-  display: grid;
-  grid-template-rows: 766px 645px;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 50px;
-  padding: 0px 50px;
-  gap: 40px;
-
-  div:nth-child(3) {
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
-  }
-`;
-
-const ImageBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
+import {
+  Background,
+  ContainerA,
+  ContainerB,
+  Containers,
+  ImageBox,
+  Main,
+  MoreButton,
+  Texts,
+} from './style';
 
 export default function Page5() {
   return (

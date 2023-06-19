@@ -2,60 +2,50 @@ import styled from 'styled-components';
 
 export const BackgroundDefault = styled.div`
   width: 100%;
-
+  word-break: keep-all;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 `;
 
-const Main = styled.main`
+export const MainDefault = styled.main`
   width: 100%;
-  margin-top: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  gap: 40px;
-  margin-top: 30px;
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    border: 1px solid black;
-    gap: 8px;
-    font-size: 20px;
-    font-weight: bolder;
-    padding: 16px 24px;
-  }
-`;
-
-const Texts = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h1 {
-    font-size: 64px;
+  h2 {
+    font-size: 44px;
     font-weight: bolder;
   }
   h3 {
-    margin-top: 30px;
-    font-size: 24px;
+    font-size: 36px;
+    font-weight: bolder;
+  }
+  p {
+    font-size: 20px;
   }
 `;
 
-const ImageBox = styled.div`
-  width: 1100px;
-  aspect-ratio: 110/46;
-  position: relative;
-  margin: 0px 90px;
+export const CategroiesContainer = styled.nav`
+  margin-top: 40px;
+  margin-bottom: 52px;
+  display: flex;
+  gap: 40px;
+`;
 
-  @media (max-width: 1280px) {
-    width: 90%;
-  }
+export const Category = styled.button<{ select: number }>`
+  font-size: 20px;
+  color: ${(props) => (props.select ? 'black' : 'rgba(161, 161, 170, 1)')};
+`;
+
+export const MoreButton = styled.button`
+  width: 140px;
+  height: 54px;
+  border-radisu: 4px;
+  border: 1px solid black;
+  font-size: 20px;
+
+  margin-top: 60px;
 `;
