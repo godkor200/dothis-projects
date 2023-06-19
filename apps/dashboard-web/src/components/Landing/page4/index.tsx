@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const Background = styled.div`
+  width: 100%;
   height: 900px;
   background-color: rgba(249, 249, 249, 1);
   display: flex;
@@ -13,6 +14,7 @@ const Background = styled.div`
 `;
 
 const Main = styled.main`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,11 +53,16 @@ const MoreButton = styled.button`
 
 const ImageBox = styled.div`
   width: 700px;
-  height: 500px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  aspect-ratio: 7/5;
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export default function Page4() {
@@ -85,8 +92,10 @@ export default function Page4() {
           <Image
             src={`/images/landing/page4_${state + 1}.png`}
             alt={`${state} image`}
-            width={621}
-            height={450}
+            width={0}
+            height={0}
+            sizes="100%"
+            fill
           />
         </ImageBox>
         <MoreButton

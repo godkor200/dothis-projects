@@ -5,6 +5,7 @@ const Background = styled.div`
   height: 800px;
   background-color: rgba(24, 24, 27, 1);
   color: white;
+  word-break: keep-all;
 
   display: flex;
   justify-content: center;
@@ -12,6 +13,8 @@ const Background = styled.div`
 
   @media (max-width: 800px) {
     display: block;
+    height: auto;
+    padding: 30px 0px;
   }
 
   position: relative;
@@ -46,8 +49,13 @@ const Main = styled.main`
 
 const ImageBox = styled.div`
   width: 680px;
-  height: 560px;
   padding-left: 50px;
+
+  aspect-ratio: 68/56;
+  @media (max-width: 900px) {
+    width: 100%;
+    padding-right: 50px;
+  }
 `;
 
 export default function Page2() {
