@@ -39,7 +39,7 @@ export default function Page3() {
 
         <ImageBox>
           <Image
-            src={`/images/landing/page3_${state + 1}.png`}
+            src={`/images/landing/keyword_0${state + 1}.png`}
             alt={`${state} image`}
             width={0}
             height={0}

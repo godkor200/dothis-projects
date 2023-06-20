@@ -14,7 +14,7 @@ export default function Page4() {
           {titles.map((value: string, key: number) => {
             return (
               <Category
-                key={`page3_menu_${key}`}
+                key={`page4_menu_${key}`}
                 onClick={() => {
                   setState(key);
                 }}
@@ -27,7 +27,7 @@ export default function Page4() {
         </CategroiesContainer>
         <ImageBox>
           <Image
-            src={`/images/landing/page4_${state + 1}.png`}
+            src={`/images/landing/trend_0${state + 1}.png`}
             alt={`${state} image`}
             width={0}
             height={0}
