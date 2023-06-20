@@ -4,6 +4,9 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "build:api": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
