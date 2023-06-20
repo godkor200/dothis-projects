@@ -5,6 +5,12 @@ export const Background = styled(BackgroundDefault)`
   height: 800px;
   background-color: rgba(24, 24, 27, 1);
   color: white;
+`;
+
+export const Main = styled(MainDefault)`
+  margin: 50px;
+  flex-direction: row;
+  justify-content: center;
 
   @media (max-width: 800px) {
     display: block;
@@ -13,7 +19,18 @@ export const Background = styled(BackgroundDefault)`
   }
 `;
 
-export const Main = styled(MainDefault)`
+export const ImageBox = styled.div`
+  width: 680px;
+
+  aspect-ratio: 68/56;
+  @media (max-width: 900px) {
+    width: 80%;
+  }
+`;
+
+export const Text = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 196px;
   gap: 40px;
   padding-right: 101px;
@@ -27,16 +44,5 @@ export const Main = styled(MainDefault)`
     border-radisu: 4px;
     border: 1px solid white;
     font-size: 20px;
-  }
-`;
-
-export const ImageBox = styled.div`
-  width: 680px;
-  padding-left: 50px;
-
-  aspect-ratio: 68/56;
-  @media (max-width: 900px) {
-    width: 100%;
-    padding-right: 50px;
   }
 `;

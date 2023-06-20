@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Background, ImageBox, Main } from './style';
 import { Category, CategroiesContainer, MoreButton } from '../style';
+import { useRouter } from 'next/navigation';
+import { dummy } from '@/constants/route';
 
 export default function Page3() {
   const [state, setState] = useState<number>(1);
@@ -12,6 +14,8 @@ export default function Page3() {
     '조회수 예측',
     '구독자 구간',
   ];
+
+  const router = useRouter();
 
   return (
     <Background>
@@ -49,7 +53,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            console.log('move');
+            router.push(dummy);
           }}
         >
           더 알아보기

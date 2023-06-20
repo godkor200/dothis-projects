@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { Background, ImageBox, Main, Texts } from './style';
+import { useRouter } from 'next/navigation';
+import { content } from '@/constants/route';
 
 export default function Page6() {
+  const router = useRouter();
   return (
     <Background>
       <Main>
@@ -15,7 +18,11 @@ export default function Page6() {
         </ImageBox>
         <Texts>
           <h3>영상 기획, 오랜 시간 고민하지 말고 두-디스</h3>
-          <button>
+          <button
+            onClick={() => {
+              router.push(content);
+            }}
+          >
             <Image
               src={'/images/landing/logo_small.png'}
               alt={''}

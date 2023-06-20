@@ -1,10 +1,13 @@
 import Image from 'next/image';
-
+import { useRouter } from 'next/navigation';
 import Search from './svg/search.svg';
 import Topbar from './topbar';
 import { Background, Buttons, ImageBox, Main, Texts } from './style';
+import { content, pricing } from '@/constants/route';
 
 export default function Page1() {
+  const router = useRouter();
+
   return (
     <Background>
       <Topbar />
@@ -25,7 +28,7 @@ export default function Page1() {
             하세요
           </h3>
           <Buttons>
-            <button>
+            <button onClick={() => router.push(content)}>
               <Image
                 src={'/images/landing/logo_small.png'}
                 alt={'logo_small'}
@@ -34,7 +37,11 @@ export default function Page1() {
               />
               <p>무료 체험하기</p>
             </button>
-            <button>
+            <button
+              onClick={() => {
+                router.push(pricing);
+              }}
+            >
               <Search width={30} height={30} />
               <p>요금제 알아보기</p>
             </button>

@@ -2,10 +2,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Background, ImageBox, Main } from './style';
 import { Category, CategroiesContainer, MoreButton } from '../style';
+import { useRouter } from 'next/navigation';
+import { dummy } from '@/constants/route';
+
 export default function Page4() {
   const [state, setState] = useState<number>(0);
   const titles = ['채널별 연관 콘텐츠', '시청자 반응', '콘텐츠 요약'];
-
+  const router = useRouter();
   return (
     <Background>
       <Main>
@@ -37,7 +40,7 @@ export default function Page4() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            console.log('move');
+            router.push(dummy);
           }}
         >
           더 알아보기

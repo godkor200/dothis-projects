@@ -9,8 +9,11 @@ import {
   MoreButton,
   Texts,
 } from './style';
+import { useRouter } from 'next/navigation';
+import { dummy } from '@/constants/route';
 
 export default function Page5() {
+  const router = useRouter();
   return (
     <Background>
       <Main>
@@ -59,7 +62,13 @@ export default function Page5() {
             </ImageBox>
           </ContainerB>
         </Containers>
-        <MoreButton>더 알아보기</MoreButton>
+        <MoreButton
+          onClick={() => {
+            router.push(dummy);
+          }}
+        >
+          더 알아보기
+        </MoreButton>
       </Main>
     </Background>
   );
