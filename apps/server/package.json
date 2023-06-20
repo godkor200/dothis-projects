@@ -6,6 +6,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=development nest build --webpack && tsc-alias -p tsconfig.build.json",
+    "build:api": "nest build --webpack --webpackPath ./apps/api/webpack.config.js && tsc-alias -p ./apps/api/tsconfig.app.json",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start:dev-api": "cross-env NODE_ENV=development nest build api --webpack --webpackPath ./apps/api/webpack.config.js --watch",
     "start:prod-api": "cross-env NODE_ENV=production nest build api --webpack --webpackPath ./apps/api/webpack.config.js --watch",
