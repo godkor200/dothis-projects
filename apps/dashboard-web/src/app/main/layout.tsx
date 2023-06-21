@@ -10,6 +10,12 @@ function Layout({ children }: { children: React.ReactNode }) {
         <GNB />
         <NavSlider />
         <>{children}</>
+        <p style={{ fontSize: '10rem' }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+          quidem aspernatur ipsum aliquam optio eveniet sunt laboriosam
+          inventore voluptatum assumenda nihil, accusantium adipisci magni dolor
+          sapiente deleniti repellendus nam veniam!
+        </p>
       </div>
     </>
   );
