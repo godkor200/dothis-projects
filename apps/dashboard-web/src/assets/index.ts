@@ -5,6 +5,7 @@ export { default as HeaderTicket } from './svg/Header/HeaderTicket.svg';
 export { default as HeaderUserProfile } from './svg/Header/HeaderUserProfile.svg';
 export { default as LogoSvg } from './svg/Login/dothisLogo.svg';
 export { default as GoogleSvg } from './svg/Login/Google.svg';
+export { default as NavSlideDelete } from './svg/NavSlide/NavSlideDelete.svg';
 export { default as SideLogo } from './svg/SideBar/SideLogo.svg';
 export { default as SideMagicPen } from './svg/SideBar/SideMagicPen.svg';
 export { default as SideMain } from './svg/SideBar/SideMain.svg';
