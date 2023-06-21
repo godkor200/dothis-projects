@@ -1,30 +1,59 @@
 'use client';
 
 import { theme } from '@dothis/theme/dashboard/index';
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
 
-import NavSliderContent from './NavSlideContent';
+import NavSlideContent from './NavSlideContent';
 
-function NavSlider() {
+export enum KeywordCategory {
+  Review = '리뷰',
+  Community = '커뮤니티',
+  house = '부동산',
+  zod = '조드',
+  story = '스토리북',
+}
+
+const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
+  [KeywordCategory.Review]: ' 리뷰',
+  [KeywordCategory.Community]: '커뮤니티sadasdsa',
+  [KeywordCategory.house]: '부동산 테스트다 스크롤',
+  [KeywordCategory.zod]: '부동산 테스트다 스크롤',
+  [KeywordCategory.story]: '스토리북',
+} as const;
+
+function NavSlide() {
+  // 일단은 array 로 만들었지만,, 추후 List들어오는 api 형식보고서 최종결정 예정입니다!
+  const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
+
   return (
     <KeywordTapContiner>
       <ResetButton>
         <SvgComp icon="NavSlideReset" size="1.5rem" />
       </ResetButton>
-
-      <NavSliderContent />
-
+      <ButtonContainer>
+        {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
+          <NavSlideContent
+            key={key}
+            $active={keywordCategory.includes(key as KeywordCategory)}
+            label={label}
+            keyValue={key}
+            setKeywordCategory={setKeywordCategory}
+          />
+        ))}
+      </ButtonContainer>
       <ArrowButton />
     </KeywordTapContiner>
   );
 }
 
-export default NavSlider;
+export default NavSlide;
 
 const KeywordTapContiner = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-wrap: nowrap;
   gap: 1.5rem;
 
@@ -41,6 +70,20 @@ const KeywordTapContiner = styled.div`
 
   transition: all 0.5s ease;
   white-space: nowrap;
+`;
+
+const ResetButton = styled.button`
+  padding: 0.5rem 1.25rem;
+  border: 1px solid ${theme.colors.grey40};
+  border-radius: 0.5rem;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+
+  overflow-x: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -75,6 +118,8 @@ const ArrowButton = styled.button`
       rgba(255, 255, 255, 0.9) 60%,
       white 70%
     );
+
+    pointer-events: none;
   }
 
   &::after {
@@ -89,10 +134,4 @@ const ArrowButton = styled.button`
 
     transform: translate(20%, -50%) rotate(-45deg);
   }
-`;
-
-const ResetButton = styled.button`
-  padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey40};
-  border-radius: 0.5rem;
 `;

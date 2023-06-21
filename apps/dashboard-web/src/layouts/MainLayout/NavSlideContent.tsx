@@ -1,76 +1,43 @@
 import { theme } from '@dothis/theme/dashboard/index';
+import type { SetStateAction } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
 
-function NavSliderContent() {
+import type { KeywordCategory } from './NavSlide';
+
+interface KeywordCategoryContentProps {
+  $active: boolean;
+  label: string;
+  keyValue: string;
+  setKeywordCategory: React.Dispatch<SetStateAction<KeywordCategory[]>>;
+}
+
+function NavSlideContent({
+  $active,
+  label,
+  keyValue,
+  setKeywordCategory,
+}: KeywordCategoryContentProps) {
   return (
-    <ButtonContainer>
-      <Button $active={true}>
-        먹방
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-      <Button $active={true}>
-        먹방맛집
-        <SvgComp icon="NavSlideDelete" size="1rem" />
-      </Button>
-    </ButtonContainer>
+    <Button
+      $active={$active}
+      onClick={() => {
+        setKeywordCategory((prev) =>
+          prev.includes(keyValue as KeywordCategory)
+            ? prev.filter((el) => el !== keyValue)
+            : [...prev, keyValue as KeywordCategory],
+        );
+      }}
+    >
+      {label}
+      <SvgComp icon="NavSlideDelete" size="1rem" />
+    </Button>
   );
 }
 
-export default NavSliderContent;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-
-  overflow-x: hidden;
-`;
+export default NavSlideContent;
 
 const Button = styled.button<{ $active: boolean }>`
   display: flex;
