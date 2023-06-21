@@ -41,6 +41,7 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 이것도 SVG 색채우기는  다른 MainLayout과 함께 작업예정
 // 추후 리팩토링을 통해 코드 분할 예정
 // 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
+// Wheel은 transform이려나
 
 function NavSlide() {
   const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
@@ -79,9 +80,6 @@ const KeywordTapContiner = styled.nav`
   position: sticky;
   top: 0rem;
 
-  overflow-x: hidden;
-  justify-content: start;
-
   background-color: white;
 
   transition: all 0.5s ease;
@@ -114,8 +112,6 @@ const ArrowButton = styled.button`
   padding: 0.5rem 1.25rem;
   border: 1px solid ${theme.colors.grey40};
   border-radius: 0.5rem;
-
-  /* background-color: white; */
 
   &::before {
     content: '';
