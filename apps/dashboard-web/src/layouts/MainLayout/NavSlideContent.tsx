@@ -19,7 +19,6 @@ function NavSlideContent<T extends HTMLButtonElement>({
   $active,
   label,
   keyValue,
-
   handleScrollX,
   setKeywordCategory,
 }: KeywordCategoryContentProps<T>) {

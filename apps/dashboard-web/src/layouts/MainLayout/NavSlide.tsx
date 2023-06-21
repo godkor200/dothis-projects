@@ -1,8 +1,8 @@
 'use client';
 
 import { theme } from '@dothis/theme/dashboard/index';
-import { useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
 import useClickScrollX from '@/hooks/useClickScrollX';
