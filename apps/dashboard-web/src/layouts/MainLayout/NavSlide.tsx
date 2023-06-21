@@ -39,6 +39,8 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 일단은 array 로 만들었지만,, 추후 List들어오는 api 형식보고서 최종결정 예정입니다!
 // 반응형도 고려해서 생성하였지만, 모바일 단계에서는 다른 형식으로 전환하긴 해야함
 // 이것도 SVG 색채우기는  다른 MainLayout과 함께 작업예정
+// 추후 리팩토링을 통해 코드 분할 예정
+// 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
 
 function NavSlide() {
   const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
