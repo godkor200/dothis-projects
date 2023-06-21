@@ -1,27 +1,32 @@
 import { theme } from '@dothis/theme/dashboard/index';
-import type { SetStateAction } from 'react';
-import { MutableRefObject, useRef } from 'react';
+import type { MutableRefObject, SetStateAction } from 'react';
+import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
 
 import type { KeywordCategory } from './NavSlide';
 
-interface KeywordCategoryContentProps {
+interface KeywordCategoryContentProps<T> {
   $active: boolean;
   label: string;
   keyValue: string;
+  handleScrollX: (target: MutableRefObject<T | null>) => void;
   setKeywordCategory: React.Dispatch<SetStateAction<KeywordCategory[]>>;
 }
 
-function NavSlideContent({
+function NavSlideContent<T extends HTMLButtonElement>({
   $active,
   label,
   keyValue,
+
+  handleScrollX,
   setKeywordCategory,
-}: KeywordCategoryContentProps) {
+}: KeywordCategoryContentProps<T>) {
+  const targetRef = useRef<T | null>(null);
   return (
     <Button
+      ref={targetRef}
       $active={$active}
       onClick={() => {
         setKeywordCategory((prev) =>
@@ -29,6 +34,7 @@ function NavSlideContent({
             ? prev.filter((el) => el !== keyValue)
             : [...prev, keyValue as KeywordCategory],
         );
+        handleScrollX(targetRef);
       }}
     >
       {label}

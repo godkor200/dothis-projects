@@ -1,10 +1,11 @@
 'use client';
 
 import { theme } from '@dothis/theme/dashboard/index';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
+import useClickScrollX from '@/hooks/useClickScrollX';
 
 import NavSlideContent from './NavSlideContent';
 
@@ -46,18 +47,21 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 function NavSlide() {
   const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
 
+  const [handleScrollX, containerRef] = useClickScrollX();
+
   return (
     <KeywordTapContiner>
       <ResetButton>
         <SvgComp icon="NavSlideReset" size="1.5rem" />
       </ResetButton>
-      <ButtonContainer>
+      <ButtonContainer ref={containerRef}>
         {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
           <NavSlideContent
             key={key}
             $active={keywordCategory.includes(key as KeywordCategory)}
             label={label}
             keyValue={key}
+            handleScrollX={handleScrollX}
             setKeywordCategory={setKeywordCategory}
           />
         ))}
