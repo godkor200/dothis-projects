@@ -31,9 +31,6 @@ jobs:
         with:
           node-version: '18.16.0'
 
-      - name: Restore pnpm cache
-        run: pnpm restore
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --global-pnpm
 
