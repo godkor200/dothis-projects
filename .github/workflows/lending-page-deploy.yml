@@ -27,27 +27,27 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: main
-          
+
       - name: Install pnpm
         run: npm install -g pnpm
-      
+
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '18.13.0'
+          node-version: '18.16.0'
         # 깃허브 액션 러너에서의 노드 버전은 여기선 큰의미가 없음.
 
       - name: Install Dependencies
         run: |
-           pnpm install
+          pnpm install
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+      #       - name: Configure AWS Credentials
+      #         uses: aws-actions/configure-aws-credentials@v1
+      #         with:
+      #           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #           aws-region: ap-northeast-2
 
-      - name: Deploy Next.js app
+      - name: build:dashboard
         run: |
-          cd ./apps/dashboard-web && npm run lending:deploy
+          cd ./ && pnpm run build:dashboard

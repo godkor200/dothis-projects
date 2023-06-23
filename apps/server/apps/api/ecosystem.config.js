@@ -1,11 +1,10 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../../production.env' });
 console.log(process.env.NODE_ENV);
 module.exports = {
   apps: [
     {
       name: 'dothis',
-      cwd: './dist',
-      script: './main.js',
+      script: '../../dist/apps/api/main.js',
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,

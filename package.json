@@ -12,6 +12,7 @@
     "dev:dashboard": "dotenv -e .env -- turbo run dev --filter=dashboard-web",
     "dev:dashboard-mock": "dotenv -e .env -- turbo run dev-mock --filter=dashboard-web",
     "dev:dashboard:deploy": "dotenv -e .env -- turbo run lending:deploy --filter=dashboard-web",
+    "build:dashboard": "dotenv -e ./apps/dashboard-web/.env -- turbo run build --filter=dashboard-web",
     "storybook": "turbo run storybook",
     "storybook:ui": "turbo run storybook --filter=@dothis/ui",
     "build-storybook:ui": "turbo run build-storybook --filter=@dothis/ui",
@@ -32,7 +33,8 @@
     "dev:back-end-scheduler": "dotenv -e ./apps/server/.env -- turbo run start:dev-scheduler",
     "dev:back-end-scheduler:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-scheduler",
     "build:back-end": "dotenv -e ./apps/server/.env -- turbo run build --filter=api",
-    "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=api"
+    "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=api",
+    "build:back-end:api-prod": "dotenv -e ./apps/server/production.env -- turbo run build:api --filter=api"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",

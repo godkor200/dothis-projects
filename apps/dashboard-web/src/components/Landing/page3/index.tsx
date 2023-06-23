@@ -50,7 +50,12 @@ const MoreButton = styled.button`
 `;
 
 const ImageBox = styled.div`
-  height: 431px;
+  width: 900px;
+  height: 480px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function Page3() {

@@ -19,7 +19,16 @@ async function ChooseKeywordPage() {
 
   const mock_keyword = await onLoading(3000);
 
-  return <LoginKeyword keyword={mock_keyword} />;
+  return (
+    <>
+      <h2 className="font-bold text-2xl leading-9">
+        분석하고 싶은 키워드를 <br />
+        선택해 주세요
+      </h2>
+      <p className="mb-16 pt-2 text-stone-500">최대 5개</p>
+      <LoginKeyword keyword={mock_keyword} />
+    </>
+  );
 }
 
 export default ChooseKeywordPage;

@@ -40,6 +40,7 @@ function Keywords({ keyword }: KeywordSchema) {
             onClick={() => onToggleKeyword(mock)}
             chosen={keywords.includes(mock) || undefined}
           >
+            {keywords.includes(mock) && <StyledCheck />}
             {mock}
           </TagItem>
         ))}
@@ -69,7 +70,9 @@ const TagList = styled.ul`
 const TagItem = styled.li<{ chosen: boolean | undefined }>`
   height: 2rem;
   padding: 0 0.75rem;
-  border-radius: 9999px;
+
+  border-radius: 0.5rem;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -80,18 +83,43 @@ const TagItem = styled.li<{ chosen: boolean | undefined }>`
   animation: 0.25s ${FADE_IN} cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 
+  box-shadow: inset 0 0 0 2px #fafafa;
+
   ${({ style, chosen }) =>
     chosen
       ? css`
-          color: red;
-          box-shadow: inset 0 0 0 2px red;
+          font-weight: bold;
+
+          background-color: #fef7f8;
+          box-shadow: inset 0 0 0 2px #fde7eb;
         `
-      : css`
-          color: #ffffff;
-          background-color: red;
-        `}
+      : css``}
   @media (min-width: 768px) {
     height: 2.25rem;
     font-size: 1rem;
+  }
+`;
+
+const StyledCheck = styled.i`
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+
+  &::after {
+    content: '';
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    left: 3px;
+    top: -1px;
+    width: 6px;
+    height: 10px;
+    border-width: 0 1px 1px 0;
+    border-color: #ff647d;
+    transform-origin: bottom left;
+    transform: rotate(45deg);
   }
 `;
