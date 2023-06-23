@@ -50,4 +50,4 @@ jobs:
 
       - name: build:dashboard
         run: |
-          pnpm build:dashboard
+          cd ./ && pnpm run build:dashboard
