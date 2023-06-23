@@ -31,12 +31,11 @@ jobs:
         with:
           node-version: '18.16.0'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Restore pnpm cache
+        run: pnpm restore
 
-      - name: Install Dependencies
-        run: |
-          pnpm install
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --global-pnpm
 
       #       - name: Configure AWS Credentials
       #         uses: aws-actions/configure-aws-credentials@v1
