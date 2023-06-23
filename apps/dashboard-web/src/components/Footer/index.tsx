@@ -1,5 +1,4 @@
 import './style.css';
-import '../../tempcss.css';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,17 +6,20 @@ import Link from 'next/link';
 import { ceoMail } from '@/constants/etc';
 import { pagePath } from '@/constants/pagePath';
 
+import styled from 'styled-components';
+
+const FooterLayout = styled.footer`
+  border-top: 1px solid #d4d4d8;
+  padding: 100px 150px;
+`;
+
 export default function Footer() {
   return (
-    <footer className="footer">
+    <FooterLayout>
       <div className="footer__inner">
         <div className="footer-container">
           <div className="footer-info">
-            <Link
-              href={pagePath.home()}
-              title="두디스 홈"
-              style={{ width: '100%' }}
-            >
+            <Link href={'/'} title="두디스 홈" style={{ width: '100%' }}>
               <Image
                 src="/images/dothis-logo.svg"
                 width={113}
@@ -89,6 +91,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </FooterLayout>
   );
 }

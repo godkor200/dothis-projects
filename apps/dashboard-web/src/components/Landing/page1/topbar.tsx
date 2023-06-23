@@ -1,44 +1,29 @@
 import Image from 'next/image';
-import styled from 'styled-components';
+import { throttle } from 'lodash';
+import { useRouter } from 'next/navigation';
+import Contact from './svg/contact.svg';
+import Content from './svg/CONTENT.svg';
+import Magicpen from './svg/magicpen.svg';
+import User from './svg/user.svg';
+import { useEffect, useState } from 'react';
+import { Bar, Nav } from './style';
 
-const Bar = styled.nav`
-  position: absolute;
-  width: 100%;
-  top: 0;
-  padding-top: 36px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  max-width: 1440px;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 10px;
-
-  button {
-    width: 160px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radisu: 4px;
-
-    font-size: 20px;
-  }
-`;
+import { CONTENT, SURVEY } from '@/constants/route';
 
 const SVG_SIZE = 32;
 
 export default function Topbar() {
-  const SVG = ({ src }: { src: string }) => {
-    return <Image src={src} alt={''} width={32} height={32} />;
-  };
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const router = useRouter();
+
+  const resizeHandler = throttle(() => {
+    setWidth(window.innerWidth);
+  }, 10);
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
+  }, []);
 
   return (
     <Bar>
@@ -48,24 +33,37 @@ export default function Topbar() {
         width={204}
         height={48}
       />
-      <ButtonsContainer>
-        <button>
-          <SVG src={'./content.svg'} />
-          <p>콘텐츠 분석</p>
-        </button>
-        <button>
-          <SVG src={'./magicpen.svg'} />
-          <p>키워드 분석</p>
-        </button>
-        <button>
-          <SVG src={'./user.svg'} />
-          <p>내 채널 분석</p>
-        </button>
-        <button>
-          <SVG src={'./contact.svg'} />
-          <p>Contact</p>
-        </button>
-      </ButtonsContainer>
+      <Nav>
+        {width > 1000 ? (
+          <>
+            <button onClick={() => router.push(CONTENT)}>
+              <Content width={SVG_SIZE} height={SVG_SIZE} />
+              <p>콘텐츠 분석</p>
+            </button>
+            <button onClick={() => router.push(CONTENT)}>
+              <Magicpen width={SVG_SIZE} height={SVG_SIZE} />
+              <p>키워드 분석</p>
+            </button>
+            <button onClick={() => router.push(CONTENT)}>
+              <User width={SVG_SIZE} height={SVG_SIZE} />
+              <p>내 채널 분석</p>
+            </button>
+            <a href={SURVEY}>
+              <button>
+                <Contact width={SVG_SIZE} height={SVG_SIZE} />
+                <p>Contact</p>
+              </button>
+            </a>
+          </>
+        ) : (
+          <>
+            <Content width={SVG_SIZE} height={SVG_SIZE} />
+            <Magicpen width={SVG_SIZE} height={SVG_SIZE} />
+            <User width={SVG_SIZE} height={SVG_SIZE} />
+            <Contact width={SVG_SIZE} height={SVG_SIZE} />
+          </>
+        )}
+      </Nav>
     </Bar>
   );
 }
