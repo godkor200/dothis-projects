@@ -6,7 +6,6 @@
   "packageManager": "^pnpm@8.4.0",
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
-    "build:dashboard": "dotenv -e ./apps/dashboard-web/.env -- turbo run build --filter=dashboard-web",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
     "analyze": "dotenv -e .env -- turbo run analyze --parallel",
     "dev:request": "dotenv -e .env -- turbo run dev --filter=request-web",
