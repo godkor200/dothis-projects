@@ -34,9 +34,6 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Restore pnpm cache
-        run: pnpm restore
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --global-pnpm
 
