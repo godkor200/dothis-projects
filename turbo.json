@@ -7,7 +7,7 @@
     "build:api": {
       "dependsOn": ["^build"]
     },
-    "build:dashboard": {
+    "build:dashboard": {
       "dependsOn": ["^build"]
     },
     "dev": {
