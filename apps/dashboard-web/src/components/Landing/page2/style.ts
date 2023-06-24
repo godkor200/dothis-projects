@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`

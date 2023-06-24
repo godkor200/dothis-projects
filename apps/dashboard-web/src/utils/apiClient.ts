@@ -28,3 +28,5 @@ export const apiClient = initQueryClient(apiRouter, {
     return { status: result.status, body: result.data };
   },
 });
+
+export { apiRouter };

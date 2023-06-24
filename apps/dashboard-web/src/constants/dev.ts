@@ -5,6 +5,6 @@ export const mockApiPathname = '/api/mock' as const;
 export const mockApiBaseUrl = `${mockApiHost}${mockApiPathname}` as const;
 
 export const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_MOCKING === 'enabled'
+  process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled'
     ? mockApiBaseUrl
     : serverApiBaseUrl;

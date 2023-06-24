@@ -1,3 +1,5 @@
+'use client';
+
 import { throttle } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -14,7 +16,8 @@ import { Bar, Nav } from './style';
 const SVG_SIZE = 32;
 
 export default function Topbar() {
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [width, setWidth] = useState<number>(0);
+  // 해당 state 선언단계에서 바로 window 세팅 시 에러
   const router = useRouter();
 
   const resizeHandler = throttle(() => {

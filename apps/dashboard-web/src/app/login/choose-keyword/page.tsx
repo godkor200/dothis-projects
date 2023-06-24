@@ -2,7 +2,7 @@ import LoginKeyword from '@/components/Login/LoginKeyword';
 
 async function ChooseKeywordPage() {
   const onLoading = async (ms: number) => {
-    await delay(ms);
+    // await delay(ms);
 
     return [
       '부동산',
@@ -34,6 +34,6 @@ async function ChooseKeywordPage() {
 export default ChooseKeywordPage;
 
 // Loading 체크를 위한 임시 delay 함수
-export const delay = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+// export const delay = (ms: number) => {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// };

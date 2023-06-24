@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import { Background, ImageBox, Main, Texts } from './style';
 import { useRouter } from 'next/navigation';
+
 import { CONTENT } from '@/constants/route';
+
+import { Background, ImageBox, Main, Texts } from './style';
 
 export default function Page6() {
   const router = useRouter();
