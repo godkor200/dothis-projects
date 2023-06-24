@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import { Background, ImageBox, Main, Text } from './style';
 import { useRouter } from 'next/navigation';
+
 import { NOT_FOUND } from '@/constants/route';
+
+import { Background, ImageBox, Main, Text } from './style';
 export default function Page2() {
   const router = useRouter();
   return (
@@ -26,7 +28,7 @@ export default function Page2() {
           </p>
           <button
             onClick={() => {
-              router.push(NOT_FOUND);
+              router.push('/');
             }}
           >
             더 알아보기

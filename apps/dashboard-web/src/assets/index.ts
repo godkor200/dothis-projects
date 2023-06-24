@@ -1,3 +1,4 @@
+export { default as FooterLogo } from './svg/Footer/FooterLogo.svg';
 export { default as HeaderEdit } from './svg/Header/HeaderEdit.svg';
 export { default as HeaderNotification } from './svg/Header/HeaderNotification.svg';
 export { default as HeaderPlus } from './svg/Header/HeaderPlus.svg';

@@ -1,9 +1,11 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import { Background, ImageBox, Main } from './style';
-import { Category, CategroiesContainer, MoreButton } from '../style';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
 import { NOT_FOUND } from '@/constants/route';
+
+import { Category, CategroiesContainer, MoreButton } from '../style';
+import { Background, ImageBox, Main } from './style';
 
 export default function Page3() {
   const [state, setState] = useState<number>(1);
@@ -53,7 +55,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push(NOT_FOUND);
+            router.push('/');
           }}
         >
           더 알아보기

@@ -1,4 +1,8 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+import { NOT_FOUND } from '@/constants/route';
+
 import {
   Background,
   ContainerA,
@@ -9,8 +13,6 @@ import {
   MoreButton,
   Texts,
 } from './style';
-import { useRouter } from 'next/navigation';
-import { NOT_FOUND } from '@/constants/route';
 
 export default function Page5() {
   const router = useRouter();
@@ -64,7 +66,7 @@ export default function Page5() {
         </Containers>
         <MoreButton
           onClick={() => {
-            router.push(NOT_FOUND);
+            router.push('/');
           }}
         >
           더 알아보기

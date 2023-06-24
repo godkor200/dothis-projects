@@ -1,14 +1,15 @@
-import Image from 'next/image';
 import { throttle } from 'lodash';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Contact from './svg/contact.svg';
-import Content from './svg/CONTENT.svg';
-import Magicpen from './svg/magicpen.svg';
-import User from './svg/user.svg';
 import { useEffect, useState } from 'react';
-import { Bar, Nav } from './style';
 
+import Contact from '@/assets/svg/Landing/contact.svg';
+import Content from '@/assets/svg/Landing/CONTENT.svg';
+import Magicpen from '@/assets/svg/Landing/magicpen.svg';
+import User from '@/assets/svg/Landing/user.svg';
 import { CONTENT, SURVEY } from '@/constants/route';
+
+import { Bar, Nav } from './style';
 
 const SVG_SIZE = 32;
 

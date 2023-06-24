@@ -1,58 +1,5 @@
 import styled from 'styled-components';
 
-export const TagContainer = styled.div`
-  display: flex;
-  justify-content: left;
-  position: relative;
-  align-items: space-around;
-  max-width: 1280px;
-
-  div {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 12px;
-    overflow: hidden;
-  }
-`;
-
-export const Gradient = styled.span`
-  position: absolute;
-  top: 0;
-  right: 32px;
-  width: 30%;
-  height: 100%;
-  z-index: 2;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0), white);
-`;
-
-export const RightButton = styled.button`
-  margin-left: 54px;
-  width: 34px;
-  height: 34px;
-  border-radius: 4px;
-  border: 1px solid #a1a1aa;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Tag = styled.button`
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: solid #a1a1aa 1px;
-  white-space: nowrap;
-  width: 100%;
-  color: #a1a1aa;
-`;
-
-export const Tag_select = styled(Tag)`
-  border: solid #f0516d 1px;
-  color: #f0516d;
-  background-color: #fef7f8;
-`;
-
 export const PriceCategory = styled.table`
   width: 100%;
   text-align: center;

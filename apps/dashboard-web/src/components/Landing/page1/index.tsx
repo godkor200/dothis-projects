@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Search from './svg/search.svg';
-import Topbar from './topbar';
+
+import Search from '@/assets/svg/Landing/search.svg';
+import { CONTENT } from '@/constants/route';
+
 import { Background, Buttons, ImageBox, Main, Texts } from './style';
-import { CONTENT, PRICING } from '@/constants/route';
+import Topbar from './topbar';
 
 export default function Page1() {
   const router = useRouter();
@@ -39,7 +41,7 @@ export default function Page1() {
             </button>
             <button
               onClick={() => {
-                router.push(PRICING);
+                router.push('/main');
               }}
             >
               <Search width={30} height={30} />
