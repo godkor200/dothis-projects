@@ -5,6 +5,12 @@ import { BackgroundDefault, MainDefault } from '../style';
 export const Background = styled(BackgroundDefault)`
   background-color: rgba(24, 24, 27, 1);
   color: white;
+
+  padding: 120px 0px;
+
+  @media (max-height: 800px) {
+    height: 800px;
+  }
 `;
 
 export const Main = styled(MainDefault)`

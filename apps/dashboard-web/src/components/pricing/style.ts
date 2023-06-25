@@ -104,4 +104,8 @@ export const ImageBox = styled.div`
   margin-top: 58px;
   margin-bottom: 100px;
   position: relative;
+
+  @media (min-width: 1280px) {
+    width: 1280px;
+  }
 `;
