@@ -42,7 +42,7 @@ export default function Page4() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push('/');
+            router.push(NOT_FOUND);
           }}
         >
           더 알아보기

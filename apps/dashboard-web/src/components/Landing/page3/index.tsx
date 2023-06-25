@@ -55,7 +55,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push(PRICING);
+            router.push(NOT_FOUND);
           }}
         >
           더 알아보기

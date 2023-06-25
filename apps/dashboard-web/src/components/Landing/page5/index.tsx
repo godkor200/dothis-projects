@@ -66,7 +66,7 @@ export default function Page5() {
         </Containers>
         <MoreButton
           onClick={() => {
-            router.push('/');
+            router.push(NOT_FOUND);
           }}
         >
           더 알아보기
