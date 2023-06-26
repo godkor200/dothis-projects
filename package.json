@@ -43,7 +43,7 @@
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.40.0",
     "eslint-config-dothis-nestjs": "workspace:*",
-    "eslint-config-next": "13.4.1",
+    "eslint-config-next": "13.4.6",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-turbo": "^1.9.3",
     "eslint-plugin-import": "^2.27.5",
