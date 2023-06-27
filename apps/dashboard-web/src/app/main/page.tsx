@@ -1,5 +1,11 @@
-function LandingPage() {
-  return <div>안녕하세요</div>;
+import Price from '@/components/pricing/page';
+
+function MainPage() {
+  return (
+    <div>
+      <Price />
+    </div>
+  );
 }
 
-export default LandingPage;
+export default MainPage;

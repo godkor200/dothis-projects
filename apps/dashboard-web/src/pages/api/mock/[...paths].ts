@@ -25,8 +25,7 @@ export default function handler(
 
   switch (method) {
     case 'GET':
-      if (matchDynamicPath(apiRouter.auth.getGoogleLogin.path))
-        return res200.json(mockToken);
+      if (matchDynamicPath(apiRouter.auth.getGoogleLogin.path)) return res200;
       break;
     case 'POST':
       // if (matchDynamicPath(apiRouter.user.verifyAccessTokenPost.path))
@@ -41,8 +40,8 @@ export default function handler(
   }
 }
 
-const mockToken: ApiRouterResponse['user']['verifyTokenGet']['body'] =
-  'kajsdlkfjlksdjflkjslkfjksdl';
+// const mockToken: ApiRouterResponse['user']['verifyTokenGet']['body'] =
+//   'kajsdlkfjlksdjflkjslkfjksdl';
 
 const mockUsers = [
   {
