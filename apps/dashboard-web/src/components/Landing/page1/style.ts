@@ -4,6 +4,11 @@ import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
   background-color: white;
+  padding-bottom: 143px;
+
+  @media (max-height: 1080px) {
+    height: 1080px;
+  }
 `;
 
 export const Main = styled(MainDefault)`

@@ -52,7 +52,7 @@ function Footer() {
       </LinkContainer>
 
       <Text>
-        두디스 | 대표이사 : 민상현 | 개인정보 보호 최고책임자 : 박순헌
+        두디스 | 대표이사 : 민상현 | 개인정보 보호 최고책임자 : 유병국
         <br />
         사업자등록번호 : 685-87-02606 | 메일 : &nbsp;
         <a href={`mailto:${ceoMail}`}>{ceoMail}</a>

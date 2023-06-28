@@ -42,7 +42,7 @@ export default function Page4() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push('/');
+            alert('준비중입니다');
           }}
         >
           더 알아보기

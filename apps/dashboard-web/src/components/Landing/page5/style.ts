@@ -7,9 +7,12 @@ import {
 } from '../style';
 
 export const Background = styled(BackgroundDefault)`
-  height: 1901px;
   background-color: rgba(34, 34, 34, 1);
   color: white;
+  padding: 120px 0px;
+  @media (max-height: 1900px) {
+    height: 1900px;
+  }
 `;
 
 export const Main = styled(MainDefault)`
