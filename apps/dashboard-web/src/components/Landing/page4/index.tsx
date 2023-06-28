@@ -1,67 +1,16 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import styled from 'styled-components';
 
-const Background = styled.div`
-  height: 900px;
-  background-color: rgba(249, 249, 249, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+import { NOT_FOUND } from '@/constants/route';
 
-  position: relative;
-`;
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h3 {
-    font-size: 36px;
-    font-weight: bolder;
-  }
-  p {
-    margin-top: 20px;
-    font-size: 20px;
-  }
-`;
-
-const CategroiesContainer = styled.nav`
-  margin-top: 40px;
-  margin-bottom: 52px;
-  display: flex;
-  gap: 40px;
-`;
-
-const Category = styled.button<{ select: number }>`
-  font-size: 20px;
-  color: ${(props) => (props.select ? 'black' : 'rgba(161, 161, 170, 1)')};
-`;
-
-const MoreButton = styled.button`
-  width: 140px;
-  height: 54px;
-  border-radisu: 4px;
-  border: 1px solid black;
-  font-size: 20px;
-
-  margin-top: 60px;
-`;
-
-const ImageBox = styled.div`
-  width: 700px;
-  height: 500px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { Category, CategroiesContainer, MoreButton } from '../style';
+import { Background, ImageBox, Main } from './style';
 
 export default function Page4() {
   const [state, setState] = useState<number>(0);
   const titles = ['채널별 연관 콘텐츠', '시청자 반응', '콘텐츠 요약'];
-
+  const router = useRouter();
   return (
     <Background>
       <Main>
@@ -70,7 +19,7 @@ export default function Page4() {
           {titles.map((value: string, key: number) => {
             return (
               <Category
-                key={`page3_menu_${key}`}
+                key={`page4_menu_${key}`}
                 onClick={() => {
                   setState(key);
                 }}
@@ -83,15 +32,17 @@ export default function Page4() {
         </CategroiesContainer>
         <ImageBox>
           <Image
-            src={`/images/landing/page4_${state + 1}.png`}
+            src={`/images/landing/trend_0${state + 1}.png`}
             alt={`${state} image`}
-            width={621}
-            height={450}
+            width={0}
+            height={0}
+            sizes="100%"
+            fill
           />
         </ImageBox>
         <MoreButton
           onClick={() => {
-            console.log('move');
+            router.push('/');
           }}
         >
           더 알아보기

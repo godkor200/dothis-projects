@@ -1,2 +1,14 @@
-export { default as LogoSvg } from './dothisLogo.svg';
-export { default as GoogleSvg } from './Google.svg';
+export { default as FooterLogo } from './svg/Footer/FooterLogo.svg';
+export { default as HeaderEdit } from './svg/Header/HeaderEdit.svg';
+export { default as HeaderNotification } from './svg/Header/HeaderNotification.svg';
+export { default as HeaderPlus } from './svg/Header/HeaderPlus.svg';
+export { default as HeaderTicket } from './svg/Header/HeaderTicket.svg';
+export { default as HeaderUserProfile } from './svg/Header/HeaderUserProfile.svg';
+export { default as LogoSvg } from './svg/Login/dothisLogo.svg';
+export { default as GoogleSvg } from './svg/Login/Google.svg';
+export { default as SideLogo } from './svg/SideBar/SideLogo.svg';
+export { default as SideMagicPen } from './svg/SideBar/SideMagicPen.svg';
+export { default as SideMain } from './svg/SideBar/SideMain.svg';
+export { default as SideMessage } from './svg/SideBar/SideMessage.svg';
+export { default as SideTrendUp } from './svg/SideBar/SideTrendUp.svg';
+export { default as SideUser } from './svg/SideBar/SideUser.svg';

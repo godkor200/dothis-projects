@@ -1,13 +1,11 @@
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
+import Price from '@/components/pricing/page';
 
-export default function Main() {
+function MainPage() {
   return (
-    <div className="template">
-      <Sidebar />
-      <Header />
-      <div>여기에 내용이 들어갑니다</div>
-      <div className="footer">footer</div>
+    <div>
+      <Price />
     </div>
   );
 }
+
+export default MainPage;
