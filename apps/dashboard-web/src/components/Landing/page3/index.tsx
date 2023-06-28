@@ -55,7 +55,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push(NOT_FOUND);
+            alert('준비중입니다');
           }}
         >
           더 알아보기

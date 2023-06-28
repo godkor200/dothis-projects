@@ -66,7 +66,7 @@ export default function Page5() {
         </Containers>
         <MoreButton
           onClick={() => {
-            router.push(NOT_FOUND);
+            alert('준비중입니다');
           }}
         >
           더 알아보기

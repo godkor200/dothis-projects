@@ -28,7 +28,7 @@ export default function Page2() {
           </p>
           <button
             onClick={() => {
-              router.push(NOT_FOUND);
+              alert('준비중입니다');
             }}
           >
             더 알아보기
