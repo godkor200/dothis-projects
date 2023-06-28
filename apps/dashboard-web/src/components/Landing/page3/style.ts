@@ -2,7 +2,14 @@ import styled from 'styled-components';
 
 import { BackgroundDefault, MainDefault } from '../style';
 
-export const Background = styled(BackgroundDefault)``;
+export const Background = styled(BackgroundDefault)`
+  padding-top: 100px;
+  padding-bottom: 60px;
+
+  @media (max-height: 900px) {
+    height: 900px;
+  }
+`;
 
 export const Main = styled(MainDefault)`
   p {

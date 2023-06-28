@@ -8,7 +8,7 @@ import { Category, CategroiesContainer, MoreButton } from '../style';
 import { Background, ImageBox, Main } from './style';
 
 export default function Page3() {
-  const [state, setState] = useState<number>(1);
+  const [state, setState] = useState<number>(0);
   const titles = [
     '내 관심사',
     '연관 소재',
@@ -55,7 +55,7 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
-            router.push('/');
+            alert('준비중입니다');
           }}
         >
           더 알아보기

@@ -4,6 +4,13 @@ import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
   background-color: rgba(249, 249, 249, 1);
+
+  padding-top: 100px;
+  padding-bottom: 60px;
+
+  @media (max-height: 900px) {
+    height: 900px;
+  }
 `;
 
 export const Main = styled(MainDefault)`
