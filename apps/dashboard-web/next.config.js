@@ -13,6 +13,7 @@ const config = {
     outputFileTracingIgnores: ['**swc/core**'],
     appDir: true,
     typedRoutes: true,
+    esmExternals:'loose'
   },
 
   compiler: {
