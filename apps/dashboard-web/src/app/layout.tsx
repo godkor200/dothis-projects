@@ -1,5 +1,4 @@
 import './global.css';
-import './tempcss.css';
 
 import localFont from '@next/font/local';
 import clsx from 'clsx';
