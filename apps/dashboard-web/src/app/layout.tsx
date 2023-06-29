@@ -6,8 +6,8 @@ import clsx from 'clsx';
 import type react from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
-
 import Analytics from '@/components/Analytics';
+
 import ClientContext from './ClientContext';
 
 // nextjs font 최적화
