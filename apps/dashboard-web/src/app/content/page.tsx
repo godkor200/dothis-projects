@@ -7,15 +7,10 @@ import styled from 'styled-components';
 import { PRICING } from '@/constants/route';
 
 const Background = styled.div`
-
-
-backgrounddefault
-  height: 100%;
-
-background
   width: 100%;
-  aspect-ratio: 1440/3058;
+  height: 100%;
   position: relative;
+  aspect-ratio: 1440/3058;
 
   @media (min-width: 1280px) {
     width: 1280px;

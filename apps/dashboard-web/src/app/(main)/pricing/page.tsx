@@ -1,6 +1,6 @@
 import Price from '@/components/pricing/page';
 
-function MainPage() {
+function PricingPage() {
   return (
     <div>
       <Price />
@@ -8,4 +8,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default PricingPage;
