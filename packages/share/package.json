@@ -13,7 +13,7 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@effect/data": "^0.12.2",
+    "@effect/data": "^0.12.8",
     "@ts-rest/core": "^3.19.3",
     "d3-array": "^3.2.3",
     "date-fns": "^2.30.0",

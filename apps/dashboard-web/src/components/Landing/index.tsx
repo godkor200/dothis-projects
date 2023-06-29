@@ -6,16 +6,17 @@ import Page3 from './page3';
 import Page4 from './page4';
 import Page5 from './page5';
 import Page6 from './page6';
+import { Layout } from './style';
 
 export default function Landing() {
   return (
-    <>
+    <Layout>
       <Page1 />
       <Page2 />
       <Page3 />
       <Page4 />
       <Page5 />
       <Page6 />
-    </>
+    </Layout>
   );
 }
