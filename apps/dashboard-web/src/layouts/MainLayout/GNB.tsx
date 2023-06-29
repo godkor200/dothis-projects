@@ -1,7 +1,7 @@
 'use client';
 
 import { theme } from '@dothis/theme/dashboard/index';
-import { css, styled } from 'styled-components';
+import styled from 'styled-components';
 
 import SvgComp from '@/components/share/SvgComp';
 
