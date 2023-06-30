@@ -9,7 +9,6 @@ function Layout({ children }: { children: React.ReactNode }) {
       <SideBar />
       <div className="ml-24">
         <GNB />
-        <NavSlider />
         <>{children}</>
         <Footer />
       </div>
