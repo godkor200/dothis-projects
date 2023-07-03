@@ -8,6 +8,7 @@ import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
 import Analytics from '@/components/Analytics';
 
 import ClientContext from './ClientContext';
+import RootHeader from './head';
 
 // nextjs font 최적화
 const font = localFont({
@@ -22,6 +23,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={clsx(font.className, 'text-[16px]')}>
+      <RootHeader />
       <body suppressHydrationWarning={true}>
         <Analytics />
         <StyledComponentsRegistry>
