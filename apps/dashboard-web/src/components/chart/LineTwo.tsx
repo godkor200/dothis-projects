@@ -1,7 +1,5 @@
 'use client';
 
-import './Graph.css';
-
 import { ResponsiveLine } from '@nivo/line';
 import styled from 'styled-components';
 
@@ -12,31 +10,31 @@ const LineTwo = () => {
       color: 'hsl(81, 70%, 50%)',
       data: [
         {
-          x: 10,
+          x: '2017-12-29',
           y: 30,
         },
         {
-          x: 20,
+          x: '2017-12-31',
           y: 40,
         },
         {
-          x: 30,
+          x: '2018-01-02',
           y: 70,
         },
         {
-          x: 40,
+          x: '2018-01-04',
           y: 90,
         },
         {
-          x: 50,
+          x: '2018-01-06',
           y: 70,
         },
         {
-          x: 60,
+          x: '2018-01-08',
           y: 100,
         },
         {
-          x: 70,
+          x: '2018-01-10',
           y: 70,
         },
       ],
@@ -48,31 +46,31 @@ const LineTwo = () => {
       color: 'hsl(81, 70%, 50%)',
       data: [
         {
-          x: 10,
+          x: '2017-12-29',
           y: 600000,
         },
         {
-          x: 20,
+          x: '2017-12-31',
           y: 770000,
         },
         {
-          x: 30,
+          x: '2018-01-03',
           y: 750000,
         },
         {
-          x: 40,
+          x: '2018-01-05',
           y: 630000,
         },
         {
-          x: 50,
+          x: '2018-01-07',
           y: 790000,
         },
         {
-          x: 60,
+          x: '2018-01-09',
           y: 730000,
         },
         {
-          x: 70,
+          x: '2018-01-11',
           y: 770000,
         },
       ],
@@ -85,7 +83,12 @@ const LineTwo = () => {
         <ResponsiveLine
           data={data2}
           margin={{ top: 50, right: 600, left: 60 }}
-          xScale={{ type: 'point' }}
+          xScale={{
+            format: '%Y-%m-%d',
+            precision: 'day',
+            type: 'time',
+            useUTC: false,
+          }}
           yScale={{
             type: 'linear',
             min: 500000,
@@ -97,6 +100,8 @@ const LineTwo = () => {
           axisTop={null}
           axisRight={null}
           axisBottom={null}
+          enableGridX={false}
+          // x축 눈금 제거
           axisLeft={{
             tickSize: 0,
             tickPadding: 20,
@@ -151,7 +156,13 @@ const LineTwo = () => {
         <ResponsiveLine
           data={data}
           margin={{ right: 600, bottom: 50, left: 60 }}
-          xScale={{ type: 'point' }}
+          xScale={{
+            format: '%Y-%m-%d',
+            precision: 'day',
+            type: 'time',
+            useUTC: false,
+          }}
+          enableGridX={false}
           yScale={{
             type: 'linear',
             min: 0,
@@ -162,7 +173,12 @@ const LineTwo = () => {
           yFormat=" >-.2f"
           axisTop={null}
           axisRight={null}
-          axisBottom={null}
+          axisBottom={{
+            format: '%b %d',
+            legend: 'time scale',
+            legendOffset: -12,
+            tickValues: 'every 4 days',
+          }}
           axisLeft={{
             tickValues: [20, 40, 60, 80, 100],
             tickSize: 0,
