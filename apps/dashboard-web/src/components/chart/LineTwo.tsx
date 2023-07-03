@@ -79,6 +79,8 @@ const LineTwo = () => {
     },
   ];
 
+  // 현재 공통된 style 프로퍼티는 공용을 만들어서 관리할 생각
+
   return (
     <>
       <ChartContainer className="graph-container">
