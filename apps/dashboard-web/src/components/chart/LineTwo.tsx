@@ -81,6 +81,10 @@ const LineTwo = () => {
 
   // 현재 공통된 style 프로퍼티는 공용을 만들어서 관리할 생각
 
+  // 최소 구해서 ∙∙∙ 공백 처리 필요
+  // y data 도출하기
+  // 디자인과 맞게 편집(눈금선 점선으로 )
+
   return (
     <>
       <ChartContainer className="graph-container">
@@ -128,6 +132,8 @@ const LineTwo = () => {
           useMesh={true}
           // 마우스 상호작용을 감지하며 tooltip생성
 
+          enablePoints={false}
+          // point 활성화, 비활성화
           legends={[
             {
               anchor: 'bottom-right',
@@ -154,6 +160,25 @@ const LineTwo = () => {
               ],
             },
           ]}
+          theme={{
+            axis: {
+              ticks: {
+                line: {
+                  stroke: 'green',
+                },
+                text: {
+                  fill: 'black',
+                },
+              },
+            },
+            grid: {
+              line: {
+                stroke: 'pink',
+                strokeWidth: 2,
+                strokeDasharray: '4 4',
+              },
+            },
+          }}
         />
       </ChartContainer>
       <div
@@ -201,6 +226,7 @@ const LineTwo = () => {
           gridYValues={[0, 20, 40, 60, 80, 100, 120]}
           useMesh={true}
           curve="catmullRom"
+          enablePoints={false}
           legends={[
             {
               anchor: 'bottom-right',
@@ -227,6 +253,25 @@ const LineTwo = () => {
               ],
             },
           ]}
+          theme={{
+            axis: {
+              ticks: {
+                line: {
+                  stroke: 'green',
+                },
+                text: {
+                  fill: 'black',
+                },
+              },
+            },
+            grid: {
+              line: {
+                stroke: 'pink',
+                strokeWidth: 2,
+                strokeDasharray: '4 4',
+              },
+            },
+          }}
         />
       </div>
     </>
