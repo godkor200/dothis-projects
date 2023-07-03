@@ -89,6 +89,9 @@ const LineTwo = () => {
           margin={{ top: 50, right: 600, left: 60 }}
           lineWidth={4}
           colors={{ scheme: 'red_yellow_blue' }}
+          curve="catmullRom"
+          // catmullRom 정확한 곡선
+
           xScale={{
             format: '%Y-%m-%d',
             precision: 'day',
@@ -106,23 +109,24 @@ const LineTwo = () => {
           axisTop={null}
           axisRight={null}
           axisBottom={null}
-          enableGridX={false}
-          // x축 눈금 제거
           axisLeft={{
             tickSize: 0,
             tickPadding: 20,
             tickRotation: 0,
             tickValues: [500000, 600000, 700000, 800000, 900000, 1000000],
+            // yAxis value
             format: unitFormat,
             // renderTick: render,
             // rederTick은 format을 더 상세히 자기 입맛에 맞게끔?
             legendOffset: -40,
             legendPosition: 'middle',
           }}
+          enableGridX={false}
+          // x축 눈금 제거
           gridYValues={[500000, 600000, 700000, 800000, 900000, 1000000]}
+          // y 축 눈금
           useMesh={true}
-          curve="catmullRom"
-          // catmullRom 정확한 곡선
+          // 마우스 상호작용을 감지하며 tooltip생성
 
           legends={[
             {
@@ -181,8 +185,7 @@ const LineTwo = () => {
           axisTop={null}
           axisRight={null}
           axisBottom={{
-            format: '%b %d',
-            legend: 'time scale',
+            format: '%m.%d',
             legendOffset: -12,
             tickValues: 'every 2 days',
           }}
