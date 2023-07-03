@@ -8,7 +8,7 @@ import { unitFormat } from './utils';
 const LineTwo = () => {
   const data = [
     {
-      id: 'test',
+      id: '기대 조회 수(단위:배)',
       color: 'hsl(81, 70%, 50%)',
       data: [
         {
@@ -44,7 +44,7 @@ const LineTwo = () => {
   ];
   const data2 = [
     {
-      id: 'feel',
+      id: '일일 조회 수(단위:회)',
       color: 'hsl(81, 70%, 50%)',
       data: [
         {
@@ -85,6 +85,8 @@ const LineTwo = () => {
         <ResponsiveLine
           data={data2}
           margin={{ top: 50, right: 600, left: 60 }}
+          lineWidth={4}
+          colors={{ scheme: 'red_yellow_blue' }}
           xScale={{
             format: '%Y-%m-%d',
             precision: 'day',
@@ -116,7 +118,6 @@ const LineTwo = () => {
             legendPosition: 'middle',
           }}
           gridYValues={[500000, 600000, 700000, 800000, 900000, 1000000]}
-          lineWidth={13}
           useMesh={true}
           curve="catmullRom"
           // catmullRom 정확한 곡선
@@ -158,6 +159,8 @@ const LineTwo = () => {
         <ResponsiveLine
           data={data}
           margin={{ right: 600, bottom: 50, left: 60 }}
+          lineWidth={4}
+          colors={{ scheme: 'category10' }}
           xScale={{
             format: '%Y-%m-%d',
             precision: 'day',
@@ -179,7 +182,7 @@ const LineTwo = () => {
             format: '%b %d',
             legend: 'time scale',
             legendOffset: -12,
-            tickValues: 'every 4 days',
+            tickValues: 'every 2 days',
           }}
           axisLeft={{
             tickValues: [20, 40, 60, 80, 100],
@@ -191,7 +194,6 @@ const LineTwo = () => {
             legendPosition: 'middle',
           }}
           gridYValues={[0, 20, 40, 60, 80, 100, 120]}
-          lineWidth={13}
           useMesh={true}
           curve="catmullRom"
           legends={[
