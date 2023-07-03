@@ -77,6 +77,17 @@ const LineTwo = () => {
     },
   ];
 
+  function yfloor() {
+    let tt = Math.min.apply(
+      null,
+      data2[0].data.map(({ y }) => y),
+    );
+    console.log(tt);
+    return data2[0].data.map(({ y }) => y);
+  }
+
+  yfloor();
+
   return (
     <>
       <ChartContainer className="graph-container">
