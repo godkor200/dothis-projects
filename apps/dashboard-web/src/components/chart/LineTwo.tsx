@@ -77,16 +77,16 @@ const LineTwo = () => {
     },
   ];
 
-  function yfloor() {
-    let tt = Math.min.apply(
-      null,
-      data2[0].data.map(({ y }) => y),
-    );
-    console.log(tt);
-    return data2[0].data.map(({ y }) => y);
-  }
+  function unitFormat(value: any) {
+    // y scale interval 도출 시 min값을 가져와서 ∙∙∙ 공백 처리 필요
 
-  yfloor();
+    const compactNumber = new Intl.NumberFormat('ko', {
+      notation: 'compact',
+    });
+    // 일단 임시로 Intl format을 사용(구현 중 디자인상 format이면 Intl로 사용해도 문제없겠다 생각)
+
+    return compactNumber.format(value);
+  }
 
   return (
     <>
@@ -118,7 +118,7 @@ const LineTwo = () => {
             tickPadding: 20,
             tickRotation: 0,
             tickValues: [500000, 600000, 700000, 800000, 900000, 1000000],
-
+            format: unitFormat,
             // renderTick: render,
             // rederTick은 format을 더 상세히 자기 입맛에 맞게끔?
             legendOffset: -40,
