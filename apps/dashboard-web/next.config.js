@@ -10,7 +10,9 @@ const config = {
   transpilePackages: ['@dothis/share', '@dothis/ui', '@dothis/dto'],
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
-    outputFileTracingExcludes: ['**swc/core**'],
+    outputFileTracingExcludes: {
+      '**swc/core**': true,
+    },
     appDir: true,
     typedRoutes: true,
   },
@@ -32,7 +34,8 @@ const config = {
     });
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../../dashboard-web/src'),
+      '@/': path.resolve(__dirname, '../../dashboard-web/src'),
+      '~/': path.resolve(__dirname, '../../dashboard-web'),
       '@dothis/share': path.resolve(__dirname, '../../packages/share'),
       '@dothis/ui': path.resolve(__dirname, '../../packages/ui'),
       '@dothis/dto': path.resolve(__dirname, '../../packages/dto'),
