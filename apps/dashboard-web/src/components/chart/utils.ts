@@ -4,7 +4,7 @@ const numberFormat = (value: number) => {
   return value.toString().replace(NUMBER_FORMAT_REGX, ',');
 };
 
-const setUnitText = (numbers: number[]) => {
+export const setUnitText = (numbers: number[]) => {
   const unit = ['', '만', '억', '조', '경'];
   return numbers.map((number, index) =>
     !!number ? numberFormat(number) + unit[unit.length - 1 - index] : number,
@@ -24,7 +24,7 @@ export function unitFormat(value: any) {
   return compactNumber.format(value);
 }
 
-function numberToKorean(number: number) {
+export function numberToKorean(number: number) {
   var inputNumber = number < 0 ? false : number;
   var unitWords = ['', '만', '억', '조', '경'];
   var splitUnit = 10000;
@@ -50,3 +50,13 @@ function numberToKorean(number: number) {
 
   return resultString;
 }
+
+// 단위 format
+
+export function getRoundingUnit(value: number) {
+  const digits = Math.floor(Math.log10(value)) + 1;
+  const roundingUnit = Math.pow(10, digits - 1);
+  return roundingUnit;
+}
+
+// 자릿수 유닛을 구하는 함수
