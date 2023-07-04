@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import Contact from '@/assets/svg/Landing/contact.svg';
-import Content from '@/assets/svg/Landing/CONTENT.svg';
+import Content from '@/assets/svg/Landing/content.svg';
 import Magicpen from '@/assets/svg/Landing/magicpen.svg';
 import User from '@/assets/svg/Landing/user.svg';
 import { CONTENT, SURVEY } from '@/constants/route';
