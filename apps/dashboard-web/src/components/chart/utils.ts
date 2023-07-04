@@ -60,3 +60,13 @@ export function getRoundingUnit(value: number) {
 }
 
 // 자릿수 유닛을 구하는 함수
+
+export function floorToNearest(value: number, roundingUnit: number) {
+  const floorValue = Math.floor(value / roundingUnit) * roundingUnit;
+  return floorValue;
+}
+
+export function ceilToNearest(value: number, roundingUnit: number) {
+  const ceilValue = Math.floor(value / roundingUnit) * roundingUnit;
+  return ceilValue;
+}
