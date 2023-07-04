@@ -88,10 +88,7 @@ const LineTwo = () => {
   // 현재 공통된 style 프로퍼티는 공용을 만들어서 관리할 생각
 
   // 서버 데이터랑 포맷팅이 필요
-  // 최소 구해서 ∙∙∙ 공백 처리 필요
-  // 만,천 단위 반올림
   // y data 도출하기
-  // 디자인과 맞게 편집(눈금선 점선으로 )
 
   const tickSize = 6;
   const yArr = data2[0].data.map((item) => item.y);
@@ -152,6 +149,7 @@ const LineTwo = () => {
           }}
           yScale={{
             type: 'linear',
+            // yAxis 범위가 값으로만 정해져서 linear (커스텀이 가능한데, 못 찾은걸수도 있습니다)
             min: Math.min(...getYAxisRange),
             max: Math.max(...getYAxisRange),
             stacked: true,
