@@ -7,7 +7,7 @@
     "clean": "rm -rf .turbo node_modules",
     "dev-mock": "NEXT_PUBLIC_API_MOCKING=enabled next dev -p 3667",
     "dev:next": "next dev -p 3666",
-    "dev": "run-p dev:*",
+    "dev": "sst bind next dev",
     "lint": "next lint",
     "start": "next start",
     "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
@@ -16,7 +16,7 @@
     "@dothis/dto": "workspace:^",
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
-    "@effect/data": "^0.12.2",
+    "@effect/data": "^0.12.8",
     "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.4.1",
     "@tanstack/query-core": "^4.29.5",
@@ -24,12 +24,14 @@
     "@tanstack/react-query-devtools": "^4.29.6",
     "@ts-rest/core": "^3.19.3",
     "@ts-rest/react-query": "^3.19.3",
+    "@types/lodash": "^4.14.195",
     "aos": "^2.3.4",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "iron-session": "^6.3.1",
-    "next": "13.4.1",
+    "lottie-react": "^2.4.0",
+    "next": "13.4.6",
     "next-auth": "^4.17.0",
     "next-pwa": "^5.6.0",
     "prop-types": "^15.8.1",
@@ -64,7 +66,10 @@
     "ts-node": "^10.9.1",
     "type-fest": "^3.6.1",
     "typescript": "^5.0.4",
-    "webpack": "^5.75.0"
+    "webpack": "^5.75.0",
+    "sst": "^2.18.1",
+    "aws-cdk-lib": "2.84.0",
+    "constructs": "10.1.156"
   },
   "peerDependencies": {
     "zod": "^3.21.4"
