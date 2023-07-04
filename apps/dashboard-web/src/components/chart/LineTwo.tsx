@@ -7,6 +7,7 @@ import {
   ceilToNearest,
   floorToNearest,
   getRoundingUnit,
+  roundToNearest,
   unitFormat,
 } from './utils';
 
@@ -78,7 +79,7 @@ const LineTwo = () => {
         },
         {
           x: '2018-01-11',
-          y: 120_0000,
+          y: 271_0000,
         },
       ],
     },
@@ -92,60 +93,46 @@ const LineTwo = () => {
   // y data 도출하기
   // 디자인과 맞게 편집(눈금선 점선으로 )
 
-  const value1 = 14590000;
-  const roundingUnit1 = getRoundingUnit(value1);
+  const tickSize = 6;
+  const yArr = data2[0].data.map((item) => item.y);
 
-  function getYAxisRange(data: number[]) {
-    const minValue = Math.min(...data);
-
-    const maxValue = Math.max(...data);
-    const range = maxValue - minValue;
-    const interval = Math.ceil(range / 4 / 100000) * 100000;
-    const startValue = Math.floor(minValue / 100000) * 100000;
-    const yAxisRange = [];
-    for (let i = 0; i < 5; i++) {
-      yAxisRange.push(startValue + interval * i);
-    }
-    yAxisRange.push(maxValue);
-    console.log(yAxisRange);
-    return yAxisRange;
-  }
-
-  const Yarray = data2[0].data.map((item) => item.y);
-
-  const Ymin = floorToNearest(
-    Math.min(...Yarray),
-    getRoundingUnit(Math.min(...Yarray)),
+  const yArrMin = floorToNearest(
+    Math.min(...yArr),
+    getRoundingUnit(Math.min(...yArr), 2),
   );
 
-  const Ymax = ceilToNearest(
-    Math.max(...Yarray),
-    getRoundingUnit(Math.max(...Yarray)),
+  const yArrMax = ceilToNearest(
+    Math.max(...yArr),
+    getRoundingUnit(Math.max(...yArr), 2),
   );
 
-  function roundToNearest(value: number) {
-    const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
-    console.log(roundingUnit);
-    const roundedValue = Math.ceil(value / roundingUnit) * roundingUnit;
-    return roundedValue;
+  function getAxisInterval() {
+    const deviationByTick = (yArrMax - yArrMin) / (tickSize - 2);
+
+    return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
   }
 
-  // function floorToNearest(value: number) {
-  //   const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
-  //   const roundedValue = Math.ceil(value / roundingUnit) * roundingUnit;
-  //   return roundedValue;
-  // }
+  // interval이 yArrmin보다 클 경우 예외처리가 너무 골치아픔
 
-  // console.log(roundToNearest(Math.max(...Yarray)));
+  function getStartValue() {
+    const yStartValue = yArrMin - getAxisInterval();
 
-  // const Ymin = floorToNearest(Math.min(...Yarray));
+    // return yStartValue > yArrMin ? 0 : yStartValue;
+    return yStartValue;
+  }
 
-  // const Ymax = roundToNearest(Math.max(...Yarray));
+  // 현재 startValue가 yArrmin이 interval보다 작을경우 음수값이 대입이 된다..  이경우 예외처리가 필요하다
+
+  const getYAxisRange = Array.from(
+    { length: tickSize },
+    (_, i) =>
+      floorToNearest(getStartValue(), getRoundingUnit(getStartValue(), 1)) +
+      i * getAxisInterval(),
+  );
 
   // interval을  값을 미리 구해놔야함 그러고 Ymin에 적용
   // 딱 interval 값을 정해놔야한다,  반응적인 interval은 적용되면 안댐 절떄
-  console.log('this' + Ymin);
-  console.log('this' + Ymax);
+
   return (
     <>
       <ChartContainer className="graph-container">
@@ -165,8 +152,8 @@ const LineTwo = () => {
           }}
           yScale={{
             type: 'linear',
-            min: Math.min(...getYAxisRange(Yarray)),
-            max: Math.max(...getYAxisRange(Yarray)),
+            min: Math.min(...getYAxisRange),
+            max: Math.max(...getYAxisRange),
             stacked: true,
             reverse: false,
           }}
@@ -178,9 +165,10 @@ const LineTwo = () => {
             tickSize: 0,
             tickPadding: 20,
             tickRotation: 0,
-            tickValues: getYAxisRange(Yarray),
+            tickValues: getYAxisRange,
             // yAxis value
-            format: unitFormat,
+            format: (value: number) =>
+              unitFormat(value, Math.min(...getYAxisRange)),
             // renderTick: render,
             // rederTick은 format을 더 상세히 자기 입맛에 맞게끔?
             legendOffset: -40,
@@ -188,7 +176,7 @@ const LineTwo = () => {
           }}
           enableGridX={false}
           // x축 눈금 제거
-          gridYValues={getYAxisRange(Yarray)}
+          gridYValues={getYAxisRange}
           // y 축 눈금
           useMesh={true}
           // 마우스 상호작용을 감지하며 tooltip생성
