@@ -49,31 +49,31 @@ const LineTwo = () => {
       data: [
         {
           x: '2017-12-29',
-          y: 600000,
+          y: 75_0000,
         },
         {
           x: '2017-12-31',
-          y: 770000,
+          y: 114_0000,
         },
         {
           x: '2018-01-03',
-          y: 750000,
+          y: 109_0000,
         },
         {
           x: '2018-01-05',
-          y: 630000,
+          y: 98_0000,
         },
         {
           x: '2018-01-07',
-          y: 790000,
+          y: 89_0000,
         },
         {
           x: '2018-01-09',
-          y: 730000,
+          y: 110_0000,
         },
         {
           x: '2018-01-11',
-          y: 770000,
+          y: 120_0000,
         },
       ],
     },
@@ -81,11 +81,38 @@ const LineTwo = () => {
 
   // 현재 공통된 style 프로퍼티는 공용을 만들어서 관리할 생각
 
+  // 서버 데이터랑 포맷팅이 필요
   // 최소 구해서 ∙∙∙ 공백 처리 필요
   // 만,천 단위 반올림
   // y data 도출하기
   // 디자인과 맞게 편집(눈금선 점선으로 )
 
+  function getRoundingUnit(value: number) {
+    const digits = Math.floor(Math.log10(value)) + 1;
+    const roundingUnit = Math.pow(10, digits - 1);
+    return roundingUnit;
+  }
+
+  const value1 = 14590000;
+  const roundingUnit1 = getRoundingUnit(value1);
+
+  function getYAxisRange(data: number[]) {
+    const average = data.reduce((sum, value) => sum + value, 0) / data.length;
+    const stdDeviation = Math.sqrt(
+      data.reduce((sum, value) => sum + Math.pow(value - average, 2), 0) /
+        data.length,
+    );
+    const range = stdDeviation * 2; // 범위 조정을 위해 표준 편차의 몇 배로 설정할지 결정
+    const interval = range / (data.length - 2);
+    const yAxisRange = [average - range, average + range];
+    for (let i = 1; i < data.length - 1; i++) {
+      yAxisRange.push(average - range + interval * i);
+    }
+    console.log(yAxisRange);
+    return yAxisRange;
+  }
+
+  const Yarray = data2[0].data.map((item) => item.y);
   return (
     <>
       <ChartContainer className="graph-container">
@@ -118,7 +145,7 @@ const LineTwo = () => {
             tickSize: 0,
             tickPadding: 20,
             tickRotation: 0,
-            tickValues: [500000, 600000, 700000, 800000, 900000, 1000000],
+            tickValues: getYAxisRange(Yarray),
             // yAxis value
             format: unitFormat,
             // renderTick: render,
