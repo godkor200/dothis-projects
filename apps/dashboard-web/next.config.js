@@ -7,10 +7,10 @@ const config = {
     locales: ['ko'],
     defaultLocale: 'ko',
   },
-  transpilePackages: ['@dothis/share', "@dothis/ui", "@dothis/dto"],
+  transpilePackages: ['@dothis/share', '@dothis/ui', '@dothis/dto'],
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
-    outputFileTracingIgnores: ['**swc/core**'],
+    outputFileTracingExcludes: ['**swc/core**'],
     appDir: true,
     typedRoutes: true,
   },
@@ -18,7 +18,6 @@ const config = {
   compiler: {
     styledComponents: true,
   },
-
 
   webpack(config) {
     config.module.rules.push({
@@ -31,8 +30,15 @@ const config = {
         },
       ],
     });
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, '../../dashboard-web/src'),
+      '@dothis/share': path.resolve(__dirname, '../../packages/share'),
+      '@dothis/ui': path.resolve(__dirname, '../../packages/ui'),
+      '@dothis/dto': path.resolve(__dirname, '../../packages/dto'),
+    };
 
     return config;
-  }
+  },
 };
 module.exports = config;
