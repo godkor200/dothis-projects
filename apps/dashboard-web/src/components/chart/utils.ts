@@ -54,19 +54,21 @@ export function numberToKorean(number: number) {
 // 단위 format
 
 export function getRoundingUnit(value: number) {
-  const digits = Math.floor(Math.log10(value)) + 1;
-  const roundingUnit = Math.pow(10, digits - 1);
+  const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
+
   return roundingUnit;
 }
 
 // 자릿수 유닛을 구하는 함수
+export function ceilToNearest(value: number, roundingUnit: number) {
+  console.log(value);
+  console.log(roundingUnit);
+  const ceilValue = Math.ceil(value / roundingUnit) * roundingUnit;
+
+  return ceilValue;
+}
 
 export function floorToNearest(value: number, roundingUnit: number) {
   const floorValue = Math.floor(value / roundingUnit) * roundingUnit;
   return floorValue;
-}
-
-export function ceilToNearest(value: number, roundingUnit: number) {
-  const ceilValue = Math.floor(value / roundingUnit) * roundingUnit;
-  return ceilValue;
 }
