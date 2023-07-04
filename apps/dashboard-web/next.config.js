@@ -36,6 +36,7 @@ const config = {
       '@dothis/share': path.resolve(__dirname, '../../packages/share'),
       '@dothis/ui': path.resolve(__dirname, '../../packages/ui'),
       '@dothis/dto': path.resolve(__dirname, '../../packages/dto'),
+      '@dothis/theme': path.resolve(__dirname, '../../config/theme'),
     };
 
     return config;
