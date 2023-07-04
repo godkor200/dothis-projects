@@ -13,9 +13,10 @@ export const setUnitText = (numbers: number[]) => {
 
 // 근데 이 부분은 넘어오는 number 형식에 따라 고민 중 (배열?? , 현재 format은 value: number로 제공 )
 
-export function unitFormat(value: any) {
+export function unitFormat(value: any, minValue: any) {
   // y scale interval 도출 시 min값을 가져와서 ∙∙∙ 공백 처리 필요
 
+  if (value === minValue) return '∙∙∙';
   const compactNumber = new Intl.NumberFormat('ko', {
     notation: 'compact',
   });
@@ -53,16 +54,20 @@ export function numberToKorean(number: number) {
 
 // 단위 format
 
-export function getRoundingUnit(value: number) {
-  const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
+// 해당 digit을 value의 length의 맞게 type 지정을 하고싶다.
+export function getRoundingUnit(value: number, digit: number) {
+  const roundingUnit = Math.pow(
+    10,
+    Math.floor(Math.log10(value) - (digit - 1)),
+  );
 
   return roundingUnit;
 }
 
-// 자릿수 유닛을 구하는 함수
+// 자릿수 유닛을 구하는 함수(2번째 자릿수)
+
 export function ceilToNearest(value: number, roundingUnit: number) {
-  console.log(value);
-  console.log(roundingUnit);
+  if (value <= 0) return 0;
   const ceilValue = Math.ceil(value / roundingUnit) * roundingUnit;
 
   return ceilValue;
@@ -70,5 +75,12 @@ export function ceilToNearest(value: number, roundingUnit: number) {
 
 export function floorToNearest(value: number, roundingUnit: number) {
   const floorValue = Math.floor(value / roundingUnit) * roundingUnit;
+
   return floorValue;
+}
+
+export function roundToNearest(value: number, roundingUnit: number) {
+  const roundValue = Math.round(value / roundingUnit) * roundingUnit;
+
+  return roundValue;
 }
