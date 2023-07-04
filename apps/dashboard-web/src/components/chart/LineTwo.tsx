@@ -3,7 +3,12 @@
 import { ResponsiveLine } from '@nivo/line';
 import styled from 'styled-components';
 
-import { unitFormat } from './utils';
+import {
+  ceilToNearest,
+  floorToNearest,
+  getRoundingUnit,
+  unitFormat,
+} from './utils';
 
 const LineTwo = () => {
   const data = [
@@ -87,32 +92,60 @@ const LineTwo = () => {
   // y data 도출하기
   // 디자인과 맞게 편집(눈금선 점선으로 )
 
-  function getRoundingUnit(value: number) {
-    const digits = Math.floor(Math.log10(value)) + 1;
-    const roundingUnit = Math.pow(10, digits - 1);
-    return roundingUnit;
-  }
-
   const value1 = 14590000;
   const roundingUnit1 = getRoundingUnit(value1);
 
   function getYAxisRange(data: number[]) {
-    const average = data.reduce((sum, value) => sum + value, 0) / data.length;
-    const stdDeviation = Math.sqrt(
-      data.reduce((sum, value) => sum + Math.pow(value - average, 2), 0) /
-        data.length,
-    );
-    const range = stdDeviation * 2; // 범위 조정을 위해 표준 편차의 몇 배로 설정할지 결정
-    const interval = range / (data.length - 2);
-    const yAxisRange = [average - range, average + range];
-    for (let i = 1; i < data.length - 1; i++) {
-      yAxisRange.push(average - range + interval * i);
+    const minValue = Math.min(...data);
+
+    const maxValue = Math.max(...data);
+    const range = maxValue - minValue;
+    const interval = Math.ceil(range / 4 / 100000) * 100000;
+    const startValue = Math.floor(minValue / 100000) * 100000;
+    const yAxisRange = [];
+    for (let i = 0; i < 5; i++) {
+      yAxisRange.push(startValue + interval * i);
     }
+    yAxisRange.push(maxValue);
     console.log(yAxisRange);
     return yAxisRange;
   }
 
   const Yarray = data2[0].data.map((item) => item.y);
+
+  const Ymin = floorToNearest(
+    Math.min(...Yarray),
+    getRoundingUnit(Math.min(...Yarray)),
+  );
+
+  const Ymax = ceilToNearest(
+    Math.max(...Yarray),
+    getRoundingUnit(Math.max(...Yarray)),
+  );
+
+  function roundToNearest(value: number) {
+    const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
+    console.log(roundingUnit);
+    const roundedValue = Math.ceil(value / roundingUnit) * roundingUnit;
+    return roundedValue;
+  }
+
+  // function floorToNearest(value: number) {
+  //   const roundingUnit = Math.pow(10, Math.floor(Math.log10(value) - 1));
+  //   const roundedValue = Math.ceil(value / roundingUnit) * roundingUnit;
+  //   return roundedValue;
+  // }
+
+  // console.log(roundToNearest(Math.max(...Yarray)));
+
+  // const Ymin = floorToNearest(Math.min(...Yarray));
+
+  // const Ymax = roundToNearest(Math.max(...Yarray));
+
+  // interval을  값을 미리 구해놔야함 그러고 Ymin에 적용
+  // 딱 interval 값을 정해놔야한다,  반응적인 interval은 적용되면 안댐 절떄
+  console.log('this' + Ymin);
+  console.log('this' + Ymax);
   return (
     <>
       <ChartContainer className="graph-container">
@@ -132,8 +165,8 @@ const LineTwo = () => {
           }}
           yScale={{
             type: 'linear',
-            min: 500000,
-            max: 1000000,
+            min: Math.min(...getYAxisRange(Yarray)),
+            max: Math.max(...getYAxisRange(Yarray)),
             stacked: true,
             reverse: false,
           }}
@@ -155,7 +188,7 @@ const LineTwo = () => {
           }}
           enableGridX={false}
           // x축 눈금 제거
-          gridYValues={[500000, 600000, 700000, 800000, 900000, 1000000]}
+          gridYValues={getYAxisRange(Yarray)}
           // y 축 눈금
           useMesh={true}
           // 마우스 상호작용을 감지하며 tooltip생성
