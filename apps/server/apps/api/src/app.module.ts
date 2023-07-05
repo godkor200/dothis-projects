@@ -7,7 +7,7 @@ import { validationSchema } from 'apps/api/src/config/validationsSchema';
 import dbConfig from 'apps/api/src/config/database/config/db.env';
 import cacheConfig from 'apps/api/src/config/cache/config/cache.env';
 import appConfig from 'apps/api/src/config/app/config/app.env';
-import awsConfig from 'apps/api/src/config/aws/aws.env';
+import awsConfig from '@Apps/config/aws/config/aws.env';
 
 import { TypeormModule } from 'apps/api/src/config/database/database.module';
 import { HeathApiController } from 'apps/api/src/health.controller';

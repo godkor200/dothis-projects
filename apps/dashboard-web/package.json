@@ -7,7 +7,7 @@
     "clean": "rm -rf .turbo node_modules",
     "dev-mock": "NEXT_PUBLIC_API_MOCKING=enabled next dev -p 3667",
     "dev:next": "next dev -p 3666",
-    "dev": "run-p dev:*",
+    "dev": "sst bind next dev",
     "lint": "next lint",
     "start": "next start",
     "lending:deploy": "cross-env NODE_ENV=production cross-env SLS_INTERACTIVE_SETUP_ENABLE=1 serverless deploy"
@@ -71,7 +71,10 @@
     "ts-node": "^10.9.1",
     "type-fest": "^3.6.1",
     "typescript": "^5.0.4",
-    "webpack": "^5.75.0"
+    "webpack": "^5.75.0",
+    "sst": "^2.18.1",
+    "aws-cdk-lib": "2.84.0",
+    "constructs": "10.1.156"
   },
   "peerDependencies": {
     "zod": "^3.21.4"
