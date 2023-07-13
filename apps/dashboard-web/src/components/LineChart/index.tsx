@@ -1,8 +1,8 @@
 'use client';
 
 import { ResponsiveLine } from '@nivo/line';
-import styled from 'styled-components';
 
+import * as Style from './style';
 import {
   ceilToNearest,
   floorToNearest,
@@ -132,7 +132,7 @@ const LineTwo = () => {
 
   return (
     <>
-      <ChartContainer className="graph-container">
+      <Style.ChartContainer>
         <ResponsiveLine
           data={data2}
           margin={{ top: 50, right: 600, left: 60 }}
@@ -228,7 +228,7 @@ const LineTwo = () => {
             },
           }}
         />
-      </ChartContainer>
+      </Style.ChartContainer>
       <div
         style={{
           width: '100%',
@@ -329,12 +329,4 @@ const LineTwo = () => {
 
 export default LineTwo;
 
-const ChartContainer = styled.div`
-  width: 100%;
-  height: 450px;
-
-  & svg {
-    overflow: visible;
-  }
-`;
 // 니보 라이브러리 axisLeft  트랜스폼 위로 조금 Text를  g태그에 담겨있다.??
