@@ -4,6 +4,9 @@ import dynamic from 'next/dynamic';
 
 import LineTwo from '@/components/LineChart';
 
+import ChartSidebar from '@/components/ChartSidebar';
+
+
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
 // });
@@ -25,6 +28,7 @@ const ChartPage = () => {
         quis impedit animi sequi est.
       </p> */}
       {/* <LineChart /> */}
+      <ChartSidebar />
       <LineTwo />
     </div>
   );

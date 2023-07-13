@@ -1,3 +1,5 @@
+export { default as ChartArrowDown } from './svg/Chart/ChartArrowDown.svg';
+export { default as ChartArrowUp } from './svg/Chart/ChartArrowUp.svg';
 export { default as FooterLogo } from './svg/Footer/FooterLogo.svg';
 export { default as HeaderEdit } from './svg/Header/HeaderEdit.svg';
 export { default as HeaderNotification } from './svg/Header/HeaderNotification.svg';

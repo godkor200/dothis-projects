@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
+import type { SVGProps } from 'react';
 
 import * as Svgs from '@/assets';
 
 export type SVGType = keyof typeof Svgs;
 
-interface SVGCompProps extends React.SVGProps<SVGSVGElement> {
+interface SVGCompProps extends SVGProps<SVGSVGElement> {
   icon: SVGType;
   title?: string;
   size?: number | string;
