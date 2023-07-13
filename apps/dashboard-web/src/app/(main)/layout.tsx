@@ -3,7 +3,7 @@ import GNB from '@/layouts/MainLayout/GNB';
 import NavSlider from '@/layouts/MainLayout/NavSlide';
 import SideBar from '@/layouts/MainLayout/SideBar';
 
-function Layout({ children }: { children: React.ReactNode }) {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <SideBar />
@@ -14,6 +14,6 @@ function Layout({ children }: { children: React.ReactNode }) {
       </div>
     </>
   );
-}
+};
 
 export default Layout;

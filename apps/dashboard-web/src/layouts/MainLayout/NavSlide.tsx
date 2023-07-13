@@ -8,6 +8,7 @@ import SvgComp from '@/components/share/SvgComp';
 import useClickScrollX from '@/hooks/useClickScrollX';
 
 import NavSlideContent from './NavSlideContent';
+import * as Style from './style';
 
 export enum KeywordCategory {
   Review = '리뷰',
@@ -44,17 +45,17 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
 // Wheel은 transform이려나
 
-function NavSlide() {
+const NavSlide = () => {
   const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
 
   const [handleScrollX, containerRef] = useClickScrollX();
 
   return (
-    <KeywordTapContiner>
-      <ResetButton>
+    <Style.KeywordTapContiner>
+      <Style.ResetButton>
         <SvgComp icon="NavSlideReset" size="1.5rem" />
-      </ResetButton>
-      <ButtonContainer ref={containerRef}>
+      </Style.ResetButton>
+      <Style.ButtonContainer ref={containerRef}>
         {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
           <NavSlideContent
             key={key}
@@ -65,93 +66,10 @@ function NavSlide() {
             setKeywordCategory={setKeywordCategory}
           />
         ))}
-      </ButtonContainer>
-      <ArrowButton />
-    </KeywordTapContiner>
+      </Style.ButtonContainer>
+      <Style.ArrowButton />
+    </Style.KeywordTapContiner>
   );
-}
+};
 
 export default NavSlide;
-
-const KeywordTapContiner = styled.nav`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1.5rem;
-
-  margin-bottom: 1.5rem;
-  padding: 1.875rem 3rem;
-
-  position: sticky;
-  top: 0rem;
-
-  background-color: white;
-
-  transition: all 0.5s ease;
-  white-space: nowrap;
-`;
-
-const ResetButton = styled.button`
-  padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey40};
-  border-radius: 0.5rem;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-
-  overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const ArrowButton = styled.button`
-  position: relative;
-
-  /* 오른쪽 정렬이 필요 (Keyword List가 적을 때) */
-  margin: 0 0 0 auto;
-  padding: 0.5rem 1.25rem;
-  border: 1px solid ${theme.colors.grey40};
-  border-radius: 0.5rem;
-
-  &::before {
-    content: '';
-    display: inline-block;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    /* ArrowButton에 좌우 패팅만큼  */
-    right: 2.625rem;
-
-    width: 10rem;
-
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.2) 10%,
-      rgba(255, 255, 255, 0.4) 20%,
-      rgba(255, 255, 255, 0.6) 40%,
-      rgba(255, 255, 255, 0.7) 50%,
-      rgba(255, 255, 255, 0.9) 60%,
-      white 70%
-    );
-
-    pointer-events: none;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 50%;
-
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    padding: 0.25rem;
-
-    transform: translate(20%, -50%) rotate(-45deg);
-  }
-`;

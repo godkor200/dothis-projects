@@ -2,10 +2,10 @@
 
 import dynamic from 'next/dynamic';
 
-import LineChart from '@/components/chart/LineChart';
-import LineTwo from '@/components/chart/LineTwo';
-import MyResponsivePie from '@/components/chart/Test';
+import LineTwo from '@/components/LineChart';
+
 import ChartSidebar from '@/components/ChartSidebar';
+
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
@@ -13,7 +13,7 @@ import ChartSidebar from '@/components/ChartSidebar';
 
 // const MyResponsivePie = dynamic(() => import('../../../components/chart/Test'));
 
-function ChartPage() {
+const ChartPage = () => {
   return (
     <div
       style={{
@@ -32,6 +32,6 @@ function ChartPage() {
       <LineTwo />
     </div>
   );
-}
+};
 
 export default ChartPage;

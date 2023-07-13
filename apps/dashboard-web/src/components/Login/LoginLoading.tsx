@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import LoadingLottie from '@/assets/loading.json';
 
-function LoginLoadingComponent() {
+const LoginLoadingComponent = () => {
   useEffect(() => {
     console.log('LoginLoadingComponent');
   }, []);
@@ -16,6 +16,6 @@ function LoginLoadingComponent() {
       style={{ width: '220px', height: '220px', margin: '0 auto' }}
     />
   );
-}
+};
 
 export default LoginLoadingComponent;

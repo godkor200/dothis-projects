@@ -3,7 +3,7 @@ import Link from 'next/link';
 import GoogleBtn from '@/components/Login/GoogleBtn';
 import SvgComp from '@/components/share/SvgComp';
 
-function LoginPage() {
+const LoginPage = () => {
   return (
     <div className="flex  items-center flex-col pt-14">
       <SvgComp icon="LogoSvg" width={80} />
@@ -22,6 +22,6 @@ function LoginPage() {
       </p>
     </div>
   );
-}
+};
 
 export default LoginPage;

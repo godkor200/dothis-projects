@@ -5,48 +5,36 @@ import { useRouter } from 'next/navigation';
 
 import { SURVEY } from '@/constants/route';
 
-import {
-  Background,
-  Best_bottom,
-  Best_mid,
-  Best_name,
-  Best_top,
-  ImageBox,
-  Main,
-  Pink,
-  PriceCategory,
-  Td_start,
-  Th_start,
-} from './style';
+import * as Style from './style';
 
 export default function Price() {
   const router = useRouter();
   return (
-    <Background>
-      <Main>
+    <Style.Background>
+      <Style.Main>
         <h2>유튜브 콘텐츠 기획 시작하기</h2>
         <p>
-          <Pink>하루 330원</Pink>으로 더 고도화된 분석, 강력한 AI, 더 쾌적한
-          서비스 환경 등이 제공됩니다.
+          <Style.Pink>하루 330원</Style.Pink>으로 더 고도화된 분석, 강력한 AI,
+          더 쾌적한 서비스 환경 등이 제공됩니다.
         </p>
 
-        <PriceCategory>
+        <Style.PriceCategory>
           <thead>
             <tr>
-              <Th_start>시작하기</Th_start>
+              <Style.Th_start>시작하기</Style.Th_start>
               <th>Trial</th>
-              <Best_top>
-                <Best_name>BEST</Best_name>
+              <Style.Best_top>
+                <Style.Best_name>BEST</Style.Best_name>
                 Basic
-              </Best_top>
+              </Style.Best_top>
               <th>Pro</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <Td_start>요금 / 기간</Td_start>
+              <Style.Td_start>요금 / 기간</Style.Td_start>
               <td>무료 / 무제한</td>
-              <Best_mid>9,900 / 30일</Best_mid>
+              <Style.Best_mid>9,900 / 30일</Style.Best_mid>
               <td>49,500원 / 30일</td>
             </tr>
             <tr>
@@ -56,11 +44,11 @@ export default function Price() {
                   <button>시작하기</button>
                 </a>
               </td>
-              <Best_bottom>
+              <Style.Best_bottom>
                 <a href={SURVEY}>
                   <button>14일 무료 체험</button>
                 </a>
-              </Best_bottom>
+              </Style.Best_bottom>
               <td>
                 <a href={SURVEY}>
                   <button>14일 무료 체험</button>
@@ -68,9 +56,9 @@ export default function Price() {
               </td>
             </tr>
           </tbody>
-        </PriceCategory>
+        </Style.PriceCategory>
 
-        <ImageBox>
+        <Style.ImageBox>
           <Image
             width={0}
             height={0}
@@ -79,8 +67,8 @@ export default function Price() {
             src={'/images/pricing.png'}
             alt={''}
           />
-        </ImageBox>
-      </Main>
-    </Background>
+        </Style.ImageBox>
+      </Style.Main>
+    </Style.Background>
   );
 }
