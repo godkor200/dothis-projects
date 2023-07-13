@@ -76,6 +76,10 @@
     "clean": {
       "cache": false
     },
+    "dev:next": {
+      "cache": false,
+      "persistent": true
+    },
     "start:dev-api": {
       "cache": false,
       "outputs": ["dist/**/*"]
