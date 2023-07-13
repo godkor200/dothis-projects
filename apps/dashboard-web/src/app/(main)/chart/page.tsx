@@ -2,10 +2,9 @@
 
 import dynamic from 'next/dynamic';
 
-import LineTwo from '@/components/LineChart';
+import LineTwo from '@/components/Chart/LineChart';
 
 import ChartSidebar from '@/components/ChartSidebar';
-
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
