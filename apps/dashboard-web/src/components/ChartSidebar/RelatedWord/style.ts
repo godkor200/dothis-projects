@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const RelatedWordItem = styled.a`
+export const RelatedWordItem = styled.li`
   display: flex;
   align-items: center;
   padding: 9px 20px;

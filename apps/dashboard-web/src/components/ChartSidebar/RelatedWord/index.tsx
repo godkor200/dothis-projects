@@ -1,11 +1,10 @@
-import ArrowDown from '@/assets/svg/Arrow/ArrowDown';
-import ArrowUp from '@/assets/svg/Arrow/ArrowUp';
+import SvgComp from '@/components/share/SvgComp';
 
 import { Gap, Rank, RankContent, RelatedWordItem, Views, Word } from './style';
 
 const GAP_ICON = {
-  DOWN: <ArrowDown />,
-  UP: <ArrowUp />,
+  DOWN: <SvgComp icon="ChartArrowDown" size={10} />,
+  UP: <SvgComp icon="ChartArrowUp" size={10} />,
 };
 
 type GapType = keyof typeof GAP_ICON;

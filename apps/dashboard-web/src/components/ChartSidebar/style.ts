@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const RelatedWordList = styled.div`
+export const RelatedWordList = styled.ol`
   display: flex;
   flex-direction: column;
   gap: 20px;
