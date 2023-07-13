@@ -2,9 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import LineChart from '@/components/chart/LineChart';
-import LineTwo from '@/components/chart/LineTwo';
-import MyResponsivePie from '@/components/chart/Test';
+import LineTwo from '@/components/LineChart';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
