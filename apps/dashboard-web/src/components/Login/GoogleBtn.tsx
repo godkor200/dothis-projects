@@ -4,7 +4,8 @@ import { styled } from 'styled-components';
 
 import SvgComp from '../share/SvgComp';
 import * as Style from './style';
-function GoogleBtn() {
+
+const GoogleBtn = () => {
   return (
     <Style.GoogleLink href="https://api.dothis.kr/v1/auth/google-login">
       <Style.Container>
@@ -15,6 +16,6 @@ function GoogleBtn() {
       </Style.Container>
     </Style.GoogleLink>
   );
-}
+};
 
 export default GoogleBtn;

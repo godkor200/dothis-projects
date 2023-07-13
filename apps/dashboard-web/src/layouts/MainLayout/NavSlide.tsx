@@ -45,7 +45,7 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
 // Wheel은 transform이려나
 
-function NavSlide() {
+const NavSlide = () => {
   const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
 
   const [handleScrollX, containerRef] = useClickScrollX();
@@ -70,6 +70,6 @@ function NavSlide() {
       <Style.ArrowButton />
     </Style.KeywordTapContiner>
   );
-}
+};
 
 export default NavSlide;

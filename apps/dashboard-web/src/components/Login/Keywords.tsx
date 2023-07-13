@@ -4,7 +4,7 @@ import type { KeywordSchema } from '@/constants/schema/login';
 
 import * as Style from './style';
 
-function Keywords({ keyword }: KeywordSchema) {
+const Keywords = ({ keyword }: KeywordSchema) => {
   const { control, setValue } = useFormContext<KeywordSchema>();
   const keywords = useWatch({ name: 'keyword', control });
 
@@ -48,5 +48,5 @@ function Keywords({ keyword }: KeywordSchema) {
       <br />
     </Style.TagList>
   );
-}
+};
 export default Keywords;

@@ -11,7 +11,7 @@ import * as Style from './style';
 // SVG 파일 색채우기 필요함 (채워본적 없어서 보류)
 // transition은 추후에 변경 생각 중
 
-function SideBar() {
+const SideBar = () => {
   return (
     <Style.Container>
       <SvgComp icon="SideLogo" size={50} />
@@ -27,5 +27,5 @@ function SideBar() {
       </Style.IconContainer>
     </Style.Container>
   );
-}
+};
 export default SideBar;

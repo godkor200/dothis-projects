@@ -9,7 +9,7 @@ import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
 import Keywords from './Keywords';
 import * as Style from './style';
 
-function LoginKeyword({ keyword }: KeywordSchema) {
+const LoginKeyword = ({ keyword }: KeywordSchema) => {
   const methods = useForm<KeywordSchema>({
     mode: 'onChange',
     resolver: zodResolver(LOGIN_KEYWORD_SCHEMA),
@@ -34,6 +34,6 @@ function LoginKeyword({ keyword }: KeywordSchema) {
       </Style.LoginKeywordButton>
     </FormProvider>
   );
-}
+};
 
 export default LoginKeyword;

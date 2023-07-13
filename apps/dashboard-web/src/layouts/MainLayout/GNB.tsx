@@ -8,7 +8,7 @@ import SvgComp from '@/components/share/SvgComp';
 import * as Style from './style';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
-function GNB() {
+const GNB = () => {
   return (
     <Style.GNBContainer>
       <Style.SearchInputWrapper>
@@ -35,5 +35,5 @@ function GNB() {
       </Style.UserGNBWrapper>
     </Style.GNBContainer>
   );
-}
+};
 export default GNB;

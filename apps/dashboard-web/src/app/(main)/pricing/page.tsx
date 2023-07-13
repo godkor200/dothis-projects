@@ -1,11 +1,11 @@
 import Price from '@/components/pricing';
 
-function PricingPage() {
+const PricingPage = () => {
   return (
     <div>
       <Price />
     </div>
   );
-}
+};
 
 export default PricingPage;

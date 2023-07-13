@@ -14,13 +14,13 @@ interface KeywordCategoryContentProps<T> {
   setKeywordCategory: React.Dispatch<SetStateAction<KeywordCategory[]>>;
 }
 
-function NavSlideContent<T extends HTMLButtonElement>({
+const NavSlideContent = <T extends HTMLButtonElement>({
   $active,
   label,
   keyValue,
   handleScrollX,
   setKeywordCategory,
-}: KeywordCategoryContentProps<T>) {
+}: KeywordCategoryContentProps<T>) => {
   const targetRef = useRef<T | null>(null);
   return (
     <Style.Button
@@ -39,6 +39,6 @@ function NavSlideContent<T extends HTMLButtonElement>({
       <SvgComp icon="NavSlideDelete" size="1rem" />
     </Style.Button>
   );
-}
+};
 
 export default NavSlideContent;

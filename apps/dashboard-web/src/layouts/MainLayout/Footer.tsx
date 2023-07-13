@@ -9,7 +9,7 @@ import { ceoMail } from '@/constants/etc';
 import SvgComp from '../../components/share/SvgComp';
 import * as Style from './style';
 
-function Footer() {
+const Footer = () => {
   return (
     <Style.FooterLayout>
       <Style.LinkContainer>
@@ -66,6 +66,6 @@ function Footer() {
       </Style.Copyright>
     </Style.FooterLayout>
   );
-}
+};
 
 export default Footer;

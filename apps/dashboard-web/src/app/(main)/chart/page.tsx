@@ -10,7 +10,7 @@ import LineTwo from '@/components/LineChart';
 
 // const MyResponsivePie = dynamic(() => import('../../../components/chart/Test'));
 
-function ChartPage() {
+const ChartPage = () => {
   return (
     <div
       style={{
@@ -28,6 +28,6 @@ function ChartPage() {
       <LineTwo />
     </div>
   );
-}
+};
 
 export default ChartPage;
