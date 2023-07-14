@@ -15,6 +15,7 @@ const config = {
     },
     appDir: true,
     typedRoutes: true,
+    esmExternals:'loose'
   },
 
   compiler: {

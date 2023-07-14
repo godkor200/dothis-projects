@@ -26,12 +26,16 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@master
         with:
-          ref: master
+          ref: main
+          
+      - name: Install pnpm
+        run: |
+            npm install -g pnpm
 
       # Runs a single command using the runners shell
       - name: Install Dependencies
         run: |
-          pnpm install
+          pnpm install -no-frozen-lockfile
 
       - name: Use Node.js
         uses: actions/setup-node@v1
