@@ -3,7 +3,7 @@ import { FindDailyViewsAdapter } from '../../../interface/find-daily-views.adapt
 import { DAILY_VIEWS_DI_TOKEN } from 'apps/api/src/modules/daily_views/constants/daily-views.di-token.contants';
 import { Inject } from '@nestjs/common';
 import { VIDEO_DI_TOKEN } from 'apps/api/src/modules/video/constants/videos.di-token.constants';
-import { FindVideoAdapter } from 'apps/api/src/modules/video/interface/find-video.adapter';
+import { VideoAdapter } from 'apps/api/src/modules/video/interface/find-video.adapter';
 import { DailyViewsEntity } from 'apps/api/src/modules/daily_views/repository/entity/daily-views.entity';
 
 export class FindDailyViewsQuery {
@@ -28,7 +28,7 @@ export class FindDailyViewsQueryAthenaHandler
   private readonly dailyViews: FindDailyViewsAdapter;
 
   @Inject(VIDEO_DI_TOKEN.ATHENA_FIND_BY_VIDEO_ID)
-  private readonly video: FindVideoAdapter;
+  private readonly video: VideoAdapter;
 
   async execute(query: FindDailyViewsQuery): Promise<DailyViewsEntity[]> {
     const videoIdx = await this.video.findManyVideo(query.relationKeyword);

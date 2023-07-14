@@ -1,12 +1,17 @@
-import { Controller, HttpStatus, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  HttpStatus,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { FindUserCommand } from 'apps/api/src/modules/user/v1/commands/get-user/get-user.service';
+import { FindKeywordTagByUserCommand } from 'apps/api/src/modules/user/v2/get-keyword-byUser/get-keyword-byUser.service';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { UserDto } from '@Libs/commons/src/types/dto.types';
@@ -16,22 +21,24 @@ import {
   NestRequestShapes,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
+import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { UserInfoCommandDto } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.service';
 const c = nestControllerContract(apiRouter.user);
-const { pathParams, summary, responses, description } = c.getUser;
+const { pathParams, summary, responses, description } = c.getUserKeyword;
 type RequestShapes = NestRequestShapes<typeof c>;
 @ApiTags(pathParams)
 @Controller()
-export class GetUserHttpController {
+export class GetKeywordByUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @TsRest(c.getUser)
-  @ApiParam({ name: 'id', required: true, description: '유저 아이디' })
+  @TsRest(c.getUserKeyword)
+  @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary,
     description,
   })
   @ApiOkResponse({
-    description: '유저 찾아옵니다.',
+    description: '유저의 태그나 키워드를 찾아 옵니다.',
     type: UserDto,
   })
   @ApiNotFoundResponse({
@@ -41,9 +48,9 @@ export class GetUserHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async getUser(@Param('id') id: string) {
-    const command = new FindUserCommand({
-      userId: id.toString(),
+  async getKeywordTag(@User() userInfo: UserInfoCommandDto) {
+    const command = new FindKeywordTagByUserCommand({
+      userId: userInfo.id,
     });
     return await this.commandBus.execute(command);
   }

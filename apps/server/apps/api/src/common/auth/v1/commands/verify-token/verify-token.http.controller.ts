@@ -4,7 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { Request, Response } from 'express';
 import { apiRouter } from '@dothis/dto';
 import { Cookies } from '@Libs/commons/src';
-import { TokenDto } from 'apps/api/src/modules/auth/v1/commands/verify-token/verify-token.service';
+import { TokenDto } from '@Apps/common/auth/v1/commands/verify-token/verify-token.service';
 import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,

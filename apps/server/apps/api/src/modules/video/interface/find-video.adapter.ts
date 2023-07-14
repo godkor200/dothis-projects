@@ -1,5 +1,5 @@
 import { IfindManyVideoResult } from './find-many-video.interface';
 
-export interface FindVideoAdapter {
+export interface VideoAdapter {
   findManyVideo: (tag: string) => Promise<any[]>;
 }
