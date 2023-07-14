@@ -1,4 +1,4 @@
-import LoginKeyword from '@/components/Login/LoginKeyword';
+import { LoginKeyword } from '@/components/Login';
 import LoginLoadingComponent from '@/components/Login/LoginLoading';
 
 const onLoading = async (ms: number) => {

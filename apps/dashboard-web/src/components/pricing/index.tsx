@@ -7,7 +7,7 @@ import { SURVEY } from '@/constants/route';
 
 import * as Style from './style';
 
-export default function Price() {
+const Price = () => {
   const router = useRouter();
   return (
     <Style.Background>
@@ -71,4 +71,6 @@ export default function Price() {
       </Style.Main>
     </Style.Background>
   );
-}
+};
+
+export default Price;
