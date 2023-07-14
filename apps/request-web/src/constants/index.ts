@@ -55,7 +55,7 @@ export const pagePath = {
   /* jwt */
   // 로그인
   [PAGE_KEYS.login]: () => ({
-    pathname: '/jwt/login',
+    pathname: '/auth/login',
   }),
 
   /* inquiry */
