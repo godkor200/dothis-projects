@@ -7,6 +7,7 @@ import { VIDEO_DI_TOKEN } from 'apps/api/src/modules/video/constants/videos.di-t
 import { FindDailyViewsAntenaHttpController } from './queries/find-daily-views/find-daily-views.http.controller';
 import { FindDailyViewsQueryAthenaHandler } from './queries/find-daily-views/find-daily-views.query-handler';
 import { VideoService } from 'apps/api/src/modules/video/repository/repository/video.service';
+import { AwsModule } from '@Apps/common/aws/aws.module';
 
 const controllers = [FindDailyViewsAntenaHttpController];
 const repositories: Provider[] = [
@@ -22,7 +23,7 @@ const repositories: Provider[] = [
 ];
 
 @Module({
-  imports: [CqrsModule, DailyViewsEntityModule],
+  imports: [CqrsModule, DailyViewsEntityModule, AwsModule],
   controllers,
   providers: [...repositories],
 })

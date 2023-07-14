@@ -1,10 +1,10 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { USER_REPOSITORY } from 'apps/api/src/modules/user/constants/user.di-token';
-import { UserRepositoryPort } from 'apps/api/src/modules/user/repository/db/user.repository.port';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
+import { UserRepositoryPort } from '@Apps/modules/user/repository/db/user.repository.port';
 import { JwtService } from '@nestjs/jwt';
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'apps/api/src/modules/user/repository/entity/user.entity';
+import { User } from '@Apps/modules/user/repository/entity/user.entity';
 export class UserInfoCommandDto {
   @ApiProperty()
   readonly id: bigint;

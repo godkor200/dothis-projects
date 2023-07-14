@@ -1,15 +1,15 @@
 import { Module, Provider } from '@nestjs/common';
-import { UserEntityModule } from 'apps/api/src/modules/user/repository/entity/user.entity.module';
+import { UserEntityModule } from '@Apps/modules/user/repository/entity/user.entity.module';
 import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { GoogleLoginHttpController } from 'apps/api/src/modules/auth/v1/commands/google-login/goolgle-login.http.controller';
-import { GoogleLoginRedirectHttpController } from 'apps/api/src/modules/auth/v1/commands/google-login-redirect/google-login-redirect.http.controller';
+import { GoogleLoginHttpController } from '@Apps/common/auth/v1/commands/google-login/goolgle-login.http.controller';
+import { GoogleLoginRedirectHttpController } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserRepository } from 'apps/api/src/modules/user/repository/db/user.repository';
-import { GoogleLoginRedirectCommandHandler } from 'apps/api/src/modules/auth/v1/commands/google-login-redirect/google-login-redirect.service';
-import { USER_REPOSITORY } from 'apps/api/src/modules/user/constants/user.di-token';
-import { VerifyTokenHttpController } from 'apps/api/src/modules/auth/v1/commands/verify-token/verify-token.http.controller';
-import { VerifyTokenCommandHandler } from 'apps/api/src/modules/auth/v1/commands/verify-token/verify-token.service';
+import { UserRepository } from '@Apps/modules/user/repository/db/user.repository';
+import { GoogleLoginRedirectCommandHandler } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+import { USER_REPOSITORY } from '@Apps/modules/user/constants/user.di-token';
+import { VerifyTokenHttpController } from '@Apps/common/auth/v1/commands/verify-token/verify-token.http.controller';
+import { VerifyTokenCommandHandler } from '@Apps/common/auth/v1/commands/verify-token/verify-token.service';
 
 const httpControllers = [
   GoogleLoginHttpController,

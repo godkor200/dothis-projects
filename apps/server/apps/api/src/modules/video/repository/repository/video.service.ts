@@ -1,7 +1,6 @@
 import { from, lastValueFrom, map, mergeMap, pluck, toArray } from 'rxjs';
-import { VideoServicePort } from './video.service.port';
+import { VideoServicePort } from '../../interface/video.service.port';
 import { AwsOpensearchService } from 'apps/api/src/common/aws/service/aws.opensearch.service';
-import { error } from 'console';
 
 export class VideoService
   extends AwsOpensearchService
