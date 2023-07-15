@@ -1,9 +1,8 @@
 'use client';
 
 import Lottie from 'lottie-react';
+import LoadingLottie from 'public/aseets/Lottie/loading.json';
 import { useEffect } from 'react';
-
-import LoadingLottie from '@/assets/loading.json';
 
 const LoginLoadingComponent = () => {
   useEffect(() => {

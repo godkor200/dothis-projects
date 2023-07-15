@@ -1,8 +1,7 @@
 'use client';
 
+import * as Svgs from 'public/aseets/svg/index';
 import type { SVGProps } from 'react';
-
-import * as Svgs from '@/assets';
 
 export type SVGType = keyof typeof Svgs;
 
