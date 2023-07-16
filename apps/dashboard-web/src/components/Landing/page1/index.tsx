@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Search from 'public/aseets/svg/Landing/search.svg';
 
-import Search from '@/assets/svg/Landing/search.svg';
 import { CONTENT, PRICING } from '@/constants/route';
 
 import { Background, Buttons, ImageBox, Main, Texts } from './style';
