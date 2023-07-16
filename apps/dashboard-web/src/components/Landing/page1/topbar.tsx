@@ -3,12 +3,12 @@
 import { throttle } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Contact from 'public/aseets/svg/Landing/contact.svg';
+import Content from 'public/aseets/svg/Landing/content.svg';
+import Magicpen from 'public/aseets/svg/Landing/magicpen.svg';
+import User from 'public/aseets/svg/Landing/user.svg';
 import { useEffect, useState } from 'react';
 
-import Contact from '@/assets/svg/Landing/contact.svg';
-import Content from '@/assets/svg/Landing/content.svg';
-import Magicpen from '@/assets/svg/Landing/magicpen.svg';
-import User from '@/assets/svg/Landing/user.svg';
 import { CONTENT, SURVEY } from '@/constants/route';
 
 import { Bar, Nav } from './style';
