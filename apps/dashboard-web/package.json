@@ -16,6 +16,7 @@
     "@dothis/dto": "workspace:^",
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
+    "dashboard-storybook": "workspace:*",
     "@effect/data": "^0.12.8",
     "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.4.1",
