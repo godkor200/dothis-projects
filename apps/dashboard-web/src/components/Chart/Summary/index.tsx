@@ -1,3 +1,5 @@
+'use client';
+
 import { SUMMARY, type SummaryItem } from '@/mocks/chart/summary';
 
 import * as Style from './style';

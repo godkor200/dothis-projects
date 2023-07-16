@@ -1,7 +1,4 @@
-'use client';
-
 import dynamic from 'next/dynamic';
-import { styled } from 'styled-components';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
 import LineTwo from '@/components/Chart/LineChart';
@@ -15,7 +12,7 @@ import Summary from '@/components/Chart/Summary';
 
 const ChartPage = () => {
   return (
-    <Dashboard>
+    <div className="flex w-full	h-screen py-14 px-12">
       {/* <p style={{ fontSize: '10rem' }}>
         lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nemo
         voluptates, earum ratione aliquid voluptas nesciunt delectus magni
@@ -24,28 +21,12 @@ const ChartPage = () => {
       </p> */}
       {/* <LineChart /> */}
       <ChartSidebar />
-      <Chart>
+      <div className="grow ml-4 p-10 rounded-lg border border-solid bg-white">
         <Summary />
         <LineTwo />
-      </Chart>
-    </Dashboard>
+      </div>
+    </div>
   );
 };
 
 export default ChartPage;
-
-const Dashboard = styled.div`
-  display: flex;
-  height: 100vh;
-  padding: 60px 48px;
-  background-color: #f4f4f5;
-`;
-
-const Chart = styled.div`
-  flex: 1;
-  margin-left: 16px;
-  padding: 40px;
-  border-radius: 8px;
-  border: 1px solid #d4d4d8;
-  background-color: #ffffff;
-`;
