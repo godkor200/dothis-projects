@@ -1,3 +1,5 @@
+'use client';
+
 import { RELATED_WORDS } from '@/mocks';
 
 import RelatedWord from './RelatedWord';

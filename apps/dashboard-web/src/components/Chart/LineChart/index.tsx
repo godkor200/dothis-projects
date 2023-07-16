@@ -11,80 +11,80 @@ import {
   unitFormat,
 } from './utils';
 
-const LineTwo = () => {
-  const data = [
-    {
-      id: '기대 조회 수(단위:배)',
-      color: 'hsl(81, 70%, 50%)',
-      data: [
-        {
-          x: '2017-12-29',
-          y: 30,
-        },
-        {
-          x: '2017-12-31',
-          y: 40,
-        },
-        {
-          x: '2018-01-02',
-          y: 70,
-        },
-        {
-          x: '2018-01-04',
-          y: 90,
-        },
-        {
-          x: '2018-01-06',
-          y: 70,
-        },
-        {
-          x: '2018-01-08',
-          y: 100,
-        },
-        {
-          x: '2018-01-10',
-          y: 70,
-        },
-      ],
-    },
-  ];
-  const data2 = [
-    {
-      id: '일일 조회 수(단위:회)',
-      color: 'hsl(81, 70%, 50%)',
-      data: [
-        {
-          x: '2017-12-29',
-          y: 75_0000,
-        },
-        {
-          x: '2017-12-31',
-          y: 114_0000,
-        },
-        {
-          x: '2018-01-03',
-          y: 109_0000,
-        },
-        {
-          x: '2018-01-05',
-          y: 98_0000,
-        },
-        {
-          x: '2018-01-07',
-          y: 89_0000,
-        },
-        {
-          x: '2018-01-09',
-          y: 110_0000,
-        },
-        {
-          x: '2018-01-11',
-          y: 271_0000,
-        },
-      ],
-    },
-  ];
+const data = [
+  {
+    id: '기대 조회 수(단위:배)',
+    color: 'hsl(81, 70%, 50%)',
+    data: [
+      {
+        x: '2017-12-29',
+        y: 30,
+      },
+      {
+        x: '2017-12-31',
+        y: 40,
+      },
+      {
+        x: '2018-01-02',
+        y: 70,
+      },
+      {
+        x: '2018-01-04',
+        y: 90,
+      },
+      {
+        x: '2018-01-06',
+        y: 70,
+      },
+      {
+        x: '2018-01-08',
+        y: 100,
+      },
+      {
+        x: '2018-01-10',
+        y: 70,
+      },
+    ],
+  },
+];
+const data2 = [
+  {
+    id: '일일 조회 수(단위:회)',
+    color: 'hsl(81, 70%, 50%)',
+    data: [
+      {
+        x: '2017-12-29',
+        y: 75_0000,
+      },
+      {
+        x: '2017-12-31',
+        y: 114_0000,
+      },
+      {
+        x: '2018-01-03',
+        y: 109_0000,
+      },
+      {
+        x: '2018-01-05',
+        y: 98_0000,
+      },
+      {
+        x: '2018-01-07',
+        y: 89_0000,
+      },
+      {
+        x: '2018-01-09',
+        y: 110_0000,
+      },
+      {
+        x: '2018-01-11',
+        y: 271_0000,
+      },
+    ],
+  },
+];
 
+const LineTwo = () => {
   // 현재 공통된 style 프로퍼티는 공용을 만들어서 관리할 생각
 
   // 서버 데이터랑 포맷팅이 필요
@@ -135,12 +135,11 @@ const LineTwo = () => {
       <Style.ChartContainer>
         <ResponsiveLine
           data={data2}
-          margin={{ top: 50, right: 600, left: 60 }}
+          margin={{ top: 50, left: 60 }}
           lineWidth={4}
           colors={{ scheme: 'red_yellow_blue' }}
           curve="catmullRom"
           // catmullRom 정확한 곡선
-
           xScale={{
             format: '%Y-%m-%d',
             precision: 'day',
@@ -178,7 +177,6 @@ const LineTwo = () => {
           // y 축 눈금
           useMesh={true}
           // 마우스 상호작용을 감지하며 tooltip생성
-
           enablePoints={false}
           // point 활성화, 비활성화
           legends={[
@@ -229,15 +227,10 @@ const LineTwo = () => {
           }}
         />
       </Style.ChartContainer>
-      <div
-        style={{
-          width: '100%',
-          height: '450px',
-        }}
-      >
+      <Style.ChartContainer>
         <ResponsiveLine
           data={data}
-          margin={{ right: 600, bottom: 50, left: 60 }}
+          margin={{ bottom: 50, left: 60 }}
           lineWidth={4}
           colors={{ scheme: 'category10' }}
           xScale={{
@@ -322,7 +315,7 @@ const LineTwo = () => {
             },
           }}
         />
-      </div>
+      </Style.ChartContainer>
     </>
   );
 };
