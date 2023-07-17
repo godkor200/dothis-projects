@@ -9,6 +9,6 @@ pnpm i
 
 pnpm build:back-end:prod
 
-cd /var/www/back-end/apps/api
+cd /var/www/back-end/apps/server/apps/api
 
 sudo pm2 reload ecosystem.config.js --env production --update-env
