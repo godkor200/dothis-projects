@@ -1,7 +1,7 @@
 import type { MutableRefObject, SetStateAction } from 'react';
 import { useRef } from 'react';
 
-import SvgComp from '@/components/share/SvgComp';
+import SvgComp from '@/share/SvgComp';
 
 import type { KeywordCategory } from './NavSlide';
 import * as Style from './style';

@@ -3,7 +3,7 @@
 import { theme } from '@dothis/theme/dashboard';
 import styled from 'styled-components';
 
-import SvgComp from '@/components/share/SvgComp';
+import SvgComp from '@/share/SvgComp';
 import { SIDE_MENUS } from '@/constants/SideMenus';
 
 import * as Style from './style';

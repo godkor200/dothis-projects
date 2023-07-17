@@ -2,7 +2,7 @@
 
 import { styled } from 'styled-components';
 
-import SvgComp from '../share/SvgComp';
+import SvgComp from '../../share/SvgComp';
 import * as Style from './style';
 
 const GoogleBtn = () => {
