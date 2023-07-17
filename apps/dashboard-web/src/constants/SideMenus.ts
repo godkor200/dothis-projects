@@ -1,4 +1,4 @@
-import type { SVGType } from '@/components/share/SvgComp';
+import type { SVGType } from '@/share/SvgComp';
 
 interface SideMenus {
   title: string;

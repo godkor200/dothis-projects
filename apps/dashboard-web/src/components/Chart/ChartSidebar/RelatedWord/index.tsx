@@ -1,4 +1,4 @@
-import SvgComp from '@/components/share/SvgComp';
+import SvgComp from '@/share/SvgComp';
 
 import { Gap, Rank, RankContent, RelatedWordItem, Views, Word } from './style';
 

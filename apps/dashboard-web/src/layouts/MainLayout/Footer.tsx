@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { ceoMail } from '@/constants/etc';
 
-import SvgComp from '../../components/share/SvgComp';
+import SvgComp from '../../share/SvgComp';
 import * as Style from './style';
 
 const Footer = () => {
