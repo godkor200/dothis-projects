@@ -20,7 +20,9 @@ const tsConfigFile = 'tsconfig.build.json';
 module.exports = function (options, webpack) {
   if (process.env.NODE_ENV === 'production') {
     options.devtool = 'source-map';
-    options.entry = {};
+    options.entry = {
+      main: `./apps/api/src/main.ts`,
+    };
     options.optimization.minimize = true;
     options.optimization.minimizer = [
       new TerserPlugin({

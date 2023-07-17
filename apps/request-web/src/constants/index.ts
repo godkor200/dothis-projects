@@ -52,7 +52,7 @@ export const pagePath = {
     query,
   }),
 
-  /* jwt */
+  /* auth */
   // 로그인
   [PAGE_KEYS.login]: () => ({
     pathname: '/auth/login',

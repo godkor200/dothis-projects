@@ -12,7 +12,7 @@ module.exports = {
       max_memory_restart: '1G',
       watch: true,
       env_development: {
-        SERVER_PORT: 8080,
+        APP_PORT: 8080,
         NODE_ENV: 'development',
         MYSQL_ROOT_USER: process.env.MYSQL_ROOT_USER,
         MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
@@ -34,7 +34,7 @@ module.exports = {
         AWS_REGION: process.env.AWS_REGION,
       },
       env_production: {
-        SERVER_PORT: 8080,
+        APP_PORT: 8080,
         NODE_ENV: 'production',
         MYSQL_ROOT_USER: process.env.MYSQL_ROOT_USER,
         MYSQL_ROOT_PASSWORD: process.env.MYSQL_ROOT_PASSWORD,
