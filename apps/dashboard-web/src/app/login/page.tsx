@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { GoogleBtn } from '@/components/Login/index';
+import GoogleBtn from '@/components/Login/GoogleBtn';
 import SvgComp from '@/components/share/SvgComp';
 
 const LoginPage = () => {
