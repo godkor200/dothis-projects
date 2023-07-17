@@ -35,7 +35,7 @@ jobs:
             echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} >> production.env
             echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> production.env
             echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> production.env
-            echo PORT=${{ secrets.PORT }} >> production.env
+            echo APP_PORT=${{ secrets.PORT }} >> production.env
             echo DB_PORT=${{ secrets.DB_PORT }} >> production.env
             echo DB_HOST=${{ secrets.DB_HOST }} >> production.env
             echo DB_SCHEMA=${{ secrets.DB_SCHEMA }} >> production.env
