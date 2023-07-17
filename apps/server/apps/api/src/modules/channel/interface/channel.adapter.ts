@@ -1,7 +1,7 @@
-import { FindKeywordByUserResponseDto } from '@Apps/modules/channel/interface/find-keyword-byUser.response.dto';
+import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 
 export interface ChannelAdapter {
   findChannelTagOrKeyword: (
     channelId: string,
-  ) => Promise<FindKeywordByUserResponseDto>;
+  ) => Promise<ChannelKeywordOrtagDtos>;
 }
