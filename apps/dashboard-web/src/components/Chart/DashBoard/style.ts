@@ -5,32 +5,32 @@ import { styled } from 'styled-components';
 /* Summary */
 export const SummaryList = styled.ul`
   display: flex;
-  gap: 22px;
+  gap: ${px2rem(22)};
 `;
 
 export const SummaryWrapper = styled.li`
   flex: 1;
-  min-width: 300px;
-  padding: 20px 0;
-  border-radius: 8px;
-  background-color: #fef7f8;
+  min-width: ${px2rem(300)};
+  padding: ${px2rem(20)} 0;
+  border-radius: ${px2rem(8)};
+  background-color: ${theme.colors.primary50};
 `;
 
 export const Border = styled.div`
-  padding-left: 25px;
-  border-left: 2px solid #f0516d;
+  padding-left: ${px2rem(25)};
+  border-left: ${px2rem(2)} solid ${theme.colors.primary500};
 `;
 
 export const SummaryTitle = styled.div`
-  margin-bottom: 4px;
+  margin-bottom: ${px2rem(4)};
   font-weight: 700;
-  color: #71717a;
+  color: ${theme.colors.grey600};
 `;
 
 export const Content = styled.div`
-  font-size: 26px;
+  font-size: ${px2rem(26)};
   font-weight: 700;
-  color: #f0516d;
+  color: ${theme.colors.primary500};
 `;
 
 /* DailyView */
