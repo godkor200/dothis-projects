@@ -1,6 +1,6 @@
 import LineTwo from '../LineChart';
-import Summary from '../Summary';
 import DailyView from './DailyView';
+import Summary from './Summary';
 
 const DashBoard = () => {
   return (

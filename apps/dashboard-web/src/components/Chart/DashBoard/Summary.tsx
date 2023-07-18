@@ -16,12 +16,12 @@ const Summary = () => {
 
 const SummaryItem = ({ title, content }: SummaryItem) => {
   return (
-    <Style.Wrapper>
+    <Style.SummaryWrapper>
       <Style.Border>
-        <Style.Title>{title}</Style.Title>
+        <Style.SummaryTitle>{title}</Style.SummaryTitle>
         <Style.Content>{content}</Style.Content>
       </Style.Border>
-    </Style.Wrapper>
+    </Style.SummaryWrapper>
   );
 };
 
