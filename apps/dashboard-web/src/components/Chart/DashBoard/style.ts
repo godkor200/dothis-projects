@@ -6,6 +6,8 @@ import { styled } from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  height: fit-content;
+  margin-top: ${px2rem(40)};
   width: ${px2rem(300)};
   padding: ${px2rem(24)};
   font-weight: 700;
