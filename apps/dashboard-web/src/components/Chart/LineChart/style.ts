@@ -5,11 +5,11 @@ export const Wrapper = styled.div`
   height: 460px;
   display: flex;
   flex-direction: column;
-  padding-right: 20px;
+  margin-right: 20px;
 `;
 
 export const ChartContainer = styled.div`
-  width: 90%;
+  width: 100%;
   height: 50%;
 
   & svg {
