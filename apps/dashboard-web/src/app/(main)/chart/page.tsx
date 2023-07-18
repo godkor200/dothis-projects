@@ -12,7 +12,7 @@ import Summary from '@/components/Chart/Summary';
 
 const ChartPage = () => {
   return (
-    <div className="flex w-full	h-screen py-14 px-12">
+    <div className="flex w-full	h-screen py-14 px-12 bg-[#F4F4F5]">
       {/* <p style={{ fontSize: '10rem' }}>
         lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nemo
         voluptates, earum ratione aliquid voluptas nesciunt delectus magni
@@ -21,7 +21,7 @@ const ChartPage = () => {
       </p> */}
       {/* <LineChart /> */}
       <ChartSidebar />
-      <div className="grow ml-4 p-10 rounded-lg border border-solid bg-white">
+      <div className="grow ml-4 p-10 rounded-lg border border-solid border-[#D4D4D8] bg-white">
         <Summary />
         <LineTwo />
       </div>
