@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
+import DailyView from '@/components/Chart/DashBoard/DailyView';
 import LineTwo from '@/components/Chart/LineChart';
 import Summary from '@/components/Chart/Summary';
 
@@ -24,6 +25,7 @@ const ChartPage = () => {
       <div className="grow ml-4 p-10 rounded-lg border border-solid border-[#D4D4D8] bg-white">
         <Summary />
         <LineTwo />
+        <DailyView view={913192} />
       </div>
     </div>
   );
