@@ -1,19 +1,16 @@
-'use client';
-
-import * as Style from './style';
-
 interface DailyViewProps {
   view: number;
 }
 
 const DailyView = ({ view }: DailyViewProps) => {
   return (
-    <Style.Wrapper>
-      <Style.Title>일일 조회 수</Style.Title>
+    <div className="flex justify-between h-fit mt-10 w-[300px] p-6 font-bold rounded-8 border border-grey400 bg-grey00">
+      <div className="text-grey600">일일 조회 수</div>
       <div>
-        <Style.View>{view.toLocaleString('ko-KR')}</Style.View>회
+        <span className="text-primary500">{view.toLocaleString('ko-KR')}</span>
+        회
       </div>
-    </Style.Wrapper>
+    </div>
   );
 };
 

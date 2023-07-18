@@ -11,7 +11,7 @@ import DashBoard from '@/components/Chart/DashBoard';
 
 const ChartPage = () => {
   return (
-    <div className="flex w-full py-14 px-12 bg-[#F4F4F5]">
+    <div className="flex w-full px-12 py-[60px] bg-grey200">
       {/* <LineChart /> */}
       <ChartSidebar />
       <DashBoard />

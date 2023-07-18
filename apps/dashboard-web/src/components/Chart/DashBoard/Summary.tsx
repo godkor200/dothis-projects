@@ -1,27 +1,23 @@
-'use client';
-
 import { SUMMARY, type SummaryItem } from '@/mocks/chart/summary';
-
-import * as Style from './style';
 
 const Summary = () => {
   return (
-    <Style.SummaryList>
+    <ul className="flex gap-[22px]">
       {SUMMARY.map(({ title, content }) => (
         <SummaryItem key={title} title={title} content={content} />
       ))}
-    </Style.SummaryList>
+    </ul>
   );
 };
 
 const SummaryItem = ({ title, content }: SummaryItem) => {
   return (
-    <Style.SummaryWrapper>
-      <Style.Border>
-        <Style.SummaryTitle>{title}</Style.SummaryTitle>
-        <Style.Content>{content}</Style.Content>
-      </Style.Border>
-    </Style.SummaryWrapper>
+    <li className="grow py-5 rounded-8 bg-primary50">
+      <div className="pl-[25px] border-l-2 border-primary500 font-bold">
+        <div className="mb-1 text-grey600">{title}</div>
+        <div className="text-[26px] text-primary500">{content}</div>
+      </div>
+    </li>
   );
 };
 
