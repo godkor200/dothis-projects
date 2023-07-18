@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
-import DashBoard from '@/components/Chart/DashBoard';
+import DashBoard from '@/components/Chart/DashBoard/DashBoard';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
