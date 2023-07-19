@@ -131,7 +131,7 @@ const LineTwo = () => {
   // 딱 interval 값을 정해놔야한다,  반응적인 interval은 적용되면 안댐 절떄
 
   return (
-    <>
+    <Style.Wrapper>
       <Style.ChartContainer>
         <ResponsiveLine
           data={data2}
@@ -181,18 +181,18 @@ const LineTwo = () => {
           // point 활성화, 비활성화
           legends={[
             {
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: 'bottom',
+              direction: 'row',
               justify: false,
-              translateX: 100,
-              translateY: 380,
+              translateX: -120,
+              translateY: 260,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
               itemWidth: 80,
               itemHeight: 20,
               itemOpacity: 0.75,
               symbolSize: 12,
-              symbolShape: 'circle',
+              symbolShape: 'square',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
               effects: [
                 {
@@ -270,18 +270,18 @@ const LineTwo = () => {
           enablePoints={false}
           legends={[
             {
-              anchor: 'bottom-right',
+              anchor: 'bottom',
               direction: 'column',
               justify: false,
-              translateX: 100,
-              translateY: 0,
+              translateX: 60,
+              translateY: 80,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
               itemWidth: 80,
               itemHeight: 20,
               itemOpacity: 0.75,
               symbolSize: 12,
-              symbolShape: 'circle',
+              symbolShape: 'square',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
               effects: [
                 {
@@ -316,7 +316,7 @@ const LineTwo = () => {
           }}
         />
       </Style.ChartContainer>
-    </>
+    </Style.Wrapper>
   );
 };
 

@@ -7,7 +7,12 @@ const config = {
     locales: ['ko'],
     defaultLocale: 'ko',
   },
-  transpilePackages: ['@dothis/share', '@dothis/ui', '@dothis/dto'],
+  transpilePackages: [
+    '@dothis/share',
+    '@dothis/ui',
+    '@dothis/dto',
+    '@dothis/theme',
+  ],
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
     outputFileTracingExcludes: {
@@ -15,7 +20,7 @@ const config = {
     },
     appDir: true,
     typedRoutes: true,
-    esmExternals:'loose'
+    esmExternals: 'loose',
   },
 
   compiler: {

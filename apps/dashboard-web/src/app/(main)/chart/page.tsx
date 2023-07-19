@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
-import LineTwo from '@/components/Chart/LineChart';
-import Summary from '@/components/Chart/Summary';
+import DashBoard from '@/components/Chart/DashBoard/DashBoard';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
@@ -12,19 +11,10 @@ import Summary from '@/components/Chart/Summary';
 
 const ChartPage = () => {
   return (
-    <div className="flex w-full	h-screen py-14 px-12 bg-[#F4F4F5]">
-      {/* <p style={{ fontSize: '10rem' }}>
-        lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nemo
-        voluptates, earum ratione aliquid voluptas nesciunt delectus magni
-        obcaecati commodi eligendi placeat recusandae quibusdam voluptatibus,
-        quis impedit animi sequi est.
-      </p> */}
+    <div className="flex w-full px-12 py-[60px] bg-grey200">
       {/* <LineChart /> */}
       <ChartSidebar />
-      <div className="grow ml-4 p-10 rounded-lg border border-solid border-[#D4D4D8] bg-white">
-        <Summary />
-        <LineTwo />
-      </div>
+      <DashBoard />
     </div>
   );
 };
