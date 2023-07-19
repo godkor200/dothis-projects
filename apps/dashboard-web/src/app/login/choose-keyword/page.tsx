@@ -16,8 +16,7 @@ const onLoading = async (ms: number) => {
     '은평구 부동산',
   ];
 };
-
-export default async function ChooseKeywordPage() {
+const ChooseKeywordPage = async () => {
   const mock_keyword = await onLoading(3000);
 
   return (
@@ -30,8 +29,9 @@ export default async function ChooseKeywordPage() {
       <LoginKeyword keyword={mock_keyword} />
     </>
   );
-}
+};
 
+export default ChooseKeywordPage;
 // Loading 체크를 위한 임시 delay 함수
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

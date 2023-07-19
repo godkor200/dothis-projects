@@ -2,17 +2,14 @@
 
 import styled from 'styled-components';
 
-export default function LoginLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <OuterContainer>
       <LoginLayoutConatiner>{children}</LoginLayoutConatiner>
     </OuterContainer>
   );
-}
+};
+export default LoginLayout;
 
 const OuterContainer = styled.div`
   padding: 10rem 0;

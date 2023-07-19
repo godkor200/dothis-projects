@@ -4,12 +4,8 @@
     "baseUrl": ".",
     "preserveSymlinks": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "~/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     },
     "incremental": true,
     "plugins": [
@@ -23,10 +19,8 @@
   "include": [
     "./src/**/*",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "public/aseets/svg/index.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "./public/**/*"
-  ]
+  "exclude": ["node_modules", "./public/**/*"]
 }
