@@ -1,11 +1,7 @@
-import Price from '@/components/Pricing';
+import Price from '@/components/pricing';
 
 const PricingPage = () => {
-  return (
-    <div>
-      <Price />
-    </div>
-  );
+  return <Price />;
 };
 
 export default PricingPage;
