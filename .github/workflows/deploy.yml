@@ -48,15 +48,15 @@ jobs:
             echo REDIS_PORT=${{ secrets.REDIS_PORT }} >> production.env
             echo REDIS_HOSTNAME=${{ secrets.REDIS_HOSTNAME }} >> production.env
             echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> production.env
-            echo AWS_CREDENTIAL_KEY=${{ secrets.AWS_CREDENTIAL_KEY }} >> production.env
-            echo AWS_CREDENTIAL_SECRET=${{ secrets.AWS_CREDENTIAL_SECRET }} >> production.env
+            echo AWS_CREDENTIAL_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} >> production.env
+            echo AWS_CREDENTIAL_SECRET=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> production.env
             echo AWS_REGION=${{ secrets.AWS_REGION }} >> production.env
             echo NODE_PATH=${{ secrets.NODE_PATH }} >> production.env
             cat production.env
 
       - name: zip file
         working-directory: ./
-        run: zip -r dothisBackEnd.zip ./ -x "./apps/dashboard-web/**" -x "./apps/request-web/**" -x "./packages/share/**" -x "./packages/ui/**"
+        run: zip -r dothisBackEnd.zip ./ -x "./apps/request-web/**" -x "./packages/share/**" -x "./packages/ui/**"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { User } from 'apps/api/src/modules/user/repository/entity/user.entity';
-import { VideoEntity } from 'apps/api/src/modules/video/repository/db/videos.entity';
+import { User } from '@Apps/modules/user/domain/user.entity';
+import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
 
 @Entity({ name: 'channel' })
 export class ChannelEntity {

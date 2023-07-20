@@ -4,6 +4,7 @@ import { authApi } from './auth';
 import { cacheApi } from './cache';
 import { relWordsApi } from './rel-words';
 import { dailyViewApi } from './daily-views/daily-views.api';
+import { videoApi } from './video';
 
 export const apiRouter = c.router({
   auth: authApi,
@@ -11,4 +12,5 @@ export const apiRouter = c.router({
   cache: cacheApi,
   dailyViews: dailyViewApi,
   relwords: relWordsApi,
+  video: videoApi,
 });

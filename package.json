@@ -34,28 +34,28 @@
     "dev:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-api",
     "dev:back-end-scheduler": "dotenv -e ./apps/server/.env -- turbo run start:dev-scheduler",
     "dev:back-end-scheduler:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-scheduler",
-    "build:back-end": "dotenv -e ./apps/server/.env -- turbo run build --filter=api",
-    "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=api",
-    "build:back-end:api-prod": "dotenv -e ./apps/server/production.env -- turbo run build:api --filter=api"
+    "build:back-end": "dotenv -e ./apps/server/.env -- turbo run build --filter=server",
+    "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=server",
+    "build:back-end:api-prod": "dotenv -e ./apps/server/production.env -- turbo run build:api --filter=server"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^5.59.2",
-    "@typescript-eslint/parser": "^5.59.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "dotenv-cli": "^7.2.1",
-    "eslint": "^8.40.0",
+    "eslint": "^8.45.0",
     "eslint-config-dothis-nestjs": "workspace:*",
     "eslint-config-next": "13.4.6",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-config-turbo": "^1.9.3",
+    "eslint-config-turbo": "^1.10.9",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-turbo": "^1.9.3",
+    "eslint-plugin-turbo": "^1.10.9",
     "prettier": "^2.8.8",
-    "turbo": "^1.9.3",
-    "typescript": "^5.0.4"
+    "turbo": "^1.10.9",
+    "typescript": "^5.1.6"
   },
   "pnpm": {
     "overrides": {
