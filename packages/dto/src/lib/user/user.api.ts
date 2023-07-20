@@ -1,4 +1,4 @@
-import { string, z } from 'zod';
+import { z } from 'zod';
 import { c } from '../contract';
 import { userModel } from './user.model';
 

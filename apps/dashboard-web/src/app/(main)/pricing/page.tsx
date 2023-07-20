@@ -1,11 +1,7 @@
-import Price from '@/components/pricing/page';
+import Price from '@/components/pricing';
 
-function PricingPage() {
-  return (
-    <div>
-      <Price />
-    </div>
-  );
-}
+const PricingPage = () => {
+  return <Price />;
+};
 
 export default PricingPage;

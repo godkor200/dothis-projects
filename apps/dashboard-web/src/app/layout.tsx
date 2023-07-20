@@ -1,30 +1,23 @@
-import './global.css';
+import '@/styles/global.css';
 
-import localFont from '@next/font/local';
 import clsx from 'clsx';
-import type react from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
 import Analytics from '@/components/Analytics';
+import { pretendard } from '@/styles/font';
 
 import ClientContext from './ClientContext';
 import RootHeader from './head';
 
-// nextjs font 최적화
-const font = localFont({
-  src: '../assets/PretendardVariable.ttf',
-  display: 'swap',
-});
-
-type Props = {
-  children: react.ReactNode;
-};
-
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="ko" className={clsx(font.className, 'text-[16px]')}>
+    <html lang="ko">
       <RootHeader />
-      <body suppressHydrationWarning={true}>
+      <body
+        className={clsx(pretendard.className, 'text-[16px]')}
+        suppressHydrationWarning={true}
+      >
         <Analytics />
         <StyledComponentsRegistry>
           <ClientContext>
