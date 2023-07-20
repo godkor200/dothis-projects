@@ -12,13 +12,13 @@ import { users } from './Users';
 
 /***********
  model RequestPost {
-  id            BigInt        @id @default(autoincrement()) @db.BigInt
+  id            BigInt        @id @default(autoincrement()) @database.BigInt
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   user          User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId        String?
-  title         String        @db.VarChar(255)
-  content       String        @db.LongText
+  title         String        @database.VarChar(255)
+  content       String        @database.LongText
   category      RequestCategoryType?        @default(ETC)
   creator       Creator?      @relation(fields: [creatorId], references: [id], onDelete: SetNull)
   creatorId     BigInt?
@@ -309,12 +309,12 @@ export const requestComments = [
   },
 ];
 
-// id          BigInt      @id @default(autoincrement()) @db.BigInt
+// id          BigInt      @id @default(autoincrement()) @database.BigInt
 //   request     RequestPost @relation(fields: [requestId], references: [id], onDelete: Cascade)
 //   requestId   BigInt
 //   user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 //   userId      String?
-//   content     String      @db.LongText
+//   content     String      @database.LongText
 //   type        RequestReportType
 //   status      RequestReportStatus
 //   createdAt   DateTime    @default(now())

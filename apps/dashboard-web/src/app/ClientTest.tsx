@@ -9,6 +9,7 @@ export default function clientTest() {
     params: {
       id: '1',
     },
+    query: { search: 'zzzz' },
   });
 
   if (!isLoading) console.log('data', data);

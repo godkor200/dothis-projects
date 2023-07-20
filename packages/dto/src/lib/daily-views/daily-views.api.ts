@@ -8,8 +8,8 @@ export const dailyViewApi = c.router({
   getDailyViews: {
     method: 'GET',
     path: `${dailyViewApiUrl}/:relationKeyword`,
-    pathParams: { relationKeyword: z.string() },
-    query: { from: z.string(), to: z.string() },
+    pathParams: z.object({ relationKeyword: z.string() }),
+    query: z.object({ from: z.string(), to: z.string() }),
     responses: {
       200: 'OK',
       401: 'Not Found',

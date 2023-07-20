@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { VideoApiV1Module } from '@Apps/modules/video/v1/video-api-v1.module';
+import { VideoApiV1Module } from '@Apps/modules/video/queries/v1/video-api-v1.module';
 import { RouterModule } from '@nestjs/core';
 
 @Module({

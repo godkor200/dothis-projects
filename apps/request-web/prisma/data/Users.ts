@@ -5,7 +5,7 @@ model User {
   email               String?             @unique
   emailVerified       DateTime?
   image               String?
-  introduction        String?             @db.Text
+  introduction        String?             @database.Text
   accounts            Account[]
   sessions            Session[]
   requestPosts        RequestPost[]

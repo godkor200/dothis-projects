@@ -31,7 +31,6 @@
     "@types/node": "^18.14.0",
     "babel-loader": "^8.3.0",
     "eslint": "^8.40.0",
-    "eslint-config-dothis-nestjs": "workspace:*",
-    "tsup": "^6.6.3"
+    "eslint-config-dothis-nestjs": "workspace:*"
   }
 }

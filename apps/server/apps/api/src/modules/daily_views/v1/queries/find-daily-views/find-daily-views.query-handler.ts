@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindDailyViewsAdapter } from '../../../interface/find-daily-views.adapter';
 import { DAILY_VIEWS_DI_TOKEN } from 'apps/api/src/modules/daily_views/constants/daily-views.di-token.contants';
 import { Inject } from '@nestjs/common';
-import { VIDEO_DI_TOKEN } from 'apps/api/src/modules/video/constants/videos.di-token.constants';
+import { VIDEO_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoAdapter } from 'apps/api/src/modules/video/interface/find-video.adapter';
 import { DailyViewsEntity } from 'apps/api/src/modules/daily_views/repository/entity/daily-views.entity';
 

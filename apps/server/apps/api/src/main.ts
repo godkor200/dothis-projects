@@ -26,7 +26,6 @@ async function bootstrap() {
   logger.log(`==========================================================`);
 
   logger.log(`Environment Variable`, process.env.NODE_ENV);
-  logger.log('NestApplication');
 
   logger.log(`==========================================================`);
 
