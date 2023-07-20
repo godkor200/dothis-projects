@@ -1,40 +1,45 @@
 import styled from 'styled-components';
 
 export const PriceCategory = styled.table`
-  width: 100%;
+  width: 1600px;
   text-align: center;
-  vertical-align: center;
-
+  white-space: nowrap;
   margin-top: 120px;
 
   th {
+    width: 360px;
+    height: 220px;
     font-size: 36px;
     border-bottom: 1px solid #e4e4e7;
     border-collapse: collapse;
-    padding: 5vw 126px;
   }
 
   td {
+    width: 360px;
+    height: 100px;
     font-size: 26px;
-    padding: 20px 0px;
+    padding: 20px;
   }
 
   button {
-    width: 20vw;
     height: 56px;
+    padding: 0 100px;
     border-radius: 8px;
     background-color: #f0516d;
     color: white;
     font-size: 16px !important;
   }
 `;
+
 export const Th_start = styled.th`
+  width: 360px;
   font-size: 28px !important;
   text-align: left !important;
   padding: 20px 0px 20px 24px !important;
 `;
 
 export const Td_start = styled.td`
+  width: 360px;
   font-size: 20px !important;
   text-align: left !important;
   padding: 20px 0px 20px 24px !important;
@@ -74,14 +79,12 @@ export const Best_name = styled.div`
 `;
 
 export const Main = styled.main`
-  width: 90%;
-
-  position: relative;
+  white-space: nowrap;
   padding: 30px 50px 0px 48px;
   margin-left: 98px;
   overflow: hidden;
-  font-weight: bolder;
-  display: block;
+  font-weight: bold;
+
   h2 {
     font-size: 36px;
     margin-top: 100px;
@@ -96,16 +99,7 @@ export const Pink = styled.span`
   color: #f0516d;
 `;
 
-export const Background = styled.div``;
-
 export const ImageBox = styled.div`
-  width: 100%;
-  aspect-ratio: 1244/2914;
-  margin-top: 58px;
-  margin-bottom: 100px;
-  position: relative;
-
-  @media (min-width: 1280px) {
-    width: 1280px;
-  }
+  width: 1600px;
+  margin: 58px 130px 100px 0;
 `;

@@ -1,16 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import { SURVEY } from '@/constants/route';
 
 import * as Style from './style';
 
 const Price = () => {
-  const router = useRouter();
   return (
-    <Style.Background>
+    <>
       <Style.Main>
         <h2>유튜브 콘텐츠 기획 시작하기</h2>
         <p>
@@ -57,19 +55,16 @@ const Price = () => {
             </tr>
           </tbody>
         </Style.PriceCategory>
-
         <Style.ImageBox>
           <Image
-            width={0}
-            height={0}
-            sizes={'100%'}
-            fill
+            width={1600}
+            height={2800}
             src={'/images/pricing.png'}
-            alt={''}
+            alt="가격"
           />
         </Style.ImageBox>
       </Style.Main>
-    </Style.Background>
+    </>
   );
 };
 
