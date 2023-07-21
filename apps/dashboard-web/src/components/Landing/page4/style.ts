@@ -11,11 +11,28 @@ export const Background = styled(BackgroundDefault)`
   @media (max-height: 900px) {
     height: 900px;
   }
+
+  @media (max-width: 576px) {
+    padding-top: 70px;
+  }
 `;
 
 export const Main = styled(MainDefault)`
   p {
     margin-top: 20px;
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: 36px;
+  font-weight: 700;
+  padding: 0 38px;
+  text-align: center;
+  white-space: nowrap;
+
+  @media (max-width: 576px) {
+    font-size: 28px;
+    margin-bottom: 12px;
   }
 `;
 
