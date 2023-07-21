@@ -4,7 +4,7 @@ import type { z } from 'zod';
 
 import { mockApiPathname } from '@/constants/dev';
 import type { ApiRouterResponse } from '@/utils/apiClient';
-import { apiRouter } from '@/utils/apiClient';
+import { apiRouter } from '@dothis/dto';
 
 const urlMatchDynamicPath = (url: string) => (dynamicPath: string) =>
   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);
