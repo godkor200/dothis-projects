@@ -23,7 +23,11 @@
       "cache": false
     },
     "dashboard-web#dev:next": {
-      "dependsOn": ["@dothis/theme#build", "@dothis/dto#build"]
+      "dependsOn": [
+        "@dothis/theme#build",
+        "@dothis/dto#build",
+        "dashboard-storybook#build"
+      ]
     },
     "dashboard-web#build": {
       "dependsOn": ["@dothis/theme#build", "@dothis/dto#build"]
