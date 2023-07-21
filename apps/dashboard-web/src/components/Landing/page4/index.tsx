@@ -2,19 +2,17 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { NOT_FOUND } from '@/constants/route';
-
 import { Category, CategroiesContainer, MoreButton } from '../style';
-import { Background, ImageBox, Main } from './style';
+import { Background, ImageBox, Main, Title } from './style';
 
 export default function Page4() {
   const [state, setState] = useState<number>(0);
   const titles = ['채널별 연관 콘텐츠', '시청자 반응', '콘텐츠 요약'];
-  const router = useRouter();
+
   return (
     <Background>
       <Main>
-        <h3>📊 한 눈에 보이는 트렌드</h3>
+        <Title>📊 한 눈에 보이는 트렌드</Title>
         <CategroiesContainer>
           {titles.map((value: string, key: number) => {
             return (

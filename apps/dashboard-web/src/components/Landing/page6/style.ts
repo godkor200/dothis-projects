@@ -17,12 +17,20 @@ export const Main = styled(MainDefault)`
     border: 1px solid black;
     border-radius: 4px;
     gap: 8px;
-    width: 195px;
-    height: 62px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 20px;
+    padding: 16px 24px;
+
+    @media (max-width: 576px) {
+      img {
+        width: 16px;
+        height: 16px;
+      }
+
+      font-size: 16px;
+    }
   }
 `;
 
@@ -39,4 +47,24 @@ export const Texts = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const Title = styled.h1`
+  font-size: 36px;
+  font-weight: 700;
+  padding: 0 52px;
+  text-align: center;
+
+  span {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 28px;
+  }
 `;
