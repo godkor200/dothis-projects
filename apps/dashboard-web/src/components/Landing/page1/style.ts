@@ -6,10 +6,6 @@ export const Background = styled(BackgroundDefault)`
   background-color: white;
   padding-bottom: 143px;
 
-  @media (max-height: 1080px) {
-    height: 1080px;
-  }
-
   @media (max-width: 576px) {
     padding-bottom: 60px;
   }

@@ -7,8 +7,8 @@ export const Background = styled(BackgroundDefault)`
   color: #ffffff;
   padding: 120px 0px;
 
-  @media (max-height: 800px) {
-    padding: 60px 0px;
+  @media (max-width: 800px) {
+    padding: 70px 0px;
   }
 `;
 
