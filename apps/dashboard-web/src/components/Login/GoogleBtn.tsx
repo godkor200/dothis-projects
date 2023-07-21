@@ -1,51 +1,23 @@
 'use client';
 
-import { styled } from 'styled-components';
+import Link from 'next/link';
 
-import SvgComp from '../share/SvgComp';
+import SvgComp from '../../share/SvgComp';
 
-function GoogleBtn() {
+const GoogleBtn = () => {
   return (
-    <GoogleLink href="https://api.dothis.kr/v1/auth/google-login">
-      <Container>
-        <Button>
+    <Link
+      className="w-full block mt-[3.75rem]"
+      href="https://api.dothis.kr/v1/auth/google-login"
+    >
+      <div className="w-full flex justify-center items-center py-4 border-solid border border-grey200 rounded-lg text-center">
+        <button className="inline-flex gap-[0.7rem]">
           <SvgComp icon="GoogleSvg" size={26} />
-          <Text>Google 로그인</Text>
-        </Button>
-      </Container>
-    </GoogleLink>
+          <p className="text-grey900 font-bold">Google 로그인</p>
+        </button>
+      </div>
+    </Link>
   );
-}
+};
 
 export default GoogleBtn;
-
-const GoogleLink = styled.a`
-  display: block;
-  width: 100%;
-  margin-top: 3.75rem;
-`;
-
-const Container = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 1rem 0;
-
-  border: 1px solid #f4f4f5;
-  border-radius: 0.5rem;
-
-  text-align: center;
-`;
-
-const Button = styled.button`
-  display: inline-flex;
-
-  gap: 0.7rem;
-`;
-
-const Text = styled.p`
-  font-weight: 700;
-`;

@@ -22,7 +22,12 @@
       "dependsOn": ["^theme-gen", "^request-web#db-generate"],
       "cache": false
     },
-
+    "dashboard-web#dev:next": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-web#build": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
     "theme-gen": {
       "inputs": ["./src/styles/**/*"],
       "outputs": ["./src/types/theme.d.ts"],
@@ -75,6 +80,10 @@
     },
     "clean": {
       "cache": false
+    },
+    "dev:next": {
+      "cache": false,
+      "persistent": true
     },
     "start:dev-api": {
       "cache": false,

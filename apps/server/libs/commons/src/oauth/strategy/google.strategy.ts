@@ -21,7 +21,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       //   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
       //     ? 'localhost:3666'
       //     : 'api.dothis.kr'
-      // }/v1/auth/google-redirect`,
+      // }/v1/jwt/google-redirect`,
 
       scope: [
         'email',

@@ -1,13 +1,13 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Injectable, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Membership } from 'apps/api/src/config/database/domain/entities/membership/membership.entity';
+import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { DailyViewsEntity } from 'apps/api/src/modules/daily_views/repository/entity/daily-views.entity';
 
-import { User } from 'apps/api/src/modules/user/repository/entity/user.entity';
+import { User } from '@Apps/modules/user/domain/user.entity';
 import { RelatedWordsEntity } from 'apps/api/src/modules/rel-words/repository/entity/related_words.entity';
 import { ChannelEntity } from 'apps/api/src/modules/channel/repository/entity/channel.entity';
-import { VideoEntity } from 'apps/api/src/modules/video/repository/db/videos.entity';
+import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {

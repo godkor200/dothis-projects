@@ -14,10 +14,10 @@
   ],
   "scripts": {
     "clean": "rimraf node_modules",
-    "build": "tsc --build tsconfig.build.json",
-    "build:watch": "tsc --build tsconfig.build.json --watch"
+    "build": "tsc --build tsconfig.json",
+    "build:watch": "tsc --build tsconfig.json --watch"
   },
-  "devDependencies": { 
+  "devDependencies": {
     "rimraf": "^4.3.1",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4"

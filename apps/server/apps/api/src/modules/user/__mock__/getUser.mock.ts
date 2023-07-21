@@ -1,7 +1,7 @@
-import { UserRepositoryPort } from 'apps/api/src/modules/user/repository/db/user.repository.port';
+import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { IResDto } from '@Libs/commons/src/types/res.types';
 import { updateObject } from '@Libs/commons/src';
-import { User } from '../repository/entity/user.entity';
+import { User } from '../domain/user.entity';
 
 export class MockGetUser implements UserRepositoryPort {
   private readonly result: User;

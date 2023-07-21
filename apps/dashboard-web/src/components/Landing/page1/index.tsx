@@ -1,11 +1,21 @@
 'use client';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Search from 'public/aseets/svg/Landing/search.svg';
 
-import Search from '@/assets/svg/Landing/search.svg';
 import { CONTENT, PRICING } from '@/constants/route';
 
-import { Background, Buttons, ImageBox, Main, Texts } from './style';
+import {
+  Background,
+  Button,
+  Buttons,
+  Description,
+  ImageBox,
+  Main,
+  Texts,
+  Title,
+} from './style';
 import Topbar from './topbar';
 
 export default function Page1() {
@@ -26,12 +36,15 @@ export default function Page1() {
           />
         </ImageBox>
         <Texts>
-          <h3>
-            콘텐츠 기획부터 키워드 추천, 트렌드 분석까지 바로 지금 Do this
-            하세요
-          </h3>
+          <Title>
+            어떤 영상을 찍어야 <br /> 조회수가 잘 나올까?
+          </Title>
+          <Description>
+            <span>콘텐츠 기획부터 키워드 추천, 트렌드 분석까지 </span>
+            <span>바로 지금 Do this 하세요</span>
+          </Description>
           <Buttons>
-            <button onClick={() => router.push(CONTENT)}>
+            <Button onClick={() => router.push(CONTENT)}>
               <Image
                 src={'/images/landing/logo_small.png'}
                 alt={'logo_small'}
@@ -39,15 +52,15 @@ export default function Page1() {
                 height={30}
               />
               <p>무료 체험하기</p>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => {
                 router.push(PRICING);
               }}
             >
               <Search width={30} height={30} />
               <p>요금제 알아보기</p>
-            </button>
+            </Button>
           </Buttons>
         </Texts>
       </Main>

@@ -17,7 +17,7 @@ const Background = styled.div`
   }
 `;
 
-export default function Content() {
+const Content = () => {
   const router = useRouter();
   return (
     <Background>
@@ -34,4 +34,6 @@ export default function Content() {
       />
     </Background>
   );
-}
+};
+
+export default Content;

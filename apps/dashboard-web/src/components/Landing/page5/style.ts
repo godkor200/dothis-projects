@@ -10,14 +10,16 @@ export const Background = styled(BackgroundDefault)`
   background-color: rgba(34, 34, 34, 1);
   color: white;
   padding: 120px 0px;
-  @media (max-height: 1900px) {
-    height: 1900px;
+
+  @media (max-width: 768px) {
+    padding-top: 0;
   }
 `;
 
 export const Main = styled(MainDefault)`
   margin-top: 120px;
 `;
+
 export const MoreButton = styled(MoreButtonDefault)`
   border: 1px solid white;
   background-color: inherit;
@@ -33,15 +35,35 @@ export const Container = styled.div`
   justify-content: center;
   padding: 80px 50px;
   padding-top: 80px;
+
+  @media (max-width: 768px) {
+    padding: 38px;
+  }
 `;
 
-export const ContainerA = styled(Container)`
-  height: 766px;
+export const TopContainer = styled.div`
+  display: flex;
+  gap: 40px;
+  margin: 50px;
+
+  @media (max-width: 1480px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 576px) {
+    margin: 26px;
+  }
 `;
+
+export const ContainerA = styled(Container)``;
 
 export const ContainerB = styled(Container)`
-  height: 645px;
   padding-bottom: 80px;
+  margin: 0 50px;
+
+  @media (max-width: 576px) {
+    margin: 0 26px;
+  }
 `;
 
 export const Texts = styled.div`
@@ -60,18 +82,36 @@ export const Texts = styled.div`
     color: rgba(161, 161, 170, 1);
     font-size: 20px;
   }
+
+  @media (max-width: 1480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: 36px;
+  font-weight: 700;
+  padding: 0 52px;
+  text-align: center;
+
+  span {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 28px;
+  }
 `;
 
 export const Containers = styled.div`
-  display: grid;
-  grid-template-rows: 766px 645px;
-  grid-template-columns: 1fr 1fr;
-  margin: 50px;
-  gap: 40px;
-
-  div:nth-child(3) {
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
+  @media (max-width: 768px) {
   }
 `;
 
