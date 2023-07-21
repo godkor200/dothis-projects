@@ -6,7 +6,7 @@ name: dashboard-page CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: ["lending/deploy"]
+    branches: ['lending/deploy']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,10 +27,10 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: main
-          
+
       - name: Install pnpm
         run: |
-            npm install -g pnpm
+          npm install -g pnpm
 
       # Runs a single command using the runners shell
       - name: Install Dependencies
@@ -49,10 +49,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
-#      - name: make dotenv
-#        run: |
-#          touch .env.production
-#          echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env.production
+      #      - name: make dotenv
+      #        run: |
+      #          touch .env.production
+      #          echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env.production
+      - name: build dashboard
+        run: |
+          pnpm build:dashboard
 
       - name: Deploy Next.js app
         run: |
