@@ -1,11 +1,9 @@
 'use client';
 
-import { theme } from '@dothis/theme/dashboard/index';
 import { useState } from 'react';
-import styled from 'styled-components';
 
-import SvgComp from '@/share/SvgComp';
 import useClickScrollX from '@/hooks/useClickScrollX';
+import SvgComp from '@/share/SvgComp';
 
 import NavSlideContent from './NavSlideContent';
 import * as Style from './style';
@@ -52,9 +50,9 @@ const NavSlide = () => {
 
   return (
     <Style.KeywordTapContiner>
-      <Style.ResetButton>
+      <button className="px-5 py-2 border border-solid border-grey500 rounded-8">
         <SvgComp icon="NavSlideReset" size="1.5rem" />
-      </Style.ResetButton>
+      </button>
       <Style.ButtonContainer ref={containerRef}>
         {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
           <NavSlideContent

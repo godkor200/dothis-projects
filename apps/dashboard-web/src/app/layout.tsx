@@ -6,6 +6,7 @@ import type { PropsWithChildren } from 'react';
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
 import Analytics from '@/components/Analytics';
 import { pretendard } from '@/styles/font';
+import StyledTheme from '@/styles/StyledTheme';
 
 import ClientContext from './ClientContext';
 import RootHeader from './head';
@@ -19,10 +20,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
         suppressHydrationWarning={true}
       >
         <Analytics />
+
         <StyledComponentsRegistry>
-          <ClientContext>
-            <div>{children}</div>
-          </ClientContext>
+          <StyledTheme>
+            <ClientContext>{children}</ClientContext>
+          </StyledTheme>
         </StyledComponentsRegistry>
       </body>
     </html>

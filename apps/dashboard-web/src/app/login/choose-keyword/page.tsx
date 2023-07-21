@@ -21,11 +21,11 @@ const ChooseKeywordPage = async () => {
 
   return (
     <>
-      <h2 className="font-bold text-2xl leading-9">
+      <h2 className="font-bold text-[1.5rem] leading-9 text-grey900">
         분석하고 싶은 키워드를 <br />
         선택해 주세요
       </h2>
-      <p className="mb-16 pt-2 text-stone-500">최대 5개</p>
+      <p className="mb-16 pt-2 text-grey600">최대 5개</p>
       <LoginKeyword keyword={mock_keyword} />
     </>
   );

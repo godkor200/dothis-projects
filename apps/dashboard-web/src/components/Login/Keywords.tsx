@@ -33,20 +33,22 @@ const Keywords = ({ keyword }: KeywordSchema) => {
   };
 
   return (
-    <Style.TagList>
-      {0 < keyword.length &&
-        keyword?.map((mock) => (
-          <Style.TagItem
-            key={`editor-${mock}`}
-            onClick={() => onToggleKeyword(mock)}
-            chosen={keywords.includes(mock) || undefined}
-          >
-            {keywords.includes(mock) && <Style.StyledCheck />}
-            {mock}
-          </Style.TagItem>
-        ))}
-      <br />
-    </Style.TagList>
+    <>
+      {keyword?.length > 0 ? (
+        <ul className="flex gap-[0.5rem] flex-wrap mb-16">
+          {keyword?.map((mock) => (
+            <Style.TagItem
+              key={`editor-${mock}`}
+              onClick={() => onToggleKeyword(mock)}
+              chosen={keywords?.includes(mock)}
+            >
+              {keywords.includes(mock) && <Style.StyledCheck />}
+              {mock}
+            </Style.TagItem>
+          ))}
+        </ul>
+      ) : null}
+    </>
   );
 };
 export default Keywords;

@@ -1,37 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
 
-// GoogleBtn.tsx
-export const GoogleLink = styled.a`
-  display: block;
-  width: 100%;
-  margin-top: 3.75rem;
-`;
-
-export const Container = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 1rem 0;
-
-  border: 1px solid #f4f4f5;
-  border-radius: 0.5rem;
-
-  text-align: center;
-`;
-
-export const Button = styled.button`
-  display: inline-flex;
-
-  gap: 0.7rem;
-`;
-
-export const Text = styled.p`
-  font-weight: 700;
-`;
-
 // Keywords.tsx
 export const FADE_IN = keyframes`
   0% {
@@ -40,14 +8,6 @@ export const FADE_IN = keyframes`
   100% {
     opacity: 1;
   }
-`;
-
-export const TagList = styled.ul`
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-
-  margin-bottom: 4rem;
 `;
 
 export const TagItem = styled.li<{ chosen: boolean | undefined }>`
