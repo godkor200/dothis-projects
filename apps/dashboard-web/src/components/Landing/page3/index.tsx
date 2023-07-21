@@ -1,11 +1,8 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { NOT_FOUND } from '@/constants/route';
-
 import { Category, CategroiesContainer, MoreButton } from '../style';
-import { Background, ImageBox, Main } from './style';
+import { Background, Description, ImageBox, Main, Title } from './style';
 
 export default function Page3() {
   const [state, setState] = useState<number>(0);
@@ -17,16 +14,21 @@ export default function Page3() {
     '구독자 구간',
   ];
 
-  const router = useRouter();
-
   return (
     <Background>
       <Main>
-        <h3>🔎 내 관심사 그대로 맞춤 키워드 분석</h3>
-        <p>
-          <b>내 채널의 관심사</b>부터 시작해 앞으로 다룰만한 콘텐츠 소재의{' '}
-          <b>조회수 예측</b>까지 알 수 있어요
-        </p>
+        <Title>
+          <span>🔎 내 관심사 그대로 </span>
+          <span>맞춤 키워드 분석</span>
+        </Title>
+        <Description>
+          <span>
+            <b>내 채널의 관심사</b>부터 시작해 앞으로 다룰만한
+          </span>
+          <span>
+            콘텐츠 소재의 <b>조회수 예측</b>까지 알 수 있어요
+          </span>
+        </Description>
         <CategroiesContainer>
           {titles.map((value: string, key: number) => {
             return (
