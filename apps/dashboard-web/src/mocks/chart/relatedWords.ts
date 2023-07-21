@@ -2,7 +2,7 @@ export const RELATED_WORDS = [
   {
     id: '1',
     rank: 1,
-    word: '물냉면물냉면물냉면물냉면물냉면물냉면물냉면',
+    word: '물냉면',
     views: 10,
     gap: 'UP',
   },
