@@ -4,7 +4,7 @@ import { users } from './Users';
 
 /***********
  model Creator {
-    id              BigInt          @id @default(autoincrement()) @database.BigInt
+    id              BigInt          @id @default(autoincrement()) @db.BigInt
     user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId          String          @unique
     createdAt       DateTime        @default(now())

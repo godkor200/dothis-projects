@@ -1,8 +1,8 @@
 /**************
 id          Int         @id @default(autoincrement())
 type        FaqType
-title       String      @database.VarChar(255)
-content     String      @database.LongText
+title       String      @db.VarChar(255)
+content     String      @db.LongText
 createdAt   DateTime    @default(now())
 **************/
 import { FaqType } from '@prisma/client';

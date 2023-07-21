@@ -2,8 +2,14 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { apiRouter } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.service';
+import { IfindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
 const c = nestControllerContract(apiRouter.video);
 const { pathParams, summary, responses, description } = c.getVideo;
 
@@ -19,10 +25,24 @@ export class FindVideoHttpController {
    */
   @TsRest(c.getVideo)
   @Get()
+  @ApiQuery({
+    name: 'search',
+    required: true,
+    description: '탐색어',
+    example: '한소희',
+  })
+  @ApiQuery({
+    name: 'related',
+    required: false,
+    description: '연관어',
+    example: '영화',
+  })
+  @ApiOkResponse()
+  @ApiNotFoundResponse()
   async execute(
     @Query('search') search: string,
     @Query('related') related: string,
-  ) {
+  ): Promise<IfindManyVideoResult[]> {
     const query = new FindVideoQuery({ search, related });
     return await this.queryBus.execute(query);
   }
