@@ -16,7 +16,7 @@ import { Bar, Nav } from './style';
 const SVG_SIZE = 32;
 
 export default function Topbar() {
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [width, setWidth] = useState<number>(0);
 
   const router = useRouter();
 
