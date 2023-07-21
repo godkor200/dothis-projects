@@ -9,10 +9,18 @@ export const Background = styled(BackgroundDefault)`
   @media (max-height: 1080px) {
     height: 1080px;
   }
+
+  @media (max-width: 576px) {
+    padding-bottom: 60px;
+  }
 `;
 
 export const Main = styled(MainDefault)`
   margin-top: 240px;
+
+  @media (max-width: 576px) {
+    margin-top: 140px;
+  }
 `;
 
 export const Buttons = styled.div`
@@ -20,16 +28,33 @@ export const Buttons = styled.div`
   gap: 40px;
   margin-top: 30px;
 
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    border: 1px solid black;
-    gap: 8px;
-    font-size: 20px;
-    font-weight: bolder;
-    padding: 16px 24px;
+  @media (max-width: 576px) {
+    gap: 16px;
+    margin: 30px 16px 0 16px;
+    white-space: nowrap;
+  }
+`;
+
+export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid black;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 16px 24px;
+
+  @media (max-width: 576px) {
+    font-size: 16px;
+    padding: 12px 16px;
+
+    img,
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 
@@ -37,14 +62,34 @@ export const Texts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
 
-  h1 {
-    font-size: 64px;
-    font-weight: bolder;
+export const Title = styled.h1`
+  display: none;
+  font-size: 32px;
+  font-weight: 700;
+  padding: 0 52px;
+  text-align: center;
+
+  @media (max-width: 576px) {
+    display: block;
   }
-  h3 {
-    margin-top: 30px;
-    font-size: 24px;
+`;
+
+export const Description = styled.p`
+  padding: 0 36px;
+  margin-top: 30px;
+  font-size: 24px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 576px) {
+    white-space: nowrap;
+    font-size: 16px;
+    text-align: center;
   }
 `;
 
@@ -57,6 +102,10 @@ export const ImageBox = styled.div`
   @media (max-width: 1280px) {
     width: 90%;
   }
+
+  @media (max-width: 576px) {
+    display: none;
+  }
 `;
 
 export const Bar = styled.nav`
@@ -67,7 +116,6 @@ export const Bar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   max-width: 1440px;
 `;
 

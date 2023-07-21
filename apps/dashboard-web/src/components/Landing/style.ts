@@ -34,9 +34,6 @@ export const MainDefault = styled.main`
     font-size: 36px;
     font-weight: bolder;
   }
-  p {
-    font-size: 20px;
-  }
 `;
 
 export const CategroiesContainer = styled.nav`
