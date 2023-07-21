@@ -123,7 +123,6 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   gap: 10px;
 
   button {
@@ -134,7 +133,6 @@ export const Nav = styled.nav`
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-
     font-size: 20px;
   }
 `;
