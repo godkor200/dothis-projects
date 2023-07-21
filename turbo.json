@@ -30,7 +30,11 @@
       ]
     },
     "dashboard-web#build": {
-      "dependsOn": ["@dothis/theme#build", "@dothis/dto#build"]
+      "dependsOn": [
+        "@dothis/theme#build",
+        "@dothis/dto#build",
+        "dashboard-storybook#build"
+      ]
     },
     "theme-gen": {
       "inputs": ["./src/styles/**/*"],
