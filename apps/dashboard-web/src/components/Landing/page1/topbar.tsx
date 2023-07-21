@@ -59,14 +59,7 @@ export default function Topbar() {
               </button>
             </a>
           </>
-        ) : (
-          <>
-            <Content width={SVG_SIZE} height={SVG_SIZE} />
-            <Magicpen width={SVG_SIZE} height={SVG_SIZE} />
-            <User width={SVG_SIZE} height={SVG_SIZE} />
-            <Contact width={SVG_SIZE} height={SVG_SIZE} />
-          </>
-        )}
+        ) : null}
       </Nav>
     </Bar>
   );
