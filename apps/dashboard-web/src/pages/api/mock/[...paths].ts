@@ -1,10 +1,10 @@
+import { apiRouter } from '@dothis/dto';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getPathMatch } from 'next/dist/shared/lib/router/utils/path-match';
 import type { z } from 'zod';
 
 import { mockApiPathname } from '@/constants/dev';
 import type { ApiRouterResponse } from '@/utils/apiClient';
-import { apiRouter } from '@dothis/dto';
 
 const urlMatchDynamicPath = (url: string) => (dynamicPath: string) =>
   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);
