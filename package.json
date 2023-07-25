@@ -20,6 +20,8 @@
     "build-storybook:ui": "turbo run build-storybook --filter=@dothis/ui",
     "build:theme": "turbo run build --filter=@dothis/theme",
     "build-watch:theme": "turbo run build:watch --filter=@dothis/theme",
+    "build-storybook:dashboard-storybook": "turbo run build-storybook --filter=dashboard-storybook",
+    "build:dashboard-storybook": "turbo run build --filter=dashboard-storybook",
     "clean:workspaces": "turbo clean",
     "clean": "rm -rf node_modules",
     "lint": "turbo run lint",

@@ -32,7 +32,17 @@ export class GoogleLoginRedirectHttpController {
     res.cookie('refreshToken', token.refreshToken);
     res.cookie('google_access_token', userInfo.googleAccessToken);
     res.cookie('google_refresh_token', userInfo.googleRefreshToken);
-    res.redirect('http://localhost:3666');
+    res.redirect(
+      `http${
+        process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
+          ? ''
+          : 's'
+      }://${
+        process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
+          ? 'localhost:3666'
+          : 'dothis.kr'
+      }/login/redirect`,
+    );
 
     return {
       message: 'Dothis Authentication',
