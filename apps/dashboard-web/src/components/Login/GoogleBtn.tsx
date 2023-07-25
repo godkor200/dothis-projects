@@ -1,4 +1,3 @@
-import type { Route } from 'next';
 import Link from 'next/link';
 
 import SvgComp from '../../share/SvgComp';
@@ -7,7 +6,7 @@ const GoogleBtn = () => {
   return (
     <Link
       className="w-full block mt-[3.75rem]"
-      href={process.env['GOOGLE_AUTH_API'] as Route}
+      href="https://api.dothis.kr/v1/auth/google-login"
     >
       <div className="w-full flex justify-center items-center py-4 border-solid border border-grey200 rounded-lg text-center">
         <button className="inline-flex gap-[0.7rem]">
