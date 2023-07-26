@@ -61,7 +61,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
 
     return (
       <Style.CheckBox
-        className="appearance-none w-[1.5rem] h-[1.5rem] border-2 rounded-[4px]  border-grey300 bg-grey00 focus:border-primary500 checked:border-primary500  checked:bg-primary500 checked:bg-[url('./Vector2.svg')] checked:bg-no-repeat bg-center "
         type="checkbox"
         id={id}
         checked={isChecked}
