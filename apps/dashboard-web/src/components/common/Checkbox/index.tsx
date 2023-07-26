@@ -7,6 +7,7 @@ import React, {
   ReactElement,
   useContext,
 } from 'react';
+import type { CSSProp } from 'styled-components';
 
 import * as Style from './style';
 
@@ -53,10 +54,11 @@ const useCheckboxContext = () => {
 interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   $size?: Style.CheckBoxSize;
   disabled?: boolean;
+  css?: CSSProp;
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
-  ({ $size = 'md', disabled = false, ...props }, ref) => {
+  ({ $size = 'md', disabled = false, css, ...props }, ref) => {
     const { id, isChecked, onChange } = useCheckboxContext();
 
     return (
@@ -67,6 +69,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
         onClick={onChange}
         $size={$size}
         disabled={disabled}
+        $css={css}
         {...props}
         ref={ref}
       />

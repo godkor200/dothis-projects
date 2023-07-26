@@ -1,3 +1,4 @@
+import type { CSSProp } from 'styled-components';
 import styled, { css } from 'styled-components';
 
 const CheckBoxSizeStyles = {
@@ -15,6 +16,7 @@ export type CheckBoxSize = keyof typeof CheckBoxSizeStyles;
 
 interface BaseCheckBoxProps {
   $size: CheckBoxSize;
+  $css?: CSSProp;
 }
 
 export const CheckBox = styled.input<BaseCheckBoxProps>`
@@ -45,7 +47,8 @@ export const CheckBox = styled.input<BaseCheckBoxProps>`
     background-color: ${({ theme }) => theme.colors.grey300};
   }
 
-  ${({ $size }) => css`
+  ${({ $size, $css }) => css`
     ${CheckBoxSizeStyles[$size]}
+    ${$css}
   `}
 `;
