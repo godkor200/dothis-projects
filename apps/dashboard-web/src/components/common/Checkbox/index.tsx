@@ -1,3 +1,5 @@
+'use client';
+
 import type { PropsWithChildren } from 'react';
 import React, {
   createContext,
@@ -5,6 +7,8 @@ import React, {
   ReactElement,
   useContext,
 } from 'react';
+
+import * as Style from './style';
 
 type CheckboxContextProps = {
   id: string;
@@ -46,30 +50,27 @@ const useCheckboxContext = () => {
 };
 // useContext hook
 
-const Checkbox = forwardRef(
-  ({ as, ...props }: { as: React.ElementType }, ref) => {
+interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  $size?: Style.CheckBoxSize;
+  disabled?: boolean;
+}
+
+const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
+  ({ $size = 'md', disabled = false, ...props }, ref) => {
     const { id, isChecked, onChange } = useCheckboxContext();
 
-    const Trigger =
-      as ||
-      React.forwardRef<HTMLInputElement>(({ ...props }, ref) => (
-        <input
-          type="checkbox"
-          id={id}
-          checked={isChecked}
-          onClick={onChange}
-          readOnly
-          {...props}
-          ref={ref}
-        />
-      ));
-
     return (
-      <>
-        {/* <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} ref={ref} /> */}
-
-        <Trigger isChecked={isChecked} onChange={onChange} id={id} ref={ref} />
-      </>
+      <Style.CheckBox
+        className="appearance-none w-[1.5rem] h-[1.5rem] border-2 rounded-[4px]  border-grey300 bg-grey00 focus:border-primary500 checked:border-primary500  checked:bg-primary500 checked:bg-[url('./Vector2.svg')] checked:bg-no-repeat bg-center "
+        type="checkbox"
+        id={id}
+        checked={isChecked}
+        onClick={onChange}
+        $size={$size}
+        disabled={disabled}
+        {...props}
+        ref={ref}
+      />
     );
   },
 );
