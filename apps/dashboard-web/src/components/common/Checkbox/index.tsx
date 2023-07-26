@@ -77,7 +77,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
 const Label = ({ children, ...props }: PropsWithChildren<{}>) => {
   const { id } = useCheckboxContext();
   return (
-    <label htmlFor={id} {...props}>
+    <label htmlFor={id} className="text-grey600 text-[0.875rem]" {...props}>
       {children}
     </label>
   );
