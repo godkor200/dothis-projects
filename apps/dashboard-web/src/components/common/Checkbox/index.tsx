@@ -14,7 +14,7 @@ import * as Style from './style';
 type CheckboxContextProps = {
   id: string;
   isChecked: boolean;
-  onChange: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 type CheckboxProps = CheckboxContextProps & React.PropsWithChildren<{}>;
@@ -66,7 +66,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
         type="checkbox"
         id={id}
         checked={isChecked}
-        onClick={onChange}
+        onChange={onChange}
         $size={$size}
         disabled={disabled}
         $css={css}
