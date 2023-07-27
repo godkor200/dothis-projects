@@ -1,7 +1,7 @@
 import type { CSSProp } from 'styled-components';
 import styled, { css } from 'styled-components';
 
-const CheckBoxSizeStyles = {
+const CHECKBOX_SIZE_STYLES = {
   sm: css`
     width: 1.25rem;
     height: 1.25rem;
@@ -12,7 +12,7 @@ const CheckBoxSizeStyles = {
   `,
 };
 
-export type CheckBoxSize = keyof typeof CheckBoxSizeStyles;
+export type CheckBoxSize = keyof typeof CHECKBOX_SIZE_STYLES;
 
 interface BaseCheckBoxProps {
   $size: CheckBoxSize;
@@ -48,7 +48,7 @@ export const CheckBox = styled.input<BaseCheckBoxProps>`
   }
 
   ${({ $size, $css }) => css`
-    ${CheckBoxSizeStyles[$size]}
+    ${CHECKBOX_SIZE_STYLES[$size]}
     ${$css}
   `}
 `;
