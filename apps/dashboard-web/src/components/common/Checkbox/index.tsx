@@ -45,10 +45,8 @@ const CheckboxContainer = ({
 };
 // Context
 
-const useCheckboxContext = () => {
-  const context = useContext(CheckboxContext);
-  return context;
-};
+const useCheckboxContext = () => useContext(CheckboxContext);
+
 // useContext hook
 
 interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
