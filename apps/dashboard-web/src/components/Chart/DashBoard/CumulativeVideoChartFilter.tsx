@@ -2,7 +2,7 @@
 
 import CheckboxContainer from '@/components/common/Checkbox';
 
-const DashBoardCheckBox = () => {
+const CumulativeVideoChartFilter = () => {
   return (
     <div className="flex gap-[1.5rem] ml-auto ">
       <CheckboxContainer
@@ -45,4 +45,4 @@ const DashBoardCheckBox = () => {
   );
 };
 
-export default DashBoardCheckBox;
+export default CumulativeVideoChartFilter;

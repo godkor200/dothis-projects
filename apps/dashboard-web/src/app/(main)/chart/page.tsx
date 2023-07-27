@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
+import DashBoardCheckBox from '@/components/Chart/DashBoard/CumulativeVideoChartFilter';
 import DashBoard from '@/components/Chart/DashBoard/DashBoard';
-import DashBoardCheckBox from '@/components/Chart/DashBoard/DashBoardCheckBox';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
 //   ssr: false,
