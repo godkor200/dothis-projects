@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import ChartSidebar from '@/components/Chart/ChartSidebar';
-import DashBoardCheckBox from '@/components/Chart/DashBoard/CumulativeVideoChartFilter';
+import CumulativeVideoChartFilter from '@/components/Chart/DashBoard/CumulativeVideoChartFilter';
 import DashBoard from '@/components/Chart/DashBoard/DashBoard';
 
 // const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
@@ -16,7 +16,7 @@ const ChartPage = () => {
       {/* <LineChart /> */}
       <div className="flex mb-5">
         <div>캘린더 위치</div>
-        <DashBoardCheckBox />
+        <CumulativeVideoChartFilter />
       </div>
       <div className="flex">
         <ChartSidebar />
