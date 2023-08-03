@@ -84,9 +84,6 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.1.0
         version: 3.1.0(react-hook-form@7.43.9)
-      '@next/font':
-        specifier: ^13.4.1
-        version: 13.4.1
       '@nivo/api':
         specifier: ^0.74.1
         version: 0.74.1(@nivo/tooltip@0.74.1)(prop-types@15.8.1)
@@ -6800,10 +6797,6 @@ packages:
     resolution: {integrity: sha512-bPigeu0RI7bgy1ucBA2Yqcfg539y0Lzo38P2hIkrRB1GNvFSbYg6RTu8n6tGqPVrH3TTlPTNKLXG01wc+5NuwQ==}
     dependencies:
       glob: 7.1.7
-
-  /@next/font@13.4.1:
-    resolution: {integrity: sha512-GIgdVNXhWgGq92NUSGVd4n2yiF1k0i6U3dt/Pa9SFJvOEJyAJ99khXVq6cYJYJS8jhbL0yjE8+th8h+KjIGzuA==}
-    dev: false
 
   /@next/swc-darwin-arm64@13.4.6:
     resolution: {integrity: sha512-ahi6VP98o4HV19rkOXPSUu+ovfHfUxbJQ7VVJ7gL2FnZRr7onEFC1oGQ6NQHpm8CxpIzSSBW79kumlFMOmZVjg==}
