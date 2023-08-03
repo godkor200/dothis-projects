@@ -1,52 +1,46 @@
-import './button.css';
+import clsx from 'clsx';
+import { forwardRef, PropsWithChildren } from 'react';
+
+import styles from './button.module.css';
 
 interface ButtonProps {
   /**
-   * Is this the principal call to action on the page?
+   Button Style Type (primary, outlined,taxted )
    */
-  primary?: boolean;
+  theme: 'primary' | 'outlined' | 'contained';
   /**
-   * What background color / color to use
+   Button 비활성화 유무
    */
-  backgroundColor?: string;
+  disabled?: boolean;
   /**
-   * How large should the button be?
+   Button 사이즈 (S,M,L)
    */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * Button contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
+  size: 'S' | 'M' | 'L';
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary
-    ? 'storybook-button--primary'
-    : 'storybook-button--secondary';
 
-  return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(
-        ' ',
-      )}
-      style={{ backgroundColor }}
-      {...props}
-    >
-      {label}
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
+  (
+    { theme = 'primary', size = 'S', disabled = false, children, ...props },
+    ref,
+  ) => {
+    const rootClassName = clsx(styles.root, styles[theme], styles[size]);
+
+    return (
+      <button
+        type="button"
+        className={rootClassName}
+        disabled={disabled}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+
+export { Button };

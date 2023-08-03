@@ -33,6 +33,7 @@ module.exports = {
     'prettier/prettier': 'warn',
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+    'import/no-unresolved': 'off',
     'react-refresh/only-export-components': [
       'warn',
       {
