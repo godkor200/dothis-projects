@@ -1,0 +1,11 @@
+.label {
+  @apply inline-block text-[14px] text-grey700 mb-[0.62rem];
+}
+
+.input {
+  @apply flex h-12 w-full rounded-lg border border-solid border-grey400 bg-grey00 px-6 py-3 text-[14px] text-grey900 placeholder:text-grey500 focus:outline-none focus:border-primary500 disabled:cursor-not-allowed disabled:bg-grey200;
+}
+
+.description {
+  @apply inline-block text-[12px] text-grey400 mt-2;
+}
