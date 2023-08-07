@@ -8,7 +8,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.service';
+import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import { IfindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
 const c = nestControllerContract(apiRouter.video);
 const { pathParams, summary, responses, description } = c.getVideo;

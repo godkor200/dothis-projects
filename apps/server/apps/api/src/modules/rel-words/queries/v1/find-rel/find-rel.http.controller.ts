@@ -14,7 +14,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindRelQuery } from './find-rel.query-handler';
+import { FindRelQuery } from '../../dtos/find-rel.dto';
 
 @ApiTags('연관어')
 @ApiCookieAuth()
@@ -36,10 +36,7 @@ export class FindRelHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async execute(
-    @Param() queryParams: FindRelRequestDto,
-    // @Cookies() cookie: { access_token: string },
-  ) {
+  async execute(@Param() queryParams: FindRelRequestDto) {
     return await this.queryBus.execute(new FindRelQuery(queryParams));
   }
 }

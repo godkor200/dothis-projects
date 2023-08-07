@@ -6,6 +6,7 @@ import { UserInfoCommandDto } from '@Apps/common/auth/v1/commands/google-login-r
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
+import { setCookie } from '@Libs/commons/src/util/setCookie';
 const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getGoogleRedirect;
 
@@ -28,10 +29,10 @@ export class GoogleLoginRedirectHttpController {
     const token: { accessToken: string; refreshToken: string } =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
-    res.cookie('Authorization', 'Bearer ' + token.accessToken);
-    res.cookie('refreshToken', token.refreshToken);
-    res.cookie('google_access_token', userInfo.googleAccessToken);
-    res.cookie('google_refresh_token', userInfo.googleRefreshToken);
+    setCookie(res, 'Authorization', 'Bearer ' + token.accessToken);
+    setCookie(res, 'refreshToken', token.refreshToken);
+    setCookie(res, 'google_access_token', userInfo.googleAccessToken);
+    setCookie(res, 'google_refresh_token', userInfo.googleRefreshToken);
     res.redirect(
       `http${
         process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
@@ -40,7 +41,7 @@ export class GoogleLoginRedirectHttpController {
       }://${
         process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
           ? 'localhost:3666'
-          : 'dothis.kr'
+          : 'www.dothis.kr'
       }/login/redirect`,
     );
 
