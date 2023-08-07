@@ -7,8 +7,11 @@ export const dailyViewApiUrl = '/daily-views';
 export const dailyViewApi = c.router({
   getDailyViews: {
     method: 'GET',
-    path: `${dailyViewApiUrl}/:relationKeyword`,
-    pathParams: { relationKeyword: z.string() },
+    path: `${dailyViewApiUrl}/:keyword/:relationKeyword`,
+    pathParams: z.object({
+      keyword: z.string(),
+      relationKeyword: z.string().optional(),
+    }),
     query: z.object({ from: z.string(), to: z.string() }),
     responses: {
       200: 'OK',
@@ -16,6 +19,7 @@ export const dailyViewApi = c.router({
       500: '서버에 문제가 있으면 리턴한다.',
     },
     summary: '데일리 뷰를 가져옵니다.',
-    description: 'params relationKeyword video를 찾아 옵니다.',
+    description:
+      'params relationKeyword video를 찾아 옵니다. 와서 video history 를 출력합니다.',
   },
 });
