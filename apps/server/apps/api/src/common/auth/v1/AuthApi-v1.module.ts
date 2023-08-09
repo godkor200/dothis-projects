@@ -2,7 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import { UserEntityModule } from '@Apps/modules/user/domain/user.entity.module';
 import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { GoogleLoginHttpController } from '@Apps/common/auth/v1/commands/google-login/goolgle-login.http.controller';
+import { GoogleLoginHttpController } from '@Apps/common/auth/v1/commands/google-login/google-login.http.controller';
 import { GoogleLoginRedirectHttpController } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserRepository } from '@Apps/modules/user/database/user.repository';
