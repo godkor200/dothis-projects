@@ -12,7 +12,6 @@ export class VideoHistoryQueryHandler
     fromDate: string,
     toDate: string,
   ): Promise<FindVideoHistoryResposne[]> {
-    console.log(videoIds, fromDate, toDate);
     const searchQuery = {
       index: 'new_video_history',
       body: {
@@ -26,7 +25,7 @@ export class VideoHistoryQueryHandler
               },
               {
                 range: {
-                  video_date: {
+                  crawled_date: {
                     gte: fromDate + ' 00:00:00', // 시작 날짜 (greater than or equal)
                     lte: toDate + ' 00:00:00', // 종료 날짜 (less than or equal)
                   },

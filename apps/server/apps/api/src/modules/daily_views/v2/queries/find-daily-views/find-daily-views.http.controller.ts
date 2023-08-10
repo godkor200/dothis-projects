@@ -1,10 +1,12 @@
 import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { apiRouter, VideoHistoryModel } from '@dothis/dto';
+
+import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/interface/find-daily-views.dto';
 const c = nestControllerContract(apiRouter.dailyViews);
+
 const { getDailyViews } = c;
 const { summary, description } = getDailyViews;
 
@@ -18,12 +20,18 @@ export class FindDailyViewsOsHttpController {
     summary,
     description,
   })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+    description: '비디오 히스토리 데이터',
+    type: VideoHistoryModel,
+  })
   async execute(
-    @Param() params: { keyword: string; relationKeyword?: string },
+    @Param('keyword') keyword: string,
+    @Query('relationKeyword') relationKeyword: string | undefined,
     @Query('from') from: Date,
     @Query('to') to: Date,
   ) {
-    const { keyword, relationKeyword } = params;
     const query = new FindDailyViewsQuery({
       keyword,
       relationKeyword,
