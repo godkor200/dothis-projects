@@ -18,7 +18,6 @@ export class FindDailyViewsQueryOsHandler
 
   async execute(query: FindDailyViewsQuery): Promise<any> {
     const videos = await this.video.findvideoIdfullScanAndVideos(query);
-
     return await this.videoHistory.findVideoHistory(
       videos,
       query.from.toString(),
