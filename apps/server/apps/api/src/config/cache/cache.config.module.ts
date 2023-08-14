@@ -14,6 +14,14 @@ export const cacheConfigAsync: RedisModuleAsyncOptions = {
   imports: [ConfigModule],
   useClass: RedisConfigService,
   inject: [ConfigService],
+  useFactory: (configService: ConfigService) => ({
+    config: {
+      host: configService.get<string>('REDIS_HOSTNAME'),
+      port: configService.get<number>('REDIS_PORT'),
+      password: configService.get<string>('REDIS_PASSWORD'),
+      db: 2, // 연관어 레디스 db
+    },
+  }),
 };
 
 @Module({

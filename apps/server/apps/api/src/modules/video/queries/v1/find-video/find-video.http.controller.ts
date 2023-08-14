@@ -10,10 +10,11 @@ import {
 } from '@nestjs/swagger';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import { IfindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
+import { VideoRes } from '@Libs/commons/src/types/dto.types';
 const c = nestControllerContract(apiRouter.video);
 const { pathParams, summary, responses, description } = c.getVideo;
 
-@ApiTags(pathParams)
+@ApiTags('영상')
 @Controller()
 export class FindVideoHttpController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -37,7 +38,7 @@ export class FindVideoHttpController {
     description: '연관어',
     example: '영화',
   })
-  @ApiOkResponse()
+  @ApiOkResponse({ type: VideoRes })
   @ApiNotFoundResponse()
   async execute(
     @Query('search') search: string,

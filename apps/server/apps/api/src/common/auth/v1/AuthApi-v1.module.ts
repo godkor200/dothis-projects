@@ -32,7 +32,6 @@ const repositories: Provider[] = [
   imports: [
     CqrsModule,
     UserEntityModule,
-    // ConfigModule.forRoot(),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1d' },

@@ -11,7 +11,7 @@ import { envDiscrimination } from '@Libs/commons/src/util/setCookie';
 const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getGoogleRedirect;
 
-@ApiTags(pathParams)
+@ApiTags('유저 인증')
 @Controller()
 export class GoogleLoginRedirectHttpController {
   constructor(private readonly commandBus: CommandBus) {}
