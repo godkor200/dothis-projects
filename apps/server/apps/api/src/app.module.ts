@@ -5,7 +5,6 @@ import dbConfig from 'apps/api/src/config/database/config/db.env';
 import cacheConfig from 'apps/api/src/config/cache/config/cache.env';
 import appConfig from 'apps/api/src/config/app/config/app.env';
 import awsConfig from '@Apps/config/aws/config/aws.env';
-import { CacheConfigModule } from 'apps/api/src/config/cache/cache.config.module';
 import { TypeormModule } from 'apps/api/src/config/database/database.module';
 
 import { HeathApiController } from 'apps/api/src/health.controller';
@@ -29,7 +28,6 @@ import { CommonModule } from '@Apps/common/common.module';
     }),
     ScheduleModule.forRoot(),
     TypeormModule,
-    CacheConfigModule,
     CommonModule,
     //module
     BusinessModules,
