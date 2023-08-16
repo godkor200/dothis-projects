@@ -2,16 +2,16 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { User } from '../domain/user.entity';
 import { Injectable } from '@nestjs/common';
-import { UserModel, userModel } from '@dothis/dto';
+import { zUserModel, TUserModel } from '@dothis/dto';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class UserRepository
-  extends SqlRepositoryBase<User, UserModel>
+  extends SqlRepositoryBase<User, TUserModel>
   implements UserRepositoryPort
 {
   protected tableName = 'User';
-  protected schema = userModel;
+  protected schema = zUserModel;
 
   @InjectRepository(User) protected readonly repository: Repository<User>;
 
