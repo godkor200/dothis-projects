@@ -12,11 +12,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import {
-  nestControllerContract,
-  TsRest,
-  NestRequestShapes,
-} from '@ts-rest/nest';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
