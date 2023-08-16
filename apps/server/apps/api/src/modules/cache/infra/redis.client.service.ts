@@ -9,4 +9,15 @@ export class RedisClientService {
   constructor(protected readonly redisService: RedisService) {
     this.redisClient = this.redisService.getClient();
   }
+  async findAllKeys(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      this.redisClient.keys('*', (err, keys) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(keys);
+        }
+      });
+    });
+  }
 }

@@ -19,7 +19,7 @@ import { apiRouter } from '@dothis/dto';
 const c = nestControllerContract(apiRouter.user);
 const { pathParams, summary, responses, description } = c.getUser;
 type RequestShapes = NestRequestShapes<typeof c>;
-@ApiTags(pathParams)
+@ApiTags('유저 관련')
 @Controller()
 export class GetUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}

@@ -3,6 +3,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { FindKeywordTagByUserCommand } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import {
   ApiBearerAuth,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -24,7 +25,7 @@ const c = nestControllerContract(apiRouter.user);
 const { pathParams, summary, responses, description } = c.getUserKeyword;
 type RequestShapes = NestRequestShapes<typeof c>;
 
-@ApiTags(pathParams)
+@ApiTags('유저 관련')
 @Controller()
 export class GetKeywordByUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
@@ -39,6 +40,12 @@ export class GetKeywordByUserHttpController {
     description: '유저의 태그나 키워드를 찾아 옵니다.',
     type: ChannelKeywordOrtagDtos,
   })
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+    },
+  ])
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: responses[404],

@@ -21,7 +21,7 @@ import { apiRouter } from '@dothis/dto';
 const c = nestControllerContract(apiRouter.user);
 const { getUserChannelData } = c;
 const { responses, description, summary, pathParams } = getUserChannelData;
-@ApiTags(pathParams)
+@ApiTags('유저 관련')
 @Controller()
 @ApiCookieAuth()
 export class GetChannelDataHttpController {

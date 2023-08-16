@@ -11,6 +11,7 @@ export class FindRelQueryHandler
 {
   @Inject(RELWORDS_DI_TOKEN.FIND_ONE) private readonly query: FindRelAdapter;
   execute(query: FindRelQuery): Promise<RelatedWordsEntity> {
+    console.log('내가 볼떈 여긴데');
     return this.query.findOneByKeyword(query.keyword);
   }
 }

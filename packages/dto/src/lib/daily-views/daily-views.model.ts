@@ -27,8 +27,3 @@ export const zVideoHistory = z.object({
 });
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
-
-export type TVideoHistoryModel = z.TypeOf<typeof zVideoHistory>;
-
-export interface IVideoHistory extends TVideoHistoryModel {}
-export class VideoHistoryModel implements IVideoHistory {}
