@@ -10,7 +10,7 @@ import { apiRouter } from '@dothis/dto';
 import { GoogleOAuthGuard } from '@Libs/commons/src';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const { getGoogleLogin } = nestControllerContract(apiRouter.auth);
-const { pathParams, description, summary, responses } = getGoogleLogin;
+const { description, summary, responses } = getGoogleLogin;
 @ApiTags('유저 인증')
 @Controller()
 export class GoogleLoginHttpController {
