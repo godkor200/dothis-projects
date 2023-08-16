@@ -12,18 +12,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import {
-  nestControllerContract,
-  TsRest,
-  NestRequestShapes,
-} from '@ts-rest/nest';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { UserInfoCommandDto } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 const c = nestControllerContract(apiRouter.user);
-const { pathParams, summary, responses, description } = c.getUserKeyword;
-type RequestShapes = NestRequestShapes<typeof c>;
+const { summary, responses, description } = c.getUserKeyword;
 
 @ApiTags('유저 관련')
 @Controller()

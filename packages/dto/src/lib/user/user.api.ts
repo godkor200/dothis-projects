@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { userModel } from './user.model';
+import { zUserModel } from './user.model';
 
 export const userBaseApiUrl = '/user';
 
@@ -11,7 +11,7 @@ export const userApi = c.router({
     pathParams: userBaseApiUrl,
     query: z.object({ search: z.string() }),
     responses: {
-      200: userModel,
+      200: zUserModel,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },

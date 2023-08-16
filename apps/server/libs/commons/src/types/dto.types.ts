@@ -1,13 +1,13 @@
 import { extendApi } from '@anatine/zod-openapi';
 import { createZodDto } from '@anatine/zod-nestjs';
 import {
-  userModel,
+  zUserModel,
   zRelWordsArray,
   zVideoHistory,
   zVideoModel,
 } from '@dothis/dto';
-export class UserDto extends createZodDto(extendApi(userModel)) {}
-
+export class UserDto extends createZodDto(extendApi(zUserModel)) {}
+export class UserRes extends UserDto {}
 export class VideoHistoryRes extends createZodDto(extendApi(zVideoHistory)) {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}

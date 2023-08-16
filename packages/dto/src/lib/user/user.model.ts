@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const userModel = z.object({
+export const zUserModel = z.object({
   id: z.number().nullable().describe('The id of user'),
   userEmail: z.string().email().max(30).nullable().describe('user email'),
   channelId: z.number().nullable().describe('User Channel-id'),
@@ -18,4 +18,4 @@ export const userModel = z.object({
     .describe('The date which the user was created'),
 });
 
-export type UserModel = z.TypeOf<typeof userModel>;
+export type TUserModel = z.TypeOf<typeof zUserModel>;
