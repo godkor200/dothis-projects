@@ -2,7 +2,7 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { CookieOptions, Request, Response } from 'express';
 import { GoogleOAuthGuard, User } from '@Libs/commons/src';
 import { CommandBus } from '@nestjs/cqrs';
-import { UserInfoCommandDto } from '@Apps/common/auth/v1/commands/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
@@ -31,10 +31,11 @@ export class GoogleLoginRedirectHttpController {
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
     const options: CookieOptions = {
-      domain: envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
       httpOnly: true,
     };
+
     res.cookie('Authorization', 'Bearer ' + token.accessToken, options);
     res.cookie('refreshToken', token.refreshToken, options);
     res.cookie('google_access_token', userInfo.googleAccessToken, options);

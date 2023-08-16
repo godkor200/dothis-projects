@@ -4,7 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CookieOptions, Request, Response } from 'express';
 import { apiRouter } from '@dothis/dto';
 import { Cookies } from '@Libs/commons/src';
-import { TokenDto } from '@Apps/common/auth/v1/commands/verify-token/verify-token.service';
+import { TokenDto } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -45,7 +45,7 @@ export class VerifyTokenHttpController {
     });
     const result = await this.commandBus.execute(tokenDto);
     const options: CookieOptions = {
-      domain: envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
       httpOnly: true,
     };
