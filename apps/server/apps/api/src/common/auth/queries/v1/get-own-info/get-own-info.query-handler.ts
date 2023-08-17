@@ -1,8 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  GetOwnInfoOutboundPort,
-  GetOwnInfoQuery,
-} from '@Apps/common/auth/interface/get-own-info.interface';
+import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interface';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';

@@ -4,6 +4,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -16,6 +17,7 @@ import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interf
 const { getOwnInfo } = nestControllerContract(apiRouter.auth);
 import { User as UserEntity } from '@Apps/modules/user/domain/user.entity';
 import { UserRes } from '@Libs/commons/src/types/dto.types';
+const { summary, description } = getOwnInfo;
 
 @ApiTags('유저 인증')
 @Controller()
@@ -27,6 +29,10 @@ export class GetOwnInfoHttpController {
   @ApiOkResponse({
     description: '유저의 정보를 찾아 옵니다.',
     type: UserRes,
+  })
+  @ApiOperation({
+    summary,
+    description,
   })
   @ApiHeaders([
     {
