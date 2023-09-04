@@ -1,28 +1,17 @@
-import dynamic from 'next/dynamic';
-
 import ChartSidebar from '@/components/Chart/ChartSidebar/ChartSidebar';
-import CumulativeVideoChartFilter from '@/components/Chart/DashBoard/CumulativeVideoChartFilter';
 import DashBoard from '@/components/Chart/DashBoard/DashBoard';
-
-// const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
-//   ssr: false,
-// });
-
-// const MyResponsivePie = dynamic(() => import('../../../components/chart/Test'));
+import ContentCard from '@/components/common/ContentCard/ContentCard';
+import ContentCardHeader from '@/components/common/ContentCard/ContentCardHeader';
 
 const ChartPage = () => {
   return (
-    <div className=" w-full px-12 py-[60px] bg-grey200">
-      {/* <LineChart /> */}
-      <div className="flex mb-5">
-        <div>캘린더 위치</div>
-        <CumulativeVideoChartFilter />
-      </div>
+    <ContentCard className="mb-[2.25rem]">
+      <ContentCardHeader title="콘텐츠 소재" />
       <div className="flex">
         <ChartSidebar />
         <DashBoard />
       </div>
-    </div>
+    </ContentCard>
   );
 };
 

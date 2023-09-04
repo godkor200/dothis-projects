@@ -82,7 +82,7 @@ const DailyViewChart = () => {
     <ResponsiveLine
       data={DAILYVIEW_DATA}
       margin={{ top: 50, left: 60 }}
-      lineWidth={3}
+      lineWidth={2}
       colors={['#F0516D']}
       curve="catmullRom"
       xScale={{
@@ -152,11 +152,16 @@ const DailyViewChart = () => {
         },
       ]}
       theme={{
+        fontFamily: 'Pretendard',
+        legends: {
+          text: { fontSize: 12, fontWeight: 500 },
+        },
         axis: {
           ticks: {
             text: {
               fill: '#71717A',
               fontSize: 12,
+              fontWeight: 500,
             },
           },
         },

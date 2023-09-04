@@ -46,7 +46,7 @@ const ExpectedViewChart = () => {
     <ResponsiveLine
       data={EXPECTEDVIEW_DATA}
       margin={{ bottom: 50, left: 60 }}
-      lineWidth={3}
+      lineWidth={2}
       colors={['#818CF8']}
       curve="catmullRom"
       xScale={{
@@ -117,11 +117,16 @@ const ExpectedViewChart = () => {
         },
       ]}
       theme={{
+        fontFamily: 'Pretendard',
+        legends: {
+          text: { fontSize: 12, fontWeight: 500 },
+        },
         axis: {
           ticks: {
             text: {
               fill: '#71717A',
               fontSize: 12,
+              fontWeight: 500,
             },
           },
         },

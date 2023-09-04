@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <NavSlider />
       <Header />
-      <>{children}</>
+      <div className="bg-grey100 pt-[5rem]">{children}</div>
     </>
   );
 };

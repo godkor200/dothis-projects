@@ -22,12 +22,12 @@ const data = [
 
 const CumulativeVideoChart = () => {
   return (
-    <div className="flex flex-col h-full p-6 font-bold rounded-8 border border-grey400 bg-grey00 text-grey600">
+    <div className="flex flex-col h-[368px] p-6 font-bold rounded-8 border border-grey400 bg-grey00 text-grey600">
       <div>누적 영상 수</div>
       <div className="relative h-full">
-        <div className="absolute top-[94px] left-2/4 translate-x-[-50%] flex flex-col justify-center items-center">
+        <div className="absolute top-[82px] left-2/4 translate-x-[-50%] flex flex-col justify-center items-center">
           <div>전체 영상</div>
-          <div>
+          <div className="text-[20px]">
             <span className="text-primary500">1만 6,420</span>개
           </div>
         </div>
@@ -35,9 +35,7 @@ const CumulativeVideoChart = () => {
           data={data}
           margin={{ top: 26, bottom: 100 }}
           sortByValue={true}
-          innerRadius={0.75}
-          padAngle={0.7}
-          cornerRadius={3}
+          innerRadius={0.8}
           activeOuterRadiusOffset={8}
           colors={['#f07288', '#f7b4c0', '#fde7eb']}
           borderColor={{
@@ -79,6 +77,12 @@ const CumulativeVideoChart = () => {
               ],
             },
           ]}
+          theme={{
+            fontFamily: 'Pretendard',
+            legends: {
+              text: { fontSize: 12, fontWeight: 500 },
+            },
+          }}
         />
       </div>
     </div>

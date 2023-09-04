@@ -10,11 +10,11 @@ export const VIEWCHART_LABEL = {
 
 const DashBoard = () => {
   return (
-    <div className="grow ml-4 p-10 rounded-lg border border-solid border-grey400 bg-grey00">
+    <div className="grow ml-5 pt-[2.5rem] bg-grey00">
       <Summary />
       <div className="flex w-full h-[520px]">
         <ViewChart />
-        <div className="flex flex-col">
+        <div className="flex flex-col min-w-[18.12rem] [&_text]:font-bold">
           <DailyView view={913192} />
           <CumulativeVideoChart />
         </div>
