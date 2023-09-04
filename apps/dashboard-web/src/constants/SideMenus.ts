@@ -12,21 +12,21 @@ export const SIDE_MENUS: SideMenus[] = [
     icon: 'SideMain',
     link: '/chart',
   },
-  {
-    title: '인기 영상 분석',
-    icon: 'SideMagicPen',
-    link: '/chart2',
-  },
+  // {
+  //   title: '인기 영상 분석',
+  //   icon: 'SideMagicPen',
+  //   link: '/chart2',
+  // },
   {
     title: '내 채널 분석',
     icon: 'SideUser',
     link: '/chart3',
   },
-  {
-    title: '인기 키워드 분석',
-    icon: 'SideTrendUp',
-    link: '/chart4',
-  },
+  // {
+  //   title: '인기 키워드 분석',
+  //   icon: 'SideTrendUp',
+  //   link: '/chart4',
+  // },
   {
     title: '커뮤니티',
     icon: 'SideMessage',

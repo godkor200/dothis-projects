@@ -5,14 +5,14 @@ import SideBar from '@/layouts/MainLayout/SideBar';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <div className="flex">
       <SideBar />
-      <div className="ml-24">
+      <div className="w-[1342px] mx-auto">
         <GNB />
         <>{children}</>
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

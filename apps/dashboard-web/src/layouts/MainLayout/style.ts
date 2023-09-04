@@ -76,8 +76,8 @@ export const IconWrapper = styled.div<{ $isInActive: boolean }>`
 export const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  gap: 7.5rem;
-  position: fixed;
+  gap: 3.75rem;
+
   width: 6rem;
   height: 100vh;
   padding: 1.5rem;

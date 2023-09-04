@@ -16,7 +16,7 @@ const SideBar = () => {
   return (
     <Style.Container>
       <SvgComp icon="SideLogo" size={50} />
-      <div className="flex flex-col gap-[5rem]">
+      <div className="flex flex-col gap-[2.5rem]">
         {SIDE_MENUS.map((item) => (
           <Style.IconWrapper $isInActive={pathName !== item.link}>
             <Style.IconBox>
