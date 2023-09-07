@@ -16,4 +16,5 @@ export const validationSchema = Joi.object({
   AWS_CREDENTIAL_KEY: Joi.string().required(),
   AWS_CREDENTIAL_SECRET: Joi.string().required(),
   AWS_REGION: Joi.string().required(),
+  NODE_ENV: Joi.string().required(),
 });
