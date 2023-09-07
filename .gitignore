@@ -44,3 +44,10 @@ sw.js.map
 sw.js
 dist
 storybook-static
+
+#database cache
+apps/server/data
+apps/server/db/redis
+/apps/dashboard-web/.open-next/
+/apps/server/db/data/mysql/
+/apps/dashboard-web/.sst/
