@@ -7,14 +7,17 @@ import { FindRelQueryHandler } from '@Apps/modules/rel-words/queries/v2/find-rel
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { RedisConfigService } from '@Apps/config/cache/config/cache.config';
+import { FindAutoCompleteHttpController } from '@Apps/modules/rel-words/queries/v2/find-auto-complete/find-auto-complete.http.controller';
+import { FindAutoCompleteQueryHandler } from '@Apps/modules/rel-words/queries/v2/find-auto-complete/find-auto-complete.query-handler';
 
-const controllers = [FindRelHttpV2Controller];
+const controllers = [FindAutoCompleteHttpController];
 const repositories: Provider[] = [
   {
     provide: RELWORDS_DI_TOKEN.FIND_ONE_BY_ELASTICACHE,
     useClass: FindRelCache,
   },
   FindRelQueryHandler,
+  FindAutoCompleteQueryHandler,
 ];
 @Module({
   imports: [
