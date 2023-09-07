@@ -32,11 +32,8 @@ export class User {
   @Column({ name: 'date_sign_in' })
   dateSignIn: Date;
 
-  // @OneToMany(
-  //   (type) => UserChannelData,
-  //   (userChanelData) => userChanelData.userId,
-  // )
-  // UserChannelData: UserChannelData[];
+  @Column({ name: 'personalization_tag' })
+  personalizationTag: string;
 
   @OneToMany((type) => Membership, (Membership) => Membership.userId)
   Membership: Membership[];
