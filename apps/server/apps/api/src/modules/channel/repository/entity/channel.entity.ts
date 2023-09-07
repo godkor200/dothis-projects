@@ -8,12 +8,11 @@ import {
 } from 'typeorm';
 
 import { User } from '@Apps/modules/user/domain/user.entity';
-import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
 
 @Entity({ name: 'channel' })
 export class ChannelEntity {
-  @PrimaryGeneratedColumn({ name: 'channel_id' })
-  id: string;
+  @PrimaryGeneratedColumn({ type: 'int', name: 'channel_id' })
+  id: number;
 
   @Column('int', { name: 'user_id' })
   userId: number;
@@ -46,9 +45,6 @@ export class ChannelEntity {
   url: string;
 
   @ManyToOne((type) => User, (user) => user.channel)
-  @JoinColumn({ name: 'channel_id', referencedColumnName: 'channelId' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
-
-  @OneToMany((type) => ChannelEntity, (channel) => channel.id)
-  video: VideoEntity[];
 }
