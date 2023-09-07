@@ -11,8 +11,15 @@ import { ChannelDataRepository } from '@Apps/modules/channel/repository/db/chann
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/channel.entity.module';
+import { UpdatePersonalTagHttpController } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.http.controller';
+import { UpdateAutoCompleteWordsCommandHandler } from '@Apps/modules/rel-words/command/v1/update-auto-complete-words/update-auto-complete-words.command-handler';
+import { UpdatePersonalTagCommandHandler } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.command-handler';
 
-const httpControllers = [GetUserHttpController, GetChannelDataHttpController];
+const httpControllers = [
+  GetUserHttpController,
+  GetChannelDataHttpController,
+  UpdatePersonalTagHttpController,
+];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
@@ -25,6 +32,7 @@ const repositories: Provider[] = [
 const commandHandlers: Provider[] = [
   GetChannelDataCommandHandler,
   GetUserCommandHandler,
+  UpdatePersonalTagCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [];
