@@ -1,9 +1,7 @@
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import {
-  MySqlConfigModule,
-  TypeOrmConfigService,
-} from 'apps/api/src/config/database/database.mysql';
+import { TypeOrmConfigService } from 'apps/api/src/config/database/database.mysql';
+import { MySqlConfigModule } from '@Apps/config/database/mysql-config.module';
 
 export const typeOrmConfigAsync: TypeOrmModuleAsyncOptions = {
   imports: [MySqlConfigModule],
