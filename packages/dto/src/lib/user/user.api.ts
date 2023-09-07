@@ -45,4 +45,16 @@ export const userApi = c.router({
     summary: '유저 채널 키워드 겟하기',
     description: '유저의 채널 키워드를 가져온다',
   },
+  putUpdatePersonalTag: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/:id`,
+    responses: {
+      200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: z.object({ tag: z.array(z.string()) }),
+    summary: '유저 개인화 태그 넣기',
+    description: '유저 개인화 태그 넣기',
+  },
 });
