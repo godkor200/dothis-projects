@@ -112,6 +112,20 @@
     "start:dev-scheduler": {
       "cache": false,
       "outputs": ["dist/**/*"]
+    },
+    "typeorm-create": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-run": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },   "typeorm-generate": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },   "typeorm-revert": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
     }
   },
   "globalEnv": [
