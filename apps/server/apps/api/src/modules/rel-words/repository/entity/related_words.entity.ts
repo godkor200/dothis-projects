@@ -10,4 +10,7 @@ export class RelatedWordsEntity {
 
   @Column({ name: 'rel_words' })
   relWords: string;
+
+  @Column({ name: 'cluster' })
+  cluster: string;
 }
