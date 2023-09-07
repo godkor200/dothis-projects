@@ -10,11 +10,13 @@ import {
   ApiConflictResponse,
   ApiCookieAuth,
   ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindRelQuery } from '../../dtos/find-rel.dto';
+import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
 
 @ApiTags('연관어')
 @ApiCookieAuth()
@@ -27,16 +29,22 @@ export class FindRelHttpController {
     summary,
     description,
   })
+  @ApiParam({
+    name: '탐색어',
+  })
   @ApiOkResponse({
     description: `데이터를 보냅니다.`,
   })
   @ApiConflictResponse({
     description: responses[401],
   })
+  @ApiNotFoundResponse({
+    description: responses[404],
+  })
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
   async execute(@Param() queryParams: FindRelRequestDto) {
-    return await this.queryBus.execute(new FindRelQuery(queryParams));
+    return await this.queryBus.execute(new FindRelV1Query(queryParams));
   }
 }
