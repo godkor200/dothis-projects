@@ -1,6 +1,7 @@
 import { Body, Controller, HttpStatus, Req, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
+  ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -37,9 +38,14 @@ export class UpdatePersonalTagHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
+  @ApiBody({
+    isArray: true,
+    type: 'string',
+    description: "['먹방#', '카페#', 'ASMR', '여행', '제주도']",
+    required: true,
+  })
   @ApiOkResponse({
-    description: '유저 찾아옵니다.',
-    type: UserDto,
+    description: '성공여부를 리턴합니다.',
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
