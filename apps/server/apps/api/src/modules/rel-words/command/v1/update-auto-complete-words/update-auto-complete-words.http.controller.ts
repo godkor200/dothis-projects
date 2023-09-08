@@ -12,8 +12,8 @@ export class UpdateAutoCompleteWordsHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @TsRest(c.updateAutoCompleteWords)
-  async execute(): Promise<IResDto> {
+  async execute(): Promise<IResDto<void>> {
     const command = new UpdateAutoCompleteWordsCommandDto({});
-    return { success: true, data: await this.commandBus.execute(command) };
+    if (await this.commandBus.execute(command)) return { success: true };
   }
 }
