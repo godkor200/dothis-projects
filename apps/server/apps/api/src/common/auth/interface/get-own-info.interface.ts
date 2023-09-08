@@ -14,3 +14,10 @@ export class GetOwnInfoQuery implements IQuery {
     Object.assign(this, props);
   }
 }
+
+export interface IDecodeToken {
+  id: number;
+  userEmail: string;
+  iat: number;
+  exp: number;
+}
