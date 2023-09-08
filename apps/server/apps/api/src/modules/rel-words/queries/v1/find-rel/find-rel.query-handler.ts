@@ -3,15 +3,14 @@ import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelAdapter } from '../../../interface/find-rel.adapter';
 import { RelatedWordsEntity } from '@Apps/modules/rel-words/repository/entity/related_words.entity';
-import { FindRelQuery } from '@Apps/modules/rel-words/queries/dtos/find-rel.dto';
+import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
 
-@QueryHandler(FindRelQuery)
+@QueryHandler(FindRelV1Query)
 export class FindRelQueryHandler
-  implements IQueryHandler<FindRelQuery, RelatedWordsEntity>
+  implements IQueryHandler<FindRelV1Query, RelatedWordsEntity>
 {
   @Inject(RELWORDS_DI_TOKEN.FIND_ONE) private readonly query: FindRelAdapter;
-  execute(query: FindRelQuery): Promise<RelatedWordsEntity> {
-    console.log('내가 볼떈 여긴데');
+  execute(query: FindRelV1Query): Promise<RelatedWordsEntity> {
     return this.query.findOneByKeyword(query.keyword);
   }
 }

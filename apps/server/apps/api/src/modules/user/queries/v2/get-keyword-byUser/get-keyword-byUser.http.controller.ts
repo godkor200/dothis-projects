@@ -54,7 +54,7 @@ export class GetKeywordByUserHttpController {
     @User() userInfo: UserInfoCommandDto,
   ): Promise<ChannelKeywordOrtagDtos> {
     const command = new FindKeywordTagByUserCommand({
-      userId: userInfo.id,
+      userId: userInfo.id.toString(),
     });
     return await this.commandBus.execute(command);
   }

@@ -11,7 +11,7 @@ import {
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { FindRelRequestDto } from '@Apps/modules/rel-words/queries/v1/find-rel/find-rel.request.dto';
-import { FindRelQuery } from '@Apps/modules/rel-words/queries/dtos/find-rel.dto';
+import { FindRelV2Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
 import { RelwordsRes } from '@Libs/commons/src/types/dto.types';
 const c = nestControllerContract(apiRouter.relwords);
 const { getRelWords } = c;
@@ -41,6 +41,6 @@ export class FindRelHttpV2Controller {
     description: responses[500],
   })
   async execute(@Param() queryParams: FindRelRequestDto): Promise<string> {
-    return await this.queryBus.execute(new FindRelQuery(queryParams));
+    return await this.queryBus.execute(new FindRelV2Query(queryParams));
   }
 }

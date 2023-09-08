@@ -19,10 +19,7 @@ import { CommonModule } from '@Apps/common/common.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'development'
-          ? 'development.env'
-          : 'production.env',
+      envFilePath: `${process.env.NODE_ENV}.env`,
       load: [dbConfig, cacheConfig, appConfig, awsConfig],
       validationSchema,
     }),

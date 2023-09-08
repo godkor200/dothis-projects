@@ -2,4 +2,6 @@ import { RelatedWordsEntity } from 'apps/api/src/modules/rel-words/repository/en
 
 export interface FindRelAdapter {
   findOneByKeyword: (option: string) => Promise<RelatedWordsEntity>;
+
+  findAllKeyword: () => Promise<string[]>;
 }

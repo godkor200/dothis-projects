@@ -6,7 +6,7 @@ import { CHANNEL_DATA_REPOSITORY_BY_OS } from '@Apps/modules/channel/constants/c
 import { ChannelAdapter } from '@Apps/modules/channel/interface/channel.adapter';
 
 export class FindKeywordTagByUserCommand {
-  public readonly userId;
+  public readonly userId: string;
   constructor(props: FindKeywordTagByUserCommand) {
     this.userId = props.userId;
   }

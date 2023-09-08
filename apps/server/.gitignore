@@ -13,7 +13,7 @@ lerna-debug.log*
 
 #database cache
 /data
-/redis
+/db/redis
 
 # OS
 .DS_Store

@@ -19,7 +19,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./e2e/jest-e2e.json"
+    "test:e2e": "jest --config ./e2e/jest-e2e.json",
+    "typeorm": "cross-env NODE_ENV=development ts-node ./node_modules/typeorm/cli.js",
+    "typeorm-prod": "cross-env NODE_ENV=production ts-node ./node_modules/typeorm/cli.js",
+    "typeorm-create": "npm run typeorm -- migration:create apps/api/src/migrations/migration",
+    "typeorm-run": "npm run typeorm migration:run -- -d apps/api/src/typeorm.config.ts",
+    "typeorm-generate": "npm run typeorm -- -d apps/api/src/typeorm.config.ts migration:generate apps/api/src/migrations/migration",
+    "typeorm-revert": "npm run typeorm -- -d apps/api/src/typeorm.config.ts migration:revert",
+    "typeorm-create:prod": "npm run typeorm-prod -- migration:create apps/api/src/migrations/migration",
+    "typeorm-run:prod": "npm run typeorm-prod migration:run -- -d apps/api/src/typeorm.config.ts",
+    "typeorm-generate:prod": "npm run typeorm-prod -- -d apps/api/src/typeorm.config.ts migration:generate apps/api/src/migrations/migration",
+    "typeorm-revert:prod": "npm run typeorm-prod -- -d apps/api/src/typeorm.config.ts migration:revert"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "^1.9.2",
