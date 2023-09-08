@@ -3,7 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -11,40 +10,43 @@ import { User } from '@Apps/modules/user/domain/user.entity';
 
 @Entity({ name: 'channel' })
 export class ChannelEntity {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'channel_id' })
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column('int', { name: 'user_id' })
-  userId: number;
+  @Column({ type: 'int', nullable: false, name: 'user_id' })
+  userId?: number;
 
-  @Column('varchar', { name: 'channel_name' })
+  @Column({ type: 'varchar', length: 50, name: 'channel_id' })
+  channelId: string;
+
+  @Column({ type: 'varchar', length: 100, name: 'channel_name' })
   channelName: string;
 
-  @Column('varchar', { name: 'channel_country' })
-  country: string;
+  @Column('varchar', { length: 30, nullable: true, name: 'channel_country' })
+  country?: string;
 
-  @Column('varchar', { name: 'channel_description' })
+  @Column('text', { nullable: true, name: 'channel_description' })
   description: string;
 
-  @Column('varchar', { name: 'channel_keyword' })
+  @Column('text', { nullable: true, name: 'channel_keyword' })
   keyword: string;
 
-  @Column('varchar', { name: 'channel_link' })
+  @Column('text', { nullable: true, name: 'channel_link' })
   link: string;
 
-  @Column('date', { name: 'channel_since' })
+  @Column('varchar', { length: 30, name: 'channel_since' })
   since: Date;
 
-  @Column({ name: 'channel_subscriber' })
+  @Column('int', { nullable: true, name: 'channel_subscriber' })
   subscriber: number;
 
-  @Column('varchar', { name: 'channel_tag' })
+  @Column('text', { nullable: true, name: 'channel_tag' })
   tag: string;
 
-  @Column('varchar', { name: 'channel_url' })
+  @Column('varchar', { length: 100, name: 'channel_url' })
   url: string;
 
   @ManyToOne((type) => User, (user) => user.channel)
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }

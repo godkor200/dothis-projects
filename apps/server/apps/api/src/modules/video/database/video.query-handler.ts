@@ -87,7 +87,7 @@ export class VideoQueryHandler
   ): Promise<string[]> {
     console.log(query);
     let searchQuery = {
-      index: 'new_video',
+      index: 'video-6',
       scroll: '10s',
       size: 10000,
       body: {
