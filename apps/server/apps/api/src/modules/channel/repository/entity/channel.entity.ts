@@ -13,7 +13,7 @@ export class ChannelEntity {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ type: 'int', nullable: false, name: 'user_id' })
+  @Column({ type: 'int', nullable: true, name: 'user_id' })
   userId?: number;
 
   @Column({ type: 'varchar', length: 50, name: 'channel_id' })
