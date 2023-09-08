@@ -28,6 +28,7 @@ const repositories: Provider[] = [
     useClass: ChannelDataRepository,
   },
 ];
+const strategies: Provider[] = [];
 
 const commandHandlers: Provider[] = [
   GetChannelDataCommandHandler,
@@ -44,6 +45,11 @@ const queryHandlers: Provider[] = [];
     ChannelEntityModule,
   ],
   controllers: [...httpControllers],
-  providers: [...repositories, ...commandHandlers, ...queryHandlers],
+  providers: [
+    ...repositories,
+    ...commandHandlers,
+    ...queryHandlers,
+    ...strategies,
+  ],
 })
 export class UserApiV1Module {}
