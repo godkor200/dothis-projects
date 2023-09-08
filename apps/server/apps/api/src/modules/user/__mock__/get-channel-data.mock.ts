@@ -12,7 +12,7 @@ export class ChannelDataMock implements ChannelDataRepositoryPort {
   constructor(result: ChannelEntity) {
     this.result = result;
   }
-  updateOne(option: updateObject): Promise<IResDto> {
+  updateOne(option: updateObject): Promise<IResDto<void>> {
     throw new Error('Method not implemented.');
   }
   delete(id: string): Promise<boolean> {
@@ -37,7 +37,7 @@ export class ChannelDataMock implements ChannelDataRepositoryPort {
     return Promise.resolve(undefined);
   }
 
-  insert(entity: ChannelEntity): Promise<IResDto> {
+  insert(entity: ChannelEntity): Promise<IResDto<void>> {
     return Promise.resolve({ success: true });
   }
 

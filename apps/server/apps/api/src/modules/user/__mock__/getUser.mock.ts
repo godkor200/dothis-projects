@@ -9,7 +9,7 @@ export class MockGetUser implements UserRepositoryPort {
   constructor(result: User) {
     this.result = result;
   }
-  updateOne(option: updateObject): Promise<IResDto> {
+  updateOne(option: updateObject): Promise<IResDto<void>> {
     throw new Error('Method not implemented.');
   }
 
@@ -33,7 +33,7 @@ export class MockGetUser implements UserRepositoryPort {
     return Promise.resolve(undefined);
   }
 
-  insert(entity: User): Promise<IResDto> {
+  insert(entity: User): Promise<IResDto<void>> {
     return Promise.resolve({ success: true });
   }
 
