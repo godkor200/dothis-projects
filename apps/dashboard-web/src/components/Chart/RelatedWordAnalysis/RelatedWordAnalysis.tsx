@@ -1,4 +1,4 @@
-import CumulativeVideoChart from './CumulativeVideoChart';
+import CumulativeVideoChart from './CumulativeVideoChart/CumulativeVideoChart';
 import DailyView from './DailyView';
 import Summary from './Summary';
 import ViewChart from './ViewChart/ViewChart';
@@ -8,7 +8,7 @@ export const VIEWCHART_LABEL = {
   EXPECTEDVIEW: '기대 조회수',
 } as const;
 
-const DashBoard = () => {
+const RelatedWordAnalysis = () => {
   return (
     <div className="grow ml-5 pt-[2.5rem] bg-grey00">
       <Summary />
@@ -23,4 +23,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default RelatedWordAnalysis;

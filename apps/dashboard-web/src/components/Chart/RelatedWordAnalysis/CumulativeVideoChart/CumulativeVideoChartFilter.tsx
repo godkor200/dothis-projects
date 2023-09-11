@@ -4,7 +4,7 @@ import CheckboxContainer from '@/components/common/Checkbox';
 
 const CumulativeVideoChartFilter = () => {
   return (
-    <div className="flex gap-[1.5rem] ml-auto ">
+    <div className="ml-auto flex gap-[1.5rem] ">
       <CheckboxContainer
         isChecked={true}
         onChange={() => console.log('checked1')}

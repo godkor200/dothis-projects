@@ -1,17 +1,12 @@
-import ChartSidebar from '@/components/Chart/ChartSidebar/ChartSidebar';
-import DashBoard from '@/components/Chart/DashBoard/DashBoard';
-import ContentCard from '@/components/common/ContentCard/ContentCard';
-import ContentCardHeader from '@/components/common/ContentCard/ContentCardHeader';
+import ContentTopic from '@/features/chart/ContentTopic';
+import SocialMedia from '@/features/chart/SocialMedia';
 
 const ChartPage = () => {
   return (
-    <ContentCard className="mb-[2.25rem]">
-      <ContentCardHeader title="콘텐츠 소재" />
-      <div className="flex">
-        <ChartSidebar />
-        <DashBoard />
-      </div>
-    </ContentCard>
+    <>
+      <ContentTopic />
+      <SocialMedia />
+    </>
   );
 };
 

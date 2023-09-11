@@ -6,11 +6,11 @@ import { RELATED_WORDS } from '@/mocks';
 
 import RelatedWord from './RelatedWord';
 
-const ChartSidebar = () => {
+const RelatedWordRanking = () => {
   const [selectedRelatedWord, setSelectedRelatedWord] = useState(1);
 
   return (
-    <div className="flex flex-col gap-[1.2rem] w-[11.8rem] h-full py-[2.5rem] pr-[1.25rem] border-r border-solid border-grey300 bg-grey00">
+    <div className="flex h-full w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid border-grey300 bg-grey00 py-[2.5rem] pr-[1.25rem]">
       {RELATED_WORDS.map((relatedWord) => (
         <RelatedWord
           key={relatedWord.id}
@@ -23,4 +23,4 @@ const ChartSidebar = () => {
   );
 };
 
-export default ChartSidebar;
+export default RelatedWordRanking;

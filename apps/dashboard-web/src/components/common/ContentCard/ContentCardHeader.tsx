@@ -9,7 +9,7 @@ const ContentCardHeader = ({
   title,
 }: PropsWithChildren<ContentCardHeaderProps>) => {
   return (
-    <header className="pb-[30px] border-b border-solid border-grey300 bg-grey00">
+    <header className="border-b border-solid border-grey300 bg-grey00 pb-[30px]">
       <h1 className="text-[32px] font-bold">{title}</h1>
       <div>{children}</div>
     </header>
