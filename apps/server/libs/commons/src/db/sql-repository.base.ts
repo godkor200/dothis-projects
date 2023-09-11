@@ -1,4 +1,5 @@
 import {
+  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
@@ -13,14 +14,14 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
 
-  async updateOne(params: updateObject): Promise<IResDto> {
+  async updateOne(params: updateObject): Promise<IResDto<void>> {
     const res = await this.repository
       .createQueryBuilder()
       .update(this.tableName)
       .set(params)
       .where({ id: params.id })
       .execute();
-    return { success: res.raw > 0 };
+    return { success: res.affected > 0 };
   }
   async delete(id: string): Promise<boolean> {
     const res = await this.repository
@@ -29,7 +30,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .from(this.tableName)
       .where({ id })
       .execute();
-    return res.raw > 0;
+    return res.affected > 0;
   }
 
   async findAll(): Promise<E[]> {
@@ -55,7 +56,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .getOne();
   }
 
-  async insert(entity: E): Promise<IResDto> {
+  async insert(entity: E): Promise<IResDto<void>> {
     const res = await this.repository
       .createQueryBuilder(this.tableName)
       .insert()

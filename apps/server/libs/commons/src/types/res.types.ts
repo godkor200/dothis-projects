@@ -1,4 +1,4 @@
-export interface IResDto {
+export interface IResDto<T> {
   success: boolean;
-  data?: any;
+  data?: T | any;
 }

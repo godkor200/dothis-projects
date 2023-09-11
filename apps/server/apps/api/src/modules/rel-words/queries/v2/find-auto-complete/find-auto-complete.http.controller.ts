@@ -41,7 +41,9 @@ export class FindAutoCompleteHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async execute(@TsRestRequest() { params: { word } }): Promise<IResDto> {
+  async execute(
+    @TsRestRequest() { params: { word } },
+  ): Promise<IResDto<string[]>> {
     const command = new FindAutoCompleteWordsCommandDto({ words: word });
     return { success: true, data: await this.queryBus.execute(command) };
   }

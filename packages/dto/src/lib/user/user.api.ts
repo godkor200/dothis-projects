@@ -47,7 +47,7 @@ export const userApi = c.router({
   },
   putUpdatePersonalTag: {
     method: 'PUT',
-    path: `${userBaseApiUrl}/:id`,
+    path: `${userBaseApiUrl}/search-word`,
     responses: {
       200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
       404: 'Not Found',
@@ -55,6 +55,7 @@ export const userApi = c.router({
     },
     body: z.object({ tag: z.array(z.string()) }),
     summary: '유저 개인화 태그 넣기',
-    description: '유저 개인화 태그 넣기',
+    description:
+      '유저 개인화 태그 넣기 사용자가 선택한 탐색어는 단어뒤에나 #을 붙혀서 저장하는게 좋을꺼 같습니다. 검색 기록이라고 부르시는거는 아무것도 안붙혀도 될것같습니다.',
   },
 });

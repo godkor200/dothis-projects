@@ -29,8 +29,8 @@ export type updateObject = {
 };
 
 export interface RepositoryPort<Entity> {
-  insert(entity: Entity): Promise<IResDto>;
-  updateOne(option: updateObject): Promise<IResDto>;
+  insert(entity: Entity): Promise<IResDto<void>>;
+  updateOne(option: updateObject): Promise<IResDto<void>>;
   findOneById(id: string): Promise<Entity>;
   findAll(): Promise<Entity[]>;
   findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Entity>>;

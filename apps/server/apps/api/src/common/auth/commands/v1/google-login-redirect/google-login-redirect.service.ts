@@ -46,17 +46,23 @@ export class GoogleLoginRedirectCommandHandler
       checkUser = await this.userRepository.findOneByEmail(command.userEmail);
     }
 
-    const refreshToken = this.jwtService.sign({
-      id: checkUser.id,
-    });
+    const refreshToken = this.jwtService.sign(
+      {
+        id: checkUser.id,
+      },
+      { expiresIn: '4h' },
+    );
 
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
 
     return {
-      accessToken: this.jwtService.sign({
-        id: checkUser.id,
-        userEmail: checkUser.userEmail,
-      }),
+      accessToken: this.jwtService.sign(
+        {
+          id: checkUser.id,
+          userEmail: checkUser.userEmail,
+        },
+        { expiresIn: '30m' },
+      ),
       refreshToken,
     };
   }
