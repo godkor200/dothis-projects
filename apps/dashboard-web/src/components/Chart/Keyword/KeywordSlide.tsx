@@ -5,7 +5,7 @@ import { useState } from 'react';
 import useClickScrollX from '@/hooks/useClickScrollX';
 import SvgComp from '@/share/SvgComp';
 
-import NavSlideContent from './NavSlideContent';
+import NavSlideContent from './Keyword';
 import * as Style from './style';
 
 export enum KeywordCategory {
@@ -43,31 +43,56 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
 // Wheel은 transform이려나
 
-const NavSlide = () => {
-  const [keywordCategory, setKeywordCategory] = useState<KeywordCategory[]>([]);
+const KeywordSlide = () => {
+  // prefetch해서 가져온 keyword data를 초기에 넣어주기.
+  // data 형식이 아직 어떤식으로 넘어오는지 확인은 하지못하여 임시로 string[] 로 선언
 
-  const [handleScrollX, containerRef] = useClickScrollX();
+  // 아마 keyword를 추가하는 것도 하나의 mutate로 들어갈 것 같습니다.  (당장 Context로 상태를 만들어 searchBar와 연결해서 추가 삭제를 구현하고 싶었지만, 해당 상태는 서버 데이터로 관리되지 않을까??라는 생각에 미뤄두었습니다. )
+
+  const [keywordList, setKeywordList] = useState<string[]>([
+    '먹방',
+    '요리',
+    '와인',
+    '맛집',
+    '커피',
+    '카페',
+    '브이로그',
+  ]);
+
+  const [targetKeywords, setTargetKeywords] = useState<string[]>([]);
+  // targetKeywords,keywordsToAnalyze 등등 변수명 고민
+  // 선택된 키워드를 담는 배열입니다.
+
+  const {
+    containerRef,
+    handleTapScrollX,
+    handleRightScroll,
+    handleLeftScroll,
+  } = useClickScrollX();
 
   return (
     <Style.KeywordTapContiner>
-      <button className="px-5 py-2 border border-solid border-grey500 rounded-8">
-        <SvgComp icon="NavSlideReset" size="1.5rem" />
-      </button>
+      <Style.ArrowLeftButton onClick={handleLeftScroll}>
+        <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
+      </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
-        {Object.entries(KEYWORD_CATEGORIES).map(([key, label]) => (
+        {keywordList.map((keyword) => (
           <NavSlideContent
-            key={key}
-            $active={keywordCategory.includes(key as KeywordCategory)}
-            label={label}
-            keyValue={key}
-            handleScrollX={handleScrollX}
-            setKeywordCategory={setKeywordCategory}
+            key={keyword}
+            $active={targetKeywords.includes(keyword)}
+            label={keyword}
+            keyValue={keyword}
+            handleScrollX={handleTapScrollX}
+            setKeywordList={setKeywordList}
+            setTargetKeywords={setTargetKeywords}
           />
         ))}
       </Style.ButtonContainer>
-      <Style.ArrowButton />
+      <Style.ArrowRightButton onClick={handleRightScroll}>
+        <SvgComp icon="KeywordRightArrow" size="1.5rem" />
+      </Style.ArrowRightButton>
     </Style.KeywordTapContiner>
   );
 };
 
-export default NavSlide;
+export default KeywordSlide;
