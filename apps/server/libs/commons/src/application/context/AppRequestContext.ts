@@ -1,13 +1,20 @@
 import { RequestContext } from 'nestjs-request-context';
+import { EntityManager } from 'typeorm';
+
+/**
+ * Setting some isolated context for each request.
+ */
+
 export class AppRequestContext extends RequestContext {
   requestId: string;
-  // transactionConnection?: DatabaseTransactionConnection; // For global transactions
+  transactionConnection?: EntityManager; // For global transactions
 }
+
 export class RequestContextService {
   static getContext(): AppRequestContext {
-    const ctx: AppRequestContext = RequestContext.currentContext.req;
-    return ctx;
+    return RequestContext.currentContext.req;
   }
+
   static setRequestId(id: string): void {
     const ctx = this.getContext();
     ctx.requestId = id;
@@ -15,5 +22,20 @@ export class RequestContextService {
 
   static getRequestId(): string {
     return this.getContext().requestId;
+  }
+
+  static getTransactionConnection(): EntityManager | undefined {
+    const ctx = this.getContext();
+    return ctx.transactionConnection;
+  }
+
+  static setTransactionConnection(transactionConnection?: EntityManager): void {
+    const ctx = this.getContext();
+    ctx.transactionConnection = transactionConnection;
+  }
+
+  static cleanTransactionConnection(): void {
+    const ctx = this.getContext();
+    ctx.transactionConnection = undefined;
   }
 }
