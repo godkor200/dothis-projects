@@ -1,15 +1,16 @@
 import {
-  CallHandler,
-  ExecutionContext,
   Injectable,
   NestInterceptor,
+  ExecutionContext,
+  CallHandler,
 } from '@nestjs/common';
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { Observable, tap } from 'rxjs';
 import { nanoid } from 'nanoid';
-import { tap } from 'rxjs';
+import { RequestContextService } from './AppRequestContext';
+
 @Injectable()
 export class ContextInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler<any>) {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
 
     /**
@@ -19,6 +20,7 @@ export class ContextInterceptor implements NestInterceptor {
     const requestId = request?.body?.requestId ?? nanoid(6);
 
     RequestContextService.setRequestId(requestId);
+
     return next.handle().pipe(
       tap(() => {
         // Perform cleaning if needed

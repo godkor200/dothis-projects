@@ -26,7 +26,7 @@ export class AwsOpensearchConnetionService {
           );
         },
       }),
-      node: `https://search-dothis-js7jgo2actyuzihx7zz335k2nq.ap-northeast-2.es.amazonaws.com/`,
+      node: this.configService.get<string>('aws.OPENSEARCH_NODE'),
     });
   }
 
