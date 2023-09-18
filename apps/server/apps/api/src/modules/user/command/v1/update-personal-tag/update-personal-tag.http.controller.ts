@@ -10,10 +10,9 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserDto } from '@Libs/commons/src/types/dto.types';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IResDto } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 import { UpdatePersonalTagDto } from '@Apps/modules/user/dtos/update-personal-tag.dto';
 import { JwtAccessGuard } from '@Libs/commons/src';
 const c = nestControllerContract(apiRouter.user);
@@ -54,10 +53,7 @@ export class UpdatePersonalTagHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async execute(
-    @Req() req,
-    @Body('tag') tag: string[],
-  ): Promise<IResDto<void>> {
+  async execute(@Req() req, @Body('tag') tag: string[]): Promise<IRes<void>> {
     const arg = new UpdatePersonalTagDto({ id: req.user.id, tag });
     if (await this.commandBus.execute(arg)) return { success: true };
   }
