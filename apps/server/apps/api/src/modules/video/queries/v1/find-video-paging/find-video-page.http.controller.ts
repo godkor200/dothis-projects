@@ -7,7 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, Param, Query } from '@nestjs/common';
-import { IQuery, QueryBus } from '@nestjs/cqrs';
+import { QueryBus } from '@nestjs/cqrs';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import {
   FindVideoPageQuery,
@@ -15,13 +15,10 @@ import {
 } from './find-video-paging.req.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import {
-  IFindManyVideoResult,
-  IPagingRes,
-} from '@Apps/modules/video/interface/find-many-video.interface';
+import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
 import { VideoRes } from '@Libs/commons/src/types/dto.types';
 const c = nestControllerContract(apiRouter.video);
-const { pathParams, summary, responses, description } = c.getVideo;
+const { summary, responses, description } = c.getVideo;
 
 @ApiTags('영상')
 @Controller()
