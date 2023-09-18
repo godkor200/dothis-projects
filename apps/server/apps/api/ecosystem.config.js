@@ -54,6 +54,7 @@ module.exports = {
         AWS_CREDENTIAL_KEY: process.env.AWS_CREDENTIAL_KEY,
         AWS_CREDENTIAL_SECRET: process.env.AWS_CREDENTIAL_SECRET,
         AWS_REGION: process.env.AWS_REGION,
+        OPENSEARCH_NODE: process.env.OPENSEARCH_NODE,
       },
     },
   ],
