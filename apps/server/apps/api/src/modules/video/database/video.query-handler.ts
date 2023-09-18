@@ -1,9 +1,13 @@
-import { from, lastValueFrom, map, mergeMap, pluck, toArray } from 'rxjs';
+import { firstValueFrom, from, lastValueFrom, map } from 'rxjs';
 import { VideoServicePort } from './video.service.port';
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
-import { IfindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
+import {
+  IFindManyVideoResult,
+  IPagingRes,
+} from '@Apps/modules/video/interface/find-many-video.interface';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/interface/find-daily-views.dto';
+import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 
 export class VideoQueryHandler
   extends AwsOpensearchConnetionService
@@ -40,7 +44,7 @@ export class VideoQueryHandler
   }
   async findVideoByWords(
     words: FindVideoQuery,
-  ): Promise<IfindManyVideoResult[]> {
+  ): Promise<IFindManyVideoResult[]> {
     let searchQuery = {
       index: 'new_video',
       body: {
@@ -82,10 +86,13 @@ export class VideoQueryHandler
     return await lastValueFrom(observable$);
   }
 
+  /**
+   * FIXME: 개선 해야됨
+   * @param query
+   */
   async findvideoIdfullScanAndVideos(
     query: FindDailyViewsQuery,
   ): Promise<string[]> {
-    console.log(query);
     let searchQuery = {
       index: 'video-6',
       scroll: '10s',
@@ -138,8 +145,55 @@ export class VideoQueryHandler
         },
       );
     const res = await this.fullScan(searchQuery);
-    const observable: string[] = res.map((e) => e.video_id);
+    return res.map((e) => e.video_id);
+  }
 
-    return await observable;
+  async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
+    const { clusterNumber, limit, search, related, last } = arg;
+    let searchQuery = {
+      index: `video-${clusterNumber}`,
+      size: limit,
+      body: {
+        query: {
+          bool: {
+            must: [
+              {
+                bool: {
+                  should: [
+                    { wildcard: { video_tag: `*${search}*` } },
+                    { wildcard: { video_title: `*${search}*` } },
+                  ],
+                },
+              },
+              // If related is not null or undefined
+              ...(related
+                ? [
+                    {
+                      bool: {
+                        should: [
+                          { wildcard: { video_tag: `*${related}*` } },
+                          { wildcard: { video_title: `*${related}*` } },
+                        ],
+                      },
+                    },
+                  ]
+                : []),
+            ],
+          },
+        },
+        sort: ['_id'],
+      },
+    };
+
+    if (last) searchQuery.body['search_after'] = [last];
+
+    const observable$ = from(
+      this.client.search(searchQuery).then((res) => ({
+        total: res.body.hits.total,
+        data: res.body.hits.hits,
+      })),
+    );
+
+    return await lastValueFrom(observable$);
   }
 }
