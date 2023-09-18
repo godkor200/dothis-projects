@@ -4,7 +4,7 @@ import { nestControllerContract, TsRest, TsRestRequest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/rel-words/interface/dtos/auto-complete-words.dto';
 
-import { IResDto } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 import {
   ApiConflictResponse,
   ApiInternalServerErrorResponse,
@@ -43,7 +43,7 @@ export class FindAutoCompleteHttpController {
   })
   async execute(
     @TsRestRequest() { params: { word } },
-  ): Promise<IResDto<string[]>> {
+  ): Promise<IRes<string[]>> {
     const command = new FindAutoCompleteWordsCommandDto({ words: word });
     return { success: true, data: await this.queryBus.execute(command) };
   }
