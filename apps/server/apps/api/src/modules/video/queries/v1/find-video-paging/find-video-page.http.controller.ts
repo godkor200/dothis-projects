@@ -6,7 +6,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { Controller, Param, Query } from '@nestjs/common';
+import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import {
@@ -17,6 +17,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
 import { VideoRes } from '@Libs/commons/src/types/dto.types';
+import { match, Result } from 'oxide.ts';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getVideo;
 
@@ -84,6 +85,13 @@ export class FindVideoPageHttpController {
       related,
       last,
     });
-    return await this.queryBus.execute(arg);
+    const result: Result<IPagingRes, NotFoundException> =
+      await this.queryBus.execute(arg);
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err: Error) => {
+        throw err;
+      },
+    });
   }
 }
