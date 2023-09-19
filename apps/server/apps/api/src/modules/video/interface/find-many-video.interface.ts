@@ -19,6 +19,6 @@ export interface IFindManyVideoResult {
   };
 }
 export interface IPagingRes {
-  total: number;
+  total: { value: number; relation: string };
   data: IFindManyVideoResult[];
 }
