@@ -1,4 +1,4 @@
-import { firstValueFrom, from, lastValueFrom, map } from 'rxjs';
+import { from, lastValueFrom, map } from 'rxjs';
 import { VideoServicePort } from './video.service.port';
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
