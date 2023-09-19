@@ -4,7 +4,7 @@ import {
   updateObject,
 } from '@Libs/commons/src';
 import { ChannelDataRepositoryPort } from 'apps/api/src/modules/channel/repository/db/channel-data.repository.port';
-import { IResDto } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 import { ChannelEntity } from 'apps/api/src/modules/channel/repository/entity/channel.entity';
 
 export class ChannelDataMock implements ChannelDataRepositoryPort {
@@ -12,7 +12,7 @@ export class ChannelDataMock implements ChannelDataRepositoryPort {
   constructor(result: ChannelEntity) {
     this.result = result;
   }
-  updateOne(option: updateObject): Promise<IResDto<void>> {
+  updateOne(option: updateObject): Promise<IRes<void>> {
     throw new Error('Method not implemented.');
   }
   delete(id: string): Promise<boolean> {
@@ -37,7 +37,7 @@ export class ChannelDataMock implements ChannelDataRepositoryPort {
     return Promise.resolve(undefined);
   }
 
-  insert(entity: ChannelEntity): Promise<IResDto<void>> {
+  insert(entity: ChannelEntity): Promise<IRes<void>> {
     return Promise.resolve({ success: true });
   }
 

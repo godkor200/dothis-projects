@@ -58,6 +58,7 @@ export class ExceptionInterceptor implements NestInterceptor {
             return throwError(err);
           }
         }
+        return throwError(err);
       }),
     );
   }

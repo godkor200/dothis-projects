@@ -9,8 +9,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
-import { IfindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
+import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
 import { VideoRes } from '@Libs/commons/src/types/dto.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 const c = nestControllerContract(apiRouter.video);
 const { pathParams, summary, responses, description } = c.getVideo;
 
@@ -24,8 +25,7 @@ export class FindVideoHttpController {
    * 검색 : video type, 제목+태그에서 입력키워드 검색
    * 출력 : video 튜플
    */
-  @TsRest(c.getVideo)
-  @Get()
+
   @ApiQuery({
     name: 'search',
     required: true,
@@ -43,7 +43,7 @@ export class FindVideoHttpController {
   async execute(
     @Query('search') search: string,
     @Query('related') related: string,
-  ): Promise<IfindManyVideoResult[]> {
+  ): Promise<IRes<IFindManyVideoResult[]>> {
     const query = new FindVideoQuery({ search, related });
     return await this.queryBus.execute(query);
   }

@@ -21,14 +21,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
       // class-validator 발생 에러
       return response.status(status).json({
         success: false,
-        data: err.message,
+        ...err.message,
       });
     }
 
     // 사용자 정의 에러(HttpException, BadRequestException 등..)
     response.status(status).json({
       success: false,
-      data: err,
+      ...err,
     });
   }
 }

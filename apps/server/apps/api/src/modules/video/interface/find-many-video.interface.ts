@@ -1,4 +1,4 @@
-export interface IfindManyVideoResult {
+export interface IFindManyVideoResult {
   _index: string;
   _id: string;
   _score: number;
@@ -17,4 +17,8 @@ export interface IfindManyVideoResult {
     video_end_screen: number;
     crawled_date: string;
   };
+}
+export interface IPagingRes {
+  total: { value: number; relation: string };
+  data: IFindManyVideoResult[];
 }

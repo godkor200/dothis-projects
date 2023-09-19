@@ -39,4 +39,17 @@ export const zVideoModel = z.object({
   crawlUpdateAt: z.date().describe('Crawled time'),
 });
 
+export const zPaginatedQuery = z.object({
+  limit: z.number().describe('Specifies a limit of returned records'),
+  last: z.string().describe('Last index returned').optional(),
+});
+
+export const zKeyword = z.object({
+  search: z.string().describe('탐색어'),
+  related: z.string().describe('연관어').optional(),
+});
+export const findVideoPageQuery = zKeyword.merge(zPaginatedQuery);
+export interface IKeyword extends z.TypeOf<typeof zKeyword> {}
+export interface IPageQuery extends z.TypeOf<typeof zPaginatedQuery> {}
+
 export type VideoModel = z.TypeOf<typeof zVideoModel>;
