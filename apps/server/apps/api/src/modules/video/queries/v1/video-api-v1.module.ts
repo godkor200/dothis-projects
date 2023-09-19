@@ -1,5 +1,4 @@
 import { Module, Provider } from '@nestjs/common';
-import { FindVideoHttpController } from '@Apps/modules/video/queries/v1/find-video/find-video.http.controller';
 import { VIDEO_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
