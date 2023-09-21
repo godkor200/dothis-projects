@@ -1,8 +1,15 @@
 import Image from 'next/image';
 import { useState } from 'react';
+<<<<<<< HEAD
 
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import { Background, Description, ImageBox, Main, Title } from './style';
+=======
+import { Background, ImageBox, Main } from './style';
+import { Category, CategroiesContainer, MoreButton } from '../style';
+import { useRouter } from 'next/navigation';
+import { dummy } from '@/constants/route';
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 
 export default function Page3() {
   const [state, setState] = useState<number>(0);
@@ -13,6 +20,8 @@ export default function Page3() {
     '조회수 예측',
     '구독자 구간',
   ];
+
+  const router = useRouter();
 
   return (
     <Background>
@@ -57,7 +66,11 @@ export default function Page3() {
         </ImageBox>
         <MoreButton
           onClick={() => {
+<<<<<<< HEAD
             alert('준비중입니다');
+=======
+            router.push(dummy);
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
           }}
         >
           더 알아보기

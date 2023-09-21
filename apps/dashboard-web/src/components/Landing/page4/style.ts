@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 
 import { BackgroundDefault, MainDefault } from '../style';
 
@@ -15,6 +16,13 @@ export const Background = styled(BackgroundDefault)`
   @media (max-width: 576px) {
     padding-top: 70px;
   }
+=======
+import { BackgroundDefault, MainDefault } from '../style';
+
+export const Background = styled(BackgroundDefault)`
+  height: 900px;
+  background-color: rgba(249, 249, 249, 1);
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Main = styled(MainDefault)`
@@ -23,6 +31,7 @@ export const Main = styled(MainDefault)`
   }
 `;
 
+<<<<<<< HEAD
 export const Title = styled.h1`
   font-size: 36px;
   font-weight: 700;
@@ -36,6 +45,8 @@ export const Title = styled.h1`
   }
 `;
 
+=======
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 export const ImageBox = styled.div`
   width: 700px;
 

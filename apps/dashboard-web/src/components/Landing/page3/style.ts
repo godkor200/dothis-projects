@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 
 import { BackgroundDefault, MainDefault } from '../style';
 
@@ -9,6 +10,12 @@ export const Background = styled(BackgroundDefault)`
   @media (max-height: 900px) {
     padding: 70px 16px 0 16px;
   }
+=======
+import { BackgroundDefault, MainDefault } from '../style';
+
+export const Background = styled(BackgroundDefault)`
+  height: 900px;
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Main = styled(MainDefault)`
@@ -17,6 +24,7 @@ export const Main = styled(MainDefault)`
   }
 `;
 
+<<<<<<< HEAD
 export const Title = styled.h1`
   font-size: 36px;
   font-weight: 700;
@@ -56,6 +64,8 @@ export const Description = styled.p`
   }
 `;
 
+=======
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 export const ImageBox = styled.div`
   width: 900px;
 
@@ -64,7 +74,10 @@ export const ImageBox = styled.div`
   align-items: center;
   position: relative;
   aspect-ratio: 90/48;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   @media (max-width: 900px) {
     width: 100%;
   }

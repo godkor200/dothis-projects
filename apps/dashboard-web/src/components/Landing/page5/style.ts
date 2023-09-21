@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 import {
   BackgroundDefault,
   MainDefault,
@@ -7,6 +10,7 @@ import {
 } from '../style';
 
 export const Background = styled(BackgroundDefault)`
+<<<<<<< HEAD
   background-color: rgba(34, 34, 34, 1);
   color: white;
   padding: 120px 0px;
@@ -14,12 +18,20 @@ export const Background = styled(BackgroundDefault)`
   @media (max-width: 768px) {
     padding-top: 0;
   }
+=======
+  height: 1901px;
+  background-color: rgba(34, 34, 34, 1);
+  color: white;
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Main = styled(MainDefault)`
   margin-top: 120px;
 `;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 export const MoreButton = styled(MoreButtonDefault)`
   border: 1px solid white;
   background-color: inherit;
@@ -35,6 +47,7 @@ export const Container = styled.div`
   justify-content: center;
   padding: 80px 50px;
   padding-top: 80px;
+<<<<<<< HEAD
 
   @media (max-width: 768px) {
     padding: 38px;
@@ -64,6 +77,17 @@ export const ContainerB = styled(Container)`
   @media (max-width: 576px) {
     margin: 0 26px;
   }
+=======
+`;
+
+export const ContainerA = styled(Container)`
+  height: 766px;
+`;
+
+export const ContainerB = styled(Container)`
+  height: 645px;
+  padding-bottom: 80px;
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Texts = styled.div`
@@ -82,6 +106,7 @@ export const Texts = styled.div`
     color: rgba(161, 161, 170, 1);
     font-size: 20px;
   }
+<<<<<<< HEAD
 
   @media (max-width: 1480px) {
     flex-direction: column;
@@ -112,6 +137,20 @@ export const Title = styled.h1`
 
 export const Containers = styled.div`
   @media (max-width: 768px) {
+=======
+`;
+
+export const Containers = styled.div`
+  display: grid;
+  grid-template-rows: 766px 645px;
+  grid-template-columns: 1fr 1fr;
+  margin: 50px;
+  gap: 40px;
+
+  div:nth-child(3) {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+>>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   }
 `;
 
