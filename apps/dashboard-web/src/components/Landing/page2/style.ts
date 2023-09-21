@@ -14,7 +14,7 @@ export const Background = styled(BackgroundDefault)`
 
 export const Main = styled(MainDefault)`
   margin: 50px;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 
   @media (max-width: 800px) {

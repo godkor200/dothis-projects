@@ -61,7 +61,7 @@ export const Texts = styled.div`
 `;
 
 export const Title = styled.h1`
-  display: none;
+  display: flex;
   font-size: 32px;
   font-weight: 700;
   padding: 0 52px;
@@ -130,5 +130,58 @@ export const Nav = styled.nav`
     gap: 10px;
     border-radius: 4px;
     font-size: 20px;
+  }
+`;
+
+export const Circle = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  border-radius: 50px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 576px) {
+    width: 1rem;
+    height: 1rem;
+  }
+`;
+
+export const CircleText = styled.p`
+  padding: 0 18px;
+  font-size: 16px;
+  color: #FFFFFF;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 576px) {
+    white-space: nowrap;
+    font-size: 12px;
+    text-align: center;
+  }
+`;
+
+export const CircleBox = styled.div`
+  width: 1100px;
+  position: relative;
+  margin: 0px 90px;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 1280px) {
+    width: 90%;
+  }
+
+  @media (max-width: 576px) {
+    display: none;
   }
 `;

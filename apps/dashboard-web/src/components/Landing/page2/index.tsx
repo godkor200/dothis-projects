@@ -6,6 +6,11 @@ export default function Page2() {
   return (
     <Background>
       <Main>
+        <Text>
+          <Title>
+              주제부터 스크립트까지<br /> 두디스로 한 번에
+          </Title>
+        </Text>
         <ImageBox>
           <Image
             src={'/images/landing/page2.png'}

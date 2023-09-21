@@ -10,6 +10,9 @@ import {
   Background,
   Button,
   Buttons,
+  Circle,
+  CircleText,
+  CircleBox,
   Description,
   ImageBox,
   Main,
@@ -25,24 +28,10 @@ export default function Page1() {
     <Background>
       <Topbar />
       <Main>
-        <ImageBox>
-          <Image
-            src="/images/landing/page1.png"
-            width={0}
-            height={0}
-            sizes="100%"
-            fill
-            alt={'page1 image'}
-          />
-        </ImageBox>
         <Texts>
           <Title>
-            어떤 영상을 찍어야 <br /> 조회수가 잘 나올까?
+            주제부터 스크립트까지 <br /> 두디스로 한 번에
           </Title>
-          <Description>
-            <span>콘텐츠 기획부터 키워드 추천, 트렌드 분석까지 </span>
-            <span>바로 지금 Do this 하세요</span>
-          </Description>
           <Buttons>
             <Button onClick={() => router.push(CONTENT)}>
               <Image
@@ -63,6 +52,27 @@ export default function Page1() {
             </Button>
           </Buttons>
         </Texts>
+        <CircleBox>
+          <Image
+                src={'/images/landing/Landing_Section1_Rightshift.png'}
+                alt={''}
+                width={30}
+                height={30}
+              />
+          <Circle>
+            <CircleText>영상 제작</CircleText>
+          </Circle>
+        </CircleBox>
+        <ImageBox>
+          <Image
+            src="/images/landing/page1.png"
+            width={0}
+            height={0}
+            sizes="100%"
+            fill
+            alt={'page1 image'}
+          />
+        </ImageBox>
       </Main>
     </Background>
   );
