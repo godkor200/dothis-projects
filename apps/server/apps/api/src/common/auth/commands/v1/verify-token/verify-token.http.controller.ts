@@ -12,7 +12,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { envDiscrimination } from '@Libs/commons/src/util/setCookie';
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
 const { pathParams, description, summary, responses } = getVerifyToken;
 @ApiTags('유저 인증')
@@ -44,13 +43,10 @@ export class VerifyTokenHttpController {
       ...cookie,
     });
     const result = await this.commandBus.execute(tokenDto);
-    const options: CookieOptions = {
-      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
-      path: '/',
-      httpOnly: true,
+
+    return {
+      Authorization: 'Bearer ' + result.accessToken,
+      refreshToken: result.refreshToken,
     };
-    res.cookie('Authorization', 'Bearer ' + result.accessToken, options);
-    res.cookie('refreshToken', result.refreshToken, options);
-    return { message: 'authorized' };
   }
 }

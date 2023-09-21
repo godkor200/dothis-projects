@@ -30,21 +30,11 @@ export class GoogleLoginRedirectHttpController {
     const token: { accessToken: string; refreshToken: string } =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
-    const options: CookieOptions = {
-      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
-      path: '/',
-      httpOnly: true,
+    return {
+      Authorization: 'Bearer ' + token.accessToken,
+      refreshToken: token.refreshToken,
+      google_access_token: userInfo.googleAccessToken,
+      google_refresh_token: userInfo.googleRefreshToken,
     };
-
-    res.cookie('Authorization', 'Bearer ' + token.accessToken, options);
-    res.cookie('refreshToken', token.refreshToken, options);
-    res.cookie('google_access_token', userInfo.googleAccessToken, options);
-    res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
-
-    res.redirect(
-      `http${envDiscrimination(req) ? '' : 's'}://${
-        envDiscrimination(req) ? 'localhost:3666' : 'www.dothis.kr'
-      }/login/redirect`,
-    );
   }
 }
