@@ -4,7 +4,6 @@ import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
   background-color: white;
-  padding-bottom: 143px;
 
   @media (max-width: 576px) {
     padding-bottom: 60px;
@@ -12,12 +11,32 @@ export const Background = styled(BackgroundDefault)`
 `;
 
 export const Main = styled(MainDefault)`
-  margin-top: 240px;
+  margin-top: 100px;
 
   @media (max-width: 576px) {
     margin-top: 140px;
   }
 `;
+
+export const Container = styled.div`
+  aspect-ratio: 110/46;
+  position: relative;
+  margin: 0px 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+
+  @media (max-width: 1280px) {
+    width: 90%;
+  }
+
+  /* @media (max-width: 576px) {
+    display: none;
+  } */
+`;
+
 
 export const Buttons = styled.div`
   display: flex;
@@ -89,19 +108,25 @@ export const Description = styled.p`
   }
 `;
 
-export const ImageBox = styled.div`
-  width: 1100px;
-  aspect-ratio: 110/46;
-  position: relative;
-  margin: 0px 90px;
+export const SlideIcon = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-  @media (max-width: 1280px) {
-    width: 90%;
-  }
+export const SlideText = styled.h1`
+  display: flex;
+  font-size: 22px;
+  text-align: center;
+  font-weight: 700;
+`;
 
-  @media (max-width: 576px) {
-    display: none;
-  }
+export const SlideIconContainer = styled.div`
+  width: 200%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const Bar = styled.nav`
@@ -130,58 +155,5 @@ export const Nav = styled.nav`
     gap: 10px;
     border-radius: 4px;
     font-size: 20px;
-  }
-`;
-
-export const Circle = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: black;
-  border-radius: 50px;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 576px) {
-    width: 1rem;
-    height: 1rem;
-  }
-`;
-
-export const CircleText = styled.p`
-  padding: 0 18px;
-  font-size: 16px;
-  color: #FFFFFF;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 576px) {
-    white-space: nowrap;
-    font-size: 12px;
-    text-align: center;
-  }
-`;
-
-export const CircleBox = styled.div`
-  width: 1100px;
-  position: relative;
-  margin: 0px 90px;
-  display: flex;
-  flex-direction: row;
-
-  @media (max-width: 1280px) {
-    width: 90%;
-  }
-
-  @media (max-width: 576px) {
-    display: none;
   }
 `;

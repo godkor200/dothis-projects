@@ -8,13 +8,14 @@ export default function Page2() {
       <Main>
         <Text>
           <Title>
-              주제부터 스크립트까지<br /> 두디스로 한 번에
+            맞춤 소재 발굴부터 AI가 제안하는 <br /> 영상 기획까지 한 번에
+          </Title>
         </Text>
         <ImageBox>
           <Image
             width={680}
             height={560}
-            sizes="100%"
+            sizes="100%" src={''} alt={''}
           />
         </ImageBox>
         <Text>

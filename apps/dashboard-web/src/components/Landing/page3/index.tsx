@@ -14,8 +14,6 @@ export default function Page3() {
     '구독자 구간',
   ];
 
-  const router = useRouter();
-
   return (
     <Background>
       <Main>

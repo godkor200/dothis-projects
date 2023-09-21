@@ -13,7 +13,6 @@ import {
 } from './style';
 
 export default function Page5() {
-  const router = useRouter();
   return (
     <Background>
       <Main>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
+  background-color: white;
   background-color: rgba(24, 24, 27, 1);
   color: #ffffff;
   padding: 120px 0px;
@@ -83,6 +84,7 @@ export const Text = styled.div`
 export const Title = styled.h1`
   font-size: 36px;
   font-weight: 700;
+  text-align: center;
 
   @media (max-width: 1280px) {
     font-size: 28px;
@@ -90,7 +92,6 @@ export const Title = styled.h1`
 
   @media (max-width: 800px) {
     margin-top: 50px;
-    text-align: center;
   }
 `;
 
