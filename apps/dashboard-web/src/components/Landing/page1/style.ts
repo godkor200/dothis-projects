@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
 
 import { BackgroundDefault, MainDefault } from '../style';
 
@@ -10,24 +9,14 @@ export const Background = styled(BackgroundDefault)`
   @media (max-width: 576px) {
     padding-bottom: 60px;
   }
-=======
-import { BackgroundDefault, MainDefault } from '../style';
-
-export const Background = styled(BackgroundDefault)`
-  height: 1080px;
-  background-color: white;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Main = styled(MainDefault)`
   margin-top: 240px;
-<<<<<<< HEAD
 
   @media (max-width: 576px) {
     margin-top: 140px;
   }
-=======
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Buttons = styled.div`
@@ -35,7 +24,6 @@ export const Buttons = styled.div`
   gap: 40px;
   margin-top: 30px;
 
-<<<<<<< HEAD
   @media (max-width: 576px) {
     gap: 16px;
     margin: 30px 16px 0 16px;
@@ -63,18 +51,6 @@ export const Button = styled.button`
       width: 16px;
       height: 16px;
     }
-=======
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    border: 1px solid black;
-    gap: 8px;
-    font-size: 20px;
-    font-weight: bolder;
-    padding: 16px 24px;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   }
 `;
 
@@ -82,7 +58,6 @@ export const Texts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
 `;
 
 export const Title = styled.h1`
@@ -111,16 +86,6 @@ export const Description = styled.p`
     white-space: nowrap;
     font-size: 16px;
     text-align: center;
-=======
-
-  h1 {
-    font-size: 64px;
-    font-weight: bolder;
-  }
-  h3 {
-    margin-top: 30px;
-    font-size: 24px;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   }
 `;
 
@@ -133,13 +98,10 @@ export const ImageBox = styled.div`
   @media (max-width: 1280px) {
     width: 90%;
   }
-<<<<<<< HEAD
 
   @media (max-width: 576px) {
     display: none;
   }
-=======
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Bar = styled.nav`
@@ -150,10 +112,6 @@ export const Bar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
-=======
-
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   max-width: 1440px;
 `;
 
@@ -161,10 +119,6 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
-=======
-
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   gap: 10px;
 
   button {
@@ -174,7 +128,6 @@ export const Nav = styled.nav`
     justify-content: center;
     align-items: center;
     gap: 10px;
-<<<<<<< HEAD
     border-radius: 4px;
     font-size: 20px;
   }
@@ -232,10 +185,3 @@ export const CircleBox = styled.div`
     display: none;
   }
 `;
-=======
-    border-radisu: 4px;
-
-    font-size: 20px;
-  }
-`;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd

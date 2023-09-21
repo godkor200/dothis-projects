@@ -1,8 +1,4 @@
 import Image from 'next/image';
-<<<<<<< HEAD
-
-=======
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 import {
   Background,
   ContainerA,
@@ -12,15 +8,9 @@ import {
   Main,
   MoreButton,
   Texts,
-<<<<<<< HEAD
   Title,
   TopContainer,
 } from './style';
-=======
-} from './style';
-import { useRouter } from 'next/navigation';
-import { dummy } from '@/constants/route';
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 
 export default function Page5() {
   const router = useRouter();
@@ -79,11 +69,7 @@ export default function Page5() {
         </Containers>
         <MoreButton
           onClick={() => {
-<<<<<<< HEAD
             alert('준비중입니다');
-=======
-            router.push(dummy);
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
           }}
         >
           더 알아보기

@@ -34,13 +34,8 @@
     "dashboard-storybook": "workspace:*",
     "date-fns": "^2.30.0",
     "iron-session": "^6.3.1",
-<<<<<<< HEAD
     "lottie-react": "^2.4.0",
     "next": "13.4.6",
-=======
-    "loadash": "^1.0.0",
-    "next": "13.4.1",
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
     "next-auth": "^4.17.0",
     "next-pwa": "^5.6.0",
     "nivo": "^0.31.0",

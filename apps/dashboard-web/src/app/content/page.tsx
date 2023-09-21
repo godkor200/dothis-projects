@@ -1,6 +1,5 @@
 'use client';
 
-<<<<<<< HEAD
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -26,21 +25,6 @@ const Content = () => {
         onClick={() => {
           router.push(PRICING);
         }}
-=======
-import styled from 'styled-components';
-import Image from 'next/image';
-
-const Background = styled.div`
-  width: 100%;
-  height: 2000px;
-  position: relative;
-`;
-
-export default function Content() {
-  return (
-    <Background>
-      <Image
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
         src={'/images/content.png'}
         alt={''}
         width={0}
@@ -50,10 +34,6 @@ export default function Content() {
       />
     </Background>
   );
-<<<<<<< HEAD
 };
 
 export default Content;
-=======
-}
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd

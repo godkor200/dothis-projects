@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
 
 import { BackgroundDefault, MainDefault } from '../style';
 
@@ -7,12 +6,6 @@ export const Background = styled(BackgroundDefault)`
   @media (max-height: 700px) {
     height: 700px;
   }
-=======
-import { BackgroundDefault, MainDefault } from '../style';
-
-export const Background = styled(BackgroundDefault)`
-  height: 700px;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
 `;
 
 export const Main = styled(MainDefault)`
@@ -24,7 +17,6 @@ export const Main = styled(MainDefault)`
     border: 1px solid black;
     border-radius: 4px;
     gap: 8px;
-<<<<<<< HEAD
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,14 +31,6 @@ export const Main = styled(MainDefault)`
 
       font-size: 16px;
     }
-=======
-    width: 195px;
-    height: 62px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-sisz: 20px;
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
   }
 `;
 
@@ -64,7 +48,6 @@ export const Texts = styled.div`
   justify-content: center;
   align-items: center;
 `;
-<<<<<<< HEAD
 
 export const Title = styled.h1`
   font-size: 36px;
@@ -85,5 +68,3 @@ export const Title = styled.h1`
     font-size: 28px;
   }
 `;
-=======
->>>>>>> 1092b8af0fdac1d28e49c20dd5e8f0ef7b7527bd
