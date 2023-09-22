@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
-  background-color: white;
-  background-color: rgba(24, 24, 27, 1);
-  color: #ffffff;
   padding: 120px 0px;
 
   @media (max-width: 800px) {
@@ -14,7 +11,7 @@ export const Background = styled(BackgroundDefault)`
 `;
 
 export const Main = styled(MainDefault)`
-  margin: 50px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 
@@ -25,25 +22,42 @@ export const Main = styled(MainDefault)`
   }
 `;
 
+export const ImageBackground = styled.div`
+  position: absolute;
+  background-color: #ffb4c9;
+  height: 30%;
+  width: 100%;
+`;
+
+export const ImageBackgroundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+`;
+
+export const ImageContainer = styled.div`
+  width: 100%;
+  margin: 50px 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+  }
+`;
+
 export const ImageBox = styled.div`
-  width: 680px;
-  aspect-ratio: 68/56;
-
-  @media (max-width: 1400px) {
-    width: 70%;
-  }
-
-  @media (max-width: 576px) {
-    width: 80%;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const Text = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  margin-left: 196px;
-  padding-right: 100px;
+  gap: 10px;
 
   @media (max-width: 1280px) {
     margin-left: 40px;
@@ -78,36 +92,5 @@ export const Text = styled.div`
       font-size: 16px;
       padding: 12px 16px;
     }
-  }
-`;
-
-export const Title = styled.h1`
-  font-size: 36px;
-  font-weight: 700;
-  text-align: center;
-
-  @media (max-width: 1280px) {
-    font-size: 28px;
-  }
-
-  @media (max-width: 800px) {
-    margin-top: 50px;
-  }
-`;
-
-export const Description = styled.p`
-  font-size: 24px;
-  white-space: nowrap;
-
-  @media (max-width: 1280px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    white-space: nowrap;
-    font-size: 16px;
-    text-align: center;
   }
 `;

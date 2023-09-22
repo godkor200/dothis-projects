@@ -71,3 +71,43 @@ export const MoreButton = styled.button`
     padding: 12px 16px;
   }
 `;
+
+export const Title = styled.h1`
+  font-size: 44px;
+  font-weight: 700;
+  padding: 0 38px;
+  text-align: center;
+  white-space: nowrap;
+
+  @media (max-width: 576px) {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+`;
+
+export const Description = styled.p`
+  font-size: 22px;
+  white-space: nowrap;
+  font-weight: 500;
+  text-align: center;
+
+  @media (max-width: 1280px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    font-size: 16px;
+    text-align: center;
+  }
+`;

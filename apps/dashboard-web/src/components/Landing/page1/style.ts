@@ -37,6 +37,11 @@ export const Container = styled.div`
   } */
 `;
 
+export const ImageContainer = styled.div`
+  position: relative;
+  @media (max-width: 768px) {
+  }
+`;
 
 export const Buttons = styled.div`
   display: flex;
@@ -79,9 +84,9 @@ export const Texts = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h1`
+export const MainTitle = styled.h1`
   display: flex;
-  font-size: 32px;
+  font-size: 70px;
   font-weight: 700;
   padding: 0 52px;
   text-align: center;
@@ -91,28 +96,12 @@ export const Title = styled.h1`
   }
 `;
 
-export const Description = styled.p`
-  padding: 0 36px;
-  margin-top: 30px;
-  font-size: 24px;
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 576px) {
-    white-space: nowrap;
-    font-size: 16px;
-    text-align: center;
-  }
-`;
-
 export const SlideIcon = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 30px;
 `;
 
 export const SlideText = styled.h1`
@@ -123,10 +112,11 @@ export const SlideText = styled.h1`
 `;
 
 export const SlideIconContainer = styled.div`
-  width: 200%;
+  width: 1920px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 120px;
 `;
 
 export const Bar = styled.nav`

@@ -1,39 +1,41 @@
 import Image from 'next/image';
 
-import { Background, Description, ImageBox, Main, Text, Title } from './style';
+import { Title, Description } from '../style';
+import {
+  Background,
+  ImageBackground,
+  ImageBackgroundContainer,
+  ImageBox,
+  ImageContainer,
+  Main,
+  Text,
+} from './style';
 
 export default function Page2() {
   return (
     <Background>
       <Main>
         <Text>
-          <Title>
-            맞춤 소재 발굴부터 AI가 제안하는 <br /> 영상 기획까지 한 번에
-          </Title>
+          <Title>당신에게 추천하는 맞춤 아이템</Title>
+          <Description>
+            특허 받은 소재 탐색 알고리즘이 지금 가장 핫한 아이템을 추천해드려요.
+          </Description>
         </Text>
         <ImageBox>
-          <Image
-            width={680}
-            height={560}
-            sizes="100%" src={''} alt={''}
-          />
+          <ImageBackgroundContainer>
+            <ImageBackground />
+          </ImageBackgroundContainer>
+          <ImageContainer>
+            <Image
+              src={'/images/landing/svg/Landing_Section2_Mockup.svg'}
+              alt={''}
+              width={0}
+              height={0}
+              sizes="100vm"
+              style={{ width: '80%', height: 'auto' }}
+            />
+          </ImageContainer>
         </ImageBox>
-        <Text>
-          <Title>
-            유튜브 콘텐츠, <br /> 10분만에 기획을 간단하게
-          </Title>
-          <Description>
-            조회수 높이는 맞춤형 소재부터 포맷에 따른 <br />
-            스토리보드 도구까지 한곳에서 간편하게!
-          </Description>
-          <button
-            onClick={() => {
-              alert('준비중입니다');
-            }}
-          >
-            더 알아보기
-          </button>
-        </Text>
       </Main>
     </Background>
   );
