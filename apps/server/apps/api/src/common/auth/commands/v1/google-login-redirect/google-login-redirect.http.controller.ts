@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Redirect, Req, Res, UseGuards } from '@nestjs/common';
 import { CookieOptions, Request, Response } from 'express';
 import { GoogleOAuthGuard, User } from '@Libs/commons/src';
 import { CommandBus } from '@nestjs/cqrs';
@@ -22,6 +22,7 @@ export class GoogleLoginRedirectHttpController {
   @ApiOkResponse({
     description: responses[200],
   })
+  @Redirect('http://localhost:3666/login/redirect', 302)
   async googleAuthRedirect(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -30,11 +31,17 @@ export class GoogleLoginRedirectHttpController {
     const token: { accessToken: string; refreshToken: string } =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
+    const options: CookieOptions = {
+      domain: 'localhost',
+      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      path: '/',
+      httpOnly: true,
+    };
+
+    res.cookie('google_access_token', userInfo.googleAccessToken, options);
+    res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
     return {
-      Authorization: 'Bearer ' + token.accessToken,
-      refreshToken: token.refreshToken,
-      google_access_token: userInfo.googleAccessToken,
-      google_refresh_token: userInfo.googleRefreshToken,
+      url: `http://localhost:3666/login/redirect?accessToken=${token.accessToken}&refreshToken=${token.refreshToken}`,
     };
   }
 }
