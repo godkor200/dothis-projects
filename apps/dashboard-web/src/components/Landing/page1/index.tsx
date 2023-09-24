@@ -24,30 +24,46 @@ import {
   Texts,
   Title,
 } from './style';
+
 const SVGPATH = '/images/landing/svg/';
+const slideIcon = [
+  { icon: '/images/landing/Landing_Section1_SlideIcon_1.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_2.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_3.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_4.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_5.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_6.png' },
+  { icon: '/images/landing/Landing_Section1_SlideIcon_7.png' },
+];
 
 export default function Page1() {
   const router = useRouter();
+  // 기본 경로 설정
   const [svgAutomatic, setSvgAutomatic] = useState<string>(
     SVGPATH + 'Landing_Section1_Automatic.svg',
-  ); // 기본 경로 설정
+  );
   const [svgMockBackground, setSvgMockBackground] = useState<string>(
     SVGPATH + 'Landing_Section1_Mockup_background.svg',
-  ); // 기본 경로 설정
+  );
+  const [animate, setAnimate] = useState(true);
+  const onStop = () => setAnimate(false);
+  const onRun = () => setAnimate(true);
 
   useEffect(() => {
     // 화면 크기에 따라 SVG 파일 경로 조정
     const handleResize = () => {
       if (window.innerWidth < parseInt(theme.breakpoints.mobile)) {
-        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic_mobile.svg'); // 작은 화면에 맞는 경로 설정
+        // 작은 화면에 맞는 경로 설정
+        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic_mobile.svg');
         setSvgMockBackground(
           SVGPATH + 'Landing_Section1_Mockup_background_mobile.svg',
-        ); // 작은 화면에 맞는 경로 설정
+        );
       } else {
-        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic.svg'); // 큰 화면에 맞는 경로 설정
+        // 큰 화면에 맞는 경로 설정
+        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic.svg');
         setSvgMockBackground(
           SVGPATH + 'Landing_Section1_Mockup_background.svg',
-        ); // 큰 화면에 맞는 경로 설정
+        );
       }
     };
 

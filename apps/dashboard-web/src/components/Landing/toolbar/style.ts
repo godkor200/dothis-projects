@@ -3,10 +3,6 @@ import styled from 'styled-components';
 
 import { BackgroundDefault, MainDefault, theme } from '../style';
 
-// useEffect(() => {
-//   AOS.init()
-// }, [])
-
 export const Background = styled(BackgroundDefault)`
   background-color: #18181b;
   height: 100px;

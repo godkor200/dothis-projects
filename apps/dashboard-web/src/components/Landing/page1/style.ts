@@ -156,11 +156,11 @@ export const SlideText = styled.h1`
 `;
 
 export const SlideIconContainer = styled.div`
-  width: 1920px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 120px;
+  gap: 200px;
   padding-top: 80px;
 `;
 
