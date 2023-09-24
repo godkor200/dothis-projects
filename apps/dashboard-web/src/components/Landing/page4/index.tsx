@@ -2,14 +2,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import {
-  Category,
-  CategroiesContainer,
-  Description,
-  MoreButton,
-  Title
-} from '../style';
-import { Background, Img, Main } from './style';
+import { Category, CategroiesContainer, MoreButton } from '../style';
+import { Background, Description, Img, Main, Title } from './style';
 
 export default function Page4() {
   const router = useRouter();

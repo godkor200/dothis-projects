@@ -1,7 +1,7 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { BackgroundDefault, MainDefault } from '../style';
-import { useEffect } from 'react';
+import { BackgroundDefault, MainDefault, theme } from '../style';
 
 // useEffect(() => {
 //   AOS.init()
@@ -11,7 +11,8 @@ export const Background = styled(BackgroundDefault)`
   background-color: #18181b;
   height: 100px;
 
-  @media (max-width: 576px) {
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    height: 60px;
   }
 `;
 
@@ -20,7 +21,7 @@ export const Main = styled(MainDefault)`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 576px) {
+  @media (max-width: ${theme.breakpoints.mobile}) {
   }
 `;
 
@@ -32,6 +33,9 @@ export const Bar = styled.nav`
   justify-content: space-between;
   align-items: center;
   max-width: 1440px;
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+  }
 `;
 
 export const Nav = styled.nav`
@@ -66,7 +70,7 @@ export const Button = styled.button`
   color: white;
   gap: 8px;
 
-  @media (max-width: 576px) {
+  @media (max-width: ${theme.breakpoints.mobile}) {
     font-size: 16px;
     padding: 12px 16px;
   }

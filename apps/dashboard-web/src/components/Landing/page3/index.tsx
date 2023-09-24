@@ -1,14 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import {
-  Category,
-  CategroiesContainer,
-  Description,
-  MoreButton,
-  Title,
-} from '../style';
-import { Background, Img, Main } from './style';
+import { Category, CategroiesContainer, MoreButton } from '../style';
+import { Background, Description, Img, Main, Title } from './style';
 
 export default function Page3() {
   const [state, setState] = useState<number>(0);
@@ -25,7 +19,7 @@ export default function Page3() {
       <Main>
         <Title>다른 사람들은 어떻게 만들지?</Title>
         <Description>
-          선택한 아이템과 관련된 다른 콘텐츠를 한 눈에 요약해 드려요.
+          선택한 아이템과 관련된 다른 콘텐츠를 모아 한 페이지에 요약해 드려요.
           <br /> 요약 내용을 참고해 아이디어를 얻어보세요.
         </Description>
         <Img

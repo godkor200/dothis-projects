@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-import { Description, Title } from '../style';
 import {
   Background,
+  Description,
   ImageBackground,
   ImageBackgroundContainer,
   ImageBox,
@@ -10,6 +10,7 @@ import {
   ImgMock,
   Main,
   Text,
+  Title,
 } from './style';
 
 export default function Page2() {

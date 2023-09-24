@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
-import { BackgroundDefault, MainDefault } from '../style';
+import {
+  BackgroundDefault,
+  DescriptionDefault,
+  MainDefault,
+  theme,
+  TitleDefault,
+} from '../style';
 
 export const Background = styled(BackgroundDefault)`
   padding: 120px 0px;
 
-  @media (max-width: 800px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     padding: 70px 0px;
   }
 `;
@@ -16,10 +22,10 @@ export const Main = styled(MainDefault)`
   justify-content: center;
   gap: 40px;
 
-  @media (max-width: 800px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     flex-direction: column;
     padding: 30px 0px;
-    margin: 16px;
+    margin: 8px;
   }
 `;
 
@@ -32,13 +38,15 @@ export const ImageBackground = styled.div`
   @media (max-width: 1280px) {
     height: 30%;
   }
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    height: 15%;
+  }
 `;
 
 export const ImageBackgroundContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
-
 `;
 
 export const ImageContainer = styled.div`
@@ -47,7 +55,7 @@ export const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (max-width: 768px) {
+  @media (max-width: ${theme.breakpoints.mobile}) {
   }
 `;
 
@@ -73,12 +81,16 @@ export const ImgMock = styled.img`
 export const Text = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+  width: 90%;
+  flex-wrap: wrap;
 
-  @media (max-width: 1280px) {
+  /* @media (max-width: 1280px) {
     margin-left: 40px;
     padding-right: 40px;
-  }
+  } */
 
   @media (max-width: 900px) {
     padding-right: 0;
@@ -86,11 +98,6 @@ export const Text = styled.div`
 
   @media (max-width: 800px) {
     margin-left: 0;
-  }
-
-  @media (max-width: 576px) {
-    margin-left: 14px;
-    padding-right: 14px;
   }
 
   button {
@@ -108,5 +115,20 @@ export const Text = styled.div`
       font-size: 16px;
       padding: 12px 16px;
     }
+  }
+`;
+
+export const Title = styled(TitleDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    font-size: 26px;
+    margin-bottom: 12px;
+    padding: 0px 0px;
+    width: 220px;
+  }
+`;
+
+export const Description = styled(DescriptionDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    width: 240px;
   }
 `;

@@ -3,8 +3,7 @@ import { useRouter } from 'next/navigation';
 
 import { CONTENT } from '@/constants/route';
 
-import { Description, Title } from '../style';
-import { Background, ImageBox, Main, Texts } from './style';
+import { Background, Description, ImageBox, Main, Texts, Title } from './style';
 
 export default function Page6() {
   const router = useRouter();

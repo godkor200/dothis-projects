@@ -1,8 +1,12 @@
 import styled from 'styled-components';
+
 import {
   BackgroundDefault,
+  DescriptionDefault,
   MainDefault,
   MoreButton as MoreButtonDefault,
+  theme,
+  TitleDefault,
 } from '../style';
 
 export const Background = styled(BackgroundDefault)`
@@ -60,5 +64,20 @@ export const Img = styled.img`
 
   @media (max-width: 1280px) {
     width: 80%;
+  }
+`;
+
+export const Title = styled(TitleDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    font-size: 26px;
+    margin-bottom: 12px;
+    padding: 0 14px;
+    width: 300px;
+  }
+`;
+
+export const Description = styled(DescriptionDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    width: 300px;
   }
 `;

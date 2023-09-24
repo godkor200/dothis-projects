@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Search from 'public/aseets/svg/Landing/search.svg';
+import { useEffect, useState } from 'react';
 
 import { CONTENT, PRICING } from '@/constants/route';
 
-import { Description, Title } from '../style';
+import { theme } from '../style';
 import {
   Background,
   Button,
@@ -21,10 +22,41 @@ import {
   SlideIconContainer,
   SlideText,
   Texts,
+  Title,
 } from './style';
+const SVGPATH = '/images/landing/svg/';
 
 export default function Page1() {
   const router = useRouter();
+  const [svgAutomatic, setSvgAutomatic] = useState<string>(
+    SVGPATH + 'Landing_Section1_Automatic.svg',
+  ); // 기본 경로 설정
+  const [svgMockBackground, setSvgMockBackground] = useState<string>(
+    SVGPATH + 'Landing_Section1_Mockup_background.svg',
+  ); // 기본 경로 설정
+
+  useEffect(() => {
+    // 화면 크기에 따라 SVG 파일 경로 조정
+    const handleResize = () => {
+      if (window.innerWidth < parseInt(theme.breakpoints.mobile)) {
+        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic_mobile.svg'); // 작은 화면에 맞는 경로 설정
+        setSvgMockBackground(
+          SVGPATH + 'Landing_Section1_Mockup_background_mobile.svg',
+        ); // 작은 화면에 맞는 경로 설정
+      } else {
+        setSvgAutomatic(SVGPATH + 'Landing_Section1_Automatic.svg'); // 큰 화면에 맞는 경로 설정
+        setSvgMockBackground(
+          SVGPATH + 'Landing_Section1_Mockup_background.svg',
+        ); // 큰 화면에 맞는 경로 설정
+      }
+    };
+
+    handleResize(); // 초기 로딩 시 설정
+    window.addEventListener('resize', handleResize); // 화면 크기 변경 시 설정 업데이트
+    return () => {
+      window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    };
+  }, []);
 
   return (
     <Background>
@@ -54,22 +86,16 @@ export default function Page1() {
               </Button>
             </ButtonContainer>
           </Texts>
-          <ImgAutomatic
-            src={'/images/landing/svg/Landing_Section1_Automatic.svg'}
-            alt={''}
-          />
+          <ImgAutomatic src={svgAutomatic} alt={''} />
           <Container>
-            <ImgMockBackground
-              src={'/images/landing/svg/Landing_Section1_Mockup_background.svg'}
-              alt={''}
-            />
+            <ImgMockBackground src={svgMockBackground} alt={''} />
             <ImgMock
               src={'/images/landing/svg/Landing_Section1_Mockup.svg'}
               alt={''}
             />
           </Container>
           <Title>
-            맞춤 소재 발굴부터 AI가 제안하는 영상 기획까지 <br />한 번에
+            나에게 딱 맞는 소재 발굴부터 AI가 제안하는 영상 기획까지 <br /> 한 번에
           </Title>
           <SlideIconContainer>
             <SlideIcon>

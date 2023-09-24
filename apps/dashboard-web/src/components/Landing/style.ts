@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+export const theme = {
+  breakpoints: {
+    mobile: '576px',
+    tablet: '768px',
+    desktop_s: '1280px',
+    desktop_b: '1920px',
+  },
+};
+
 export const Layout = styled.div`
   width: 100%;
 `;
@@ -37,7 +46,7 @@ export const CategroiesContainer = styled.div`
   margin-bottom: 52px;
   gap: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     display: none;
   }
 `;
@@ -46,7 +55,7 @@ export const Category = styled.button<{ select: number }>`
   font-size: 20px;
   color: ${(props) => (props.select ? 'black' : 'rgba(161, 161, 170, 1)')};
 
-  @media (max-height: 768px) {
+  @media (max-height: ${theme.breakpoints.tablet}) {
     font-size: 0;
     opacity: 0;
     display: none;
@@ -61,53 +70,59 @@ export const MoreButton = styled.button`
   font-size: 20px;
   margin-top: 60px;
 
-  @media (max-width: 800px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     margin: 0 auto;
     margin-top: 20px;
   }
 
-  @media (max-width: 576px) {
+  @media (max-width: ${theme.breakpoints.mobile}) {
     font-size: 16px;
     padding: 12px 16px;
   }
 `;
 
-export const Title = styled.h1`
+export const TitleDefault = styled.h1`
   font-size: 44px;
   font-weight: 700;
   padding: 0 38px;
   text-align: center;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 
-  @media (max-width: 576px) {
-    font-size: 28px;
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    font-size: 26px;
     margin-bottom: 12px;
+    padding: 0 14px;
+    width: 360px;
   }
 `;
 
-export const Description = styled.p`
+export const DescriptionDefault = styled.p`
   font-size: 22px;
-  white-space: nowrap;
+  white-space: normal;
   font-weight: 500;
   text-align: center;
 
-  @media (max-width: 1280px) {
+  @media (max-width: ${theme.breakpoints.desktop_s}) {
     font-size: 20px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${theme.breakpoints.desktop_s}) {
     display: flex;
     flex-direction: column;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     font-size: 18px;
     text-align: center;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${theme.breakpoints.tablet}) {
     display: flex;
     flex-direction: column;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     font-size: 16px;
     text-align: center;
+  }
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    width: 300px;
   }
 `;
