@@ -26,13 +26,13 @@ export const Main = styled(MainDefault)`
   }
 `;
 
-export const ImageBox = styled.div`
-  width: 100%;
+export const Img = styled.img`
+  width: 1132px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 900px) {
-    width: 100%;
+  @media (max-width: 1280px) {
+    width: 95%;
   }
 `;

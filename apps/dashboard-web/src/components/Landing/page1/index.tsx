@@ -10,9 +10,11 @@ import { Description, Title } from '../style';
 import {
   Background,
   Button,
-  Buttons,
+  ButtonContainer,
   Container,
-  ImageContainer,
+  ImgAutomatic,
+  ImgMock,
+  ImgMockBackground,
   Main,
   MainTitle,
   SlideIcon,
@@ -32,7 +34,7 @@ export default function Page1() {
             <MainTitle>
               주제부터 스크립트까지 <br /> 두디스로 한 번에
             </MainTitle>
-            <Buttons>
+            <ButtonContainer>
               <Button onClick={() => router.push(CONTENT)}>
                 <Image
                   src={'/images/landing/logo_small.png'}
@@ -50,50 +52,24 @@ export default function Page1() {
                 <Search width={30} height={30} />
                 <p>요금제 알아보기</p>
               </Button>
-            </Buttons>
+            </ButtonContainer>
           </Texts>
-          <Image 
+          <ImgAutomatic
             src={'/images/landing/svg/Landing_Section1_Automatic.svg'}
             alt={''}
-            width={0}
-            height={0}
-            sizes="100vm"
-            style={{ width: '80%', height: 'auto' }}
           />
-          <ImageContainer>
-            <div style={{ position: 'absolute' }}>
-              <Image
-                src={
-                  '/images/landing/svg/Landing_Section1_Mockup_background.svg'
-                }
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-            <div style={{ position: 'absolute' }}>
-              <Image
-                src={'/images/landing/svg/Landing_Section1_Mockup.svg'}
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-          </ImageContainer>
-          <Image
-            src="/images/landing/Landing_Section1_Mockup.png"
-            alt={''}
-            width={0}
-            height={0}
-            sizes="100vm"
-            style={{ width: '80%', height: 'auto' }}
-          />
+          <Container>
+            <ImgMockBackground
+              src={'/images/landing/svg/Landing_Section1_Mockup_background.svg'}
+              alt={''}
+            />
+            <ImgMock
+              src={'/images/landing/svg/Landing_Section1_Mockup.svg'}
+              alt={''}
+            />
+          </Container>
           <Title>
-            맞춤 소재 발굴부터 AI가 제안하는 <br /> 영상 기획까지 한 번에
+            맞춤 소재 발굴부터 AI가 제안하는 영상 기획까지 <br />한 번에
           </Title>
           <SlideIconContainer>
             <SlideIcon>
@@ -122,7 +98,7 @@ export default function Page1() {
             <SlideIcon>
               <Image
                 src="/images/landing/Landing_Section1_SlideIcon_3.png"
-                alt={''} 
+                alt={''}
                 width={0}
                 height={0}
                 sizes="100vm"

@@ -1,21 +1,26 @@
 import styled from 'styled-components';
 
 import { BackgroundDefault, MainDefault } from '../style';
+import { useEffect } from 'react';
+
+// useEffect(() => {
+//   AOS.init()
+// }, [])
 
 export const Background = styled(BackgroundDefault)`
   background-color: #18181b;
   height: 100px;
 
   @media (max-width: 576px) {
-    padding-bottom: 60px;
   }
 `;
 
 export const Main = styled(MainDefault)`
-  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 576px) {
-    margin-top: 140px;
   }
 `;
 
@@ -53,11 +58,12 @@ export const Button = styled.button`
   align-items: center;
   width: auto;
   height: 60px;
-  border-radius: 20px;
+  padding: 20px 100px;
+  border-radius: 50px;
   border: 1px solid black;
+  border-color: white;
   font-size: 22px;
   color: white;
-  margin-top: 60px;
   gap: 8px;
 
   @media (max-width: 576px) {

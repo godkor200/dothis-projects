@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { BackgroundDefault, MainDefault } from '../style';
 
 export const Background = styled(BackgroundDefault)`
-
   padding-top: 100px;
   padding-bottom: 60px;
 
@@ -22,14 +21,16 @@ export const Main = styled(MainDefault)`
   }
 `;
 
-export const ImageBox = styled.div`
+export const Img = styled.img`
   margin-top: 40px;
+  width: 1006px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 
-  @media (max-width: 900px) {
-    width: 100%;
+  @media (max-width: 1280px) {
+    width: 80%;
   }
 `;

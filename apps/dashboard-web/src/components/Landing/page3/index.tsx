@@ -8,7 +8,7 @@ import {
   MoreButton,
   Title,
 } from '../style';
-import { Background, ImageBox, Main } from './style';
+import { Background, Img, Main } from './style';
 
 export default function Page3() {
   const [state, setState] = useState<number>(0);
@@ -28,16 +28,10 @@ export default function Page3() {
           선택한 아이템과 관련된 다른 콘텐츠를 한 눈에 요약해 드려요.
           <br /> 요약 내용을 참고해 아이디어를 얻어보세요.
         </Description>
-        <ImageBox>
-          <Image
-            src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
-            alt={''}
-            width={0}
-            height={0}
-            sizes="100vm"
-            style={{ width: '80%', height: 'auto' }}
-          />
-        </ImageBox>
+        <Img
+          src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
+          alt={''}
+        />
 
         {/* <MoreButton
           onClick={() => {

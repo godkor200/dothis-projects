@@ -1,12 +1,13 @@
 import Image from 'next/image';
 
-import { Title, Description } from '../style';
+import { Description, Title } from '../style';
 import {
   Background,
   ImageBackground,
   ImageBackgroundContainer,
   ImageBox,
   ImageContainer,
+  ImgMock,
   Main,
   Text,
 } from './style';
@@ -26,13 +27,9 @@ export default function Page2() {
             <ImageBackground />
           </ImageBackgroundContainer>
           <ImageContainer>
-            <Image
+            <ImgMock
               src={'/images/landing/svg/Landing_Section2_Mockup.svg'}
               alt={''}
-              width={0}
-              height={0}
-              sizes="100vm"
-              style={{ width: '80%', height: 'auto' }}
             />
           </ImageContainer>
         </ImageBox>

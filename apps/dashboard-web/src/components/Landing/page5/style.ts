@@ -49,10 +49,16 @@ export const Texts = styled.div`
 `;
 
 
-export const ImageBox = styled.div`
+export const Img = styled.img`
   margin-top: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  width: 943px;
+  height: auto;
+
+  @media (max-width: 1280px) {
+    width: 80%;
+  }
 `;

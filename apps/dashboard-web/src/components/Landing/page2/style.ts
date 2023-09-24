@@ -14,6 +14,7 @@ export const Main = styled(MainDefault)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 40px;
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -25,8 +26,12 @@ export const Main = styled(MainDefault)`
 export const ImageBackground = styled.div`
   position: absolute;
   background-color: #ffb4c9;
-  height: 30%;
+  height: 362px;
   width: 100%;
+
+  @media (max-width: 1280px) {
+    height: 30%;
+  }
 `;
 
 export const ImageBackgroundContainer = styled.div`
@@ -38,7 +43,6 @@ export const ImageBackgroundContainer = styled.div`
 
 export const ImageContainer = styled.div`
   width: 100%;
-  margin: 50px 200px;
   position: relative;
   display: flex;
   align-items: center;
@@ -52,6 +56,18 @@ export const ImageBox = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+`;
+
+export const ImgMock = styled.img`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 1069px;
+  height: auto;
+
+  @media (max-width: 1280px) {
+    width: 85%;
+  }
 `;
 
 export const Text = styled.div`

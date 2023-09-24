@@ -11,7 +11,7 @@ export const Background = styled(BackgroundDefault)`
 `;
 
 export const Main = styled(MainDefault)`
-  margin-top: 100px;
+  margin-top: 40px;
 
   @media (max-width: 576px) {
     margin-top: 140px;
@@ -19,34 +19,58 @@ export const Main = styled(MainDefault)`
 `;
 
 export const Container = styled.div`
-  aspect-ratio: 110/46;
   position: relative;
   margin: 0px 90px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 60px;
+  width: 100%;
 
-  @media (max-width: 1280px) {
+  /* @media (max-width: 1280px) {
     width: 90%;
-  }
+  } */
 
   /* @media (max-width: 576px) {
     display: none;
   } */
 `;
-
-export const ImageContainer = styled.div`
+export const ImgAutomatic = styled.img`
   position: relative;
-  @media (max-width: 768px) {
+  width: 1130px;
+  height: auto;
+
+  @media (max-width: 1280px) {
+    width: 90%;
   }
 `;
 
-export const Buttons = styled.div`
+export const ImgMockBackground = styled.img`
+  position: relative;
+  width: 1130px;
+  height: auto;
+  margin: 100px 0px 200px 0px;
+
+  @media (max-width: 1280px) {
+    width: 90%;
+  }
+`;
+
+export const ImgMock = styled.img`
+  position: absolute;
+  width: 690px;
+  height: auto;
+  margin: 100px 0px 200px 0px;
+
+  @media (max-width: 1280px) {
+    width: 55%;
+  }
+`;
+
+export const ButtonContainer = styled.div`
   display: flex;
   gap: 40px;
-  margin-top: 30px;
+  margin: 60px 0px;
 
   @media (max-width: 576px) {
     gap: 16px;
@@ -82,6 +106,7 @@ export const Texts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
 `;
 
 export const MainTitle = styled.h1`
@@ -117,33 +142,5 @@ export const SlideIconContainer = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 120px;
-`;
-
-export const Bar = styled.nav`
-  position: absolute;
-  width: 100%;
-  top: 0;
-  padding: 36px 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1440px;
-`;
-
-export const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
-  button {
-    width: 160px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 4px;
-    font-size: 20px;
-  }
+  padding-top: 80px;
 `;

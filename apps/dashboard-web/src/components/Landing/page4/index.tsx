@@ -9,7 +9,7 @@ import {
   MoreButton,
   Title
 } from '../style';
-import { Background, ImageBox, Main } from './style';
+import { Background, Img, Main } from './style';
 
 export default function Page4() {
   const router = useRouter();
@@ -23,16 +23,10 @@ export default function Page4() {
         <Description>
           AI가 화면 구성은 물론 스크립트 작성까지 모두 가이드 해드립니다.
         </Description>
-        <ImageBox>
-          <Image
-            src={'/images/landing/svg/Landing_Section4_Mockup_Group.svg'}
-            alt={''}
-            width={0}
-            height={0}
-            sizes="100vm"
-            style={{ width: '80%', height: 'auto' }}
-          />
-        </ImageBox>
+        <Img
+          src={'/images/landing/svg/Landing_Section4_Mockup_Group.svg'}
+          alt={''}
+        />
       </Main>
     </Background>
   );

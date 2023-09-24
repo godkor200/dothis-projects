@@ -33,17 +33,18 @@ export default function Topbar() {
 
   return (
     <Background>
-      <Bar>
-        <Button onClick={() => router.push(CONTENT)}>
+      <Main>
+        <Bar></Bar>
+        <Button onClick={() => window.open(CONTENT_URL)}>
           <Image
-            src={'./svg/Toolbar_icon_campaign.svg'}
+            src={'/images/landing/svg/Toolbar_icon_campaign.svg'}
             alt={''}
             width={30}
             height={30}
           />
-          <p>무료 체험하기</p>
+          <p>설문조사 참여하고 커피 쿠폰 받기</p>
         </Button>
-      </Bar>
+      </Main>
     </Background>
   );
 }

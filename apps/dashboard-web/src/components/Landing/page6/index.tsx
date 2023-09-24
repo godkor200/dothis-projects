@@ -20,7 +20,7 @@ export default function Page6() {
           />
         </ImageBox>
         <Texts>
-          <Title>영상 기획, 오랜 시간 고민하지 말고 두-디스</Title>
+          <Title>영상 기획, 오랜 시간 고민하지 말고 두디스</Title>
           <button
             onClick={() => {
               router.push(CONTENT);
