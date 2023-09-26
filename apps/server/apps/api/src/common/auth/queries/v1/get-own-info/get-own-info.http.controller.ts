@@ -50,7 +50,7 @@ export class GetOwnInfoHttpController {
   ])
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: getOwnInfo.responses[404],
+    description: UserNotFoundError.message,
   })
   @ApiUnauthorizedResponse({ description: 'Authentication failed' })
   @ApiInternalServerErrorResponse({
