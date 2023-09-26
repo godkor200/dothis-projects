@@ -66,6 +66,7 @@ export class GoogleLoginRedirectCommandHandler
       accessToken: this.jwtService.sign(
         {
           id: checkUser.id,
+          channelId: checkUser.channelId,
           userEmail: checkUser.userEmail,
         },
         { expiresIn: '30m' },
