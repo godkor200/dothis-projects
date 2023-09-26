@@ -35,7 +35,7 @@ export const authApi = c.router({
     },
     summary: '토큰 확인(accessToken, refreshToken) 후 갱신된 토큰 리턴',
     description:
-      '유저 관련 토큰 accessToken, refreshToken은 쿠키로 보내어진다.',
+      '유저 관련 토큰 accessToken, refreshToken은 쿠키, 바디로 보내어진다.',
   },
   getOwnInfo: {
     method: 'GET',
