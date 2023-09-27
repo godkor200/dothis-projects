@@ -120,10 +120,12 @@
     "typeorm-run": {
       "cache": false,
       "outputs": ["dist/**/*"]
-    },   "typeorm-generate": {
+    },
+    "typeorm-generate": {
       "cache": false,
       "outputs": ["dist/**/*"]
-    },   "typeorm-revert": {
+    },
+    "typeorm-revert": {
       "cache": false,
       "outputs": ["dist/**/*"]
     }

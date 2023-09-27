@@ -35,12 +35,12 @@ const Keywords = ({ keyword }: KeywordSchema) => {
   return (
     <>
       {keyword?.length > 0 ? (
-        <ul className="flex gap-[0.5rem] flex-wrap mb-16">
+        <ul className="mb-16 flex flex-wrap gap-[0.5rem]">
           {keyword?.map((mock) => (
             <Style.TagItem
               key={`editor-${mock}`}
               onClick={() => onToggleKeyword(mock)}
-              chosen={keywords?.includes(mock)}
+              $chosen={keywords?.includes(mock)}
             >
               {keywords.includes(mock) && <Style.StyledCheck />}
               {mock}
