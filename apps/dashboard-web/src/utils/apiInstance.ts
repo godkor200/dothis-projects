@@ -6,23 +6,27 @@ const isServer = typeof window === 'undefined';
 
 export const apiInstance = axios.create({
   baseURL: HTTP_BASE_URL,
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 apiInstance.interceptors.request.use(async (config) => {
   if (isServer) {
-    const { cookies } = await import('next/headers'),
-      token = cookies().get('accessToken')?.value;
+    const { cookies } = await import('next/headers');
+    const token = cookies().get('accessToken')?.value;
+    const refreshToken = cookies().get('refreshToken')?.value;
 
     if (token) {
       config.headers.Authorization = `${token}`;
+      // config.headers['cookie'] = `refreshToken=${refreshToken}`;
     }
   } else {
     const { getCookie } = await import('cookies-next');
 
     const token = getCookie('accessToken');
+    const refreshToken = getCookie('refreshToken');
     if (token) {
       config.headers.Authorization = `${token}`;
+      // config.headers['cookie'] = `refreshToken=${refreshToken}`;
     }
   }
 
