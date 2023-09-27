@@ -8,7 +8,6 @@ export const userApi = c.router({
   getUser: {
     method: 'GET',
     path: `${userBaseApiUrl}/:id`,
-    pathParams: userBaseApiUrl,
     query: z.object({ search: z.string() }),
     responses: {
       200: zUserModel,
@@ -21,7 +20,6 @@ export const userApi = c.router({
   getUserChannelData: {
     method: 'POST',
     path: `${userBaseApiUrl}/get-channel-data`,
-    pathParams: userBaseApiUrl,
     body: {},
     responses: {
       200: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',
@@ -36,7 +34,6 @@ export const userApi = c.router({
   getUserKeyword: {
     method: 'GET',
     path: `${userBaseApiUrl}/keyword`,
-    pathParams: userBaseApiUrl,
     responses: {
       200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
       404: 'Not Found',

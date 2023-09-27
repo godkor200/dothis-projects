@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Inject, NotFoundException } from '@nestjs/common';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CHANNEL_DATA_REPOSITORY_BY_OS } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelAdapter } from '@Apps/modules/channel/interface/channel.adapter';
+import { Err, Ok } from 'oxide.ts';
 
 export class FindKeywordTagByUserCommand {
   public readonly userId: string;
@@ -28,7 +29,7 @@ export class GetUserV2CommandHandler
     const res = await this.channelOpenSearchRepo.findChannelTagOrKeyword(
       found.channelId,
     );
-    if (!res) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    return res;
+    if (!res) return Err(NotFoundException);
+    return Ok(res);
   }
 }

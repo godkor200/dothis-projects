@@ -1,4 +1,9 @@
-import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  HttpStatus,
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindKeywordTagByUserCommand } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import {
@@ -11,12 +16,14 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-
+import { match, Result } from 'oxide.ts';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
+import { IRes } from '@Libs/commons/src/types/res.types';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUserKeyword;
 
@@ -52,10 +59,21 @@ export class GetKeywordByUserHttpController {
   @ApiBearerAuth('Authorization')
   async getKeywordTag(
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<ChannelKeywordOrtagDtos> {
+  ): Promise<IRes<ChannelKeywordOrtagDtos>> {
     const command = new FindKeywordTagByUserCommand({
       userId: userInfo.id.toString(),
     });
-    return await this.commandBus.execute(command);
+    const result: Result<ChannelKeywordOrtagDtos, NotFoundException> =
+      await this.commandBus.execute(command);
+
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err: Error) => {
+        if (err instanceof NotFoundException) {
+          throw new UserNotFoundError();
+        }
+        throw err;
+      },
+    });
   }
 }
