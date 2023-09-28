@@ -156,7 +156,7 @@ export const SlideIcon = styled.div`
   align-items: center;
   gap: 30px;
   flex-wrap: nowrap;
-  animation: ${infiniteSlide} 10s linear infinite normal none running;
+  animation: ${infiniteSlide} 20s linear infinite normal none running;
 
   &::before {
     content: '';
