@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import {
   BackgroundDefault,
@@ -140,28 +140,54 @@ export const MainTitle = styled.h1`
 }
 `;
 
+export const infiniteSlide = keyframes`
+  0%, 100% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(-1800%); // icon이 9개라 -200% * 9
+  }
+`;
+
 export const SlideIcon = styled.div`
-  width: 100%;
+  width: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  flex-wrap: nowrap;
+  animation: ${infiniteSlide} 10s linear infinite normal none running;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+  }
 `;
 
 export const SlideText = styled.h1`
   display: flex;
   font-size: 22px;
   text-align: center;
+  flex-direction: column;
   font-weight: 700;
+  width: 160px;
 `;
 
 export const SlideIconContainer = styled.div`
-  width: 100%;
+  width: 200%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 200px;
+  gap: 160px;
   padding-top: 80px;
+  list-style: none;
+  overflow: hidden;
+  flex-wrap: nowrap;
 `;
 
 export const Title = styled(TitleDefault)`

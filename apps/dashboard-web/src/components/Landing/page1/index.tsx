@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 'use client';
 
 import Image from 'next/image';
@@ -26,14 +27,43 @@ import {
 } from './style';
 
 const SVGPATH = '/images/landing/svg/';
-const slideIcon = [
-  { icon: '/images/landing/Landing_Section1_SlideIcon_1.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_2.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_3.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_4.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_5.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_6.png' },
-  { icon: '/images/landing/Landing_Section1_SlideIcon_7.png' },
+const slides = [
+  {
+    text: '관심사 분석',
+    src: '/images/landing/Landing_Section1_SlideIcon_1.png',
+  },
+  {
+    text: '파생 소재 비교',
+    src: '/images/landing/Landing_Section1_SlideIcon_2.png',
+  },
+  {
+    text: '경쟁강도 측정',
+    src: '/images/landing/Landing_Section1_SlideIcon_3.png',
+  },
+  {
+    text: '조회수 예측',
+    src: '/images/landing/Landing_Section1_SlideIcon_4.png',
+  },
+  {
+    text: '유사채널 분석',
+    src: '/images/landing/Landing_Section1_SlideIcon_5.png',
+  },
+  {
+    text: '자동 자료 수집',
+    src: '/images/landing/Landing_Section1_SlideIcon_6.png',
+  },
+  {
+    text: '콘텐츠 요약',
+    src: '/images/landing/Landing_Section1_SlideIcon_7.png',
+  },
+  {
+    text: '스토리보드 작성',
+    src: '/images/landing/Landing_Section1_SlideIcon_8.png',
+  },
+  {
+    text: '가이드라인 제시',
+    src: '/images/landing/Landing_Section1_SlideIcon_9.png',
+  },
 ];
 
 export default function Page1() {
@@ -45,9 +75,6 @@ export default function Page1() {
   const [svgMockBackground, setSvgMockBackground] = useState<string>(
     SVGPATH + 'Landing_Section1_Mockup_background.svg',
   );
-  const [animate, setAnimate] = useState(true);
-  const onStop = () => setAnimate(false);
-  const onRun = () => setAnimate(true);
 
   useEffect(() => {
     // 화면 크기에 따라 SVG 파일 경로 조정
@@ -111,87 +138,36 @@ export default function Page1() {
             />
           </Container>
           <Title>
-            나에게 딱 맞는 소재 발굴부터 AI가 제안하는 영상 기획까지 <br /> 한 번에
+            나에게 딱 맞는 소재 발굴부터 AI가 제안하는 영상 기획까지
+            <br /> 한 번에
           </Title>
           <SlideIconContainer>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_1.png"
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>관심사 분석</SlideText>
-            </SlideIcon>
-
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_2.png"
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>파생 소재 비교</SlideText>
-            </SlideIcon>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_3.png"
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>경쟁강도 측정</SlideText>
-            </SlideIcon>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_4.png"
-                alt={''} 
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>조회수 예측</SlideText>
-            </SlideIcon>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_5.png"
-                alt={''}
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>유사채널 분석</SlideText>
-            </SlideIcon>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_6.png"
-                alt={''} 
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>자동 자료 수집</SlideText>
-            </SlideIcon>
-            <SlideIcon>
-              <Image
-                src="/images/landing/Landing_Section1_SlideIcon_7.png"
-                alt={''} 
-                width={0}
-                height={0}
-                sizes="100vm"
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <SlideText>콘텐츠 요약</SlideText>
-            </SlideIcon>
+            {slides.map((s, i) => (
+              <SlideIcon key={i}>
+                <Image
+                  src={s.src}
+                  alt={''}
+                  width={0}
+                  height={0}
+                  sizes="100vm"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+                <SlideText>{s.text}</SlideText>
+              </SlideIcon>
+            ))}
+            {slides.map((s, i) => (
+              <SlideIcon key={i}>
+                <Image
+                  src={s.src}
+                  alt={''}
+                  width={0}
+                  height={0}
+                  sizes="100vm"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+                <SlideText>{s.text}</SlideText>
+              </SlideIcon>
+            ))}
           </SlideIconContainer>
         </Container>
       </Main>

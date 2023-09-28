@@ -11,6 +11,7 @@ export const theme = {
 
 export const Layout = styled.div`
   width: 100%;
+  overflow: hidden;
 `;
 
 export const BackgroundDefault = styled.div`
