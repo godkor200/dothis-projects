@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { Category, CategroiesContainer, MoreButton } from '../style';
-import { Background, Description, ImageBox, Main, Title } from './style';
+import { Background, Description, Img, Main, Title } from './style';
 
 export default function Page3() {
   const [state, setState] = useState<number>(0);
@@ -17,51 +17,23 @@ export default function Page3() {
   return (
     <Background>
       <Main>
-        <Title>
-          <span>🔎 내 관심사 그대로 </span>
-          <span>맞춤 키워드 분석</span>
-        </Title>
+        <Title>다른 사람들은 어떻게 만들지?</Title>
         <Description>
-          <span>
-            <b>내 채널의 관심사</b>부터 시작해 앞으로 다룰만한
-          </span>
-          <span>
-            콘텐츠 소재의 <b>조회수 예측</b>까지 알 수 있어요
-          </span>
+          선택한 아이템과 관련된 다른 콘텐츠를 모아 한 페이지에 요약해 드려요.
+          <br /> 요약 내용을 참고해 아이디어를 얻어보세요.
         </Description>
-        <CategroiesContainer>
-          {titles.map((value: string, key: number) => {
-            return (
-              <Category
-                key={`page3_menu_${key}`}
-                onClick={() => {
-                  setState(key);
-                }}
-                select={state === key ? 1 : 0}
-              >
-                {value}
-              </Category>
-            );
-          })}
-        </CategroiesContainer>
+        <Img
+          src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
+          alt={''}
+        />
 
-        <ImageBox>
-          <Image
-            src={`/images/landing/keyword_0${state + 1}.png`}
-            alt={`${state} image`}
-            width={0}
-            height={0}
-            sizes={'100%'}
-            fill
-          />
-        </ImageBox>
-        <MoreButton
+        {/* <MoreButton
           onClick={() => {
             alert('준비중입니다');
           }}
         >
           더 알아보기
-        </MoreButton>
+        </MoreButton> */}
       </Main>
     </Background>
   );
