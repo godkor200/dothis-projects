@@ -33,6 +33,7 @@ export const Main = styled(MainDefault)`
 `;
 
 export const Img = styled.img`
+  margin-top: 60px;
   width: 1132px;
 
   display: flex;
