@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import { Background, Description, Img, Main, Title } from './style';
 
@@ -22,10 +24,12 @@ export default function Page3() {
           선택한 아이템과 관련된 다른 콘텐츠를 모아 한 페이지에 요약해 드려요.
           <br /> 요약 내용을 참고해 아이디어를 얻어보세요.
         </Description>
-        <Img
-          src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
-          alt={''}
-        />
+        <RevealWrapper>
+          <Img
+            src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
+            alt={''}
+          />
+        </RevealWrapper>
 
         {/* <MoreButton
           onClick={() => {

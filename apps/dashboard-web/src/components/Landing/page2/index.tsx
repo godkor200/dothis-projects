@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+
 import {
   Background,
   Description,
@@ -27,12 +29,14 @@ export default function Page2() {
           <ImageBackgroundContainer>
             <ImageBackground />
           </ImageBackgroundContainer>
-          <ImageContainer>
-            <ImgMock
-              src={'/images/landing/svg/Landing_Section2_Mockup.svg'}
-              alt={''}
-            />
-          </ImageContainer>
+          <RevealWrapper>
+            <ImageContainer>
+              <ImgMock
+                src={'/images/landing/svg/Landing_Section2_Mockup.svg'}
+                alt={''}
+              />
+            </ImageContainer>
+          </RevealWrapper>
         </ImageBox>
       </Main>
     </Background>

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Search from 'public/aseets/svg/Landing/search.svg';
 import { useEffect, useState } from 'react';
 
+import { RevealList, RevealWrapper } from '@/components/common/Reveal/Reveal';
 import { CONTENT, PRICING } from '@/constants/route';
 
 import { theme } from '../style';
@@ -14,6 +15,7 @@ import {
   Button,
   ButtonContainer,
   Container,
+  ImageContainer,
   ImgAutomatic,
   ImgMock,
   ImgMockBackground,
@@ -130,13 +132,15 @@ export default function Page1() {
             </ButtonContainer>
           </Texts>
           <ImgAutomatic src={svgAutomatic} alt={''} />
-          <Container>
-            <ImgMockBackground src={svgMockBackground} alt={''} />
-            <ImgMock
-              src={'/images/landing/svg/Landing_Section1_Mockup.svg'}
-              alt={''}
-            />
-          </Container>
+          <RevealWrapper>
+            <ImageContainer>
+              <ImgMockBackground src={svgMockBackground} alt={''} />
+              <ImgMock
+                src={'/images/landing/svg/Landing_Section1_Mockup.svg'}
+                alt={''}
+              />
+            </ImageContainer>
+          </RevealWrapper>
           <Title>
             나에게 딱 맞는 소재 발굴부터 AI가 제안하는 영상 기획까지
             <br /> 한 번에
