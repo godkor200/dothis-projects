@@ -1,4 +1,6 @@
-export const HTTP_BASE_URL =
+export const HTTP_BASE_URL = 'https://www.api.dothis.kr';
+
+export const HTTP_BASE_URL_WITHLOCAL =
   process.env.NODE_ENV === 'production'
     ? 'https://www.api.dothis.kr'
-    : 'http://localhost:8080';
+    : 'https://www.api.dothis.kr';
