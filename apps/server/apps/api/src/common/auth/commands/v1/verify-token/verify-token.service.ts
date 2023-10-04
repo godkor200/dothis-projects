@@ -12,21 +12,24 @@ import { Err, Ok } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
 
 export class TokenDto {
-  accessToken: string;
+  userInfo: IUserInfo;
   refreshToken: string;
   google_access_token: string;
   google_refresh_token: string;
 
   constructor(props: TokenDto) {
-    this.accessToken = props.accessToken;
+    this.userInfo = props.userInfo;
     this.refreshToken = props.refreshToken;
     this.google_access_token = props.google_access_token;
     this.google_refresh_token = props.google_refresh_token;
   }
 }
 export interface IUserInfo {
-  id: string;
+  id: number;
+  channelId: string;
   userEmail: string;
+  iat: number;
+  exp: number;
 }
 
 @CommandHandler(TokenDto)
@@ -46,29 +49,30 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
    * @param command
    */
   async execute(command: TokenDto) {
-    const cutBearerToken = command.accessToken.split('Bearer ')[1];
-
-    const userInfo: any = this.jwtService.decode(cutBearerToken);
     const refresh = this.jwtService.decode(command.refreshToken);
-    const user = await this.userRepository.findOneById(userInfo.id);
+    const userEntity = await this.userRepository.findOneById(
+      command.userInfo.id.toString(),
+    );
 
     if (
-      !userInfo ||
-      user.tokenRefresh !== command.refreshToken ||
+      userEntity.tokenRefresh !== command.refreshToken ||
       !refresh ||
-      !user.tokenRefresh
+      !userEntity.tokenRefresh
     ) {
       return Err(new UnauthorizedExceptionError());
     } else {
-      const newRefreshToken = this.jwtService.sign({ id: userInfo.id });
+      const newRefreshToken = this.jwtService.sign(
+        { id: userEntity.id },
+        { expiresIn: '24h' },
+      );
       await this.userRepository.updateRefreshToken(
-        Number(userInfo.id),
+        Number(userEntity.id),
         newRefreshToken,
       );
       return Ok({
         accessToken: this.jwtService.sign({
-          id: userInfo.id,
-          userEmail: userInfo.userEmail,
+          id: userEntity.id,
+          userEmail: userEntity.userEmail,
         }),
         refreshToken: newRefreshToken,
       });

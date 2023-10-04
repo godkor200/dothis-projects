@@ -57,7 +57,7 @@ export class GoogleLoginRedirectCommandHandler
       {
         id: checkUser.id,
       },
-      { expiresIn: '4h' },
+      { expiresIn: '24h' },
     );
 
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);

@@ -33,7 +33,7 @@ const { description, summary, responses } = getVerifyToken;
 export class VerifyTokenHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @ApiOkResponse({ description: responses[200] })
+  @ApiOkResponse({ description: '{}' })
   @ApiUnauthorizedResponse({ description: UnauthorizedExceptionError.message })
   @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({
@@ -64,22 +64,26 @@ export class VerifyTokenHttpController {
     },
   ): Promise<IRes<ITokenRes>> {
     const tokenDto = new TokenDto({
-      accessToken: req.headers.authorization,
+      userInfo: req['user'],
       ...cookie,
     });
     const result: Result<ITokenRes, UnauthorizedExceptionError> =
       await this.commandBus.execute(tokenDto);
-
+    const options: CookieOptions = {
+      domain: '.dothis.kr',
+      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+    };
     return match(result, {
       Ok: (result) => {
         res.header('Authorization', 'Bearer ' + result.accessToken);
-        res.cookie('refreshToken', result.refreshToken);
+        res.cookie('refreshToken', result.refreshToken, options);
         return {
           success: true,
           data: {
             message: 'authorized',
-            accessToken: result.accessToken,
-            refreshToken: result.refreshToken,
           },
         };
       },

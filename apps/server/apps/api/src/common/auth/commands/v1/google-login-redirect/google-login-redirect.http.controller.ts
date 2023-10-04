@@ -49,19 +49,24 @@ export class GoogleLoginRedirectHttpController {
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
     const options: CookieOptions = {
-      domain: '*',
+      domain: '.dothis.kr',
       //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
-      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
     };
 
     res.cookie('google_access_token', userInfo.googleAccessToken, options);
     res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
 
     return match(result, {
-      Ok: (result) => ({
-        url: `http://localhost:3666/login/redirect?isNewUser=${result.isNewUser}&accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-      }),
+      Ok: (result) => {
+        res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
+        res.cookie('refreshToken', result.refreshToken, options);
+        return {
+          url: `http://localhost:3666/login/redirect?isNewUser=${result.isNewUser}&accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
+        };
+      },
       Err: (err: Error) => {
         if (err instanceof InternalServerErrorException)
           throw new InternalServerErrorException(err.message);
