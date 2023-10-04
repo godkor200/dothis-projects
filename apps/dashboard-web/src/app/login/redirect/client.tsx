@@ -1,16 +1,13 @@
 'use client';
 
 import { setCookie } from 'cookies-next';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { apiClient } from '@/utils/apiClient';
-import { apiInstance } from '@/utils/apiInstance';
+import { isProduction } from '@/constants/dev';
+import { useAuthActions } from '@/store/authStore';
 
 const isServer = typeof window === 'undefined';
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 const Client = ({
   accessToken,
@@ -22,25 +19,15 @@ const Client = ({
   isNewUser: string | string[] | undefined;
 }) => {
   const router = useRouter();
+  const { setIsSignedIn } = useAuthActions();
 
-  setCookie('accessToken', `Bearer ${accessToken}`);
-
-  if (!isProduction) {
-    Cookies.set('refreshToken', `${refreshToken}`, { domain: 'dothis.kr' });
+  if (!isProduction && accessToken) {
+    setCookie('accessToken', `Bearer ${accessToken}`);
   }
-
-  // if (!isServer) {
-  //   console.log('test');
-  //   document.cookie = `refreshToken=${refreshToken}; domain=.dothis.kr; path=/`;
-  //   console.log(document.cookie);
-  // }
-
-  const { data } = apiClient.auth.getOwnInfo.useQuery(['my']);
-
-  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
 
   useEffect(() => {
     if (accessToken && refreshToken) {
+      setIsSignedIn(true);
       if (isNewUser) {
         router.replace('/login/choose-keyword');
       } else {
