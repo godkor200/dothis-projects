@@ -1,4 +1,11 @@
+import type { AxiosResponse } from 'axios';
 import axios from 'axios';
+import { setCookie } from 'cookies-next';
+
+import { isProduction } from '@/constants/dev';
+
+import { apiServer } from './apiServer';
+import { isAccessTokenExpired } from './authUtils';
 
 export const HTTP_BASE = '  api.dothis.kr';
 
@@ -30,5 +37,25 @@ apiInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
-// accessToken 만료 시 에러핸들링 추가 예정  (verifyToken api 가 현재 미구현)
-apiInstance.interceptors.response.use();
+// 401 코드에 Title을 정해야함, getVerifyToken response 여쭤봐야함.
+apiInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response.data.data;
+  },
+  async (error) => {
+    const { data, config: originalRequest } = error.response;
+    const statusCode = data.statusCode;
+
+    if (isAccessTokenExpired(statusCode)) {
+      const data = await apiServer.auth.getVerifyToken();
+      if (!isProduction) {
+        /**
+         *  현재 해당코드는 백엔드와 response 논의 후 백엔드 적용 시 동작할거임
+         */
+        setCookie('accessToken', `Bearer ${data.body}`);
+      }
+      return apiInstance(originalRequest);
+    }
+    return Promise.reject(error);
+  },
+);
