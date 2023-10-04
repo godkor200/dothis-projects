@@ -17,7 +17,7 @@ import {
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 const c = nestControllerContract(apiRouter.user);
-const { pathParams, summary, responses, description } = c.getUser;
+const { summary, responses, description } = c.getUser;
 type RequestShapes = NestRequestShapes<typeof c>;
 @ApiTags('유저 관련')
 @Controller()

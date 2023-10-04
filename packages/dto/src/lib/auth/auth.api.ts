@@ -1,4 +1,5 @@
 import { c } from '../contract';
+import { z } from 'zod';
 import { zUserModel } from '../user';
 
 export const authBaseApiUrl = '/auth';
@@ -29,7 +30,8 @@ export const authApi = c.router({
     path: `${authBaseApiUrl}/verify-token`,
     responses: {
       //TODO: 모듈화 필요
-      200: 'authorized',
+      200: z.object({ success: z.boolean(), data: z.any() }),
+
       401: 'Invalid Credential',
       500: 'Internal Server Error',
     },
