@@ -7,6 +7,9 @@ const config = {
     locales: ['ko'],
     defaultLocale: 'ko',
   },
+  images:{
+    domains:['bigkinds.or.kr']
+  },
   transpilePackages: [
     '@dothis/share',
     '@dothis/ui',

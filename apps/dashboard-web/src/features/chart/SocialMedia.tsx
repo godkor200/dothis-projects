@@ -1,7 +1,10 @@
+import Image from 'next/image';
+
 import Content from '@/components/common/ContentCard/Content';
 import ContentCard from '@/components/common/ContentCard/ContentCard';
 import ContentCardHeaderTap from '@/components/common/ContentCard/ContentCardHeaderTap';
 import ContentList from '@/components/common/ContentCard/ContentList';
+import MainContentContainer from '@/components/common/ContentCard/MainContentContainer';
 import relatedContentApi from '@/query/RelatedContent';
 
 const SocialMedia = async ({
@@ -19,13 +22,7 @@ const SocialMedia = async ({
     <ContentCard className="mb-[2.25rem]">
       <ContentCardHeaderTap relatedContent={selectedRelatedContent} />
       <div className="mt-10 flex gap-[1.25rem]">
-        <Content
-          title={contentArray[0].title}
-          category={contentArray[0].category}
-          provider={contentArray[0].provider}
-          date={contentArray[0].date}
-        />
-        <ContentList contentArray={contentArray} />
+        <MainContentContainer contentArray={contentArray} />
       </div>
     </ContentCard>
   );

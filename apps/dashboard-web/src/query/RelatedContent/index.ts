@@ -40,7 +40,14 @@ const relatedContentApi: { [key: string]: any } = {
         hilight: 200,
         return_from: 0,
         return_size: 5,
-        fields: ['byline', 'category', 'category_incident', 'provider_news_id'],
+        fields: [
+          'byline',
+          'category',
+          'category_incident',
+          'provider_news_id',
+          'images',
+          'provider_link_page',
+        ],
       },
     };
     const newsData = await fetch(
@@ -49,12 +56,16 @@ const relatedContentApi: { [key: string]: any } = {
     );
     const { return_object } = await newsData.json();
 
+    console.log(return_object);
+
     const returnData = await return_object.documents.map((item: any) => {
       return {
         title: item.title,
         category: item.category[0],
         provider: item.provider,
         date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
+        image: item.images,
+        link: item.provider_link_page,
       };
     });
     return returnData;
