@@ -71,7 +71,7 @@ const slides = [
   },
 ];
 
-export default function Page1() {
+export default function Page1_abtest() {
   const router = useRouter();
   // 기본 경로 설정
   const [svgAutomatic, setSvgAutomatic] = useState<string>(
@@ -112,7 +112,7 @@ export default function Page1() {
         <Container>
           <Texts>
             <MainTitle>
-              주제부터 스크립트까지 <br /> 두디스로 한 번에
+              내일 만들 영상 주제 추천은 <br /> DOTHIS
             </MainTitle>
             <ButtonContainer>
               {/* <Button onClick={() => router.push(CONTENT)}> */}

@@ -27,8 +27,14 @@ export const Main = styled(MainDefault)`
   }
 `;
 
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Img = styled.img`
-  margin-top: 40px;
+  margin-top: 60px;
   width: 1006px;
   height: auto;
   display: flex;
@@ -36,8 +42,8 @@ export const Img = styled.img`
   align-items: center;
   position: relative;
 
-  @media (max-width: 1280px) {
-    width: 80%;
+  @media (max-width: ${theme.breakpoints.desktop_s}) {
+    padding: 0px 20px;
   }
 `;
 

@@ -20,7 +20,7 @@ export const Main = styled(MainDefault)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 40px;
+  gap: 80px;
 
   @media (max-width: ${theme.breakpoints.tablet}) {
     flex-direction: column;
@@ -34,6 +34,7 @@ export const ImageBackground = styled.div`
   background-color: #ffb4c9;
   height: 362px;
   width: 100%;
+  left: 0%;
 
   @media (max-width: 1280px) {
     height: 30%;

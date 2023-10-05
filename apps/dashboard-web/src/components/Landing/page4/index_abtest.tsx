@@ -14,22 +14,22 @@ import {
   Title,
 } from './style';
 
-export default function Page4() {
+export default function Page4_abtest() {
   const router = useRouter();
 
   return (
     <Background>
       <Main>
         <Title>
-          어려운 스토리보드 작성? <br /> 따라하기만 하세요.
+          내가 선택한 소재, <br /> 시청자 반응은 괜찮을까?
         </Title>
         <Description>
-          AI가 화면 구성은 물론 스크립트 작성까지 모두 가이드 해드립니다.
+          소재와 관련된 콘텐츠 반응을 한 눈에 보여드려요.
         </Description>
         <RevealWrapper>
           <ImageContainer>
             <Img
-              src={'/images/landing/svg/Landing_Section4_Mockup_Group.svg'}
+              src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
               alt={''}
             />
           </ImageContainer>

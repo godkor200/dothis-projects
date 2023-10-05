@@ -15,8 +15,9 @@ export const Background = styled(BackgroundDefault)`
 `;
 
 export const Main = styled(MainDefault)`
-  margin-top: 110px;
+  margin-top: 60px;
   justify-content: center;
+  gap: 40px;
 
   button {
     margin-top: 40px;

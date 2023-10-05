@@ -1,8 +1,17 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+
 import { theme } from '../style';
-import { Background, Description, Img, Main, Title } from './style';
+import {
+  Background,
+  Description,
+  ImageContainer,
+  Img,
+  Main,
+  Title,
+} from './style';
 const SVGPATH = '/images/landing/svg/';
 
 export default function Page5() {
@@ -32,14 +41,17 @@ export default function Page5() {
     <Background>
       <Main>
         <Title>1초 간편 회원가입으로 지금 바로 시작해보세요.</Title>
-        <Img
-          src={svgPath}
-          alt={''}
-          width={0}
-          height={0}
-          sizes="100vm"
-          style={{ width: '80%', height: 'auto' }}
-        />
+        <RevealWrapper>
+          <ImageContainer>
+            <Img
+              src={svgPath}
+              alt={''}
+              width={0}
+              height={0}
+              style={{ width: '70%', height: 'auto' }}
+            />
+          </ImageContainer>
+        </RevealWrapper>
       </Main>
     </Background>
   );

@@ -6,7 +6,7 @@ import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import { Background, Description, Img, Main, Title } from './style';
 
-export default function Page3() {
+export default function Page3_abtest() {
   const [state, setState] = useState<number>(0);
   const titles = [
     '내 관심사',
@@ -19,14 +19,15 @@ export default function Page3() {
   return (
     <Background>
       <Main>
-        <Title>다른 사람들은 어떻게 만들지?</Title>
+        <Title>
+          조회수 이끄는 아이템 추천 <br /> 클릭 한 번이면 충분해요.
+        </Title>
         <Description>
-          선택한 아이템과 관련된 다른 콘텐츠를 모아 한 페이지에 요약해 드려요.
-          <br /> 요약 내용을 참고해 아이디어를 얻어보세요.
+          클릭 한 번으로 두디스가 추천하는 아이템을 한 눈에 살펴보세요.
         </Description>
         <RevealWrapper>
           <Img
-            src={'/images/landing/svg/Landing_Section3_Mockup_Group.svg'}
+            src={'/images/landing/svg/Landing_Section3_Mockup_Group_abtest.svg'}
             alt={''}
           />
         </RevealWrapper>

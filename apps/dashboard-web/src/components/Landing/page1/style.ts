@@ -17,10 +17,10 @@ export const Background = styled(BackgroundDefault)`
 `;
 
 export const Main = styled(MainDefault)`
-  margin-top: 40px;
+  margin-top: 60px;
 
   @media (max-width: ${theme.breakpoints.mobile}) {
-    margin-top: 140px;
+    margin-top: 80px;
   }
 `;
 
@@ -32,13 +32,15 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  gap: 100px;
 
   /* @media (max-width: ${theme.breakpoints.desktop_s}) {
-    width: 90%;
+    width: 100%;
   } */
 
-  /* @media (max-width: ${theme.breakpoints.mobile}) {
+  /* @media (max-width: ${theme.breakpoints.tablet}) {
     display: none;
+    margin: 0px;
   } */
 `;
 export const ImgAutomatic = styled.img`
@@ -50,7 +52,7 @@ export const ImgAutomatic = styled.img`
     width: 90%;
   }
   @media (max-width: ${theme.breakpoints.mobile}) {
-    margin-top: 60px;
+    margin-top: 20px;
   }
 `;
 
@@ -64,7 +66,7 @@ export const ImgMockBackground = styled.img`
     width: 90%;
   }
   @media (max-width: ${theme.breakpoints.mobile}) {
-    margin: 80px 0px 160px 0px;
+    margin: 80px 0px;
     width: 100%;
   }
 `;
@@ -79,9 +81,15 @@ export const ImgMock = styled.img`
     width: 55%;
   }
   @media (max-width: ${theme.breakpoints.mobile}) {
-    margin: 80px 0px 160px 0px;
+    margin: 80px 0px;
     width: 440px;
   }
+`;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ButtonContainer = styled.div`
@@ -156,7 +164,7 @@ export const SlideIcon = styled.div`
   align-items: center;
   gap: 30px;
   flex-wrap: nowrap;
-  animation: ${infiniteSlide} 20s linear infinite normal none running;
+  animation: ${infiniteSlide} 50s linear infinite normal none running;
 
   &::before {
     content: '';
@@ -184,7 +192,6 @@ export const SlideIconContainer = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 160px;
-  padding-top: 80px;
   list-style: none;
   overflow: hidden;
   flex-wrap: nowrap;
