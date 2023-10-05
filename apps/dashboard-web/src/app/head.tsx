@@ -6,7 +6,7 @@ export default function RootHeader() {
         name="description"
         content=" 데이터로 기획하는 영상 기획 보조 도구, 두디스"
       />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/logo.ico" />
       <meta property="og:title" content="두디스(Dothis)" />
       <meta
         property="og:description"
