@@ -4,8 +4,10 @@ import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { apiClient } from '@/utils/apiClient';
-import { apiInstance } from '@/utils/apiInstance';
+import { isProduction } from '@/constants/dev';
+import { useAuthActions } from '@/store/authStore';
+
+const isServer = typeof window === 'undefined';
 
 const Client = ({
   accessToken,
@@ -17,14 +19,15 @@ const Client = ({
   isNewUser: string | string[] | undefined;
 }) => {
   const router = useRouter();
+  const { setIsSignedIn } = useAuthActions();
 
-  setCookie('accessToken', `Bearer ${accessToken}`);
-  setCookie('refreshToken', `Bearer ${refreshToken}`);
-
-  const { data } = apiClient.auth.getOwnInfo.useQuery(['my']);
+  if (!isProduction && accessToken) {
+    setCookie('accessToken', `Bearer ${accessToken}`);
+  }
 
   useEffect(() => {
     if (accessToken && refreshToken) {
+      setIsSignedIn(true);
       if (isNewUser) {
         router.replace('/login/choose-keyword');
       } else {
