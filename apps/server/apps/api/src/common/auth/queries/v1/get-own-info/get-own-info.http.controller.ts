@@ -8,7 +8,12 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  HttpStatus,
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
@@ -17,6 +22,9 @@ import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interf
 const { getOwnInfo } = nestControllerContract(apiRouter.auth);
 import { User as UserEntity } from '@Apps/modules/user/domain/user.entity';
 import { UserRes } from '@Libs/commons/src/types/dto.types';
+import { match, Result } from 'oxide.ts';
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 const { summary, description } = getOwnInfo;
 
 @ApiTags('유저 인증')
@@ -42,15 +50,27 @@ export class GetOwnInfoHttpController {
   ])
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: getOwnInfo.responses[404],
+    description: UserNotFoundError.message,
   })
   @ApiUnauthorizedResponse({ description: 'Authentication failed' })
   @ApiInternalServerErrorResponse({
     description: getOwnInfo.responses[500],
   })
   @ApiBearerAuth('Authorization')
-  async execute(@User() user: TDecodePayload): Promise<UserEntity> {
+  async execute(@User() user: TDecodePayload): Promise<IRes<UserEntity>> {
     const query = new GetOwnInfoQuery({ index: user.id });
-    return this.queryBus.execute(query);
+
+    const result: Result<UserEntity, NotFoundException> =
+      await this.queryBus.execute(query);
+
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err: Error) => {
+        if (err instanceof NotFoundException) {
+          throw new UserNotFoundError();
+        }
+        throw err;
+      },
+    });
   }
 }

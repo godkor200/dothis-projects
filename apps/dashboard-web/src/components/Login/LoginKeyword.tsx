@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import type { KeywordSchema } from '@/constants/schema/login';
@@ -21,17 +22,22 @@ const LoginKeyword = ({ keyword }: KeywordSchema) => {
   const control = methods.control;
   const keywords = useWatch({ name: 'keyword', control });
 
+  const router = useRouter();
+
   const onSubmit = async () => {
     console.log('data submit');
+    router.push('/');
   };
 
   return (
     <FormProvider {...methods}>
-      <Keywords keyword={keyword} />
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Keywords keyword={keyword} />
 
-      <Style.LoginKeywordButton disabledBtn={keywords.length}>
-        {keywords.length > 0 && keywords.length + '개'} 작성
-      </Style.LoginKeywordButton>
+        <Style.LoginKeywordButton $disabledBtn={keywords.length}>
+          {keywords.length > 0 && keywords.length + '개'} 작성
+        </Style.LoginKeywordButton>
+      </form>
     </FormProvider>
   );
 };

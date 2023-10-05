@@ -10,7 +10,7 @@ export const FADE_IN = keyframes`
   }
 `;
 
-export const TagItem = styled.li<{ chosen: boolean | undefined }>`
+export const TagItem = styled.li<{ $chosen: boolean | undefined }>`
   height: 2rem;
   padding: 0 0.75rem;
 
@@ -28,8 +28,8 @@ export const TagItem = styled.li<{ chosen: boolean | undefined }>`
 
   box-shadow: inset 0 0 0 2px #fafafa;
 
-  ${({ style, chosen }) =>
-    chosen
+  ${({ style, $chosen }) =>
+    $chosen
       ? css`
           font-weight: bold;
 
@@ -68,7 +68,7 @@ export const StyledCheck = styled.i`
 `;
 
 // LoginKeyword.tsx
-export const LoginKeywordButton = styled.button<{ disabledBtn: number }>`
+export const LoginKeywordButton = styled.button<{ $disabledBtn: number }>`
   display: block;
 
   width: 100%;
@@ -80,8 +80,8 @@ export const LoginKeywordButton = styled.button<{ disabledBtn: number }>`
   background-color: #fde7eb;
   color: #f7b4c0;
 
-  ${({ style, disabledBtn }) =>
-    disabledBtn &&
+  ${({ style, $disabledBtn }) =>
+    $disabledBtn &&
     css`
       background-color: #ff647d;
       color: white;

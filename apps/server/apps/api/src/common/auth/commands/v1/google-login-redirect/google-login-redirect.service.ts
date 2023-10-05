@@ -5,6 +5,9 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { JwtService } from '@nestjs/jwt';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@Apps/modules/user/domain/user.entity';
+import { GoogleLoginRedirectRes } from '@Apps/common/auth/interface/google-login-redirect.interface';
+import { Err, Ok, Result } from 'oxide.ts';
+import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 export class UserInfoCommandDto {
   @ApiProperty()
   readonly id: bigint;
@@ -34,7 +37,10 @@ export class GoogleLoginRedirectCommandHandler
     private readonly jwtService: JwtService,
   ) {}
 
-  async execute(command: UserInfoCommandDto) {
+  async execute(
+    command: UserInfoCommandDto,
+  ): Promise<Result<GoogleLoginRedirectRes, InternalServerErrorException>> {
+    let isNewUser: boolean = false;
     let checkUser = await this.userRepository.findOneByEmail(command.userEmail);
 
     if (!checkUser) {
@@ -44,26 +50,29 @@ export class GoogleLoginRedirectCommandHandler
         async () => await this.userRepository.insert(user),
       );
       checkUser = await this.userRepository.findOneByEmail(command.userEmail);
+      isNewUser = true;
     }
-
+    if (!checkUser) return Err(new InternalServerErrorException());
     const refreshToken = this.jwtService.sign(
       {
         id: checkUser.id,
       },
-      { expiresIn: '4h' },
+      { expiresIn: '24h' },
     );
 
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
 
-    return {
+    return Ok({
       accessToken: this.jwtService.sign(
         {
           id: checkUser.id,
+          channelId: checkUser.channelId,
           userEmail: checkUser.userEmail,
         },
         { expiresIn: '30m' },
       ),
       refreshToken,
-    };
+      isNewUser,
+    });
   }
 }

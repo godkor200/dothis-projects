@@ -18,6 +18,7 @@ import { apiRouter } from '@dothis/dto';
 import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
 import { VideoRes } from '@Libs/commons/src/types/dto.types';
 import { match, Result } from 'oxide.ts';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getVideo;
 
@@ -72,7 +73,7 @@ export class FindVideoPageHttpController {
   })
   @TsRest(c.getVideo)
   @ApiOkResponse({ type: VideoRes })
-  @ApiNotFoundResponse()
+  @ApiNotFoundResponse({ description: VideoNotFoundError.message })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @Query() query: IFindVideoPageQuery,
@@ -85,11 +86,14 @@ export class FindVideoPageHttpController {
       related,
       last,
     });
-    const result: Result<IPagingRes, NotFoundException> =
+    const result: Result<IPagingRes, VideoNotFoundError> =
       await this.queryBus.execute(arg);
+
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
+        if (err instanceof VideoNotFoundError)
+          throw new NotFoundException(err.message);
         throw err;
       },
     });

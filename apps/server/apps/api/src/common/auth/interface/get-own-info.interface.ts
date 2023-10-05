@@ -21,3 +21,9 @@ export interface IDecodeToken {
   iat: number;
   exp: number;
 }
+
+export interface ITokenRes {
+  message: string;
+  accessToken: string;
+  refreshToken: string;
+}
