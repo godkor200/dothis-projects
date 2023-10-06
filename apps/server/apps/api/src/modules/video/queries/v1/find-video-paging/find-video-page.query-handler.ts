@@ -5,6 +5,7 @@ import { Inject, NotFoundException } from '@nestjs/common';
 import { VIDEO_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { Ok, Result, Err } from 'oxide.ts';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 @QueryHandler(FindVideoPageQuery)
 export class FindVideoPageQueryHandler
   implements IQueryHandler<FindVideoPageQuery, Result<IPagingRes, Error>>
@@ -15,9 +16,9 @@ export class FindVideoPageQueryHandler
   ) {}
   async execute(
     arg: FindVideoPageQuery,
-  ): Promise<Result<IPagingRes, NotFoundException>> {
+  ): Promise<Result<IPagingRes, VideoNotFoundError>> {
     const res = await this.video.findVideoPaging(arg);
-    if (!res.total.value) return Err(new NotFoundException());
+    if (!res.total.value) return Err(new VideoNotFoundError());
     return Ok(res);
   }
 }

@@ -1,11 +1,11 @@
 import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
 
-export class WalletNotEnoughBalanceError extends ExceptionBase {
-  static readonly message = 'Wallet has not enough balance';
+export class VideoNotFoundError extends ExceptionBase {
+  static readonly message = 'The video could not be found.';
 
-  public readonly code = 'WALLET.NOT_ENOUGH_BALANCE';
+  public readonly code = 'VIDEO.NOT_BE_FOUND';
 
   constructor(metadata?: unknown) {
-    super(WalletNotEnoughBalanceError.message, undefined, metadata);
+    super(VideoNotFoundError.message, undefined, metadata);
   }
 }

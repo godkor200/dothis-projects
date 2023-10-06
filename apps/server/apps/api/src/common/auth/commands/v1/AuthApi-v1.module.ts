@@ -1,4 +1,9 @@
-import { Module, Provider } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  Provider,
+} from '@nestjs/common';
 import { UserEntityModule } from '@Apps/modules/user/domain/user.entity.module';
 import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
@@ -11,6 +16,7 @@ import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { VerifyTokenHttpController } from '@Apps/common/auth/commands/v1/verify-token/verify-token.http.controller';
 import { VerifyTokenCommandHandler } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import { PassportModule } from '@nestjs/passport';
+import { CookieValidationMiddleware } from '@Apps/common/auth/middleware/cookie.middleware';
 const httpControllers = [
   GoogleLoginHttpController,
   GoogleLoginRedirectHttpController,
@@ -40,4 +46,10 @@ const repositories: Provider[] = [
   ],
   providers: [...strategies, ...repositories, ...commandHandlers],
 })
-export class AuthApiV1Module {}
+export class AuthApiV1Module implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CookieValidationMiddleware)
+      .forRoutes(VerifyTokenHttpController);
+  }
+}
