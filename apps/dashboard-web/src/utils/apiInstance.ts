@@ -39,8 +39,9 @@ apiInstance.interceptors.request.use(async (config) => {
 
 // 401 코드에 Title을 정해야함, getVerifyToken response 여쭤봐야함.
 apiInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response.data.data;
+  (response: any) => {
+    console.log(response.headers);
+    return response;
   },
   async (error) => {
     const { data, config: originalRequest } = error.response;
@@ -52,6 +53,7 @@ apiInstance.interceptors.response.use(
         /**
          *  현재 해당코드는 백엔드와 response 논의 후 백엔드 적용 시 동작할거임
          */
+
         setCookie('accessToken', `Bearer ${data.body}`);
       }
       return apiInstance(originalRequest);

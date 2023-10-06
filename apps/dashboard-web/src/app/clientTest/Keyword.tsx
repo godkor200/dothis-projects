@@ -12,6 +12,8 @@ export default function Keyword() {
   console.log(isLoading);
   console.log(data);
 
+  const { data: test } = apiClient.auth.getOwnInfo.useQuery(['my']);
+  console.log(test);
   return (
     <>
       <div>
