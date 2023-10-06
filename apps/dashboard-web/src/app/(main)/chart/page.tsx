@@ -1,21 +1,17 @@
-import dynamic from 'next/dynamic';
+import ContentTopic from '@/features/chart/ContentTopic';
+import SocialMedia from '@/features/chart/SocialMedia';
 
-import ChartSidebar from '@/components/Chart/ChartSidebar';
-import DashBoard from '@/components/Chart/DashBoard/DashBoard';
-
-// const LineChart = dynamic(() => import('../../../components/chart/LineChart'), {
-//   ssr: false,
-// });
-
-// const MyResponsivePie = dynamic(() => import('../../../components/chart/Test'));
-
-const ChartPage = () => {
+const ChartPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   return (
-    <div className="flex w-full px-12 py-[60px] bg-grey200">
-      {/* <LineChart /> */}
-      <ChartSidebar />
-      <DashBoard />
-    </div>
+    <>
+      <ContentTopic />
+      {/* @ts-expect-error Server Component */}
+      <SocialMedia searchParams={searchParams} />
+    </>
   );
 };
 

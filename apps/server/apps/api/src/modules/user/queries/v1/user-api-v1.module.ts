@@ -11,8 +11,15 @@ import { ChannelDataRepository } from '@Apps/modules/channel/repository/db/chann
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/channel.entity.module';
+import { UpdatePersonalTagHttpController } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.http.controller';
 
-const httpControllers = [GetUserHttpController, GetChannelDataHttpController];
+import { UpdatePersonalTagCommandHandler } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.command-handler';
+
+const httpControllers = [
+  GetUserHttpController,
+  GetChannelDataHttpController,
+  UpdatePersonalTagHttpController,
+];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
@@ -21,10 +28,12 @@ const repositories: Provider[] = [
     useClass: ChannelDataRepository,
   },
 ];
+const strategies: Provider[] = [];
 
 const commandHandlers: Provider[] = [
   GetChannelDataCommandHandler,
   GetUserCommandHandler,
+  UpdatePersonalTagCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [];
@@ -36,6 +45,11 @@ const queryHandlers: Provider[] = [];
     ChannelEntityModule,
   ],
   controllers: [...httpControllers],
-  providers: [...repositories, ...commandHandlers, ...queryHandlers],
+  providers: [
+    ...repositories,
+    ...commandHandlers,
+    ...queryHandlers,
+    ...strategies,
+  ],
 })
 export class UserApiV1Module {}

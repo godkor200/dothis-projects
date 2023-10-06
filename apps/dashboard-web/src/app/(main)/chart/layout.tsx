@@ -1,12 +1,17 @@
 import Header from '@/components/Chart/Header/Header';
-import NavSlider from '@/layouts/MainLayout/NavSlide';
+import KeywordSlide from '@/components/Chart/Keyword/KeywordSlide';
+import SearchBar from '@/components/Chart/SearchBar/Search';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <NavSlider />
+      <h2 className="text-h3 pb-10 pt-20 text-center font-bold">
+        키워드로 인사이트를 얻어보세요
+      </h2>
+      <KeywordSlide />
+      <SearchBar />
       <Header />
-      <>{children}</>
+      <div className="bg-grey100 pt-[5rem]">{children}</div>
     </>
   );
 };

@@ -32,13 +32,17 @@
     "db-generate": "dotenv -e .env -- turbo db-generate --parallel",
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
-    "dev:back-end": "dotenv -e ./apps/server/.env -- turbo run start:dev-api",
+    "dev:back-end": "dotenv -e ./apps/server/development.env -- turbo run start:dev-api",
     "dev:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-api",
     "dev:back-end-scheduler": "dotenv -e ./apps/server/.env -- turbo run start:dev-scheduler",
     "dev:back-end-scheduler:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-scheduler",
-    "build:back-end": "dotenv -e ./apps/server/.env -- turbo run build --filter=server",
+    "build:back-end": "dotenv -e ./apps/server/development.env -- turbo run build --filter=server",
     "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=server",
-    "build:back-end:api-prod": "dotenv -e ./apps/server/production.env -- turbo run build:api --filter=server"
+    "build:back-end:api-prod": "dotenv -e ./apps/server/production.env -- turbo run build:api --filter=server",
+    "typeorm-create": "dotenv -e ./apps/server/development.env -- turbo run typeorm-create --filter=server",
+    "typeorm-run": "dotenv -e ./apps/server/development.env turbo typeorm-run --filter=server",
+    "typeorm-generate": "dotenv -e ./apps/server/development.env turbo typeorm-generate --filter=server",
+    "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",

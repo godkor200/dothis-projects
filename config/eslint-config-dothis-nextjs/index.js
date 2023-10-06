@@ -1,12 +1,18 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
   },
-  extends: ['turbo', 'plugin:@next/next/recommended',  "plugin:prettier/recommended"],
+  extends: [
+    'turbo',
+    'plugin:@next/next/recommended',
+    'plugin:tailwindcss/recommended',
+    'plugin:prettier/recommended',
+  ],
   plugins: [
     'turbo',
     '@typescript-eslint',
+    'tailwindcss',
     'react',
     'jsx-a11y',
     'simple-import-sort',
@@ -23,7 +29,7 @@ module.exports = {
   },
   ignorePatterns: ['.next', 'node_modules', '**/*.js', '**.*.cjs'],
   rules: {
-    "prettier/prettier": "warn",
+    'prettier/prettier': 'warn',
     'react/jsx-pascal-case': 'off',
     'react/function-component-definition': 'off',
     'react/prop-types': 'off',
@@ -44,5 +50,6 @@ module.exports = {
     '@next/next/no-img-element': 'off', // We currently not using next/image because it isn't supported with SSG mode
     '@typescript-eslint/comma-dangle': 'off', // Avoid conflict rule between Eslint and Prettier
     '@typescript-eslint/consistent-type-imports': 'error', // Ensure `import type` is used when it's necessary
+    'tailwindcss/no-custom-classname':'off'
   },
 };

@@ -1,5 +1,4 @@
-import { IResDto } from '@Libs/commons/src/types/res.types';
-import { type } from 'os';
+import { IRes } from '@Libs/commons/src/types/res.types';
 
 export class Paginated<T> {
   readonly count: number;
@@ -29,8 +28,8 @@ export type updateObject = {
 };
 
 export interface RepositoryPort<Entity> {
-  insert(entity: Entity): Promise<IResDto>;
-  updateOne(option: updateObject): Promise<IResDto>;
+  insert(entity: Entity): Promise<IRes<void>>;
+  updateOne(option: updateObject): Promise<IRes<void>>;
   findOneById(id: string): Promise<Entity>;
   findAll(): Promise<Entity[]>;
   findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Entity>>;

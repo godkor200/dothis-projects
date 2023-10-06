@@ -1,36 +1,43 @@
 import Image from 'next/image';
 
-import { Background, Description, ImageBox, Main, Text, Title } from './style';
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+
+import {
+  Background,
+  Description,
+  ImageBackground,
+  ImageBackgroundContainer,
+  ImageBox,
+  ImageContainer,
+  ImgMock,
+  Main,
+  Text,
+  Title,
+} from './style';
 
 export default function Page2() {
   return (
     <Background>
       <Main>
-        <ImageBox>
-          <Image
-            src={'/images/landing/page2.png'}
-            alt={''}
-            width={680}
-            height={560}
-            sizes="100%"
-          />
-        </ImageBox>
         <Text>
-          <Title>
-            유튜브 콘텐츠, <br /> 10분만에 기획을 간단하게
-          </Title>
+          <Title>당신에게 추천하는 맞춤 아이템</Title>
           <Description>
-            조회수 높이는 맞춤형 소재부터 포맷에 따른 <br />
-            스토리보드 도구까지 한곳에서 간편하게!
+            특허 받은 소재 탐색 알고리즘이 지금 가장 핫한 아이템을 추천해드려요.
           </Description>
-          <button
-            onClick={() => {
-              alert('준비중입니다');
-            }}
-          >
-            더 알아보기
-          </button>
         </Text>
+        <ImageBox>
+          <ImageBackgroundContainer>
+            <ImageBackground />
+          </ImageBackgroundContainer>
+          <RevealWrapper>
+            <ImageContainer>
+              <ImgMock
+                src={'/images/landing/svg/Landing_Section2_Mockup.svg'}
+                alt={''}
+              />
+            </ImageContainer>
+          </RevealWrapper>
+        </ImageBox>
       </Main>
     </Background>
   );

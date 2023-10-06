@@ -8,7 +8,7 @@ const relatedKeywords = RELATED_WORDS.slice(0, 3)
 
 const Title = () => {
   return (
-    <h1 className="flex flex-col typo-h1 pl-12 mb-[3.1rem]">
+    <h1 className="typo-h1 bg-primary50 mb-[3.1rem] mt-[60px] flex flex-col rounded-2xl py-10 pl-12 text-center">
       <span className="mb-1">
         <span>{KEYWORD}</span> 외 1개 키워드에서 다루기 좋은 소재는
       </span>

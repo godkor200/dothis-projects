@@ -2,49 +2,38 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+
 import { Category, CategroiesContainer, MoreButton } from '../style';
-import { Background, ImageBox, Main, Title } from './style';
+import {
+  Background,
+  Description,
+  ImageContainer,
+  Img,
+  Main,
+  Title,
+} from './style';
 
 export default function Page4() {
-  const [state, setState] = useState<number>(0);
-  const titles = ['채널별 연관 콘텐츠', '시청자 반응', '콘텐츠 요약'];
+  const router = useRouter();
 
   return (
     <Background>
       <Main>
-        <Title>📊 한 눈에 보이는 트렌드</Title>
-        <CategroiesContainer>
-          {titles.map((value: string, key: number) => {
-            return (
-              <Category
-                key={`page4_menu_${key}`}
-                onClick={() => {
-                  setState(key);
-                }}
-                select={state === key ? 1 : 0}
-              >
-                {value}
-              </Category>
-            );
-          })}
-        </CategroiesContainer>
-        <ImageBox>
-          <Image
-            src={`/images/landing/trend_0${state + 1}.png`}
-            alt={`${state} image`}
-            width={0}
-            height={0}
-            sizes="100%"
-            fill
-          />
-        </ImageBox>
-        <MoreButton
-          onClick={() => {
-            alert('준비중입니다');
-          }}
-        >
-          더 알아보기
-        </MoreButton>
+        <Title>
+          어려운 스토리보드 작성? <br /> 따라하기만 하세요.
+        </Title>
+        <Description>
+          AI가 화면 구성은 물론 스크립트 작성까지 모두 가이드 해드립니다.
+        </Description>
+        <RevealWrapper>
+          <ImageContainer>
+            <Img
+              src={'/images/landing/svg/Landing_Section4_Mockup_Group.svg'}
+              alt={''}
+            />
+          </ImageContainer>
+        </RevealWrapper>
       </Main>
     </Background>
   );

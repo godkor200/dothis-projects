@@ -1,6 +1,7 @@
 import * as Joi from 'joi';
 
 export const validationSchema = Joi.object({
+  JWT_SECRET: Joi.string().required(),
   MYSQL_ROOT_USER: Joi.string().required(),
   MYSQL_ROOT_PASSWORD: Joi.string().required(),
   MYSQL_USER: Joi.string().required(),
@@ -15,4 +16,6 @@ export const validationSchema = Joi.object({
   AWS_CREDENTIAL_KEY: Joi.string().required(),
   AWS_CREDENTIAL_SECRET: Joi.string().required(),
   AWS_REGION: Joi.string().required(),
+  NODE_ENV: Joi.string().required(),
+  OPENSEARCH_NODE: Joi.string().required(),
 });

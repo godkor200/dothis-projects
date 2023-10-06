@@ -25,4 +25,11 @@ export class RelatedWordsRepository
       .where({ keyword })
       .getOne();
   }
+
+  async findAllKeyword(): Promise<{ keyword: string }[]> {
+    return await this.repository
+      .createQueryBuilder(this.tableName)
+      .select('keyword')
+      .execute();
+  }
 }

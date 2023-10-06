@@ -36,6 +36,18 @@
         "dashboard-storybook#build"
       ]
     },
+    "dashboard-storybook#build": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#build-storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#chromatic": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
     "theme-gen": {
       "inputs": ["./src/styles/**/*"],
       "outputs": ["./src/types/theme.d.ts"],
@@ -98,6 +110,22 @@
       "outputs": ["dist/**/*"]
     },
     "start:dev-scheduler": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-create": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-run": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-generate": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-revert": {
       "cache": false,
       "outputs": ["dist/**/*"]
     }

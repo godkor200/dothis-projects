@@ -1,28 +1,35 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
 import { CONTENT } from '@/constants/route';
 
-import { Background, ImageBox, Main, Texts, Title } from './style';
+import { Background, Description, ImageBox, Main, Texts, Title } from './style';
+
+const CONTENT_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSc4WwQb9SbmZMMhghQWQQ3Oh-q1slxewT4kpic3C-kf-YnXmw/viewform';
 
 export default function Page6() {
   const router = useRouter();
   return (
     <Background>
       <Main>
-        <ImageBox>
-          <Image
-            src={'/images/landing/page6.png'}
-            alt={''}
-            width={500}
-            height={500}
-          />
-        </ImageBox>
+        <RevealWrapper>
+          <ImageBox>
+            <Image
+              src={'/images/landing/page6.png'}
+              alt={''}
+              width={400}
+              height={400}
+            />
+          </ImageBox>
+        </RevealWrapper>
         <Texts>
-          <Title>영상 기획, 오랜 시간 고민하지 말고 두-디스</Title>
+          <Title>영상 기획, 오랜 시간 고민하지 말고 두디스</Title>
           <button
             onClick={() => {
-              router.push(CONTENT);
+              // router.push(CONTENT);
+              router.push(CONTENT_URL);
             }}
           >
             <Image
@@ -31,7 +38,8 @@ export default function Page6() {
               width={30}
               height={30}
             />
-            <p>무료 체험하기</p>
+              {/* <p>무료 체험하기</p> */}
+              <p>예약하기</p>
           </button>
         </Texts>
       </Main>

@@ -20,8 +20,8 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 const c = nestControllerContract(apiRouter.user);
 const { getUserChannelData } = c;
-const { responses, description, summary, pathParams } = getUserChannelData;
-@ApiTags(pathParams)
+const { responses, description, summary } = getUserChannelData;
+@ApiTags('유저 관련')
 @Controller()
 @ApiCookieAuth()
 export class GetChannelDataHttpController {

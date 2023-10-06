@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
-import { BackgroundDefault, MainDefault } from '../style';
+import {
+  BackgroundDefault,
+  DescriptionDefault,
+  MainDefault,
+  theme,
+  TitleDefault,
+} from '../style';
 
 export const Background = styled(BackgroundDefault)`
-  background-color: rgba(249, 249, 249, 1);
-
   padding-top: 100px;
   padding-bottom: 60px;
 
@@ -23,29 +27,37 @@ export const Main = styled(MainDefault)`
   }
 `;
 
-export const Title = styled.h1`
-  font-size: 36px;
-  font-weight: 700;
-  padding: 0 38px;
-  text-align: center;
-  white-space: nowrap;
-
-  @media (max-width: 576px) {
-    font-size: 28px;
-    margin-bottom: 12px;
-  }
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const ImageBox = styled.div`
-  width: 700px;
-
+export const Img = styled.img`
+  margin-top: 60px;
+  width: 1006px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 
-  aspect-ratio: 7/5;
-  @media (max-width: 900px) {
-    width: 100%;
+  @media (max-width: ${theme.breakpoints.desktop_s}) {
+    padding: 0px 20px;
+  }
+`;
+
+export const Title = styled(TitleDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    font-size: 26px;
+    margin-bottom: 12px;
+    padding: 0 14px;
+    width: 360px;
+  }
+`;
+
+export const Description = styled(DescriptionDefault)`
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    width: 280px;
   }
 `;

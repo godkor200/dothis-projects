@@ -1,26 +1,27 @@
 import {
+  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
-import { IResDto } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
-  constructor(private dataSource: DataSource) {}
+  protected constructor(private dataSource: DataSource) {}
   protected abstract tableName: string;
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
 
-  async updateOne(params: updateObject): Promise<IResDto> {
+  async updateOne(params: updateObject): Promise<IRes<void>> {
     const res = await this.repository
       .createQueryBuilder()
       .update(this.tableName)
       .set(params)
       .where({ id: params.id })
       .execute();
-    return { success: res.raw > 0 };
+    return { success: res.affected > 0 };
   }
   async delete(id: string): Promise<boolean> {
     const res = await this.repository
@@ -29,7 +30,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .from(this.tableName)
       .where({ id })
       .execute();
-    return res.raw > 0;
+    return res.affected > 0;
   }
 
   async findAll(): Promise<E[]> {
@@ -55,7 +56,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .getOne();
   }
 
-  async insert(entity: E): Promise<IResDto> {
+  async insert(entity: E): Promise<IRes<void>> {
     const res = await this.repository
       .createQueryBuilder(this.tableName)
       .insert()
@@ -65,7 +66,11 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     return { success: res.raw > 0 };
   }
 
-  async transaction<T>(handler: () => Promise<T>): Promise<T | void> {
+  /**
+   * start a global transaction to save
+   * results of all event handlers in one operation
+   */
+  public async transaction<T>(handler: () => Promise<T>): Promise<T | void> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();

@@ -1,10 +1,10 @@
 import { ChannelAdapter } from '@Apps/modules/channel/interface/channel.adapter';
-import { AwsOpensearchService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { from, lastValueFrom, map } from 'rxjs';
 import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 
 export class ChannelQueryHandler
-  extends AwsOpensearchService
+  extends AwsOpensearchConnetionService
   implements ChannelAdapter
 {
   async findChannelTagOrKeyword(

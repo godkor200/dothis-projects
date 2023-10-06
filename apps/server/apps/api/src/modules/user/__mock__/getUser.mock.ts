@@ -1,5 +1,5 @@
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
-import { IResDto } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/types/res.types';
 import { updateObject } from '@Libs/commons/src';
 import { User } from '../domain/user.entity';
 
@@ -9,7 +9,7 @@ export class MockGetUser implements UserRepositoryPort {
   constructor(result: User) {
     this.result = result;
   }
-  updateOne(option: updateObject): Promise<IResDto> {
+  updateOne(option: updateObject): Promise<IRes<void>> {
     throw new Error('Method not implemented.');
   }
 
@@ -33,7 +33,7 @@ export class MockGetUser implements UserRepositoryPort {
     return Promise.resolve(undefined);
   }
 
-  insert(entity: User): Promise<IResDto> {
+  insert(entity: User): Promise<IRes<void>> {
     return Promise.resolve({ success: true });
   }
 

@@ -1,0 +1,74 @@
+/* Button Root Style */
+
+.root {
+  @apply rounded-8 py-2 px-4;
+}
+
+/* ButtonTheme */
+
+.contained {
+  @apply bg-primary500 text-grey00;
+}
+
+.outlined {
+  @apply bg-grey00 border-[1px] border-solid border-primary500 text-primary500;
+}
+
+.primary {
+  @apply text-primary500;
+}
+
+/* Hover */
+
+.contained {
+  @apply hover:bg-primary300;
+}
+
+.outlined {
+  @apply hover:bg-primary100  hover:border-primary300 hover:text-primary300;
+}
+
+.primary {
+  @apply hover:bg-primary100  hover:text-primary300;
+}
+
+/* Active */
+
+.contained {
+  @apply active:bg-primary600;
+}
+
+.outlined {
+  @apply active:bg-primary200  active:border-primary500 active:text-primary500;
+}
+
+.primary {
+  @apply active:bg-primary200  active:text-primary500;
+}
+
+/* disabled */
+.contained {
+  @apply disabled:bg-grey300 disabled:text-grey500;
+}
+
+.outlined {
+  @apply disabled:bg-grey00 disabled:border-grey400 disabled:text-grey400;
+}
+
+.primary {
+  @apply disabled:bg-grey00 disabled:text-grey400;
+}
+
+/* Size */
+
+.S {
+  @apply text-c1 leading-18;
+}
+
+.M {
+  @apply text-b1 leading-24;
+}
+
+.L {
+  @apply text-b1 leading-24 py-3 px-6;
+}

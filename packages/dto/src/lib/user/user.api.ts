@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { userModel } from './user.model';
+import { zUserModel } from './user.model';
 
 export const userBaseApiUrl = '/user';
 
@@ -8,10 +8,9 @@ export const userApi = c.router({
   getUser: {
     method: 'GET',
     path: `${userBaseApiUrl}/:id`,
-    pathParams: userBaseApiUrl,
     query: z.object({ search: z.string() }),
     responses: {
-      200: userModel,
+      200: zUserModel,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
@@ -21,7 +20,6 @@ export const userApi = c.router({
   getUserChannelData: {
     method: 'POST',
     path: `${userBaseApiUrl}/get-channel-data`,
-    pathParams: userBaseApiUrl,
     body: {},
     responses: {
       200: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',
@@ -36,7 +34,6 @@ export const userApi = c.router({
   getUserKeyword: {
     method: 'GET',
     path: `${userBaseApiUrl}/keyword`,
-    pathParams: userBaseApiUrl,
     responses: {
       200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
       404: 'Not Found',
@@ -44,5 +41,18 @@ export const userApi = c.router({
     },
     summary: '유저 채널 키워드 겟하기',
     description: '유저의 채널 키워드를 가져온다',
+  },
+  putUpdatePersonalTag: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/search-word`,
+    responses: {
+      200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: z.object({ tag: z.array(z.string()) }),
+    summary: '유저 개인화 태그 넣기',
+    description:
+      '유저 개인화 태그 넣기 사용자가 선택한 탐색어는 단어뒤에나 #을 붙혀서 저장하는게 좋을꺼 같습니다. 검색 기록이라고 부르시는거는 아무것도 안붙혀도 될것같습니다.',
   },
 });
