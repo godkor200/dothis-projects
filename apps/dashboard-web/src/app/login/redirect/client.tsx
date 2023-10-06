@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
+import { apiClient } from '@/utils/apiClient';
 
 const isServer = typeof window === 'undefined';
 
@@ -24,6 +25,10 @@ const Client = ({
   if (!isProduction && accessToken) {
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
+
+  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
+
+  console.log(verify);
 
   useEffect(() => {
     if (accessToken && refreshToken) {
