@@ -3,9 +3,14 @@ import axios from 'axios';
 import { setCookie } from 'cookies-next';
 
 import { isProduction } from '@/constants/dev';
+import { authStore } from '@/store/authStore';
 
 import { apiServer } from './apiServer';
-import { isAccessTokenExpired } from './authUtils';
+import {
+  isAccessTokenExpired,
+  isRefreshTokenExpired,
+  isTokenNotExist,
+} from './authUtils';
 
 export const HTTP_BASE = '  api.dothis.kr';
 
@@ -37,25 +42,62 @@ apiInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
+/**
+ * 서버 오류 시 무한 재귀를 대응하기위한 count 변수
+ * */
+let count = 0;
+
 // 401 코드에 Title을 정해야함, getVerifyToken response 여쭤봐야함.
 apiInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response.data.data;
+    /**
+     * 현재 해당 response 마다 authorization을 체크해서 cookie를 갱신하는 코드가 추가되었다. (ts-Rest query 내에서 headers를 response로 못받는갑다)
+     */
+    if (response.headers['authorization'] && !isProduction) {
+      setCookie('accessToken', response.headers['authorization']);
+    }
+
+    return response;
   },
   async (error) => {
+    console.log(error);
+    count += 1;
+
+    if (count > 2) {
+      count = 0;
+      return Promise.reject(error);
+    }
+
     const { data, config: originalRequest } = error.response;
     const statusCode = data.statusCode;
 
     if (isAccessTokenExpired(statusCode)) {
-      const data = await apiServer.auth.getVerifyToken();
+      await apiServer.auth.getVerifyToken();
+
+      // 여기에 있는 getVerifyToke header data로 이쪽에서 cookie갱신을 하려했지만, ts-rest 형식이 headers는 추가가 안되는거 같다..
       if (!isProduction) {
         /**
          *  현재 해당코드는 백엔드와 response 논의 후 백엔드 적용 시 동작할거임
          */
-        setCookie('accessToken', `Bearer ${data.body}`);
+        // setCookie('accessToken', `Bearer ${data}`);
       }
       return apiInstance(originalRequest);
     }
+
+    /**
+     * 해당 if 절 앞단 true는 백엔드와 Error Text 협의 후 제거 예정
+     */
+    if (
+      true ||
+      isRefreshTokenExpired(statusCode, 'serverTitle') ||
+      isTokenNotExist(statusCode, 'serverTitle')
+    ) {
+      const { setIsTokenRequired, setIsSignedIn } =
+        authStore.getState().actions;
+      setIsSignedIn(false);
+      setIsTokenRequired(true);
+    }
+
     return Promise.reject(error);
   },
 );

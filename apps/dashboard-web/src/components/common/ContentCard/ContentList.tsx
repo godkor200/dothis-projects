@@ -23,6 +23,7 @@ const ContentList = ({
           <div
             className="flex gap-[1rem] py-[0.875rem]"
             onClick={() => handleSetContentIndex(index)}
+            key={index}
           >
             <div className="h-[74px] w-[132px] overflow-hidden rounded-md">
               <Image
