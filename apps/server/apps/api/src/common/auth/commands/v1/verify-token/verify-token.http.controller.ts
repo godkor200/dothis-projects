@@ -16,6 +16,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -25,6 +26,7 @@ import { ITokenRes } from '@Apps/common/auth/interface/get-own-info.interface';
 import { match, Result } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
 import { AuthGuard } from '@Apps/common/auth/guards/auth.guard';
+import { TokenExpired } from '@Libs/commons/src/types/dto.types';
 
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getVerifyToken;
@@ -33,7 +35,7 @@ const { description, summary, responses } = getVerifyToken;
 export class VerifyTokenHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @ApiOkResponse({ description: '{}' })
+  @ApiResponse({ status: 200, isArray: false, type: TokenExpired })
   @ApiUnauthorizedResponse({ description: UnauthorizedExceptionError.message })
   @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({
