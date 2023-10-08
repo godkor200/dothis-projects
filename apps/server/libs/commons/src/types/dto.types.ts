@@ -7,8 +7,7 @@ import {
   zVideoModel,
   zTokenExpired,
 } from '@dothis/dto';
-import { z } from 'zod';
-import { IQuery } from '@nestjs/cqrs';
+
 export class UserDto extends createZodDto(extendApi(zUserModel)) {}
 export class UserRes extends UserDto {}
 export class VideoHistoryRes extends createZodDto(extendApi(zVideoHistory)) {}

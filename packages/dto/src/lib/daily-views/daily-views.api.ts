@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { DailyViewModel } from './daily-views.model';
 
 export const dailyViewApiUrl = '/daily-views';
 

@@ -16,7 +16,6 @@ import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -35,8 +34,15 @@ const { description, summary, responses } = getVerifyToken;
 export class VerifyTokenHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @ApiResponse({ status: 200, isArray: false, type: TokenExpired })
-  @ApiUnauthorizedResponse({ description: UnauthorizedExceptionError.message })
+  @ApiOkResponse({
+    status: 200,
+    isArray: false,
+    description: '쿠키와 해더로 토큰이 res 됩니다.',
+  })
+  @ApiUnauthorizedResponse({
+    description: UnauthorizedExceptionError.message,
+    type: TokenExpired,
+  })
   @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({
     summary,

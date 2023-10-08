@@ -1,14 +1,7 @@
 import { c, USER_AUTH } from '../contract';
 import { z } from 'zod';
 import { zUserModel } from '../user';
-
-export const zTokenExpired = z.object({
-  statusCode: z.number(),
-  message: z.union([
-    z.literal(USER_AUTH.AccessTokenExpired),
-    z.literal(USER_AUTH.RefreshTokenExpired),
-  ]),
-});
+import { zTokenExpired } from './auth.constant';
 
 export const authBaseApiUrl = '/auth';
 
