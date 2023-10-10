@@ -49,6 +49,7 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
    * @param command
    */
   async execute(command: TokenDto) {
+    console.log(command);
     const userEntity = await this.userRepository.findOneById(
       command.userInfo.id.toString(),
     );

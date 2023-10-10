@@ -50,16 +50,11 @@ export class VerifyTokenHttpController {
   })
   @ApiHeaders([
     {
-      name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
-    },
-    {
       name: 'Cookie',
       description: "refreshToken(ex:'refreshToken=eradsfae')",
     },
   ])
   @TsRest(getVerifyToken)
-  @UseGuards(AuthGuard)
   async verifyAccessToken(
     @Req() req: Request,
     @Res({ passthrough: true })

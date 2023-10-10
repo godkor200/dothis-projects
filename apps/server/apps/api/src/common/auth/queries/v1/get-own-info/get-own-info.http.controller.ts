@@ -15,7 +15,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
+import { apiRouter, USER_AUTH } from '@dothis/dto';
 import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interface';
@@ -52,7 +52,9 @@ export class GetOwnInfoHttpController {
     status: HttpStatus.NOT_FOUND,
     description: UserNotFoundError.message,
   })
-  @ApiUnauthorizedResponse({ description: 'Authentication failed' })
+  @ApiUnauthorizedResponse({
+    description: `${USER_AUTH.AccessTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
+  })
   @ApiInternalServerErrorResponse({
     description: getOwnInfo.responses[500],
   })
