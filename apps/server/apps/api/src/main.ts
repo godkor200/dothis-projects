@@ -21,7 +21,7 @@ async function bootstrap() {
     origin: ['http://localhost:3666', 'https://www.dothis.kr'],
     methods: ['POST', 'PUT', 'DELETE', 'GET'],
     credentials: true,
-    exposedHeaders: ['Authorization'],
+    allowedHeaders: ['Authorization'],
   });
   await app.listen(appPort);
 

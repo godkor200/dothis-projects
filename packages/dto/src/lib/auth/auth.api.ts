@@ -1,6 +1,7 @@
-import { c } from '../contract';
+import { c, USER_AUTH } from '../contract';
 import { z } from 'zod';
 import { zUserModel } from '../user';
+import { zTokenExpired } from './auth.constant';
 
 export const authBaseApiUrl = '/auth';
 
@@ -31,8 +32,11 @@ export const authApi = c.router({
     responses: {
       //TODO: 모듈화 필요
       200: z.object({ success: z.boolean(), data: z.any() }),
-
-      401: 'Invalid Credential',
+      400: z.object({
+        statusCode: z.number(),
+        message: z.string().default(USER_AUTH.NoTokenProvided),
+      }),
+      401: zTokenExpired,
       500: 'Internal Server Error',
     },
     summary: '토큰 확인(accessToken, refreshToken) 후 갱신된 토큰 리턴',
@@ -44,7 +48,7 @@ export const authApi = c.router({
     path: `${authBaseApiUrl}/own-info`,
     responses: {
       200: zUserModel,
-      401: 'Invalid Credential',
+      401: zTokenExpired,
       404: 'Not Found',
       500: 'Internal Server Error',
     },

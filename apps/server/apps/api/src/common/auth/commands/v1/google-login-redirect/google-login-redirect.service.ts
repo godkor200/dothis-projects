@@ -69,7 +69,7 @@ export class GoogleLoginRedirectCommandHandler
           channelId: checkUser.channelId,
           userEmail: checkUser.userEmail,
         },
-        { expiresIn: '30m' },
+        { expiresIn: '1h' },
       ),
       refreshToken,
       isNewUser,

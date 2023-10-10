@@ -27,6 +27,10 @@ const Client = ({
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
 
+  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
+
+  console.log(verify);
+
   useEffect(() => {
     if (accessToken && refreshToken) {
       setIsSignedIn(true);
