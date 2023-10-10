@@ -49,14 +49,12 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
    * @param command
    */
   async execute(command: TokenDto) {
-    const refresh = this.jwtService.decode(command.refreshToken);
     const userEntity = await this.userRepository.findOneById(
       command.userInfo.id.toString(),
     );
 
     if (
       userEntity.tokenRefresh !== command.refreshToken ||
-      !refresh ||
       !userEntity.tokenRefresh
     ) {
       return Err(new UnauthorizedExceptionError());
