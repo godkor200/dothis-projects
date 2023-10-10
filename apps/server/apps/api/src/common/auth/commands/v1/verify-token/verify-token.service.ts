@@ -69,10 +69,14 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
         newRefreshToken,
       );
       return Ok({
-        accessToken: this.jwtService.sign({
-          id: userEntity.id,
-          userEmail: userEntity.userEmail,
-        }),
+        accessToken: this.jwtService.sign(
+          {
+            id: userEntity.id,
+            userEmail: userEntity.userEmail,
+            channelId: userEntity.channelId,
+          },
+          { expiresIn: '1h' },
+        ),
         refreshToken: newRefreshToken,
       });
     }
