@@ -8,7 +8,7 @@ import {
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { CookieOptions, Request, Response } from 'express';
-import { apiRouter } from '@dothis/dto';
+import { apiRouter, USER_AUTH } from '@dothis/dto';
 import { Cookies } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import {
@@ -40,7 +40,7 @@ export class VerifyTokenHttpController {
     description: '쿠키와 해더로 토큰이 res 됩니다.',
   })
   @ApiUnauthorizedResponse({
-    description: UnauthorizedExceptionError.message,
+    description: `${USER_AUTH.AccessTokenExpired} or ${USER_AUTH.RefreshTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
     type: TokenExpired,
   })
   @ApiInternalServerErrorResponse({ description: responses[500] })
