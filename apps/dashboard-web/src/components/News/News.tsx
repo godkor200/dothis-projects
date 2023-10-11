@@ -30,7 +30,6 @@ const News = () => {
         { method: 'POST', body: JSON.stringify(obj) },
       );
       const dd = await test.json();
-      console.log(dd);
     }
     aa();
   }, []);

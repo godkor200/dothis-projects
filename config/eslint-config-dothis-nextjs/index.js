@@ -50,6 +50,7 @@ module.exports = {
     '@next/next/no-img-element': 'off', // We currently not using next/image because it isn't supported with SSG mode
     '@typescript-eslint/comma-dangle': 'off', // Avoid conflict rule between Eslint and Prettier
     '@typescript-eslint/consistent-type-imports': 'error', // Ensure `import type` is used when it's necessary
-    'tailwindcss/no-custom-classname':'off'
+    'tailwindcss/no-custom-classname':'off',
+    "tailwindcss/migration-from-tailwind-2":'off'
   },
 };

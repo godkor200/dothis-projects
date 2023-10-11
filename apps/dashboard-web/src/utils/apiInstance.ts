@@ -43,7 +43,7 @@ apiInstance.interceptors.request.use(async (config) => {
 });
 
 /**
- * 서버 오류 시 무한 재귀를 대응하기위한 count 변수
+ *  interceptor getVerifyToken api 서버 오류 시 무한 재귀를 대응하기위한 count 변수
  * */
 let count = 0;
 
@@ -60,10 +60,9 @@ apiInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error);
     count += 1;
 
-    if (count > 2) {
+    if (count > 1) {
       count = 0;
       return Promise.reject(error);
     }
