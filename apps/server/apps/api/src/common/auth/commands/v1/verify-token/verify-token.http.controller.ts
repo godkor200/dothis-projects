@@ -81,6 +81,7 @@ export class VerifyTokenHttpController {
     };
     return match(result, {
       Ok: (result) => {
+        res.header('Accesss-Control-Allow-Headers', 'Authorization');
         res.header('Authorization', 'Bearer ' + result.accessToken);
         res.cookie('refreshToken', result.refreshToken, options);
         return {
