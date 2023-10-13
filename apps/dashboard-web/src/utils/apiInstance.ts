@@ -10,6 +10,7 @@ import {
   isAccessTokenExpired,
   isRefreshTokenExpired,
   isTokenNotExist,
+  isTokenNotMatch,
 } from './authUtils';
 
 export const HTTP_BASE = '  api.dothis.kr';
@@ -53,6 +54,7 @@ apiInstance.interceptors.response.use(
     /**
      * 현재 해당 response 마다 authorization을 체크해서 cookie를 갱신하는 코드가 추가되었다. (ts-Rest query 내에서 headers를 response로 못받는갑다)
      */
+
     if (response.headers['authorization'] && !isProduction) {
       setCookie('accessToken', response.headers['authorization']);
     }
@@ -62,6 +64,7 @@ apiInstance.interceptors.response.use(
   async (error) => {
     count += 1;
 
+    console.log(error);
     if (count > 1) {
       count = 0;
       return Promise.reject(error);
@@ -69,6 +72,7 @@ apiInstance.interceptors.response.use(
 
     const { data, config: originalRequest } = error.response;
     const statusCode = data.statusCode;
+    const errorMessage = data.message;
 
     if (isAccessTokenExpired(statusCode)) {
       await apiServer.auth.getVerifyToken();
@@ -87,9 +91,9 @@ apiInstance.interceptors.response.use(
      * 해당 if 절 앞단 true는 백엔드와 Error Text 협의 후 제거 예정
      */
     if (
-      true ||
-      isRefreshTokenExpired(statusCode, 'serverTitle') ||
-      isTokenNotExist(statusCode, 'serverTitle')
+      isRefreshTokenExpired(statusCode, errorMessage) ||
+      isTokenNotExist(statusCode, errorMessage) ||
+      isTokenNotMatch(statusCode, errorMessage)
     ) {
       const { setIsTokenRequired, setIsSignedIn } =
         authStore.getState().actions;
