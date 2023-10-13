@@ -2,12 +2,8 @@
 
 import Lottie from 'lottie-react';
 import LoadingLottie from 'public/aseets/Lottie/loading.json';
-import { useEffect } from 'react';
 
 const LoginLoadingComponent = () => {
-  useEffect(() => {
-    console.log('LoginLoadingComponent');
-  }, []);
   return (
     <Lottie
       loop

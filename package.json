@@ -17,6 +17,7 @@
     "storybook": "turbo run storybook",
     "storybook:ui": "turbo run storybook --filter=@dothis/ui",
     "storybook:dashboard": "turbo run storybook --filter=dashboard-storybook",
+    "storybook-run:dashboard": "turbo run dev --filter=dashboard-storybook",
     "build-storybook:ui": "turbo run build-storybook --filter=@dothis/ui",
     "build:theme": "turbo run build --filter=@dothis/theme",
     "build-watch:theme": "turbo run build:watch --filter=@dothis/theme",

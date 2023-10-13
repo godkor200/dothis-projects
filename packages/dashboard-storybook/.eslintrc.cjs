@@ -42,4 +42,5 @@ module.exports = {
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
   },
+  ignorePatterns: ['.next', 'node_modules', '**/*.js', '**.*.cjs'],
 };
