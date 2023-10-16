@@ -27,7 +27,7 @@ const Client = ({
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
 
-  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
+  const { data: verify } = apiClient(1).auth.getVerifyToken.useQuery(['test']);
 
   console.log(verify);
 

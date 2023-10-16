@@ -49,7 +49,7 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
         /**
          * Access Token이 존재하지 않을 경우 재발급
          */
-        await apiServer.auth.getVerifyToken();
+        await apiServer(1).auth.getVerifyToken();
 
         setIsSignedIn(true);
       } catch (error) {
