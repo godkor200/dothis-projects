@@ -55,4 +55,16 @@ export const userApi = c.router({
     description:
       '유저 개인화 태그 넣기 사용자가 선택한 탐색어는 단어뒤에나 #을 붙혀서 저장하는게 좋을꺼 같습니다. 검색 기록이라고 부르시는거는 아무것도 안붙혀도 될것같습니다.',
   },
+  putAgreePromotion: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/agree-promotion`,
+    responses: {
+      200: '성공적으로 약관 동의를 하면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: z.object({ isAgree: z.boolean() }),
+    summary: '유저 약관 동의 여부',
+    description: '동의 여부 불리언',
+  },
 });
