@@ -9,15 +9,23 @@ import { ChannelQueryHandler } from '@Apps/modules/channel/repository/repository
 import { GetKeywordByUserHttpController } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.http.controller';
 import { GetUserV2CommandHandler } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import { AwsModule } from '@Apps/common/aws/aws.module';
+import { PutAgreePromotionHttpController } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.http.controller';
+import { PutAgreePromotionCommandHandler } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.command-handler';
 
-const httpControllers = [GetKeywordByUserHttpController];
+const httpControllers = [
+  GetKeywordByUserHttpController,
+  PutAgreePromotionHttpController,
+];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
   { provide: CHANNEL_DATA_REPOSITORY_BY_OS, useClass: ChannelQueryHandler },
 ];
 
-const commandHandlers: Provider[] = [GetUserV2CommandHandler];
+const commandHandlers: Provider[] = [
+  GetUserV2CommandHandler,
+  PutAgreePromotionCommandHandler,
+];
 
 const queryHandlers: Provider[] = [];
 @Module({
