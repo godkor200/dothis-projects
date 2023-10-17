@@ -24,3 +24,10 @@ export const zUserModel = z.object({
 });
 
 export type TUserModel = z.TypeOf<typeof zUserModel>;
+
+export const zKeywordModel = z.array(
+  z.object({
+    channel_keywords: z.array(z.string()).nullable(),
+    channel_tags: z.array(z.string()).nullable(),
+  }),
+);
