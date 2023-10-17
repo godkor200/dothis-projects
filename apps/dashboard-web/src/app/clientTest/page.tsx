@@ -9,7 +9,7 @@ import Keyword from './Keyword';
 export default async function PostPage() {
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(['rel'], () =>
-    apiServer.relwords.getRelWords({
+    apiServer(1).relwords.getRelWords({
       params: {
         keyword: '손흥민',
       },

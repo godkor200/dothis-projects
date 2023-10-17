@@ -5,17 +5,21 @@ import styles from './button.module.css';
 
 interface ButtonProps {
   /**
-   Button Style Type (primary, outlined,taxted )
+   * Button Style Type (primary, outlined,taxted )
    */
   theme: 'primary' | 'outlined' | 'contained';
   /**
-   Button 비활성화 유무
+   * Button 비활성화 유무
    */
   disabled?: boolean;
   /**
-   Button 사이즈 (S,M,L)
+   * Button 사이즈 (S,M,L)
    */
   size: 'S' | 'M' | 'L';
+  /**
+   * Button 좌우패딩 커스터마이징
+   */
+  paddingX?: string;
 }
 
 /**
@@ -24,10 +28,26 @@ interface ButtonProps {
 
 const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
   (
-    { theme = 'primary', size = 'S', disabled = false, children, ...props },
+    {
+      theme = 'primary',
+      size = 'S',
+      disabled = false,
+
+      paddingX,
+      children,
+      ...props
+    },
     ref,
   ) => {
-    const rootClassName = clsx(styles.root, styles[theme], styles[size]);
+    const rootClassName = clsx(
+      styles.root,
+      styles[theme],
+      styles[size],
+
+      {
+        [paddingX!]: paddingX,
+      },
+    );
 
     return (
       <button

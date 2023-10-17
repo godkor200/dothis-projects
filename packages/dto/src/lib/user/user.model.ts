@@ -16,6 +16,18 @@ export const zUserModel = z.object({
     .date()
     .nullable()
     .describe('The date which the user was created'),
+  argeePromotion: z
+    .boolean()
+    .default(false)
+    .nullable()
+    .describe('user agreePromotion'),
 });
 
 export type TUserModel = z.TypeOf<typeof zUserModel>;
+
+export const zKeywordModel = z.array(
+  z.object({
+    channel_keywords: z.array(z.string()).nullable(),
+    channel_tags: z.array(z.string()).nullable(),
+  }),
+);

@@ -25,7 +25,7 @@ const RelatedContentCardHeader = ({
         return (
           <>
             <h1
-              className={cn('text-[32px] font-bold', {
+              className={cn('text-[32px] font-bold cursor-pointer', {
                 'text-grey500': relatedContent !== item,
               })}
             >

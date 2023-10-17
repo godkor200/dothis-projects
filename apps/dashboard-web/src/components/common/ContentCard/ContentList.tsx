@@ -17,7 +17,7 @@ const ContentList = ({
   handleSetContentIndex,
 }: ContentListProps) => {
   return (
-    <div className="px-5 pt-[0.375rem] ">
+    <div className="cursor-pointer px-5  pt-[0.375rem]">
       {contentArray.map(({ title, category, date, provider, image }, index) => {
         return (
           <div

@@ -18,15 +18,15 @@ export const HTTP_STATUS_CODE = {
 
 export const HTTP_RESPONSE_ERROR_DATA = {
   ACCESS_TOKEN_EXPIRED: {
-    TITLE: 'AccessTokenExpired',
-    MESSAGE: 'AccessToken expired',
+    MESSAGE: 'Access token has expired.',
   },
   REFRESH_TOKEN_EXPIRED: {
-    TITLE: 'RefreshTokenExpired',
-    MESSAGE: 'RefreshToken expired',
+    MESSAGE: 'Refresh token has expired.',
   },
   TOKEN_NOT_EXIST: {
-    TITLE: 'NoAuthTokenException',
-    MESSAGE: 'No Auth Token Exception',
+    MESSAGE: 'No token provided.',
+  },
+  TOKEN_NOT_MATCH: {
+    MESSAGE: 'Authentication failed',
   },
 } as const;

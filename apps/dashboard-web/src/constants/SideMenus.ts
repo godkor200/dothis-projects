@@ -10,7 +10,7 @@ export const SIDE_MENUS: SideMenus[] = [
   {
     title: '콘텐츠 키워드 찾기',
     icon: 'SideMain',
-    link: '/chart',
+    link: '/contents',
   },
   // {
   //   title: '인기 영상 분석',

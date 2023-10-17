@@ -56,8 +56,6 @@ const relatedContentApi: { [key: string]: any } = {
     );
     const { return_object } = await newsData.json();
 
-    console.log(return_object);
-
     const returnData = await return_object.documents.map((item: any) => {
       return {
         title: item.title,
