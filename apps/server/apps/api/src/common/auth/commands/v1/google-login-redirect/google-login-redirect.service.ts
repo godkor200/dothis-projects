@@ -14,6 +14,8 @@ export class UserInfoCommandDto {
   @ApiProperty()
   readonly userEmail: string;
   @ApiProperty()
+  readonly channelId: string;
+  @ApiProperty()
   readonly tokenRefresh: string | null;
   @ApiProperty()
   readonly googleAccessToken: string;
