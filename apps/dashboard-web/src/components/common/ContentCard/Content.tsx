@@ -44,7 +44,7 @@ const Content = ({
           date={date}
         />
         <CopyToClipboard text={link} onCopy={() => alert(`${link}가 복사`)}>
-          <div className="bg-grey200 flex w-full items-center justify-center rounded-lg   py-4 text-center">
+          <div className="bg-grey200 flex w-full cursor-pointer items-center justify-center   rounded-lg py-4 text-center">
             <button className="inline-flex items-center gap-[0.7rem]">
               <SvgComp icon="Share" size={26} />
               <p className="text-grey700 font-bold">공유하기</p>

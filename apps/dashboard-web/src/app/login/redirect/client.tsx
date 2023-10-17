@@ -27,7 +27,7 @@ const Client = ({
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
 
-  const { data: verify } = apiClient.auth.getVerifyToken.useQuery(['test']);
+  const { data: verify } = apiClient(1).auth.getVerifyToken.useQuery(['test']);
 
   console.log(verify);
 
@@ -38,7 +38,7 @@ const Client = ({
       if (isNewUser === 'true') {
         router.replace('/login/choose-keyword');
       } else {
-        router.replace('/chart' as Route);
+        router.replace('/contents');
       }
     } else {
       throw new Error('로그인이 정상적으로 진행되지 않았습니다.');

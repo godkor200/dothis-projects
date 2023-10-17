@@ -1,3 +1,5 @@
+import Modal from '@/components/common/Modal/AuthModal/Modal';
+import SignUpContents from '@/components/common/Modal/AuthModal/SignUpContents';
 import ContentTopic from '@/features/chart/ContentTopic';
 import SocialMedia from '@/features/chart/SocialMedia';
 

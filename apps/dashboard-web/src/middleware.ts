@@ -7,6 +7,14 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   return response;
+
+  // if (request.nextUrl.pathname.startsWith('/chart')) {
+  //   const response = NextResponse.redirect(
+  //     new URL('/about?search=dashboard', request.nextUrl),
+  //   );
+  //   response.cookies.set('test', 'test');
+  //   return response;
+  // }
 }
 
 export const config = {
