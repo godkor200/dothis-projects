@@ -8,14 +8,14 @@ export const userApi = c.router({
   getUser: {
     method: 'GET',
     path: `${userBaseApiUrl}/:id`,
-    query: z.object({ search: z.string() }),
+    pathParams: z.object({ id: z.string() }),
     responses: {
       200: zUserModel,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
-    summary: '유저를 가져옵니다.',
-    description: '쿼리 id로 유저를 찾아 옵니다.',
+    summary: '유저를 가져옵니다. (관리자 콘솔용) ',
+    description: '유저 index로 유저를 찾아 옵니다.',
   },
   getUserChannelData: {
     method: 'POST',
