@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { zUserModel } from './user.model';
+import { zKeywordModel, zUserModel } from './user.model';
 
 export const userBaseApiUrl = '/user';
 
@@ -35,7 +35,7 @@ export const userApi = c.router({
     method: 'GET',
     path: `${userBaseApiUrl}/keyword`,
     responses: {
-      200: '성공적으로 유저 키워드를 가져오면 성공 여부를 리턴한다.',
+      200: zKeywordModel,
       404: 'Not Found',
       500: 'server error',
     },
