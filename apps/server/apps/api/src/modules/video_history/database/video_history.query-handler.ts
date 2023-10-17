@@ -1,7 +1,6 @@
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/database/video_history.query-handler.port';
 import { FindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
-import { from, lastValueFrom } from 'rxjs';
 
 export class VideoHistoryQueryHandler
   extends AwsOpensearchConnetionService
@@ -11,9 +10,12 @@ export class VideoHistoryQueryHandler
     videoIds: string[],
     fromDate: string,
     toDate: string,
+    clusterNumber: string,
   ): Promise<FindVideoHistoryResposne[]> {
     const searchQuery = {
-      index: 'new_video_history',
+      index: `video-history-${clusterNumber}-*`,
+      scroll: '10s',
+      size: 10000,
       body: {
         query: {
           bool: {
@@ -37,9 +39,6 @@ export class VideoHistoryQueryHandler
       },
     };
 
-    const observable$ = from(
-      this.client.search(searchQuery).then((res) => res.body.hits.hits),
-    );
-    return await lastValueFrom(observable$);
+    return await this.fullScan<FindVideoHistoryResposne>(searchQuery);
   }
 }
