@@ -16,6 +16,11 @@ export const zUserModel = z.object({
     .date()
     .nullable()
     .describe('The date which the user was created'),
+  argeePromotion: z
+    .boolean()
+    .default(false)
+    .nullable()
+    .describe('user agreePromotion'),
 });
 
 export type TUserModel = z.TypeOf<typeof zUserModel>;
