@@ -1,9 +1,14 @@
 const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="bg-grey200 tablet:py-[15rem] desktop:py-[25rem] py-[10rem]">
-      <section className="bg-grey00 tablet:p-10 mx-auto w-full max-w-[32rem] rounded-2xl px-6 py-4">
+    // 기존 main 레이아웃을 따라간다면 pt-[80px] 이 추가되어야함
+    <div className=" flex  h-screen flex-col  items-center justify-center px-[171px] ">
+      <h1 className="mb-[51px] text-center text-[36px] font-bold">
+        간편 로그인
+      </h1>
+
+      <div className="border-1 border-grey400 flex w-[1000px] flex-col items-center justify-center rounded-[120px] py-[70px]">
         {children}
-      </section>
+      </div>
     </div>
   );
 };

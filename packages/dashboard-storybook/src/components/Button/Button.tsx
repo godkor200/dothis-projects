@@ -3,7 +3,7 @@ import { forwardRef, PropsWithChildren } from 'react';
 
 import styles from './button.module.css';
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Button Style Type (primary, outlined,taxted )
    */

@@ -1,7 +1,7 @@
 import type { Route } from 'next';
 import Link from 'next/link';
 
-import { apiBaseUrl, BaseURL } from '@/constants/dev';
+import { BaseURL } from '@/constants/dev';
 import { HTTP_BASE_URL } from '@/constants/http';
 
 import SvgComp from '../../share/SvgComp';

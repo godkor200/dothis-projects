@@ -1,3 +1,5 @@
+import LoginTerms from '@/components/Login/LoginTerms';
+
 const LoginTermsPage = () => {
   return (
     <>
@@ -5,7 +7,11 @@ const LoginTermsPage = () => {
         반가워요 😊 두디스가 처음이시네요!
         <br /> Let`s Do This!
       </h1>
-      <p className="mb-[20px]">Google 계정으로 Dothis에 가입합니다</p>
+      <p className="mb-[20px] text-center">
+        Google 계정으로 Dothis에 가입합니다
+      </p>
+
+      <LoginTerms />
     </>
   );
 };

@@ -1,26 +1,32 @@
+import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import type { Route } from 'next';
 import Link from 'next/link';
 
-import GoogleBtn from '@/components/Login/GoogleBtn';
-import SvgComp from '@/share/SvgComp';
+import { BaseURL } from '@/constants/dev';
 
 const LoginPage = () => {
   return (
-    <div className="flex  flex-col items-center pt-14">
-      <SvgComp icon="LogoSvg" width={80} />
+    <>
+      <h1 className="text-grey700 mb-10  text-center  text-[28px] font-semibold">
+        반가워요😊 회원가입을 도와드릴게요! <br /> Let`s Do This!
+      </h1>
+      <p className="mb-[20px]">Google 계정으로 로그인 (회원가입)</p>
 
-      <h2 className="text-grey900 mt-10 text-[1.5rem] font-bold ">
-        간편 로그인으로 내 채널 분석까지
-      </h2>
-      <p className="text-grey600 mt-3">
-        빅데이터 기반 콘텐츠 키워드 분석 플랫폼 ‘두디스’
+      <Link
+        href={(BaseURL + '/v1/auth/google-login') as Route}
+        className="mb-[60px]"
+      >
+        <Button theme="contained" size="L" paddingX="!px-[70px]">
+          회원가입
+        </Button>
+      </Link>
+      <p className="text-[14px]">
+        계속 진행하기 위해 Google에서 내 이름, 이메일 주소, 언어 환경설정,
+        프로필 사진을 <br /> Dothis와 공유합니다. 가입하기 전에{' '}
+        <span className="font-bold">개인정보처리방침</span> 및{' '}
+        <span className="font-bold">서비스 약관</span>을 검토하세요.
       </p>
-
-      <GoogleBtn />
-
-      <p className="text-grey200 mt-14 text-[0.75rem]">
-        Copyright © 2023 Dothis Corp. All rights reserved.
-      </p>
-    </div>
+    </>
   );
 };
 
