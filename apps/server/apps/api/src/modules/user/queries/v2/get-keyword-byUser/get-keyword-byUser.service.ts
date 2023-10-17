@@ -5,11 +5,14 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CHANNEL_DATA_REPOSITORY_BY_OS } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelAdapter } from '@Apps/modules/channel/interface/channel.adapter';
 import { Err, Ok } from 'oxide.ts';
+import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 
 export class FindKeywordTagByUserCommand {
   public readonly userId: string;
+  public readonly channelId: string;
   constructor(props: FindKeywordTagByUserCommand) {
     this.userId = props.userId;
+    this.channelId = props.channelId;
   }
 }
 
@@ -25,11 +28,10 @@ export class GetUserV2CommandHandler
     protected readonly channelOpenSearchRepo: ChannelAdapter,
   ) {}
   async execute(command: FindKeywordTagByUserCommand) {
-    const found = await this.userRepo.findOneWithRelations(command.userId);
     const res = await this.channelOpenSearchRepo.findChannelTagOrKeyword(
-      found.channelId,
+      command.channelId,
     );
-    if (!res) return Err(NotFoundException);
+    if (!res) return Err(new UserNotFoundError());
     return Ok(res);
   }
 }
