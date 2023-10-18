@@ -33,6 +33,7 @@ describe('GoogleLoginRedirectCommandHandler 예외 처리', () => {
   it('checkUser가 없을 경우 server err를 띄웁니다.', async () => {
     const arg: UserInfoCommandDto = {
       id: BigInt(1234567890),
+      channelId: 'UCX6OQ3DkcsbYNE6H8uQQuVA',
       userEmail: 'godkor200@gmail.com',
       tokenRefresh: 'aaaaa',
       googleAccessToken: 'googleAccessToken',
