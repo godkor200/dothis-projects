@@ -30,7 +30,7 @@ export class AwsOpensearchConnetionService {
     });
   }
 
-  async fullScan(query: any): Promise<Record<string, any>[]> {
+  async fullScan<T>(query: any): Promise<T[]> {
     const start_time: number = Date.now();
     const first_query: any = query;
 

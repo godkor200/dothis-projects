@@ -8,14 +8,14 @@ export const userApi = c.router({
   getUser: {
     method: 'GET',
     path: `${userBaseApiUrl}/:id`,
-    query: z.object({ search: z.string() }),
+    pathParams: z.object({ id: z.string() }),
     responses: {
       200: zUserModel,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
-    summary: '유저를 가져옵니다.',
-    description: '쿼리 id로 유저를 찾아 옵니다.',
+    summary: '유저를 가져옵니다. (관리자 콘솔용) ',
+    description: '유저 index로 유저를 찾아 옵니다.',
   },
   getUserChannelData: {
     method: 'POST',
@@ -54,5 +54,17 @@ export const userApi = c.router({
     summary: '유저 개인화 태그 넣기',
     description:
       '유저 개인화 태그 넣기 사용자가 선택한 탐색어는 단어뒤에나 #을 붙혀서 저장하는게 좋을꺼 같습니다. 검색 기록이라고 부르시는거는 아무것도 안붙혀도 될것같습니다.',
+  },
+  putAgreePromotion: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/agree-promotion`,
+    responses: {
+      200: '성공적으로 약관 동의를 하면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: z.object({ isAgree: z.boolean() }),
+    summary: '유저 약관 동의 여부',
+    description: '동의 여부 불리언',
   },
 });

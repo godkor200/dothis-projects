@@ -1,7 +1,13 @@
-import { Controller, HttpStatus, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  HttpStatus,
+  NotFoundException,
+  Param,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindUserCommand } from '@Apps/modules/user/queries/v1/get-user/get-user.service';
 import {
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -16,6 +22,9 @@ import {
   NestRequestShapes,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
+import { match, Result } from 'oxide.ts';
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUser;
 type RequestShapes = NestRequestShapes<typeof c>;
@@ -25,13 +34,12 @@ export class GetUserHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @TsRest(c.getUser)
-  @ApiParam({ name: 'id', required: true, description: '유저 아이디' })
   @ApiOperation({
     summary,
     description,
   })
   @ApiOkResponse({
-    description: '유저 찾아옵니다.',
+    description: description,
     type: UserDto,
   })
   @ApiNotFoundResponse({
@@ -41,10 +49,21 @@ export class GetUserHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  async getUser(@Param('id') id: string) {
+  async getUser(@Param('id') id: string): Promise<IRes<UserDto>> {
     const command = new FindUserCommand({
-      userId: id.toString(),
+      userId: id,
     });
-    return await this.commandBus.execute(command);
+    const result: Result<UserDto, NotFoundException> =
+      await this.commandBus.execute(command);
+
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err) => {
+        if (err instanceof UserNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        throw err;
+      },
+    });
   }
 }

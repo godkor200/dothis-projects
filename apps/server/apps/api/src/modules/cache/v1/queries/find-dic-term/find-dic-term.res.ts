@@ -1,2 +1,1 @@
-export type FindDicTermRes  = Record<string, string>
-
+export type FindDicTermRes = Record<string, string>;

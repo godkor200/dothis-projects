@@ -3,7 +3,7 @@ import {
   IFindManyVideoResult,
   IPagingRes,
 } from '@Apps/modules/video/interface/find-many-video.interface';
-import { FindDailyViewsQuery } from '@Apps/modules/daily_views/interface/find-daily-views.dto';
+import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 
 export interface VideoServicePort {

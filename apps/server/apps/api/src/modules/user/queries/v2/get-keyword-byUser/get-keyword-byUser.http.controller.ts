@@ -62,6 +62,7 @@ export class GetKeywordByUserHttpController {
   ): Promise<IRes<ChannelKeywordOrtagDtos>> {
     const command = new FindKeywordTagByUserCommand({
       userId: userInfo.id.toString(),
+      channelId: userInfo.channelId,
     });
     const result: Result<ChannelKeywordOrtagDtos, NotFoundException> =
       await this.commandBus.execute(command);
@@ -69,8 +70,8 @@ export class GetKeywordByUserHttpController {
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof NotFoundException) {
-          throw new UserNotFoundError();
+        if (err instanceof UserNotFoundError) {
+          throw new NotFoundException(err.message);
         }
         throw err;
       },
