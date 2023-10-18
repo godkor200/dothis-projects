@@ -12,8 +12,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindDailyViewsQuery } from '@Apps/modules/daily_views/interface/find-daily-views.dto';
+import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VideoHistoryRes } from '@Libs/commons/src/types/dto.types';
+import { FindDailyViewsDtos } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 const c = nestControllerContract(apiRouter.dailyViews);
 
 const { getDailyViews } = c;
@@ -41,17 +42,13 @@ export class FindDailyViewsOsHttpController {
   @ApiNotFoundResponse({ description: 'Not Found' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
-    @Param('keyword') keyword: string,
-    @Query('from') from: Date,
-    @Query('to') to: Date,
-    @Query('relationKeyword') relationKeyword: string | undefined,
+    @Param('clusterNumber') clusterNumber: string,
+    @Query() query: FindDailyViewsDtos,
   ) {
-    const query = new FindDailyViewsQuery({
-      keyword,
-      relationKeyword,
-      from,
-      to,
+    const arg = new FindDailyViewsQuery({
+      clusterNumber,
+      ...query,
     });
-    return await this.queryBus.execute(query);
+    return await this.queryBus.execute(arg);
   }
 }
