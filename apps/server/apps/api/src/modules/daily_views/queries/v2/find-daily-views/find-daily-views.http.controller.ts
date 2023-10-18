@@ -1,10 +1,9 @@
-import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 
 import {
-  ApiFoundResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
