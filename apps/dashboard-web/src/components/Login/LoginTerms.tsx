@@ -40,6 +40,7 @@ const LoginTerms = () => {
   const onSubmit = (data: any) => {
     console.log(data);
     // 약관동의 코드 작성
+    // onSuccess router 처리 들어가야함.
   };
 
   useEffect(() => {
