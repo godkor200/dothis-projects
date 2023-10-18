@@ -1,14 +1,7 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { Err, Ok } from 'oxide.ts';
 import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 
