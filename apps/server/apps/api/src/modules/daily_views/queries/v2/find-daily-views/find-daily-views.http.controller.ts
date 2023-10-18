@@ -1,4 +1,10 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
@@ -14,6 +20,10 @@ import {
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VideoHistoryRes } from '@Libs/commons/src/types/dto.types';
 import { FindDailyViewsDtos } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { IncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.query-handler';
+import { match, Result } from 'oxide.ts';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.dailyViews);
 
 const { getDailyViews } = c;
@@ -43,11 +53,22 @@ export class FindDailyViewsOsHttpController {
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @Query() query: FindDailyViewsDtos,
-  ) {
+  ): Promise<IRes<IncreaseData[]>> {
     const arg = new FindDailyViewsQuery({
       clusterNumber,
       ...query,
     });
-    return await this.queryBus.execute(arg);
+    const result: Result<IncreaseData[], NotFoundException> =
+      await this.queryBus.execute(arg);
+
+    return match(result, {
+      Ok: (result) => ({ success: true, data: result }),
+      Err: (err: Error) => {
+        if (err instanceof VideoNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        throw err;
+      },
+    });
   }
 }
