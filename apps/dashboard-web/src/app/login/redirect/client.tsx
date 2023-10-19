@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
 import { apiClient } from '@/utils/apiClient';
-import { isHashKeyword } from '@/utils/isHashKeyword';
+import { combinedKeywordsAndTags, isHashKeyword } from '@/utils/keyword';
 
 const isServer = typeof window === 'undefined';
 
@@ -48,8 +48,12 @@ const Client = ({
           return;
         }
         if (
-          isHashKeyword(keyword?.body.data[0].channel_keywords) &&
-          isHashKeyword(keyword?.body.data[0].channel_tags)
+          isHashKeyword(
+            combinedKeywordsAndTags(
+              keyword?.body.data.channel_keywords,
+              keyword?.body.data.channel_tags,
+            ),
+          )
         ) {
           router.replace('/login/choose-keyword');
           return;
