@@ -7,6 +7,10 @@ import getQueryClient from '@/query/getQueryClient';
 import ReactQueryHydrate from '@/query/ReactQueryHydrate';
 import { apiServer } from '@/utils/apiServer';
 
+/**
+ * Login 프로세스에서 해당 api가 연달아 실행이 되어서 이미 react query에 캐싱이 되어있는데,
+ * 해당 페이지에서 serverside에서 또 prefetch를 하는 이유 -> 키워드 지정을 안한 사람이면 키워드 선택 페이지로 redirect가 되는 경우가 존재
+ */
 const ChooseKeywordPage = async () => {
   const queryClient = getQueryClient();
 
