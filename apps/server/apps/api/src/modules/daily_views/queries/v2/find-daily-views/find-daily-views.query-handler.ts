@@ -7,8 +7,8 @@ import { VIDEO_HISTORY_DI_TOKEN } from '@Apps/modules/video_history/video_histor
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
 import { FindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { Err } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { Ok, Result, Err } from 'oxide.ts';
 
 export interface IncreaseData {
   date: string;
@@ -21,7 +21,7 @@ export class FindDailyViewsQueryOsHandler
   implements
     IQueryHandler<
       FindDailyViewsQuery,
-      IncreaseData[] | Err<VideoNotFoundError> | Err<VideoHistoryNotFoundError>
+      Result<IncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
     >
 {
   constructor(
@@ -31,7 +31,11 @@ export class FindDailyViewsQueryOsHandler
     private readonly video: FindVideoOsAdapter,
   ) {}
 
-  async execute(query: FindDailyViewsQuery) {
+  async execute(
+    query: FindDailyViewsQuery,
+  ): Promise<
+    Result<IncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
+  > {
     const videos = await this.video.findvideoIdfullScanAndVideos(query);
     if (!videos) return Err(new VideoNotFoundError());
     const videoHistories = await this.videoHistory.findVideoHistory(
@@ -41,7 +45,7 @@ export class FindDailyViewsQueryOsHandler
       query.clusterNumber,
     );
     if (!videoHistories) return Err(new VideoHistoryNotFoundError());
-    return this.calculateIncrease(videoHistories);
+    return Ok(this.calculateIncrease(videoHistories));
   }
 
   /**
