@@ -1,5 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import { useRouter } from 'next/navigation';
@@ -25,8 +26,10 @@ const LoginTerms = () => {
     1,
   ).auth.getOwnInfo.useQuery(['user']);
 
+  const queryClient = useQueryClient();
   const { mutate } = apiClient(2).user.putAgreePromotion.useMutation({
     onSuccess: () => {
+      queryClient.invalidateQueries(['user']);
       if (!keywordArr.length) {
         router.replace('/login/choose-keyword');
         return;
