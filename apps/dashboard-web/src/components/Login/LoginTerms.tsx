@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
+import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { type PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -35,7 +36,7 @@ const LoginTerms = () => {
         return;
       }
 
-      router.replace('/contents');
+      router.replace('/content');
     },
   });
 

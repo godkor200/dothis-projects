@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -50,7 +51,7 @@ const LoginKeyword = () => {
       combinedKeywordsAndTags(channel_keywords, channel_tags).length === 0 ||
       isHashKeyword(combinedKeywordsAndTags(channel_keywords, channel_tags))
     ) {
-      router.replace('/contents');
+      router.replace('/content');
       return;
     }
   }, [keywordArr]);

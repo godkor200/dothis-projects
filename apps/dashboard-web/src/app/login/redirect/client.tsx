@@ -60,7 +60,7 @@ const Client = ({
           return;
         }
 
-        router.replace('/contents');
+        router.replace('/content');
       } else {
         throw new Error('로그인이 정상적으로 진행되지 않았습니다.');
       }

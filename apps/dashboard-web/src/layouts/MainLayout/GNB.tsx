@@ -17,7 +17,7 @@ const GNB = () => {
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
-    router.push('/contents?steps=signUp');
+    router.push('/content?steps=signUp');
     return false;
   };
 
