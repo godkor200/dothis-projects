@@ -43,7 +43,7 @@ const Client = ({
       if (accessToken && refreshToken) {
         setIsSignedIn(true);
         setIsTokenRequired(false);
-        if (isNewUser === 'true' || !userData?.body.data.argeePromotion) {
+        if (isNewUser === 'true' || !userData?.body.data.agreePromotion) {
           router.replace('/login/terms');
           return;
         }
