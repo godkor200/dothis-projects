@@ -51,7 +51,7 @@ const LoginKeyword = () => {
       combinedKeywordsAndTags(channel_keywords, channel_tags).length === 0 ||
       isHashKeyword(combinedKeywordsAndTags(channel_keywords, channel_tags))
     ) {
-      router.replace('/content');
+      router.replace('/contents');
       return;
     }
   }, [keywordArr]);

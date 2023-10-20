@@ -36,7 +36,7 @@ const LoginTerms = () => {
         return;
       }
 
-      router.replace('/content');
+      router.replace('/contents');
     },
   });
 
