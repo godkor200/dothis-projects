@@ -34,5 +34,8 @@ export const combinedKeywordsAndTags = (
   //   throw new Error('타입 에러발생 ');
   // }
 
-  return arr1.split(',').concat(arr2.split(','));
+  const resultArr1 = arr1 ? arr1.split(',') : [];
+  const resultArr2 = arr2 ? arr2.split(',') : [];
+
+  return [...resultArr1, ...resultArr2];
 };
