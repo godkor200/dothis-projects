@@ -43,8 +43,6 @@ const LoginKeyword = () => {
   const channel_keywords = keywordArr?.body?.data?.channel_keywords;
   const channel_tags = keywordArr?.body?.data?.channel_tags;
 
-  console.log(keywordArr);
-
   // 해당  keyword api 와 combinedKeywordsAndTags 은 middleware에서 라우팅가드로 재사용가능성이 있음.
 
   useEffect(() => {
