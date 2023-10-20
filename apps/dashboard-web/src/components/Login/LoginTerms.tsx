@@ -2,10 +2,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
+import { useRouter } from 'next/navigation';
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
+import useGetKeywordArray from '@/hooks/useGetKeywordArray';
 import { apiClient } from '@/utils/apiClient';
 
 import CheckboxContainer from '../common/Checkbox';
@@ -21,6 +23,20 @@ const LoginTerms = () => {
     1,
   ).auth.getOwnInfo.useQuery(['user']);
 
+  const { mutate } = apiClient(2).user.putAgreePromotion.useMutation({
+    onSuccess: () => {
+      if (!keywordArr.length) {
+        router.replace('/login/choose-keyword');
+        return;
+      }
+
+      router.replace('/contents');
+    },
+  });
+
+  const keywordArr = useGetKeywordArray();
+
+  const router = useRouter();
   const methods = useForm({
     mode: 'onSubmit',
     resolver: zodResolver(LOGIN_TERMS_SCHEMA),
@@ -37,10 +53,8 @@ const LoginTerms = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // 약관동의 코드 작성
-    // onSuccess router 처리 들어가야함.
+  const onSubmit = async (data: any) => {
+    mutate({ body: { isAgree: true } });
   };
 
   useEffect(() => {
