@@ -17,7 +17,7 @@ export const zUserModel = z.object({
       .date()
       .nullable()
       .describe('The date which the user was created'),
-    argeePromotion: z
+    agreePromotion: z
       .boolean()
       .default(false)
       .nullable()
