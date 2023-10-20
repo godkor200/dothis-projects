@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import { useRouter } from 'next/navigation';
-import { type PropsWithChildren, useEffect, useState } from 'react';
+import { type PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
@@ -19,6 +19,8 @@ import TermsModalContents from '../common/Modal/TermsModal/TermsModalContents';
 const LoginTerms = () => {
   const [onError, setOnError] = useState(false);
 
+  const keywordArr = useGetKeywordArray();
+
   const { data: userData, isLoading: userLoading } = apiClient(
     1,
   ).auth.getOwnInfo.useQuery(['user']);
@@ -33,8 +35,6 @@ const LoginTerms = () => {
       router.replace('/contents');
     },
   });
-
-  const keywordArr = useGetKeywordArray();
 
   const router = useRouter();
   const methods = useForm({
