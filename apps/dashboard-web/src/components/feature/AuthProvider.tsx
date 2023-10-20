@@ -49,7 +49,20 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
         /**
          * Access Token이 존재하지 않을 경우 재발급
          */
+
         await apiServer(1).auth.getVerifyToken();
+
+        try {
+          const data = await apiServer(1).auth.getOwnInfo();
+
+          if (data.status === 200) {
+            if (!data.body.data?.agreePromotion) {
+              router.push('/login/terms');
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
 
         setIsSignedIn(true);
       } catch (error) {
