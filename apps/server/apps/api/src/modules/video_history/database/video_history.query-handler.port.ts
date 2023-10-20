@@ -5,5 +5,6 @@ export interface VideoHistoryQueryHandlerPort {
     videoId: string[],
     from: string,
     to: string,
+    clusterNumber: string,
   ): Promise<FindVideoHistoryResposne[]>;
 }

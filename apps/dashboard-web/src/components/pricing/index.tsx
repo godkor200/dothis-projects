@@ -6,6 +6,9 @@ import { SURVEY } from '@/constants/route';
 
 import * as Style from './style';
 
+const ICON_CHECK = '/icons/pricing_check.svg';
+const ICON_X = '/icons/pricing_x.svg';
+
 const Price = () => {
   return (
     <>
@@ -16,7 +19,7 @@ const Price = () => {
           더 쾌적한 서비스 환경 등이 제공됩니다.
         </p>
 
-        <Style.PriceCategory>
+        <Style.PriceButton>
           <thead>
             <tr>
               <Style.Th_start>시작하기</Style.Th_start>
@@ -54,15 +57,128 @@ const Price = () => {
               </td>
             </tr>
           </tbody>
-        </Style.PriceCategory>
-        <Style.ImageBox>
-          <Image
-            width={1600}
-            height={2800}
-            src={'/images/pricing.png'}
-            alt="가격"
-          />
-        </Style.ImageBox>
+        </Style.PriceButton>
+
+        <Style.PriceDetail>
+          <thead>
+            <tr>
+              <td></td>
+              <td>Trial</td>
+              <td>Basic</td>
+              <td>Pro</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Style.Th_subtitle>소재 탐색</Style.Th_subtitle>
+              <Style.Th_subtitle />
+              <Style.Th_subtitle />
+              <Style.Th_subtitle />
+            </tr>
+            <tr>
+              <th>검색 횟수 제한</th>
+              <td>무제한</td>
+              <td>무제한</td>
+              <td>무제한</td>
+            </tr>
+            <tr>
+              <th>동시 검색 키워드</th>
+              <td>무제한</td>
+              <td>무제한</td>
+              <td>무제한</td>
+            </tr>
+            <tr>
+              <th>연관어 개수</th>
+              <td>10</td>
+              <td>50</td>
+              <td>150</td>
+            </tr>
+            <tr>
+              <th>최대 분석 기간</th>
+              <td>7일</td>
+              <td>30일</td>
+              <td>365일</td>
+            </tr>
+            <tr>
+              <th>연관 콘텐츠</th>
+              <td>최대 5개</td>
+              <td>최대 20개</td>
+              <td>최대 50개</td>
+            </tr>
+            <tr>
+              <th>콘텐츠 요약</th>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_X} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>AI 카테고리 분석</th>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_X} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>상위 노출 확률 분석</th>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_X} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>조회수 예측</th>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_X} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_X} />
+                </Style.IconContainer>
+              </td>
+              <td>
+                <Style.IconContainer>
+                  <Style.Icon src={ICON_CHECK} />
+                </Style.IconContainer>
+              </td>
+            </tr>
+          </tbody>
+        </Style.PriceDetail>
       </Style.Main>
     </>
   );
