@@ -11,8 +11,7 @@ export const FADE_IN = keyframes`
 `;
 
 export const TagItem = styled.li<{ $chosen: boolean | undefined }>`
-  height: 2rem;
-  padding: 0 0.75rem;
+  padding: 0.625rem 1.25rem;
 
   border-radius: 0.5rem;
 
@@ -26,15 +25,18 @@ export const TagItem = styled.li<{ $chosen: boolean | undefined }>`
   animation: 0.25s ${FADE_IN} cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-  box-shadow: inset 0 0 0 2px #fafafa;
+  /* box-shadow: inset 0 0 0 2px #fafafa; */
 
-  ${({ style, $chosen }) =>
+  font-weight: bold;
+  color: #71717a;
+  background-color: #f4f4f5;
+
+  ${({ style, $chosen, theme }) =>
     $chosen
       ? css`
-          font-weight: bold;
-
-          background-color: #fef7f8;
-          box-shadow: inset 0 0 0 2px #fde7eb;
+          background-color: #f0516d;
+          color: white;
+          /* box-shadow: inset 0 0 0 2px #fde7eb; */
         `
       : css``}
   @media (min-width: 768px) {

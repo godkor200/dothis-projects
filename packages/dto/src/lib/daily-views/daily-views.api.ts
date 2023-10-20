@@ -1,17 +1,17 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { DailyViewModel } from './daily-views.model';
 
 export const dailyViewApiUrl = '/daily-views';
 
 export const dailyViewApi = c.router({
   getDailyViews: {
     method: 'GET',
-    path: `${dailyViewApiUrl}/:keyword`,
+    path: `${dailyViewApiUrl}/:clusterNumber`,
     pathParams: z.object({
-      keyword: z.string(),
+      clusterNumber: z.string(),
     }),
     query: z.object({
+      keyword: z.string(),
       relationKeyword: z.string().optional(),
       from: z.string(),
       to: z.string(),

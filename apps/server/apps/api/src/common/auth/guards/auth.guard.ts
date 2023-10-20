@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   CanActivate,
   ExecutionContext,
   Injectable,
@@ -6,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { USER_AUTH } from '@dothis/dto';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,7 +21,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      throw new UnauthorizedException('Access token is invalid.');
+      throw new UnauthorizedException(USER_AUTH.NoTokenProvided);
     }
 
     try {
@@ -30,7 +32,7 @@ export class AuthGuard implements CanActivate {
       // so that we can access it in our route handlers
       request['user'] = payload;
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(USER_AUTH.AccessTokenExpired);
     }
     return true;
   }

@@ -1,10 +1,7 @@
 'use client';
 
 import { isAxiosError } from 'axios';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 
 import {
@@ -12,9 +9,12 @@ import {
   useIsSignedIn,
   useIsTokenRequired,
 } from '@/store/authStore';
-import { apiInstance } from '@/utils/apiInstance';
 import { apiServer } from '@/utils/apiServer';
-import { isRefreshTokenExpired, isTokenNotExist } from '@/utils/authUtils';
+import {
+  isRefreshTokenExpired,
+  isTokenNotExist,
+  isTokenNotMatch,
+} from '@/utils/authUtils';
 
 /**
  *  해당 AuthProvider는 자동로그인을 위한 template입니다
@@ -32,7 +32,10 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
      * 토큰이 없는 경우 홈으로 리다이렉트
      */
     if (isTokenRequired) {
-      router.replace('/');
+      /**
+       * 임시 주석처리 dev 단계이여서 라우팅을 다 열어두었고, 접근권한에 따른 페이지 절차를 확립이 X
+       */
+      // router.replace('/');
 
       return;
     }
@@ -46,23 +49,37 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
         /**
          * Access Token이 존재하지 않을 경우 재발급
          */
-        await apiServer.auth.getVerifyToken();
+
+        await apiServer(1).auth.getVerifyToken();
+
+        try {
+          const data = await apiServer(1).auth.getOwnInfo();
+
+          if (data.status === 200) {
+            if (!data.body.data?.agreePromotion) {
+              router.push('/login/terms');
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
 
         setIsSignedIn(true);
       } catch (error) {
         if (isAxiosError(error)) {
           const err = error;
           const statusCode = err.response?.status as number;
-          const errorData = err.response?.data.data;
-          const title = errorData?.title as string;
+          const errorMessage = err.response?.data.message;
 
           /**
            * Refresh Token이 만료되었거나 모든 토큰이 존재하지 않을 경우 홈으로 리다이렉트
            */
           if (
-            isRefreshTokenExpired(statusCode, title) ||
-            isTokenNotExist(statusCode, title)
+            isRefreshTokenExpired(statusCode, errorMessage) ||
+            isTokenNotExist(statusCode, errorMessage) ||
+            isTokenNotMatch(statusCode, errorMessage)
           ) {
+            setIsSignedIn(false);
             setIsTokenRequired(true);
           }
         }

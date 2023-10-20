@@ -14,6 +14,8 @@ export class UserInfoCommandDto {
   @ApiProperty()
   readonly userEmail: string;
   @ApiProperty()
+  readonly channelId: string;
+  @ApiProperty()
   readonly tokenRefresh: string | null;
   @ApiProperty()
   readonly googleAccessToken: string;
@@ -69,7 +71,7 @@ export class GoogleLoginRedirectCommandHandler
           channelId: checkUser.channelId,
           userEmail: checkUser.userEmail,
         },
-        { expiresIn: '30m' },
+        { expiresIn: '1h' },
       ),
       refreshToken,
       isNewUser,

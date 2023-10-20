@@ -18,4 +18,6 @@ export { default as SideMain } from './SideBar/SideMain.svg';
 export { default as SideMessage } from './SideBar/SideMessage.svg';
 export { default as SideTrendUp } from './SideBar/SideTrendUp.svg';
 export { default as SideUser } from './SideBar/SideUser.svg';
+export { default as Alert } from './System/alert.svg';
+export { default as Close } from './System/close.svg';
 export { default as Share } from './System/share.svg';

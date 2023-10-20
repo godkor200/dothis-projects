@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { apiClient } from '@/utils/apiClient';
 
 const MyPage = () => {
-  const { data } = apiClient.auth.getOwnInfo.useQuery(['my_1'], {});
+  const { data } = apiClient(1).auth.getOwnInfo.useQuery(['my_1'], {});
 
   console.log(data);
 

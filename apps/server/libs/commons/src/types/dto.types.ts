@@ -5,9 +5,9 @@ import {
   zRelWordsArray,
   zVideoHistory,
   zVideoModel,
+  zTokenExpired,
 } from '@dothis/dto';
-import { z } from 'zod';
-import { IQuery } from '@nestjs/cqrs';
+
 export class UserDto extends createZodDto(extendApi(zUserModel)) {}
 export class UserRes extends UserDto {}
 export class VideoHistoryRes extends createZodDto(extendApi(zVideoHistory)) {}
@@ -15,6 +15,9 @@ export class VideoHistoryRes extends createZodDto(extendApi(zVideoHistory)) {}
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
 
 export class RelwordsRes extends createZodDto(extendApi(zRelWordsArray)) {}
+
+export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
+
 // export class CreateUserInput extends createZodDto(
 //   // userModel.omit({
 //   //   dateSignIn: true,

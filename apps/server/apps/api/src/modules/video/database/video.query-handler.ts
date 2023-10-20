@@ -6,7 +6,7 @@ import {
   IFindManyVideoResult,
   IPagingRes,
 } from '@Apps/modules/video/interface/find-many-video.interface';
-import { FindDailyViewsQuery } from '@Apps/modules/daily_views/interface/find-daily-views.dto';
+import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 
 export class VideoQueryHandler
@@ -94,7 +94,7 @@ export class VideoQueryHandler
     query: FindDailyViewsQuery,
   ): Promise<string[]> {
     let searchQuery = {
-      index: 'video-6',
+      index: 'video-' + query.clusterNumber,
       scroll: '10s',
       size: 10000,
       body: {
@@ -117,14 +117,6 @@ export class VideoQueryHandler
                   ],
                 },
               },
-              {
-                range: {
-                  crawled_date: {
-                    gte: query.from + ' 00:00:00', // 시작 날짜 (greater than or equal)
-                    lte: query.to + ' 00:00:00', // 종료 날짜 (less than or equal)
-                  },
-                },
-              },
             ],
           },
         },
@@ -144,7 +136,7 @@ export class VideoQueryHandler
           },
         },
       );
-    const res = await this.fullScan(searchQuery);
+    const res = await this.fullScan<{ video_id: string }>(searchQuery);
     return res.map((e) => e.video_id);
   }
 
