@@ -18,7 +18,11 @@ export const apiServer = (version: number) => {
         url: path,
         data: body,
       });
-      return { status: result.status, body: result.data };
+      return {
+        status: result.status,
+        body: result.data,
+        header: result.headers,
+      };
     },
   });
 };

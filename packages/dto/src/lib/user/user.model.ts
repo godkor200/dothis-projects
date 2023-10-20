@@ -17,7 +17,7 @@ export const zUserModel = z.object({
       .date()
       .nullable()
       .describe('The date which the user was created'),
-    argeePromotion: z
+    agreePromotion: z
       .boolean()
       .default(false)
       .nullable()
@@ -28,10 +28,8 @@ export const zUserModel = z.object({
 export type TUserModel = z.TypeOf<typeof zUserModel>;
 
 export const zKeywordModel = z.object({
-  data: z.array(
-    z.object({
-      channel_keywords: z.array(z.string()).nullable(),
-      channel_tags: z.array(z.string()).nullable(),
-    }),
-  ),
+  data: z.object({
+    channel_keywords: z.string().nullable(),
+    channel_tags: z.string().nullable(),
+  }),
 });

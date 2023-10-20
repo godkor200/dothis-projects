@@ -5,10 +5,11 @@ import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import LoginLoadingComponent from '@/components/Login/LoginLoading';
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
 import { apiClient } from '@/utils/apiClient';
-import { isHashKeyword } from '@/utils/isHashKeyword';
+import { combinedKeywordsAndTags, isHashKeyword } from '@/utils/keyword';
 
 const isServer = typeof window === 'undefined';
 
@@ -43,13 +44,17 @@ const Client = ({
       if (accessToken && refreshToken) {
         setIsSignedIn(true);
         setIsTokenRequired(false);
-        if (isNewUser === 'true' || !userData?.body.data.argeePromotion) {
+        if (isNewUser === 'true' || !userData?.body.data.agreePromotion) {
           router.replace('/login/terms');
           return;
         }
         if (
-          isHashKeyword(keyword?.body.data[0].channel_keywords) &&
-          isHashKeyword(keyword?.body.data[0].channel_tags)
+          !isHashKeyword(
+            combinedKeywordsAndTags(
+              keyword?.body.data.channel_keywords,
+              keyword?.body.data.channel_tags,
+            ),
+          )
         ) {
           router.replace('/login/choose-keyword');
           return;
@@ -61,7 +66,14 @@ const Client = ({
       }
     }
   }, [userLoading, keywordLoading]);
-  return <></>;
+  return (
+    <>
+      {/* 현재 LoadingComponent가 서버 측 redirect로는 나오지않는 이슈가 존재*/}
+      <LoginLoadingComponent />
+
+      <h2 className="mt-3 text-center text-2xl font-bold">채널 분석 중</h2>
+    </>
+  );
 };
 
 export default Client;
