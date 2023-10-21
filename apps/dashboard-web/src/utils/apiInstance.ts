@@ -40,6 +40,10 @@ apiInstance.interceptors.request.use(async (config) => {
     }
   }
 
+  config.headers['X-Client-Environment'] = isProduction
+    ? 'production'
+    : 'local';
+
   return config;
 });
 
