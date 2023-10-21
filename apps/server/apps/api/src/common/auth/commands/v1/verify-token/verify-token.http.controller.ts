@@ -26,6 +26,7 @@ import { match, Result } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
 import { AuthGuard } from '@Apps/common/auth/guards/auth.guard';
 import { TokenExpired } from '@Libs/commons/src/types/dto.types';
+import { envDiscrimination } from '@Libs/commons/src/util/setCookie';
 
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getVerifyToken;
@@ -73,12 +74,12 @@ export class VerifyTokenHttpController {
     const result: Result<ITokenRes, UnauthorizedExceptionError> =
       await this.commandBus.execute(tokenDto);
     const options: CookieOptions = {
-      domain: '.dothis.kr',
-      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
       secure: true,
       sameSite: 'none',
     };
+    console.log(!envDiscrimination(req) ? '.dothis.kr' : 'localhost');
     return match(result, {
       Ok: (result) => {
         res.header('Accesss-Control-Allow-Headers', 'Authorization');
