@@ -64,7 +64,6 @@ apiInstance.interceptors.response.use(
   async (error) => {
     count += 1;
 
-    console.log(error);
     if (count > 1) {
       count = 0;
       return Promise.reject(error);
@@ -84,6 +83,12 @@ apiInstance.interceptors.response.use(
          */
         // setCookie('accessToken', `Bearer ${data}`);
       }
+
+      // if(isServer) {
+      //   return  apiInstance({...originalRequest,headers})
+      // ts-rest에서 return data 에 header가 없어서 여기 부분 (isServer에서 request에 Authorization 삽입)이 힘듬
+      // }
+
       return apiInstance(originalRequest);
     }
 

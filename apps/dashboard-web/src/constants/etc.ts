@@ -1,1 +1,1 @@
-export const ceoMail = 'ceo@dothis.world' as const;
+export const ContactMail = 'Contact@dothis.kr' as const;
