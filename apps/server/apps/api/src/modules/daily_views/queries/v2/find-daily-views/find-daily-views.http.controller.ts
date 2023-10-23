@@ -24,6 +24,7 @@ import { IRes } from '@Libs/commons/src/types/res.types';
 import { IncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.query-handler';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 const c = nestControllerContract(apiRouter.dailyViews);
 
 const { getDailyViews } = c;
@@ -65,6 +66,9 @@ export class FindDailyViewsOsHttpController {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
         if (err instanceof VideoNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        if (err instanceof VideoHistoryNotFoundError) {
           throw new NotFoundException(err.message);
         }
         throw err;

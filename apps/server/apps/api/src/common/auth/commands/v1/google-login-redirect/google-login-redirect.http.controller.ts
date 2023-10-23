@@ -21,6 +21,7 @@ import { apiRouter } from '@dothis/dto';
 import { GoogleLoginRedirectRes } from '@Apps/common/auth/interface/google-login-redirect.interface';
 import { match, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
+import { envDiscrimination } from '@Libs/commons/src/util/setCookie';
 
 const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getGoogleRedirect;
@@ -39,23 +40,21 @@ export class GoogleLoginRedirectHttpController {
   @ApiInternalServerErrorResponse({
     description: InternalServerErrorException.message,
   })
-  @Redirect('http://localhost:3666/login/redirect', 302)
   async googleAuthRedirect(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<{ url: string }> {
+  ) {
     const result: Result<GoogleLoginRedirectRes, InternalServerErrorException> =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
     const options: CookieOptions = {
-      domain: '.dothis.kr',
-      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
+      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
       secure: true,
       sameSite: 'none',
     };
-
+    console.log(!envDiscrimination(req) ? '.dothis.kr' : 'localhost');
     res.cookie('google_access_token', userInfo.googleAccessToken, options);
     res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
 
@@ -63,9 +62,13 @@ export class GoogleLoginRedirectHttpController {
       Ok: (result) => {
         res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
         res.cookie('refreshToken', result.refreshToken, options);
-        return {
-          url: `http://localhost:3666/login/redirect?isNewUser=${result.isNewUser}&accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-        };
+        return res.redirect(
+          `http${
+            envDiscrimination(req) ? '://localhost:3666/' : 's://api.dothis.kr/'
+          }login/redirect?isNewUser=${result.isNewUser}&accessToken=${
+            result.accessToken
+          }&refreshToken=${result.refreshToken}`,
+        );
       },
       Err: (err: Error) => {
         if (err instanceof InternalServerErrorException)
