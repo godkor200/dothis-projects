@@ -21,9 +21,12 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
-import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
-import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
+import {
+  ChannelKeywordOrtagDtos,
+  ResultChannelKeywordTag,
+} from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 import { IRes } from '@Libs/commons/src/types/res.types';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/channel.errors';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUserKeyword;
 
@@ -64,13 +67,13 @@ export class GetKeywordByUserHttpController {
       userId: userInfo.id.toString(),
       channelId: userInfo.channelId,
     });
-    const result: Result<ChannelKeywordOrtagDtos, NotFoundException> =
+    const result: Result<ResultChannelKeywordTag, ChannelNotFoundError> =
       await this.commandBus.execute(command);
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof UserNotFoundError) {
+        if (err instanceof ChannelNotFoundError) {
           throw new NotFoundException(err.message);
         }
         throw err;
