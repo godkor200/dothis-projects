@@ -62,9 +62,9 @@ export class GoogleLoginRedirectHttpController {
       Ok: (result) => {
         res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
         res.cookie('refreshToken', result.refreshToken, options);
-        return res.redirect(
+        res.redirect(
           `http${
-            envDiscrimination(req) ? '://localhost:3666/' : 's://api.dothis.kr/'
+            envDiscrimination(req) ? '://localhost:3666/' : 's://www.dothis.kr/'
           }login/redirect?isNewUser=${result.isNewUser}&accessToken=${
             result.accessToken
           }&refreshToken=${result.refreshToken}`,
