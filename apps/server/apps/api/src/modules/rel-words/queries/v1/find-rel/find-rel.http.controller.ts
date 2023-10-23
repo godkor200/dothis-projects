@@ -34,7 +34,7 @@ export class FindRelHttpController {
     description,
   })
   @ApiParam({
-    name: '탐색어',
+    name: 'keyword',
   })
   @ApiOkResponse({
     description: `해당하는 데이터를 보냅니다.`,
