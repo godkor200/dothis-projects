@@ -21,7 +21,6 @@ import { apiRouter } from '@dothis/dto';
 import { GoogleLoginRedirectRes } from '@Apps/common/auth/interface/google-login-redirect.interface';
 import { match, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
-import { envDiscrimination } from '@Libs/commons/src/util/setCookie';
 
 const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getGoogleRedirect;
@@ -48,23 +47,25 @@ export class GoogleLoginRedirectHttpController {
     const result: Result<GoogleLoginRedirectRes, InternalServerErrorException> =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
-    const options: CookieOptions = {
-      domain: !envDiscrimination(req) ? '.dothis.kr' : 'localhost',
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-    };
-    console.log(!envDiscrimination(req) ? '.dothis.kr' : 'localhost');
-    res.cookie('google_access_token', userInfo.googleAccessToken, options);
-    res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
-
     return match(result, {
       Ok: (result) => {
+        console.log(
+          '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@result.isEnvLocal',
+          result.isEnvLocal,
+          result.refreshToken,
+        );
+        const options: CookieOptions = {
+          domain: '.dothis.kr',
+          path: '/',
+          secure: true,
+          sameSite: 'none',
+        };
+
         res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
         res.cookie('refreshToken', result.refreshToken, options);
         res.redirect(
           `http${
-            envDiscrimination(req) ? '://localhost:3666/' : 's://www.dothis.kr/'
+            result.isEnvLocal ? '://localhost:3666/' : 's://www.dothis.kr/'
           }login/redirect?isNewUser=${result.isNewUser}&accessToken=${
             result.accessToken
           }&refreshToken=${result.refreshToken}`,
