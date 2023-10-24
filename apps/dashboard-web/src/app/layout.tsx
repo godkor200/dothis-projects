@@ -15,12 +15,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ko">
       <RootHeader />
+      <Analytics />
       <body
         className={clsx(pretendard.className, 'text-[16px]')}
         suppressHydrationWarning={true}
       >
-        <Analytics />
-
         <StyledComponentsRegistry>
           <StyledTheme>
             <ClientContext>{children}</ClientContext>
