@@ -41,7 +41,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(
-    // req: express.Request,
     accessToken: string,
     refreshToken: string,
     profile: Profile,
