@@ -82,9 +82,9 @@ export default function HorizonPostRequestItem({
               className="item-comment"
               as="p"
               noOfLines={2}
-              dangerouslySetInnerHTML={{
-                __html: cutOverflowStr(removeHTMLTag(requestPost.content), 120),
-              }}
+              // dangerouslySetInnerHTML={{
+              //   __html: cutOverflowStr(removeHTMLTag(requestPost.content), 120),
+              // }}
             />
           )}
         </div>
