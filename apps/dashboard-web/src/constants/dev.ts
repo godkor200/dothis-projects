@@ -19,3 +19,5 @@ export const serverApiBaseUrl: Record<number, string> = {
   1: 'https://api.dothis.kr/v1',
   2: 'https://api.dothis.kr/v2',
 };
+
+export const isServer = typeof window === 'undefined';
