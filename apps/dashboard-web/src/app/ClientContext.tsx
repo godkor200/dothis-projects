@@ -7,7 +7,18 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 type Props = {
   children: React.ReactNode;
 };
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    mutations: {
+      retry: 0,
+    },
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: 0,
+    },
+  },
+});
 
 export default function ClientContext({ children }: Props) {
   return (
