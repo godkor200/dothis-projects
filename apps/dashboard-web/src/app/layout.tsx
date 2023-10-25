@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import type { PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
-import Analytics from '@/components/Analytics';
+// import Analytics from '@/components/Analytics';
 import { pretendard } from '@/styles/font';
 import StyledTheme from '@/styles/StyledTheme';
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ko">
       <RootHeader />
-      <Analytics />
+      {/* <Analytics /> */}
       <body
         className={clsx(pretendard.className, 'text-[16px]')}
         suppressHydrationWarning={true}
