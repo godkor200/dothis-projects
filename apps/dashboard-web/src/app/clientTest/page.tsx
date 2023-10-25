@@ -1,4 +1,5 @@
 import { dehydrate } from '@tanstack/query-core';
+import axios from 'axios';
 
 import { apiServer } from '@/utils/apiServer';
 
@@ -17,9 +18,33 @@ export default async function PostPage() {
   );
   const dehydratedState = dehydrate(queryClient);
 
+  // const authResponse = await auth.json();
+  // console.log(authResponse);
+
+  try {
+    const auth = await apiTest.get('/v1/auth/verify-token', {
+      withCredentials: true,
+    });
+
+    console.log('success');
+  } catch (error) {
+    console.log('error ');
+    console.log(error);
+  }
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <Keyword />
     </ReactQueryHydrate>
   );
 }
+
+export const HTTP_BASE = 'https://api.dothis.kr';
+
+export const apiTest = axios.create({
+  baseURL: HTTP_BASE,
+  withCredentials: true,
+});
+
+apiTest.interceptors.request.use(async (config) => {
+  return config;
+});
