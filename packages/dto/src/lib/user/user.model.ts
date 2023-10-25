@@ -29,7 +29,7 @@ export type TUserModel = z.TypeOf<typeof zUserModel>;
 
 export const zKeywordModel = z.object({
   data: z.object({
-    channel_keywords: z.string().nullable(),
-    channel_tags: z.string().nullable(),
+    channel_keywords: z.array(z.string()).nullable(),
+    channel_tags: z.array(z.string()).nullable(),
   }),
 });
