@@ -17,4 +17,7 @@ export type TDecodePayload = {
   userEmail: string;
   iat: number;
   exp: number;
+  channelId: string;
+  isAdmin: boolean;
+  isEnvLocal: boolean;
 };

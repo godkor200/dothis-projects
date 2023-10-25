@@ -40,8 +40,8 @@ export class GetUserV2CommandHandler
     if (!res) return Err(new ChannelNotFoundError());
     const { keyword, tag } = res;
     return Ok({
-      channel_keywords: keyword.split(','),
-      channel_tags: tag.split(','),
+      channel_keywords: keyword && keyword.split(','),
+      channel_tags: tag && tag.split(','),
     });
   }
 }
