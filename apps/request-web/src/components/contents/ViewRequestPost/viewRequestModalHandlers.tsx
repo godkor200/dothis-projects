@@ -657,11 +657,11 @@ const ViewRequestPost = ({ requestPost: _requestPost }: Props) => {
               display="flex"
               flexDirection="column"
               flex="auto"
-              dangerouslySetInnerHTML={{
-                __html: requestDetail.data?.content
-                  ? requestDetail.data?.content
-                  : '',
-              }}
+              // dangerouslySetInnerHTML={{
+              //   __html: requestDetail.data?.content
+              //     ? requestDetail.data?.content
+              //     : '',
+              // }}
             />
             <Flex justifyContent="center" mt={30}>
               <Button
