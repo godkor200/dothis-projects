@@ -5,7 +5,6 @@ import {
   HttpStatus,
   InternalServerErrorException,
   NotFoundException,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAccessGuard, User } from '@Libs/commons/src';

@@ -75,8 +75,8 @@ export const userApi = c.router({
       404: 'Not Found',
       500: 'server error',
     },
-    body: {},
-    summary: '유저 약관 동의 여부',
-    description: '동의 여부 불리언',
+    body: z.object({ isEnvLocal: z.boolean() }),
+    summary: '개발 환경 프로덕션 변경 (관리자 콘솔용)',
+    description: '개발 환경 프로덕션 불리언',
   },
 });
