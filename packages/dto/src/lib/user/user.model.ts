@@ -22,6 +22,10 @@ export const zUserModel = z.object({
       .default(false)
       .nullable()
       .describe('user agreePromotion'),
+    personalizationTag: z
+      .string()
+      .nullable()
+      .describe('tags saved for the user to analyze'),
   }),
 });
 

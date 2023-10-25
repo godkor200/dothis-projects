@@ -67,4 +67,16 @@ export const userApi = c.router({
     summary: '유저 약관 동의 여부',
     description: '동의 여부 불리언',
   },
+  putAdminUserEnv: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/admin/env`,
+    responses: {
+      200: '성공적으로 변경되면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: {},
+    summary: '유저 약관 동의 여부',
+    description: '동의 여부 불리언',
+  },
 });
