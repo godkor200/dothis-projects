@@ -61,3 +61,9 @@ export const convertKeywordsToArray = (
 
   return [...resultArr1, ...resultArr2];
 };
+
+export const getHashKeyword = (keywordList: string[]) => {
+  return keywordList
+    .filter((item) => item.includes('#'))
+    .map((item) => item.replace('#', ''));
+};
