@@ -24,7 +24,6 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { match, Result } from 'oxide.ts';
-import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 const c = nestControllerContract(apiRouter.user);
 const { putAgreePromotion } = c;
 const { responses, description, summary } = putAgreePromotion;

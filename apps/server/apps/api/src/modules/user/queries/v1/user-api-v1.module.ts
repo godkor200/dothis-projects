@@ -14,11 +14,16 @@ import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/cha
 import { UpdatePersonalTagHttpController } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.http.controller';
 
 import { UpdatePersonalTagCommandHandler } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.command-handler';
+import { PutEnvHttpController } from '@Apps/modules/user/command/v1/put-env/put-env.http.controller';
+import { PutEnvCommandHandler } from '@Apps/modules/user/command/v1/put-env/put-env.command-handler';
+import { AtStrategy } from '@Libs/commons/src';
+import { PassportModule } from '@nestjs/passport';
 
 const httpControllers = [
   GetUserHttpController,
   GetChannelDataHttpController,
   UpdatePersonalTagHttpController,
+  PutEnvHttpController,
 ];
 
 const repositories: Provider[] = [
@@ -28,12 +33,13 @@ const repositories: Provider[] = [
     useClass: ChannelDataRepository,
   },
 ];
-const strategies: Provider[] = [];
+const strategies: Provider[] = [AtStrategy];
 
 const commandHandlers: Provider[] = [
   GetChannelDataCommandHandler,
   GetUserCommandHandler,
   UpdatePersonalTagCommandHandler,
+  PutEnvCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [];
@@ -41,6 +47,7 @@ const queryHandlers: Provider[] = [];
   imports: [
     CqrsModule,
     UserEntityModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     MembershipEntityModule,
     ChannelEntityModule,
   ],
