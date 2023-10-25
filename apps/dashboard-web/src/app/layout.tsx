@@ -18,17 +18,17 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <Head>
         <RootHeader />
         <Analytics />
-        <body
-          className={clsx(pretendard.className, 'text-[16px]')}
-          suppressHydrationWarning={true}
-        >
-          <StyledComponentsRegistry>
-            <StyledTheme>
-              <ClientContext>{children}</ClientContext>
-            </StyledTheme>
-          </StyledComponentsRegistry>
-        </body>
       </Head>
+      <body
+        className={clsx(pretendard.className, 'text-[16px]')}
+        suppressHydrationWarning={true}
+      >
+        <StyledComponentsRegistry>
+          <StyledTheme>
+            <ClientContext>{children}</ClientContext>
+          </StyledTheme>
+        </StyledComponentsRegistry>
+      </body>
     </html>
   );
 }
