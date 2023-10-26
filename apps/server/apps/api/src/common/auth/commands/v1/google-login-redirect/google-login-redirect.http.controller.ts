@@ -39,33 +39,37 @@ export class GoogleLoginRedirectHttpController {
   @ApiInternalServerErrorResponse({
     description: InternalServerErrorException.message,
   })
-  @Redirect('http://localhost:3666/login/redirect', 302)
   async googleAuthRedirect(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<{ url: string }> {
+  ) {
     const result: Result<GoogleLoginRedirectRes, InternalServerErrorException> =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
 
-    const options: CookieOptions = {
-      domain: '.dothis.kr',
-      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-    };
-
-    res.cookie('google_access_token', userInfo.googleAccessToken, options);
-    res.cookie('google_refresh_token', userInfo.googleRefreshToken, options);
-
     return match(result, {
       Ok: (result) => {
+        console.log(
+          '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@result.isEnvLocal',
+          result.isEnvLocal,
+          result.refreshToken,
+        );
+        const options: CookieOptions = {
+          domain: '.dothis.kr',
+          path: '/',
+          secure: true,
+          sameSite: 'none',
+        };
+
         res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
         res.cookie('refreshToken', result.refreshToken, options);
-        return {
-          url: `http://localhost:3666/login/redirect?isNewUser=${result.isNewUser}&accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`,
-        };
+        res.redirect(
+          `http${
+            result.isEnvLocal ? '://localhost:3666/' : 's://www.dothis.kr/'
+          }login/redirect?isNewUser=${result.isNewUser}&accessToken=${
+            result.accessToken
+          }&refreshToken=${result.refreshToken}`,
+        );
       },
       Err: (err: Error) => {
         if (err instanceof InternalServerErrorException)

@@ -9,7 +9,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { CookieOptions, Request, Response } from 'express';
 import { apiRouter, USER_AUTH } from '@dothis/dto';
-import { Cookies } from '@Libs/commons/src';
+import { Cookies, TDecodePayload, User } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import {
   ApiHeaders,
@@ -55,8 +55,9 @@ export class VerifyTokenHttpController {
     },
   ])
   @TsRest(getVerifyToken)
+  @UseGuards(AuthGuard)
   async verifyAccessToken(
-    @Req() req: Request,
+    @User() user: TDecodePayload,
     @Res({ passthrough: true })
     res: Response,
     @Cookies()
@@ -67,18 +68,18 @@ export class VerifyTokenHttpController {
     },
   ): Promise<IRes<ITokenRes>> {
     const tokenDto = new TokenDto({
-      userInfo: req['user'],
+      userInfo: user,
       ...cookie,
     });
     const result: Result<ITokenRes, UnauthorizedExceptionError> =
       await this.commandBus.execute(tokenDto);
     const options: CookieOptions = {
       domain: '.dothis.kr',
-      //!envDiscrimination(req) ? '.dothis.kr' : 'localhost',
       path: '/',
       secure: true,
       sameSite: 'none',
     };
+
     return match(result, {
       Ok: (result) => {
         res.header('Accesss-Control-Allow-Headers', 'Authorization');
