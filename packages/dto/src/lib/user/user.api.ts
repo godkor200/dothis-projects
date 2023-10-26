@@ -76,7 +76,8 @@ export const userApi = c.router({
       500: 'server error',
     },
     body: z.object({ isEnvLocal: z.boolean() }),
-    summary: '개발 환경 프로덕션 변경 (관리자 콘솔용)',
-    description: '개발 환경 프로덕션 불리언',
+    summary: '환경 개발/프로덕션 변경 (관리자 콘솔용)',
+    description:
+      '환경 개발/프로덕션 해당 아이디로 로그인되고 리다이렉션될때, 로컬로 가느냐 프로덕션 환경으로 가느냐 설정하게 끔 변경하는 api',
   },
 });
