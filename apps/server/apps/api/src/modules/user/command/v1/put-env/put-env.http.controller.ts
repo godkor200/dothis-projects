@@ -18,12 +18,15 @@ import {
   ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
 const c = nestControllerContract(apiRouter.user);
 const { putAdminUserEnv } = c;
 const { responses, description, summary } = putAdminUserEnv;
 @Controller()
+@ApiTags('유저 관련')
 export class PutEnvHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
@@ -39,6 +42,9 @@ export class PutEnvHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
+  @ApiOkResponse({
+    description: '성공여부를 리턴합니다.',
+  })
   @ApiBody({
     isArray: false,
     type: Boolean,
