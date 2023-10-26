@@ -7,6 +7,10 @@ export default function Analytics() {
   return (
     <>
       {/* <!-- Start VWO Async SmartCode --> */}
+      <link
+        rel="preconnect"
+        href="https://dev.visualwebsiteoptimizer.com/lib/785926_nojq.js"
+      />
       <Script id="vwoCode" strategy="beforeInteractive">
         {`window._vwo_code || (function() {
           var account_id=785926,
