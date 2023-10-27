@@ -67,6 +67,12 @@ export class User {
   })
   personalizationTag: string;
 
+  @Column({
+    name: 'isEnvLocal',
+    type: 'boolean',
+  })
+  isEnvLocal: boolean;
+
   @OneToMany((type) => Membership, (Membership) => Membership.userId)
   Membership: Membership[];
 

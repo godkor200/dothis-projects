@@ -70,11 +70,14 @@ export class GoogleLoginRedirectCommandHandler
           id: checkUser.id,
           channelId: checkUser.channelId,
           userEmail: checkUser.userEmail,
+          isAdmin: checkUser.isAdmin,
+          isEnvLocal: checkUser.isEnvLocal,
         },
         { expiresIn: '1h' },
       ),
       refreshToken,
       isNewUser,
+      isEnvLocal: checkUser.isEnvLocal,
     });
   }
 }

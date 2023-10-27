@@ -10,6 +10,7 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { JwtService } from '@nestjs/jwt';
 import { Err, Ok } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
+import { TDecodePayload } from '@Libs/commons/src';
 
 export class TokenDto {
   userInfo: IUserInfo;
@@ -24,13 +25,7 @@ export class TokenDto {
     this.google_refresh_token = props.google_refresh_token;
   }
 }
-export interface IUserInfo {
-  id: number;
-  channelId: string;
-  userEmail: string;
-  iat: number;
-  exp: number;
-}
+export interface IUserInfo extends TDecodePayload {}
 
 @CommandHandler(TokenDto)
 export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
@@ -73,6 +68,8 @@ export class VerifyTokenCommandHandler implements ICommandHandler<TokenDto> {
             id: userEntity.id,
             userEmail: userEntity.userEmail,
             channelId: userEntity.channelId,
+            isAdmin: userEntity.isAdmin,
+            isEnvLocal: userEntity.isEnvLocal,
           },
           { expiresIn: '1h' },
         ),
