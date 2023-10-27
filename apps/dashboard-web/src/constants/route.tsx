@@ -1,4 +1,4 @@
-export const CONTENT = '/content';
+export const CONTENT = '/contents';
 export const PRICING = '/pricing';
 export const LANDING = '/';
 export const NOT_FOUND = '/404';
