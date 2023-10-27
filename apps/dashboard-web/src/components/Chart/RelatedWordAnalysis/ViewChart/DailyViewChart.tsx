@@ -2,6 +2,8 @@
 
 import { ResponsiveLine } from '@nivo/line';
 
+import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+
 import { VIEWCHART_LABEL } from '../RelatedWordAnalysis';
 import CustomTooltip from './CustomTooltip';
 import {
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const DailyViewChart = ({ dailyView }: Props) => {
+  const selectedRelWord = useSelectedRelWord();
   const TICK_SIZE = 6;
   const yScales = dailyView[0].data.map((item) => Number(item.y));
 
@@ -54,6 +57,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
   }
 
   console.log(yAxisRange());
+  console.log(dailyView);
   return (
     <ResponsiveLine
       data={dailyView}
@@ -93,7 +97,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword="물냉면"
+          keyword={selectedRelWord!}
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
