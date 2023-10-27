@@ -45,6 +45,7 @@ export function ceilToNearest(value: number, roundingUnit: number) {
 }
 
 export function floorToNearest(value: number, roundingUnit: number) {
+  if (value === 0) return 0;
   return Math.floor(value / roundingUnit) * roundingUnit;
 }
 

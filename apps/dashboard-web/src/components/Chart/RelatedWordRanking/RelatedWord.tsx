@@ -3,8 +3,6 @@ import type { Dispatch, SetStateAction } from 'react';
 interface RelatedWord {
   rank: number;
   word: string;
-  views: number;
-  gap: string;
 }
 
 interface RelatedWordProps {

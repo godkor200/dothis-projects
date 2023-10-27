@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { setCookie } from 'cookies-next';
 
-import { isProduction } from '@/constants/dev';
+import { isProduction, isServer } from '@/constants/dev';
 import { authStore } from '@/store/authStore';
 
 import { apiServer } from './apiServer';
@@ -14,8 +14,6 @@ import {
 } from './authUtils';
 
 export const HTTP_BASE = '  api.dothis.kr';
-
-const isServer = typeof window === 'undefined';
 
 export const apiInstance = axios.create({
   baseURL: HTTP_BASE,

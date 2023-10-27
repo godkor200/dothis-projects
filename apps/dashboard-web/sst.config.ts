@@ -10,16 +10,12 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, 'site');
-      // const site = new NextjsSite(stack, 'site', {
-      //   customDomain: {
-      //     domainName: 'www.dothis.kr',
-      //     isExternalDomain: true,
-      //     cdk: {
-      //       certificate: Certificate.fromCertificateArn(stack, 'MyCert'),
-      //     },
-      //   },
-      // });
+      const site = new NextjsSite(stack, 'site', {
+        customDomain: {
+          domainName: 'dothis.kr',
+          domainAlias: 'www.dothis.kr',
+        },
+      });
 
       stack.addOutputs({
         SiteUrl: site.url,

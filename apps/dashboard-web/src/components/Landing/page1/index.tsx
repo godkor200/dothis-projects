@@ -28,9 +28,6 @@ import {
   Title,
 } from './style';
 
-const CONTENT_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSc4WwQb9SbmZMMhghQWQQ3Oh-q1slxewT4kpic3C-kf-YnXmw/viewform';
-
 const SVGPATH = '/images/landing/svg/';
 const slides = [
   {
@@ -115,16 +112,14 @@ export default function Page1() {
               주제부터 스크립트까지 <br /> 두디스로 한 번에
             </MainTitle>
             <ButtonContainer>
-              {/* <Button onClick={() => router.push(CONTENT)}> */}
-              <Button onClick={() => router.push(CONTENT_URL)}>
+              <Button onClick={() => router.push(CONTENT)}>
                 <Image
                   src={'/images/landing/logo_small.png'}
                   alt={'logo_small'}
                   width={30}
                   height={30}
                 />
-                {/* <p>무료 체험하기</p> */}
-                <p>예약하기</p>
+                <p>무료 체험하기</p>
               </Button>
               <Button
                 onClick={() => {
