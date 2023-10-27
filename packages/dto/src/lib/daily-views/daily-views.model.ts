@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const zDailyViews = z.object({
   data: z.object({
-    date: z.date(),
+    date: z.string(),
     increase_comments: z.number(),
     increase_likes: z.number(),
     increase_views: z.number(),
