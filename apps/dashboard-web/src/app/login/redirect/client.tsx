@@ -9,7 +9,11 @@ import LoginLoadingComponent from '@/components/Login/LoginLoading';
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
 import { apiClient } from '@/utils/apiClient';
-import { combinedKeywordsAndTags, isHashKeyword } from '@/utils/keyword';
+import {
+  combinedKeywordsAndTags,
+  convertKeywordsToArray,
+  isHashKeyword,
+} from '@/utils/keyword';
 
 const isServer = typeof window === 'undefined';
 
@@ -50,10 +54,7 @@ const Client = ({
         }
         if (
           !isHashKeyword(
-            combinedKeywordsAndTags(
-              keyword?.body.data.channel_keywords,
-              keyword?.body.data.channel_tags,
-            ),
+            convertKeywordsToArray(userData.body.data.personalizationTag),
           )
         ) {
           router.replace('/login/choose-keyword');

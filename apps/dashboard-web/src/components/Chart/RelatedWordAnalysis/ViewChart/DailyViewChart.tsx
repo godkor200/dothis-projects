@@ -2,6 +2,8 @@
 
 import { ResponsiveLine } from '@nivo/line';
 
+import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+
 import { VIEWCHART_LABEL } from '../RelatedWordAnalysis';
 import CustomTooltip from './CustomTooltip';
 import {
@@ -11,76 +13,54 @@ import {
   unitFormat,
 } from './utils';
 
-const DAILYVIEW_DATA = [
-  {
-    id: '일일 조회 수(단위:회)',
-    data: [
-      {
-        x: '2017-12-29',
-        y: 750000,
-      },
-      {
-        x: '2017-12-31',
-        y: 1140000,
-      },
-      {
-        x: '2018-01-03',
-        y: 1090000,
-      },
-      {
-        x: '2018-01-05',
-        y: 980000,
-      },
-      {
-        x: '2018-01-07',
-        y: 890000,
-      },
-      {
-        x: '2018-01-09',
-        y: 1100000,
-      },
-      {
-        x: '2018-01-11',
-        y: 2710000,
-      },
-    ],
-  },
-];
+interface Props {
+  dailyView: { id: string; data: { x: string; y: number }[] }[];
+}
 
-const TICK_SIZE = 6;
-const yScales = DAILYVIEW_DATA[0].data.map((item) => item.y);
+const DailyViewChart = ({ dailyView }: Props) => {
+  const selectedRelWord = useSelectedRelWord();
+  const TICK_SIZE = 6;
+  const yScales = dailyView[0].data.map((item) => Number(item.y));
 
-const yMinScale = floorToNearest(
-  Math.min(...yScales),
-  getRoundingUnit(Math.min(...yScales), 2),
-);
+  const yMinScale = floorToNearest(
+    Math.min(...yScales),
+    getRoundingUnit(Math.min(...yScales), 2),
+  );
 
-const yMaxScale = ceilToNearest(
-  Math.max(...yScales),
-  getRoundingUnit(Math.max(...yScales), 2),
-);
+  const yMaxScale = ceilToNearest(
+    Math.max(...yScales),
+    getRoundingUnit(Math.max(...yScales), 2),
+  );
 
-const getAxisInterval = () => {
-  const deviationByTick = (yMaxScale - yMinScale) / (TICK_SIZE - 2);
+  const getAxisInterval = () => {
+    const deviationByTick = (yMaxScale - yMinScale) / (TICK_SIZE - 2);
 
-  return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
-};
+    return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
+  };
 
-const getStartValue = () => {
-  return yMinScale - getAxisInterval();
-};
+  const getStartValue = () => {
+    return yMinScale - getAxisInterval() < 1
+      ? 0
+      : yMinScale - getAxisInterval();
+  };
 
-const yAxisRange = Array.from(
-  { length: TICK_SIZE },
-  (_, index) =>
-    floorToNearest(getStartValue(), getRoundingUnit(getStartValue(), 1)) +
-    index * getAxisInterval(),
-);
+  const yAxisRange = () =>
+    Array.from(
+      { length: TICK_SIZE },
+      (_, index) =>
+        floorToNearest(getStartValue(), getRoundingUnit(getStartValue(), 1)) +
+        index * getAxisInterval(),
+    );
 
-const DailyViewChart = () => {
+  if (dailyView[0].data.length === 0) {
+    return;
+  }
+
+  console.log(yAxisRange());
+  console.log(dailyView);
   return (
     <ResponsiveLine
-      data={DAILYVIEW_DATA}
+      data={dailyView}
       margin={{ top: 50, left: 60 }}
       lineWidth={2}
       colors={['#F0516D']}
@@ -93,15 +73,15 @@ const DailyViewChart = () => {
       }}
       yScale={{
         type: 'linear',
-        min: Math.min(...yAxisRange),
-        max: Math.max(...yAxisRange),
+        min: Math.min(...yAxisRange()),
+        max: Math.max(...yAxisRange()),
         stacked: true,
         reverse: false,
       }}
       yFormat=">-.2f"
       enableGridX={false}
       enablePoints={false}
-      gridYValues={yAxisRange}
+      gridYValues={yAxisRange()}
       axisTop={null}
       axisRight={null}
       axisBottom={null}
@@ -109,20 +89,20 @@ const DailyViewChart = () => {
         tickSize: 0,
         tickPadding: 20,
         tickRotation: 0,
-        tickValues: yAxisRange,
+        tickValues: yAxisRange(),
         legendOffset: -40,
         legendPosition: 'middle',
-        format: (value: number) => unitFormat(value, Math.min(...yAxisRange)),
+        format: (value: number) => unitFormat(value, Math.min(...yAxisRange())),
       }}
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword="물냉면"
+          keyword={selectedRelWord!}
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
-          }).format(DAILYVIEW_DATA[0].data[point.index].y)}
-          date={DAILYVIEW_DATA[0].data[point.index].x}
+          }).format(dailyView[0].data[point.index].y)}
+          date={dailyView[0].data[point.index].x}
         />
       )}
       legends={[

@@ -10,12 +10,14 @@ export const VIEWCHART_LABEL = {
 
 const RelatedWordAnalysis = () => {
   return (
-    <div className="grow ml-5 pt-[2.5rem] bg-grey00">
+    <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
       <Summary />
-      <div className="flex w-full h-[520px]">
+      <div className="flex h-[520px] w-full">
         <ViewChart />
-        <div className="flex flex-col min-w-[18.12rem] [&_text]:font-bold">
+
+        <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
           <DailyView view={913192} />
+
           <CumulativeVideoChart />
         </div>
       </div>

@@ -6,9 +6,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex">
       <SideBar />
-      <div className="absolute w-full h-[5.5rem] p-5 border-b border-solid border-grey300 box-border z-index-1" />
+      <div className="border-grey300 z-index-1 absolute box-border h-[5.5rem] w-full border-b border-solid p-5" />
 
-      <div className="w-[1342px] mx-auto">
+      <div className="mx-auto w-[1342px]">
         <GNB />
         <>{children}</>
         <Footer />

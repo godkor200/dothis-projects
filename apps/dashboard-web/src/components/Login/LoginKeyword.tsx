@@ -11,7 +11,11 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import type { KeywordSchema } from '@/constants/schema/login';
 import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
 import { apiClient } from '@/utils/apiClient';
-import { combinedKeywordsAndTags, isHashKeyword } from '@/utils/keyword';
+import {
+  combinedKeywordsAndTags,
+  convertKeywordsToArray,
+  isHashKeyword,
+} from '@/utils/keyword';
 
 import Keywords from './Keywords';
 
@@ -30,6 +34,8 @@ const LoginKeyword = () => {
     2,
   ).user.getUserKeyword.useQuery(['keyword']);
 
+  const { data: userData } = apiClient(1).auth.getOwnInfo.useQuery(['user']);
+
   const queryClient = useQueryClient();
 
   const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
@@ -37,6 +43,7 @@ const LoginKeyword = () => {
       console.log(data);
 
       queryClient.invalidateQueries(['keyword']);
+      queryClient.invalidateQueries(['user']);
       router.push('/');
     },
   });
@@ -49,12 +56,14 @@ const LoginKeyword = () => {
   useEffect(() => {
     if (
       combinedKeywordsAndTags(channel_keywords, channel_tags).length === 0 ||
-      isHashKeyword(combinedKeywordsAndTags(channel_keywords, channel_tags))
+      isHashKeyword(
+        convertKeywordsToArray(userData?.body.data.personalizationTag),
+      )
     ) {
       router.replace('/contents');
       return;
     }
-  }, [keywordArr]);
+  }, [keywordArr, userData]);
 
   const control = methods.control;
   const keywords = useWatch({ name: 'keyword', control });
