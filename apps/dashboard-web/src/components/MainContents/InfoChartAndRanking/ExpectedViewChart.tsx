@@ -2,7 +2,7 @@
 
 import { ResponsiveLine } from '@nivo/line';
 
-import { VIEWCHART_LABEL } from '../RelatedWordAnalysis';
+import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 import CustomTooltip from './CustomTooltip';
 
 const EXPECTEDVIEW_DATA = [

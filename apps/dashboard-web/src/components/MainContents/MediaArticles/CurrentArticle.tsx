@@ -4,10 +4,10 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import SvgComp from '@/share/SvgComp';
 
-import ContentSubTitle from './ContentSubTitle/ContentSubTitle';
-import { externaImageLoader, getMainImage } from './utils';
+import ArticleInfo from './ArticleInfo';
+import { externaImageLoader, getMainImage } from '../../../utils/imagesUtil';
 
-export interface ContentProps {
+export interface CurrentArticleProps {
   title: string;
   category: string;
   provider: string;
@@ -16,14 +16,14 @@ export interface ContentProps {
   link: string;
 }
 
-const Content = ({
+const CurrentArticle = ({
   title,
   category,
   provider,
   date,
   image,
   link,
-}: ContentProps) => {
+}: CurrentArticleProps) => {
   return (
     <div className="rounded-10 border-grey300 w-[640px] overflow-hidden border border-solid">
       <div className="h-[300px] w-[640px] overflow-hidden">
@@ -38,11 +38,7 @@ const Content = ({
       </div>
       <div className="px-[1.875rem] py-10">
         <h3 className="text-grey700 mb-6  text-[1.5rem] font-bold">{title}</h3>
-        <ContentSubTitle
-          secondText={provider}
-          thirdText={category}
-          date={date}
-        />
+        <ArticleInfo secondText={provider} thirdText={category} date={date} />
         <CopyToClipboard text={link} onCopy={() => alert(`${link}가 복사`)}>
           <div className="bg-grey200 flex w-full cursor-pointer items-center justify-center   rounded-lg py-4 text-center">
             <button className="inline-flex items-center gap-[0.7rem]">
@@ -56,4 +52,4 @@ const Content = ({
   );
 };
 
-export default Content;
+export default CurrentArticle;

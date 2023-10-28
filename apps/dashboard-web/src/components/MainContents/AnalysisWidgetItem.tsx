@@ -1,6 +1,9 @@
-import { SummaryItem } from '@/mocks/chart/summary';
+export interface AnalysisWidgetItemProps {
+  title: string;
+  content: string;
+}
 
-const SummaryItem = ({ title, content }: SummaryItem) => {
+const AnalysisWidgetItem = ({ title, content }: AnalysisWidgetItemProps) => {
   return (
     <li className="rounded-8 bg-primary50 w-[18.1rem] grow py-5">
       <div className="border-primary500 border-l-2 pl-[25px] font-bold">
@@ -10,5 +13,4 @@ const SummaryItem = ({ title, content }: SummaryItem) => {
     </li>
   );
 };
-
-export default SummaryItem;
+export default AnalysisWidgetItem;

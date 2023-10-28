@@ -4,14 +4,14 @@ import { ResponsiveLine } from '@nivo/line';
 
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 
-import { VIEWCHART_LABEL } from '../RelatedWordAnalysis';
+import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 import CustomTooltip from './CustomTooltip';
 import {
   ceilToNearest,
   floorToNearest,
   getRoundingUnit,
   unitFormat,
-} from './utils';
+} from '../../../utils/mainContentUtil';
 
 interface Props {
   dailyView: { id: string; data: { x: string; y: number }[] }[];

@@ -11,7 +11,7 @@ interface RelatedWordProps {
   onClick: Dispatch<SetStateAction<number>>;
 }
 
-const RelatedWord = ({
+const KeywordRankingItem = ({
   relatedWord,
   isSelected,
   onClick,
@@ -31,4 +31,4 @@ const RelatedWord = ({
   );
 };
 
-export default RelatedWord;
+export default KeywordRankingItem;

@@ -1,4 +1,4 @@
-import { VIEWCHART_LABEL } from '../RelatedWordAnalysis';
+import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 
 type ViewChartLabel = '일일 조회수' | '기대 조회수';
 
@@ -11,30 +11,30 @@ interface CustomTooltip {
 
 const DailyViewGraphPoint = () => {
   return (
-    <div className="h-2 w-2 rounded-full border-2 border-solid border-primary500" />
+    <div className="border-primary500 h-2 w-2 rounded-full border-2 border-solid" />
   );
 };
 
 const ExpectedViewGraphPoint = () => {
   return (
-    <div className="h-2 w-2 rounded-full border-2 border-solid border-indigo" />
+    <div className="border-indigo h-2 w-2 rounded-full border-2 border-solid" />
   );
 };
 
 const CustomTooltip = ({ keyword, label, value, date }: CustomTooltip) => {
   return (
-    <div className="w-[192px] rounded bg-grey700 p-2.5">
-      <header className="flex items-center justify-between border-b border-solid border-grey600 pb-3">
-        <h1 className="font-bold text-grey00">{keyword}</h1>
-        <span className="text-[12px] text-grey500">{date}</span>
+    <div className="bg-grey700 w-[192px] rounded p-2.5">
+      <header className="border-grey600 flex items-center justify-between border-b border-solid pb-3">
+        <h1 className="text-grey00 font-bold">{keyword}</h1>
+        <span className="text-grey500 text-[12px]">{date}</span>
       </header>
       <div className="mt-3 flex items-center justify-between">
         <div className="flex items-center">
           {label === VIEWCHART_LABEL.DAILYVIEW && <DailyViewGraphPoint />}
           {label === VIEWCHART_LABEL.EXPECTEDVIEW && <ExpectedViewGraphPoint />}
-          <div className="ml-2 text-[14px] font-bold text-grey00">{value}</div>
+          <div className="text-grey00 ml-2 text-[14px] font-bold">{value}</div>
         </div>
-        <span className="text-[12px] text-grey500">{label}</span>
+        <span className="text-grey500 text-[12px]">{label}</span>
       </div>
     </div>
   );
