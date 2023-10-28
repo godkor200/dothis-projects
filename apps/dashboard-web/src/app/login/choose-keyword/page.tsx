@@ -2,7 +2,7 @@ import { dehydrate } from '@tanstack/query-core';
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
-import LoginKeyword from '@/components/Login/LoginKeyword';
+import LoginKeyword from '@/components/Auth/LoginKeyword';
 import getQueryClient from '@/query/getQueryClient';
 import ReactQueryHydrate from '@/query/ReactQueryHydrate';
 import { apiServer } from '@/utils/apiServer';

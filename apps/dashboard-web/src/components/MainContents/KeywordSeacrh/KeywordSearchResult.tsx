@@ -1,7 +1,7 @@
 import useKeyword from '@/hooks/user/useKeyword';
 import useGetRelWords from '@/query/user/useGetRelWords';
 
-const Title = () => {
+const KeywordSearchResult = () => {
   const { hashKeywordList } = useKeyword();
 
   const { data: relWords } = useGetRelWords();
@@ -23,4 +23,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default KeywordSearchResult;

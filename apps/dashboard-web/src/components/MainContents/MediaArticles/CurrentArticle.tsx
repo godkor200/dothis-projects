@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { PropsWithChildren } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
 import ArticleInfo from './ArticleInfo';
 import { externaImageLoader, getMainImage } from '../../../utils/imagesUtil';

@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 import useClickScrollX from '@/hooks/useClickScrollX';
 import useKeyword from '@/hooks/user/useKeyword';
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
-import NavSlideContent from './Keyword';
+import KeywordItem from './KeywordItem';
 import * as Style from './style';
 
 export enum KeywordCategory {
@@ -86,7 +86,7 @@ const KeywordSlide = ({ keyword }: Props) => {
       </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
         {hashKeywordList.map((keyword) => (
-          <NavSlideContent
+          <KeywordItem
             key={keyword}
             $active={targetKeywords.includes(keyword)}
             label={keyword}

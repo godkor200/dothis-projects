@@ -4,9 +4,9 @@ import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
-const SignUpContents = () => {
+const SignUp = () => {
   const router = useRouter();
   return (
     <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
@@ -33,4 +33,4 @@ const SignUpContents = () => {
   );
 };
 
-export default SignUpContents;
+export default SignUp;

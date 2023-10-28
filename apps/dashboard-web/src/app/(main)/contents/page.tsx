@@ -1,11 +1,11 @@
-import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
-import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
-import ContentCardHeaderTap from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
+import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
+import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
+import ContentCardHeaderTap from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
+import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import relatedContentApi from '@/query/RelatedContent';
-import MonthlyViewData from '@/components/MainContents/MonthlyContentReportSection/MonthlyViewData';
 
 const MainContentPage = async ({
   searchParams,
@@ -26,7 +26,7 @@ const MainContentPage = async ({
         </div>
       </Card>
       <Card>
-        <CardHeader title="월간 View" />
+        <CardHeader title="월간 콘텐츠 리포트" />
         <MonthlyViewData />
       </Card>
       <Card>

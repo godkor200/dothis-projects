@@ -23,7 +23,7 @@ type RevealListType = {
   viewOffset?: { top: number; right: number; bottom: number; left: number };
 };
 
-const RevealList: React.FC<RevealListType> = ({
+const RevealList = ({
   children,
   className,
   interval,
@@ -42,7 +42,7 @@ const RevealList: React.FC<RevealListType> = ({
   useDelay,
   viewFactor,
   viewOffset,
-}) => {
+}: RevealListType) => {
   const listRefs = useRef([]) as any;
 
   const Origin = origin === undefined || null ? reveal.origin : origin;

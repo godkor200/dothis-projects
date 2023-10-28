@@ -1,4 +1,4 @@
-import LoginTerms from '@/components/Login/LoginTerms';
+import LoginTerms from '@/components/Auth/LoginTerms';
 
 const LoginTermsPage = () => {
   return (

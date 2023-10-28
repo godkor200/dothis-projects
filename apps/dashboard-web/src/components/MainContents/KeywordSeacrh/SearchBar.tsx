@@ -3,7 +3,7 @@
 import type { KeyboardEvent } from 'react';
 import { useRef } from 'react';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
 const SearchBar = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -14,9 +14,9 @@ const SearchBar = () => {
     }
   };
   return (
-    <div className="relative  max-w-[50rem] mx-auto">
+    <div className="relative  mx-auto max-w-[50rem]">
       <input
-        className="w-full border-2 border-solid border-grey300  rounded-8 py-5 pr-14 pl-5 box-border text-[1.25rem]  bg-grey00 outline-none transition focus:border-primary300 "
+        className="border-grey300 rounded-8 bg-grey00 focus:border-primary300  box-border w-full border-2 border-solid py-5 pl-5  pr-14 text-[1.25rem] outline-none transition "
         placeholder="키워드를 넣어주세요"
         ref={searchInputRef}
         onKeyDown={handleSubmit}

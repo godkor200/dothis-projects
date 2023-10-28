@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 
 import { SIDE_MENUS } from '@/constants/SideMenus';
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
 import * as Style from './style';
 

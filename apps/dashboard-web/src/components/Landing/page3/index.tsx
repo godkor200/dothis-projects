@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import { Background, Description, Img, Main, Title } from './style';

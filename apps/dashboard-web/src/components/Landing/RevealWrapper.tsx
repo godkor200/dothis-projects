@@ -22,7 +22,7 @@ type RevealWrapperType = {
   viewOffset?: { top: number; right: number; bottom: number; left: number };
 };
 
-const RevealWrapper: React.FC<RevealWrapperType> = ({
+const RevealWrapper = ({
   children,
   className,
   origin,
@@ -40,7 +40,7 @@ const RevealWrapper: React.FC<RevealWrapperType> = ({
   useDelay,
   viewFactor,
   viewOffset,
-}) => {
+}: RevealWrapperType) => {
   const ref = useRef<HTMLDivElement>(null);
   const Origin = origin === undefined || null ? reveal.origin : origin;
   const Distance = distance === undefined || null ? reveal.distance : distance;

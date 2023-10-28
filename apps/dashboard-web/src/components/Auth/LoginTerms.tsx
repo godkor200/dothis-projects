@@ -14,9 +14,9 @@ import { apiClient } from '@/utils/apiClient';
 
 import CheckboxContainer from '../common/Checkbox';
 import { CheckBox } from '../common/Checkbox/style';
-import Modal from '../common/Modal/AuthModal/Modal';
+import Modal from '../common/Modal/AuthModal/AuthModal';
 import TermsModal from '../common/Modal/TermsModal/TermsModal';
-import TermsModalContents from '../common/Modal/TermsModal/TermsModalContents';
+import TermsContents from './TermsContents';
 
 const LoginTerms = () => {
   const [onError, setOnError] = useState(false);
@@ -107,7 +107,7 @@ const LoginTerms = () => {
       </form>
       {onError && (
         <TermsModal setOnError={setOnError}>
-          <TermsModalContents
+          <TermsContents
             errorMessage={errors.service?.message || errors.privacy?.message}
             setOnError={setOnError}
           />

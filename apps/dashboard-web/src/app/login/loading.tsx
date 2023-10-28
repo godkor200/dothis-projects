@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import LoginLoadingComponent from '@/components/Login/LoginLoading';
+import LoginLoadingComponent from '@/components/Auth/LoginLoading';
 
 const LoginLoading = () => {
   return (

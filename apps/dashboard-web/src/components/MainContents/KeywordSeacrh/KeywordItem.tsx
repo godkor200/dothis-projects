@@ -1,7 +1,7 @@
 import type { MouseEvent, MutableRefObject, SetStateAction } from 'react';
 import { useRef } from 'react';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
 import type { KeywordCategory } from './KeywordSlide';
 import * as Style from './style';
@@ -15,7 +15,7 @@ interface KeywordCategoryContentProps<T> {
   setTargetKeywords: React.Dispatch<SetStateAction<string[]>>;
 }
 
-const Keyword = <T extends HTMLButtonElement>({
+const KeywordItem = <T extends HTMLButtonElement>({
   $active,
   label,
   keyValue,
@@ -62,4 +62,4 @@ const Keyword = <T extends HTMLButtonElement>({
   );
 };
 
-export default Keyword;
+export default KeywordItem;

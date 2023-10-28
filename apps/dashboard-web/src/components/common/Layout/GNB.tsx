@@ -4,7 +4,7 @@ import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정

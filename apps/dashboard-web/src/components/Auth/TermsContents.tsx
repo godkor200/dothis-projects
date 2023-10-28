@@ -1,11 +1,10 @@
 'use client';
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
-import Link from 'next/link';
 
-import SvgComp from '@/share/SvgComp';
+import SvgComp from '@/components/common/SvgComp';
 
-const TermsModalContents = ({
+const TermsContents = ({
   errorMessage,
   setOnError,
 }: {
@@ -36,4 +35,4 @@ const TermsModalContents = ({
   );
 };
 
-export default TermsModalContents;
+export default TermsContents;

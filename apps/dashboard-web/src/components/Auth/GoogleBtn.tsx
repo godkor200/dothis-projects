@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BaseURL } from '@/constants/dev';
 import { HTTP_BASE_URL } from '@/constants/http';
 
-import SvgComp from '../../share/SvgComp';
+import SvgComp from '../common/SvgComp';
 
 const GoogleBtn = () => {
   return (
