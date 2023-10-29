@@ -56,8 +56,6 @@ const DailyViewChart = ({ dailyView }: Props) => {
     return;
   }
 
-  console.log(yAxisRange());
-  console.log(dailyView);
   return (
     <ResponsiveLine
       data={dailyView}

@@ -4,7 +4,7 @@ import { getPathMatch } from 'next/dist/shared/lib/router/utils/path-match';
 import type { z } from 'zod';
 
 import { mockApiPathname } from '@/constants/dev';
-import type { ApiRouterResponse } from '@/utils/apiClient';
+import type { ApiRouterResponse } from '@/utils/api/apiClient';
 
 const urlMatchDynamicPath = (url: string) => (dynamicPath: string) =>
   getPathMatch(`${mockApiPathname}${dynamicPath}`, { strict: true })(url);

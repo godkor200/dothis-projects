@@ -10,7 +10,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import type { KeywordSchema } from '@/constants/schema/login';
 import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 import {
   combinedKeywordsAndTags,
   convertKeywordsToArray,

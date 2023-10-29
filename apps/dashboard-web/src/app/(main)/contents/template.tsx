@@ -7,7 +7,7 @@ import SearchBar from '@/components/MainContents/KeywordSeacrh/SearchBar';
 import useGetUserInfo from '@/query/user/useGetUserInfo';
 import KeywordSearchResult from '@/components/MainContents/KeywordSeacrh/KeywordSearchResult';
 
-const ChartTemplate = ({ children }: PropsWithChildren) => {
+const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { data } = useGetUserInfo();
 
   return (
@@ -21,4 +21,4 @@ const ChartTemplate = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default ChartTemplate;
+export default MainContentTemplate;

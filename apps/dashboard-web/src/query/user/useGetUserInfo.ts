@@ -1,7 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions, UseQueryResult } from '@ts-rest/react-query';
 
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 
 /**
  * getOwnInfo api -> 유저정보 api를 만들어놓은 커스텀 hook

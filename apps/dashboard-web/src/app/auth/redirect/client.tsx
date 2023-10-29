@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import LoginLoadingComponent from '@/components/Auth/LoginLoading';
 import { isProduction } from '@/constants/dev';
 import { useAuthActions } from '@/store/authStore';
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 import {
   combinedKeywordsAndTags,
   convertKeywordsToArray,

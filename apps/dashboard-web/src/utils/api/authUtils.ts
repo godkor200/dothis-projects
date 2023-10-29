@@ -1,4 +1,7 @@
-import { HTTP_RESPONSE_ERROR_DATA, HTTP_STATUS_CODE } from '../constants/http';
+import {
+  HTTP_RESPONSE_ERROR_DATA,
+  HTTP_STATUS_CODE,
+} from '../../constants/http';
 
 //추 후 백엔드와 Title을 정하여 unAuth 분기처리
 

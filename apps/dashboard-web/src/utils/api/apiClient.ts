@@ -1,4 +1,3 @@
-import { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { ApiRouteResponse } from '@ts-rest/core';
 import { initQueryClient } from '@ts-rest/react-query';
 import type { Method } from 'axios';
@@ -6,6 +5,7 @@ import type { Method } from 'axios';
 import { serverApiBaseUrl } from '@/constants/dev';
 
 import { apiInstance } from './apiInstance';
+import { apiRouter } from '@dothis/dto/dist/lib/apiRouter';
 
 export type ApiRouterResponse = ApiRouteResponse<typeof apiRouter>;
 

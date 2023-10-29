@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { apiServer } from './utils/apiServer';
+import { apiServer } from './utils/api/apiServer';
 
 // 추 후  라우팅가드를 위한 middleware 파일 생성 (기획단과 상의 후 라우팅 가드 적용 예정)
 export async function middleware(request: NextRequest) {

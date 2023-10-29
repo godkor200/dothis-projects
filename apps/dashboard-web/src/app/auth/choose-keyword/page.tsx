@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import LoginKeyword from '@/components/Auth/LoginKeyword';
 import getQueryClient from '@/query/getQueryClient';
 import ReactQueryHydrate from '@/query/ReactQueryHydrate';
-import { apiServer } from '@/utils/apiServer';
+import { apiServer } from '@/utils/api/apiServer';
 
 /**
  * Login 프로세스에서 해당 api가 연달아 실행이 되어서 이미 react query에 캐싱이 되어있는데,

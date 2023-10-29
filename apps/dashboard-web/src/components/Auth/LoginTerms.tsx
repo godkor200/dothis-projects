@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
 import useGetKeywordArray from '@/hooks/useGetKeywordArray';
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 
 import CheckboxContainer from '../common/Checkbox';
 import { CheckBox } from '../common/Checkbox/style';

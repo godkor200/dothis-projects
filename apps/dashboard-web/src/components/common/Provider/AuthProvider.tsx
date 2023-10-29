@@ -9,12 +9,12 @@ import {
   useIsSignedIn,
   useIsTokenRequired,
 } from '@/store/authStore';
-import { apiServer } from '@/utils/apiServer';
+import { apiServer } from '@/utils/api/apiServer';
 import {
   isRefreshTokenExpired,
   isTokenNotExist,
   isTokenNotMatch,
-} from '@/utils/authUtils';
+} from '@/utils/api/authUtils';
 
 /**
  *  해당 AuthProvider는 자동로그인을 위한 template입니다
