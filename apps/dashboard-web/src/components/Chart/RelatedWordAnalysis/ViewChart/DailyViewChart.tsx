@@ -53,7 +53,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
     );
 
   if (dailyView[0].data.length === 0) {
-    return;
+    return null;
   }
 
   console.log(yAxisRange());
