@@ -3,7 +3,9 @@
 import { useState } from 'react';
 
 import useClickScrollX from '@/hooks/useClickScrollX';
+import useKeyword from '@/hooks/user/useKeyword';
 import SvgComp from '@/share/SvgComp';
+import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import NavSlideContent from './Keyword';
 import * as Style from './style';
@@ -43,7 +45,11 @@ const KEYWORD_CATEGORIES: Record<KeywordCategory, string> = {
 // 현재 Button 클릭시 자동 X축 Scroll or 마우스 Wheel을 이용한 X축 Scroll 고민 중
 // Wheel은 transform이려나
 
-const KeywordSlide = () => {
+interface Props {
+  keyword: string | undefined | null;
+}
+
+const KeywordSlide = ({ keyword }: Props) => {
   // prefetch해서 가져온 keyword data를 초기에 넣어주기.
   // data 형식이 아직 어떤식으로 넘어오는지 확인은 하지못하여 임시로 string[] 로 선언
 
@@ -59,8 +65,11 @@ const KeywordSlide = () => {
     '브이로그',
   ]);
 
+  const { hashKeywordList } = useKeyword();
+  // 제거하는 api 요청하기. (해당 hook에 제거 mutate있으면 좋음)
+
   const [targetKeywords, setTargetKeywords] = useState<string[]>([]);
-  // targetKeywords,keywordsToAnalyze 등등 변수명 고민
+  // targetKeywords,keywordsToAnalyze 등등 변수명 고민-
   // 선택된 키워드를 담는 배열입니다.
 
   const {
@@ -76,7 +85,7 @@ const KeywordSlide = () => {
         <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
       </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
-        {keywordList.map((keyword) => (
+        {hashKeywordList.map((keyword) => (
           <NavSlideContent
             key={keyword}
             $active={targetKeywords.includes(keyword)}

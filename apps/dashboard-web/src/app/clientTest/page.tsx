@@ -1,4 +1,5 @@
 import { dehydrate } from '@tanstack/query-core';
+import axios from 'axios';
 
 import { apiServer } from '@/utils/apiServer';
 
@@ -16,6 +17,9 @@ export default async function PostPage() {
     }),
   );
   const dehydratedState = dehydrate(queryClient);
+
+  // const authResponse = await auth.json();
+  // console.log(authResponse);
 
   return (
     <ReactQueryHydrate state={dehydratedState}>

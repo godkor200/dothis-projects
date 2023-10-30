@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { c } from '../contract';
+import { zDailyViews } from './daily-views.model';
 
 export const dailyViewApiUrl = '/daily-views';
 
@@ -17,7 +18,7 @@ export const dailyViewApi = c.router({
       to: z.string(),
     }),
     responses: {
-      200: 'OK',
+      200: zDailyViews,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
