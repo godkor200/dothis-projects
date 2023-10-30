@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 
 import { Category, CategroiesContainer, MoreButton } from '../style';
 import {

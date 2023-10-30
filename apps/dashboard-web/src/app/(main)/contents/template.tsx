@@ -2,23 +2,23 @@
 
 import type { PropsWithChildren } from 'react';
 
-import Header from '@/components/Chart/Header/Header';
-import KeywordSlide from '@/components/Chart/Keyword/KeywordSlide';
-import SearchBar from '@/components/Chart/SearchBar/Search';
+import KeywordSlide from '@/components/MainContents/KeywordSeacrh/KeywordSlide';
+import SearchBar from '@/components/MainContents/KeywordSeacrh/SearchBar';
 import useGetUserInfo from '@/query/user/useGetUserInfo';
+import KeywordSearchResult from '@/components/MainContents/KeywordSeacrh/KeywordSearchResult';
 
-const ChartTemplate = ({ children }: PropsWithChildren) => {
+const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { data } = useGetUserInfo();
 
   return (
     <>
       <KeywordSlide keyword={data?.personalizationTag} />
       <SearchBar />
-      <Header />
+      <KeywordSearchResult />
 
       <div className="bg-grey100 pt-[5rem]">{children}</div>
     </>
   );
 };
 
-export default ChartTemplate;
+export default MainContentTemplate;

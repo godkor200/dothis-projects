@@ -1,7 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 import {
   convertKeywordsToArray,
   getHashKeyword,
@@ -37,6 +37,8 @@ const useGetRelWords = (
     },
     { enabled: !isLoading, ...queryOptions },
   );
+
+  queryResult.data;
 
   return {
     ...queryResult,

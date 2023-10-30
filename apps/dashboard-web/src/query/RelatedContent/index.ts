@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
-import { apiInstance } from '@/utils/apiInstance';
-import { apiServer } from '@/utils/apiServer';
+import { apiInstance } from '@/utils/api/apiInstance';
+import { apiServer } from '@/utils/api/apiServer';
 
 const relatedContentApi: { [key: string]: any } = {
   /**

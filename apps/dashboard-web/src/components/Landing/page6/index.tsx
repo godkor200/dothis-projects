@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 import { CONTENT } from '@/constants/route';
 
 import { Background, Description, ImageBox, Main, Texts, Title } from './style';
