@@ -12,6 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <GNB />
         <>{children}</>
         <Footer />
+        {/* <div></div> */}
       </div>
     </div>
   );
