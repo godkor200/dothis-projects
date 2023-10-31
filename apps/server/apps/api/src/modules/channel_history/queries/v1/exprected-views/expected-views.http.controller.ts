@@ -12,12 +12,11 @@ const { getExpectedViews } = c;
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const { summary, description } = getExpectedViews;
-export interface IncreaseExpectedData {
+export interface IExpectedData {
   date: string;
-  increase_expected_views: number;
-  increase_expected_likes: number;
-  increase_expected_comments: number;
+  expected_views: number;
 }
 
 @ApiTags('기대조회수')
@@ -33,15 +32,15 @@ export class ExpectedViewsHttpController {
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @Query() query: ExpectedViewsDto,
-  ): Promise<IRes<IncreaseExpectedData[]>> {
+  ): Promise<IRes<IExpectedData[]>> {
     const arg = new ExpectedViewsQuery({ clusterNumber, ...query });
-    const result: Result<IncreaseExpectedData[], NotFoundException> =
+    const result: Result<IExpectedData[], VideoNotFoundError> =
       await this.queryBus.execute(arg);
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof NotFoundException) {
+        if (err instanceof VideoNotFoundError) {
           throw new NotFoundException(err.message);
         }
         throw err;
