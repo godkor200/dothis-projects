@@ -13,6 +13,7 @@ export default {
       const site = new NextjsSite(stack, 'site', {
         customDomain: {
           domainName: 'www.dothis.kr',
+          hostedZone: 'dothis.kr',
         },
       });
 
