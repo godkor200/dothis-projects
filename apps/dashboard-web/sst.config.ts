@@ -1,4 +1,3 @@
-import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import type { SSTConfig } from 'sst';
 import { NextjsSite } from 'sst/constructs';
 export default {
@@ -12,7 +11,7 @@ export default {
     app.stack(function Site({ stack }) {
       const site = new NextjsSite(stack, 'site', {
         customDomain: {
-          domainName: 'www.dothis.kr',
+          domainName: 'dothis.kr',
           hostedZone: 'dothis.kr',
         },
       });
