@@ -20,7 +20,7 @@ const ChooseKeywordPage = async () => {
       apiServer(2).user.getUserKeyword(),
     );
   } catch (error) {
-    redirect('/login');
+    // redirect('/login');
     /**
      *  throw로 error 페이지로 이동도 가능, 기획협의 후 확정
      */
