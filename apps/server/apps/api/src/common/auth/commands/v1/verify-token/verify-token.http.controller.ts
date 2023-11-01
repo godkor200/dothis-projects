@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Req,
-  Res,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Res, UnauthorizedException } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { CookieOptions, Request, Response } from 'express';
@@ -24,7 +18,6 @@ import { IRes } from '@Libs/commons/src/types/res.types';
 import { ITokenRes } from '@Apps/common/auth/interface/get-own-info.interface';
 import { match, Result } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
-import { AuthGuard } from '@Apps/common/auth/guards/auth.guard';
 import { TokenExpired } from '@Libs/commons/src/types/dto.types';
 
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
@@ -40,7 +33,7 @@ export class VerifyTokenHttpController {
     description: '쿠키와 해더로 토큰이 res 됩니다.',
   })
   @ApiUnauthorizedResponse({
-    description: `${USER_AUTH.AccessTokenExpired} or ${USER_AUTH.RefreshTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
+    description: `${USER_AUTH.RefreshTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
     type: TokenExpired,
   })
   @ApiInternalServerErrorResponse({ description: responses[500] })
@@ -55,7 +48,6 @@ export class VerifyTokenHttpController {
     },
   ])
   @TsRest(getVerifyToken)
-  @UseGuards(AuthGuard)
   async verifyAccessToken(
     @User() user: TDecodePayload,
     @Res({ passthrough: true })
