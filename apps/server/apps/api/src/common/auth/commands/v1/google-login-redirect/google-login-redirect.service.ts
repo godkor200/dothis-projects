@@ -10,7 +10,7 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 export class UserInfoCommandDto {
   @ApiProperty()
-  readonly id: bigint;
+  readonly id: string;
   @ApiProperty()
   readonly userEmail: string;
   @ApiProperty()

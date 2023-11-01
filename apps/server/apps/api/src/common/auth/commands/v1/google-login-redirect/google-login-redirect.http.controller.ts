@@ -49,11 +49,6 @@ export class GoogleLoginRedirectHttpController {
 
     return match(result, {
       Ok: (result) => {
-        console.log(
-          '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@result.isEnvLocal',
-          result.isEnvLocal,
-          result.refreshToken,
-        );
         const options: CookieOptions = {
           domain: '.dothis.kr',
           path: '/',

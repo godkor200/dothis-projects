@@ -25,7 +25,7 @@ export const zUserModel = z.object({
     personalizationTag: z
       .string()
       .nullable()
-      .describe('user personalizationTag'),
+      .describe('tags saved for the user to analyze'),
   }),
 });
 
@@ -33,7 +33,7 @@ export type TUserModel = z.TypeOf<typeof zUserModel>;
 
 export const zKeywordModel = z.object({
   data: z.object({
-    channel_keywords: z.array(z.string()).nullable(),
-    channel_tags: z.array(z.string()).nullable(),
+    channel_keywords: z.string().nullable(),
+    channel_tags: z.string().nullable(),
   }),
 });

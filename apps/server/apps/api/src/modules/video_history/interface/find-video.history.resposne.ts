@@ -1,4 +1,4 @@
-export interface FindVideoHistoryResposne {
+export interface IFindVideoHistoryResposne {
   video_id: string;
   video_views: number;
   video_likes: number;
