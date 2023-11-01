@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { zDailyViews } from './daily-views.model';
 
-export const dailyViewApiUrl = '/daily-views';
+export const expectedViewsApiUrl = '/expected-views';
 
-export const dailyViewApi = c.router({
-  getDailyViews: {
+export const expectedViewsApi = c.router({
+  getExpectedViews: {
     method: 'GET',
-    path: `${dailyViewApiUrl}/:clusterNumber`,
+    path: `${expectedViewsApiUrl}/:clusterNumber`,
     pathParams: z.object({
       clusterNumber: z.string(),
     }),
@@ -18,11 +17,11 @@ export const dailyViewApi = c.router({
       to: z.string(),
     }),
     responses: {
-      200: zDailyViews,
+      200: 'OK',
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
-    summary: '일일 조회수를 가져옵니다',
-    description: 'params,relationKeyword, 날짜로 일일 조회수 를 출력합니다.',
+    summary: '기대 조회수를 가져옵니다',
+    description: 'params,relationKeyword, 날짜로 기대 조회수 를 출력합니다.',
   },
 });

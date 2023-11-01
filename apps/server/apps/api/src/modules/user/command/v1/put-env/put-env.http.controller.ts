@@ -4,11 +4,15 @@ import {
   Controller,
   HttpStatus,
   InternalServerErrorException,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
+import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
+import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { PutEnvDtos } from '@Apps/modules/user/dtos/put-env.dtos';
+import { match, Result } from 'oxide.ts';
 import {
   ApiBody,
   ApiHeaders,
@@ -18,20 +22,16 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { PutAgreePromotionDtos } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
-import { match, Result } from 'oxide.ts';
 const c = nestControllerContract(apiRouter.user);
-const { putAgreePromotion } = c;
-const { responses, description, summary } = putAgreePromotion;
+const { putAdminUserEnv } = c;
+const { responses, description, summary } = putAdminUserEnv;
 @Controller()
 @ApiTags('유저 관련')
-export class PutAgreePromotionHttpController {
+export class PutEnvHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @UseGuards(JwtAccessGuard)
+  @UseGuards(JwtAccessGuard, IsAdminGuard)
+  @TsRest(putAdminUserEnv)
   @ApiOperation({
     summary,
     description,
@@ -42,14 +42,14 @@ export class PutAgreePromotionHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
+  @ApiOkResponse({
+    description: '성공여부를 리턴합니다.',
+  })
   @ApiBody({
     isArray: false,
     type: Boolean,
-    description: '동의여부, {isAgree: boolean}',
+    description: '리다이렉션 환경, {isEnvLocal: boolean}',
     required: true,
-  })
-  @ApiOkResponse({
-    description: '성공여부를 리턴합니다.',
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
@@ -58,20 +58,23 @@ export class PutAgreePromotionHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
-  @TsRest(c.putAgreePromotion)
   async execute(
-    @Body('isAgree') isAgree: boolean,
     @User() user: UserInfoCommandDto,
-  ): Promise<IRes<void>> {
-    const arg = new PutAgreePromotionDtos({ isAgree, id: user.id });
-    const result: Result<boolean, NotFoundException> =
+    @Body('isEnvLocal') isEnvLocal: boolean,
+  ) {
+    const arg = new PutEnvDtos({
+      id: user.id,
+      isEnvLocal,
+    });
+
+    const result: Result<boolean, InternalServerErrorException> =
       await this.commandBus.execute(arg);
+
     return match(result, {
       Ok: (result) => ({ success: result }),
-      Err: (err) => {
-        if (err instanceof InternalServerErrorException) {
-          throw new InternalServerErrorException();
-        }
+      Err: (err: Error) => {
+        if (err instanceof InternalServerErrorException)
+          throw new InternalServerErrorException(err.message);
         throw err;
       },
     });
