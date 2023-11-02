@@ -1,11 +1,10 @@
+import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import useGetUserInfo from '@/query/user/useGetUserInfo';
 import {
   convertKeywordsToArray,
   getHashKeyword,
   isHashKeyword,
 } from '@/utils/keyword';
-
-const guestKeyword = ['먹방', '와인'];
 
 const useKeyword = () => {
   const { data } = useGetUserInfo();
@@ -17,7 +16,7 @@ const useKeyword = () => {
       convertKeywordsToArray(data?.personalizationTag),
     )
       ? getHashKeyword(convertKeywordsToArray(data?.personalizationTag))
-      : guestKeyword,
+      : GUEST_KEYWORD,
   };
 };
 
