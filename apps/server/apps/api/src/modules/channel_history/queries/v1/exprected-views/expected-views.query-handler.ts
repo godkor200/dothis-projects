@@ -4,10 +4,7 @@ import { IExpectedData } from '@Apps/modules/channel_history/queries/v1/exprecte
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject, NotFoundException } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import {
-  FindVideoOsAdapter,
-  IFindVideoIDAndChannelIdRes,
-} from '@Apps/modules/video/interface/find-video.os.adapter';
+import { IFindVideoIDAndChannelIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/database/video_history.query-handler.port';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
@@ -15,7 +12,8 @@ import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/databa
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
-import { OsRes } from '@Apps/common/aws/interface/os.res.interface';
+import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
+import { VIDEO_DATA_KEY } from '@Apps/modules/video/dtos/find-videos.dtos';
 
 @QueryHandler(ExpectedViewsQuery)
 export class ExpectedViewsQueryHandler
@@ -27,7 +25,7 @@ export class ExpectedViewsQueryHandler
 {
   constructor(
     @Inject(VIDEO_OS_DI_TOKEN)
-    private readonly video: FindVideoOsAdapter,
+    private readonly video: VideoServicePort,
 
     @Inject(VIDEO_HISTORY_OS_DI_TOKEN)
     private readonly videoHistory: VideoHistoryQueryHandlerPort,
@@ -47,14 +45,21 @@ export class ExpectedViewsQueryHandler
   async execute(
     query: ExpectedViewsQuery,
   ): Promise<Result<IExpectedData[], VideoNotFoundError>> {
+    const arg = {
+      ...query,
+      data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.CHANNEL_ID],
+    };
     //탐색어 + 관련어 비디오,
-    const searchRelatedVideo = await this.video.findVideoIdAndChannelId(query);
+    const searchRelatedVideo =
+      await this.video.findvideoIdfullScanAndVideos<IFindVideoIDAndChannelIdRes>(
+        arg,
+      );
     if (!searchRelatedVideo) return Err(new VideoNotFoundError());
     //채널 아이디들이랑, 비디오 아이디를 분리
     const { channelIds, videoIds } = searchRelatedVideo.reduce(
       (acc, e) => {
-        acc.channelIds.push(e._source.channel_id);
-        acc.videoIds.push(e._source.video_id);
+        acc.channelIds.push(e.channel_id);
+        acc.videoIds.push(e.video_id);
         return acc;
       },
       { channelIds: [], videoIds: [] },
@@ -65,13 +70,12 @@ export class ExpectedViewsQueryHandler
       channelIds,
     );
     //해당날짜의 각 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
-    const videoHistory = await this.videoHistory.findVideoHistory(
+    const videoHistory = await this.videoHistory.findVideoHistoryFullscan(
       videoIds,
       query.from.toString(),
       query.to.toString(),
       query.clusterNumber,
     );
-
     return Ok(
       this.calculateAverageViews(
         searchRelatedVideo,
@@ -81,33 +85,33 @@ export class ExpectedViewsQueryHandler
     );
   }
   private calculateAverageViews(
-    searchRelatedVideo: OsRes<IFindVideoIDAndChannelIdRes>[],
-    channelHistories: OsRes<IChannelHistoryRes>[],
-    videoHistories: OsRes<IFindVideoHistoryResposne>[],
+    searchRelatedVideo: IFindVideoIDAndChannelIdRes[],
+    channelHistories: IChannelHistoryRes[],
+    videoHistories: IFindVideoHistoryResposne[],
   ): IExpectedData[] {
     let dateViewRatios: { [date: string]: { total: number; count: number } } =
       {};
 
     // 선별된 video_id로 video 히스토리를 찾음
     for (let videoHistory of videoHistories) {
-      let videoId = videoHistory._source.video_id;
-      let videoDate = new Date(videoHistory._source.crawled_date)
+      let videoId = videoHistory.video_id;
+      let videoDate = new Date(videoHistory.crawled_date)
         .toISOString()
         .split('T')[0]; // Get the date part
-      let closestChannel: any = null;
-      let closestDateDifference: number = 0;
+      let closestChannel: IChannelHistoryRes | null = null;
+      let closestDateDifference: number | null = null;
 
       // videoData에서 해당 channelId를 가진 비디오를 찾습니다.
       let matchedVideoData = searchRelatedVideo.find(
-        (videoData) => videoData._source.video_id === videoId,
+        (videoData) => videoData.video_id === videoId,
       );
 
       if (!matchedVideoData) continue; // 일치하는 비디오 데이터가 없다면 다음 비디오로 넘어갑니다.
-      let matchedChannelId = matchedVideoData._source.channel_id;
+      let matchedChannelId = matchedVideoData.channel_id;
       // 채널 히스토리에서 각각 채널아이디를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
       for (let channelHistory of channelHistories) {
-        let channelId = channelHistory._source.channel_id;
-        let channelDate = new Date(channelHistory._source.crawled_date);
+        let channelId = channelHistory.channel_id;
+        let channelDate = new Date(channelHistory.crawled_date);
         let dateDifference = Math.abs(
           new Date(videoDate).getTime() - channelDate.getTime(),
         );
@@ -122,13 +126,12 @@ export class ExpectedViewsQueryHandler
       }
 
       if (closestChannel !== null) {
-        let videoViews = videoHistory._source.video_views;
-        let channelAvgViews = closestChannel._source.channel_average_views;
+        let videoViews = videoHistory.video_views;
+        let channelAvgViews = closestChannel.channel_average_views;
 
         if (channelAvgViews !== 0) {
           // 0으로 나누면 안됨..
           let viewsRatio = videoViews / channelAvgViews;
-
           // 날짜의 합계와 카운트를 추가합니다
           if (!dateViewRatios[videoDate]) {
             dateViewRatios[videoDate] = { total: 0, count: 0 };
@@ -138,7 +141,6 @@ export class ExpectedViewsQueryHandler
         }
       }
     }
-
     // 각 날짜의 평균으로 합계 및 카운트 변환
     let result: IExpectedData[] = [];
     for (let date in dateViewRatios) {
