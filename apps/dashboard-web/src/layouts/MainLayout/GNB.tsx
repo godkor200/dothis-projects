@@ -33,7 +33,7 @@ const GNB = () => {
 
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
         <div
-          className="border-primary100 rounded-8 bg-primary100 ml-3 flex items-center border border-solid p-3"
+          className="border-primary100 rounded-8 bg-primary100 hover:bg-grey300 ml-3 flex items-center border border-solid p-3"
           onClick={() => handleRouter('/about')}
         >
           <SvgComp icon="HeaderEdit" size="1.5rem" />
@@ -51,7 +51,7 @@ const GNB = () => {
           <SvgComp icon="HeaderNotification" size="1.5rem" />
         </div>
         <div
-          className="rounded-8 hover:bg-grey300 p-3"
+          className="border-grey300 rounded-8 bg-grey300 hover:bg-grey600 p-3"
           onClick={() => handleRouter('/about')}
         >
           <SvgComp icon="HeaderUserProfile" size="1.5rem" />
