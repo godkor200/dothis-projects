@@ -11,7 +11,6 @@ type DailyView = ClientInferResponseBody<
 const useDailyViewChartData = () => {
   const { data } = useGetDailyView();
 
-  console.log(data.flat());
   // 각 날짜별 increase_views 값을 합산하는 함수
   function sumViews(data: (DailyView | undefined)[]) {
     const result: Record<string, number> = {};
