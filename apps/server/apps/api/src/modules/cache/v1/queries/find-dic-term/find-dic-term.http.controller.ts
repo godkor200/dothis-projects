@@ -15,10 +15,10 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const { get } = nestControllerContract(apiRouter.cache);
 const { description, summary, responses } = get;
 
+@ApiTags('탐색어 관련')
 @Controller()
 export class FindDicTermHttpController {
   constructor(private readonly queryBus: QueryBus) {}
-  @ApiTags(cacheBaseApiUrl)
   @ApiOkResponse({ description: responses[200] })
   @ApiUnauthorizedResponse({ description: responses[401] })
   @ApiInternalServerErrorResponse({ description: responses[500] })
