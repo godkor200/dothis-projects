@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Search from 'public/aseets/svg/Landing/search.svg';
 import { useEffect, useState } from 'react';
 
-import { RevealList, RevealWrapper } from '@/components/common/Reveal/Reveal';
+import { RevealList, RevealWrapper } from '@/components/Landing/Reveal';
 import { CONTENT, PRICING } from '@/constants/route';
 
 import { theme } from '../style';

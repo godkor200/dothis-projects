@@ -1,4 +1,4 @@
-import { apiClient } from '@/utils/apiClient';
+import { apiClient } from '@/utils/api/apiClient';
 import { combinedKeywordsAndTags } from '@/utils/keyword';
 
 const useGetKeywordArray = () => {
