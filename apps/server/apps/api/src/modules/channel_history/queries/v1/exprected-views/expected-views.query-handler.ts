@@ -76,6 +76,7 @@ export class ExpectedViewsQueryHandler
       query.to.toString(),
       query.clusterNumber,
     );
+
     return Ok(
       this.calculateAverageViews(
         searchRelatedVideo,
