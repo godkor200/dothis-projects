@@ -14,7 +14,7 @@ export default function LoginRedirectError({
     <html>
       <body>
         <h2>Something went wrong!</h2>
-        <button onClick={() => router.push('/login')}>
+        <button onClick={() => router.push('/auth')}>
           다시 로그인하러가기
         </button>
       </body>

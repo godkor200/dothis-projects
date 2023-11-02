@@ -49,7 +49,7 @@ const Client = ({
         setIsSignedIn(true);
         setIsTokenRequired(false);
         if (isNewUser === 'true' || !userData?.body.data.agreePromotion) {
-          router.replace('/login/terms');
+          router.replace('/auth/terms');
           return;
         }
         if (
@@ -57,7 +57,7 @@ const Client = ({
             convertKeywordsToArray(userData.body.data.personalizationTag),
           )
         ) {
-          router.replace('/login/choose-keyword');
+          router.replace('/auth/choose-keyword');
           return;
         }
 

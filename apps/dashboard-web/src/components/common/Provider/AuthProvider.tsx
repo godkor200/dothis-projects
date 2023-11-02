@@ -57,7 +57,7 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
 
           if (data.status === 200) {
             if (!data.body.data?.agreePromotion) {
-              router.push('/login/terms');
+              router.push('/auth/terms');
             }
           }
         } catch (error) {

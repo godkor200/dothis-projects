@@ -32,7 +32,7 @@ const LoginTerms = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['user']);
       if (!keywordArr.length) {
-        router.replace('/login/choose-keyword');
+        router.replace('/auth/choose-keyword');
         return;
       }
 

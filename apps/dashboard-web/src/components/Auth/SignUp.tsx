@@ -18,12 +18,12 @@ const SignUp = () => {
         (3초면 가입 끝!)
       </p>
       <div className="flex justify-center gap-[1.25rem]">
-        <Link href={'/login'} replace>
+        <Link href={'/auth'} replace>
           <Button theme="outlined" size="L">
             로그인
           </Button>
         </Link>
-        <Link href={'/login'} replace>
+        <Link href={'/auth'} replace>
           <Button theme="contained" size="L">
             회원가입
           </Button>
