@@ -48,7 +48,10 @@ const providers: Provider[] = [...infra, SetDicTermHandler];
     //  ChannelEntityModule
     ChannelEntityModule,
   ],
-  controllers,
-  providers,
+  /**
+   * 현재 이 기능은 쓰지 않음 11/2
+   */
+  // controllers,
+  // providers,
 })
 export class CacheV1Module {}
