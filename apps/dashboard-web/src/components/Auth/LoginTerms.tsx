@@ -3,25 +3,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
-import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { type PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
-import useGetKeywordArray from '@/hooks/useGetKeywordArray';
+import useGetKeyword from '@/query/user/useGetKeyword';
 import { apiClient } from '@/utils/api/apiClient';
+import { combinedKeywordsAndTags } from '@/utils/keyword';
 
-import CheckboxContainer from '../common/Checkbox';
 import { CheckBox } from '../common/Checkbox/style';
-import Modal from '../common/Modal/AuthModal/AuthModal';
 import TermsModal from '../common/Modal/TermsModal/TermsModal';
 import TermsContents from './TermsContents';
 
 const LoginTerms = () => {
   const [onError, setOnError] = useState(false);
 
-  const keywordArr = useGetKeywordArray();
+  const { data: keywordData } = useGetKeyword();
+
+  const keywordList = combinedKeywordsAndTags(
+    keywordData?.channel_keywords,
+    keywordData?.channel_tags,
+  );
 
   const { data: userData, isLoading: userLoading } = apiClient(
     1,
@@ -31,7 +34,7 @@ const LoginTerms = () => {
   const { mutate } = apiClient(2).user.putAgreePromotion.useMutation({
     onSuccess: () => {
       queryClient.invalidateQueries(['user']);
-      if (!keywordArr.length) {
+      if (!keywordList.length) {
         router.replace('/auth/choose-keyword');
         return;
       }
