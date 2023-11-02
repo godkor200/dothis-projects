@@ -1,12 +1,15 @@
 'use client';
 
-import useDailyViewChartData from '@/hooks/dailyView/useDailyViewChartData ';
+import useGetDailyView from '@/query/user/useGetDailyView';
+import { formatToLineGraph, sumViews } from '@/utils/contents/dailyview';
 
 import DailyViewChart from './DailyViewChart';
 import ExpectedViewChart from './ExpectedViewChart';
 
 const ViewChart = () => {
-  const dailyViewChartData = useDailyViewChartData();
+  const { data: dailyViewData } = useGetDailyView();
+
+  const dailyViewChartData = formatToLineGraph(sumViews(dailyViewData.flat()));
 
   return (
     <div className="mr-7 flex h-[460px] w-full flex-col">
