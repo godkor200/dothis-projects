@@ -5,26 +5,23 @@ export const Price = styled.table`
   text-align: center;
   white-space: nowrap;
 
-  tr {
-    gap: 20px;
-  }
-
   th {
-    width: 306px;
-    height: 90px;
-    font-size: 36px;
+    width: 206px;
+    height: 60px;
+    font-size: 30px;
+    padding: 20px;
   }
 
   td {
-    width: 306px;
-    height: 90px;
-    font-size: 26px;
+    width: 206px;
+    height: 60px;
+    font-size: 24px;
     padding: 20px;
   }
 `;
 
 export const PriceButton = styled(Price)`
-  margin-top: 120px;
+  margin-top: 90px;
 
   th {
     border-bottom: 1px solid #e4e4e7;
@@ -32,7 +29,7 @@ export const PriceButton = styled(Price)`
   }
 
   button {
-    width: 286px;
+    width: 270px;
     height: 56px;
     border-radius: 8px;
     background-color: #f0516d;
@@ -40,7 +37,7 @@ export const PriceButton = styled(Price)`
     font-size: 16px !important;
 
     &:hover {
-      background-color: gray;
+      background-color: ${({ theme }) => theme.colors.grey300};
       color: black;
     }
   }
@@ -50,59 +47,66 @@ export const PriceDetail = styled(Price)`
   margin-top: 40px;
 
   thead {
-    font-size: 36px;
+    font-size: 30px;
     height: 40px !important;
 
-    td {
+    td,
+    th {
       width: 206px;
-      font-size: 36px;
+      font-size: 30px;
     }
   }
 
   tbody {
     th {
       width: 206px;
-      height: 90px;
-      font-size: 20px;
+      height: 60px;
+      font-size: 18px;
       font-weight: 600;
       text-align: left !important;
-      padding: 20px 0px 20px 24px !important;
+    }
+
+    tr {
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.grey300};
+      }
+      &:hover td {
+        background-color: ${({ theme }) => theme.colors.grey300};
+      }
     }
 
     td {
+      width: 286px;
       background-color: #fafafa;
-      height: 90px;
+      height: 60px;
       font-size: 16px;
-      padding: 10px;
     }
   }
 `;
+
 export const Th_subtitle = styled.th`
   width: 206px;
-  height: 90px;
+  height: 60px;
   border-bottom: 1px solid #e4e4e7;
   border-collapse: collapse;
-  font-size: 28px !important;
+  font-size: 24px !important;
   font-weight: 700 !important;
   text-align: left !important;
-  padding: 20px 0px 20px 24px !important;
 `;
 
 export const Th_start = styled.th`
   width: 206px;
-  height: 90px;
-  font-size: 28px !important;
+  height: 60px;
+  font-size: 24px !important;
   text-align: left !important;
-  padding: 20px 0px 20px 24px !important;
 `;
 
 export const Td_start = styled.td`
   width: 206px;
-  height: 90px;
+  height: 60px;
   font-size: 20px !important;
   text-align: left !important;
-  padding: 20px 0px 20px 24px !important;
-  font-weight: normal !important;
+  font-weight: 600 !important;
 `;
 
 export const Best_top = styled.th`
@@ -140,12 +144,13 @@ export const Best_name = styled.div`
 export const Main = styled.main`
   white-space: nowrap;
   margin-left: 2rem;
+  margin-bottom: 100px;
   overflow: hidden;
   font-weight: bold;
 
   h2 {
-    font-size: 36px;
-    margin-top: 90px;
+    font-size: 30px;
+    margin-top: 60px;
   }
   p {
     font-size: 28px;
@@ -155,11 +160,6 @@ export const Main = styled.main`
 export const Pink = styled.span`
   font-size: inherit;
   color: #f0516d;
-`;
-
-export const ImageBox = styled.div`
-  width: 1600px;
-  margin: 58px 130px 100px 0;
 `;
 
 export const Icon = styled.img`
