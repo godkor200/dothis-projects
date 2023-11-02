@@ -16,7 +16,7 @@ import {
 } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 
-export interface IncreaseData {
+export interface IIncreaseData {
   date: string;
   increase_views: number;
   increase_likes: number;
@@ -27,7 +27,7 @@ export class FindDailyViewsQueryOsHandler
   implements
     IQueryHandler<
       FindDailyViewsQuery,
-      Result<IncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
+      Result<IIncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
     >
 {
   constructor(
@@ -40,7 +40,7 @@ export class FindDailyViewsQueryOsHandler
   async execute(
     query: FindDailyViewsQuery,
   ): Promise<
-    Result<IncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
+    Result<IIncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
   > {
     const arg: FindVideoDateQuery = {
       ...query,
@@ -66,7 +66,7 @@ export class FindDailyViewsQueryOsHandler
    */
   private calculateIncrease(
     videoData: IFindVideoHistoryResposne[],
-  ): IncreaseData[] {
+  ): IIncreaseData[] {
     // Sort the data by 'video_id' and 'crawled_date'
     videoData.sort(
       (a, b) =>
@@ -74,7 +74,7 @@ export class FindDailyViewsQueryOsHandler
         a.crawled_date.localeCompare(b.crawled_date),
     );
 
-    let result: IncreaseData[] = [];
+    let result: IIncreaseData[] = [];
 
     let prevVideo = null;
 
