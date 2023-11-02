@@ -6,11 +6,12 @@ import useGetDailyView from '@/query/user/useGetDailyView';
 type DailyView = ClientInferResponseBody<
   typeof apiRouter.dailyViews.getDailyViews,
   200
->['data'];
+>['data'][0];
 
 const useDailyViewChartData = () => {
   const { data } = useGetDailyView();
 
+  console.log(data.flat());
   // 각 날짜별 increase_views 값을 합산하는 함수
   function sumViews(data: (DailyView | undefined)[]) {
     const result: Record<string, number> = {};
