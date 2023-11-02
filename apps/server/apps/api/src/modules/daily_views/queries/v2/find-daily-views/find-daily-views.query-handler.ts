@@ -1,14 +1,20 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { FindVideoOsAdapter } from '@Apps/modules/video/interface/find-video.os.adapter';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
-import { FindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
-import { Ok, Result, Err } from 'oxide.ts';
+import { Err, Ok, Result } from 'oxide.ts';
+import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
+
+import {
+  FindVideoDateQuery,
+  VIDEO_DATA_KEY,
+} from '@Apps/modules/video/dtos/find-videos.dtos';
+import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 
 export interface IncreaseData {
   date: string;
@@ -28,7 +34,7 @@ export class FindDailyViewsQueryOsHandler
     @Inject(VIDEO_HISTORY_OS_DI_TOKEN)
     private readonly videoHistory: FindVideoHistoryOsAdapter,
     @Inject(VIDEO_OS_DI_TOKEN)
-    private readonly video: FindVideoOsAdapter,
+    private readonly video: VideoServicePort,
   ) {}
 
   async execute(
@@ -36,10 +42,15 @@ export class FindDailyViewsQueryOsHandler
   ): Promise<
     Result<IncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
   > {
-    const videos = await this.video.findvideoIdfullScanAndVideos(query);
+    const arg: FindVideoDateQuery = {
+      ...query,
+      data: [VIDEO_DATA_KEY.VIDEO_ID],
+    };
+    const videos =
+      await this.video.findvideoIdfullScanAndVideos<IFindVideoIdRes>(arg);
     if (!videos) return Err(new VideoNotFoundError());
-    const videoHistories = await this.videoHistory.findVideoHistory(
-      videos,
+    const videoHistories = await this.videoHistory.findVideoHistoryFullscan(
+      videos.map((e) => e.video_id),
       query.from.toString(),
       query.to.toString(),
       query.clusterNumber,
@@ -54,7 +65,7 @@ export class FindDailyViewsQueryOsHandler
    * @private
    */
   private calculateIncrease(
-    videoData: FindVideoHistoryResposne[],
+    videoData: IFindVideoHistoryResposne[],
   ): IncreaseData[] {
     // Sort the data by 'video_id' and 'crawled_date'
     videoData.sort(
