@@ -4,7 +4,21 @@ import Image from 'next/image';
 
 import { SURVEY } from '@/constants/route';
 
-import * as Style from './style';
+import {
+  Best_bottom,
+  Best_mid,
+  Best_name,
+  Best_top,
+  Icon,
+  IconContainer,
+  Main,
+  Pink,
+  PriceButton,
+  PriceDetail,
+  Td_start,
+  Th_start,
+  Th_subtitle,
+} from './style';
 
 const ICON_CHECK = '/icons/pricing_check.svg';
 const ICON_X = '/icons/pricing_x.svg';
@@ -12,30 +26,30 @@ const ICON_X = '/icons/pricing_x.svg';
 const Price = () => {
   return (
     <>
-      <Style.Main>
+      <Main>
         <h2>유튜브 콘텐츠 기획 시작하기</h2>
         <p>
-          <Style.Pink>하루 330원</Style.Pink>으로 더 고도화된 분석, 강력한 AI,
-          더 쾌적한 서비스 환경 등이 제공됩니다.
+          <Pink>하루 330원</Pink>으로 더 고도화된 분석, 강력한 AI, 서비스 환경
+          등이 제공됩니다.
         </p>
 
-        <Style.PriceButton>
+        <PriceButton>
           <thead>
             <tr>
-              <Style.Th_start>시작하기</Style.Th_start>
+              <Th_start>시작하기</Th_start>
               <th>Trial</th>
-              <Style.Best_top>
-                <Style.Best_name>BEST</Style.Best_name>
+              <Best_top>
+                <Best_name>BEST</Best_name>
                 Basic
-              </Style.Best_top>
+              </Best_top>
               <th>Pro</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <Style.Td_start>요금 / 기간</Style.Td_start>
+              <Td_start>요금 / 기간</Td_start>
               <td>무료 / 무제한</td>
-              <Style.Best_mid>9,900 / 30일</Style.Best_mid>
+              <Best_mid>9,900 / 30일</Best_mid>
               <td>49,500원 / 30일</td>
             </tr>
             <tr>
@@ -45,11 +59,11 @@ const Price = () => {
                   <button>시작하기</button>
                 </a>
               </td>
-              <Style.Best_bottom>
+              <Best_bottom>
                 <a href={SURVEY}>
                   <button>14일 무료 체험</button>
                 </a>
-              </Style.Best_bottom>
+              </Best_bottom>
               <td>
                 <a href={SURVEY}>
                   <button>14일 무료 체험</button>
@@ -57,24 +71,25 @@ const Price = () => {
               </td>
             </tr>
           </tbody>
-        </Style.PriceButton>
+        </PriceButton>
 
-        <Style.PriceDetail>
+        {/* 소재 탐색 */}
+        <PriceDetail>
           <thead>
-            <tr>
+            {/* <tr>
               <td></td>
               <td>Trial</td>
               <td>Basic</td>
               <td>Pro</td>
+            </tr> */}
+            <tr>
+              <Th_subtitle>소재 탐색</Th_subtitle>
+              <Th_subtitle />
+              <Th_subtitle />
+              <Th_subtitle />
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <Style.Th_subtitle>소재 탐색</Style.Th_subtitle>
-              <Style.Th_subtitle />
-              <Style.Th_subtitle />
-              <Style.Th_subtitle />
-            </tr>
             <tr>
               <th>검색 횟수 제한</th>
               <td>무제한</td>
@@ -108,78 +123,286 @@ const Price = () => {
             <tr>
               <th>콘텐츠 요약</th>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_X} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
             </tr>
             <tr>
               <th>AI 카테고리 분석</th>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_X} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
             </tr>
             <tr>
               <th>상위 노출 확률 분석</th>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_X} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
             </tr>
             <tr>
               <th>조회수 예측</th>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_X} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_X} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
               </td>
               <td>
-                <Style.IconContainer>
-                  <Style.Icon src={ICON_CHECK} />
-                </Style.IconContainer>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
               </td>
             </tr>
           </tbody>
-        </Style.PriceDetail>
-      </Style.Main>
+        </PriceDetail>
+
+        {/* 채널 분석 */}
+        <PriceDetail>
+          <thead>
+            <tr>
+              <Th_subtitle>내 채널 분석</Th_subtitle>
+              <Th_subtitle />
+              <Th_subtitle />
+              <Th_subtitle />
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>관심사 분석</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>키워드 성과 분석</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>유사 채널 분석</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>시청자 댓글 분석</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>소셜미디어 언급 분석</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+          </tbody>
+        </PriceDetail>
+
+        {/* 스토리보드 */}
+        <PriceDetail>
+          <thead>
+            <tr>
+              <Th_subtitle>스토리보드</Th_subtitle>
+              <Th_subtitle />
+              <Th_subtitle />
+              <Th_subtitle />
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>저장 페이지</th>
+              <td>최대 5개</td>
+              <td>최대 100개</td>
+              <td>무제한</td>
+            </tr>
+            <tr>
+              <th>보관 기간</th>
+              <td>30일</td>
+              <td>365일</td>
+              <td>무제한</td>
+            </tr>
+            <tr>
+              <th>내보내기</th>
+              <td>10</td>
+              <td>50</td>
+              <td>150</td>
+            </tr>
+            <tr>
+              <th>팀원 초대</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>제목 / 태그 추천</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>스크립트 생성</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+            <tr>
+              <th>콘티 자동 생성</th>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_X} />
+                </IconContainer>
+              </td>
+              <td>
+                <IconContainer>
+                  <Icon src={ICON_CHECK} />
+                </IconContainer>
+              </td>
+            </tr>
+          </tbody>
+        </PriceDetail>
+      </Main>
     </>
   );
 };
