@@ -66,7 +66,7 @@ export class ExpectedViewsQueryHandler
     );
 
     //해당날짜의 각 채널의 평균 조회수를 찾기 위해 히스토리를 가져옴
-    const channelHistory = await this.channelHistory.findChannelHistory(
+    const channelHistory = await this.channelHistory.findChannelHistoryFullscan(
       channelIds,
     );
     //해당날짜의 각 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
@@ -84,6 +84,18 @@ export class ExpectedViewsQueryHandler
       ),
     );
   }
+
+  /**
+   *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
+   *   2. 날짜 별로 계산된 것을 모두 더하고 평균을 내어 리턴
+   */
+  /**
+   * 평균 기대조회수 리턴
+   * @param searchRelatedVideo 관계된 비디오들
+   * @param channelHistories
+   * @param videoHistories
+   * @private
+   */
   private calculateAverageViews(
     searchRelatedVideo: IFindVideoIDAndChannelIdRes[],
     channelHistories: IChannelHistoryRes[],
