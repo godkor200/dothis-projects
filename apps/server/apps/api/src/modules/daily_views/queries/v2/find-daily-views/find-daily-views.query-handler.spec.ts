@@ -2,17 +2,14 @@ import { FindDailyViewsQueryOsHandler } from '@Apps/modules/daily_views/queries/
 
 import { mock } from 'jest-mock-extended';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
-import { FindVideoOsAdapter } from '@Apps/modules/video/interface/find-video.os.adapter';
-import {
-  data,
-  example,
-} from '@Apps/modules/daily_views/queries/v2/find-daily-views/__dummy__/daily-view-dummy-data';
+import { example } from '@Apps/modules/daily_views/queries/v2/find-daily-views/__dummy__/daily-view-dummy-data';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
+import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 
 const mockFindVideoHistoryOsAdapter = mock<FindVideoHistoryOsAdapter>();
-const mockFindVideoOsAdapter = mock<FindVideoOsAdapter>();
+const mockFindVideoOsAdapter = mock<VideoServicePort>();
 let handler: FindDailyViewsQueryOsHandler;
 
 beforeEach(() => {
@@ -23,7 +20,7 @@ beforeEach(() => {
 });
 describe('calculateIncrease 함수', () => {
   it('should ', async () => {
-    mockFindVideoHistoryOsAdapter.findVideoHistory.mockReturnValue(
+    mockFindVideoHistoryOsAdapter.findVideoHistoryFullscan.mockReturnValue(
       Promise.resolve(example),
     );
     const arg: FindDailyViewsQuery = {
@@ -35,7 +32,7 @@ describe('calculateIncrease 함수', () => {
     };
 
     const res = await handler.execute(arg);
-    expect(res).toStrictEqual([
+    expect(res.unwrap()).toStrictEqual([
       {
         date: '2023-10-13',
         increase_views: 2708,
@@ -81,7 +78,7 @@ describe('예외 처리', () => {
     mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
       Promise.resolve(['1', '2']),
     );
-    mockFindVideoHistoryOsAdapter.findVideoHistory.mockReturnValue(
+    mockFindVideoHistoryOsAdapter.findVideoHistoryFullscan.mockReturnValue(
       Promise.resolve(null),
     );
     const arg: FindDailyViewsQuery = {
