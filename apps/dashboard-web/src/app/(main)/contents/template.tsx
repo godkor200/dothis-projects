@@ -2,10 +2,10 @@
 
 import type { PropsWithChildren } from 'react';
 
+import KeywordSearchResult from '@/components/MainContents/KeywordSeacrh/KeywordSearchResult';
 import KeywordSlide from '@/components/MainContents/KeywordSeacrh/KeywordSlide';
 import SearchBar from '@/components/MainContents/KeywordSeacrh/SearchBar';
 import useGetUserInfo from '@/query/user/useGetUserInfo';
-import KeywordSearchResult from '@/components/MainContents/KeywordSeacrh/KeywordSearchResult';
 
 const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { data } = useGetUserInfo();

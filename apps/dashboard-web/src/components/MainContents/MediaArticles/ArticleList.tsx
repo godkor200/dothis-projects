@@ -8,7 +8,7 @@ import {
   handleImageError,
 } from '../../../utils/imagesUtil';
 import ContentSubTitle from './ArticleInfo';
-import { CurrentArticleProps } from './CurrentArticle';
+import type { CurrentArticleProps } from './CurrentArticle';
 
 interface ArticleListProps {
   articleListData: CurrentArticleProps[];

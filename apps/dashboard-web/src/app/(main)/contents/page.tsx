@@ -13,8 +13,9 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle = (searchParams?.relatedContent as string) || 'news';
-  const articleListData =
-    await relatedContentApi[selectedArticle]('아시안게임');
+  const articleListData = await relatedContentApi[selectedArticle](
+    '아시안게임',
+  );
 
   return (
     <>

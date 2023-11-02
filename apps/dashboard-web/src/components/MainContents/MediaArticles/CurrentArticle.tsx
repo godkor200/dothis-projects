@@ -4,8 +4,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import SvgComp from '@/components/common/SvgComp';
 
-import ArticleInfo from './ArticleInfo';
 import { externaImageLoader, getMainImage } from '../../../utils/imagesUtil';
+import ArticleInfo from './ArticleInfo';
 
 export interface CurrentArticleProps {
   title: string;

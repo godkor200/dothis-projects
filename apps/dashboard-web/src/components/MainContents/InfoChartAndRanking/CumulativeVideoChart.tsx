@@ -22,7 +22,7 @@ const data = [
 
 const CumulativeVideoChart = () => {
   return (
-    <div className="flex h-[368px] flex-col rounded-8 border border-grey400 bg-grey00 p-6 font-bold text-grey600">
+    <div className="rounded-8 border-grey400 bg-grey00 text-grey600 flex h-[368px] flex-col border p-6 font-bold">
       <div>누적 영상 수</div>
       <div className="relative h-full">
         <div className="absolute left-2/4 top-[82px] flex translate-x-[-50%] flex-col items-center justify-center">

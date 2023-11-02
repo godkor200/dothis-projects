@@ -1,6 +1,6 @@
+import AnalysisWidgetList from './AnalysisWidgetList';
 import CumulativeVideoChart from './CumulativeVideoChart';
 import DailyView from './DailyView';
-import AnalysisWidgetList from './AnalysisWidgetList';
 import ViewChart from './ViewChart';
 
 export const VIEWCHART_LABEL = {

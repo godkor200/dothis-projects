@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import useRelWord from '@/hooks/user/useRelWord';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
+
 import KeywordRankingItem from './KeywordRankingItem';
 
 const KeywordRankingList = () => {
