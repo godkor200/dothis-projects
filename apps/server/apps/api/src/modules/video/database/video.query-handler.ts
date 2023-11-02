@@ -8,6 +8,7 @@ import {
 } from '@Apps/modules/video/interface/find-many-video.interface';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
+import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
 
 export class VideoQueryHandler
   extends AwsOpensearchConnetionService
@@ -87,12 +88,12 @@ export class VideoQueryHandler
   }
 
   /**
-   * FIXME: 개선 해야됨
+   * FIXME: 개선 해야됨,11/2 현재 템플릿 리터럴로 수정
    * @param query
    */
-  async findvideoIdfullScanAndVideos(
-    query: FindDailyViewsQuery,
-  ): Promise<string[]> {
+  async findvideoIdfullScanAndVideos<T>(
+    query: FindVideoDateQuery,
+  ): Promise<T[]> {
     let searchQuery = {
       index: 'video-' + query.clusterNumber,
       scroll: '10s',
@@ -120,7 +121,7 @@ export class VideoQueryHandler
             ],
           },
         },
-        _source: ['video_id'],
+        _source: query.data,
       },
     };
     if (query.relationKeyword)
@@ -136,8 +137,7 @@ export class VideoQueryHandler
           },
         },
       );
-    const res = await this.fullScan<{ video_id: string }>(searchQuery);
-    return res.map((e) => e.video_id);
+    return await this.fullScan<T>(searchQuery);
   }
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
