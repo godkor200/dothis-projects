@@ -16,7 +16,7 @@ export class ChannelHistoryQueryHandler
     channelIds: string[],
   ): Promise<IChannelHistoryRes[]> {
     let searchQuery = {
-      index: `new-channel-history`,
+      index: `new_channel_history`,
       scroll: '10s',
       size: 10000,
       body: {
