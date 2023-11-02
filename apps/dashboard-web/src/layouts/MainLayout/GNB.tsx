@@ -40,7 +40,7 @@ const GNB = () => {
         </div>
         <div
           className="rounded-8 hover:bg-grey300 p-3"
-          onClick={() => handleRouter('/about')}
+          onClick={() => handleRouter('/pricing')}
         >
           <SvgComp icon="HeaderTicket" size="1.5rem" />
         </div>
@@ -52,7 +52,7 @@ const GNB = () => {
         </div>
         <div
           className="border-grey300 rounded-8 bg-grey300 hover:bg-grey600 p-3"
-          onClick={() => handleRouter('/about')}
+          onClick={() => handleRouter('/mypage')}
         >
           <SvgComp icon="HeaderUserProfile" size="1.5rem" />
         </div>

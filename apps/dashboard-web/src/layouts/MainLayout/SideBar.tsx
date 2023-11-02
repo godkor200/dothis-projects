@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { SIDE_MENUS } from '@/constants/SideMenus';
 import SvgComp from '@/share/SvgComp';
@@ -12,10 +13,13 @@ import * as Style from './style';
 
 const SideBar = () => {
   const pathName = usePathname();
+  const router = useRouter();
 
   return (
     <Style.Container>
-      <SvgComp icon="SideLogo" size={50} />
+      <div className="cursor-pointer" onClick={() => router.push('/contents')}>
+        <SvgComp icon="SideLogo" size={50} />
+      </div>
       <div className="flex flex-col gap-[2.5rem]">
         {SIDE_MENUS.map((item, index) => (
           <Style.IconWrapper $isInActive={pathName !== item.link} key={index}>
