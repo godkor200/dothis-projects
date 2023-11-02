@@ -23,6 +23,7 @@ export const dailyViewApi = c.router({
       500: '서버에 문제가 있으면 리턴한다.',
     },
     summary: '일일 조회수를 가져옵니다',
-    description: 'params,relationKeyword, 날짜로 일일 조회수 를 출력합니다.',
+    description:
+      '클러스터 번호(clusterNumber),탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 일일 조회수 를 출력합니다.',
   },
 });
