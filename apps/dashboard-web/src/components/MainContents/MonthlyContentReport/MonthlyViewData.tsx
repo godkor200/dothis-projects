@@ -24,8 +24,6 @@ const MonthlyViewData = () => {
   //   }, {});
   // });
 
-  console.log(data);
-
   return (
     <>
       <h3 className="typo-t2 mt-10  flex items-center gap-[4px]">
