@@ -2,8 +2,8 @@
 
 import { ResponsiveLine } from '@nivo/line';
 
-import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 import CustomTooltip from './CustomTooltip';
+import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 
 const EXPECTEDVIEW_DATA = [
   {

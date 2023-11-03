@@ -5,9 +5,9 @@ export const KeywordTapContiner = styled.nav`
   display: flex;
   flex-wrap: nowrap;
   gap: 1.5rem;
-  justify-content: flex-start;
+  justify-content: center;
 
-  width: 658px;
+  max-width: 658px;
 
   margin: 0 auto 1.5rem auto;
 
@@ -22,7 +22,7 @@ export const ButtonContainer = styled.div`
   gap: 0.675rem;
   overflow-x: auto;
 
-  padding-right: 5rem;
+  padding-right: 1.5rem;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -40,7 +40,7 @@ export const ArrowRightButton = styled.button`
   position: relative;
 
   /* 오른쪽 정렬이 필요 (Keyword List가 적을 때) */
-  margin: 0 0 0 auto;
+  /* margin: 0 0 0 auto; */
   padding: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.grey500};
   border-radius: 0.5rem;

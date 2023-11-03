@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import ArticleList from './ArticleList';
-import { CurrentArticleProps } from './CurrentArticle';
+import type { CurrentArticleProps } from './CurrentArticle';
 import CurrentArticle from './CurrentArticle';
 
 interface MainContentContainerProps {

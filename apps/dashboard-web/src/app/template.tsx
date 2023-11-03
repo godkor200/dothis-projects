@@ -2,10 +2,10 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import Modal from '@/components/common/Modal/AuthModal/AuthModal';
 import SignUp from '@/components/Auth/SignUp';
-import { useIsOpenSignUpModal } from '@/store/authStore';
+import Modal from '@/components/common/Modal/AuthModal/AuthModal';
 import AuthProvider from '@/components/common/Provider/AuthProvider';
+import { useIsOpenSignUpModal } from '@/store/authStore';
 
 const RootTemplate = ({ children }: StrictPropsWithChildren) => {
   const isOpenSignUpModal = useIsOpenSignUpModal();

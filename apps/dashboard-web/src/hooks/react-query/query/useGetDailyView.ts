@@ -17,7 +17,10 @@ const useGetDailyView = () => {
   const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: ['dailyView', clusterNumber],
+        queryKey: [
+          'dailyView',
+          { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
+        ],
         params: {
           clusterNumber,
         },

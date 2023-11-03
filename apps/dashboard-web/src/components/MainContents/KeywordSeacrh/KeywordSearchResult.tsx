@@ -1,5 +1,5 @@
+import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useKeyword from '@/hooks/user/useKeyword';
-import useGetRelWords from '@/query/user/useGetRelWords';
 
 const KeywordSearchResult = () => {
   const { hashKeywordList } = useKeyword();

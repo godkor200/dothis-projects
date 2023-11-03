@@ -7,8 +7,8 @@ import {
   getMainImage,
   handleImageError,
 } from '../../../utils/imagesUtil';
-import ContentSubTitle from './ArticleInfo';
-import { CurrentArticleProps } from './CurrentArticle';
+import ArticleInfo from './ArticleInfo';
+import type { CurrentArticleProps } from './CurrentArticle';
 
 interface ArticleListProps {
   articleListData: CurrentArticleProps[];
@@ -45,7 +45,7 @@ const ArticleList = ({
                 <p className="text-grey700 mb-2 line-clamp-2 w-[278px] font-medium">
                   {title}
                 </p>
-                <ContentSubTitle
+                <ArticleInfo
                   secondText={provider}
                   thirdText={category}
                   date={date}

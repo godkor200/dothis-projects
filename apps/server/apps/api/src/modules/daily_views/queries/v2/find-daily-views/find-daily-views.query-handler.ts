@@ -1,9 +1,9 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { VIDEO_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { FindVideoOsAdapter } from '@Apps/modules/video/interface/find-video.os.adapter';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
-import { VIDEO_HISTORY_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
+import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
 import { FindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
@@ -25,9 +25,9 @@ export class FindDailyViewsQueryOsHandler
     >
 {
   constructor(
-    @Inject(VIDEO_HISTORY_DI_TOKEN.FIND_HISTORY)
+    @Inject(VIDEO_HISTORY_OS_DI_TOKEN)
     private readonly videoHistory: FindVideoHistoryOsAdapter,
-    @Inject(VIDEO_DI_TOKEN.OS_FIND_BY_VIDEO_ID)
+    @Inject(VIDEO_OS_DI_TOKEN)
     private readonly video: FindVideoOsAdapter,
   ) {}
 
