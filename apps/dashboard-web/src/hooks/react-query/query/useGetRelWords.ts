@@ -8,7 +8,7 @@ import {
   isHashKeyword,
 } from '@/utils/keyword';
 
-import useGetUserInfo from '../../../query/user/useGetUserInfo';
+import useGetUserInfo from './useGetUserInfo';
 
 const guestKeyword = ['먹방', '와인'];
 

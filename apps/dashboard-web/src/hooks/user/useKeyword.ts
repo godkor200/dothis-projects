@@ -1,5 +1,5 @@
 import { GUEST_KEYWORD } from '@/constants/guestKeyword';
-import useGetUserInfo from '@/query/user/useGetUserInfo';
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import {
   convertKeywordsToArray,
   getHashKeyword,
