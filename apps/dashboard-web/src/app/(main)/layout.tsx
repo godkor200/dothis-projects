@@ -1,6 +1,6 @@
-import Footer from '@/layouts/MainLayout/Footer';
-import GNB from '@/layouts/MainLayout/GNB';
-import SideBar from '@/layouts/MainLayout/SideBar';
+import Footer from '@/components/common/Layout/Footer';
+import GNB from '@/components/common/Layout/GNB';
+import SideBar from '@/components/common/Layout/SideBar';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

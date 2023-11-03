@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 
 import { theme } from '../style';
 import {
@@ -26,7 +26,6 @@ export default function Page5() {
         setSvgPath(SVGPATH + 'Landing_Section5_Image_mobile.svg'); // 작은 화면에 맞는 경로 설정
       } else {
         setSvgPath(SVGPATH + 'Landing_Section5_Image.svg'); // 큰 화면에 맞는 경로 설정
-
       }
     };
 

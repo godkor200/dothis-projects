@@ -21,3 +21,4 @@ export { default as SideUser } from './SideBar/SideUser.svg';
 export { default as Alert } from './System/alert.svg';
 export { default as Close } from './System/close.svg';
 export { default as Share } from './System/share.svg';
+export { default as Question } from './System/question.svg';
