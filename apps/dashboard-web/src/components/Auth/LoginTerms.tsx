@@ -8,7 +8,7 @@ import { type PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
-import useGetKeyword from '@/query/user/useGetKeyword';
+import useGetKeyword from '@/hooks/react-query/query/useGetKeyword';
 import { apiClient } from '@/utils/api/apiClient';
 import { combinedKeywordsAndTags } from '@/utils/keyword';
 
