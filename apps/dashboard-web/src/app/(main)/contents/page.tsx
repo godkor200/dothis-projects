@@ -5,7 +5,7 @@ import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/Ke
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import ContentCardHeaderTap from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
-import relatedContentApi from '@/query/RelatedContent';
+import relatedContentApi from '@/utils/api/mediaApis';
 
 const MainContentPage = async ({
   searchParams,
