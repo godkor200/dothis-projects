@@ -1,4 +1,5 @@
 import {
+  ApiBearerAuth,
   ApiHeaders,
   ApiOperation,
   ApiParam,
@@ -66,6 +67,7 @@ export class FindAccumulateVideosHttpController {
     },
   ])
   @TsRest(c.getAccVideo)
+  @ApiBearerAuth('Authorization')
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @User() userInfo: UserInfoCommandDto,
