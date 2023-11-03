@@ -1,8 +1,9 @@
 import { QueryClient } from '@tanstack/query-core';
 import type { QueryKey } from '@tanstack/react-query';
 import { dehydrate, type QueryFunction } from '@tanstack/react-query';
-import { Hydrate as RQHydrate } from '@tanstack/react-query';
 import { cache, type PropsWithChildren } from 'react';
+
+import HydrateClient from './HydrateClient';
 
 type Props = {
   queryKey: QueryKey;
@@ -20,7 +21,7 @@ const PrefetchHydration = async ({
   await queryClient.prefetchQuery(queryKey, queryFn);
   const dehydratedState = dehydrate(queryClient);
 
-  return <RQHydrate state={dehydratedState}>{children}</RQHydrate>;
+  return <HydrateClient state={dehydratedState}>{children}</HydrateClient>;
 };
 
 export default PrefetchHydration;
