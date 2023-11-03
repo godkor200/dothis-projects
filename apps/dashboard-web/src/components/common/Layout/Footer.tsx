@@ -7,7 +7,7 @@ import SvgComp from '../SvgComp';
 
 const Footer = () => {
   return (
-    <footer className="border-t-grey400 border-t border-solid py-[6.25rem] pl-[9.375rem] pr-12 ">
+    <footer className="border-t-grey400 border-t border-solid py-[4rem] pl-[3rem] pr-12 ">
       <div className="mb-10 flex items-center justify-end">
         <div className="mr-auto">
           <Link href={'/'} title="두디스 홈">
