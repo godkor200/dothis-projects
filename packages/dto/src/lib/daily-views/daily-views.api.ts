@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { c } from '../contract';
 import { zDailyViews } from './daily-views.model';
+import { findVideoBySearchKeyword } from '../video';
 
 export const dailyViewApiUrl = '/daily-views';
 
@@ -11,12 +12,7 @@ export const dailyViewApi = c.router({
     pathParams: z.object({
       clusterNumber: z.string(),
     }),
-    query: z.object({
-      keyword: z.string(),
-      relationKeyword: z.string().optional(),
-      from: z.string(),
-      to: z.string(),
-    }),
+    query: findVideoBySearchKeyword,
     responses: {
       200: zDailyViews,
       401: 'Not Found',
