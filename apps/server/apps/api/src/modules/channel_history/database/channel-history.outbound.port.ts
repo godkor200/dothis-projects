@@ -5,4 +5,10 @@ export interface ChannelHistoryOutboundPort {
   findChannelHistoryFullscan(
     channelIds: string[],
   ): Promise<IChannelHistoryRes[]>;
+
+  findChannelHistoryByLimit(
+    channelIds: string[],
+    size: number,
+    order: 'desc' | 'asc',
+  ): Promise<IChannelHistoryRes[]>;
 }
