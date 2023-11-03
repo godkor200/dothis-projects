@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 import LoginKeyword from '@/components/Auth/LoginKeyword';
-import getQueryClient from '@/query/getQueryClient';
-import ReactQueryHydrate from '@/query/ReactQueryHydrate';
+import getQueryClient from '@/hooks/react-query/getQueryClient';
+import ReactQueryHydrate from '@/hooks/react-query/ReactQueryHydrate';
 import { apiServer } from '@/utils/api/apiServer';
 
 /**
