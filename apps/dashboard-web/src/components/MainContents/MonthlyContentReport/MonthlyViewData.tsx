@@ -4,11 +4,11 @@ import { ResponsiveRadar } from '@nivo/radar';
 
 import SvgComp from '@/components/common/SvgComp';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
+import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import {
   DUMMY_VIEW_DATA,
   MONTHLY_VIEW_DUMMY_DATA,
 } from '@/mocks/monthlyReport/monthlyViewDummyData';
-import useGetRelWords from '@/query/user/useGetRelWords';
 
 import SummaryItem from '../AnalysisWidgetItem';
 

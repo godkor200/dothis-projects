@@ -1,7 +1,7 @@
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
-import useGetRelWords from '../../../query/user/useGetRelWords';
+import useGetRelWords from './useGetRelWords';
 
 const useGetDailyView = () => {
   const { data } = useGetRelWords();

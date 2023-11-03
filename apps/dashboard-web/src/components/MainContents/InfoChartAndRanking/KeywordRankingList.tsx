@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import useGetRelWords from '@/query/user/useGetRelWords';
+import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
