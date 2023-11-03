@@ -2,7 +2,13 @@ import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-
 import { OsRes } from '@Apps/common/aws/interface/os.res.interface';
 
 export interface ChannelHistoryOutboundPort {
-  findChannelHistory(
+  findChannelHistoryFullscan(
     channelIds: string[],
-  ): Promise<OsRes<IChannelHistoryRes>[]>;
+  ): Promise<IChannelHistoryRes[]>;
+
+  findChannelHistoryByLimit(
+    channelIds: string[],
+    size: number,
+    order: 'desc' | 'asc',
+  ): Promise<IChannelHistoryRes[]>;
 }

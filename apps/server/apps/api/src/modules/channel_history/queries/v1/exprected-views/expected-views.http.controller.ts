@@ -6,20 +6,28 @@ import {
   ExpectedViewsQuery,
 } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { match, Result } from 'oxide.ts';
+import { apiRouter } from '@dothis/dto';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const c = nestControllerContract(apiRouter.expectViews);
 const { getExpectedViews } = c;
-
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { ExpectedViewsData } from '@Libs/commons/src/types/dto.types';
 const { summary, description } = getExpectedViews;
 export interface IExpectedData {
   date: string;
   expected_views: number;
 }
 
-@ApiTags('기대조회수')
+@ApiTags('기대 조회수')
 @Controller()
 export class ExpectedViewsHttpController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -29,6 +37,39 @@ export class ExpectedViewsHttpController {
     summary,
     description,
   })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+    description: '평균 기대 조회수 데이터',
+    type: ExpectedViewsData,
+  })
+  @ApiParam({
+    name: 'clusterNumber',
+    description: '클러스터 번호, 탐색어를 찾을때 클러스터 번호가 표기됩니다.',
+    example: 0,
+  })
+  @ApiQuery({
+    name: 'keyword',
+    description: '탐색어',
+    example: '이태원',
+  })
+  @ApiQuery({
+    name: 'relationKeyword',
+    description: '연관어, 연관어가 없다면 없어도됩니다.',
+    example: '클라스',
+  })
+  @ApiQuery({
+    name: 'from',
+    description: '언제부터 날짜',
+    example: '2023-10-11',
+  })
+  @ApiQuery({
+    name: 'to',
+    description: '까지 날짜',
+    example: '2023-10-17',
+  })
+  @ApiNotFoundResponse({ description: 'The video could not be found.' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @Query() query: ExpectedViewsDto,

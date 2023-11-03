@@ -7,6 +7,7 @@ import { RelWordsApiModules } from '@Apps/modules/rel-words/rel-words.module';
 import { UserApiModule } from '@Apps/modules/user/user.module';
 import { VideoApiModule } from '@Apps/modules/video/video.module';
 import { VideoHistoryApiModule } from '@Apps/modules/video_history/video_history.module';
+import { ChannelHistoryApiModule } from '@Apps/modules/channel_history/channel-history-api.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { VideoHistoryApiModule } from '@Apps/modules/video_history/video_history
     UserApiModule,
     VideoApiModule,
     VideoHistoryApiModule,
+    ChannelHistoryApiModule,
   ],
 })
 export class BusinessModules {}
