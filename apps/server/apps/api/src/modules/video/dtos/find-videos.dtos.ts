@@ -28,7 +28,7 @@ export class FindVideoDateQuery implements IQuery {
 
   readonly to: Date;
 
-  readonly data: VIDEO_DATA_KEY[];
+  readonly data?: VIDEO_DATA_KEY[];
 
   constructor(props: FindVideoDateQuery) {
     this.clusterNumber = props.clusterNumber;
