@@ -1,6 +1,6 @@
 'use client';
 
-import useGetDailyView from '@/query/user/useGetDailyView';
+import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import { formatToLineGraph, sumViews } from '@/utils/contents/dailyview';
 
 import DailyViewChart from './DailyViewChart';
