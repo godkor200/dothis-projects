@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
+import SvgComp from '@/components/common/SvgComp';
 import useClickScrollX from '@/hooks/useClickScrollX';
 import useKeyword from '@/hooks/user/useKeyword';
-import SvgComp from '@/components/common/SvgComp';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import KeywordItem from './KeywordItem';

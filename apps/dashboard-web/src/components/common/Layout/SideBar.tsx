@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 
-import { SIDE_MENUS } from '@/constants/SideMenus';
 import SvgComp from '@/components/common/SvgComp';
+import { SIDE_MENUS } from '@/constants/SideMenus';
 
 import * as Style from './style';
 

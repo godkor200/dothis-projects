@@ -67,4 +67,17 @@ export const userApi = c.router({
     summary: '유저 약관 동의 여부',
     description: '동의 여부 불리언',
   },
+  putAdminUserEnv: {
+    method: 'PUT',
+    path: `${userBaseApiUrl}/admin/env`,
+    responses: {
+      200: '성공적으로 변경되면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: z.object({ isEnvLocal: z.boolean() }),
+    summary: '환경 개발/프로덕션 변경 (관리자 콘솔용)',
+    description:
+      '환경 개발/프로덕션 해당 아이디로 로그인되고 리다이렉션될때, 로컬로 가느냐 프로덕션 환경으로 가느냐 설정하게 끔 변경하는 api',
+  },
 });

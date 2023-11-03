@@ -1,14 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useRelWord from '@/hooks/user/useRelWord';
+
+import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
+import { convertKeywordsToArray } from '@/utils/keyword';
+
 import KeywordRankingItem from './KeywordRankingItem';
 
 const KeywordRankingList = () => {
   const [selectedRelatedWord, setSelectedRelatedWord] = useState(1);
 
-  const { relWordList } = useRelWord();
+  const { data: relWordsData } = useGetRelWords();
+
+  const relWordList = convertKeywordsToArray(relWordsData?.relWords);
 
   const { setRelWord } = useSelectedRelWordActions();
 

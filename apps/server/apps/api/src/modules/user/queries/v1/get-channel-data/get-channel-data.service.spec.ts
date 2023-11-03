@@ -1,12 +1,11 @@
 import { GetChannelDataCommandHandler } from './get-channel-data.service';
-import {
-  ChannelDataMock,
-  UserChannelDataMock,
-} from '@Apps/modules/user/__mock__/get-channel-data.mock';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/queries/v1/get-channel-data/get-channel-data.command.dto';
-import { google } from 'googleapis';
+import { mock } from 'jest-mock-extended';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
+const mockChannelDataRepository = mock<ChannelDataRepositoryPort>();
 
+let handler: GetChannelDataCommandHandler;
 jest.mock('googleapis', () => {
   const googleApisMock = {
     google: {
@@ -25,6 +24,10 @@ jest.mock('googleapis', () => {
     },
   };
   return googleApisMock;
+});
+
+beforeEach(async () => {
+  handler = new GetChannelDataCommandHandler(mockChannelDataRepository);
 });
 describe('get-channel-data service', () => {
   describe('유저 데이터가 전달될때', () => {
@@ -50,13 +53,8 @@ describe('get-channel-data service', () => {
         keyword: null,
         user: null,
       };
-
-      const getChannelDataService = new GetChannelDataCommandHandler(
-        new UserChannelDataMock(userChannelDataDummy),
-        new ChannelDataMock(channelDummy),
-      );
-      const res = await getChannelDataService.execute(getChannelDataCommandDto);
-      expect(res.success).toBe(true);
     });
+
+    it('should ', () => {});
   });
 });

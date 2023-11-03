@@ -1,4 +1,4 @@
-import Price from '@/components/pricing';
+import Price from '@/components/Pricing';
 
 const PricingPage = () => {
   return <Price />;

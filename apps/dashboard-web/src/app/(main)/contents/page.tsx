@@ -5,7 +5,7 @@ import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/Ke
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import ContentCardHeaderTap from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
-import relatedContentApi from '@/query/RelatedContent';
+import relatedContentApi from '@/utils/api/mediaApis';
 
 const MainContentPage = async ({
   searchParams,
@@ -13,8 +13,9 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle = (searchParams?.relatedContent as string) || 'news';
-  const articleListData =
-    await relatedContentApi[selectedArticle]('아시안게임');
+  const articleListData = await relatedContentApi[selectedArticle](
+    '아시안게임',
+  );
 
   return (
     <>

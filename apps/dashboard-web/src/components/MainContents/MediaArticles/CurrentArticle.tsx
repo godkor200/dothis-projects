@@ -4,8 +4,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import SvgComp from '@/components/common/SvgComp';
 
-import ArticleInfo from './ArticleInfo';
 import { externaImageLoader, getMainImage } from '../../../utils/imagesUtil';
+import ArticleInfo from './ArticleInfo';
 
 export interface CurrentArticleProps {
   title: string;
@@ -25,7 +25,7 @@ const CurrentArticle = ({
   link,
 }: CurrentArticleProps) => {
   return (
-    <div className="rounded-10 border-grey300 w-[640px] overflow-hidden border border-solid">
+    <div className="rounded-10 border-grey300 w-[640px] cursor-pointer overflow-hidden border border-solid">
       <div className="h-[300px] w-[640px] overflow-hidden">
         <Image
           unoptimized
@@ -40,7 +40,7 @@ const CurrentArticle = ({
         <h3 className="text-grey700 mb-6  text-[1.5rem] font-bold">{title}</h3>
         <ArticleInfo secondText={provider} thirdText={category} date={date} />
         <CopyToClipboard text={link} onCopy={() => alert(`${link}가 복사`)}>
-          <div className="bg-grey200 flex w-full cursor-pointer items-center justify-center   rounded-lg py-4 text-center">
+          <div className="bg-grey200 flex w-full  items-center justify-center   rounded-lg py-4 text-center">
             <button className="inline-flex items-center gap-[0.7rem]">
               <SvgComp icon="Share" size={26} />
               <p className="text-grey700 font-bold">공유하기</p>
