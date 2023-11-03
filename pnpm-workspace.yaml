@@ -1,0 +1,5 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'config/*'
+  - '!apps/request-web'

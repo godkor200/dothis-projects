@@ -1,0 +1,142 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "build:api": {
+      "dependsOn": ["^build"]
+    },
+    "build:dashboard": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "request-web#build": {
+      "dependsOn": ["^request-web#db-generate", "^build"],
+      "outputs": [".next/**"]
+    },
+    "request-web#dev": {
+      "dependsOn": ["^theme-gen", "^request-web#db-generate"],
+      "cache": false
+    },
+    "dashboard-web#dev:next": {
+      "dependsOn": [
+        "@dothis/theme#build",
+        "@dothis/dto#build",
+        "dashboard-storybook#build"
+      ]
+    },
+    "dashboard-web#build": {
+      "dependsOn": [
+        "@dothis/theme#build",
+        "@dothis/dto#build",
+        "dashboard-storybook#build"
+      ]
+    },
+    "dashboard-storybook#build": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#build-storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "dashboard-storybook#chromatic": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "theme-gen": {
+      "inputs": ["./src/styles/**/*"],
+      "outputs": ["./src/types/theme.d.ts"],
+      "cache": false
+    },
+    "request-web#db-generate": {
+      "inputs": ["./prisma/schema.prisma"],
+      "cache": false
+    },
+    "request-web#db-push": {
+      "inputs": ["./prisma/schema.prisma"],
+      "cache": false
+    },
+    "studio": {
+      "inputs": ["./prisma/schema.prisma"]
+    },
+    "analyze": {
+      "inputs": [".next/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev-mock": {
+      "cache": false
+    },
+    "lending:deploy": {
+      "cache": false
+    },
+    "@dothis/theme#build": {
+      "outputs": ["./dist/**/*"],
+      "inputs": ["./dashboard/**/*", "./utils/**/*"],
+      "cache": true
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "@dothis/ui#storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "build-storybook": {
+      "inputs": [".storybook/**/*", "src/components/**/*.stories.tsx"],
+      "outputs": ["storybook-static/**"]
+    },
+    "@dothis/ui#build-storybook": {
+      "dependsOn": ["@dothis/theme#build"]
+    },
+    "request-web": {
+      "dependsOn": ["^build"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "dev:next": {
+      "cache": false,
+      "persistent": true
+    },
+    "start:dev-api": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "start:dev-scheduler": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-create": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-run": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-generate": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-revert": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    }
+  },
+  "globalEnv": [
+    "DATABASE_URL",
+    "NEXTAUTH_URL",
+    "NEXTAUTH_SECRET",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "NODE_ENV"
+  ],
+  "globalDependencies": [".env", ".env.local", "tsconfig.json"]
+}

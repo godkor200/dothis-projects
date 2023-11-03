@@ -1,0 +1,3 @@
+.contentBasic {
+    @apply relative p-8 bg-grey00 shadow-grey12 border-1 border-grey05 ;
+}
