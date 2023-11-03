@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 
 import LoginKeyword from '@/components/Auth/LoginKeyword';
 import PrefetchHydration from '@/components/common/PrefetchHydration';
-import getQueryClient from '@/hooks/react-query/getQueryClient';
 import { apiServer } from '@/utils/api/apiServer';
 
 /**
