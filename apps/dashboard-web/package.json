@@ -81,7 +81,6 @@
     "postcss-import-ext-glob": "^2.1.1",
     "postcss-nested": "^6.0.1",
     "postcss-preset-env": "^8.3.2",
-    "prettier-plugin-tailwindcss": "^0.5.6",
     "sst": "^2.18.1",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.1",
