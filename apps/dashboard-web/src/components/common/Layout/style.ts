@@ -60,6 +60,7 @@ export const IconWrapper = styled.div<{ $isInActive: boolean }>`
 
   &:hover {
     ${({ theme, $isInActive }) => hover_active($isInActive, theme)}
+    cursor: pointer;
   }
 
   ${({ theme, $isInActive }) =>
@@ -79,7 +80,7 @@ export const Container = styled.aside`
   gap: 3.75rem;
 
   width: 6rem;
-  height: 100vh;
+  height: auto;
   padding: 1.5rem;
   border-right: 1px solid ${({ theme }) => theme.colors.grey400};
   box-sizing: border-box;
