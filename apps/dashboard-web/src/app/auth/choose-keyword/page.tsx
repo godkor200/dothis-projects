@@ -1,7 +1,3 @@
-import { dehydrate } from '@tanstack/query-core';
-import { redirect } from 'next/navigation';
-import { NextResponse } from 'next/server';
-
 import LoginKeyword from '@/components/Auth/LoginKeyword';
 import PrefetchHydration from '@/components/common/PrefetchHydration';
 import { apiServer } from '@/utils/api/apiServer';
@@ -13,6 +9,7 @@ import { apiServer } from '@/utils/api/apiServer';
 const ChooseKeywordPage = () => {
   return (
     <>
+      {/* @ts-expect-error Server Component */}
       <PrefetchHydration
         queryKey={['keyword']}
         queryFn={() => apiServer(2).user.getUserKeyword()}
