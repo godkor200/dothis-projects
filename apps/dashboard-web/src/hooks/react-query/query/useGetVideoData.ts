@@ -10,9 +10,7 @@ export const videoKeys = {
   video: ['video'],
 };
 
-const useGetVideoData = (
-  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideo>,
-) => {
+const useGetVideoData = () => {
   const { data } = useGetRelWords();
   const selectedRelWord = useSelectedRelWord();
   let clusters: string[] = [];
@@ -21,7 +19,7 @@ const useGetVideoData = (
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResult = apiClient(1).video.getVideo.useQueries({
+  const queryResults = apiClient(1).video.getVideo.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: [...videoKeys.video, clusterNumber],
@@ -30,12 +28,21 @@ const useGetVideoData = (
         },
         query: {
           // last:0,
-          limit: 10,
-          // related:
-          search: selectedRelWord!,
+          limit: 5,
+          related: '돼지고기',
+          search: '고기',
         },
-        ...queryOptions,
+        enabled: !!data && !!selectedRelWord,
       };
     }),
   });
+
+  const isLoading = queryResults.some((result) => result.isLoading);
+
+  return {
+    isLoading,
+    data: queryResults.map((result) => result.data?.body.data),
+  };
 };
+
+export default useGetVideoData;
