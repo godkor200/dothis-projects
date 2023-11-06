@@ -68,6 +68,14 @@ export class User {
   personalizationTag: string;
 
   @Column({
+    length: 255,
+    type: 'varchar',
+    nullable: true,
+    name: 'search_word',
+  })
+  searchWord: string;
+
+  @Column({
     name: 'isEnvLocal',
     type: 'boolean',
   })
