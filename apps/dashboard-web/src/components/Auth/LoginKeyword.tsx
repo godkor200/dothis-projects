@@ -8,8 +8,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
+import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import type { KeywordSchema } from '@/constants/schema/login';
 import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
+import useGetKeyword from '@/hooks/react-query/query/useGetKeyword';
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { apiClient } from '@/utils/api/apiClient';
 import {
   combinedKeywordsAndTags,
@@ -30,11 +33,9 @@ const LoginKeyword = () => {
 
   const router = useRouter();
 
-  const { data: keywordArr, isLoading: keywordLoading } = apiClient(
-    2,
-  ).user.getUserKeyword.useQuery(['keyword']);
+  const { data: keywordData } = useGetKeyword();
 
-  const { data: userData } = apiClient(1).auth.getOwnInfo.useQuery(['user']);
+  const { data: userData } = useGetUserInfo();
 
   const queryClient = useQueryClient();
 
@@ -44,36 +45,41 @@ const LoginKeyword = () => {
 
       queryClient.invalidateQueries(['keyword']);
       queryClient.invalidateQueries(['user']);
-      router.push('/');
+      router.push('/contents');
     },
   });
 
-  const channel_keywords = keywordArr?.body?.data?.channel_keywords;
-  const channel_tags = keywordArr?.body?.data?.channel_tags;
+  const channel_keywords = keywordData?.channel_keywords;
+  const channel_tags = keywordData?.channel_tags;
+
+  const isGuest = !combinedKeywordsAndTags(channel_keywords, channel_tags)
+    .length;
 
   // 해당  keyword api 와 combinedKeywordsAndTags 은 middleware에서 라우팅가드로 재사용가능성이 있음.
 
   useEffect(() => {
-    if (
-      combinedKeywordsAndTags(channel_keywords, channel_tags).length === 0 ||
-      isHashKeyword(
-        convertKeywordsToArray(userData?.body.data.personalizationTag),
-      )
-    ) {
-      router.replace('/contents');
+    if (isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))) {
+      // router.replace('/contents');
+      // 기획단에서 키워드 재설정 여부가 가능하게 설계한다는 얘기를 들어서 임시로 주석처리
       return;
     }
-  }, [keywordArr, userData]);
+  }, [keywordData, userData]);
 
   const control = methods.control;
   const keywords = useWatch({ name: 'keyword', control });
 
   const onSubmit = async ({ keyword }: { keyword: string[] }) => {
+    function withOutHash(arr: string[], hashKeyword: string[]) {
+      return arr.filter((item) => !hashKeyword.includes(item));
+    }
+
     const hashkeywords = keyword.map((item) => item + '#');
-    const restkeywords = combinedKeywordsAndTags(
-      channel_keywords,
-      channel_tags,
-    ).filter((item) => !keyword.includes(item));
+    const restkeywords = isGuest
+      ? withOutHash(GUEST_KEYWORD, keyword)
+      : withOutHash(
+          combinedKeywordsAndTags(channel_keywords, channel_tags),
+          keyword,
+        );
 
     mutate({ body: { tag: [...hashkeywords, ...restkeywords] } });
   };
@@ -82,7 +88,11 @@ const LoginKeyword = () => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Keywords
-          keyword={combinedKeywordsAndTags(channel_keywords, channel_tags)}
+          keyword={
+            isGuest
+              ? GUEST_KEYWORD
+              : combinedKeywordsAndTags(channel_keywords, channel_tags)
+          }
         />
 
         <div className="flex justify-center font-bold">
