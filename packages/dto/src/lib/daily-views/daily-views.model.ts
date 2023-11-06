@@ -1,12 +1,14 @@
 import { z } from 'zod';
 
 export const zDailyViews = z.object({
-  data: z.object({
-    date: z.string(),
-    increase_comments: z.number(),
-    increase_likes: z.number(),
-    increase_views: z.number(),
-  }),
+  data: z.array(
+    z.object({
+      date: z.string(),
+      increase_comments: z.number(),
+      increase_likes: z.number(),
+      increase_views: z.number(),
+    }),
+  ),
 });
 
 export const zVideoHistory = z.object({

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import RevealWrapper from '@/components/common/Reveal/RevealWrapper';
+import RevealWrapper from '@/components/Landing/RevealWrapper';
 
 import {
   Background,
