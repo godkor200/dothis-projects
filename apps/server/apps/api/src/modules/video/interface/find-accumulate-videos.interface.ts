@@ -1,5 +1,6 @@
 export interface IFindAccumulateVideoRes<T> {
   videoTotal: number;
+  userSection: SECTION_NUMBER;
   section: T;
 }
 
@@ -9,6 +10,7 @@ export interface ISection {
 }
 
 export enum SECTION_NUMBER {
+  RANGE_0_100 = '0~100',
   RANGE_100_1000 = '100~1000',
   RANGE_1000_10000 = '1000~10000',
   RANGE_10000_50000 = '10000~50000',

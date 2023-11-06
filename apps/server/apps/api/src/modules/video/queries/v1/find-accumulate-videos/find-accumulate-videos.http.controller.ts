@@ -1,12 +1,22 @@
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiHeaders,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
   ApiOperation,
   ApiParam,
   ApiQuery,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Controller, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  NotFoundException,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   FindAccumulateVideo,
@@ -22,6 +32,9 @@ import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getAccVideo;
 
@@ -68,6 +81,20 @@ export class FindAccumulateVideosHttpController {
   ])
   @TsRest(c.getAccVideo)
   @ApiBearerAuth('Authorization')
+  @ApiNotFoundResponse({
+    description:
+      ChannelNotFoundError.message +
+      ' ,' +
+      VideoNotFoundError.message +
+      ' ,' +
+      ChannelHistoryNotFoundError.message,
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The number of subscribers is not within the set range.',
+  })
+  @ApiInternalServerErrorResponse()
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
     @User() userInfo: UserInfoCommandDto,
@@ -81,12 +108,21 @@ export class FindAccumulateVideosHttpController {
 
     const result: Result<
       IFindAccumulateVideoRes<ISection[]>,
-      any
+      ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
     > = await this.queryBus.execute(arg);
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
+        if (err instanceof ChannelNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        if (err instanceof VideoNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
+        if (err instanceof ChannelHistoryNotFoundError) {
+          throw new NotFoundException(err.message);
+        }
         throw err;
       },
     });

@@ -26,6 +26,7 @@ export const zUserModel = z.object({
       .string()
       .nullable()
       .describe('tags saved for the user to analyze'),
+    searchWord: z.string().nullable().describe('search_word'),
   }),
 });
 

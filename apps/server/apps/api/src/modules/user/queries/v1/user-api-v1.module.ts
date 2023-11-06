@@ -18,11 +18,14 @@ import { PutEnvHttpController } from '@Apps/modules/user/command/v1/put-env/put-
 import { PutEnvCommandHandler } from '@Apps/modules/user/command/v1/put-env/put-env.command-handler';
 import { AtStrategy } from '@Libs/commons/src';
 import { PassportModule } from '@nestjs/passport';
+import { UpdateSearchWordHttpController } from '@Apps/modules/user/command/v1/update-search-word/update-search-word.http.controller';
+import { UpdateSearchWordCommandHandler } from '@Apps/modules/user/command/v1/update-search-word/update-search-word.command-handler';
 
 const httpControllers = [
   GetUserHttpController,
   GetChannelDataHttpController,
   UpdatePersonalTagHttpController,
+  UpdateSearchWordHttpController,
   PutEnvHttpController,
 ];
 
@@ -40,6 +43,7 @@ const commandHandlers: Provider[] = [
   GetUserCommandHandler,
   UpdatePersonalTagCommandHandler,
   PutEnvCommandHandler,
+  UpdateSearchWordCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [];
