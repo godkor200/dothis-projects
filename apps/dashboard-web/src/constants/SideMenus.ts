@@ -33,3 +33,27 @@ export const SIDE_MENUS: SideMenus[] = [
     link: '/chart5',
   },
 ];
+
+interface GNBMenus {
+  icon: SVGType;
+  link: string;
+}
+
+export const GNB_MENUS: GNBMenus[] = [
+  {
+    icon: 'HeaderEdit',
+    link: '/about',
+  },
+  {
+    icon: 'HeaderTicket',
+    link: '/pricing',
+  },
+  {
+    icon: 'HeaderNotification',
+    link: '/about',
+  },
+  {
+    icon: 'HeaderUserProfile',
+    link: '/mypage',
+  },
+];
