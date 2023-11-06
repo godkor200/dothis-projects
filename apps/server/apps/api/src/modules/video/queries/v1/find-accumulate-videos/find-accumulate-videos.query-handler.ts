@@ -15,7 +15,7 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 
 @QueryHandler(FindAccumulateVideosDtos)
 export class FindAccumulateVideosQueryHandler
@@ -24,7 +24,7 @@ export class FindAccumulateVideosQueryHandler
       FindAccumulateVideosDtos,
       Result<
         IFindAccumulateVideoRes<ISection[]>,
-        ChannelNotFoundError | VideoNotFoundError | VideoHistoryNotFoundError
+        ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
       >
     >
 {
@@ -49,7 +49,7 @@ export class FindAccumulateVideosQueryHandler
   ): Promise<
     Result<
       IFindAccumulateVideoRes<ISection[]>,
-      ChannelNotFoundError | VideoNotFoundError | VideoHistoryNotFoundError
+      ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
     >
   > {
     const userInfo = arg.user;
@@ -83,7 +83,7 @@ export class FindAccumulateVideosQueryHandler
     const channelHistoryRes =
       await this.channelHistory.findChannelHistoryFullscan(channelIds);
 
-    if (!channelHistoryRes) return Err(new VideoHistoryNotFoundError());
+    if (!channelHistoryRes) return Err(new ChannelHistoryNotFoundError());
     return Ok({
       videoTotal: videoIds.length,
       userSection: userSection.sec,

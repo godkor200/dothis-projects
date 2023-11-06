@@ -6,6 +6,6 @@ export class ChannelHistoryNotFoundError extends ExceptionBase {
   public readonly code = 'CHANNEL_HISTORY.NOT_FOUND';
 
   constructor(cause?: Error, metadata?: unknown) {
-    super(ChannelNotFoundError.message, cause, metadata);
+    super(ChannelHistoryNotFoundError.message, cause, metadata);
   }
 }

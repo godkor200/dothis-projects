@@ -34,7 +34,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getAccVideo;
 
@@ -87,7 +87,7 @@ export class FindAccumulateVideosHttpController {
       ' ,' +
       VideoNotFoundError.message +
       ' ,' +
-      VideoHistoryNotFoundError.message,
+      ChannelHistoryNotFoundError.message,
   })
   @ApiInternalServerErrorResponse({
     description: 'The number of subscribers is not within the set range.',
@@ -108,7 +108,7 @@ export class FindAccumulateVideosHttpController {
 
     const result: Result<
       IFindAccumulateVideoRes<ISection[]>,
-      ChannelNotFoundError | VideoNotFoundError | VideoHistoryNotFoundError
+      ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
     > = await this.queryBus.execute(arg);
 
     return match(result, {
@@ -120,7 +120,7 @@ export class FindAccumulateVideosHttpController {
         if (err instanceof VideoNotFoundError) {
           throw new NotFoundException(err.message);
         }
-        if (err instanceof VideoHistoryNotFoundError) {
+        if (err instanceof ChannelHistoryNotFoundError) {
           throw new NotFoundException(err.message);
         }
         throw err;
