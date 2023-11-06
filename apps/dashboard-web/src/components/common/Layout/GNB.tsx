@@ -3,12 +3,16 @@
 import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import SvgComp from '@/components/common/SvgComp';
+import { GNB_MENUS } from '@/constants/SideMenus';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { cn } from '@/utils/cn';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
 const GNB = () => {
+  const pathName = usePathname();
   const isSignedIn = useIsSignedIn();
   const { setIsOpenSignUpModal } = useAuthActions();
 
@@ -23,8 +27,11 @@ const GNB = () => {
 
   const handleRouter = (route: Route) => {
     if (!checkIsSignedIn()) return;
-    // router.push(route);
-    alert(`${route}로 이동`);
+    if (route === '/about') {
+      alert('개발중입니다.');
+      return;
+    }
+    router.push(route);
   };
 
   return (
@@ -32,30 +39,21 @@ const GNB = () => {
       {/* 이 부분은 Hover 디자인과 클릭 시 기능을 파악하고 추가 작업 */}
 
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
-        <div
-          className="border-primary100 rounded-8 bg-primary100 hover:bg-grey300 ml-3 flex items-center border border-solid p-3"
-          onClick={() => handleRouter('/about')}
-        >
-          <SvgComp icon="HeaderEdit" size="1.5rem" />
-        </div>
-        <div
-          className="rounded-8 hover:bg-grey300 p-3"
-          onClick={() => handleRouter('/pricing')}
-        >
-          <SvgComp icon="HeaderTicket" size="1.5rem" />
-        </div>
-        <div
-          className="rounded-8 hover:bg-grey300 p-3"
-          onClick={() => handleRouter('/about')}
-        >
-          <SvgComp icon="HeaderNotification" size="1.5rem" />
-        </div>
-        <div
-          className="border-grey300 rounded-8 bg-grey300 hover:bg-grey600 p-3"
-          onClick={() => handleRouter('/mypage')}
-        >
-          <SvgComp icon="HeaderUserProfile" size="1.5rem" />
-        </div>
+        {GNB_MENUS.map((item, index) => (
+          <div
+            className={cn(
+              'rounded-8 hover:bg-grey300 [&_path]:hover:stroke-grey600 p-3',
+              {
+                '[&_path]:stroke-[#F0516D] bg-primary100':
+                  pathName === item.link,
+              },
+            )}
+            onClick={() => handleRouter(item.link as Route)}
+            key={index}
+          >
+            <SvgComp icon={item.icon} size="1.5rem" />
+          </div>
+        ))}
       </div>
     </header>
   );
