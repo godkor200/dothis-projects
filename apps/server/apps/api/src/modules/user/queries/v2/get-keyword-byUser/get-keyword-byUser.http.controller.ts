@@ -26,7 +26,7 @@ import {
   ResultChannelKeywordTag,
 } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 import { IRes } from '@Libs/commons/src/types/res.types';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUserKeyword;
 

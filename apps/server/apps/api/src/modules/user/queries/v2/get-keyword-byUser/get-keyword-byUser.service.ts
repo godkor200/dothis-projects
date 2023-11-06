@@ -8,7 +8,7 @@ import {
   ChannelKeywordOrtagDtos,
   ResultChannelKeywordTag,
 } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 
 export class FindKeywordTagByUserCommand {
   public readonly userId: string;
