@@ -1,4 +1,3 @@
-import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import type { SSTConfig } from 'sst';
 import { NextjsSite } from 'sst/constructs';
 export default {
@@ -14,6 +13,7 @@ export default {
         customDomain: {
           domainName: 'dothis.kr',
           domainAlias: 'www.dothis.kr',
+          hostedZone: 'dothis.kr',
         },
       });
 

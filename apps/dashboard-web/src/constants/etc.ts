@@ -1,1 +1,1 @@
-export const ContactMail = 'Contact@dothis.kr' as const;
+export const ContactMail = 'contact@dothis.kr' as const;
