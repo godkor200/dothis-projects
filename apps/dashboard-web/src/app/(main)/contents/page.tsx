@@ -3,7 +3,7 @@ import CardHeader from '@/components/MainContents/CardHeader';
 import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
-import type { TabNavData } from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
+import type { ArticleType } from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MediaArticlesTabNav from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import relatedContentApi from '@/utils/api/mediaApis';
@@ -14,8 +14,7 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle =
-    (searchParams?.relatedContent as (typeof TabNavData)[number]['category']) ||
-    'news';
+    (searchParams?.relatedContent as ArticleType) || 'news';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );
@@ -35,9 +34,10 @@ const MainContentPage = async ({
       </Card>
       <Card>
         <MediaArticlesTabNav selectedArticle={selectedArticle} />
-        <div className="mt-10 flex gap-[1.25rem]">
-          <MainContentContainer articleListData={articleListData} />
-        </div>
+        <MainContentContainer
+          articleListData={articleListData}
+          selectedArticle={selectedArticle}
+        />
       </Card>
     </>
   );
