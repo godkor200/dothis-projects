@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
@@ -54,6 +55,7 @@ export class UpdateSearchWordHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
+  @ApiBearerAuth('Authorization')
   @ApiHeaders([
     {
       name: 'Authorization',

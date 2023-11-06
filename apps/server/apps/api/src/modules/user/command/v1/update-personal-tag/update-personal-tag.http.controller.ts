@@ -1,6 +1,7 @@
 import { Body, Controller, HttpStatus, Req, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
@@ -43,6 +44,7 @@ export class UpdatePersonalTagHttpController {
     description: "['먹방#', '카페#', 'ASMR', '여행', '제주도']",
     required: true,
   })
+  @ApiBearerAuth('Authorization')
   @ApiOkResponse({
     description: '성공여부를 리턴합니다.',
   })

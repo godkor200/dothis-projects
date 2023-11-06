@@ -10,6 +10,7 @@ import {
 import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
@@ -58,6 +59,7 @@ export class PutAgreePromotionHttpController {
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
+  @ApiBearerAuth('Authorization')
   @TsRest(c.putAgreePromotion)
   async execute(
     @Body('isAgree') isAgree: boolean,
