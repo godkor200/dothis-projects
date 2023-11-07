@@ -51,13 +51,13 @@ const KeywordItem = <T extends HTMLButtonElement>({
       onClick={handleToggleKeyword}
     >
       {label}
-      {$active && (
+      {/* {$active && (
         <SvgComp
           icon="KeywordDelete"
           size="1rem"
           onClick={(event) => removeKeyword(event)}
         />
-      )}
+      )} */}
     </Style.Button>
   );
 };
