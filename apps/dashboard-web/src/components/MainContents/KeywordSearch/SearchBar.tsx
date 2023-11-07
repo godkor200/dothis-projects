@@ -13,6 +13,7 @@ import { cn } from '@/utils/cn';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
 import KeywordItem from './KeywordItem';
+import MyKeywordList from './MyKeywordList';
 import * as Style from './style';
 
 const SearchBar = () => {
@@ -28,19 +29,10 @@ const SearchBar = () => {
     }
   };
 
-  const queryClient = useQueryClient();
-
-  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
-    },
-  });
-
   const removeHashAndConvertToArray = useCallback(
     (userKeyword: string | undefined | null, keyword: string) => {
       if (userKeyword === null || userKeyword === undefined) {
-        return [];
+        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
       }
       // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
       const dataArray = userKeyword.split(',');
@@ -60,7 +52,7 @@ const SearchBar = () => {
   const addHashAndConvertToArray = useCallback(
     (userKeyword: string | undefined | null, keyword: string) => {
       if (userKeyword === null || userKeyword === undefined) {
-        return [];
+        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
       }
       // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
       const dataArray = userKeyword.split(',');
@@ -97,18 +89,6 @@ const SearchBar = () => {
     [],
   );
 
-  const handleKeyword = (item: string) => {
-    mutate({
-      body: {
-        tag: checkHashKeyword(userData?.personalizationTag, item)
-          ? removeHashAndConvertToArray(userData?.personalizationTag, item)
-          : addHashAndConvertToArray(userData?.personalizationTag, item),
-      },
-    });
-  };
-
-  console.log(userData);
-
   return (
     <div
       className="relative  mx-auto max-w-[50rem]"
@@ -127,7 +107,7 @@ const SearchBar = () => {
               ref={searchInputRef}
               onKeyDown={handleSubmit}
             />
-            <div className="">
+            <div className="cursor-pointer">
               <SvgComp icon="HeaderPlus" size="40px" />
             </div>
           </div>
@@ -136,23 +116,14 @@ const SearchBar = () => {
               <div className="py-5">자동완성 섹션</div>
               <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
               <div className="border-grey300 mt-[20px] flex flex-wrap gap-[10px] border-b-2 pb-[30px]  ">
-                {convertKeywordsToArray(userData?.personalizationTag).map(
-                  (item) => (
-                    <Style.Button
-                      $active={item.endsWith('#')}
-                      onClick={() => handleKeyword(item)}
-                    >
-                      {item.replace('#', '')}
-                      {/* {item.endsWith('#') && (
-                <SvgComp icon="KeywordDelete" size="1rem" />
-              )} */}
-                    </Style.Button>
-                  ),
-                )}
+                <MyKeywordList
+                  userKeywordList={userData?.personalizationTag}
+                  searchWordList={userData?.searchWord}
+                />
               </div>
               <div className="my-5 flex items-center justify-between">
                 <p className="text-grey500 text-[18px]">키워드 초기화</p>
-                <div className="border-1 border-grey500 bg-grey200 rounded-8 px-5 py-2">
+                <div className="border-1 border-grey500 bg-grey200 rounded-8 cursor-pointer px-5 py-2">
                   <SvgComp icon="KeywordReset" size={24} />
                 </div>
               </div>
