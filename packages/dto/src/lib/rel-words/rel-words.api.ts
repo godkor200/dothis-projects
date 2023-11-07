@@ -30,7 +30,7 @@ export const relWordsApi = c.router({
   },
   getAutoCompleteWords: {
     method: 'GET',
-    path: `auto-complete/:word`,
+    path: `/auto-complete/:word`,
     responses: {
       200: 'success',
       404: 'Not Found',
