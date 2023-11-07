@@ -48,6 +48,13 @@ export const zKeyword = z.object({
   search: z.string().describe('탐색어'),
   related: z.string().describe('연관어').optional(),
 });
+
+export const findVideoBySearchKeyword = z.object({
+  keyword: z.string(),
+  relationKeyword: z.string().optional(),
+  from: z.string(),
+  to: z.string(),
+});
 export const findVideoPageQuery = zKeyword.merge(zPaginatedQuery);
 export interface IKeyword extends z.TypeOf<typeof zKeyword> {}
 export interface IPageQuery extends z.TypeOf<typeof zPaginatedQuery> {}

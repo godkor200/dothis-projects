@@ -4,11 +4,9 @@ import {
   Controller,
   HttpStatus,
   InternalServerErrorException,
-  NotFoundException,
+  Req,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -19,34 +17,32 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { PutAgreePromotionDtos } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { UpdateSearchWordDto } from '@Apps/modules/user/dtos/update-search-word.dto';
+import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { match, Result } from 'oxide.ts';
 const c = nestControllerContract(apiRouter.user);
-const { putAgreePromotion } = c;
-const { responses, description, summary } = putAgreePromotion;
+const { putSearchWord } = c;
+const { responses, description, summary } = putSearchWord;
+
 @Controller()
 @ApiTags('유저 관련')
-export class PutAgreePromotionHttpController {
+export class UpdateSearchWordHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @TsRest(putSearchWord)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary,
     description,
   })
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
-    },
-  ])
   @ApiBody({
-    isArray: false,
-    type: Boolean,
-    description: '동의여부, {isAgree: boolean}',
+    isArray: true,
+    type: 'string',
+    description: "['먹방', '카페', 'ASMR', '여행', '제주도']",
     required: true,
   })
   @ApiOkResponse({
@@ -54,26 +50,32 @@ export class PutAgreePromotionHttpController {
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: responses[404],
+    description: responses[401],
   })
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
   @ApiBearerAuth('Authorization')
-  @TsRest(c.putAgreePromotion)
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+    },
+  ])
   async execute(
-    @Body('isAgree') isAgree: boolean,
     @User() user: UserInfoCommandDto,
+    @Body('searchWord') searchWord: string[],
   ): Promise<IRes<void>> {
-    const arg = new PutAgreePromotionDtos({ isAgree, id: user.id });
-    const result: Result<boolean, NotFoundException> =
+    const arg = new UpdateSearchWordDto({ id: user.id, searchWord });
+
+    const result: Result<boolean, InternalServerErrorException> =
       await this.commandBus.execute(arg);
+
     return match(result, {
       Ok: (result) => ({ success: result }),
-      Err: (err) => {
-        if (err instanceof InternalServerErrorException) {
-          throw new InternalServerErrorException();
-        }
+      Err: (err: Error) => {
+        if (err instanceof InternalServerErrorException)
+          throw new InternalServerErrorException(err.message);
         throw err;
       },
     });

@@ -60,7 +60,7 @@ export class GoogleLoginRedirectHttpController {
         res.cookie('refreshToken', result.refreshToken, options);
         res.redirect(
           `http${
-            result.isEnvLocal ? '://localhost:3666/' : 's://www.dothis.kr/'
+            result.isEnvLocal ? '://localhost:3666/' : 's://dothis.kr/'
           }login/redirect?isNewUser=${result.isNewUser}&accessToken=${
             result.accessToken
           }&refreshToken=${result.refreshToken}`,

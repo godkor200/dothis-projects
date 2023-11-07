@@ -24,7 +24,7 @@ export const cacheApi = c.router({
       401: 'Not Found',
       500: 'Internal Server Error',
     },
-    summary: '탐색어를 redis에 불러옵니다.',
-    description: '탐색어를 redis에 불러옵니다.',
+    summary: '탐색어를 redis에서 불러옵니다.',
+    description: '탐색어를 redis에서 불러옵니다.',
   },
 });
