@@ -88,7 +88,7 @@ const KeywordSlide = ({ keyword }: Props) => {
         {hashKeywordList.map((keyword) => (
           <KeywordItem
             key={keyword}
-            $active={targetKeywords.includes(keyword)}
+            $active={true}
             label={keyword}
             keyValue={keyword}
             handleScrollX={handleTapScrollX}
