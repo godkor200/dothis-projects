@@ -126,26 +126,26 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
     [],
   );
 
-  const deleteKeywordAndConvertToArray = (
-    userKeyword: string | undefined | null,
-    keyword: string,
-  ) => {
-    if (userKeyword === null || userKeyword === undefined) {
-      throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-    }
+  const deleteKeywordAndConvertToArray = useCallback(
+    (userKeyword: string | undefined | null, keyword: string) => {
+      if (userKeyword === null || userKeyword === undefined) {
+        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
+      }
 
-    const dataArray = userKeyword.split(',');
+      const dataArray = userKeyword.split(',');
 
-    // 키워드와 일치하며, #이 붙어있지 않은 요소만 남김
-    const resultArray = dataArray.filter((item) => {
-      return (
-        !item.includes(keyword) ||
-        (item.includes(keyword) && !item.endsWith('#'))
-      );
-    });
+      // 키워드와 일치하며, #이 붙어있지 않은 요소만 남김
+      const resultArray = dataArray.filter((item) => {
+        return (
+          !item.includes(keyword) ||
+          (item.includes(keyword) && !item.endsWith('#'))
+        );
+      });
 
-    return resultArray;
-  };
+      return resultArray;
+    },
+    [],
+  );
 
   return (
     <>
