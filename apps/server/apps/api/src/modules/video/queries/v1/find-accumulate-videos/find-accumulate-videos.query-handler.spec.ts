@@ -6,7 +6,6 @@ import {
   channelHistoryDummy,
   sampleChannelHistoryDummy,
 } from '@Apps/modules/video/queries/v1/find-accumulate-videos/__dummy__/channel_history.dummy';
-import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import {
   sampleVideoDummy,
   videoDummy,
@@ -71,19 +70,15 @@ describe('함수 처리', () => {
     };
 
     const res = await handler.execute(arg);
-    console.log(
-      res
-        .unwrap()
-        .section.map((e) => e.number)
-        .reduce((a, b) => a + b, 0),
-    );
-
+    /**
+     * 채널히스토리에 없는 비디오들이 있음 1691 - 1636 = 55
+     */
     expect(
       res
         .unwrap()
         .section.map((e) => e.number)
         .reduce((a, b) => a + b, 0),
-    ).toBe(videoDummy.length);
+    ).toBe(videoDummy.length - 55);
     // expect(res.unwrap().section[2].number).toBe(videoDummy)
   });
 });
