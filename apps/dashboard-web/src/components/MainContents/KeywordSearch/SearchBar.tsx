@@ -1,29 +1,16 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import type { KeyboardEvent } from 'react';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from 'react';
+import { useCallback, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
-import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
-import useKeyword from '@/hooks/user/useKeyword';
 import { apiClient } from '@/utils/api/apiClient';
 import { cn } from '@/utils/cn';
-import { convertKeywordsToArray } from '@/utils/keyword';
 
-import KeywordItem from './KeywordItem';
 import MyKeywordList from './MyKeywordList';
-import * as Style from './style';
 
 const SearchBar = () => {
   const [open, setOpen] = useState(false);
@@ -54,6 +41,13 @@ const SearchBar = () => {
 
   const queryClient = useQueryClient();
 
+  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['keyword']);
+      queryClient.invalidateQueries(['user']);
+    },
+  });
+
   const { mutate: mutateSearchWord } = apiClient(
     1,
   ).user.putSearchWord.useMutation({
@@ -63,7 +57,30 @@ const SearchBar = () => {
     },
   });
 
+  const handleResetKeyword = () => {
+    mutateSearchWord({
+      body: { searchWord: [] },
+    });
+    mutate({
+      body: { tag: resetKeyword(userData?.personalizationTag) },
+    });
+  };
+
+  const resetKeyword = (userKeyword: string | undefined | null) => {
+    if (userKeyword === null || userKeyword === undefined) {
+      throw new Error('데이터를 생성하는데 문제가 생겼습니다.');
+    }
+
+    const dataArray = userKeyword.split(',');
+
+    for (let i = 1; i < dataArray.length; i++) {
+      dataArray[i] = dataArray[i].replace('#', '');
+    }
+    return dataArray;
+  };
+
   const handleCreateSearchWord = (word: string) => {
+    console.log(createSearchWord(userData?.searchWord, word));
     mutateSearchWord({
       body: { searchWord: createSearchWord(userData?.searchWord, word) },
     });
@@ -75,9 +92,23 @@ const SearchBar = () => {
         throw new Error('데이터를 생성하는데 문제가 생겼습니다.');
       }
 
-      const dataArray = userKeyword.split(',');
+      const dataArray = userKeyword ? userKeyword.split(',') : [];
 
-      return [keyword + '#', ...dataArray];
+      const index = dataArray.indexOf(keyword);
+
+      const hashindex = dataArray.indexOf(`${keyword}#`);
+
+      if (index !== -1 || hashindex !== -1) {
+        if (hashindex !== -1) {
+          return dataArray;
+        }
+
+        dataArray[index] = `${keyword}#`;
+      } else {
+        dataArray.unshift(`${keyword}#`);
+      }
+
+      return dataArray;
     },
     [],
   );
@@ -159,7 +190,10 @@ const SearchBar = () => {
               </div>
               <div className="my-5 flex items-center justify-between">
                 <p className="text-grey500 text-[18px]">키워드 초기화</p>
-                <div className="border-1 border-grey500 bg-grey200 rounded-8 cursor-pointer px-5 py-2">
+                <div
+                  className="border-1 border-grey500 bg-grey200 rounded-8 cursor-pointer px-5 py-2"
+                  onClick={handleResetKeyword}
+                >
                   <SvgComp icon="KeywordReset" size={24} />
                 </div>
               </div>
