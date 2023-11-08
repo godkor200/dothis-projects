@@ -6,9 +6,9 @@ export const MONTHLY_VIEW_DUMMY_DATA = [
 ];
 
 export const DUMMY_VIEW_DATA = [
-  { clusterNumber: 1, views: 4000, videoTotalCounts: 1000 },
-  { clusterNumber: 2, views: 1600, videoTotalCounts: 2000 },
-  { clusterNumber: 3, views: 2400, videoTotalCounts: 3000 },
-  { clusterNumber: 4, views: 3200, videoTotalCounts: 4000 },
-  { clusterNumber: 5, views: 800, videoTotalCounts: 5000 },
+  { views: 54000, videoTotalCounts: 1000 },
+  { views: 11600, videoTotalCounts: 2000 },
+  { views: 32400, videoTotalCounts: 3000 },
+  { views: 23200, videoTotalCounts: 4000 },
+  { views: 44800, videoTotalCounts: 5000 },
 ];
