@@ -3,7 +3,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import {
   FindDailyViewsRequestDto,
   FindDailyViewsRequestQuery,
-} from './find-daily-views.dto';
+} from '../../../dtos/find-daily-views.dto';
 import { FindDailyViewsQuery } from './find-daily-views.query-handler';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
