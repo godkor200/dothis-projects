@@ -9,8 +9,13 @@ import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/databa
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { VideoHistoryQueryHandler } from '@Apps/modules/video_history/database/video_history.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
+import { FindChannelHistoryHttpController } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.http.controller';
+import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.query-handler';
 
-const controllers = [ExpectedViewsHttpController];
+const controllers = [
+  ExpectedViewsHttpController,
+  FindChannelHistoryHttpController,
+];
 const repositories: Provider[] = [
   {
     provide: VIDEO_OS_DI_TOKEN,
@@ -28,6 +33,10 @@ const repositories: Provider[] = [
 @Module({
   imports: [CqrsModule, AwsModule],
   controllers,
-  providers: [...repositories, ExpectedViewsQueryHandler],
+  providers: [
+    ...repositories,
+    ExpectedViewsQueryHandler,
+    FindChannelHistoryQueryHandler,
+  ],
 })
 export class ChannelHistoryV1Module {}
