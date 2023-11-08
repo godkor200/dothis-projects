@@ -41,12 +41,12 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
     1,
   ).user.putSearchWord.useMutation({
     onSuccess: (data) => {
-      console.log(data);
       queryClient.invalidateQueries(['user']);
     },
   });
 
   const handleAddKeyword = (item: string) => {
+    // mutate가 변화가 없다면 안하는 방향으로 가야할듯
     mutate({
       body: {
         tag: addHashAndConvertToArray(userKeywordList, item),
@@ -86,6 +86,16 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
     });
   };
 
+  const isHashedTag = useMemo(() => {
+    return searchWordArray
+      .concat(userKeywordArray)
+      .filter((item) => item.endsWith('#')).length === 1
+      ? false
+      : true;
+  }, [searchWordArray, userKeywordArray]);
+
+  console.log(isHashedTag);
+
   const removeHashAndConvertToArray = useCallback(
     (userKeyword: string | undefined | null, keyword: string) => {
       if (userKeyword === null || userKeyword === undefined) {
@@ -93,6 +103,10 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
       }
       // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
       const dataArray = userKeyword.split(',');
+
+      if (!isHashedTag) {
+        return dataArray;
+      }
 
       // 배열 요소 중에서 keyword와 일치하는 부분을 찾아서 '#'을 제거합니다.
       for (let i = 0; i < dataArray.length; i++) {
@@ -103,7 +117,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
 
       return dataArray;
     },
-    [],
+    [isHashedTag],
   );
 
   const addHashAndConvertToArray = useCallback(
@@ -134,28 +148,38 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
 
       const dataArray = userKeyword.split(',');
 
+      if (!isHashedTag && keyword.endsWith('#')) {
+        return dataArray;
+      }
+
       // 키워드와 일치하며, #이 붙어있지 않은 요소만 남김
+
       const resultArray = dataArray.filter((item) => {
-        return (
-          !item.includes(keyword) ||
-          (item.includes(keyword) && !item.endsWith('#'))
+        return !(
+          item === keyword ||
+          (item === keyword + '#' && item.endsWith('#'))
         );
       });
 
       return resultArray;
     },
-    [],
+    [isHashedTag],
   );
 
   return (
     <>
       {withHashKeyword.map((item) => (
-        <Style.Button $active={true} onClick={() => handleRemoveKeyword(item)}>
+        <Style.Button
+          key={item}
+          $active={true}
+          onClick={() => handleRemoveKeyword(item)}
+        >
           {item.replace('#', '')}
         </Style.Button>
       ))}
       {withHashSearchWord.map((item) => (
         <Style.Button
+          key={item}
           $active={true}
           onClick={() => handleRemoveSearchWord(item)}
         >
@@ -172,21 +196,31 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
         </Style.Button>
       ))}
       {withoutHashKeyword.map((item) => (
-        <Style.Button $active={false} onClick={() => handleAddKeyword(item)}>
+        <Style.Button
+          key={item}
+          $active={false}
+          onClick={() => handleAddKeyword(item)}
+        >
           {item}
         </Style.Button>
       ))}
       {withoutHashSearchWord.map((item) => (
-        <Style.Button $active={false} onClick={() => handleAddSearchWord(item)}>
+        <Style.Button
+          key={item}
+          $active={false}
+          onClick={() => handleAddSearchWord(item)}
+        >
           {item}
-          <SvgComp
-            icon="KeywordDelete"
-            size="1rem"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleDeleteSearchWord(item);
-            }}
-          />
+          {item && (
+            <SvgComp
+              icon="KeywordDelete"
+              size="1rem"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleDeleteSearchWord(item);
+              }}
+            />
+          )}
         </Style.Button>
       ))}
     </>
