@@ -27,7 +27,10 @@ const useGetRelWords = (
   const { data, isLoading } = useGetUserInfo();
 
   const queryResult = apiClient(1).relwords.getRelWords.useQuery(
-    ['relWords'],
+    [
+      'relWords',
+      [getHashKeyword(convertKeywordsToArray(data?.personalizationTag))[0]],
+    ],
     {
       params: {
         keyword: isHashKeyword(convertKeywordsToArray(data?.personalizationTag))
