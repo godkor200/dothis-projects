@@ -27,14 +27,19 @@ const MediaArticlesTabNav = ({ selectedArticle }: MediaArticlesTabNavProps) => {
   };
 
   return (
-    <header className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]">
+    <header
+      id="media"
+      className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
+    >
       {TabNavData.map((item, index) => (
         <>
           <Link
             href={{
-              pathname: '/contents',
+              pathname: 'contents',
               query: { relatedContent: item.category },
+              hash: 'media',
             }}
+            replace
             onClick={() => onClickSetArticleTypes(item.category)}
             className={cn('cursor-pointer text-[32px] font-bold', {
               'text-grey700': articleTypes === item.category,
