@@ -19,13 +19,6 @@ export const TabNavData = [
 ] as const;
 
 const MediaArticlesTabNav = ({ selectedArticle }: MediaArticlesTabNavProps) => {
-  const [articleTypes, setArticleTypes] =
-    useState<ArticleType>(selectedArticle);
-
-  const onClickSetArticleTypes = (type: ArticleType) => {
-    setArticleTypes(type);
-  };
-
   return (
     <header
       id="media"
@@ -40,9 +33,8 @@ const MediaArticlesTabNav = ({ selectedArticle }: MediaArticlesTabNavProps) => {
               hash: 'media',
             }}
             replace
-            onClick={() => onClickSetArticleTypes(item.category)}
             className={cn('cursor-pointer text-[32px] font-bold', {
-              'text-grey700': articleTypes === item.category,
+              'text-grey700': selectedArticle === item.category,
             })}
           >
             {item.title}
