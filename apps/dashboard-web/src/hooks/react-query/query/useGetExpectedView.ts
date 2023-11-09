@@ -39,7 +39,7 @@ const useGetExpectedView = () => {
 
   return {
     isLoading,
-    data: queryResults.map((result) => result.data?.body),
+    data: queryResults.map((result) => result.data?.body.data),
   };
 };
 
