@@ -1,5 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 import {
@@ -11,7 +10,6 @@ import {
   useDeleteSearchwordMutation,
   useRemoveSearchwordMutation,
 } from '@/hooks/react-query/mutation/useSearchwordMutation';
-import { apiClient } from '@/utils/api/apiClient';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
 import * as Style from './style';

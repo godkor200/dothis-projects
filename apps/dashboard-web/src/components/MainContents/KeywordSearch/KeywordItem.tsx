@@ -1,9 +1,8 @@
-import type { MouseEvent, MutableRefObject, SetStateAction } from 'react';
+import type { MouseEvent, MutableRefObject } from 'react';
 import { useRef } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 
-import type { KeywordCategory } from './KeywordSlide';
 import * as Style from './style';
 
 interface KeywordCategoryContentProps<T> {

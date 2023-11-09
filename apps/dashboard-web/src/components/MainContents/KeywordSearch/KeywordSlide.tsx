@@ -1,7 +1,6 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 import { useRemoveKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
@@ -12,7 +11,6 @@ import {
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useClickScrollX from '@/hooks/useClickScrollX';
 import useKeyword from '@/hooks/user/useKeyword';
-import { apiClient } from '@/utils/api/apiClient';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import KeywordItem from './KeywordItem';

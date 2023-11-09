@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -12,7 +11,6 @@ import {
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
-import { apiClient } from '@/utils/api/apiClient';
 import { cn } from '@/utils/cn';
 
 import MyKeywordList from './MyKeywordList';
