@@ -8,7 +8,9 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import useGetUserInfo from '../query/useGetUserInfo';
 
-// 상수 타입을 생성해서 'DELETE','ADD'이런식으로 분리도 되겠지만. 일단 보류(ex axios POST GET PUT 과 같은 형태 생각중)
+// 상수 타입을 생성해서 'DELETE','ADD'이런식으로 분리해서 코드 축약이 가능하지만, 일단 보류(ex axios POST GET PUT 과 같은 형태 생각중)
+
+// 현재 mutate를 하는 response에 prev값과 next(mutate안에)값 결과 변화가 없어도 mutate를 실행한다. -> 최적화를 한다면 front단에서 mutate를 넣어주는 곳에서 prev와  next값을 비교 후 mutate가 일어나지 않게끔 할 수 있을 것 같다
 
 export const useAddKeywordMutation = (
   mutationOptions?: UseMutationOptions<

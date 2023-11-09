@@ -36,8 +36,6 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
     [userKeywordList],
   );
 
-  // 여기서 더 최적화를 한다면 api 요청을 최소하는 것 이전과 같은결과로 update를 해야할 때도 제어하지않고 그 배열을 그대로 api 요청을 보냄 (이거를 조건을 걸어줘서 줄여줄 수 있다)
-  // 한마디로 mutate결과가 변화가 없으면 안시키는 방향으로
   const { mutate: addKeywordMutate } = useAddKeywordMutation();
 
   const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
