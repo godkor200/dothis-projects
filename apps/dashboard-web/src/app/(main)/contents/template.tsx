@@ -12,7 +12,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <KeywordSlide keyword={data?.personalizationTag} />
+      <KeywordSlide />
       <SearchBar />
       <KeywordSearchResult />
 
