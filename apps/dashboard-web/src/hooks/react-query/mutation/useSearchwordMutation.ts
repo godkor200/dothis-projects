@@ -12,6 +12,8 @@ import useGetUserInfo from '../query/useGetUserInfo';
 
 // 현재 mutate를 하는 response에 prev값과 next(mutate안에)값 결과 변화가 없어도 mutate를 실행한다. -> 최적화를 한다면 front단에서 mutate를 넣어주는 곳에서 prev와  next값을 비교 후 mutate가 일어나지 않게끔 할 수 있을 것 같다
 
+// 현재 눈으로 확인할 때는 지연되는 현상이 없어서 추가하지않았지만, optimistic 업데이트도 추가할지 고민중입니다.
+
 export const useCreateSearchwordMutation = (
   mutationOptions?: UseMutationOptions<
     typeof apiRouter.user.putSearchWord,
