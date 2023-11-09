@@ -4,6 +4,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
+import { useRemoveKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
+import {
+  useDeleteSearchwordMutation,
+  useRemoveSearchwordMutation,
+} from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useClickScrollX from '@/hooks/useClickScrollX';
 import useKeyword from '@/hooks/user/useKeyword';
@@ -82,11 +87,6 @@ const KeywordSlide = ({ keyword }: Props) => {
     [userData],
   );
 
-  // const searchWordList = getHashKeyword(
-  //   convertKeywordsToArray(userData?.searchWord),
-  // );
-  // 이게 왜 이상하게 쌓이지?
-
   const {
     containerRef,
     handleTapScrollX,
@@ -94,85 +94,11 @@ const KeywordSlide = ({ keyword }: Props) => {
     handleLeftScroll,
   } = useClickScrollX();
 
-  const queryClient = useQueryClient();
+  const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
 
-  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
-    },
-  });
+  const { mutate: removeSearchwordMutate } = useRemoveSearchwordMutation();
 
-  const { mutate: mutateSearchWord } = apiClient(
-    1,
-  ).user.putSearchWord.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
-    },
-  });
-
-  const handleRemoveKeyword = (item: string) => {
-    mutate({
-      body: {
-        tag: removeHashAndConvertToArray(userData?.personalizationTag, item),
-      },
-    });
-  };
-
-  const handleRemoveSearchWord = (item: string) => {
-    mutateSearchWord({
-      body: {
-        searchWord: removeHashAndConvertToArray(userData?.searchWord, item),
-      },
-    });
-  };
-
-  const handleDeleteSearchWord = (item: string) => {
-    mutateSearchWord({
-      body: {
-        searchWord: deleteKeywordAndConvertToArray(userData?.searchWord, item),
-      },
-    });
-  };
-
-  const removeHashAndConvertToArray = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-      }
-      // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
-      const dataArray = userKeyword.split(',');
-
-      // 배열 요소 중에서 keyword와 일치하는 부분을 찾아서 '#'을 제거합니다.
-      for (let i = 0; i < dataArray.length; i++) {
-        if (dataArray[i].includes(keyword)) {
-          dataArray[i] = dataArray[i].replace('#', '');
-        }
-      }
-
-      return dataArray;
-    },
-    [],
-  );
-
-  const deleteKeywordAndConvertToArray = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-      }
-
-      const dataArray = userKeyword.split(',');
-
-      // 키워드와 일치하며, #이 붙어있지 않은 요소만 남김
-      const resultArray = dataArray.filter((item) => {
-        const regex = new RegExp(`^${keyword}(#)?$`);
-        return !regex.test(item);
-      });
-
-      return resultArray;
-    },
-    [],
-  );
+  const { mutate: deleteSearchwordMutate } = useDeleteSearchwordMutation();
 
   return (
     <Style.KeywordTapContiner>
@@ -188,7 +114,7 @@ const KeywordSlide = ({ keyword }: Props) => {
             isSearchWord={false}
             keyValue={keyword}
             handleScrollX={handleTapScrollX}
-            setRemoveKeyword={handleRemoveKeyword}
+            setRemoveKeyword={removeKeywordMutate}
           />
         ))}
         {searchWordList.map((keyword) => (
@@ -199,8 +125,8 @@ const KeywordSlide = ({ keyword }: Props) => {
             label={keyword}
             keyValue={keyword}
             handleScrollX={handleTapScrollX}
-            setRemoveKeyword={handleRemoveSearchWord}
-            setDeleteSearchword={handleDeleteSearchWord}
+            setRemoveKeyword={removeSearchwordMutate}
+            setDeleteSearchword={deleteSearchwordMutate}
           />
         ))}
       </Style.ButtonContainer>

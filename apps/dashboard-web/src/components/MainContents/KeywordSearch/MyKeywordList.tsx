@@ -2,6 +2,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
+import {
+  useAddKeywordMutation,
+  useRemoveKeywordMutation,
+} from '@/hooks/react-query/mutation/useKeywordMutation';
+import {
+  useAddSearchwordMutation,
+  useDeleteSearchwordMutation,
+  useRemoveSearchwordMutation,
+} from '@/hooks/react-query/mutation/useSearchwordMutation';
 import { apiClient } from '@/utils/api/apiClient';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
@@ -28,143 +37,18 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
     () => splitByHashtag(userKeywordArray),
     [userKeywordList],
   );
-  const queryClient = useQueryClient();
 
-  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
-    },
-  });
+  // 여기서 더 최적화를 한다면 api 요청을 최소하는 것 이전과 같은결과로 update를 해야할 때도 제어하지않고 그 배열을 그대로 api 요청을 보냄 (이거를 조건을 걸어줘서 줄여줄 수 있다)
+  // 한마디로 mutate결과가 변화가 없으면 안시키는 방향으로
+  const { mutate: addKeywordMutate } = useAddKeywordMutation();
 
-  const { mutate: mutateSearchWord } = apiClient(
-    1,
-  ).user.putSearchWord.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
-    },
-  });
+  const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
 
-  const handleAddKeyword = (item: string) => {
-    // mutate가 변화가 없다면 안하는 방향으로 가야할듯
-    mutate({
-      body: {
-        tag: addHashAndConvertToArray(userKeywordList, item),
-      },
-    });
-  };
+  const { mutate: addSearchwordMutate } = useAddSearchwordMutation();
 
-  const handleRemoveKeyword = (item: string) => {
-    mutate({
-      body: {
-        tag: removeHashAndConvertToArray(userKeywordList, item),
-      },
-    });
-  };
+  const { mutate: removeSearchwordMutate } = useRemoveSearchwordMutation();
 
-  const handleAddSearchWord = (item: string) => {
-    mutateSearchWord({
-      body: {
-        searchWord: addHashAndConvertToArray(searchWordList, item),
-      },
-    });
-  };
-
-  const handleRemoveSearchWord = (item: string) => {
-    mutateSearchWord({
-      body: {
-        searchWord: removeHashAndConvertToArray(searchWordList, item),
-      },
-    });
-  };
-
-  const handleDeleteSearchWord = (item: string) => {
-    mutateSearchWord({
-      body: {
-        searchWord: deleteKeywordAndConvertToArray(searchWordList, item),
-      },
-    });
-  };
-
-  const isHashedTag = useMemo(() => {
-    return searchWordArray
-      .concat(userKeywordArray)
-      .filter((item) => item.endsWith('#')).length === 1
-      ? false
-      : true;
-  }, [searchWordArray, userKeywordArray]);
-
-  console.log(isHashedTag);
-
-  const removeHashAndConvertToArray = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-      }
-      // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
-      const dataArray = userKeyword.split(',');
-
-      if (!isHashedTag) {
-        return dataArray;
-      }
-
-      // 배열 요소 중에서 keyword와 일치하는 부분을 찾아서 '#'을 제거합니다.
-      for (let i = 0; i < dataArray.length; i++) {
-        if (dataArray[i].includes(keyword)) {
-          dataArray[i] = dataArray[i].replace('#', '');
-        }
-      }
-
-      return dataArray;
-    },
-    [isHashedTag],
-  );
-
-  const addHashAndConvertToArray = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-      }
-      // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
-      const dataArray = userKeyword.split(',');
-
-      // 배열 요소 중에서 keyword와 일치하는 부분을 찾아서 '#'을 추가합니다.
-      for (let i = 0; i < dataArray.length; i++) {
-        if (dataArray[i].includes(keyword)) {
-          dataArray[i] += '#';
-        }
-      }
-
-      return dataArray;
-    },
-    [],
-  );
-
-  const deleteKeywordAndConvertToArray = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
-      }
-
-      const dataArray = userKeyword.split(',');
-
-      if (!isHashedTag && keyword.endsWith('#')) {
-        return dataArray;
-      }
-
-      // 키워드와 일치하며, #이 붙어있지 않은 요소만 남김
-
-      const resultArray = dataArray.filter((item) => {
-        return !(
-          item === keyword ||
-          (item === keyword + '#' && item.endsWith('#'))
-        );
-      });
-
-      return resultArray;
-    },
-    [isHashedTag],
-  );
+  const { mutate: deleteSearchwordMutate } = useDeleteSearchwordMutation();
 
   return (
     <>
@@ -172,7 +56,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
         <Style.Button
           key={item}
           $active={true}
-          onClick={() => handleRemoveKeyword(item)}
+          onClick={() => removeKeywordMutate(item)}
         >
           {item.replace('#', '')}
         </Style.Button>
@@ -181,7 +65,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
         <Style.Button
           key={item}
           $active={true}
-          onClick={() => handleRemoveSearchWord(item)}
+          onClick={() => removeSearchwordMutate(item)}
         >
           {item.replace('#', '')}
           <SvgComp
@@ -189,7 +73,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
             size="1rem"
             onClick={(event) => {
               event.stopPropagation();
-              handleDeleteSearchWord(item);
+              deleteSearchwordMutate(item);
             }}
           />
           {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
@@ -199,7 +83,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
         <Style.Button
           key={item}
           $active={false}
-          onClick={() => handleAddKeyword(item)}
+          onClick={() => addKeywordMutate(item)}
         >
           {item}
         </Style.Button>
@@ -208,7 +92,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
         <Style.Button
           key={item}
           $active={false}
-          onClick={() => handleAddSearchWord(item)}
+          onClick={() => addSearchwordMutate(item)}
         >
           {item}
           {item && (
@@ -217,7 +101,7 @@ const MyKeywordList = ({ userKeywordList, searchWordList }: Props) => {
               size="1rem"
               onClick={(event) => {
                 event.stopPropagation();
-                handleDeleteSearchWord(item);
+                deleteSearchwordMutate(item);
               }}
             />
           )}

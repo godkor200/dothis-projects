@@ -4,6 +4,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
+import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
+import {
+  useCreateSearchwordMutation,
+  useResetSearchwordMutation,
+} from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
@@ -13,13 +18,8 @@ import { cn } from '@/utils/cn';
 import MyKeywordList from './MyKeywordList';
 
 const SearchBar = () => {
-  const [open, setOpen] = useState(false);
-
   // 비제어로 하려고 했지만, submit조건이 아니고 계속 트랙킹을 해야해서 적절하지않은 것 같다.
   // const searchInputRef = useRef<HTMLInputElement>(null);
-
-  const { data: userData } = useGetUserInfo();
-  const [isPending, startTransition] = useTransition();
 
   // const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
   //   if (e.key === 'Enter' && searchInputRef.current?.value !== '') {
@@ -33,85 +33,32 @@ const SearchBar = () => {
   //   }
   // };
 
+  const [open, setOpen] = useState(false);
+
   const [searchInput, setSearchInput] = useState('');
 
   const [input, setInput] = useState('');
 
+  const [isPending, startTransition] = useTransition();
+
+  const { data: userData } = useGetUserInfo();
+
   const { data } = useGetAutoCompleteWord(searchInput);
 
-  const queryClient = useQueryClient();
+  const handleInput = useDebounce((input) => setSearchInput(input), 200, [
+    searchInput,
+  ]);
 
-  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
-    },
-  });
+  const { mutate: createSearchwordMutate } = useCreateSearchwordMutation();
 
-  const { mutate: mutateSearchWord } = apiClient(
-    1,
-  ).user.putSearchWord.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
-      queryClient.invalidateQueries(['user']);
-    },
-  });
+  const { mutate: resetKeywordMutate } = useResetKeywordMutation();
+
+  const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
 
   const handleResetKeyword = () => {
-    mutateSearchWord({
-      body: { searchWord: [] },
-    });
-    mutate({
-      body: { tag: resetKeyword(userData?.personalizationTag) },
-    });
+    resetSearchwordMutate();
+    resetKeywordMutate();
   };
-
-  const resetKeyword = (userKeyword: string | undefined | null) => {
-    if (userKeyword === null || userKeyword === undefined) {
-      throw new Error('데이터를 생성하는데 문제가 생겼습니다.');
-    }
-
-    const dataArray = userKeyword.split(',');
-
-    for (let i = 1; i < dataArray.length; i++) {
-      dataArray[i] = dataArray[i].replace('#', '');
-    }
-    return dataArray;
-  };
-
-  const handleCreateSearchWord = (word: string) => {
-    console.log(createSearchWord(userData?.searchWord, word));
-    mutateSearchWord({
-      body: { searchWord: createSearchWord(userData?.searchWord, word) },
-    });
-  };
-
-  const createSearchWord = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 생성하는데 문제가 생겼습니다.');
-      }
-
-      const dataArray = userKeyword ? userKeyword.split(',') : [];
-
-      const index = dataArray.indexOf(keyword);
-
-      const hashindex = dataArray.indexOf(`${keyword}#`);
-
-      if (index !== -1 || hashindex !== -1) {
-        if (hashindex !== -1) {
-          return dataArray;
-        }
-
-        dataArray[index] = `${keyword}#`;
-      } else {
-        dataArray.unshift(`${keyword}#`);
-      }
-
-      return dataArray;
-    },
-    [],
-  );
 
   const checkHashKeyword = useCallback(
     (userKeyword: string | undefined | null, keyword: string) => {
@@ -132,10 +79,6 @@ const SearchBar = () => {
     },
     [],
   );
-
-  const handleInput = useDebounce((input) => setSearchInput(input), 200, [
-    searchInput,
-  ]);
 
   return (
     <div
@@ -174,7 +117,7 @@ const SearchBar = () => {
                     <p
                       className="text-grey700 cursor-pointer text-[18px]"
                       onClick={() =>
-                        handleCreateSearchWord(item.replace('*', ''))
+                        createSearchwordMutate(item.replace('*', ''))
                       }
                     >
                       {item.replace('*', '')}
