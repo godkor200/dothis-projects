@@ -1,6 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
 import {
   convertKeywordsToArray,
@@ -26,16 +27,30 @@ const useGetRelWords = (
 ) => {
   const { data, isLoading } = useGetUserInfo();
 
+  const isSignedIn = useIsSignedIn();
+
+  const isNotSetTags = !data?.personalizationTag;
+
   const queryResult = apiClient(1).relwords.getRelWords.useQuery(
     [
       'relWords',
-      [getHashKeyword(convertKeywordsToArray(data?.personalizationTag))[0]],
+      [
+        getHashKeyword(
+          convertKeywordsToArray(data?.personalizationTag, data?.searchWord),
+        )[0],
+      ],
     ],
     {
       params: {
-        keyword: isHashKeyword(convertKeywordsToArray(data?.personalizationTag))
-          ? getHashKeyword(convertKeywordsToArray(data?.personalizationTag))[0]
-          : guestKeyword[0],
+        keyword:
+          isSignedIn || !isNotSetTags
+            ? getHashKeyword(
+                convertKeywordsToArray(
+                  data?.personalizationTag,
+                  data?.searchWord,
+                ),
+              )[0]
+            : guestKeyword[0],
       },
     },
     { enabled: !isLoading, ...queryOptions },
