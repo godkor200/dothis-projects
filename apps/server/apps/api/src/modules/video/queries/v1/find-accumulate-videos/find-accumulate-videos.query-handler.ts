@@ -17,6 +17,11 @@ import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 
+import {
+  FindVideoDateQuery,
+  VIDEO_DATA_KEY,
+} from '@Apps/modules/video/dtos/find-videos.dtos';
+
 @QueryHandler(FindAccumulateVideosDtos)
 export class FindAccumulateVideosQueryHandler
   implements
@@ -63,10 +68,16 @@ export class FindAccumulateVideosQueryHandler
     const subscribers = channel[0].channel_subscribers;
     const userSection = this.getRangeValues(subscribers);
 
+    const revisedArg = new FindVideoDateQuery({
+      ...arg,
+      data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.CHANNEL_ID],
+    });
+
     const searchRelatedVideo =
       await this.video.findvideoIdfullScanAndVideos<IFindVideoIDAndChannelIdRes>(
-        arg,
+        revisedArg,
       );
+
     if (!searchRelatedVideo) return Err(new VideoNotFoundError());
     const {
       channelIds,
@@ -79,11 +90,12 @@ export class FindAccumulateVideosQueryHandler
       },
       { channelIds: [], videoIds: [] },
     );
-
+    //os에서 불러 올때 날짜를 오름차순으로 불러 와야함 추후 데이터 정상화후 asc로 불러와야됨
     const channelHistoryRes =
       await this.channelHistory.findChannelHistoryFullscan(channelIds);
 
     if (!channelHistoryRes) return Err(new ChannelHistoryNotFoundError());
+
     return Ok({
       videoTotal: videoIds.length,
       userSection: userSection.sec,
@@ -139,7 +151,7 @@ export class FindAccumulateVideosQueryHandler
    */
   private getRangeValues(num: number) {
     for (let range of this.ranges) {
-      if (num >= range.gte && num <= range.lte) {
+      if (num >= range.gte && num < range.lte) {
         return { gte: range.gte, lte: range.lte, sec: range.section };
       }
     }
@@ -166,11 +178,15 @@ export class FindAccumulateVideosQueryHandler
         if (video.channel_id === item.channel_id) {
           const subscribers = item.channel_subscribers;
           for (let range of rangesWithCount) {
-            if (subscribers >= range.gte && subscribers <= range.lte) {
+            if (subscribers >= range.gte && subscribers < range.lte) {
               range.number++;
               break;
             }
           }
+          /**
+           * os에서 불러 올때 날짜를 오름차순으로 불러 올떄만 가능한 로직
+           */
+          break;
         }
       }
     }

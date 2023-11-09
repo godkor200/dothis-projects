@@ -1,15 +1,17 @@
 import { z } from 'zod';
 
 export const zChannelHistoryModel = z.object({
-  id: z.string().nullable(),
+  channel_id: z.string(),
 
-  channelId: z.string(),
+  channel_subscribers: z.number(),
 
-  totalView: z.number(),
+  channel_total_views: z.number(),
 
-  totalVideos: z.number(),
+  channel_total_videos: z.number(),
 
-  averageViews: z.number(),
+  channel_average_views: z.number(),
+
+  crawled_date: z.string(),
 });
 
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
