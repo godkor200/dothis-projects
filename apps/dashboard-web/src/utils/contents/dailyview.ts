@@ -35,8 +35,14 @@ export const sumViews = (data: (DailyView | undefined)[]) => {
   return result;
 };
 
+/**
+ * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
+ * @param data getExpectedView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
+ * @returns   date: expected_views의,  형식을 가진다. (expected_views의 평균을 value로, 날짜를 key로 가진다.)
+ */
 export const averageViews = (data: (ExpectedView | undefined)[]) => {
   const result: Record<string, number> = {};
+  const dateCount: Record<string, number> = {};
 
   data?.forEach((item) => {
     if (item) {
@@ -45,18 +51,26 @@ export const averageViews = (data: (ExpectedView | undefined)[]) => {
 
       if (result[date]) {
         result[date] += views;
+        dateCount[date] += 1;
       } else {
         result[date] = views;
+        dateCount[date] = 1;
       }
     }
   });
 
-  if (Object.keys(result).length !== 0) {
-    for (const date of Object.keys(result)) {
-      const count = data.filter((item) => item?.date === date).length;
+  for (const date in result) {
+    //for-in 루프를 사용하여 객체의 속성을 반복할 때, 객체의 프로토타입 체인에 있는 속성도 포함될 수 있다, 이때 hasOwnProperty를 사용하면 해당 속성이 직접 객체에 속해 있는지를 확인하기 위해 안정성을 위해 추가
+    if (result.hasOwnProperty(date)) {
+      const count = dateCount[date];
       result[date] = Math.round(result[date]) / count;
     }
   }
+
+  // for (const date of Object.keys(result)) {
+  //   const count = data.filter((item) => item?.date === date).length;
+  //   result[date] = Math.round(result[date]) / count;
+  // }
 
   return result;
 };
