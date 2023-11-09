@@ -14,3 +14,7 @@ export const zRelWords = z.object({
 });
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;
+
+export const zAutoCompleteWords = z.object({
+  data: z.array(z.string()),
+});

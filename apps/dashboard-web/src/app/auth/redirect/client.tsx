@@ -1,19 +1,14 @@
 'use client';
 
 import { setCookie } from 'cookies-next';
-import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import LoginLoadingComponent from '@/components/Auth/LoginLoading';
 import { isProduction } from '@/constants/dev';
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useAuthActions } from '@/store/authStore';
-import { apiClient } from '@/utils/api/apiClient';
-import {
-  combinedKeywordsAndTags,
-  convertKeywordsToArray,
-  isHashKeyword,
-} from '@/utils/keyword';
+import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 const isServer = typeof window === 'undefined';
 
@@ -35,27 +30,19 @@ const Client = ({
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
 
-  const { data: userData, isLoading: userLoading } = apiClient(
-    1,
-  ).auth.getOwnInfo.useQuery(['user']);
-
-  const { data: keyword, isLoading: keywordLoading } = apiClient(
-    2,
-  ).user.getUserKeyword.useQuery(['keyword']);
+  const { data: userData, isLoading: userLoading } = useGetUserInfo();
 
   useEffect(() => {
-    if (!userLoading && !keywordLoading) {
+    if (!userLoading) {
       if (accessToken && refreshToken) {
         setIsSignedIn(true);
         setIsTokenRequired(false);
-        if (isNewUser === 'true' || !userData?.body.data.agreePromotion) {
+        if (isNewUser === 'true' || !userData?.agreePromotion) {
           router.replace('/auth/terms');
           return;
         }
         if (
-          !isHashKeyword(
-            convertKeywordsToArray(userData.body.data.personalizationTag),
-          )
+          !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
         ) {
           router.replace('/auth/choose-keyword');
           return;
@@ -66,7 +53,7 @@ const Client = ({
         throw new Error('로그인이 정상적으로 진행되지 않았습니다.');
       }
     }
-  }, [userLoading, keywordLoading]);
+  }, [userLoading]);
   return (
     <>
       {/* 현재 LoadingComponent가 서버 측 redirect로는 나오지않는 이슈가 존재*/}

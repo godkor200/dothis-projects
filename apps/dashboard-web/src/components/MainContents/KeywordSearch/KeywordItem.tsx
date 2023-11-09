@@ -1,46 +1,39 @@
-import type { MouseEvent, MutableRefObject, SetStateAction } from 'react';
+import type { MouseEvent, MutableRefObject } from 'react';
 import { useRef } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 
-import type { KeywordCategory } from './KeywordSlide';
 import * as Style from './style';
 
 interface KeywordCategoryContentProps<T> {
   $active: boolean;
   label: string;
   keyValue: string;
+  isSearchWord: boolean;
   handleScrollX: (target: MutableRefObject<T | null>) => void;
-  setKeywordList: React.Dispatch<SetStateAction<string[]>>;
-  setTargetKeywords: React.Dispatch<SetStateAction<string[]>>;
+  setRemoveKeyword: (keyword: string) => void;
+  setDeleteSearchword?: (keyword: string) => void;
 }
 
 const KeywordItem = <T extends HTMLButtonElement>({
   $active,
   label,
   keyValue,
+  isSearchWord,
   handleScrollX,
-  setKeywordList,
-  setTargetKeywords,
+  setRemoveKeyword,
+  setDeleteSearchword,
 }: KeywordCategoryContentProps<T>) => {
   const targetRef = useRef<T | null>(null);
 
   //선택된 키워드를 해당 KeywordList에서 아예 제거해버리는 함수입니다.
-  const removeKeyword = (event: MouseEvent) => {
+  const deleteKeyword = (event: MouseEvent, keyValue: string) => {
     event.stopPropagation();
-    setKeywordList((prev) => prev.filter((item) => item !== keyValue));
+    setDeleteSearchword!(keyValue);
   };
 
-  const toggleTargetKeyword = (prev: string[], keyword: string) => {
-    if (prev.includes(keyword)) {
-      return prev.filter((el) => el !== keyValue);
-    }
-    return [...prev, keyValue];
-  };
-
-  const handleToggleKeyword = () => {
-    setTargetKeywords((prev) => toggleTargetKeyword(prev, keyValue));
-
+  const handleRemoveKeyword = (keyword: string) => {
+    setRemoveKeyword(keyword);
     handleScrollX(targetRef);
   };
 
@@ -48,14 +41,14 @@ const KeywordItem = <T extends HTMLButtonElement>({
     <Style.Button
       ref={targetRef}
       $active={$active}
-      onClick={handleToggleKeyword}
+      onClick={() => handleRemoveKeyword(keyValue)}
     >
       {label}
-      {$active && (
+      {isSearchWord && (
         <SvgComp
           icon="KeywordDelete"
           size="1rem"
-          onClick={(event) => removeKeyword(event)}
+          onClick={(event) => deleteKeyword(event, keyValue)}
         />
       )}
     </Style.Button>

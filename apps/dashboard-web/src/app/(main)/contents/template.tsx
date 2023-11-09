@@ -2,9 +2,9 @@
 
 import type { PropsWithChildren } from 'react';
 
-import KeywordSearchResult from '@/components/MainContents/KeywordSeacrh/KeywordSearchResult';
-import KeywordSlide from '@/components/MainContents/KeywordSeacrh/KeywordSlide';
-import SearchBar from '@/components/MainContents/KeywordSeacrh/SearchBar';
+import KeywordSearchResult from '@/components/MainContents/KeywordSearch/KeywordSearchResult';
+import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
+import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 
 const MainContentTemplate = ({ children }: PropsWithChildren) => {
@@ -12,7 +12,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <KeywordSlide keyword={data?.personalizationTag} />
+      <KeywordSlide />
       <SearchBar />
       <KeywordSearchResult />
 
