@@ -6,6 +6,11 @@ type DailyView = ClientInferResponseBody<
   200
 >['data'][0];
 
+type ExpectedView = ClientInferResponseBody<
+  typeof apiRouter.expectViews.getExpectedViews,
+  200
+>['data'][0];
+
 /**
  * getDailyView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 increase_views를 모두 합산하는 함수
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
@@ -30,12 +35,41 @@ export const sumViews = (data: (DailyView | undefined)[]) => {
   return result;
 };
 
+export const averageViews = (data: (ExpectedView | undefined)[]) => {
+  const result: Record<string, number> = {};
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+      const views = item.expected_views;
+
+      if (result[date]) {
+        result[date] += views;
+      } else {
+        result[date] = views;
+      }
+    }
+  });
+
+  if (Object.keys(result).length !== 0) {
+    for (const date of Object.keys(result)) {
+      const count = data.filter((item) => item?.date === date).length;
+      result[date] = Math.round(result[date]) / count;
+    }
+  }
+
+  return result;
+};
+
 /**
  * sumViews의 return으로 나온 data를 Nivo Line그래프 형식에 맞게끔  x, y로 포맷팅을 수정 및 정렬하는 함수
  * @param summedData sumView return 형식으로 param를 받는다
  * @returns Line 그래프에서 활용할 수 있게 data =  [{ x: 날짜, y: 조회수 }] 형식을 가지며, Nivo 형식에 따라 Id값을 추가한 형식이다.
  */
-export const formatToLineGraph = (summedData: Record<string, number>) => {
+export const formatToLineGraph = (
+  summedData: Record<string, number>,
+  title: string,
+) => {
   const formattedResult = [];
 
   for (const date in summedData) {
@@ -50,5 +84,5 @@ export const formatToLineGraph = (summedData: Record<string, number>) => {
     (a, b) => new Date(a.x).getTime() - new Date(b.x).getTime(),
   );
 
-  return [{ id: '일일조회수', data: formattedResult }];
+  return [{ id: title, data: formattedResult }];
 };
