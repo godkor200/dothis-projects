@@ -8,6 +8,8 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import useGetUserInfo from '../query/useGetUserInfo';
 
+// 상수 타입을 생성해서 'DELETE','ADD'이런식으로 분리도 되겠지만. 일단 보류(ex axios POST GET PUT 과 같은 형태 생각중)
+
 export const useAddKeywordMutation = (
   mutationOptions?: UseMutationOptions<
     typeof apiRouter.user.putUpdatePersonalTag,
@@ -35,8 +37,6 @@ export const useAddKeywordMutation = (
         body: { tag: addHashAndConvertToArray(data?.personalizationTag, item) },
       }),
   };
-
-  // 근데 이런식으로 리턴하면 판별을 못함 이전과 같을 때 mutate 취소를 못함.
 };
 
 export const useRemoveKeywordMutation = (

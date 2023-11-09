@@ -8,7 +8,7 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import useGetUserInfo from '../query/useGetUserInfo';
 
-// 타입을 생성해서 'DELETE','ADD'이런식으로 분리도 되겠지만. 일단 보류(ex axios POST GET PUT 과 같은 형태 생각중)
+// 상수 타입을 생성해서 'DELETE','ADD'이런식으로 분리도 되겠지만. 일단 보류(ex axios POST GET PUT 과 같은 형태 생각중)
 
 export const useCreateSearchwordMutation = (
   mutationOptions?: UseMutationOptions<
