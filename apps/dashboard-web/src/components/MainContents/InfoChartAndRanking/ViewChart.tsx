@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import {
@@ -14,18 +16,18 @@ import ExpectedViewChart from './ExpectedViewChart';
 const ViewChart = () => {
   const { data: dailyViewData } = useGetDailyView();
 
-  const dailyViewChartData = formatToLineGraph(
-    sumViews(dailyViewData.flat()),
-    '일일 조회 수',
+  const dailyViewChartData = useMemo(
+    () => formatToLineGraph(sumViews(dailyViewData.flat()), '일일 조회 수'),
+    [dailyViewData],
   );
 
   const { data: expectedViewData } = useGetExpectedView();
 
-  // console.log(
-  //   formatToLineGraph(averageViews(expectedViewData.flat()), '기대조회수'),
-  // );
-
-  console.log(expectedViewData);
+  const expectedViewChartData = useMemo(
+    () =>
+      formatToLineGraph(averageViews(expectedViewData.flat()), '기대 조회 수'),
+    [expectedViewData],
+  );
 
   return (
     <div className="mr-7 flex h-[460px] w-full flex-col">
@@ -33,7 +35,7 @@ const ViewChart = () => {
         <DailyViewChart dailyView={dailyViewChartData} />
       </div>
       <div className="h-3/6 [&_svg]:overflow-visible">
-        <ExpectedViewChart />
+        <ExpectedViewChart expectedView={expectedViewChartData} />
       </div>
     </div>
   );

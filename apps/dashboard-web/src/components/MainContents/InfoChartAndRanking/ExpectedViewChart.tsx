@@ -2,49 +2,21 @@
 
 import { ResponsiveLine } from '@nivo/line';
 
+import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+
 import CustomTooltip from './CustomTooltip';
 import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
 
-const EXPECTEDVIEW_DATA = [
-  {
-    id: '기대 조회 수(단위:배)',
-    data: [
-      {
-        x: '2023-10-11',
-        y: 30,
-      },
-      {
-        x: '2023-10-12',
-        y: 40,
-      },
-      {
-        x: '2023-10-13',
-        y: 70,
-      },
-      {
-        x: '2023-10-14',
-        y: 90,
-      },
-      {
-        x: '2023-10-15',
-        y: 70,
-      },
-      {
-        x: '2023-10-16',
-        y: 100,
-      },
-      {
-        x: '2023-10-17',
-        y: 70,
-      },
-    ],
-  },
-];
+interface Props {
+  expectedView: { id: string; data: { x: string; y: number }[] }[];
+}
 
-const ExpectedViewChart = () => {
+const ExpectedViewChart = ({ expectedView }: Props) => {
+  console.log(expectedView);
+  const selectedRelWord = useSelectedRelWord();
   return (
     <ResponsiveLine
-      data={EXPECTEDVIEW_DATA}
+      data={expectedView}
       margin={{ bottom: 50, left: 60 }}
       lineWidth={2}
       colors={['#818CF8']}
@@ -64,13 +36,14 @@ const ExpectedViewChart = () => {
       }}
       yFormat=" >-.2f"
       enableGridX={false}
+      enablePoints={false}
       gridYValues={[0, 20, 40, 60, 80, 100, 120]}
       axisTop={null}
       axisRight={null}
       axisBottom={{
         format: '%m.%d',
         legendOffset: -12,
-        tickValues: 'every 2 days',
+        tickValues: 'every 1 days',
       }}
       axisLeft={{
         tickSize: 0,
@@ -81,13 +54,12 @@ const ExpectedViewChart = () => {
         legendPosition: 'middle',
       }}
       useMesh={true}
-      enablePoints={false}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword="물냉면"
+          keyword={selectedRelWord!}
           label={VIEWCHART_LABEL.EXPECTEDVIEW}
-          value={EXPECTEDVIEW_DATA[0].data[point.index].y}
-          date={EXPECTEDVIEW_DATA[0].data[point.index].x}
+          value={expectedView[0].data[point.index].y}
+          date={expectedView[0].data[point.index].x}
         />
       )}
       legends={[
