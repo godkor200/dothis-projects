@@ -2,14 +2,13 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import Modal from '@/components/common/Modal/AuthModal/Modal';
-import SignUpContents from '@/components/common/Modal/AuthModal/SignUpContents';
-import AuthProvider from '@/components/feature/AuthProvider';
+import SignUp from '@/components/Auth/SignUp';
+import Modal from '@/components/common/Modal/AuthModal/AuthModal';
+import AuthProvider from '@/components/common/Provider/AuthProvider';
 import { useIsOpenSignUpModal } from '@/store/authStore';
 
 const RootTemplate = ({ children }: StrictPropsWithChildren) => {
   const isOpenSignUpModal = useIsOpenSignUpModal();
-
   const searchParams = useSearchParams();
 
   return (
@@ -17,7 +16,7 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
       {children}
       {searchParams?.get('steps') === 'signUp' && isOpenSignUpModal && (
         <Modal>
-          <SignUpContents />
+          <SignUp />
         </Modal>
       )}
     </AuthProvider>

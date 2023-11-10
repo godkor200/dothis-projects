@@ -10,15 +10,6 @@
     "tsConfigPath": "apps/api/tsconfig.app.json"
   },
   "projects": {
-    "scheduler": {
-      "type": "application",
-      "root": "apps/scheduler",
-      "entryFile": "main",
-      "sourceRoot": "apps/scheduler/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/scheduler/tsconfig.app.json"
-      }
-    },
     "api": {
       "type": "application",
       "root": "apps/api",

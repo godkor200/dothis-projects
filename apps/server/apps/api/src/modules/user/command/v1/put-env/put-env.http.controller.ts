@@ -14,6 +14,7 @@ import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-r
 import { PutEnvDtos } from '@Apps/modules/user/dtos/put-env.dtos';
 import { match, Result } from 'oxide.ts';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
@@ -45,6 +46,7 @@ export class PutEnvHttpController {
   @ApiOkResponse({
     description: '성공여부를 리턴합니다.',
   })
+  @ApiBearerAuth('Authorization')
   @ApiBody({
     isArray: false,
     type: Boolean,

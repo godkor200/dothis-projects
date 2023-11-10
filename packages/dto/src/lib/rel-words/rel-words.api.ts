@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { zRelWords } from './rel-words.model';
+import { zAutoCompleteWords, zRelWords } from './rel-words.model';
 
 export const relWordsApiUrl = '/rel-words';
 
@@ -30,9 +30,9 @@ export const relWordsApi = c.router({
   },
   getAutoCompleteWords: {
     method: 'GET',
-    path: `auto-complete/:word`,
+    path: `/auto-complete/:word`,
     responses: {
-      200: 'success',
+      200: zAutoCompleteWords,
       404: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
