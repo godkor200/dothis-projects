@@ -12,7 +12,6 @@ interface Props {
 }
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
-  console.log(expectedView);
   const selectedRelWord = useSelectedRelWord();
   return (
     <ResponsiveLine
