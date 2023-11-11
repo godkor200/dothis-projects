@@ -1,6 +1,3 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
-import type { UseQueryOptions } from '@ts-rest/react-query';
-
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
