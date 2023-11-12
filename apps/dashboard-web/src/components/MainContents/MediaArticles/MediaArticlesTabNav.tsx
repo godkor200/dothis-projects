@@ -1,24 +1,46 @@
+'use client';
+
+import Link from 'next/link';
+import { useState } from 'react';
+
 import { cn } from '@/utils/cn';
 
-interface MediaArticlesTabNavProps {}
+export type ArticleType = (typeof TabNavData)[number]['category'];
 
-const TabNavData = [
+interface MediaArticlesTabNavProps {
+  selectedArticle: ArticleType;
+}
+
+export const TabNavData = [
   { title: '유튜브', category: 'youtube' },
-  { title: '커뮤니티', category: 'community' },
-  { title: 'SNS', category: 'SNS' },
+  // { title: '커뮤니티', category: 'community' },
+  // { title: 'SNS', category: 'SNS' },
   { title: '뉴스', category: 'news' },
 ] as const;
 
-const MediaArticlesTabNav = () => {
+const MediaArticlesTabNav = ({ selectedArticle }: MediaArticlesTabNavProps) => {
   return (
-    <header className="border-grey400 bg-grey00 flex gap-[0.75rem] border-b border-solid pb-[30px]">
+    <header
+      id="media"
+      className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
+    >
       {TabNavData.map((item, index) => (
         <>
-          <h2 className={'cursor-pointer text-[32px] font-bold'}>
+          <Link
+            href={{
+              pathname: 'contents',
+              query: { relatedContent: item.category },
+              hash: 'media',
+            }}
+            replace
+            className={cn('cursor-pointer text-[32px] font-bold', {
+              'text-grey700': selectedArticle === item.category,
+            })}
+          >
             {item.title}
-          </h2>
+          </Link>
           {index !== TabNavData.length - 1 && (
-            <h2 className="text-grey400 text-[32px] font-bold">/</h2>
+            <p className="text-[32px] font-bold">/</p>
           )}
         </>
       ))}

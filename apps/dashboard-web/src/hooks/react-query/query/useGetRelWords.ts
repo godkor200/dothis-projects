@@ -3,11 +3,7 @@ import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
-import {
-  convertKeywordsToArray,
-  getHashKeyword,
-  isHashKeyword,
-} from '@/utils/keyword';
+import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import useGetUserInfo from './useGetUserInfo';
 const guestKeyword = ['먹방', '와인'];
