@@ -115,16 +115,14 @@ export default function Page1_abtest() {
               내일 만들 영상 주제 추천은 <br /> DOTHIS
             </MainTitle>
             <ButtonContainer>
-              {/* <Button onClick={() => router.push(CONTENT)}> */}
-              <Button onClick={() => router.push(CONTENT_URL)}>
+              <Button onClick={() => router.push(CONTENT)}>
                 <Image
                   src={'/images/landing/logo_small.png'}
                   alt={'logo_small'}
                   width={30}
                   height={30}
                 />
-                {/* <p>무료 체험하기</p> */}
-                <p>예약하기</p>
+                <p>무료 체험하기</p>
               </Button>
               <Button
                 onClick={() => {

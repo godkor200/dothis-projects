@@ -1,11 +1,7 @@
 import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useIsSignedIn } from '@/store/authStore';
-import {
-  convertKeywordsToArray,
-  getHashKeyword,
-  isHashKeyword,
-} from '@/utils/keyword';
+import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 /**
  * 해당 hook은 GUEST일 경우에 LocalStorage에 따른 hook을 사용하면서 달라질 수 있어서 아직 수정하지는 않았습니다.
