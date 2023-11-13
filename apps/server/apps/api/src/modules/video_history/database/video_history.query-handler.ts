@@ -1,15 +1,17 @@
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/database/video_history.query-handler.port';
+import { VIDEO_HISTORY_DATA } from '@Apps/modules/video_history/interface/video_history.res';
 
 export class VideoHistoryQueryHandler
   extends AwsOpensearchConnetionService
   implements VideoHistoryQueryHandlerPort
 {
-  async findVideoHistoryFullscan<T>(
+  async findVideoHistoryFullScan<T>(
     videoIds: string[],
     fromDate: string,
     toDate: string,
     clusterNumber: string,
+    data?: VIDEO_HISTORY_DATA[],
   ): Promise<T[]> {
     const searchQuery = {
       index: `video-history-${clusterNumber}-*`,
@@ -35,6 +37,7 @@ export class VideoHistoryQueryHandler
             ],
           },
         },
+        _source: data,
       },
     };
 
