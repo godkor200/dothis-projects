@@ -2,7 +2,7 @@ import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 export interface ChannelHistoryOutboundPort {
-  findChannelHistoryFullscan<T>(
+  findChannelHistoryFullScan<T>(
     channelIds: string[],
     data?: CHANNEL_DATA_KEY[],
   ): Promise<T[]>;
