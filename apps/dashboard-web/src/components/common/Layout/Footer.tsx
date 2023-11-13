@@ -16,21 +16,30 @@ const Footer = () => {
         </div>
 
         {/* 구글 로그인 인증용 disable */}
-        {/* <div className="flex gap-[2.5rem] text-[1.125rem] font-bold">
+        <div className="flex gap-[2.5rem] text-[1.125rem] font-bold">
           <Link
+            href={
+              'https://dothis-world.notion.site/428851c41e844e079b23f9acabcd48d9' as Route
+            }
+            target="_blank"
+          >
+            <span>서비스 이용약관</span>
+          </Link>
+          <Link
+            href={
+              'https://dothis-world.notion.site/aa4d04666e0e4b1486bb6e2c69dd5c30' as Route
+            }
+            target="_blank"
+          >
+            <span>개인정보 처리방침</span>
+          </Link>
+{/*       <Link
             href={
               'https://dothis-world.notion.site/1a7e28e24d3d406399d784da996fa1c8' as Route
             }
           >
             <span>회사소개</span>
           </Link>
-          <Link href="/about/policy">
-            <span>서비스 이용약관</span>
-          </Link>
-          <Link href="/about/privacy">
-            <span>개인정보 처리방침</span>
-          </Link>
-
           <Link
             href={
               'https://dothis-world.notion.site/b19467c5c36842cb95939bb98673f20d?v=1d43683f41e84112820f6771a8b02c80' as Route
@@ -44,8 +53,8 @@ const Footer = () => {
             target="_blank"
           >
             <span>고객센터</span>
-          </Link>
-        </div> */}
+          </Link> */}
+        </div>
       </div>
 
       <p className="text-grey600 mb-[1.25rem] text-[0.875rem]">
