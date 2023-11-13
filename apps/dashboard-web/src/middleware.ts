@@ -38,9 +38,23 @@ export async function middleware(request: NextRequest) {
   //   return response;
   // }
 
-  const response = NextResponse.next();
+  let count = 0;
+  if (request.nextUrl.pathname.startsWith('/contents')) {
+    const test = ['먹방', '도라에몽', '이태원', '엽떡'];
 
-  return response;
+    console.log(request);
+
+    return NextResponse.redirect(
+      new URL(
+        `/contents?guestKeyword=${test[Math.floor(Math.random() * 2)]}`,
+        request.nextUrl,
+      ),
+    );
+  }
+
+  // const response = NextResponse.next();
+
+  // return response;
 }
 
 export const config = {

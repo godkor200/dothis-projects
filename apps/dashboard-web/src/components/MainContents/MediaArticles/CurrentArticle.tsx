@@ -28,7 +28,7 @@ const CurrentArticle = ({
       <div className="h-[300px] w-[640px] overflow-hidden">
         <Image
           unoptimized
-          src={externaImageLoader(getMainImage(image))}
+          src={image}
           width={640}
           height={300}
           alt="Picture of the author"

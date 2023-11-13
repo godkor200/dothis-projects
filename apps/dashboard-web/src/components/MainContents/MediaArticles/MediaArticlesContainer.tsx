@@ -1,12 +1,19 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
+
+import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
+import {
+  externaImageLoader,
+  externalYouTubeImageLoader,
+  getMainImage,
+} from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import type { CurrentArticleProps } from './CurrentArticle';
 import CurrentArticle from './CurrentArticle';
 import type { ArticleType } from './MediaArticlesTabNav';
-
 interface MainContentContainerProps {
   articleListData: CurrentArticleProps[];
   selectedArticle: ArticleType;
@@ -16,11 +23,15 @@ const MediaArticlesContainer = ({
   articleListData,
   selectedArticle,
 }: MainContentContainerProps) => {
+  const [pageIndex, setPageIndex] = useState(4);
+
   const [contentIndex, setContentIndex] = useState(0);
 
   const handleSetContentIndex = (index: number) => {
     setContentIndex(index);
   };
+
+  const { data, isLoading } = useGetVideoData();
 
   return (
     <div className="mt-10 flex gap-[1.25rem]">
@@ -37,6 +48,18 @@ const MediaArticlesContainer = ({
           <ArticleList
             articleListData={articleListData}
             handleSetContentIndex={handleSetContentIndex}
+          />
+        </>
+      ) : !isLoading ? (
+        <>
+          <Image
+            src={externalYouTubeImageLoader(
+              data[pageIndex]?.data[contentIndex]._source.video_id,
+            )}
+            width={640}
+            height={300}
+            alt="Picture of the author"
+            style={{ objectFit: 'cover', layout: 'fill' }}
           />
         </>
       ) : (

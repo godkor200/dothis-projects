@@ -32,7 +32,7 @@ const ArticleList = ({
               <div className="h-[74px] w-[132px] overflow-hidden rounded-md">
                 <Image
                   unoptimized
-                  src={externaImageLoader(getMainImage(image))}
+                  src={image}
                   onError={handleImageError}
                   width={132}
                   height={74}
