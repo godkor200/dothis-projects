@@ -1,17 +1,15 @@
 import { CommandBus } from '@nestjs/cqrs';
 import {
-  Body,
   Controller,
   HttpStatus,
   InternalServerErrorException,
   NotFoundException,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -20,17 +18,19 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { PutAgreePromotionDtos } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
+import { match, Result } from 'oxide.ts';
+import { LogoutDto } from '@Apps/common/auth/commands/v1/logout/logout.command-handler';
+import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
-import { match, Result } from 'oxide.ts';
-const c = nestControllerContract(apiRouter.user);
-const { putAgreePromotion } = c;
-const { responses, description, summary } = putAgreePromotion;
+import { IRes } from '@Libs/commons/src/types/res.types';
+import { Response } from 'express';
+const c = nestControllerContract(apiRouter.auth);
+const { logout } = c;
+const { responses, description, summary } = logout;
 @Controller()
 @ApiTags('유저 관련')
-export class PutAgreePromotionHttpController {
+export class LogoutHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @UseGuards(JwtAccessGuard)
@@ -44,34 +44,33 @@ export class PutAgreePromotionHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
-  @ApiBody({
-    isArray: false,
-    type: Boolean,
-    description: '동의여부, {isAgree: boolean}',
-    required: true,
-  })
   @ApiOkResponse({
-    description: '성공여부를 리턴합니다.',
+    description: responses[200],
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
     description: responses[404],
   })
-  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiBearerAuth('Authorization')
-  @TsRest(c.putAgreePromotion)
+  @TsRest(logout)
   async execute(
-    @Body('isAgree') isAgree: boolean,
+    @Res({ passthrough: true }) res: Response,
     @User() user: UserInfoCommandDto,
   ): Promise<IRes<void>> {
-    const arg = new PutAgreePromotionDtos({ isAgree, id: user.id });
+    const arg = new LogoutDto({ id: user.id });
     const result: Result<boolean, NotFoundException> =
       await this.commandBus.execute(arg);
+
     return match(result, {
-      Ok: (result) => ({ success: result }),
+      Ok: (result) => {
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        return { success: result };
+      },
       Err: (err) => {
         if (err instanceof InternalServerErrorException) {
           throw new InternalServerErrorException();
