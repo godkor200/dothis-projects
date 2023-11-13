@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { number, z } from 'zod';
 
 export const zRelWords = z.object({
   data: z.object({
@@ -12,5 +12,12 @@ export const zRelWords = z.object({
       ),
   }),
 });
+
+export const zRankRel = z.object({
+  expectedViews: z.number().describe('기대조회수'),
+  word: z.string().describe('연관어'),
+});
+
+export type TRankRes = z.TypeOf<typeof zRankRel>;
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;

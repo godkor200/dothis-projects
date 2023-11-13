@@ -41,4 +41,16 @@ export const relWordsApi = c.router({
     description:
       '자동완성 단어를 가져옵니다. 뒤에 * 붙어있는 단어는 완전단어로 우리 디비에 탐색어로 등록되있는 단어를 뜻합니다.',
   },
+  rankRel: {
+    method: 'GET',
+    path: `${relWordsApiUrl}/rank/:keyword`,
+    responses: {
+      200: 'success',
+      404: 'Not Found',
+      500: '서버에 문제가 있으면 리턴한다.',
+    },
+    pathParams: z.object({ keyword: z.string() }),
+    summary: '연관어를 기대조회수로 순위를 매깁니다.',
+    description: '연관어를 기대조회수로 순위를 매깁니다.',
+  },
 });
