@@ -21,6 +21,8 @@ import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
 } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { FindAccumulateVideosRes } from '@Apps/modules/video/dtos/find-accumulate-videos.res';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 @QueryHandler(FindAccumulateVideosDtos)
 export class FindAccumulateVideosQueryHandler
@@ -92,7 +94,10 @@ export class FindAccumulateVideosQueryHandler
     );
     //os에서 불러 올때 날짜를 오름차순으로 불러 와야함 추후 데이터 정상화후 asc로 불러와야됨
     const channelHistoryRes =
-      await this.channelHistory.findChannelHistoryFullscan(channelIds);
+      await this.channelHistory.findChannelHistoryFullScan<FindAccumulateVideosRes>(
+        channelIds,
+        [CHANNEL_DATA_KEY.CHANNEL_ID, CHANNEL_DATA_KEY.CHANNEL_SEUBSCRIBERS],
+      );
 
     if (!channelHistoryRes) return Err(new ChannelHistoryNotFoundError());
 
@@ -167,7 +172,7 @@ export class FindAccumulateVideosQueryHandler
    */
   private countSubscribersByRange(
     VideoData: IFindVideoIDAndChannelIdRes[],
-    ChannelData: IChannelHistoryRes[],
+    ChannelData: FindAccumulateVideosRes[],
   ): ISection[] {
     const rangesWithCount = this.ranges.map((range) => ({
       ...range,
