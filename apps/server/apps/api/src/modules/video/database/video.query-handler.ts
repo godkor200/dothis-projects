@@ -1,5 +1,8 @@
-import { from, lastValueFrom, map } from 'rxjs';
-import { VideoServicePort } from './video.service.port';
+import { from, last, lastValueFrom, map } from 'rxjs';
+import {
+  FindVideoByMultipleIndex,
+  VideoServicePort,
+} from './video.service.port';
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
@@ -9,11 +12,62 @@ import {
 
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { query } from 'express';
 
 export class VideoQueryHandler
   extends AwsOpensearchConnetionService
   implements VideoServicePort
 {
+  async findVideosWithMultipleIndex<T>(
+    arg: FindVideoByMultipleIndex,
+  ): Promise<T[]> {
+    const index = arg.cluster.map((e) => 'video-' + e).join(',');
+
+    let searchQuery = {
+      index,
+      scroll: '10s',
+      size: 10000,
+      body: {
+        query: {
+          bool: {
+            must: [
+              {
+                bool: {
+                  should: [
+                    {
+                      wildcard: {
+                        video_tag: `*${arg.keyword}*`,
+                      },
+                    },
+                    {
+                      wildcard: {
+                        video_title: `*${arg.keyword}*`,
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        _source: arg.data,
+      },
+    };
+    if (arg.relWord)
+      searchQuery.body.query.bool.must[0].bool.should.push(
+        {
+          wildcard: {
+            video_tag: `*${arg.relWord}*`,
+          },
+        },
+        {
+          wildcard: {
+            video_title: `*${arg.relWord}*`,
+          },
+        },
+      );
+    return await this.fullScan<T>(searchQuery);
+  }
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
       index: 'new_video',

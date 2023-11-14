@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 describe('calculateIncrease 함수', () => {
   it('should ', async () => {
-    mockFindVideoHistoryOsAdapter.findVideoHistoryFullscan.mockReturnValue(
+    mockFindVideoHistoryOsAdapter.findVideoHistoryFullScan.mockReturnValue(
       Promise.resolve(example),
     );
     const arg: FindDailyViewsQuery = {
@@ -78,7 +78,7 @@ describe('예외 처리', () => {
     mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
       Promise.resolve(['1', '2']),
     );
-    mockFindVideoHistoryOsAdapter.findVideoHistoryFullscan.mockReturnValue(
+    mockFindVideoHistoryOsAdapter.findVideoHistoryFullScan.mockReturnValue(
       Promise.resolve(null),
     );
     const arg: FindDailyViewsQuery = {

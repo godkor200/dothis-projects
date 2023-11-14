@@ -57,9 +57,16 @@ export class AwsOpensearchConnetionService {
       }
     }
 
-    console.log('길이가 맞나?', result.length === total_length);
+    console.log('길이가 맞나?', total_length, result.length === total_length);
 
     console.log('TOTAL TIME:', Date.now() - start_time, 'milliseconds.');
+    console.log(
+      '쿼리타입 , 함수타입',
+      query,
+      'TOTAL TIME:',
+      (Date.now() - start_time) / 1000,
+      'seconds.',
+    );
 
     return result;
   }

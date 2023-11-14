@@ -1,8 +1,9 @@
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 import { from, lastValueFrom, map } from 'rxjs';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 export class ChannelHistoryQueryHandler
   extends AwsOpensearchConnetionService
@@ -13,9 +14,10 @@ export class ChannelHistoryQueryHandler
    * ps: 현재 데이터 안정화 작업이 되지 않았으므로 이전에 데이터를 불러온다.
    * @param channelIds
    */
-  async findChannelHistoryFullscan(
+  async findChannelHistoryFullScan<T>(
     channelIds: string[],
-  ): Promise<IChannelHistoryRes[]> {
+    data?: CHANNEL_DATA_KEY[],
+  ): Promise<T[]> {
     let searchQuery = {
       index: `new_channel_history`,
       scroll: '10s',
@@ -47,9 +49,10 @@ export class ChannelHistoryQueryHandler
             ],
           },
         },
+        _source: data,
       },
     };
-    return await this.fullScan<IChannelHistoryRes>(searchQuery);
+    return await this.fullScan<T>(searchQuery);
   }
 
   async findChannelHistoryByLimit(

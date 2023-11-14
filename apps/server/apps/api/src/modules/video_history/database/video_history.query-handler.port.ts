@@ -1,10 +1,11 @@
-import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import { VIDEO_HISTORY_DATA } from '@Apps/modules/video_history/interface/video_history.res';
 
 export interface VideoHistoryQueryHandlerPort {
-  findVideoHistoryFullscan(
+  findVideoHistoryFullScan<T>(
     videoId: string[],
     from: string,
     to: string,
     clusterNumber: string,
-  ): Promise<IFindVideoHistoryResposne[]>;
+    data?: VIDEO_HISTORY_DATA[],
+  ): Promise<T[]>;
 }

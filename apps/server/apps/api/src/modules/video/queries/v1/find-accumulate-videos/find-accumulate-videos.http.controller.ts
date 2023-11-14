@@ -47,17 +47,17 @@ export class FindAccumulateVideosHttpController {
   @ApiParam({
     name: 'clusterNumber',
     description: '클러스터 번호, 탐색어를 찾을때 클러스터 번호가 표기됩니다.',
-    example: 0,
+    example: 6,
   })
   @ApiQuery({
     name: 'keyword',
     description: '탐색어',
-    example: '이태원',
+    example: '먹방',
   })
   @ApiQuery({
     name: 'relationKeyword',
     description: '연관어, 연관어가 없다면 없어도됩니다.',
-    example: '클라스',
+    example: '불대창',
   })
   @ApiQuery({
     name: 'from',

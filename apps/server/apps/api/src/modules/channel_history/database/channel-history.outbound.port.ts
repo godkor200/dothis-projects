@@ -1,10 +1,11 @@
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { OsRes } from '@Apps/common/aws/interface/os.res.interface';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 export interface ChannelHistoryOutboundPort {
-  findChannelHistoryFullscan(
+  findChannelHistoryFullScan<T>(
     channelIds: string[],
-  ): Promise<IChannelHistoryRes[]>;
+    data?: CHANNEL_DATA_KEY[],
+  ): Promise<T[]>;
 
   findChannelHistoryByLimit(
     channelIds: string[],

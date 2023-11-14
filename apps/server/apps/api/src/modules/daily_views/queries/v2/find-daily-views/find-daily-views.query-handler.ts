@@ -4,7 +4,7 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
-import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
@@ -49,12 +49,13 @@ export class FindDailyViewsQueryOsHandler
     const videos =
       await this.video.findvideoIdfullScanAndVideos<IFindVideoIdRes>(arg);
     if (!videos) return Err(new VideoNotFoundError());
-    const videoHistories = await this.videoHistory.findVideoHistoryFullscan(
-      videos.map((e) => e.video_id),
-      query.from.toString(),
-      query.to.toString(),
-      query.clusterNumber,
-    );
+    const videoHistories =
+      await this.videoHistory.findVideoHistoryFullScan<IFindVideoHistoryResponse>(
+        videos.map((e) => e.video_id),
+        query.from.toString(),
+        query.to.toString(),
+        query.clusterNumber,
+      );
     if (!videoHistories) return Err(new VideoHistoryNotFoundError());
     return Ok(this.calculateIncrease(videoHistories));
   }
@@ -65,7 +66,7 @@ export class FindDailyViewsQueryOsHandler
    * @private
    */
   private calculateIncrease(
-    videoData: IFindVideoHistoryResposne[],
+    videoData: IFindVideoHistoryResponse[],
   ): IIncreaseData[] {
     // Sort the data by 'video_id' and 'crawled_date'
     videoData.sort(
