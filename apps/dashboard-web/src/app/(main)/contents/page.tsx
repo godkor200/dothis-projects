@@ -1,12 +1,21 @@
+import TabNavigation from '@/components/common/TabNavigation';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
 import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
-import type { ArticleType } from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
-import MediaArticlesTabNav from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import relatedContentApi from '@/utils/api/mediaApis';
+
+export const MediaTabNavData = [
+  { title: '유튜브', category: 'youtube' },
+  // { title: '커뮤니티', category: 'community' },
+  // { title: 'SNS', category: 'SNS' },
+  { title: '뉴스', category: 'news' },
+] as const;
+
+export type MedialTabNavDataCategoryType =
+  (typeof MediaTabNavData)[number]['category'];
 
 const MainContentPage = async ({
   searchParams,
@@ -14,10 +23,13 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle =
-    (searchParams?.relatedContent as ArticleType) || 'news';
+    (searchParams?.relatedContent as (typeof MediaTabNavData)[number]['category']) ||
+    'news';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );
+
+  console.log(searchParams);
 
   return (
     <>
@@ -33,7 +45,10 @@ const MainContentPage = async ({
         <MonthlyViewData />
       </Card>
       <Card>
-        <MediaArticlesTabNav selectedArticle={selectedArticle} />
+        <TabNavigation
+          selectedArticle={selectedArticle}
+          tabNavData={MediaTabNavData}
+        />
         <MainContentContainer
           articleListData={articleListData}
           selectedArticle={selectedArticle}

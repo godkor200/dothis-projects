@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import type { MedialTabNavDataCategoryType } from '@/app/(main)/contents/page';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import {
   externaImageLoader,
@@ -13,10 +14,10 @@ import {
 import ArticleList from './ArticleList';
 import type { CurrentArticleProps } from './CurrentArticle';
 import CurrentArticle from './CurrentArticle';
-import type { ArticleType } from './MediaArticlesTabNav';
+
 interface MainContentContainerProps {
   articleListData: CurrentArticleProps[];
-  selectedArticle: ArticleType;
+  selectedArticle: MedialTabNavDataCategoryType;
 }
 
 const MediaArticlesContainer = ({
