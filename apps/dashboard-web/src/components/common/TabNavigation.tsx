@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import type { MediaTabNavData } from '@/app/(main)/contents/page';
@@ -20,18 +21,19 @@ const TabNavigation = <
   tabNavData,
   selectedArticle,
 }: MediaArticlesTabNavProps<T>) => {
+  const pathName = usePathname();
   return (
     <header
-      id="media"
+      id="tab"
       className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
     >
       {tabNavData.map((item, index) => (
         <>
           <Link
             href={{
-              pathname: 'contents',
-              query: { relatedContent: item.category },
-              hash: 'media',
+              pathname: pathName,
+              query: { tab: item.category },
+              hash: 'tab',
             }}
             replace
             className={cn('cursor-pointer text-[32px] font-bold', {
