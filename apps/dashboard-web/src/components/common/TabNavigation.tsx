@@ -1,8 +1,10 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 
 import type { MediaTabNavData } from '@/app/(main)/contents/page';
 import type { MyPageTabNavData } from '@/app/(main)/mypage/page';
@@ -22,6 +24,18 @@ const TabNavigation = <
   selectedArticle,
 }: MediaArticlesTabNavProps<T>) => {
   const pathName = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
   return (
     <header
       id="tab"
@@ -30,11 +44,12 @@ const TabNavigation = <
       {tabNavData.map((item, index) => (
         <>
           <Link
-            href={{
-              pathname: pathName,
-              query: { tab: item.category },
-              hash: 'tab',
-            }}
+            href={
+              (pathName +
+                '?' +
+                createQueryString('tab', item.category) +
+                '#tab') as Route
+            }
             replace
             className={cn('cursor-pointer text-[32px] font-bold', {
               'text-grey700': selectedArticle === item.category,
