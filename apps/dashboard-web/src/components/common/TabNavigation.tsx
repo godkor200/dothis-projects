@@ -3,34 +3,21 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+import type { MediaTabNavData } from '@/app/(main)/contents/page';
+import type { MyPageTabNavData } from '@/app/(main)/mypage/page';
 import { cn } from '@/utils/cn';
 
-export type ArticleType = (typeof TabNavData)[number]['category'];
-
-export type NavData = {
-  title: string;
-  category: string;
-  queryKey: string;
-  queryValue: string;
-  hash?: string;
-}[];
-
-interface MediaArticlesTabNavProps<T> {
-  selectedArticle: ArticleType;
+interface MediaArticlesTabNavProps<
+  T extends typeof MediaTabNavData | typeof MyPageTabNavData,
+> {
+  tabNavData: T;
+  selectedArticle: T[number]['category'];
 }
 
-export const TabNavData = [
-  { title: '유튜브', category: 'youtube' },
-  // { title: '커뮤니티', category: 'community' },
-  // { title: 'SNS', category: 'SNS' },
-  { title: '뉴스', category: 'news' },
-] as const;
-
-type TestObject = {
-  title: string;
-  category: string;
-};
-const TabNavigation = <T,>({
+const TabNavigation = <
+  T extends typeof MediaTabNavData | typeof MyPageTabNavData,
+>({
+  tabNavData,
   selectedArticle,
 }: MediaArticlesTabNavProps<T>) => {
   return (
@@ -38,7 +25,7 @@ const TabNavigation = <T,>({
       id="media"
       className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
     >
-      {TabNavData.map((item, index) => (
+      {tabNavData.map((item, index) => (
         <>
           <Link
             href={{
@@ -53,7 +40,7 @@ const TabNavigation = <T,>({
           >
             {item.title}
           </Link>
-          {index !== TabNavData.length - 1 && (
+          {index !== tabNavData.length - 1 && (
             <p className="text-[32px] font-bold">/</p>
           )}
         </>
