@@ -1,7 +1,11 @@
-import Mypage from '@/components/mypage';
+import TabNavigation from '@/components/common/TabNavigation';
 import MyPageContent from '@/components/mypage/MyPageContent';
-import type { ArticleType } from '@/components/mypage/MyPageTabNav';
-import MyPageTabNav from '@/components/mypage/MyPageTabNav';
+
+export const MyPageTabNavData = [
+  { title: '내 정보', category: 'info' },
+  { title: '내 이용권 관리', category: 'manage' },
+  { title: 'FAQ', category: 'faq' },
+] as const;
 
 const MyPage = ({
   searchParams,
@@ -9,11 +13,15 @@ const MyPage = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedMyPageType =
-    (searchParams?.relatedContent as ArticleType) || 'info';
+    (searchParams?.relatedContent as (typeof MyPageTabNavData)[number]['category']) ||
+    'info';
 
   return (
     <div className="min-h-[calc(100vh-428px)] px-12 pt-20">
-      <MyPageTabNav selectedArticle={selectedMyPageType} />
+      <TabNavigation
+        selectedArticle={selectedMyPageType}
+        tabNavData={MyPageTabNavData}
+      />
       <MyPageContent />
     </div>
   );
