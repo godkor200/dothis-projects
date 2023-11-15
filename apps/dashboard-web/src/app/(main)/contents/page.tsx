@@ -23,7 +23,7 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle =
-    (searchParams?.relatedContent as (typeof MediaTabNavData)[number]['category']) ||
+    (searchParams?.tab as (typeof MediaTabNavData)[number]['category']) ||
     'news';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
