@@ -6,19 +6,18 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
-import type { MediaTabNavData } from '@/app/(main)/contents/page';
-import type { MyPageTabNavData } from '@/app/(main)/mypage/page';
+import type { MEDIA_TABNAV_DATA, MYPAGE_TABNAV_DATA } from '@/constants/TabNav';
 import { cn } from '@/utils/cn';
 
 interface MediaArticlesTabNavProps<
-  T extends typeof MediaTabNavData | typeof MyPageTabNavData,
+  T extends typeof MEDIA_TABNAV_DATA | typeof MYPAGE_TABNAV_DATA,
 > {
   tabNavData: T;
   selectedArticle: T[number]['category'];
 }
 
 const TabNavigation = <
-  T extends typeof MediaTabNavData | typeof MyPageTabNavData,
+  T extends typeof MEDIA_TABNAV_DATA | typeof MYPAGE_TABNAV_DATA,
 >({
   tabNavData,
   selectedArticle,

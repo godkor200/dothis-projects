@@ -5,17 +5,8 @@ import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
+import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
-
-export const MediaTabNavData = [
-  { title: '유튜브', category: 'youtube' },
-  // { title: '커뮤니티', category: 'community' },
-  // { title: 'SNS', category: 'SNS' },
-  { title: '뉴스', category: 'news' },
-] as const;
-
-export type MedialTabNavDataCategoryType =
-  (typeof MediaTabNavData)[number]['category'];
 
 const MainContentPage = async ({
   searchParams,
@@ -23,13 +14,11 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle =
-    (searchParams?.tab as (typeof MediaTabNavData)[number]['category']) ||
+    (searchParams?.tab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
     'news';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );
-
-  console.log(searchParams);
 
   return (
     <>
@@ -47,7 +36,7 @@ const MainContentPage = async ({
       <Card>
         <TabNavigation
           selectedArticle={selectedArticle}
-          tabNavData={MediaTabNavData}
+          tabNavData={MEDIA_TABNAV_DATA}
         />
         <MainContentContainer
           articleListData={articleListData}

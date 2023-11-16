@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import type { MedialTabNavDataCategoryType } from '@/app/(main)/contents/page';
+import type { MedialTabNavDataCategoryType } from '@/constants/TabNav';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import {
   externaImageLoader,
