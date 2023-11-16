@@ -4,9 +4,7 @@ import { ResponsiveRadar } from '@nivo/radar';
 import { useState } from 'react';
 
 import { clustersCategories } from '@/constants/clusterCategories';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
-import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import getMaxValues from '@/utils/contents/getMaxValues';
 
@@ -31,46 +29,45 @@ const TITLE_BUTTON = [
 const MonthlyViewData = () => {
   const [selectedType, setSelectedType] = useState<TitleType>('category');
   const { data, isLoading: isWordLoading } = useGetRelWords();
-  const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
-  const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
+  // const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
+  // const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
   if (isWordLoading) return null;
 
-  const categoryViewData: ViewData[] = viewData.map((item, idx) => {
-    const result: ViewData = (item ?? []).reduce(
-      (acc: ViewData, cur) => {
-        acc.views = ((acc.views as number) || 0) + cur.increase_views;
-        return acc;
-      },
-      { views: 0, videoTotalCounts: 0 },
-    );
+  // const categoryViewData: ViewData[] = viewData.map((item, idx) => {
+  //   const result: ViewData = (item ?? []).reduce(
+  //     (acc: ViewData, cur) => {
+  //       acc.views = ((acc.views as number) || 0) + cur.increase_views;
+  //       return acc;
+  //     },
+  //     { views: 0, videoTotalCounts: 0 },
+  //   );
 
-    result.views = result.views || 200;
-    result.videoTotalCounts = (videoData[idx]?.total.value as number) ?? 200;
+  //   result.views = result.views || 200;
+  //   result.videoTotalCounts = (videoData[idx]?.total.value as number) ?? 200;
 
-    return result;
-  });
+  //   return result;
+  // });
 
   const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
     getMaxValues(DUMMY_VIEW_DATA);
+  const clusterData: number[] = data && JSON.parse(data.cluster);
 
-  // const clusterData: number[] = data && JSON.parse(data.cluster);
-
-  // const convertedDatas = DUMMY_VIEW_DATA.map(
-  //   ({ views, videoTotalCounts }, idx) => {
-  //     return {
-  //       views: (views / maxViews) * viewAndVideoMaxValue,
-  //       videoTotalCounts:
-  //         (videoTotalCounts / maxVideoTotalCounts) * viewAndVideoMaxValue,
-  //       category:
-  //         clustersCategories[
-  //           clusterData[idx] as keyof typeof clustersCategories
-  //         ],
-  //     };
-  //   },
-  // );
+  const convertedDatas = DUMMY_VIEW_DATA.map(
+    ({ views, videoTotalCounts }, idx) => {
+      return {
+        views: (views / maxViews) * viewAndVideoMaxValue,
+        videoTotalCounts:
+          (videoTotalCounts / maxVideoTotalCounts) * viewAndVideoMaxValue,
+        category:
+          clustersCategories[
+            clusterData[idx] as keyof typeof clustersCategories
+          ],
+      };
+    },
+  );
 
   const onClickTitle = (type: TitleType) => {
     setSelectedType(type);
@@ -113,64 +110,49 @@ const MonthlyViewData = () => {
         </div>
         <div className="h-[315px] w-[406px] self-center">
           {selectedType === 'category' ? (
-            <div>
-              {/* <ResponsiveRadar
-                data={convertedDatas}
-                keys={['views', 'videoTotalCounts']}
-                indexBy="category"
-                valueFormat=">-.2f"
-                margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-                borderColor={{ from: 'color' }}
-                gridLabelOffset={20}
-                dotSize={10}
-                dotColor={{ theme: 'background' }}
-                theme={{
-                  labels: { text: { fontSize: '20px' } },
-                  axis: {
-                    legend: {
-                      text: {
-                        textColor: '#eee',
-                        fontSize: '14px',
-                        tickColor: '#eee',
+            <ResponsiveRadar
+              data={convertedDatas}
+              keys={['views', 'videoTotalCounts']}
+              indexBy="category"
+              valueFormat=">-.2f"
+              margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+              borderColor={{ from: 'color' }}
+              gridLabelOffset={36}
+              dotSize={10}
+              dotColor={{ theme: 'background' }}
+              dotBorderWidth={2}
+              colors={{ scheme: 'nivo' }}
+              blendMode="multiply"
+              motionConfig="wobbly"
+              sliceTooltip={({ index, data }) => (
+                <MonthlyDataGraphToolTip
+                  data={data}
+                  label={index}
+                  {...toolTipProps}
+                />
+              )}
+              legends={[
+                {
+                  anchor: 'top-left',
+                  direction: 'column',
+                  translateX: -50,
+                  translateY: -40,
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemTextColor: '#999',
+                  symbolSize: 12,
+                  symbolShape: 'circle',
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemTextColor: '#000',
                       },
                     },
-                  },
-                  fontSize: 16,
-                }}
-                dotBorderWidth={2}
-                colors={{ scheme: 'nivo' }}
-                blendMode="multiply"
-                motionConfig="wobbly"
-                sliceTooltip={({ index, data }) => (
-                  <MonthlyDataGraphToolTip
-                    data={data}
-                    label={index}
-                    {...toolTipProps}
-                  />
-                )}
-                legends={[
-                  {
-                    anchor: 'top-left',
-                    direction: 'column',
-                    translateX: -50,
-                    translateY: -40,
-                    itemWidth: 80,
-                    itemHeight: 20,
-                    itemTextColor: '#999',
-                    symbolSize: 12,
-                    symbolShape: 'circle',
-                    effects: [
-                      {
-                        on: 'hover',
-                        style: {
-                          itemTextColor: '#000',
-                        },
-                      },
-                    ],
-                  },
-                ]}
-              /> */}
-            </div>
+                  ],
+                },
+              ]}
+            />
           ) : (
             <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
               서비스 준비중 입니다.
