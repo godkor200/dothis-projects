@@ -8,10 +8,16 @@ import { FindRelQueryHandler } from '@Apps/modules/rel-words/queries/v1/find-rel
 import { UpdateAutoCompleteWordsHttpController } from '@Apps/modules/rel-words/command/v1/update-auto-complete-words/update-auto-complete-words.http.controller';
 import { UpdateAutoCompleteWordsCommandHandler } from '@Apps/modules/rel-words/command/v1/update-auto-complete-words/update-auto-complete-words.command-handler';
 import { FindRelCache } from '@Apps/modules/rel-words/repository/cache/find-rel.cache';
+import { RankRelHttpController } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.http.controller';
+import { RankRelQueryHandler } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.query-handler';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
+import { AwsModule } from '@Apps/common/aws/aws.module';
 
 const controllers = [
   FindRelHttpV1Controller,
   UpdateAutoCompleteWordsHttpController,
+  RankRelHttpController,
 ];
 const repositories: Provider[] = [
   {
@@ -22,11 +28,19 @@ const repositories: Provider[] = [
     provide: RELWORDS_DI_TOKEN.FIND_ONE_BY_ELASTICACHE,
     useClass: FindRelCache,
   },
+  {
+    provide: VIDEO_OS_DI_TOKEN,
+    useClass: VideoQueryHandler,
+  },
 ];
 
-const handler = [FindRelQueryHandler, UpdateAutoCompleteWordsCommandHandler];
+const handler = [
+  FindRelQueryHandler,
+  UpdateAutoCompleteWordsCommandHandler,
+  RankRelQueryHandler,
+];
 @Module({
-  imports: [CqrsModule, RelatedWordsModule],
+  imports: [CqrsModule, RelatedWordsModule, AwsModule],
   controllers,
   providers: [...repositories, ...handler],
 })

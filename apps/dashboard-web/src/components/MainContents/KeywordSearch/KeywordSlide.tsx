@@ -20,12 +20,17 @@ import * as Style from './style';
 // Wheel은 transform이려나
 
 const KeywordSlide = () => {
-  const { hashKeywordList } = useKeyword();
+  const { hashKeywordList, isGuest } = useKeyword();
 
   const { data: userData } = useGetUserInfo();
 
   const searchWordList = useMemo(
     () => getHashKeyword(convertKeywordsToArray(userData?.searchWord)),
+    [userData],
+  );
+
+  const keywordList = useMemo(
+    () => getHashKeyword(convertKeywordsToArray(userData?.personalizationTag)),
     [userData],
   );
 
@@ -48,7 +53,7 @@ const KeywordSlide = () => {
         <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
       </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
-        {hashKeywordList.map((keyword) => (
+        {keywordList.map((keyword) => (
           <KeywordItem
             key={keyword}
             $active={true}
@@ -71,6 +76,19 @@ const KeywordSlide = () => {
             setDeleteSearchword={deleteSearchwordMutate}
           />
         ))}
+
+        {isGuest &&
+          hashKeywordList.map((keyword) => (
+            <KeywordItem
+              key={keyword}
+              $active={true}
+              label={keyword}
+              isSearchWord={false}
+              keyValue={keyword}
+              handleScrollX={handleTapScrollX}
+              setRemoveKeyword={removeKeywordMutate}
+            />
+          ))}
       </Style.ButtonContainer>
       <Style.ArrowRightButton onClick={handleRightScroll}>
         <SvgComp icon="KeywordRightArrow" size="1.5rem" />

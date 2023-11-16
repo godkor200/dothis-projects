@@ -15,3 +15,12 @@ export const zChannelHistoryModel = z.object({
 });
 
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
+
+export const zExpectedViews = z.object({
+  data: z.array(
+    z.object({
+      date: z.string(),
+      expected_views: z.number(),
+    }),
+  ),
+});

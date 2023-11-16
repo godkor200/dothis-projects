@@ -1,32 +1,87 @@
 'use client';
 
 import { ResponsiveRadar } from '@nivo/radar';
+import { useState } from 'react';
 
-import SvgComp from '@/components/common/SvgComp';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
+import { clustersCategories } from '@/constants/clusterCategories';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
-import {
-  DUMMY_VIEW_DATA,
-  MONTHLY_VIEW_DUMMY_DATA,
-} from '@/mocks/monthlyReport/monthlyViewDummyData';
+import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
+import getMaxValues from '@/utils/contents/getMaxValues';
 
-import SummaryItem from '../AnalysisWidgetItem';
+import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
+
+/**
+ * 데이터 안정화 되면 custom hooks 주석 풀고 더미 데이터 제거 예정입니다.
+ */
+
+type TitleType = (typeof TITLE_BUTTON)[number]['type'];
+
+export interface ViewData {
+  views: number;
+  videoTotalCounts: number;
+}
+
+const TITLE_BUTTON = [
+  { label: '주요 카테고리', type: 'category' },
+  { label: '채널비교', type: 'channel' },
+] as const;
 
 const MonthlyViewData = () => {
-  const { data, isLoading } = useGetDailyView();
+  const [selectedType, setSelectedType] = useState<TitleType>('category');
+  const { data, isLoading: isWordLoading } = useGetRelWords();
+  // const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
+  // const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
 
-  // const categoryViewData = data?.map((item) => {
-  //   return item?.reduce((acc: Record<string, string | number>, cur) => {
-  //     acc.clusterNumber = cur.clusterNumber;
-  //     acc.views = ((acc.views as number) || 0) + cur.increase_views;
+  // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
-  //     return acc;
-  //   }, {});
+  if (isWordLoading) return null;
+
+  // const categoryViewData: ViewData[] = viewData.map((item, idx) => {
+  //   const result: ViewData = (item ?? []).reduce(
+  //     (acc: ViewData, cur) => {
+  //       acc.views = ((acc.views as number) || 0) + cur.increase_views;
+  //       return acc;
+  //     },
+  //     { views: 0, videoTotalCounts: 0 },
+  //   );
+
+  //   result.views = result.views || 200;
+  //   result.videoTotalCounts = (videoData[idx]?.total.value as number) ?? 200;
+
+  //   return result;
   // });
+
+  const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
+    getMaxValues(DUMMY_VIEW_DATA);
+  const clusterData: number[] = data && JSON.parse(data.cluster);
+
+  const convertedDatas = DUMMY_VIEW_DATA.map(
+    ({ views, videoTotalCounts }, idx) => {
+      return {
+        views: (views / maxViews) * viewAndVideoMaxValue,
+        videoTotalCounts:
+          (videoTotalCounts / maxVideoTotalCounts) * viewAndVideoMaxValue,
+        category:
+          clustersCategories[
+            clusterData[idx] as keyof typeof clustersCategories
+          ],
+      };
+    },
+  );
+
+  const onClickTitle = (type: TitleType) => {
+    setSelectedType(type);
+  };
+
+  const toolTipProps = {
+    maxViews,
+    maxVideoTotalCounts,
+    viewAndVideoMaxValue,
+  };
 
   return (
     <>
-      <h3 className="typo-t2 mt-10  flex items-center gap-[4px]">
+      {/* <h3 className="typo-t2 mt-10 flex items-center gap-[4px]">
         월간 View
         <SvgComp icon="Question" size={18} />
       </h3>
@@ -34,46 +89,76 @@ const MonthlyViewData = () => {
         {MONTHLY_VIEW_DUMMY_DATA.map(({ title, content }) => (
           <SummaryItem key={title} title={title} content={content} />
         ))}
-      </ul>
-      <div className="h-[500px] w-[500px]">
-        {/* {!isLoading && ( */}
-        <ResponsiveRadar
-          data={DUMMY_VIEW_DATA}
-          keys={['views']}
-          indexBy="clusterNumber"
-          valueFormat=">-.2f"
-          margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-          borderColor={{ from: 'color' }}
-          gridLabelOffset={36}
-          dotSize={10}
-          dotColor={{ theme: 'background' }}
-          dotBorderWidth={2}
-          colors={{ scheme: 'nivo' }}
-          blendMode="multiply"
-          motionConfig="wobbly"
-          legends={[
-            {
-              anchor: 'top-left',
-              direction: 'column',
-              translateX: -50,
-              translateY: -40,
-              itemWidth: 80,
-              itemHeight: 20,
-              itemTextColor: '#999',
-              symbolSize: 12,
-              symbolShape: 'circle',
-              effects: [
+      </ul> */}
+      <div className="rounded-8 border-grey400 mt-10 flex flex-col border border-solid px-[30px] py-[40px] ">
+        <div className="text-t2 text-grey400 flex items-center gap-[10px] font-bold">
+          {TITLE_BUTTON.map((item, idx) => (
+            <>
+              <button
+                className={`${
+                  selectedType === item.type ? 'text-grey700' : ''
+                }`}
+                onClick={() => onClickTitle(item.type)}
+              >
+                {item.label}
+              </button>
+              {idx !== TITLE_BUTTON.length - 1 && (
+                <span className="bg-grey400 h-1 w-1 rounded"></span>
+              )}
+            </>
+          ))}
+        </div>
+        <div className="h-[315px] w-[406px] self-center">
+          {selectedType === 'category' ? (
+            <ResponsiveRadar
+              data={convertedDatas}
+              keys={['views', 'videoTotalCounts']}
+              indexBy="category"
+              valueFormat=">-.2f"
+              margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+              borderColor={{ from: 'color' }}
+              gridLabelOffset={36}
+              dotSize={10}
+              dotColor={{ theme: 'background' }}
+              dotBorderWidth={2}
+              colors={{ scheme: 'nivo' }}
+              blendMode="multiply"
+              motionConfig="wobbly"
+              sliceTooltip={({ index, data }) => (
+                <MonthlyDataGraphToolTip
+                  data={data}
+                  label={index}
+                  {...toolTipProps}
+                />
+              )}
+              legends={[
                 {
-                  on: 'hover',
-                  style: {
-                    itemTextColor: '#000',
-                  },
+                  anchor: 'top-left',
+                  direction: 'column',
+                  translateX: -50,
+                  translateY: -40,
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemTextColor: '#999',
+                  symbolSize: 12,
+                  symbolShape: 'circle',
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemTextColor: '#000',
+                      },
+                    },
+                  ],
                 },
-              ],
-            },
-          ]}
-        />
-        {/* )} */}
+              ]}
+            />
+          ) : (
+            <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
+              서비스 준비중 입니다.
+            </p>
+          )}
+        </div>
       </div>
     </>
   );

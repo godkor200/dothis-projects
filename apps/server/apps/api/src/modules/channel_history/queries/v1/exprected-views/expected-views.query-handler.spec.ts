@@ -40,10 +40,10 @@ describe('기대 조회수 평균 구하기', () => {
     mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
       Promise.resolve(videoData),
     );
-    mockChannelHistoryHandler.findChannelHistoryFullscan.mockReturnValue(
+    mockChannelHistoryHandler.findChannelHistoryFullScan.mockReturnValue(
       Promise.resolve(channelHistoryDummy),
     );
-    mockVideoHistoryQueryHandlerPort.findVideoHistoryFullscan.mockReturnValue(
+    mockVideoHistoryQueryHandlerPort.findVideoHistoryFullScan.mockReturnValue(
       Promise.resolve(video_historyDummy),
     );
     const res = await handler.execute(arg);

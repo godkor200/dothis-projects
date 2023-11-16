@@ -1,13 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
+import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { apiInstance } from '@/utils/api/apiInstance';
 import { apiServer } from '@/utils/api/apiServer';
+
+import { externaImageLoader, getMainImage } from '../imagesUtil';
 
 const relatedContentApi: { [key: string]: any } = {
   /**
    *@description 유튜브 관련 API
    */
-  youtube: (keyword: string) => {},
+  youtube: (keyword: string) => {
+    // const { data } = fetchQuery
+  },
 
   /**
    *
@@ -54,6 +60,7 @@ const relatedContentApi: { [key: string]: any } = {
       'https://tools.kinds.or.kr/search/news?access_key=eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       { method: 'POST', body: JSON.stringify(obj) },
     );
+
     const { return_object } = await newsData.json();
 
     const returnData = await return_object.documents.map((item: any) => {
@@ -62,7 +69,7 @@ const relatedContentApi: { [key: string]: any } = {
         category: item.category[0],
         provider: item.provider,
         date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
-        image: item.images,
+        image: externaImageLoader(getMainImage(item.images)),
         link: item.provider_link_page,
       };
     });

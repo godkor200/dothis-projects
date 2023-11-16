@@ -1,6 +1,6 @@
 import { c, USER_AUTH } from '../contract';
 import { z } from 'zod';
-import { zUserModel } from '../user';
+import { userBaseApiUrl, zUserModel } from '../user';
 import { zTokenExpired } from './auth.constant';
 
 export const authBaseApiUrl = '/auth';
@@ -54,5 +54,17 @@ export const authApi = c.router({
     },
     summary: '토큰 확인후 유저 정보 리턴',
     description: '유저 관련 토큰 accessToken으로 사용자의 정보를 불러온다.',
+  },
+  logout: {
+    method: 'DELETE',
+    path: `${authBaseApiUrl}/logout`,
+    responses: {
+      200: '성공적으로 로그아웃되면 성공 여부를 리턴한다.',
+      404: 'Not Found',
+      500: 'server error',
+    },
+    body: {},
+    summary: '유저 로그아웃',
+    description: '유저 로그아웃(쿠키와 회원 정보 관련 destroy)',
   },
 });

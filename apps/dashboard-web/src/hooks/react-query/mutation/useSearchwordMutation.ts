@@ -38,7 +38,11 @@ export const useCreateSearchwordMutation = (
     mutate: (item: string) =>
       mutationResult.mutate({
         body: {
-          searchWord: createSearchWord(data?.searchWord, item),
+          searchWord: createSearchWord(
+            data?.searchWord,
+            data?.personalizationTag,
+            item,
+          ),
         },
       }),
   };

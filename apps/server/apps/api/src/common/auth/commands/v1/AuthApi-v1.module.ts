@@ -17,10 +17,13 @@ import { VerifyTokenHttpController } from '@Apps/common/auth/commands/v1/verify-
 import { VerifyTokenCommandHandler } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import { PassportModule } from '@nestjs/passport';
 import { CookieValidationMiddleware } from '@Apps/common/auth/middleware/cookie.middleware';
+import { LogoutCommandHandler } from '@Apps/common/auth/commands/v1/logout/logout.command-handler';
+import { LogoutHttpController } from '@Apps/common/auth/commands/v1/logout/logout.http.controller';
 const httpControllers = [
   GoogleLoginHttpController,
   GoogleLoginRedirectHttpController,
   VerifyTokenHttpController,
+  LogoutHttpController,
 ];
 
 const strategies: Provider[] = [GoogleStrategy, AtStrategy];
@@ -28,6 +31,7 @@ const strategies: Provider[] = [GoogleStrategy, AtStrategy];
 const commandHandlers: Provider[] = [
   GoogleLoginRedirectCommandHandler,
   VerifyTokenCommandHandler,
+  LogoutCommandHandler,
 ];
 
 const repositories: Provider[] = [

@@ -18,6 +18,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { PutAgreePromotionDtos } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
@@ -56,6 +57,7 @@ export class PutAgreePromotionHttpController {
     status: HttpStatus.NOT_FOUND,
     description: responses[404],
   })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiInternalServerErrorResponse({
     description: responses[500],
   })

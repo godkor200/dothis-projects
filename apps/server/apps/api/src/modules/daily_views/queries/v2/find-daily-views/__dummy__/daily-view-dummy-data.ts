@@ -1,6 +1,6 @@
-import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 
-export const data: IFindVideoHistoryResposne[] = [
+export const data: IFindVideoHistoryResponse[] = [
   {
     video_id: 'o8VVNtllsq4',
     video_views: 427,
@@ -26699,7 +26699,7 @@ export const data: IFindVideoHistoryResposne[] = [
   },
 ];
 
-export const example: IFindVideoHistoryResposne[] = [
+export const example: IFindVideoHistoryResponse[] = [
   {
     video_id: '1',
     video_views: 146,
