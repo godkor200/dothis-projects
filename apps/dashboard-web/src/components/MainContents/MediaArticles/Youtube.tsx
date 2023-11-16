@@ -29,23 +29,24 @@ const YouTube = () => {
     };
   });
 
+  if (!returnData) {
+    return null;
+  }
   return (
-    returnData && (
-      <>
-        <CurrentArticle
-          title={returnData[contentIndex]?.title}
-          category={returnData[contentIndex]?.category}
-          provider={returnData[contentIndex]?.provider}
-          date={returnData[contentIndex]?.date}
-          image={returnData[contentIndex]?.image}
-          link={returnData[contentIndex]?.link}
-        />
-        <ArticleList
-          articleListData={returnData}
-          handleSetContentIndex={handleSetContentIndex}
-        />
-      </>
-    )
+    <>
+      <CurrentArticle
+        title={returnData[contentIndex]?.title}
+        category={returnData[contentIndex]?.category}
+        provider={returnData[contentIndex]?.provider}
+        date={returnData[contentIndex]?.date}
+        image={returnData[contentIndex]?.image}
+        link={returnData[contentIndex]?.link}
+      />
+      <ArticleList
+        articleListData={returnData}
+        handleSetContentIndex={handleSetContentIndex}
+      />
+    </>
   );
 };
 
