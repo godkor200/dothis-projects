@@ -22,6 +22,7 @@ const useKeyword = () => {
 
   const isNotSetTags = !data?.personalizationTag;
 
+  // client에서 랜덤인덱스를 추가하기 위해 zustand로 넣고 있습니다.
   const randomIndex = useRandomIndex();
 
   // 지금은 store 에서 임의로 useEffect상에서 접근했지만, 나중에는 미들웨어단 임의 키워드로 searchparams로 임의로 넣어주자
