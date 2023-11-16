@@ -31,15 +31,35 @@ const useSearchInput = () => {
    * @returns 이미 userKeyword에 추가가 되어있으면 #을 붙인상태로 return하며, 없을경우 unShift로 맨 앞에 추가하려 반환합니다.
    */
   const createSearchWord = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
+    (
+      userKeyword: string | undefined | null,
+      personalizationTag: string | undefined | null,
+      keyword: string,
+    ) => {
       const dataArray = userKeyword ? userKeyword.split(',') : [];
+
+      const personalizationDataArray = personalizationTag
+        ? personalizationTag.split(',')
+        : [];
 
       const index = dataArray.indexOf(keyword);
 
       const hashindex = dataArray.indexOf(`${keyword}#`);
 
-      if (index !== -1 || hashindex !== -1) {
-        if (hashindex !== -1) {
+      // personalizationTag 에도 중복체크가 필요해서 넣었습니다.
+      const personalizationIndex = personalizationDataArray.indexOf(keyword);
+
+      const personalizationHashIndex = personalizationDataArray.indexOf(
+        `${keyword}#`,
+      );
+
+      if (
+        index !== -1 ||
+        hashindex !== -1 ||
+        personalizationIndex !== -1 ||
+        personalizationHashIndex !== -1
+      ) {
+        if (hashindex !== -1 || personalizationHashIndex !== -1) {
           return dataArray;
         }
 
