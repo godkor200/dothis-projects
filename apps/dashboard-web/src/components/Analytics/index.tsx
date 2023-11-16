@@ -6,7 +6,6 @@ import Script from 'next/script';
 export default function Analytics() {
   return (
     <>
-      {/* <!-- Start VWO Async SmartCode --> */}
       <Script
         id="gtm-script"
         strategy="afterInteractive"
@@ -20,7 +19,6 @@ export default function Analytics() {
         `,
         }}
       />
-      {/* <!-- End VWO Async SmartCode --> */}
     </>
   );
 }
