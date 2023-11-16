@@ -32,10 +32,6 @@ const useSearchInput = () => {
    */
   const createSearchWord = useCallback(
     (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        throw new Error('데이터를 생성하는데 문제가 생겼습니다.');
-      }
-
       const dataArray = userKeyword ? userKeyword.split(',') : [];
 
       const index = dataArray.indexOf(keyword);
