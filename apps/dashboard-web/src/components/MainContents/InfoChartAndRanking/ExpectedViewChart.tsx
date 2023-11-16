@@ -1,8 +1,17 @@
 'use client';
 
 import { ResponsiveLine } from '@nivo/line';
+import { useCallback, useMemo } from 'react';
 
+import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import {
+  ceilToNearest,
+  floorToNearest,
+  getRoundingUnit,
+  roundToNearest,
+  unitFormat,
+} from '@/utils/mainContentUtil';
 
 import CustomTooltip from './CustomTooltip';
 import { VIEWCHART_LABEL } from './KeywordAnalyticsView';
@@ -11,15 +20,69 @@ interface Props {
   expectedView: { id: string; data: { x: string; y: number }[] }[];
 }
 
-const ExpectedViewChart = ({ expectedView }: Props) => {
+const expectedView = [
+  {
+    id: '기대',
+    data: [
+      { x: '2023-10-12', y: 0 },
+      { x: '2023-10-16', y: 6 },
+    ],
+  },
+];
+
+const ExpectedViewChart = ({}: Props) => {
   const selectedRelWord = useSelectedRelWord();
+
+  const { data } = useGetExpectedView();
+
+  const TICK_SIZE = 6;
+  const yScales = expectedView[0].data.map((item) => Number(item.y));
+
+  const yMinScale = floorToNearest(
+    Math.min(...yScales),
+    getRoundingUnit(Math.min(...yScales), 2),
+  );
+
+  const yMaxScale = ceilToNearest(
+    Math.max(...yScales),
+    getRoundingUnit(Math.max(...yScales), 2),
+  );
+
+  const getAxisInterval = () => {
+    // tick이 1보다 작을경우 올림이 안되서 소수점으로 보기안좋게 보여짐 그래서 1로 설정
+    const deviationByTick =
+      (yMaxScale - yMinScale) / (TICK_SIZE - 2) < 1
+        ? 1
+        : (yMaxScale - yMinScale) / (TICK_SIZE - 2);
+
+    return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
+  };
+
+  const getStartValue = () => {
+    return yMinScale - getAxisInterval() < 1
+      ? 0
+      : yMinScale - getAxisInterval();
+  };
+
+  const yAxisRange = () =>
+    Array.from(
+      { length: TICK_SIZE },
+      (_, index) =>
+        roundToNearest(getStartValue(), getRoundingUnit(getStartValue(), 2)) +
+        index * Math.ceil(getAxisInterval()),
+    );
+
+  // every 함수를 넣어준 이유 -> 한개의 data만 들어왔을 때  yAxisRange가 5개 공통 값으로 형성이됩니다. 이렇게 형성이 되었을 경우 nivo 그래프가 렌더링 이슈로 인해 그래프 점선이 남아있음
+  if (expectedView[0].data.length === 0) {
+    return null;
+  }
   return (
     <ResponsiveLine
       data={expectedView}
-      margin={{ bottom: 50, left: 60 }}
+      margin={{ bottom: 50, left: 60, top: 30 }}
       lineWidth={2}
       colors={['#818CF8']}
-      curve="catmullRom"
+      curve="linear"
       xScale={{
         format: '%Y-%m-%d',
         precision: 'day',
@@ -28,15 +91,16 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
       }}
       yScale={{
         type: 'linear',
-        min: 0,
-        max: 120,
-        stacked: true,
+        min: Math.min(...yAxisRange()),
+        max: Math.max(...yAxisRange()),
+        stacked: false,
         reverse: false,
       }}
       yFormat=" >-.2f"
       enableGridX={false}
       enablePoints={false}
-      gridYValues={[0, 20, 40, 60, 80, 100, 120]}
+      gridYValues={yAxisRange()}
+      // 배열로 값넣으면 그것 수치만큼 적용되고, number값으로 넣으면 그거에 맞는 line 갯수를 생성
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -48,9 +112,10 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
         tickSize: 0,
         tickPadding: 20,
         tickRotation: 0,
-        tickValues: [20, 40, 60, 80, 100],
+        tickValues: yAxisRange(),
         legendOffset: -40,
         legendPosition: 'middle',
+        format: (value: number) => unitFormat(value, Math.max(...yAxisRange())),
       }}
       useMesh={true}
       tooltip={({ point }) => (
