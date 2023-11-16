@@ -1,8 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { ExpectedViewsQuery } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import {
+  CHANNEL_DATA_KEY,
+  ExpectedViewsQuery,
+} from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { IExpectedData } from '@Apps/modules/channel_history/queries/v1/exprected-views/expected-views.http.controller';
 import { Err, Ok, Result } from 'oxide.ts';
-import { Inject, NotFoundException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { IFindVideoIDAndChannelIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
@@ -10,10 +13,13 @@ import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/databa
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { IFindVideoHistoryResposne } from '@Apps/modules/video_history/interface/find-video.history.resposne';
+import {
+  IChannelExpViewsRes,
+  IVideoHistoryRes,
+} from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { VIDEO_HISTORY_DATA } from '@Apps/modules/video_history/interface/video_history.res';
 
 @QueryHandler(ExpectedViewsQuery)
 export class ExpectedViewsQueryHandler
@@ -64,18 +70,31 @@ export class ExpectedViewsQueryHandler
       },
       { channelIds: [], videoIds: [] },
     );
-
-    //해당날짜의 각 채널의 평균 조회수를 찾기 위해 히스토리를 가져옴
-    const channelHistory = await this.channelHistory.findChannelHistoryFullscan(
-      channelIds,
-    );
-    //해당날짜의 각 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
-    const videoHistory = await this.videoHistory.findVideoHistoryFullscan(
-      videoIds,
-      query.from.toString(),
-      query.to.toString(),
-      query.clusterNumber,
-    );
+    /**
+     * 해당날짜의 각 채널의 평균 조회수를 찾기 위해 히스토리를 가져옴, 해당날짜의 각 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
+     * 병렬처리로 수정
+     */
+    const [channelHistory, videoHistory] = await Promise.all([
+      this.channelHistory.findChannelHistoryFullScan<IChannelExpViewsRes>(
+        channelIds,
+        [
+          CHANNEL_DATA_KEY.CHANNEL_ID,
+          CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS,
+          CHANNEL_DATA_KEY.CRAWLED_DATE,
+        ],
+      ),
+      this.videoHistory.findVideoHistoryFullScan<IVideoHistoryRes>(
+        videoIds,
+        query.from.toString(),
+        query.to.toString(),
+        query.clusterNumber,
+        [
+          VIDEO_HISTORY_DATA.CRAWLED_DATE,
+          VIDEO_HISTORY_DATA.VIDEO_ID,
+          VIDEO_HISTORY_DATA.VIDEO_VIEWS,
+        ],
+      ),
+    ]);
 
     return Ok(
       this.calculateAverageViews(
@@ -99,9 +118,10 @@ export class ExpectedViewsQueryHandler
    */
   private calculateAverageViews(
     searchRelatedVideo: IFindVideoIDAndChannelIdRes[],
-    channelHistories: IChannelHistoryRes[],
-    videoHistories: IFindVideoHistoryResposne[],
+    channelHistories: IChannelExpViewsRes[],
+    videoHistories: IVideoHistoryRes[],
   ): IExpectedData[] {
+    let startTime = Date.now();
     let dateViewRatios: { [date: string]: { total: number; count: number } } =
       {};
 
@@ -111,31 +131,26 @@ export class ExpectedViewsQueryHandler
       let videoDate = new Date(videoHistory.crawled_date)
         .toISOString()
         .split('T')[0]; // Get the date part
-      let closestChannel: IChannelHistoryRes | null = null;
+      let closestChannel: IChannelExpViewsRes | null = null;
       let closestDateDifference: number | null = null;
 
-      // videoData에서 해당 channelId를 가진 비디오를 찾습니다.
-      let matchedVideoData = searchRelatedVideo.find(
-        (videoData) => videoData.video_id === videoId,
-      );
-
-      if (!matchedVideoData) continue; // 일치하는 비디오 데이터가 없다면 다음 비디오로 넘어갑니다.
-      let matchedChannelId = matchedVideoData.channel_id;
+      // // videoData에서 해당 channelId를 가진 비디오를 찾습니다.
+      // let matchedVideoData = searchRelatedVideo.find(
+      //   (videoData) => videoData.video_id === videoId,
+      // );
+      //
+      // if (!matchedVideoData) continue; // 일치하는 비디오 데이터가 없다면 다음 비디오로 넘어갑니다.
+      // let matchedChannelId = matchedVideoData.channel_id;
       // 채널 히스토리에서 각각 채널아이디를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
       for (let channelHistory of channelHistories) {
         let channelId = channelHistory.channel_id;
-        let channelDate = new Date(channelHistory.crawled_date);
-        let dateDifference = Math.abs(
-          new Date(videoDate).getTime() - channelDate.getTime(),
-        );
+        // let channelDate = new Date(channelHistory.crawled_date);
+        // let dateDifference = Math.abs(
+        //   new Date(videoDate).getTime() - channelDate.getTime(),
+        // );
         //채널 히스토리는 일주일 단위로 크롤링하기 때문에 데이터를 불러온 기간중에서 가장 가까운 크롤링 날짜로 평균조회수를 불러옴
-        if (
-          matchedChannelId === channelId &&
-          (closestChannel === null || dateDifference < closestDateDifference)
-        ) {
-          closestChannel = channelHistory;
-          closestDateDifference = dateDifference;
-        }
+
+        closestChannel = channelHistory;
       }
 
       if (closestChannel !== null) {
@@ -161,7 +176,8 @@ export class ExpectedViewsQueryHandler
         dateViewRatios[date].total / dateViewRatios[date].count;
       result.push({ date: date, expected_views: averageViewsRatio });
     }
-
+    let endTime = Date.now() - startTime;
+    console.log('end', endTime);
     return result;
   }
 }
