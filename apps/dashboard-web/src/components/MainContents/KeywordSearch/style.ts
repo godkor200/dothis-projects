@@ -22,7 +22,6 @@ export const ButtonContainer = styled.div`
   gap: 0.675rem;
   overflow-x: auto;
 
-  padding-right: 1.5rem;
   &::-webkit-scrollbar {
     display: none;
   }
