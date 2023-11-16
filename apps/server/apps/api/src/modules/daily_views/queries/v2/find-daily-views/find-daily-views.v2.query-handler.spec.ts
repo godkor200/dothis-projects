@@ -1,4 +1,4 @@
-import { FindDailyViewsQueryOsHandler } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.query-handler';
+import { FindDailyViewsQueryOsHandler } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.v2.query-handler';
 
 import { mock } from 'jest-mock-extended';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
