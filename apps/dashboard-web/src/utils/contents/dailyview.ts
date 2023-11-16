@@ -63,7 +63,8 @@ export const averageViews = (data: (ExpectedView | undefined)[]) => {
     //for-in 루프를 사용하여 객체의 속성을 반복할 때, 객체의 프로토타입 체인에 있는 속성도 포함될 수 있다, 이때 hasOwnProperty를 사용하면 해당 속성이 직접 객체에 속해 있는지를 확인하기 위해 안정성을 위해 추가
     if (result.hasOwnProperty(date)) {
       const count = dateCount[date];
-      result[date] = Math.round(result[date]) / count;
+
+      result[date] = Math.round(Math.round(result[date]) / count);
     }
   }
 
