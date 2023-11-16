@@ -18,6 +18,8 @@ export const colors = {
   pink: '#F0ABFC',
   green: '#34D399',
   indigo: '#818CF8',
+  black: '#000000',
+  white: '#ffffff',
 
   /* system */
   success: '#22C55E',

@@ -4,11 +4,7 @@ import useKeyword from '@/hooks/user/useKeyword';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 const KeywordSearchResult = () => {
-  const { data } = useGetUserInfo();
-
-  const hasTags = getHashKeyword(
-    convertKeywordsToArray(data?.personalizationTag, data?.searchWord),
-  );
+  const { hashKeywordList } = useKeyword();
 
   const { data: relWords } = useGetRelWords();
 
@@ -16,9 +12,9 @@ const KeywordSearchResult = () => {
   return (
     <h1 className="typo-h2 bg-primary50 mb-[3.1rem] mt-[60px] flex flex-col rounded-2xl py-10 pl-12 text-center">
       <span className="mb-1">
-        <span>{hasTags[0]}</span>{' '}
-        {hasTags.length > 1 && `외 ${hasTags.length - 1}개`} 키워드에서 다루기
-        좋은 소재는
+        <span>{hashKeywordList[0]}</span>{' '}
+        {hashKeywordList.length > 1 && `외 ${hashKeywordList.length - 1}개`}{' '}
+        키워드에서 다루기 좋은 소재는
       </span>
       <span>
         <em className="text-primary500">

@@ -25,14 +25,19 @@ const CurrentArticle = ({
 }: CurrentArticleProps) => {
   return (
     <div className="rounded-10 border-grey300 w-[640px] cursor-pointer overflow-hidden border border-solid">
-      <div className="h-[300px] w-[640px] overflow-hidden">
+      <div className="relative h-[300px] w-[640px] overflow-hidden bg-black">
         <Image
           unoptimized
-          src={externaImageLoader(getMainImage(image))}
-          width={640}
-          height={300}
+          src={image}
           alt="Picture of the author"
-          style={{ objectFit: 'cover', layout: 'fill' }}
+          width={0}
+          height={0}
+          style={{
+            objectFit: 'contain',
+            layout: 'fill',
+            width: '640px',
+            height: '100%',
+          }}
         />
       </div>
       <div className="px-[1.875rem] py-10">

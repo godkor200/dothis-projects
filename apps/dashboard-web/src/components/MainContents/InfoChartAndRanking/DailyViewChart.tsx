@@ -8,6 +8,7 @@ import {
   ceilToNearest,
   floorToNearest,
   getRoundingUnit,
+  roundToNearest,
   unitFormat,
 } from '../../../utils/mainContentUtil';
 import CustomTooltip from './CustomTooltip';
@@ -33,7 +34,10 @@ const DailyViewChart = ({ dailyView }: Props) => {
   );
 
   const getAxisInterval = () => {
-    const deviationByTick = (yMaxScale - yMinScale) / (TICK_SIZE - 2);
+    const deviationByTick =
+      (yMaxScale - yMinScale) / (TICK_SIZE - 2) < 1
+        ? 1
+        : (yMaxScale - yMinScale) / (TICK_SIZE - 2);
 
     return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
   };
@@ -48,8 +52,8 @@ const DailyViewChart = ({ dailyView }: Props) => {
     Array.from(
       { length: TICK_SIZE },
       (_, index) =>
-        floorToNearest(getStartValue(), getRoundingUnit(getStartValue(), 1)) +
-        index * getAxisInterval(),
+        roundToNearest(getStartValue(), getRoundingUnit(getStartValue(), 2)) +
+        index * Math.ceil(getAxisInterval()),
     );
 
   if (dailyView[0].data.length === 0) {
@@ -62,7 +66,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
       margin={{ top: 50, left: 60 }}
       lineWidth={2}
       colors={['#F0516D']}
-      curve="catmullRom"
+      curve="linear"
       xScale={{
         format: '%Y-%m-%d',
         precision: 'day',
@@ -73,7 +77,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
         type: 'linear',
         min: Math.min(...yAxisRange()),
         max: Math.max(...yAxisRange()),
-        stacked: true,
+        stacked: false,
         reverse: false,
       }}
       yFormat=">-.2f"

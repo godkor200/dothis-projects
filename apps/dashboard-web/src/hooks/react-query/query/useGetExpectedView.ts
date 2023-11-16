@@ -3,7 +3,7 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetDailyView = () => {
+const useGetExpectedView = () => {
   const { data } = useGetRelWords();
 
   const selectedRelWord = useSelectedRelWord();
@@ -14,11 +14,11 @@ const useGetDailyView = () => {
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
+  const queryResults = apiClient(1).expectViews.getExpectedViews.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: [
-          'dailyView',
+          'expectedView',
           { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
         ],
         params: {
@@ -43,4 +43,4 @@ const useGetDailyView = () => {
   };
 };
 
-export default useGetDailyView;
+export default useGetExpectedView;
