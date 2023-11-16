@@ -114,12 +114,12 @@ const SearchBar = () => {
           </div>
           {open && (
             <>
-              <div className="flex flex-col gap-[12px] py-10">
+              <div className="inline-flex flex-col gap-[12px] py-10">
                 {data
                   ?.filter((item) => item.endsWith('*'))
                   .slice(0, 5)
                   .map((item) => (
-                    <p
+                    <span
                       className="text-grey700 cursor-pointer text-[18px]"
                       onClick={() => {
                         if (!isSignIn) {
@@ -131,7 +131,7 @@ const SearchBar = () => {
                       }}
                     >
                       {item.replace('*', '')}
-                    </p>
+                    </span>
                   ))}
               </div>
               <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
