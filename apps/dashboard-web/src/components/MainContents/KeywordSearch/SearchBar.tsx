@@ -1,7 +1,9 @@
 'use client';
 
+import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useCallback, useState, useTransition } from 'react';
 
+import TermsModal from '@/components/common/Modal/TermsModal/TermsModal';
 import SvgComp from '@/components/common/SvgComp';
 import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
 import {
@@ -11,6 +13,7 @@ import {
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
+import { useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
 import MyKeywordList from './MyKeywordList';
@@ -33,7 +36,11 @@ const SearchBar = () => {
 
   const [open, setOpen] = useState(false);
 
+  const [openModal, setOpenModal] = useState(false);
+
   const [searchInput, setSearchInput] = useState('');
+
+  const isSignIn = useIsSignedIn();
 
   const [input, setInput] = useState('');
 
@@ -114,9 +121,14 @@ const SearchBar = () => {
                   .map((item) => (
                     <p
                       className="text-grey700 cursor-pointer text-[18px]"
-                      onClick={() =>
-                        createSearchwordMutate(item.replace('*', ''))
-                      }
+                      onClick={() => {
+                        if (!isSignIn) {
+                          setOpenModal(true);
+                          return;
+                        }
+                        createSearchwordMutate(item.replace('*', ''));
+                        return;
+                      }}
                     >
                       {item.replace('*', '')}
                     </p>
@@ -154,6 +166,23 @@ const SearchBar = () => {
           </div>
         )}
       </div>
+      {openModal && (
+        <TermsModal setOnError={setOpenModal}>
+          <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
+            <div className="mb-[0.625rem] flex justify-center">
+              로그인이 필요합니다.
+            </div>
+            <div
+              className="flex justify-center gap-[1.25rem] "
+              onClick={() => setOpenModal(false)}
+            >
+              <Button theme="contained" size="L" paddingX="!px-[85px]">
+                확인
+              </Button>
+            </div>
+          </div>
+        </TermsModal>
+      )}
     </div>
   );
 };
