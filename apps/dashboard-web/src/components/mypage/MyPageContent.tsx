@@ -1,19 +1,28 @@
 'use client';
 
-import { deleteCookie } from 'cookies-next';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
 
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import { apiClient } from '@/utils/api/apiClient';
 
 const MyPageContent = () => {
   const { data: userData } = useGetUserInfo();
 
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
+  const { mutate } = apiClient(1).auth.logout.useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries(['user']);
+      router.replace('/');
+    },
+  });
+
   const handleLogOut = () => {
-    deleteCookie('refreshToken');
-    router.replace('/');
+    mutate({});
   };
 
   return (
