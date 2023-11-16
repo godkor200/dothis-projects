@@ -134,23 +134,29 @@ export class ExpectedViewsQueryHandler
       let closestChannel: IChannelExpViewsRes | null = null;
       let closestDateDifference: number | null = null;
 
-      // // videoData에서 해당 channelId를 가진 비디오를 찾습니다.
-      // let matchedVideoData = searchRelatedVideo.find(
-      //   (videoData) => videoData.video_id === videoId,
-      // );
-      //
-      // if (!matchedVideoData) continue; // 일치하는 비디오 데이터가 없다면 다음 비디오로 넘어갑니다.
-      // let matchedChannelId = matchedVideoData.channel_id;
+      // videoData에서 해당 channelId를 가진 비디오를 찾습니다.
+      let matchedVideoData = searchRelatedVideo.find(
+        (videoData) => videoData.video_id === videoId,
+      );
+
+      if (!matchedVideoData) continue; // 일치하는 비디오 데이터가 없다면 다음 비디오로 넘어갑니다.
+      let matchedChannelId = matchedVideoData.channel_id;
       // 채널 히스토리에서 각각 채널아이디를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
       for (let channelHistory of channelHistories) {
         let channelId = channelHistory.channel_id;
-        // let channelDate = new Date(channelHistory.crawled_date);
-        // let dateDifference = Math.abs(
-        //   new Date(videoDate).getTime() - channelDate.getTime(),
-        // );
+        let channelDate = new Date(channelHistory.crawled_date);
+        let dateDifference = Math.abs(
+          new Date(videoDate).getTime() - channelDate.getTime(),
+        );
         //채널 히스토리는 일주일 단위로 크롤링하기 때문에 데이터를 불러온 기간중에서 가장 가까운 크롤링 날짜로 평균조회수를 불러옴
 
-        closestChannel = channelHistory;
+        if (
+          matchedChannelId === channelId &&
+          (closestChannel === null || dateDifference < closestDateDifference)
+        ) {
+          closestChannel = channelHistory;
+          closestDateDifference = dateDifference;
+        }
       }
 
       if (closestChannel !== null) {
@@ -177,7 +183,7 @@ export class ExpectedViewsQueryHandler
       result.push({ date: date, expected_views: averageViewsRatio });
     }
     let endTime = Date.now() - startTime;
-    console.log('end', endTime);
+    console.log('calculateAverageViews end', endTime);
     return result;
   }
 }
