@@ -12,7 +12,6 @@ import {
 
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
-import { query } from 'express';
 
 export class VideoQueryHandler
   extends AwsOpensearchConnetionService
@@ -241,5 +240,54 @@ export class VideoQueryHandler
     );
 
     return await lastValueFrom(observable$);
+  }
+
+  async findVideosWithLastVideoHistory<T>(
+    arg: FindVideoDateQuery,
+  ): Promise<T[]> {
+    let searchQuery = {
+      index: 'video-' + arg.clusterNumber,
+      scroll: '10s',
+      size: 10000,
+      body: {
+        query: {
+          bool: {
+            must: [
+              {
+                bool: {
+                  should: [
+                    {
+                      wildcard: {
+                        video_tag: `*${arg.keyword}*`,
+                      },
+                    },
+                    {
+                      wildcard: {
+                        video_title: `*${arg.keyword}*`,
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        _source: arg.data,
+      },
+    };
+    if (arg.relationKeyword)
+      searchQuery.body.query.bool.must[0].bool.should.push(
+        {
+          wildcard: {
+            video_tag: `*${arg.relationKeyword}*`,
+          },
+        },
+        {
+          wildcard: {
+            video_title: `*${arg.relationKeyword}*`,
+          },
+        },
+      );
+    return Promise.resolve([]);
   }
 }
