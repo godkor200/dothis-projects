@@ -70,7 +70,6 @@ const News = () => {
     [original],
   );
 
-  console.log(returnData);
   return (
     returnData && (
       <>

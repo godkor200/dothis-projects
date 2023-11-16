@@ -28,7 +28,6 @@ const MediaArticlesContainer = ({
   articleListData,
   selectedArticle,
 }: MainContentContainerProps) => {
-  console.log(articleListData);
   const [pageIndex, setPageIndex] = useState(4);
 
   const [contentIndex, setContentIndex] = useState(0);
