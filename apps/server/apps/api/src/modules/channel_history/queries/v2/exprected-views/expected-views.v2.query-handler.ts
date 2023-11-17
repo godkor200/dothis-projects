@@ -53,7 +53,7 @@ export class ExpectedViewsV2QueryHandler
     };
     //탐색어 + 관련어 비디오,
     const searchRelatedVideo =
-      await this.video.findvideoIdfullScanAndVideos<IFindVideoIDAndChannelIdRes>(
+      await this.video.findVideoIdFullScanAndVideos<IFindVideoIDAndChannelIdRes>(
         arg,
       );
     if (!searchRelatedVideo) return Err(new VideoNotFoundError());
