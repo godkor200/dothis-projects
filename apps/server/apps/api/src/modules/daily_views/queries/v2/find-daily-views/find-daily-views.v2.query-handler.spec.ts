@@ -56,7 +56,7 @@ describe('예외 처리', () => {
     res: undefined,
   });
   it('비디오 값이 널인 경우', async () => {
-    mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(null),
     );
     const arg: FindDailyViewsQuery = {
@@ -75,7 +75,7 @@ describe('예외 처리', () => {
   });
 
   it('히스토리가 없는 경우', async () => {
-    mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(['1', '2']),
     );
     mockFindVideoHistoryOsAdapter.findVideoHistoryFullScan.mockReturnValue(

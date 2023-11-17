@@ -37,7 +37,7 @@ describe('기대 조회수 평균 구하기', () => {
       from: new Date('2023-10-13'),
       to: new Date('2023-10-20'),
     };
-    mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(videoData),
     );
     mockChannelHistoryHandler.findChannelHistoryFullScan.mockReturnValue(

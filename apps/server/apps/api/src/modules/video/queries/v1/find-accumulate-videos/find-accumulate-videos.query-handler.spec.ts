@@ -49,7 +49,7 @@ describe('함수 처리', () => {
     mockChannelHistoryOutboundPort.findChannelHistoryFullScan.mockReturnValue(
       Promise.resolve(channelHistoryDummy),
     );
-    mockVideoServicePort.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockVideoServicePort.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(videoDummy),
     );
 
