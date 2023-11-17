@@ -1,6 +1,5 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import { useRouter } from 'next/navigation';
@@ -8,8 +7,8 @@ import { type PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
+import { useSignUpTermsMutation } from '@/hooks/react-query/mutation/useSignUpTermsMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
-import { apiClient } from '@/utils/api/apiClient';
 import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 import { CheckBox } from '../common/Checkbox/style';
@@ -21,20 +20,7 @@ const LoginTerms = () => {
 
   const { data: userData } = useGetUserInfo();
 
-  const queryClient = useQueryClient();
-  const { mutate } = apiClient(2).user.putAgreePromotion.useMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries(['user']);
-      if (
-        !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
-      ) {
-        router.replace('/auth/choose-keyword');
-        return;
-      }
-
-      router.replace('/contents');
-    },
-  });
+  const { mutate } = useSignUpTermsMutation();
 
   const router = useRouter();
   const methods = useForm({
@@ -54,7 +40,21 @@ const LoginTerms = () => {
   } = methods;
 
   const onSubmit = async (data: any) => {
-    mutate({ body: { isAgree: true } });
+    mutate(
+      { body: { isAgree: true } },
+      {
+        onSuccess: () => {
+          if (
+            !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
+          ) {
+            router.replace('/auth/choose-keyword');
+            return;
+          }
+
+          router.replace('/contents');
+        },
+      },
+    );
   };
 
   useEffect(() => {
