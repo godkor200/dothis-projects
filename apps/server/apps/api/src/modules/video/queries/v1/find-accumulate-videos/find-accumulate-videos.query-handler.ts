@@ -12,7 +12,6 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { IFindVideoIDAndChannelIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 import { Err, Ok, Result } from 'oxide.ts';
-import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
@@ -76,7 +75,7 @@ export class FindAccumulateVideosQueryHandler
     });
 
     const searchRelatedVideo =
-      await this.video.findvideoIdfullScanAndVideos<IFindVideoIDAndChannelIdRes>(
+      await this.video.findVideoIdFullScanAndVideos<IFindVideoIDAndChannelIdRes>(
         revisedArg,
       );
 
