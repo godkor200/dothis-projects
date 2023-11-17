@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import { useRouter } from 'next/navigation';
 
 import { useLogOutMutation } from '@/hooks/react-query/mutation/useLogOutMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
@@ -8,10 +9,18 @@ import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 const MyPageContent = () => {
   const { data: userData } = useGetUserInfo();
 
+  const router = useRouter();
   const { mutate } = useLogOutMutation();
 
   const handleLogOut = () => {
-    mutate({});
+    mutate(
+      {},
+      {
+        onSuccess: () => {
+          router.replace('/');
+        },
+      },
+    );
   };
 
   return (
