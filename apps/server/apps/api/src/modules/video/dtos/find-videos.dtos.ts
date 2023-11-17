@@ -15,6 +15,7 @@ export enum VIDEO_DATA_KEY {
   VIDEO_END_SCREEN = 'video_end_screen',
   CRAWLED_DATE = 'crawled_date',
   VIDEO_CLUSTER = 'video_cluster',
+  VIDEO_HISTORY = 'video_history',
 }
 
 export class FindVideoDateQuery implements IQuery {
@@ -22,7 +23,7 @@ export class FindVideoDateQuery implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 

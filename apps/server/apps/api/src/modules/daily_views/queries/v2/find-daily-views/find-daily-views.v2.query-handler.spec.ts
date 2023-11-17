@@ -1,4 +1,4 @@
-import { FindDailyViewsQueryOsHandler } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.query-handler';
+import { FindDailyViewsQueryOsHandler } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.v2.query-handler';
 
 import { mock } from 'jest-mock-extended';
 import { FindVideoHistoryOsAdapter } from '@Apps/modules/video_history/interface/find-video-history.os.adapter';
@@ -56,7 +56,7 @@ describe('예외 처리', () => {
     res: undefined,
   });
   it('비디오 값이 널인 경우', async () => {
-    mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(null),
     );
     const arg: FindDailyViewsQuery = {
@@ -75,7 +75,7 @@ describe('예외 처리', () => {
   });
 
   it('히스토리가 없는 경우', async () => {
-    mockFindVideoOsAdapter.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(['1', '2']),
     );
     mockFindVideoHistoryOsAdapter.findVideoHistoryFullScan.mockReturnValue(

@@ -28,7 +28,7 @@ beforeEach(async () => {
   });
 });
 
-describe('기대 조회수 평균 구하기', () => {
+describe('기대 조회수 평균 구하기 v2', () => {
   it('비디오', async () => {
     const arg: ExpectedViewsQuery = {
       clusterNumber: '6',
