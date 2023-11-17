@@ -96,7 +96,7 @@ const MonthlyViewData = () => {
       <div className="rounded-8 border-grey400 mt-10 flex flex-col border border-solid px-[30px] py-[40px] ">
         <div className="text-t2 text-grey400 flex items-center gap-[10px] font-bold">
           {TITLE_BUTTON.map((item, idx) => (
-            <>
+            <div key={idx} className="flex items-center gap-[10px]">
               <button
                 className={`${
                   selectedType === item.type ? 'text-grey700' : ''
@@ -108,7 +108,7 @@ const MonthlyViewData = () => {
               {idx !== TITLE_BUTTON.length - 1 && (
                 <span className="bg-grey400 h-1 w-1 rounded"></span>
               )}
-            </>
+            </div>
           ))}
         </div>
         <div className="h-[315px] w-[406px] self-center">
