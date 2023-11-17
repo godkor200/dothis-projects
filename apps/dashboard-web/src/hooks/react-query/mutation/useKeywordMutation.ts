@@ -15,6 +15,27 @@ import useGetUserInfo from '../query/useGetUserInfo';
 
 // 현재 눈으로 확인할 때는 지연되는 현상이 없어서 추가하지않았지만, optimistic 업데이트도 추가할지 고민중입니다.
 
+export const useInitialKeywordMutations = (
+  mutationOptions?: UseMutationOptions<
+    typeof apiRouter.user.putUpdatePersonalTag,
+    ClientArgs
+  >,
+) => {
+  const queryClient = useQueryClient();
+
+  const mutationResult = apiClient(1).user.putUpdatePersonalTag.useMutation({
+    ...mutationOptions,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(KEYWORD_KEY.all);
+      queryClient.invalidateQueries(USER_KEY.all);
+    },
+  });
+
+  return {
+    ...mutationResult,
+  };
+};
+
 export const useAddKeywordMutation = (
   mutationOptions?: UseMutationOptions<
     typeof apiRouter.user.putUpdatePersonalTag,

@@ -1,9 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
-import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -11,9 +9,9 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import type { KeywordSchema } from '@/constants/schema/login';
 import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
+import { useInitialKeywordMutations } from '@/hooks/react-query/mutation/useKeywordMutation';
 import useGetKeyword from '@/hooks/react-query/query/useGetKeyword';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
-import { apiClient } from '@/utils/api/apiClient';
 import {
   combinedKeywordsAndTags,
   convertKeywordsToArray,
@@ -37,17 +35,7 @@ const LoginKeyword = () => {
 
   const { data: userData } = useGetUserInfo();
 
-  const queryClient = useQueryClient();
-
-  const { mutate } = apiClient(1).user.putUpdatePersonalTag.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
-
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
-      router.push('/contents');
-    },
-  });
+  const { mutate } = useInitialKeywordMutations();
 
   const channel_keywords = keywordData?.channel_keywords;
   const channel_tags = keywordData?.channel_tags;
@@ -81,7 +69,14 @@ const LoginKeyword = () => {
           keyword,
         );
 
-    mutate({ body: { tag: [...hashkeywords, ...restkeywords] } });
+    mutate(
+      { body: { tag: [...hashkeywords, ...restkeywords] } },
+      {
+        onSuccess: () => {
+          router.push('/contents');
+        },
+      },
+    );
   };
 
   return (
