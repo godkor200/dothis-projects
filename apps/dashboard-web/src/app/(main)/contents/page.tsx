@@ -1,10 +1,11 @@
+import TabNavigation from '@/components/common/TabNavigation';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
 import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
-import ContentCardHeaderTap from '@/components/MainContents/MediaArticles/MediaArticlesTabNav';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
+import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
 
 const MainContentPage = async ({
@@ -12,7 +13,9 @@ const MainContentPage = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const selectedArticle = (searchParams?.relatedContent as string) || 'news';
+  const selectedArticle =
+    (searchParams?.tab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
+    'news';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );
@@ -31,10 +34,14 @@ const MainContentPage = async ({
         <MonthlyViewData />
       </Card>
       <Card>
-        <ContentCardHeaderTap />
-        <div className="mt-10 flex gap-[1.25rem]">
-          <MainContentContainer articleListData={articleListData} />
-        </div>
+        <TabNavigation
+          selectedArticle={selectedArticle}
+          tabNavData={MEDIA_TABNAV_DATA}
+        />
+        <MainContentContainer
+          articleListData={articleListData}
+          selectedArticle={selectedArticle}
+        />
       </Card>
     </>
   );

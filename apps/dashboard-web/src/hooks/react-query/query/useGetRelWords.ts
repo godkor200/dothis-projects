@@ -1,17 +1,13 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import useKeyword from '@/hooks/user/useKeyword';
+import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
-import {
-  convertKeywordsToArray,
-  getHashKeyword,
-  isHashKeyword,
-} from '@/utils/keyword';
+import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import useGetUserInfo from './useGetUserInfo';
-
 const guestKeyword = ['먹방', '와인'];
-
 /**
  * 쿼리 훅 내에서 의존성이 필요한 keyword를 가져오기 위해 useGetUserInfo를 통해 personalizationTag와 키워드 util함수를 이용해 키워드를 가져온다
  * @param queryOptions
@@ -26,24 +22,24 @@ const useGetRelWords = (
 ) => {
   const { data, isLoading } = useGetUserInfo();
 
+  const isSignedIn = useIsSignedIn();
+
+  const { hashKeywordList } = useKeyword();
+  const isNotSetTags = !data?.personalizationTag;
+
   const queryResult = apiClient(1).relwords.getRelWords.useQuery(
-    ['relWords'],
+    ['relWords', [hashKeywordList[0]]],
     {
       params: {
-        keyword: isHashKeyword(convertKeywordsToArray(data?.personalizationTag))
-          ? getHashKeyword(convertKeywordsToArray(data?.personalizationTag))[0]
-          : guestKeyword[0],
+        keyword: hashKeywordList[0],
       },
     },
-    { enabled: !isLoading, ...queryOptions },
+    { ...queryOptions, enabled: !isLoading },
   );
-
   queryResult.data;
-
   return {
     ...queryResult,
     data: queryResult.data?.body.data,
   };
 };
-
 export default useGetRelWords;

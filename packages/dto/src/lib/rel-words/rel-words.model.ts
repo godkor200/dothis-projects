@@ -21,3 +21,7 @@ export const zRankRel = z.object({
 export type TRankRes = z.TypeOf<typeof zRankRel>;
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;
+
+export const zAutoCompleteWords = z.object({
+  data: z.array(z.string()),
+});

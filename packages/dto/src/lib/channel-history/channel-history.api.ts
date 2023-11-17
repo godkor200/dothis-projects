@@ -1,9 +1,10 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { zChannelHistoryModel } from './channel-history.model';
+import { zChannelHistoryModel, zExpectedViews } from './channel-history.model';
 
 export const expectedViewsApiUrl = '/expected-views';
 export const channelHistoryApiUrl = '/channel-history';
+
 export const expectedViewsApi = c.router({
   getExpectedViews: {
     method: 'GET',
@@ -18,7 +19,7 @@ export const expectedViewsApi = c.router({
       to: z.string(),
     }),
     responses: {
-      200: 'OK',
+      200: zExpectedViews,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },

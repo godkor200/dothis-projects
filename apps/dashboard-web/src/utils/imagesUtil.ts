@@ -13,3 +13,7 @@ export const getMainImage = (image: string) => {
 
   return result[0];
 };
+
+export const externalYouTubeImageLoader = (videoId: string | undefined) => {
+  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+};

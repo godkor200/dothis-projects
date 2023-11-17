@@ -29,15 +29,20 @@ const ArticleList = ({
               onClick={() => handleSetContentIndex(index)}
               key={index}
             >
-              <div className="h-[74px] w-[132px] overflow-hidden rounded-md">
+              <div className="relative h-[74px] w-[132px] overflow-hidden rounded-md bg-black">
                 <Image
                   unoptimized
-                  src={externaImageLoader(getMainImage(image))}
+                  src={image}
                   onError={handleImageError}
-                  width={132}
-                  height={74}
+                  width={0}
+                  height={0}
                   alt="Picture of the author"
-                  style={{ objectFit: 'cover', layout: 'fill' }}
+                  style={{
+                    objectFit: 'cover',
+                    layout: 'fill',
+                    width: '132px',
+                    height: '100%',
+                  }}
                 />
               </div>
 

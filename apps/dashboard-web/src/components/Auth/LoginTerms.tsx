@@ -4,13 +4,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
 import { useRouter } from 'next/navigation';
-import { type PropsWithChildren, Suspense, useEffect, useState } from 'react';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
-import useGetKeyword from '@/hooks/react-query/query/useGetKeyword';
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { apiClient } from '@/utils/api/apiClient';
-import { combinedKeywordsAndTags } from '@/utils/keyword';
+import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 import { CheckBox } from '../common/Checkbox/style';
 import TermsModal from '../common/Modal/TermsModal/TermsModal';
@@ -19,22 +19,15 @@ import TermsContents from './TermsContents';
 const LoginTerms = () => {
   const [onError, setOnError] = useState(false);
 
-  const { data: keywordData } = useGetKeyword();
-
-  const keywordList = combinedKeywordsAndTags(
-    keywordData?.channel_keywords,
-    keywordData?.channel_tags,
-  );
-
-  const { data: userData, isLoading: userLoading } = apiClient(
-    1,
-  ).auth.getOwnInfo.useQuery(['user']);
+  const { data: userData } = useGetUserInfo();
 
   const queryClient = useQueryClient();
   const { mutate } = apiClient(2).user.putAgreePromotion.useMutation({
     onSuccess: () => {
       queryClient.invalidateQueries(['user']);
-      if (!keywordList.length) {
+      if (
+        !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
+      ) {
         router.replace('/auth/choose-keyword');
         return;
       }
@@ -98,7 +91,7 @@ const LoginTerms = () => {
 
         <div className="mb-5 flex  justify-center">
           <div className="w-[322px]">
-            <Input placeholder={userData?.body.data.userEmail!} disabled />
+            <Input placeholder={userData?.userEmail!} disabled />
           </div>
         </div>
 
