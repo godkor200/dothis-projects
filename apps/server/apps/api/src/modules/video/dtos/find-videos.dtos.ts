@@ -23,7 +23,7 @@ export class FindVideoDateQuery implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 

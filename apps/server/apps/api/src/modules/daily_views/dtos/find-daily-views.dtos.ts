@@ -5,7 +5,7 @@ export class FindDailyViewsQuery implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 
@@ -28,7 +28,7 @@ export class FindDailyViewsV3Query implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 
