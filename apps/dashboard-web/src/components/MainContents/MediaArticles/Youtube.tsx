@@ -15,7 +15,6 @@ const YouTube = () => {
   };
 
   const { data, isLoading } = useGetVideoData();
-  console.log(data);
 
   const returnData = data[pageIndex]?.data?.map((item) => {
     return {
