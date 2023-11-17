@@ -14,7 +14,7 @@ export class ExpectedViewsQuery implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 
@@ -37,7 +37,7 @@ export class ExpectedViewsV2Query implements IQuery {
 
   readonly keyword: string;
 
-  readonly relationKeyword?: string;
+  readonly relationKeyword: string;
 
   readonly from: Date;
 
