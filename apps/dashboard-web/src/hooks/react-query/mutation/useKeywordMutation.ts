@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { ClientArgs } from '@ts-rest/core';
 import type { UseMutationOptions } from '@ts-rest/react-query';
 
+import { KEYWORD_KEY, USER_KEY } from '@/constants/querykey';
 import useSearchInput from '@/hooks/useSearchInput';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -29,8 +30,8 @@ export const useAddKeywordMutation = (
   const mutationResult = apiClient(1).user.putUpdatePersonalTag.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(KEYWORD_KEY.all);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -58,8 +59,8 @@ export const useRemoveKeywordMutation = (
   const mutationResult = apiClient(1).user.putUpdatePersonalTag.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(KEYWORD_KEY.all);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -89,8 +90,8 @@ export const useResetKeywordMutation = (
   const mutationResult = apiClient(1).user.putUpdatePersonalTag.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['keyword']);
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(KEYWORD_KEY.all);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
