@@ -2,7 +2,7 @@
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
-import { useLogOutMutation } from '@/hooks/react-query/mutation/useLogoutMutation';
+import { useLogOutMutation } from '@/hooks/react-query/mutation/useLogOutMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 
 const MyPageContent = () => {
