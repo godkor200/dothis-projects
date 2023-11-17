@@ -47,7 +47,7 @@ export class FindDailyViewsQueryOsV3Handler
       data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.VIDEO_HISTORY],
     };
     const videos =
-      await this.video.findvideoIdfullScanAndVideos<IFindVideoIdRes>(arg);
+      await this.video.findVideoIdFullScanAndVideos<IFindVideoIdRes>(arg);
     if (!videos) return Err(new VideoNotFoundError());
 
     return Ok(this.calculateIncrease(videos));
