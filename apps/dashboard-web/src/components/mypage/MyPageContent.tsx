@@ -1,25 +1,14 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
-import { useRouter } from 'next/navigation';
 
+import { useLogOutMutation } from '@/hooks/react-query/mutation/useLogoutMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
-import { apiClient } from '@/utils/api/apiClient';
 
 const MyPageContent = () => {
   const { data: userData } = useGetUserInfo();
 
-  const router = useRouter();
-
-  const queryClient = useQueryClient();
-
-  const { mutate } = apiClient(1).auth.logout.useMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries(['user']);
-      router.replace('/');
-    },
-  });
+  const { mutate } = useLogOutMutation();
 
   const handleLogOut = () => {
     mutate({});
