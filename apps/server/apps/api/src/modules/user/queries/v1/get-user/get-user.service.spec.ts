@@ -19,6 +19,7 @@ describe('get-user spec', () => {
       channel: null,
       personalizationTag: 's',
       isEnvLocal: false,
+      searchWord: "['1111']",
     };
     const getOneUserService = new GetUserCommandHandler(new MockGetUser(user));
 

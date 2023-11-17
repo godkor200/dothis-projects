@@ -21,7 +21,7 @@ import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-v
 import { IncreaseData } from '@Libs/commons/src/types/dto.types';
 import { FindDailyViewsDtos } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { IRes } from '@Libs/commons/src/types/res.types';
-import { IIncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.query-handler';
+import { IIncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.v2.query-handler';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';

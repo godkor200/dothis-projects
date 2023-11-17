@@ -25,7 +25,7 @@ export const expectedViewsApi = c.router({
     },
     summary: '기대 조회수를 가져옵니다',
     description:
-      '클러스터 번호(clusterNumber),탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다.',
+      '클러스터 번호(clusterNumber),탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다. v2는 v1에 비하면 개선된 버전입니다.',
   },
 });
 

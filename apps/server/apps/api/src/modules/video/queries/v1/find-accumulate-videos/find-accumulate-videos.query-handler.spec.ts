@@ -46,10 +46,10 @@ describe('함수 처리', () => {
     mockChannelHistoryOutboundPort.findChannelHistoryByLimit.mockReturnValue(
       Promise.resolve(userChannel),
     );
-    mockChannelHistoryOutboundPort.findChannelHistoryFullscan.mockReturnValue(
+    mockChannelHistoryOutboundPort.findChannelHistoryFullScan.mockReturnValue(
       Promise.resolve(channelHistoryDummy),
     );
-    mockVideoServicePort.findvideoIdfullScanAndVideos.mockReturnValue(
+    mockVideoServicePort.findVideoIdFullScanAndVideos.mockReturnValue(
       Promise.resolve(videoDummy),
     );
 

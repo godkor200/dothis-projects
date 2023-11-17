@@ -25,11 +25,13 @@ export class FindVideoByMultipleIndex {
 export interface VideoServicePort {
   findManyVideo(tag: string): Promise<string[]>;
 
-  findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
-
-  findvideoIdfullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
-
   findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes>;
 
+  findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
+
+  findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
+
   findVideosWithMultipleIndex<T>(arg: FindVideoByMultipleIndex): Promise<T[]>;
+
+  findVideosWithLastVideoHistory<T>(arg: FindVideoDateQuery): Promise<T[]>;
 }
