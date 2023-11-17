@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
+import useKeyword from '@/hooks/user/useKeyword';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -14,12 +15,14 @@ const News = () => {
     setContentIndex(index);
   };
 
+  const { hashKeywordList } = useKeyword();
+
   const retrievePosts = async () => {
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: '아시안게임',
-        //나중에 키워드 연동
+        query: hashKeywordList[0],
+
         published_at: {
           from: '2023-09-01',
           until: '2023-09-26',
@@ -53,14 +56,20 @@ const News = () => {
     return data;
   };
 
-  const { data: original } = useQuery(['뉴스', '아시안게임'], retrievePosts);
+  const { data: original } = useQuery(
+    ['뉴스', hashKeywordList[0]],
+    retrievePosts,
+    {
+      enabled: !!hashKeywordList[0],
+    },
+  );
 
   const returnData = useMemo(
     () =>
       original?.return_object?.documents?.map((item: any) => {
         return {
           title: item.title,
-          category: '정민',
+          category: item.category[0],
           provider: item.provider,
           date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
           image: externaImageLoader(getMainImage(item.images)),

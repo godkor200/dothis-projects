@@ -34,8 +34,6 @@ const MonthlyViewData = () => {
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
-  if (isWordLoading) return null;
-
   // const categoryViewData: ViewData[] = viewData.map((item, idx) => {
   //   const result: ViewData = (item ?? []).reduce(
   //     (acc: ViewData, cur) => {
@@ -53,6 +51,7 @@ const MonthlyViewData = () => {
 
   const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
     getMaxValues(DUMMY_VIEW_DATA);
+
   const clusterData: number[] = data && JSON.parse(data.cluster);
 
   const convertedDatas = DUMMY_VIEW_DATA.map(
@@ -62,6 +61,7 @@ const MonthlyViewData = () => {
         videoTotalCounts:
           (videoTotalCounts / maxVideoTotalCounts) * viewAndVideoMaxValue,
         category:
+          clusterData &&
           clustersCategories[
             clusterData[idx] as keyof typeof clustersCategories
           ],
@@ -79,6 +79,8 @@ const MonthlyViewData = () => {
     viewAndVideoMaxValue,
   };
 
+  if (isWordLoading) return null;
+
   return (
     <>
       {/* <h3 className="typo-t2 mt-10 flex items-center gap-[4px]">
@@ -90,10 +92,11 @@ const MonthlyViewData = () => {
           <SummaryItem key={title} title={title} content={content} />
         ))}
       </ul> */}
+
       <div className="rounded-8 border-grey400 mt-10 flex flex-col border border-solid px-[30px] py-[40px] ">
         <div className="text-t2 text-grey400 flex items-center gap-[10px] font-bold">
           {TITLE_BUTTON.map((item, idx) => (
-            <>
+            <div key={idx} className="flex items-center gap-[10px]">
               <button
                 className={`${
                   selectedType === item.type ? 'text-grey700' : ''
@@ -105,7 +108,7 @@ const MonthlyViewData = () => {
               {idx !== TITLE_BUTTON.length - 1 && (
                 <span className="bg-grey400 h-1 w-1 rounded"></span>
               )}
-            </>
+            </div>
           ))}
         </div>
         <div className="h-[315px] w-[406px] self-center">

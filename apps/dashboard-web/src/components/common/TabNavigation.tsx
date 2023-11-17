@@ -41,8 +41,9 @@ const TabNavigation = <
       className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
     >
       {tabNavData.map((item, index) => (
-        <>
+        <div key={index} className=" flex gap-[0.75rem]">
           <Link
+            key={index}
             href={
               (pathName +
                 '?' +
@@ -59,7 +60,7 @@ const TabNavigation = <
           {index !== tabNavData.length - 1 && (
             <p className="text-[32px] font-bold">/</p>
           )}
-        </>
+        </div>
       ))}
     </header>
   );

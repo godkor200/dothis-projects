@@ -30,7 +30,7 @@ const expectedView = [
   },
 ];
 
-const ExpectedViewChart = ({}: Props) => {
+const ExpectedViewChart = ({ expectedView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
 
   const { data } = useGetExpectedView();

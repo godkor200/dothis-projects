@@ -11,6 +11,7 @@ import { type PropsWithChildren, useEffect } from 'react';
 import KeywordSearchResult from '@/components/MainContents/KeywordSearch/KeywordSearchResult';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
+import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
 
@@ -24,7 +25,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { setRandomIndex } = useRandomIndexActions();
 
   useEffect(() => {
-    setRandomIndex(Math.floor(Math.random() * 3));
+    setRandomIndex(Math.floor(Math.random() * GUEST_KEYWORD.length));
   }, []);
 
   const router = useRouter();
