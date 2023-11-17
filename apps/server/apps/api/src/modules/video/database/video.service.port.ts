@@ -29,7 +29,7 @@ export interface VideoServicePort {
 
   findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
 
-  findvideoIdfullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
+  findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
 
   findVideosWithMultipleIndex<T>(arg: FindVideoByMultipleIndex): Promise<T[]>;
 
