@@ -1,3 +1,4 @@
+import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -9,6 +10,8 @@ export const videoKeys = {
 
 const useGetVideoData = () => {
   const { data } = useGetRelWords();
+
+  const { hashKeywordList } = useKeyword();
   const selectedRelWord = useSelectedRelWord();
   let clusters: string[] = [];
 
@@ -19,15 +22,22 @@ const useGetVideoData = () => {
   const queryResults = apiClient(1).video.getVideo.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: [...videoKeys.video, clusterNumber],
+        queryKey: [
+          ...videoKeys.video,
+          clusterNumber,
+          {
+            relword: selectedRelWord,
+            keyword: hashKeywordList[0],
+          },
+        ],
         params: {
           clusterNumber,
         },
         query: {
           // last:0,
           limit: 5,
-          related: '돼지고기',
-          search: '고기',
+          related: selectedRelWord!,
+          search: hashKeywordList[0],
         },
         enabled: !!data && !!selectedRelWord,
       };
