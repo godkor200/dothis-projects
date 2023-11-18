@@ -38,7 +38,7 @@ const YouTube = () => {
     );
   }
   return (
-    <>
+    <div className="mt-10 flex gap-[1.25rem]">
       <CurrentArticle
         title={returnData[contentIndex]?.title}
         category={returnData[contentIndex]?.category}
@@ -51,7 +51,7 @@ const YouTube = () => {
         articleListData={returnData}
         handleSetContentIndex={handleSetContentIndex}
       />
-    </>
+    </div>
   );
 };
 

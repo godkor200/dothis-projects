@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
+import ParserContent from '@/components/common/ParserContent';
 import useKeyword from '@/hooks/user/useKeyword';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
@@ -74,6 +75,7 @@ const News = () => {
           date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
           image: externaImageLoader(getMainImage(item.images)),
           link: item.provider_link_page,
+          hilight: item.hilight,
         };
       }),
     [original],
@@ -89,18 +91,24 @@ const News = () => {
   }
   return (
     <>
-      <CurrentArticle
-        title={returnData[contentIndex]?.title}
-        category={returnData[contentIndex]?.category}
-        provider={returnData[contentIndex]?.provider}
-        date={returnData[contentIndex]?.date}
-        image={returnData[contentIndex]?.image}
-        link={returnData[contentIndex]?.link}
-      />
-      <ArticleList
-        articleListData={returnData}
-        handleSetContentIndex={handleSetContentIndex}
-      />
+      <div className="mt-10 flex gap-[1.25rem]">
+        <CurrentArticle
+          title={returnData[contentIndex]?.title}
+          category={returnData[contentIndex]?.category}
+          provider={returnData[contentIndex]?.provider}
+          date={returnData[contentIndex]?.date}
+          image={returnData[contentIndex]?.image}
+          link={returnData[contentIndex]?.link}
+        />
+        <ArticleList
+          articleListData={returnData}
+          handleSetContentIndex={handleSetContentIndex}
+        />
+      </div>
+      <div className="border-grey300 rounded-8 mt-10 border border-solid px-[30px] py-10">
+        <h3 className="text-t2 text-grey700 mb-5 font-bold">뉴스 요약</h3>
+        <ParserContent content={returnData[contentIndex]?.hilight} />
+      </div>
     </>
   );
 };
