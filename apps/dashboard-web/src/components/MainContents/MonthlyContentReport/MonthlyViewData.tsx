@@ -125,6 +125,9 @@ const MonthlyViewData = () => {
               dotColor={{ theme: 'background' }}
               dotBorderWidth={2}
               colors={{ scheme: 'nivo' }}
+              theme={{
+                fontSize: 16,
+              }}
               blendMode="multiply"
               motionConfig="wobbly"
               sliceTooltip={({ index, data }) => (
@@ -134,27 +137,6 @@ const MonthlyViewData = () => {
                   {...toolTipProps}
                 />
               )}
-              legends={[
-                {
-                  anchor: 'top-left',
-                  direction: 'column',
-                  translateX: -50,
-                  translateY: -40,
-                  itemWidth: 80,
-                  itemHeight: 20,
-                  itemTextColor: '#999',
-                  symbolSize: 12,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
-                      },
-                    },
-                  ],
-                },
-              ]}
             />
           ) : (
             <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
