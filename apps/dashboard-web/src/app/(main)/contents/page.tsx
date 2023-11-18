@@ -3,7 +3,7 @@ import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
 import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
-import MainContentContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
+import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
@@ -39,7 +39,7 @@ const MainContentPage = async ({
           selectedArticle={selectedArticle}
           tabNavData={MEDIA_TABNAV_DATA}
         />
-        <MainContentContainer
+        <MediaArticlesContainer
           articleListData={articleListData}
           selectedArticle={selectedArticle}
         />

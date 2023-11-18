@@ -14,6 +14,7 @@ export interface CurrentArticleProps {
   date: string;
   image: string;
   link: string;
+  hilight?: string;
 }
 
 const CurrentArticle = ({
