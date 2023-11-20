@@ -21,16 +21,22 @@ const GNB = () => {
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
-    router.push('/contents?steps=signUp');
+    router.push('?steps=signUp');
     return false;
   };
 
   const handleRouter = (route: Route) => {
-    if (!checkIsSignedIn()) return;
+    if (route === '/pricing') {
+      router.push(route);
+      return;
+    }
     if (route === '/about') {
       alert('개발중입니다.');
       return;
     }
+
+    if (!checkIsSignedIn()) return;
+
     router.push(route);
   };
 
