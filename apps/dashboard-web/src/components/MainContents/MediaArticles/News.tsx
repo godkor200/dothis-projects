@@ -8,6 +8,7 @@ import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import CurrentArticle from './CurrentArticle';
+import SummaryCard from './SummaryCard';
 
 const News = () => {
   const [contentIndex, setContentIndex] = useState(0);
@@ -105,10 +106,9 @@ const News = () => {
           handleSetContentIndex={handleSetContentIndex}
         />
       </div>
-      <div className="border-grey300 rounded-8 mt-10 border border-solid px-[30px] py-10">
-        <h3 className="text-t2 text-grey700 mb-5 font-bold">뉴스 요약</h3>
+      <SummaryCard title="뉴스 요약">
         <ParserContent content={returnData[contentIndex]?.hilight} />
-      </div>
+      </SummaryCard>
     </>
   );
 };
