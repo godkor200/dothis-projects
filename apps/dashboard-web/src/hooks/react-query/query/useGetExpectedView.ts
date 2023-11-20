@@ -1,3 +1,4 @@
+import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -17,10 +18,9 @@ const useGetExpectedView = () => {
   const queryResults = apiClient(1).expectViews.getExpectedViews.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: [
-          'expectedView',
+        queryKey: EXPECTEDVIEW_KEY.list([
           { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
-        ],
+        ]),
         params: {
           clusterNumber,
         },

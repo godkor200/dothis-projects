@@ -1,7 +1,9 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import { RELATIONWORD_KEY } from '@/constants/querykey';
 import useKeyword from '@/hooks/user/useKeyword';
+import { RELATED_WORDS } from '@/mocks';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
@@ -28,7 +30,7 @@ const useGetRelWords = (
   const isNotSetTags = !data?.personalizationTag;
 
   const queryResult = apiClient(1).relwords.getRelWords.useQuery(
-    ['relWords', [hashKeywordList[0]]],
+    RELATIONWORD_KEY.list([{ keyword: hashKeywordList[0] }]),
     {
       params: {
         keyword: hashKeywordList[0],

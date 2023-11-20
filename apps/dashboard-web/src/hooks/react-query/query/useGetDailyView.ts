@@ -1,3 +1,4 @@
+import { DAILYVIEW_KEY } from '@/constants/querykey';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -17,10 +18,9 @@ const useGetDailyView = () => {
   const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: [
-          'dailyView',
+        queryKey: DAILYVIEW_KEY.list([
           { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
-        ],
+        ]),
         params: {
           clusterNumber,
         },

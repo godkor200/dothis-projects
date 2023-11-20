@@ -1,3 +1,4 @@
+import { VIDEODATA_KEY } from '@/constants/querykey';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
@@ -22,14 +23,13 @@ const useGetVideoData = () => {
   const queryResults = apiClient(1).video.getVideo.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: [
-          ...videoKeys.video,
-          clusterNumber,
+        queryKey: VIDEODATA_KEY.list([
           {
+            clusterNumber,
             relword: selectedRelWord,
             keyword: hashKeywordList[0],
           },
-        ],
+        ]),
         params: {
           clusterNumber,
         },
