@@ -36,7 +36,7 @@ const useGetVideoCount = () => {
 
   return {
     ...queryResults,
-    data: queryResults.map((result) => result.data?.body),
+    data: queryResults.map((result) => result.data?.body.data),
   };
 };
 
