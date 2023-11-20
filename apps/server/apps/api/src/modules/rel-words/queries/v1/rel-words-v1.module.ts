@@ -13,11 +13,14 @@ import { RankRelQueryHandler } from '@Apps/modules/rel-words/queries/v1/rank-rel
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
+import { FindSearchKeywordHttpController } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.http.controller';
+import { FindSearchKeywordQueryHandler } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.query-handler';
 
 const controllers = [
   FindRelHttpV1Controller,
   UpdateAutoCompleteWordsHttpController,
   RankRelHttpController,
+  FindSearchKeywordHttpController,
 ];
 const repositories: Provider[] = [
   {
@@ -38,6 +41,7 @@ const handler = [
   FindRelQueryHandler,
   UpdateAutoCompleteWordsCommandHandler,
   RankRelQueryHandler,
+  FindSearchKeywordQueryHandler,
 ];
 @Module({
   imports: [CqrsModule, RelatedWordsModule, AwsModule],
