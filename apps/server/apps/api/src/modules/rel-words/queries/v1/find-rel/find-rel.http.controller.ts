@@ -44,7 +44,7 @@ export class FindRelHttpController {
     description: responses[401],
   })
   @ApiNotFoundResponse({
-    description: responses[404],
+    description: RelwordsNotFoundError.message,
   })
   @ApiInternalServerErrorResponse({
     description: responses[500],
