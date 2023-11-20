@@ -41,8 +41,6 @@ const YouTube = () => {
     );
   }
 
-  console.log(data);
-
   return (
     <>
       <div className="mt-10 flex gap-[1.25rem]">

@@ -11,7 +11,6 @@ const SummaryCard = ({
   title,
   marginTop = 'mt-10',
 }: SummaryCardProps) => {
-  console.log(marginTop);
   return (
     <div
       className={`border-grey300 rounded-8 ${marginTop} border border-solid px-[30px] py-10`}
