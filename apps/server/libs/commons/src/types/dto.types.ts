@@ -6,6 +6,7 @@ import {
   zVideoModel,
   zTokenExpired,
   zRelWords,
+  zKeywords,
 } from '@dothis/dto';
 import { zExpectedData, zIncreaseData } from '@Libs/commons/src/types/res.zod';
 
@@ -17,6 +18,7 @@ export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
 
 export class RelwordsRes extends createZodDto(extendApi(zRelWords)) {}
 
+export class KeywordRes extends createZodDto(extendApi(zKeywords)) {}
 export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
 
 export class ExpectedViewsData extends createZodDto(extendApi(zExpectedData)) {}
