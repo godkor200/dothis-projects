@@ -43,6 +43,49 @@ const KeywordAnalyticsView = () => {
 
   const { data } = useGetVideoCount();
 
+  type VideoCount =
+    | '0~100'
+    | '100~1000'
+    | '1000~10000'
+    | '10000~50000'
+    | '50000~100000'
+    | '100000~500000'
+    | '500000이상';
+
+  const getTotalVideoCount = useMemo((): [any, number] => {
+    let count = 0;
+
+    let sectionObj = {
+      100: 0,
+      1000: 0,
+      10000: 0,
+      50000: 0,
+      100000: 0,
+      500000: 0,
+      max: 0,
+    };
+
+    const test = new Map<VideoCount, { number: number }>();
+    // 해당 키가 이미 존재하면 누적 값을 업데이트하고, 없으면 새로운 항목 추가
+
+    data.forEach((item) => {
+      count += item?.videoTotal || 0;
+      item?.section.forEach((count) => {
+        if (test.has(count.section)) {
+          const currentValue = test.get(count.section)!;
+          currentValue.number += count.number;
+          test.set(count.section, currentValue);
+        } else {
+          test.set(count.section, { number: count.number });
+        }
+      });
+    });
+
+    return [test, count];
+  }, [data]);
+
+  console.log(data);
+
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
       <AnalysisWidgetList expectedView={lastExpectedView || 0} />
@@ -50,7 +93,10 @@ const KeywordAnalyticsView = () => {
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
           <DailyView view={lastDailyView || 0} />
-          <CumulativeVideoChart />
+          <CumulativeVideoChart
+            totalCount={getTotalVideoCount[1]}
+            videoCountsBySection={getTotalVideoCount[0]}
+          />
         </div>
       </div>
     </div>
