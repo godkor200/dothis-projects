@@ -1,5 +1,21 @@
 import { z } from 'zod';
 
+export const zAccVideoModel = z.object({
+  data: z.object({
+    section: z.array(
+      z.object({
+        gte: z.number(),
+        lte: z.number(),
+        max: z.number().nullable(),
+        section: z.string(),
+        number: z.number(),
+      }),
+    ),
+    userSection: z.string(),
+    videoTotal: z.number(),
+  }),
+});
+
 export const zVideoModel = z.object({
   id: z.number().nullable().describe('The id of video'),
   channelIndex: z.string().describe('The index of channel'),
