@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import {
   averageViews,
   formatToLineGraph,
@@ -39,6 +40,8 @@ const KeywordAnalyticsView = () => {
   );
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
+
+  const { data } = useGetVideoCount();
 
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
