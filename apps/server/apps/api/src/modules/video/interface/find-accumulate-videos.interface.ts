@@ -18,3 +18,21 @@ export enum SECTION_NUMBER {
   RANGE_100000_500000 = '100000~500000',
   RANGE_500000_AND_ABOVE = '500000이상',
 }
+
+interface Video {
+  video_tag: string;
+  crawled_date: string;
+  video_title: string;
+  video_url: string;
+  views: number;
+}
+
+interface Source {
+  video_list: Video[];
+  video_aver_views: number;
+}
+
+export interface VideoHistory {
+  _id: string;
+  _source: Source[];
+}

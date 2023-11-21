@@ -1,5 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindAccumulateVideosDtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
+import {
+  FindAccumulateVideosDtos,
+  FindAccumulateVideosV2Dtos,
+} from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
@@ -7,24 +10,18 @@ import {
   IFindAccumulateVideoRes,
   ISection,
   SECTION_NUMBER,
+  VideoHistory,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { IFindVideoIDAndChannelIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 import { Err, Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
-
-import {
-  FindVideoDateQuery,
-  VIDEO_DATA_KEY,
-} from '@Apps/modules/video/dtos/find-videos.dtos';
 import { FindAccumulateVideosRes } from '@Apps/modules/video/dtos/find-accumulate-videos.res';
-import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
-@QueryHandler(FindAccumulateVideosDtos)
-export class FindAccumulateVideosQueryHandler
+@QueryHandler(FindAccumulateVideosV2Dtos)
+export class FindAccumulateVideosV2QueryHandler
   implements
     IQueryHandler<
       FindAccumulateVideosDtos,
@@ -37,9 +34,6 @@ export class FindAccumulateVideosQueryHandler
   constructor(
     @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
-
-    @Inject(VIDEO_OS_DI_TOKEN)
-    private readonly video: VideoServicePort,
   ) {}
 
   /**
@@ -51,63 +45,24 @@ export class FindAccumulateVideosQueryHandler
    * @param arg
    */
   async execute(
-    arg: FindAccumulateVideosDtos,
+    arg: FindAccumulateVideosV2Dtos,
   ): Promise<
     Result<
       IFindAccumulateVideoRes<ISection[]>,
       ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
     >
   > {
-    const userInfo = arg.user;
-    const userChannelId = userInfo.channelId;
-    const channel = await this.channelHistory.findChannelHistoryByLimit(
-      [userChannelId],
-      1,
-      'desc',
-    );
-    if (!channel) return Err(new ChannelNotFoundError());
-    console.log('디버깅', channel);
-    const subscribers = channel[0].channel_subscribers;
-    const userSection = this.getRangeValues(subscribers);
-
-    const revisedArg = new FindVideoDateQuery({
-      ...arg,
-      data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.CHANNEL_ID],
-    });
-
-    const searchRelatedVideo =
-      await this.video.findVideoIdFullScanAndVideos<IFindVideoIDAndChannelIdRes>(
-        revisedArg,
-      );
-
-    if (!searchRelatedVideo) return Err(new VideoNotFoundError());
-    const {
-      channelIds,
-      videoIds,
-    }: { channelIds: string[]; videoIds: string[] } = searchRelatedVideo.reduce(
-      (acc, e) => {
-        acc.channelIds.push(e.channel_id);
-        acc.videoIds.push(e.video_id);
-        return acc;
-      },
-      { channelIds: [], videoIds: [] },
-    );
-    //os에서 불러 올때 날짜를 오름차순으로 불러 와야함 추후 데이터 정상화후 asc로 불러와야됨
     const channelHistoryRes =
-      await this.channelHistory.findChannelHistoryFullScan<FindAccumulateVideosRes>(
-        channelIds,
-        [CHANNEL_DATA_KEY.CHANNEL_ID, CHANNEL_DATA_KEY.CHANNEL_SEUBSCRIBERS],
+      await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<VideoHistory>(
+        arg,
       );
-
+    console.log(channelHistoryRes);
     if (!channelHistoryRes) return Err(new ChannelHistoryNotFoundError());
 
     return Ok({
-      videoTotal: videoIds.length,
-      userSection: userSection.sec,
-      section: this.countSubscribersByRange(
-        searchRelatedVideo,
-        channelHistoryRes,
-      ),
+      videoTotal: 0,
+      userSection: SECTION_NUMBER.RANGE_500000_AND_ABOVE,
+      section: [],
     });
   }
 
