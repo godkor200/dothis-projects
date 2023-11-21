@@ -12,7 +12,7 @@ import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 import { CheckBox } from '../common/Checkbox/style';
-import TermsModal from '../common/Modal/TermsModal/TermsModal';
+import Modal from '../common/Modal/Modal';
 import TermsContents from './TermsContents';
 
 const LoginTerms = () => {
@@ -102,12 +102,12 @@ const LoginTerms = () => {
         </div>
       </form>
       {onError && (
-        <TermsModal setOnError={setOnError}>
+        <Modal dismissCallback={() => setOnError(false)}>
           <TermsContents
             errorMessage={errors.service?.message || errors.privacy?.message}
             setOnError={setOnError}
           />
-        </TermsModal>
+        </Modal>
       )}
     </>
   );

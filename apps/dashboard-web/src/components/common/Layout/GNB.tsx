@@ -21,16 +21,23 @@ const GNB = () => {
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
-    router.push('/contents?steps=signUp');
+    // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+    router.push('?steps=signUp');
     return false;
   };
 
   const handleRouter = (route: Route) => {
-    if (!checkIsSignedIn()) return;
+    if (route === '/pricing') {
+      router.push(route);
+      return;
+    }
     if (route === '/about') {
       alert('개발중입니다.');
       return;
     }
+
+    if (!checkIsSignedIn()) return;
+
     router.push(route);
   };
 
