@@ -3,6 +3,8 @@
 import { colors } from '@dothis/theme/dashboard/colors';
 import { ResponsivePie } from '@nivo/pie';
 
+import type { ResponseType, VideoCount } from '@/constants/convertText';
+
 const data = [
   {
     id: '구독자 50만명 이상의 채널',
@@ -33,7 +35,7 @@ const data = [
 
 interface Props {
   totalCount: number;
-  videoCountsBySection: any;
+  videoCountsBySection: ResponseType[VideoCount][];
 }
 
 const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
@@ -48,7 +50,7 @@ const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
           </div>
         </div>
         <ResponsivePie
-          data={data}
+          data={videoCountsBySection}
           margin={{ top: 26, bottom: 100 }}
           sortByValue={false}
           innerRadius={0.8}
