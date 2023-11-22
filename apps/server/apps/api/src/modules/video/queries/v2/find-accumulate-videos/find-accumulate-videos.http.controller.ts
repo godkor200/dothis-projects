@@ -10,16 +10,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import {
-  Controller,
-  NotFoundException,
-  Param,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
-  FindAccumulateVideo,
   FindAccumulateVideosV2Dtos,
   FindAccumulateVideoV2,
 } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
@@ -29,8 +22,6 @@ import {
   IFindAccumulateVideoRes,
   ISection,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
-import { User } from '@Libs/commons/src';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
