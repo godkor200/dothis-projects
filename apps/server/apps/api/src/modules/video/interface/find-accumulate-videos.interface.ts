@@ -4,6 +4,9 @@ export interface IFindAccumulateVideoRes<T> {
   section: T;
 }
 
+export interface IFindAccumulateVideoWithOutUserSection<T>
+  extends Omit<IFindAccumulateVideoRes<T>, 'userSection'> {}
+
 export interface ISection {
   section: SECTION_NUMBER;
   number: number;
@@ -27,12 +30,13 @@ interface Video {
   views: number;
 }
 
-interface Source {
+export interface IVideoHistorySource {
   video_list: Video[];
   video_aver_views: number;
+  channel_subscribers: number;
 }
 
 export interface VideoHistory {
   _id: string;
-  _source: Source[];
+  _source: IVideoHistorySource[];
 }
