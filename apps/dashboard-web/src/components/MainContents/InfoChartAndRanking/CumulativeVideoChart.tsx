@@ -5,34 +5,6 @@ import { ResponsivePie } from '@nivo/pie';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 
-const data = [
-  {
-    id: '구독자 50만명 이상의 채널',
-    label: '구독자 50만명 이상의 채널',
-    value: 23,
-  },
-  {
-    id: '구독자 10만 이상 50만명 미만의 채널',
-    label: '구독자 10만 이상 50만명 미만의 채널',
-    value: 166,
-  },
-  {
-    id: '구독자 천명 이상 만명 미만의 채널',
-    label: '구독자 천명 이상 만명 미만의 채널',
-    value: 80,
-  },
-  {
-    id: '구독자 만명이상 5만명 미만의 채널',
-    label: '구독자 5만명 이상 10만명 미만의 채널',
-    value: 20,
-  },
-  {
-    id: '구독자 5만명 이상 10만명 미만의 채널',
-    label: '구독자 5만명 이상 10만명 미만의 채널',
-    value: 149,
-  },
-];
-
 interface Props {
   totalCount: number;
   videoCountsBySection: ResponseType[VideoCount][];
