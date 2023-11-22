@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import TabNavigation from '@/components/common/TabNavigation';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
@@ -7,6 +9,8 @@ import MainContentContainer from '@/components/MainContents/MediaArticles/MediaA
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
+
+import Test from './test';
 
 const MainContentPage = async ({
   searchParams,
@@ -25,7 +29,15 @@ const MainContentPage = async ({
       <Card>
         <CardHeader title="콘텐츠 소재" />
         <div className="flex">
-          <KeywordRankingList />
+          <Suspense
+            fallback={
+              <div className="border-grey300 bg-grey00 flex h-full w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid py-[2.5rem] pr-[1.25rem]">
+                <div> 하 이럴수가가가가가가가가</div>
+              </div>
+            }
+          >
+            <Test />
+          </Suspense>
           <KeywordAnalyticsView />
         </div>
       </Card>
