@@ -85,7 +85,10 @@ const KeywordAnalyticsView = () => {
 
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
-      <AnalysisWidgetList expectedView={lastExpectedView || 0} />
+      <AnalysisWidgetList
+        expectedView={lastExpectedView || 0}
+        competitionScore={lastDailyView && lastDailyView / totalCount}
+      />
       <div className="flex h-[520px] w-full">
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
