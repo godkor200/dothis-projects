@@ -26,8 +26,8 @@ const useGetVideoCount = () => {
         query: {
           keyword: data?.keyword!,
           relationKeyword: selectedRelWord!,
-          from: '2023-10-11',
-          to: '2023-10-17',
+          from: '2023-11-19',
+          to: '2023-11-22',
         },
         enabled: !!data && !!selectedRelWord,
       };
