@@ -74,6 +74,12 @@ const ViewChart = () => {
         <div className="h-3/6 [&_svg]:overflow-visible">
           <ExpectedViewChart.skeleton />
         </div>
+        <div className="bg-grey200 dark:bg-grey700 mb-4  h-2.5 w-[90%]  translate-x-[60px] rounded-full">
+          <div
+            className="dark:bg-primary400 bg-primary600 h-2.5 rounded-full"
+            style={{ width: totalPercentage }}
+          ></div>
+        </div>
       </div>
     );
   }
