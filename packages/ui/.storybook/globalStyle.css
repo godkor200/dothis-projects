@@ -1,0 +1,15 @@
+@import '@dothis/theme/dashboard/global.css';
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('/fonts/PretendardVariable.ttf') format('ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+
+html,
+body {
+  @apply relative;
+  font-family: pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif, serif;
+}

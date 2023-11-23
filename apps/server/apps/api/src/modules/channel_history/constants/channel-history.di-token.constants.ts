@@ -1,0 +1,1 @@
+export const CHANNEL_HISTORY_OS_DI_TOKEN = Symbol('CHANNEL_HISTORY_OS');

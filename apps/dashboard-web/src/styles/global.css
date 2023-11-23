@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+}
+
+em {
+  font-style: normal;
+}
+
+.off-screen {
+  position: absolute;
+  z-index: -1px;
+  display: inline-block;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  border: 0;
+  clip: rect(0,0,0,0);
+  clip-path: inset(50%);
+  word-break: initial;
+  word-wrap: initial;
+}

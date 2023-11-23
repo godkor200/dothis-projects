@@ -1,0 +1,497 @@
+// TO-DO
+// 사용자 알림 설정 테이블
+// 크리에이터가 등록한 플랫폼의 콘텐츠를 저장하는 테이블
+// 실결제 내역이 저장되는 테이블
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+  output = "../prisma/db"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id                     String                  @id @default(cuid())
+  name                   String?                 @unique
+  email                  String?                 @unique
+  emailVerified          DateTime?
+  image                  String?
+  introduction           String?                 @db.Text
+  totalPoint             Int                     @default(5000)
+  accounts               Account[]
+  sessions               Session[]
+  requestPosts           RequestPost[]
+  requestFundings        RequestFunding[]
+  requestComments        RequestComment[]
+  requestReactions       RequestReaction[]
+  requestBookmarks       RequestBookmark[]
+  requestReports         RequestReport[]
+  requestInquiries       RequestInquiry[]
+  requestinquiryMessages RequestInquiryMessage[]
+  requestCommentHearts   RequestCommentHeart[]
+  logs                   Log[]                   @relation("receiver")
+  points                 Point[]
+  rankings               Ranking[]
+  creatorReviews         CreatorReview[]
+  creator                Creator?
+  Log                    Log[]                   @relation("sender")
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+// RequestPost 승락 케이스
+//
+// CASE 1
+// * 유저가 크리에이터를 지정하지 않고 요청
+// * status: REQUEST, creator: null
+// MVP: 선착순으로 creator에 들어오고 status가 ACCEPT가 됌
+// AFTER: requestApplyCreators에 승락 요청한 크리에이터가 쌓이고,
+//        요청자는 이 중 한명을 선택하면 creator에 들어옴.
+//
+// CASE 2
+// * 유저가 크리에이터를 지정하고 요청
+// * status: REQUEST, creator: 해당 Creator
+// creator가 요청을 승락하면 status가 ACCEPT가 됌
+model RequestPost {
+  id                   BigInt                @id @default(autoincrement()) @db.BigInt
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  user                 User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId               String?
+  title                String                @db.VarChar(255)
+  content              String                @db.LongText
+  creator              Creator?              @relation(fields: [creatorId], references: [id], onDelete: SetNull)
+  category             RequestCategoryType?
+  creatorId            BigInt?
+  expires              DateTime?
+  totalViews           Int                   @default(0)
+  status               RequestStatusType     @default(REQUEST)
+  solvedUrl            String?
+  thumbnailUrl         String?
+  refusalReason        String?
+  totalQuantity        Int                   @default(0) // 총 펀딩 액
+  totalLikeScroe       Int                   @default(0) // 좋아요 점수(LIKE - DISLIKE)
+  isUnspecified        Boolean               @default(false)
+  requestFundings      RequestFunding[]
+  requestReactions     RequestReaction[]
+  requestApplyCreators RequestApplyCreator[]
+  requestPlatforms     RequestPlatform[]
+  requestComments      RequestComment[]      @relation("RequestPost_RequestComment")
+  requestBookmarks     RequestBookmark[]
+  requestReports       RequestReport[]
+  requestInquirys      RequestInquiry[]
+  Log                  Log[]
+
+  @@index([userId, creatorId, status, createdAt(sort: Desc)])
+  @@fulltext([title, content])
+  @@map("requestposts")
+}
+
+enum RequestFundingStatus {
+  FUNDING // 펀딩 중
+  COMPLETION // 펀딩 금액 지불 완료
+  CANCELED // 펀딩 금액 지불 취소
+  REFUND // 환불
+}
+
+enum RequestCategoryType {
+  GAME // 게임
+  LIFE_TALK // 일상/토크
+  COOK_EAT // 요리/먹방
+  TOUR_FOOD // 여행/맛집
+  DANCE_MUSIC // 댄스/음악
+  ENTERTAINMENT // 엔터테인먼트
+  EDUCATION // 교육/강의
+  FINANCE // 경제/금융
+  SPORTS_HEALTH // 스포츠_헬스
+  BEAUTY_FASHION // 뷰티_패션
+  HOBBY // 취미
+  ETC // 기타
+}
+
+enum RequestStatusType {
+  REQUEST // 요청 상태
+  ACCEPT // 크리에이터가 요청을 수락하거나, 지원한 크리에이터들 중 선정이 완료된 경우
+  REGISTRATION // 크레에이터가 등록을 한 상태 (MVP 이후에서는 완료와 등록 사이에 검토 과정 추가 예정)
+  COMPLETION // 요청 콘텐츠가 해결된 상태 (MVP에서는 크리에이터가 콘텐츠를 등록하면 완료)
+  EXPIRATION // 기간이 지나서 요청이 만료된 상태
+  REFUSE // 멘션된 크리에이터가 거절을 한 상태
+}
+
+model RequestFunding {
+  id        BigInt               @id @default(autoincrement()) @db.BigInt
+  user      User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+  quantity  Int
+  request   RequestPost?         @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  requestId BigInt?
+  createdAt DateTime             @default(now())
+  status    RequestFundingStatus @default(FUNDING) // 펀딩 상태
+
+  @@index([requestId, userId, createdAt(sort: Desc)])
+  @@map("requestfundings")
+}
+
+model RequestReaction {
+  id        BigInt       @id @default(autoincrement()) @db.BigInt
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  type      ReactionType
+  request   RequestPost  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId BigInt
+  createdAt DateTime     @default(now())
+
+  @@unique([userId, requestId])
+  @@index([requestId, userId, type, createdAt(sort: Desc)])
+  @@map("requestreactions")
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+}
+
+model RequestComment {
+  id               BigInt                @id @default(autoincrement()) @db.BigInt
+  request          RequestPost           @relation("RequestPost_RequestComment", fields: [requestId], references: [id], onDelete: Cascade)
+  requestId        BigInt
+  user             User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId           String?
+  parentId         BigInt?
+  parentComment    RequestComment?       @relation("RequestCommentToRequestComment", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rootId           BigInt?
+  content          String                @db.Text
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  hearts           RequestCommentHeart[]
+  childrenComments RequestComment[]      @relation("RequestCommentToRequestComment")
+
+  @@index([requestId, userId, parentId, createdAt(sort: Desc)])
+  @@map("requestcomments")
+}
+
+model RequestCommentHeart {
+  id               BigInt         @id @default(autoincrement()) @db.BigInt
+  requestComment   RequestComment @relation(fields: [requestCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  requestCommentId BigInt
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String
+  createdAt        DateTime       @default(now())
+
+  @@unique([requestCommentId, userId])
+  @@index([requestCommentId, userId, createdAt(sort: Desc)])
+  @@map("requestcommenthearts")
+}
+
+model RequestBookmark {
+  id        BigInt       @id @default(autoincrement()) @db.BigInt
+  request   RequestPost? @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  requestId BigInt?
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime     @default(now())
+
+  @@index([requestId, userId, createdAt(sort: Desc)])
+  @@map("requestbookmarks")
+}
+
+model RequestPlatform {
+  id        BigInt              @id @default(autoincrement()) @db.BigInt
+  request   RequestPost         @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId BigInt
+  name      RequestPlatformType
+
+  @@index([requestId, name])
+  @@map("requestplatforms")
+}
+
+enum RequestPlatformType {
+  YOUTUBE
+  INSTAGRAM
+  FACEBOOK
+  TWITCH
+}
+
+// 요청에 지원한 크리에이터 테이블
+model RequestApplyCreator {
+  id        BigInt      @id @default(autoincrement()) @db.BigInt
+  request   RequestPost @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId BigInt
+  creator   Creator?    @relation(fields: [creatorId], references: [id], onDelete: SetNull)
+  creatorId BigInt?
+
+  @@index([requestId, creatorId])
+  @@map("requestapplycreators")
+}
+
+model RequestReport {
+  id        BigInt              @id @default(autoincrement()) @db.BigInt
+  request   RequestPost         @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId BigInt
+  user      User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+  content   String              @db.LongText
+  type      RequestReportType
+  status    RequestReportStatus
+  createdAt DateTime            @default(now())
+
+  @@index([requestId, userId, type, status, createdAt(sort: Desc)])
+  @@fulltext([content])
+  @@map("requestreports")
+}
+
+enum RequestReportType {
+  SEXUAL // 불건전한 내용
+  SLANG // 비속어 사용
+  SPAMMER // 과도한 도배
+  TERRORISM // 혐오감 유발
+  PRIVACY // 개인정보 침해
+  COPYRIGHT // 저작권 위반
+  SPAM // 불법 광고
+  RIOT // 분란 야기
+  ETC // 기타
+}
+
+enum RequestReportStatus {
+  PROCESSING
+  COMPLETION
+}
+
+model RequestInquiry {
+  id                     BigInt                  @id @default(autoincrement()) @db.BigInt
+  request                RequestPost             @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId              BigInt
+  creator                Creator?                @relation(fields: [creatorId], references: [id], onDelete: SetNull)
+  creatorId              BigInt?
+  user                   User?                   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId                 String?
+  requestInquiryMessages RequestInquiryMessage[]
+  createdAt              DateTime                @default(now())
+
+  @@index([creatorId, userId, createdAt(sort: Desc)])
+  @@map("requestinquirys")
+}
+
+model RequestInquiryMessage {
+  id        BigInt         @id @default(autoincrement()) @db.BigInt
+  room      RequestInquiry @relation(fields: [roomId], references: [id])
+  roomId    BigInt
+  from      User           @relation(fields: [fromId], references: [id])
+  fromId    String
+  text      String         @db.Text
+  fileUrl   String?
+  type      MessageType    @default(TEXT)
+  isRead    Boolean?       @default(false)
+  createdAt DateTime       @default(now())
+
+  @@index([roomId, fromId, type, createdAt(sort: Desc)])
+  @@fulltext([text])
+  @@map("requestinquirymessages")
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  FILE
+}
+
+model Point {
+  id        BigInt   @id @default(autoincrement()) @db.BigInt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  quantity  Int
+  type      PoinType
+  createdAt DateTime @default(now())
+
+  @@index([userId, type, createdAt(sort: Desc)])
+  @@map("points")
+}
+
+enum PoinType {
+  WITHDRAW
+  DEPOSIT
+  FUNDING
+  RETURN
+}
+
+// Batch Table
+model Ranking {
+  id        Int         @id @default(autoincrement())
+  user      User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+  ranking   Int
+  type      RankingType
+  score     BigInt      @db.BigInt
+  change    Int
+  createdAt DateTime    @default(now())
+
+  @@index([userId, ranking, type, createdAt(sort: Desc)])
+  @@map("rankings")
+}
+
+enum RankingType {
+  FUN
+  COOL
+  SEXY
+}
+
+model Faq {
+  id        Int      @id @default(autoincrement())
+  type      FaqType
+  title     String   @db.VarChar(255)
+  content   String   @db.LongText
+  createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+  @@fulltext([title, content])
+  @@map("faqs")
+}
+
+enum FaqType {
+  BEST
+  GUIDE
+  ACCOUNT
+  CREATOR
+  BUSSINESS
+}
+
+model Notice {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  content   String   @db.LongText
+  createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+  @@fulltext([title, content])
+  @@map("notices")
+}
+
+model Creator {
+  id                   BigInt                @id @default(autoincrement()) @db.BigInt
+  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String                @unique
+  createdAt            DateTime              @default(now())
+  requestPosts         RequestPost[]
+  requestApplyCreators RequestApplyCreator[]
+  requestInquiries     RequestInquiry[]
+  creatorAuths         CreatorAuth[]
+  creatorReviews       CreatorReview[]
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("creators")
+}
+
+model CreatorAuth {
+  id         BigInt           @id @default(autoincrement()) @db.BigInt
+  creator    Creator          @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId  BigInt
+  isMain     Boolean          @default(false)
+  profileUrl String?
+  platform   AuthPlatformType
+  createdAt  DateTime         @default(now())
+
+  @@index([creatorId, platform, createdAt(sort: Desc)])
+  @@map("creatorauths")
+}
+
+enum AuthPlatformType {
+  YOUTUBE
+  INSTAGRAM
+  FACEBOOK
+  TWITCH
+}
+
+model CreatorReview {
+  id          BigInt              @id @default(autoincrement()) @db.BigInt
+  creator     Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId   BigInt
+  user        User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId      String?
+  reviewItems CreatorReviewItem[]
+  content     String?
+  createdAt   DateTime            @default(now())
+
+  @@index([creatorId, userId, createdAt(sort: Desc)])
+  @@fulltext([content])
+  @@map("creatorreviews")
+}
+
+model CreatorReviewItem {
+  id        BigInt        @id @default(autoincrement()) @db.BigInt
+  review    CreatorReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId  BigInt
+  content   String        @db.VarChar(255)
+  isChecked Boolean       @default(true)
+
+  @@index([reviewId])
+  @@fulltext([content])
+  @@map("creatorreviewitems")
+}
+
+model Log {
+  id        BigInt       @id @default(autoincrement()) @db.BigInt
+  logType   LogType
+  message   String?      @db.Text
+  senderId  String?
+  sender    User?        @relation("sender", fields: [senderId], references: [id], onDelete: SetNull)
+  isRead    Boolean?     @default(false)
+  receiver  User[]       @relation("receiver")
+  requestId BigInt?
+  request   RequestPost? @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+
+  @@index([senderId, requestId, logType, createdAt(sort: Desc)])
+  @@map("logmessages")
+}
+
+enum LogType {
+  POINT_CHARGE // 포인트 충전
+  REQUEST_STATUS_CHANGE // 요청 상태 변경
+  NEW_REQUEST // 새 요청 들어옴
+  REQUEST_ACCEPT // 크리에이터가 내 요청 승락
+  BRING_FUNDING // 펀딩액 가져옴 
+}

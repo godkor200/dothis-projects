@@ -1,0 +1,10 @@
+import { IFindManyVideoResult } from './find-many-video.interface';
+import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
+
+export interface VideoAdapter {
+  findManyVideo: (tag: string) => Promise<string[]>;
+
+  findVideoBySearchOrRelated: (
+    query: FindVideoQuery,
+  ) => Promise<IFindManyVideoResult[]>;
+}
