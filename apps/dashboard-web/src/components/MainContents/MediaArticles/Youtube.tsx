@@ -5,6 +5,7 @@ import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import CurrentArticle from './CurrentArticle';
+import SummaryCard from './SummaryCard';
 
 const YouTube = () => {
   const [pageIndex, setPageIndex] = useState(4);
@@ -25,6 +26,8 @@ const YouTube = () => {
       date: item._source.video_published,
       link: item._source.video_url,
       provider: item._source.video_category,
+      tags: item._source.video_tag,
+      description: item._source.video_description,
     };
   });
 
@@ -37,20 +40,42 @@ const YouTube = () => {
       </>
     );
   }
+
   return (
     <>
-      <CurrentArticle
-        title={returnData[contentIndex]?.title}
-        category={returnData[contentIndex]?.category}
-        provider={returnData[contentIndex]?.provider}
-        date={returnData[contentIndex]?.date}
-        image={returnData[contentIndex]?.image}
-        link={returnData[contentIndex]?.link}
-      />
-      <ArticleList
-        articleListData={returnData}
-        handleSetContentIndex={handleSetContentIndex}
-      />
+      <div className="mt-10 flex gap-[1.25rem]">
+        <CurrentArticle
+          title={returnData[contentIndex]?.title}
+          category={returnData[contentIndex]?.category}
+          provider={returnData[contentIndex]?.provider}
+          date={returnData[contentIndex]?.date}
+          image={returnData[contentIndex]?.image}
+          link={returnData[contentIndex]?.link}
+        />
+        <ArticleList
+          articleListData={returnData}
+          handleSetContentIndex={handleSetContentIndex}
+        />
+      </div>
+      <SummaryCard title="영상 태그">
+        <div className="flex flex-wrap gap-[10px]">
+          {returnData[contentIndex].tags
+            .replace(/'|\[|\]/g, '')
+            .split(', ')
+            .map((item) => (
+              <>
+                {item.length <= 10 && (
+                  <div className="bg-grey200 text-grey600 rounded-8 px-5 py-2 font-bold">
+                    {item}
+                  </div>
+                )}
+              </>
+            ))}
+        </div>
+      </SummaryCard>
+      <SummaryCard title="영상 내용 요약" marginTop="mt-5">
+        {returnData[contentIndex].description}
+      </SummaryCard>
     </>
   );
 };

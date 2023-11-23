@@ -2,11 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
+import ParserContent from '@/components/common/ParserContent';
 import useKeyword from '@/hooks/user/useKeyword';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import CurrentArticle from './CurrentArticle';
+import SummaryCard from './SummaryCard';
 
 const News = () => {
   const [contentIndex, setContentIndex] = useState(0);
@@ -74,6 +76,7 @@ const News = () => {
           date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
           image: externaImageLoader(getMainImage(item.images)),
           link: item.provider_link_page,
+          hilight: item.hilight,
         };
       }),
     [original],
@@ -89,18 +92,23 @@ const News = () => {
   }
   return (
     <>
-      <CurrentArticle
-        title={returnData[contentIndex]?.title}
-        category={returnData[contentIndex]?.category}
-        provider={returnData[contentIndex]?.provider}
-        date={returnData[contentIndex]?.date}
-        image={returnData[contentIndex]?.image}
-        link={returnData[contentIndex]?.link}
-      />
-      <ArticleList
-        articleListData={returnData}
-        handleSetContentIndex={handleSetContentIndex}
-      />
+      <div className="mt-10 flex gap-[1.25rem]">
+        <CurrentArticle
+          title={returnData[contentIndex]?.title}
+          category={returnData[contentIndex]?.category}
+          provider={returnData[contentIndex]?.provider}
+          date={returnData[contentIndex]?.date}
+          image={returnData[contentIndex]?.image}
+          link={returnData[contentIndex]?.link}
+        />
+        <ArticleList
+          articleListData={returnData}
+          handleSetContentIndex={handleSetContentIndex}
+        />
+      </div>
+      <SummaryCard title="뉴스 요약">
+        <ParserContent content={returnData[contentIndex]?.hilight} />
+      </SummaryCard>
     </>
   );
 };
