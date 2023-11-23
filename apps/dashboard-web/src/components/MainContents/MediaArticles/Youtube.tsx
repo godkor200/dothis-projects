@@ -29,7 +29,12 @@ const YouTube = () => {
   });
 
   if (!returnData) {
-    return null;
+    return (
+      <>
+        <CurrentArticle.skeleton />
+        <ArticleList.skeleton />
+      </>
+    );
   }
   return (
     <>
