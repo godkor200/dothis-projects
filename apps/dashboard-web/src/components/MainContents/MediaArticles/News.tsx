@@ -80,7 +80,12 @@ const News = () => {
   );
 
   if (!returnData) {
-    return null;
+    return (
+      <>
+        <CurrentArticle.skeleton />
+        <ArticleList.skeleton />
+      </>
+    );
   }
   return (
     <>

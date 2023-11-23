@@ -26,6 +26,7 @@ const MainContentPage = async ({
         <CardHeader title="콘텐츠 소재" />
         <div className="flex">
           <KeywordRankingList />
+
           <KeywordAnalyticsView />
         </div>
       </Card>

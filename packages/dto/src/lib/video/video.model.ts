@@ -1,5 +1,31 @@
 import { z } from 'zod';
 
+export const zVideoSection = z.enum([
+  '0~100',
+  '100~1000',
+  '1000~10000',
+  '10000~50000',
+  '50000~100000',
+  '100000~500000',
+  '500000이상',
+]);
+
+export const zAccVideoModel = z.object({
+  data: z.object({
+    section: z.array(
+      z.object({
+        gte: z.number(),
+        lte: z.number(),
+        max: z.number().nullable(),
+        section: zVideoSection,
+        number: z.number(),
+      }),
+    ),
+    userSection: z.string(),
+    videoTotal: z.number(),
+  }),
+});
+
 export const zVideoModel = z.object({
   id: z.number().nullable().describe('The id of video'),
   channelIndex: z.string().describe('The index of channel'),

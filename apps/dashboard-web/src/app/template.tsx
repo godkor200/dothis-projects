@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import SignUp from '@/components/Auth/SignUp';
-import Modal from '@/components/common/Modal/AuthModal/AuthModal';
+import Modal from '@/components/common/Modal/Modal';
 import AuthProvider from '@/components/common/Provider/AuthProvider';
 import { useIsOpenSignUpModal } from '@/store/authStore';
 

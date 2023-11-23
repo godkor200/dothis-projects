@@ -28,8 +28,14 @@ const YouTube = () => {
     };
   });
 
+  // 현재 데이터 페이지 인덱스가 clusternumber인데,  한페이지만 보여주고 있어서 임의로 하나만 지정했습니다. 하지만 해당 clusternumber에 에러가 있을 시 계속 skeleton UI 만 나오는 현상이 있을 수 있어서 에러바운더리를 설정해주는게 좋습니다
   if (!returnData) {
-    return null;
+    return (
+      <>
+        <CurrentArticle.skeleton />
+        <ArticleList.skeleton />
+      </>
+    );
   }
   return (
     <>

@@ -1,13 +1,12 @@
-import { DAILYVIEW_KEY } from '@/constants/querykey';
+import { VIDEO_COUNT_KEY } from '@/constants/querykey';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetDailyView = () => {
-  const { data } = useGetRelWords();
-
+const useGetVideoCount = () => {
   const selectedRelWord = useSelectedRelWord();
+  const { data } = useGetRelWords();
 
   let clusters: string[] = [];
 
@@ -15,10 +14,10 @@ const useGetDailyView = () => {
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(3).dailyViews.getDailyViews.useQueries({
+  const queryResults = apiClient(1).video.getAccVideo.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
-        queryKey: DAILYVIEW_KEY.list([
+        queryKey: VIDEO_COUNT_KEY.list([
           { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
         ]),
         params: {
@@ -35,13 +34,10 @@ const useGetDailyView = () => {
     }),
   });
 
-  // const isLoading = queryResults.some((result) => result.isLoading);
-  const isLoading = queryResults.map((item) => item.isLoading);
-
   return {
-    isLoading,
+    ...queryResults,
     data: queryResults.map((result) => result.data?.body.data),
   };
 };
 
-export default useGetDailyView;
+export default useGetVideoCount;

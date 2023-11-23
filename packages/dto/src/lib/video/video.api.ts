@@ -3,6 +3,7 @@ import { c } from '../contract';
 import {
   findVideoBySearchKeyword,
   findVideoPageQuery,
+  zAccVideoModel,
   zVideoResponse,
 } from './video.model';
 
@@ -29,7 +30,7 @@ export const videoApi = c.router({
     pathParams: z.number(), // 비디오 카테고리(cluster) 넘버
     query: findVideoBySearchKeyword,
     responses: {
-      200: 'video 튜플',
+      200: zAccVideoModel,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
