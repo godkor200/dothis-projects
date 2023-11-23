@@ -1,3 +1,0 @@
-export enum AWS_DI_TOKEN {
-  CREDENTIALS = 'AWS_DI_TOKEN_CREDENTIALS',
-}
