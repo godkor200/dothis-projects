@@ -176,8 +176,8 @@ const DailyViewSkeleton = () => {
             y1="180"
             y2="180"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
           <line
             opacity="1"
@@ -186,8 +186,8 @@ const DailyViewSkeleton = () => {
             y1="144"
             y2="144"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
           <line
             opacity="1"
@@ -196,8 +196,8 @@ const DailyViewSkeleton = () => {
             y1="108"
             y2="108"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
           <line
             opacity="1"
@@ -206,8 +206,8 @@ const DailyViewSkeleton = () => {
             y1="72"
             y2="72"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
           <line
             opacity="1"
@@ -216,8 +216,8 @@ const DailyViewSkeleton = () => {
             y1="36"
             y2="36"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
           <line
             opacity="1"
@@ -226,8 +226,8 @@ const DailyViewSkeleton = () => {
             y1="0"
             y2="0"
             stroke="#D4D4D8"
-            stroke-width="1"
-            stroke-dasharray="4 4"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           ></line>
         </g>
         <g>
