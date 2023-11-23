@@ -1,9 +1,10 @@
 import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 import { from, lastValueFrom, map } from 'rxjs';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { data } from '@Apps/modules/daily_views/queries/v2/find-daily-views/__dummy__/daily-view-dummy-data';
+import { FindAccumulateVideoV2 } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 
 export class ChannelHistoryQueryHandler
   extends AwsOpensearchConnetionService
@@ -104,5 +105,11 @@ export class ChannelHistoryQueryHandler
       this.client.search(searchQuery).then((res) => res.body.hits.hits),
     ).pipe(map((hits) => hits.map((hit) => hit._source)));
     return await lastValueFrom(observable$);
+  }
+
+  async findChannelHistoryByKeywordAndRelWordFullScan<T>(
+    props: FindAccumulateVideoV2,
+  ): Promise<T[]> {
+    return Promise.resolve([]);
   }
 }

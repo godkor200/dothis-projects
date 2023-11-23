@@ -5,12 +5,17 @@ import { nanoid } from 'nanoid';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { FindDailyViewsQueryOsV3Handler } from '@Apps/modules/daily_views/queries/v3/find-daily-views/find-daily-views.v3.query-handler';
 import { videoHistoryDummy } from '@Apps/modules/daily_views/queries/v3/find-daily-views/__dummy__/daily-view-dummy-data';
+import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 
 const mockFindVideoOsAdapter = mock<VideoServicePort>();
+const mockVideoAggregateService = mock<VideoAggregateService>();
 let handler: FindDailyViewsQueryOsV3Handler;
 
 beforeEach(() => {
-  handler = new FindDailyViewsQueryOsV3Handler(mockFindVideoOsAdapter);
+  handler = new FindDailyViewsQueryOsV3Handler(
+    mockFindVideoOsAdapter,
+    mockVideoAggregateService,
+  );
 });
 describe('calculateIncrease 함수', () => {
   it('should ', async () => {
