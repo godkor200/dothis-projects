@@ -3,7 +3,6 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useCallback, useMemo } from 'react';
 
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import {
   ceilToNearest,
@@ -29,8 +28,6 @@ const testExpectedView = [
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
-
-  const { data } = useGetExpectedView();
 
   const TICK_SIZE = 6;
   const yScales = expectedView[0].data.map((item) => Number(item.y));
