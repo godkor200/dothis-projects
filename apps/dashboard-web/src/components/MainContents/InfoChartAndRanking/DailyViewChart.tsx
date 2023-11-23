@@ -41,7 +41,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
         ? 1
         : (yMaxScale - yMinScale) / (TICK_SIZE - 2);
 
-    return floorToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
+    return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
     // 여기는 floor여야겠다 너무 편차가 크다. 기존(ceil)
   };
 
@@ -159,76 +159,75 @@ const DailyViewChart = ({ dailyView }: Props) => {
 };
 
 const DailyViewSkeleton = () => {
-  console.log('일일 조회수 스켈레톤');
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="599.296875"
+      width="100%"
       height="230"
       role="img"
     >
-      <rect width="599.296875" height="230" fill="transparent"></rect>
+      <rect width="100%" height="230" fill="transparent"></rect>
       <g transform="translate(60,50)">
         <g>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="180"
             y2="180"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="144"
             y2="144"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="108"
             y2="108"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="72"
             y2="72"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="36"
             y2="36"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
           <line
             opacity="1"
             x1="0"
-            x2="539.296875"
+            x2="90%"
             y1="0"
             y2="0"
             stroke="#D4D4D8"
-            strokeWidth="1"
-            strokeDasharray="4 4"
+            stroke-width="1"
+            stroke-dasharray="4 4"
           ></line>
         </g>
         <g>
