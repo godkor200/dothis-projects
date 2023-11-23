@@ -21,6 +21,8 @@ export class SearchQueryBuilder {
     keyword: string,
     relWord: string,
     data: VIDEO_DATA_KEY[],
+    from?: Date,
+    to?: Date,
   ) {
     return {
       index,
@@ -66,6 +68,19 @@ export class SearchQueryBuilder {
                       },
                     },
                   ],
+                },
+              },
+              {
+                nested: {
+                  path: 'video_history',
+                  query: {
+                    range: {
+                      'video_history.crawled_date': {
+                        gte: from + ' 00:00:00',
+                        lte: to + ' 00:00:00',
+                      },
+                    },
+                  },
                 },
               },
             ],
@@ -167,12 +182,14 @@ export class VideoQueryHandler
   async findVideoIdFullScanAndVideos<T>(
     query: FindVideoDateQuery,
   ): Promise<T[]> {
-    const { clusterNumber, keyword, relationKeyword, data } = query;
+    const { clusterNumber, keyword, relationKeyword, data, from, to } = query;
     const searchQuery = SearchQueryBuilder.video(
       'video-' + clusterNumber,
       keyword,
       relationKeyword,
       data,
+      from,
+      to,
     );
     return await this.fullScan<T>(searchQuery);
   }
@@ -226,6 +243,10 @@ export class VideoQueryHandler
     return await lastValueFrom(observable$);
   }
 
+  /**
+   * 곧 쓸일이 있을듯
+   * @param arg
+   */
   async findVideosWithLastVideoHistory<T>(
     arg: FindVideoDateQuery,
   ): Promise<T[]> {
