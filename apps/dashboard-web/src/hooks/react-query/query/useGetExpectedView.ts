@@ -15,7 +15,7 @@ const useGetExpectedView = () => {
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(1).expectViews.getExpectedViews.useQueries({
+  const queryResults = apiClient(2).expectViews.getExpectedViews.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: EXPECTEDVIEW_KEY.list([
@@ -27,15 +27,17 @@ const useGetExpectedView = () => {
         query: {
           keyword: data?.keyword!,
           relationKeyword: selectedRelWord!,
-          from: '2023-10-11',
-          to: '2023-10-17',
+          from: '2023-11-19',
+          to: '2023-11-22',
         },
         enabled: !!data && !!selectedRelWord,
       };
     }),
   });
 
-  const isLoading = queryResults.some((result) => result.isLoading);
+  // const isLoading = queryResults.some((result) => result.isLoading);
+
+  const isLoading = queryResults.map((item) => item.isLoading);
 
   return {
     isLoading,
