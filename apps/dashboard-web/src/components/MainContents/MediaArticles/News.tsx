@@ -84,10 +84,10 @@ const News = () => {
 
   if (!returnData) {
     return (
-      <>
+      <div className="mt-10 flex gap-[1.25rem]">
         <CurrentArticle.skeleton />
         <ArticleList.skeleton />
-      </>
+      </div>
     );
   }
   return (
