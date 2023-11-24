@@ -3,7 +3,6 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useCallback, useMemo } from 'react';
 
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import {
   ceilToNearest,
@@ -20,23 +19,33 @@ interface Props {
   expectedView: { id: string; data: { x: string; y: number }[] }[];
 }
 
-const expectedView = [
-  {
-    id: '기대',
-    data: [
-      { x: '2023-10-12', y: 0 },
-      { x: '2023-10-16', y: 6 },
-    ],
-  },
-];
+function getRandomValue() {
+  // 랜덤한 값 생성 (10만에서 100만)
+  return Math.floor(Math.random() * (80 - 0 + 1)) + 0;
+}
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
-
-  const { data } = useGetExpectedView();
+  const testExpectedView = useMemo(
+    () => [
+      {
+        id: '기대',
+        data: [
+          { x: '2023-11-16', y: getRandomValue() },
+          { x: '2023-11-17', y: getRandomValue() },
+          { x: '2023-11-18', y: getRandomValue() },
+          { x: '2023-11-19', y: getRandomValue() },
+          { x: '2023-11-20', y: getRandomValue() },
+          { x: '2023-11-21', y: getRandomValue() },
+          { x: '2023-11-22', y: getRandomValue() },
+        ],
+      },
+    ],
+    [selectedRelWord],
+  );
 
   const TICK_SIZE = 6;
-  const yScales = expectedView[0].data.map((item) => Number(item.y));
+  const yScales = testExpectedView[0].data.map((item) => Number(item.y));
 
   const yMinScale = floorToNearest(
     Math.min(...yScales),
@@ -73,12 +82,10 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
     );
 
   // every 함수를 넣어준 이유 -> 한개의 data만 들어왔을 때  yAxisRange가 5개 공통 값으로 형성이됩니다. 이렇게 형성이 되었을 경우 nivo 그래프가 렌더링 이슈로 인해 그래프 점선이 남아있음
-  if (expectedView[0].data.length === 0) {
-    return null;
-  }
+
   return (
     <ResponsiveLine
-      data={expectedView}
+      data={testExpectedView}
       margin={{ bottom: 50, left: 60, top: 30 }}
       lineWidth={2}
       colors={['#818CF8']}
@@ -122,8 +129,8 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
         <CustomTooltip
           keyword={selectedRelWord!}
           label={VIEWCHART_LABEL.EXPECTEDVIEW}
-          value={expectedView[0].data[point.index].y}
-          date={expectedView[0].data[point.index].x}
+          value={testExpectedView[0].data[point.index].y}
+          date={testExpectedView[0].data[point.index].x}
         />
       )}
       legends={[
@@ -177,5 +184,84 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
     />
   );
 };
+
+const ExpectedViewSkeleton = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="230"
+      role="img"
+    >
+      <rect width="100%" height="230" fill="transparent"></rect>
+      <g transform="translate(60,30)">
+        <g>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="150"
+            y2="150"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="120"
+            y2="120"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="90"
+            y2="90"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="60"
+            y2="60"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="30"
+            y2="30"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="0"
+            y2="0"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+ExpectedViewChart.skeleton = ExpectedViewSkeleton;
 
 export default ExpectedViewChart;

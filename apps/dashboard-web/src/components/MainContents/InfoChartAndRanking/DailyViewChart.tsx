@@ -1,6 +1,7 @@
 'use client';
 
 import { ResponsiveLine } from '@nivo/line';
+import { useMemo } from 'react';
 
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 
@@ -18,10 +19,35 @@ interface Props {
   dailyView: { id: string; data: { x: string; y: number }[] }[];
 }
 
+function getRandomValue() {
+  // 랜덤한 값 생성 (10만에서 100만)
+  return Math.floor(Math.random() * (900000 - 200000 + 1)) + 200000;
+}
+
 const DailyViewChart = ({ dailyView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
+
+  const testDailyView = useMemo(
+    () => [
+      {
+        id: '기대',
+        data: [
+          { x: '2023-11-16', y: getRandomValue() },
+          { x: '2023-11-17', y: getRandomValue() },
+          { x: '2023-11-18', y: getRandomValue() },
+          { x: '2023-11-19', y: getRandomValue() },
+          { x: '2023-11-20', y: getRandomValue() },
+          { x: '2023-11-21', y: getRandomValue() },
+          { x: '2023-11-22', y: getRandomValue() },
+        ],
+      },
+    ],
+    [selectedRelWord],
+  );
+
   const TICK_SIZE = 6;
-  const yScales = dailyView[0].data.map((item) => Number(item.y));
+
+  const yScales = testDailyView[0].data.map((item) => Number(item.y));
 
   const yMinScale = floorToNearest(
     Math.min(...yScales),
@@ -40,6 +66,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
         : (yMaxScale - yMinScale) / (TICK_SIZE - 2);
 
     return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
+    // 여기는 floor여야겠다 너무 편차가 크다. 기존(ceil)
   };
 
   const getStartValue = () => {
@@ -56,13 +83,9 @@ const DailyViewChart = ({ dailyView }: Props) => {
         index * Math.ceil(getAxisInterval()),
     );
 
-  if (dailyView[0].data.length === 0) {
-    return null;
-  }
-
   return (
     <ResponsiveLine
-      data={dailyView}
+      data={testDailyView}
       margin={{ top: 50, left: 60 }}
       lineWidth={2}
       colors={['#F0516D']}
@@ -103,8 +126,8 @@ const DailyViewChart = ({ dailyView }: Props) => {
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
-          }).format(dailyView[0].data[point.index].y)}
-          date={dailyView[0].data[point.index].x}
+          }).format(testDailyView[0].data[point.index].y)}
+          date={testDailyView[0].data[point.index].x}
         />
       )}
       legends={[
@@ -158,5 +181,92 @@ const DailyViewChart = ({ dailyView }: Props) => {
     />
   );
 };
+
+const DailyViewSkeleton = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="230"
+      role="img"
+    >
+      <rect width="100%" height="230" fill="transparent"></rect>
+      <g transform="translate(60,50)">
+        <g>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="180"
+            y2="180"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="144"
+            y2="144"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="108"
+            y2="108"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="72"
+            y2="72"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="36"
+            y2="36"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+          <line
+            opacity="1"
+            x1="0"
+            x2="90%"
+            y1="0"
+            y2="0"
+            stroke="#D4D4D8"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          ></line>
+        </g>
+        <g>
+          <rect
+            width="576.34375"
+            height="179.984375"
+            fill="red"
+            opacity="0"
+          ></rect>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+DailyViewChart.skeleton = DailyViewSkeleton;
 
 export default DailyViewChart;

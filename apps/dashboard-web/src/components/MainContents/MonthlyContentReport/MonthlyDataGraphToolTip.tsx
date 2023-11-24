@@ -21,12 +21,14 @@ const MonthlyDataGraphToolTip = ({
     <article className="bg-grey00 p-2 shadow-md">
       <h4 className="my-1 font-bold">{label}</h4>
       {data.map((graphData, index) => {
-        const color = `bg-[${graphData.color}]`;
+        const color =
+          graphData.id === 'views' ? 'bg-[#e8c1a0]' : 'bg-[#f47560]';
+        const title = graphData.id === 'views' ? '조회수' : '영상 수';
 
         return (
           <div key={index} className="flex items-center gap-[12px]">
             <div className={`${color} block h-3 w-3 `} />
-            <span className="flex-1">{graphData.id}</span>
+            <span className="flex-1">{title}</span>
             {Math.floor(
               (graphData.value / viewAndVideoMaxValue) *
                 (graphData.id === 'views' ? maxViews : maxVideoTotalCounts),

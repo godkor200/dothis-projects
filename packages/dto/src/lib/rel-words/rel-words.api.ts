@@ -1,10 +1,21 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { zAutoCompleteWords, zRelWords } from './rel-words.model';
+import { zAutoCompleteWords, zKeywords, zRelWords } from './rel-words.model';
 
 export const relWordsApiUrl = '/rel-words';
-
+export const keywordApiUrl = '/key-words';
 export const relWordsApi = c.router({
+  getKeyword: {
+    method: 'GET',
+    path: `${keywordApiUrl}`,
+    responses: {
+      200: zKeywords,
+      404: 'Not Found',
+      500: '서버에 문제가 있으면 리턴한다. internel server errors',
+    },
+    summary: '탐색어를 전부 가져옵니다.',
+    description: '탐색어를 전부 가져옵니다.',
+  },
   getRelWords: {
     method: 'GET',
     path: `${relWordsApiUrl}/:keyword`,

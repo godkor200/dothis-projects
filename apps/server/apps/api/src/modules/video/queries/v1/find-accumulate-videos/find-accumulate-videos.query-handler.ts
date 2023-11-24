@@ -66,6 +66,7 @@ export class FindAccumulateVideosQueryHandler
       'desc',
     );
     if (!channel) return Err(new ChannelNotFoundError());
+    console.log('디버깅', channel);
     const subscribers = channel[0].channel_subscribers;
     const userSection = this.getRangeValues(subscribers);
 
@@ -159,7 +160,8 @@ export class FindAccumulateVideosQueryHandler
         return { gte: range.gte, lte: range.lte, sec: range.section };
       }
     }
-    throw new Error('The number of subscribers is not within the set range.');
+    const { gte, lte, section } = this.ranges[this.ranges.length - 1];
+    return { gte, lte, sec: section };
   }
 
   /**

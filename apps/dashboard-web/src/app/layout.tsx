@@ -4,8 +4,7 @@
 import '@/styles/global.css';
 
 import clsx from 'clsx';
-import Head from 'next/head';
-import Script from 'next/script';
+import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
@@ -14,15 +13,32 @@ import { pretendard } from '@/styles/font';
 import StyledTheme from '@/styles/StyledTheme';
 
 import ClientContext from './ClientContext';
-import RootHeader from './head';
+
+export const metadata: Metadata = {
+  title: '두디스 - 데이터 기반 영상 기획 도구',
+  description: '데이터로 기획하는 영상 기획 도구, 두디스',
+  openGraph: {
+    type: 'website',
+    title: '두디스(Dothis)',
+    description: '데이터로 기획하는 영상 기획 도구, 두디스.',
+    images:
+      'https://dothis-lending.s3.ap-northeast-2.amazonaws.com/dothisLogo.png',
+    url: 'https://dothis.kr',
+  },
+  verification: {
+    google: 'jKXKt6DfOazkbZWSOTusR4De32UKhBG2pey4WTVnU9c',
+    other: {
+      ['naver-site-verification']: '61cf01795f8a825e98136f98401fd7f3aa1bfa20',
+    },
+  },
+};
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ko">
-      <Head>
-        <RootHeader />
+      <head>
         <Analytics />
-      </Head>
+      </head>
       <body
         className={clsx(pretendard.className, 'text-[16px]')}
         suppressHydrationWarning={true}

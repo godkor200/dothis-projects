@@ -5,7 +5,6 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
 const c = nestControllerContract(apiRouter.relwords);
 const { rankRel } = c;

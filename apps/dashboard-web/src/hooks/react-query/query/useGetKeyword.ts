@@ -1,6 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import { KEYWORD_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 /**
@@ -15,7 +16,7 @@ const useGetKeyword = (
   queryOptions?: UseQueryOptions<typeof apiRouter.user.getUserKeyword>,
 ) => {
   const queryResult = apiClient(2).user.getUserKeyword.useQuery(
-    ['keyword'],
+    KEYWORD_KEY.all,
     {},
     { ...queryOptions },
   );

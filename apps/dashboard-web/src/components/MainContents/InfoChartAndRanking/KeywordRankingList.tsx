@@ -11,7 +11,7 @@ import KeywordRankingItem from './KeywordRankingItem';
 const KeywordRankingList = () => {
   const [selectedRelatedWord, setSelectedRelatedWord] = useState(1);
 
-  const { data: relWordsData } = useGetRelWords();
+  const { data: relWordsData, isLoading } = useGetRelWords();
 
   const relWordList = convertKeywordsToArray(relWordsData?.relWords);
 
@@ -23,6 +23,10 @@ const KeywordRankingList = () => {
 
   return (
     <div className="border-grey300 bg-grey00 flex h-full w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid py-[2.5rem] pr-[1.25rem]">
+      {isLoading &&
+        [...new Array(10)].map((item, index) => (
+          <KeywordRankingItem.skeleton isSelected={index === 0} key={index} />
+        ))}
       {relWordList.slice(0, 10).map((relatedWord, index) => (
         <KeywordRankingItem
           key={index + 1}

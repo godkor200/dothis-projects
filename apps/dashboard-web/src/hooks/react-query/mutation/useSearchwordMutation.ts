@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { ClientArgs } from '@ts-rest/core';
 import type { UseMutationOptions } from '@ts-rest/react-query';
 
+import { USER_KEY } from '@/constants/querykey';
 import useSearchInput from '@/hooks/useSearchInput';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -29,7 +30,7 @@ export const useCreateSearchwordMutation = (
   const mutationResult = apiClient(1).user.putSearchWord.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -63,7 +64,7 @@ export const useAddSearchwordMutation = (
   const mutationResult = apiClient(1).user.putSearchWord.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -91,7 +92,7 @@ export const useRemoveSearchwordMutation = (
   const mutationResult = apiClient(1).user.putSearchWord.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -121,7 +122,7 @@ export const useDeleteSearchwordMutation = (
   const mutationResult = apiClient(1).user.putSearchWord.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 
@@ -147,7 +148,7 @@ export const useResetSearchwordMutation = (
   const mutationResult = apiClient(1).user.putSearchWord.useMutation({
     ...mutationOptions,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(USER_KEY.all);
     },
   });
 

@@ -1,4 +1,5 @@
-import { number, z } from 'zod';
+import { ZodObject, ZodRawShape, number, z } from 'zod';
+import { zodDeepPick } from './utils';
 
 export const zRelWords = z.object({
   data: z.object({
@@ -18,9 +19,13 @@ export const zRankRel = z.object({
   word: z.string().describe('연관어'),
 });
 
+export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
+
 export type TRankRes = z.TypeOf<typeof zRankRel>;
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;
+
+export type TKeyword = z.TypeOf<typeof zKeywords>;
 
 export const zAutoCompleteWords = z.object({
   data: z.array(z.string()),
