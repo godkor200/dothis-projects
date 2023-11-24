@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { MouseEvent } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
+import { handleImageError } from '@/utils/imagesUtil';
 
 import ArticleInfo from './ArticleInfo';
 
@@ -37,6 +38,7 @@ const CurrentArticle = ({
             unoptimized
             src={image}
             alt="Picture of the author"
+            onError={handleImageError}
             width={0}
             height={0}
             style={{
