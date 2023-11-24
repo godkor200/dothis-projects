@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 
 export const handleImageError = (event: ChangeEvent<HTMLImageElement>) => {
-  event.target.src = '/RelatedContentMain.png';
+  event.target.src = '/NoImg.png';
 };
 
 export const externaImageLoader = (src: string | null) =>
