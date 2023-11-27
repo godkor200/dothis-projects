@@ -3,7 +3,7 @@ import type { Route } from 'next';
 import Link from 'next/link';
 
 import { BaseURL } from '@/constants/dev';
-import type { OauthInterface, SVGIconType } from '@/constants/oauth';
+import type { SVGIconType } from '@/constants/oauth';
 import { cn } from '@/utils/cn';
 
 import SvgComp from '../common/SvgComp';
