@@ -1,9 +1,9 @@
+import styles from '../normalize.module.css';
+
 const PolicyPage = () => {
   return (
-    <div>
-      <h1 id="-" className="text-[3rem]">
-        두디스 서비스 이용약관
-      </h1>
+    <div className={styles.container}>
+      <h1 id="-">두디스 서비스 이용약관</h1>
       <ul>
         <li>시행일 : 2023년 11월 16일</li>
       </ul>

@@ -1,7 +1,9 @@
+import styles from '../normalize.module.css';
+
 const PrivacyPage = () => {
   return (
-    <div>
-      <h1 id="-">두디스 개인정보 처리방침</h1>
+    <div className={styles.container}>
+      <h1>두디스 개인정보 처리방침</h1>
       <ul>
         <li>시행일 : 2023년 11월 16일</li>
       </ul>
@@ -250,9 +252,15 @@ const PrivacyPage = () => {
         담당자로 문의하실 수 있습니다. 블링 은 정보주체의 문의에 대해 지체 없이
         답변 및 처리해드릴 것입니다.
       </p>
-      <p>▶ 개인정보 보호책임자</p>
-      <p>성명 :민상현</p>
-      <p>이메일주소 :contact@dothis.kr</p>
+      <details>
+        <summary> 개인정보 보호책임자</summary>
+        <p>
+          <strong>성명 :</strong> 민상현
+        </p>
+        <p>
+          <strong>이메일주소 :</strong> contact@dothis.kr
+        </p>
+      </details>
       <h3 id="-9-">제 9조 정책 변경에 따른 공지 의무</h3>
       <p>
         본 개인정보 보호정책은 관련 법률 및 정부 지침의 변경과 두디스 내부 정책
@@ -273,7 +281,7 @@ const PrivacyPage = () => {
       <ul>
         <li>법적 근거: 일반 개인 정보보호법 제6조 1항 f호</li>
       </ul>
-      <p>1) Google Analytics</p>
+      <h5>1) Google Analytics</h5>
       <p>
         두디스는 사용자가 서비스와 상호 작용하는 방식을 이해할 수 있도록 Google
         Analytics를 사용합니다.
@@ -331,7 +339,7 @@ const PrivacyPage = () => {
         이를 통해 우리는 광고를 더 잘 맞추고 다른 사이트를 방문하는 동안 광고를
         볼 수 있습니다.
       </p>
-      <p>2) Google Tag Manager</p>
+      <h5>2) Google Tag Manager</h5>
       <p>
         두디스는 투명성을 위해 Google Tag Manager(이하 ‘GTM’)를 사용하고 있음을
         알려드립니다.
@@ -352,7 +360,7 @@ const PrivacyPage = () => {
           https://www.google.com/analytics/tag-manager/use-policy/
         </a>
       </p>
-      <p>3) Hotjar</p>
+      <h5>3) Hotjar</h5>
       <p>
         본 서비스를 최적화하기 위해 Hotjar Ltd.(
         <a href="https://www.hotjar.com/">https://www.hotjar.com</a>)의 기술을
