@@ -17,23 +17,23 @@ const Footer = () => {
 
         {/* 구글 로그인 인증용 disable */}
         <div className="flex gap-[2.5rem] text-[1.125rem] font-bold">
-          <Link
-            href={
-              'https://dothis-world.notion.site/428851c41e844e079b23f9acabcd48d9' as Route
-            }
-            target="_blank"
-          >
+          <Link href={'/policy'}>
             <span>서비스 이용약관</span>
           </Link>
+          <Link href={'/privacy'}>
+            <span>개인정보 처리방침</span>
+          </Link>
+
           <Link
             href={
-              'https://dothis-world.notion.site/aa4d04666e0e4b1486bb6e2c69dd5c30' as Route
+              'https://developers.google.com/terms/api-services-user-data-policy' as Route
             }
             target="_blank"
           >
-            <span>개인정보 처리방침</span>
+            <span>구글 데이터 이용 약관</span>
           </Link>
-{/*       <Link
+
+          {/*       <Link
             href={
               'https://dothis-world.notion.site/1a7e28e24d3d406399d784da996fa1c8' as Route
             }
