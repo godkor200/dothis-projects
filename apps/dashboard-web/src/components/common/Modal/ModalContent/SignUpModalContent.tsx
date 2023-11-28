@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import SvgComp from '@/components/common/SvgComp';
 
-const SignUp = () => {
+const SignUpModalContent = () => {
   const router = useRouter();
   return (
     <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
@@ -33,4 +33,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpModalContent;
