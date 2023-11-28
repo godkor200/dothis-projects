@@ -13,7 +13,7 @@ import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 import { CheckBox } from '../common/Checkbox/style';
 import Modal from '../common/Modal/Modal';
-import TermsContents from './TermsContents';
+import TermsModal from '../common/Modal/ModalContent/TermsModal';
 
 const LoginTerms = () => {
   const [onError, setOnError] = useState(false);
@@ -103,7 +103,7 @@ const LoginTerms = () => {
       </form>
       {onError && (
         <Modal dismissCallback={() => setOnError(false)}>
-          <TermsContents
+          <TermsModal
             errorMessage={errors.service?.message || errors.privacy?.message}
             setOnError={setOnError}
           />
