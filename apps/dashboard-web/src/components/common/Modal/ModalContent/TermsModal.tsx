@@ -4,7 +4,7 @@ import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
 import SvgComp from '@/components/common/SvgComp';
 
-const TermsContents = ({
+const TermsModal = ({
   errorMessage,
   setOnError,
 }: {
@@ -35,4 +35,4 @@ const TermsContents = ({
   );
 };
 
-export default TermsContents;
+export default TermsModal;

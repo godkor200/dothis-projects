@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import type { MouseEventHandler } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 
-export default function AuthModal({
+export default function Modal({
   children,
   dismissCallback,
 }: {

@@ -2,8 +2,8 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import SignUp from '@/components/Auth/SignUp';
 import Modal from '@/components/common/Modal/Modal';
+import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import AuthProvider from '@/components/common/Provider/AuthProvider';
 import { useIsOpenSignUpModal } from '@/store/authStore';
 
@@ -16,7 +16,7 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
       {children}
       {searchParams?.get('steps') === 'signUp' && isOpenSignUpModal && (
         <Modal>
-          <SignUp />
+          <SignUpModal />
         </Modal>
       )}
     </AuthProvider>

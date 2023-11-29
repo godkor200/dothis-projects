@@ -73,9 +73,9 @@ const YouTube = () => {
       <SummaryCard title="영상 태그">
         <div className="flex flex-wrap gap-[10px]">
           {returnData[contentIndex].tags
-            .replace(/'|\[|\]/g, '')
-            .split(', ')
-            .map((item) => (
+            ?.replace(/'|\[|\]/g, '')
+            ?.split(', ')
+            ?.map((item) => (
               <>
                 {item.length <= 10 && (
                   <div className="bg-grey200 text-grey600 rounded-8 px-5 py-2 font-bold">
