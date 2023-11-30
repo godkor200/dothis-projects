@@ -27,8 +27,8 @@ const useGetDailyView = () => {
         query: {
           keyword: data?.keyword!,
           relationKeyword: selectedRelWord!,
-          from: '2023-11-19',
-          to: '2023-11-22',
+          from: '2023-11-23',
+          to: '2023-11-30',
         },
         enabled: !!data && !!selectedRelWord,
       };
