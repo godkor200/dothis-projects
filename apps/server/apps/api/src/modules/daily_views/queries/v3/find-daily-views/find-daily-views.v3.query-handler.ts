@@ -17,6 +17,7 @@ import {
 } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
+import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 
 export interface IIncreaseData {
   date: string;
@@ -37,6 +38,8 @@ export class FindDailyViewsQueryOsV3Handler
     private readonly video: VideoServicePort,
 
     private readonly videoAggregateService: VideoAggregateService,
+
+    private readonly videoDataService: VideoDataService,
   ) {}
 
   async execute(
@@ -50,9 +53,17 @@ export class FindDailyViewsQueryOsV3Handler
     };
     const videos =
       await this.video.findVideoIdFullScanAndVideos<IFindVideoIdRes>(arg);
+
     if (!videos) return Err(new VideoNotFoundError());
 
-    const result = this.videoAggregateService.calculateIncrease(videos);
+    const filteredVideoByDate = this.videoDataService.filterByDate(
+      videos,
+      arg.from,
+      arg.to,
+    );
+
+    const result =
+      this.videoAggregateService.calculateIncrease(filteredVideoByDate);
 
     return Ok(result);
   }
