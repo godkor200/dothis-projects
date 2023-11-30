@@ -2,11 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Modal from '@/components/common/Modal/Modal';
 import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
+import {
+  useRemoveKeywordMutation,
+  useResetKeywordMutation,
+} from '@/hooks/react-query/mutation/useKeywordMutation';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
+import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
@@ -23,10 +28,28 @@ const KeywordRankingList = () => {
     isError,
     refetch,
   } = useGetRelWords({
-    onError: () => {
+    onError: (data) => {
       setOnErrorModal(true);
     },
   });
+
+  const { hashKeywordList } = useKeyword();
+
+  const { mutate: resetKeywordMutate } = useResetKeywordMutation();
+  const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
+
+  const dismissModalCallback = useCallback(() => {
+    setOnErrorModal(false);
+    if (hashKeywordList.length <= 1) {
+      // 만약에 reset시켜주는 키워드가 이상한 키워드일 경우 계속 먹통일 수 있다. (예외가 필요하다.)
+      resetKeywordMutate();
+      return;
+    }
+    // 키워드가 여러개로 연관어를 가져올 수 있을경우 어떤 것이 빠져야할지 모호하므로
+    // 어떤거를 뺴줘야할지 User가 직접 선택하는  인터페이스를 제공해줘야할듯, 지금 Modal똑같은 형태지만, 어떤거를 제거하시겠습니까 라는 안내 인터페이스가 필요
+
+    removeKeywordMutate(hashKeywordList[0]);
+  }, [hashKeywordList]);
 
   const relWordList = convertKeywordsToArray(relWordsData?.relWords);
 
@@ -53,18 +76,8 @@ const KeywordRankingList = () => {
         ))}
       </div>
       {onErrorModal && (
-        <Modal
-          dismissCallback={() => {
-            setOnErrorModal(false);
-            refetch();
-          }}
-        >
-          <RelwordErrorModal
-            dismissCallback={() => {
-              setOnErrorModal(false);
-              refetch();
-            }}
-          />
+        <Modal dismissCallback={dismissModalCallback}>
+          <RelwordErrorModal dismissCallback={dismissModalCallback} />
         </Modal>
       )}
     </>
