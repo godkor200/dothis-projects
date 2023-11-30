@@ -6,10 +6,12 @@ import { FindDailyViewsQueryOsV3Handler } from '@Apps/modules/daily_views/querie
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
+import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 const controllers = [FindDailyViewsOsV3HttpController];
 const repositories: Provider[] = [
   FindDailyViewsQueryOsV3Handler,
   VideoAggregateService,
+  VideoDataService,
   {
     provide: VIDEO_OS_DI_TOKEN,
     useClass: VideoQueryHandler,
