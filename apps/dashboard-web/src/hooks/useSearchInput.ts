@@ -114,6 +114,7 @@ const useSearchInput = () => {
       if (userKeyword === null || userKeyword === undefined) {
         throw new Error('데이터를 저장하는데 문제가 생겼습니다.');
       }
+
       // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
       const dataArray = userKeyword.split(',');
 
@@ -181,8 +182,12 @@ const useSearchInput = () => {
     const dataArray = userKeyword.split(',');
 
     for (let i = 1; i < dataArray.length; i++) {
+      if (!dataArray[0].endsWith('#')) {
+        dataArray[0] += '#';
+      }
       dataArray[i] = dataArray[i].replace('#', '');
     }
+
     return dataArray;
   }, []);
 
