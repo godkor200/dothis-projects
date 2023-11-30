@@ -57,6 +57,16 @@ apiInstance.interceptors.response.use(
      * 현재 해당 response 마다 authorization을 체크해서 cookie를 갱신하는 코드가 추가되었다. (ts-Rest query 내에서 headers를 response로 못받는갑다)
      */
 
+    function setDucumentCooki(cname: string, cvalue: string) {
+      const domain = '.dothis.kr';
+      document.cookie =
+        cname + '=' + cvalue + ';' + ';path=/;' + 'domain=' + domain + ';';
+    }
+    if (response.headers['authorization'] && isProduction) {
+      setDucumentCooki('accessToken', response.headers['authorization']);
+      setDucumentCooki('jm', '테스터');
+    }
+
     if (response.headers['authorization'] && !isProduction) {
       setCookie('accessToken', response.headers['authorization']);
     }

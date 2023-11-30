@@ -16,7 +16,7 @@ export default function Modal({
 
   const onDismiss = useCallback(() => {
     dismissCallback ? dismissCallback() : router.back();
-  }, [router]);
+  }, [router, dismissCallback]);
 
   const onClick: MouseEventHandler = useCallback(
     (e) => {

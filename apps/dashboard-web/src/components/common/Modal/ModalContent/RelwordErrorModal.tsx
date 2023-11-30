@@ -18,15 +18,9 @@ const RelwordErrorModal = ({
         <SvgComp icon="Close" size={24} />
       </div>
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
-        키워드에 대한 연관어를 가져오지 못하였습니다.
-        <br />
-        해당 키워드를 제거하시겠습니까?
+        키워드에 대한 데이터가 부족합니다.
       </p>
       <div className="flex justify-center gap-[1.25rem]">
-        <Button theme="contained" size="L">
-          제거
-        </Button>
-
         <Button theme="outlined" size="L" onClick={() => dismissCallback()}>
           닫기
         </Button>
