@@ -77,7 +77,12 @@ const KeywordSlide = () => {
           />
         ))}
 
-        {isGuest &&
+        {/**
+         * 해당 isGuest -> keywordList 및 searchWordList로 변경한 이유는 isGuest가 silent refresh에서 verify되었냐 안되었냐(isLogedIn 전역상태)에 따라 달라지는데, 간혹 verifyToken동시성 문제로 인한 interceptor error 핸들링 코드 실패로 userData를 못 가져올 때가 존재함 (Login된 상태임에도 불구하고)
+         * 위에 같은 상황일 때  keywordList 및 searchWordList도 가져오는데 실패했지만 isGuest도 false여서 빈 컴포넌트로 출력될 때가 존재했음.
+         */}
+        {keywordList.length === 0 &&
+          searchWordList.length === 0 &&
           hashKeywordList.map((keyword) => (
             <KeywordItem
               key={keyword}
