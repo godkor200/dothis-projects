@@ -75,7 +75,7 @@ apiInstance.interceptors.response.use(
   async (error) => {
     count += 1;
 
-    if (count > 1) {
+    if (count > 2) {
       count = 0;
       return Promise.reject(error);
     }
