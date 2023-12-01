@@ -3,7 +3,7 @@ import {
   FindVideoByMultipleIndex,
   VideoServicePort,
 } from './video.service.port';
-import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
   IFindManyVideoResult,
@@ -92,7 +92,7 @@ export class SearchQueryBuilder {
   }
 }
 export class VideoQueryHandler
-  extends AwsOpensearchConnetionService
+  extends AwsOpenSearchConnectionService
   implements VideoServicePort
 {
   async findVideosWithMultipleIndex<T>(
