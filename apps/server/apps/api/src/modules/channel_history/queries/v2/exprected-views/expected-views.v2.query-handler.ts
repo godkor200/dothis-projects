@@ -15,6 +15,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { IChannelExpViewsRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 
 @QueryHandler(ExpectedViewsV2Query)
 export class ExpectedViewsV2QueryHandler
@@ -30,6 +31,8 @@ export class ExpectedViewsV2QueryHandler
 
     @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
+
+    private readonly videoDataService: VideoDataService,
   ) {}
 
   /**
@@ -56,15 +59,22 @@ export class ExpectedViewsV2QueryHandler
       await this.video.findVideoIdFullScanAndVideos<IFindVideoIDAndChannelIdRes>(
         arg,
       );
-    if (!searchRelatedVideo) return Err(new VideoNotFoundError());
+
+    if (!searchRelatedVideo.length) return Err(new VideoNotFoundError());
+
+    const filteredVideoByDate = this.videoDataService.filterByDate(
+      searchRelatedVideo,
+      arg.from,
+      arg.to,
+    ) as IFindVideoIDAndChannelIdRes[];
+
     //채널 아이디들이랑, 비디오 아이디를 분리
-    const { channelIds, videoIds } = searchRelatedVideo.reduce(
+    const { channelIds } = filteredVideoByDate.reduce(
       (acc, e) => {
         acc.channelIds.push(e.channel_id);
-        acc.videoIds.push(e.video_id);
         return acc;
       },
-      { channelIds: [], videoIds: [] },
+      { channelIds: [] },
     );
     /**
      * 해당날짜의 각 채널의 평균 조회수를 찾기 위해 히스토리를 가져옴, 해당날짜의 각 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
@@ -81,7 +91,7 @@ export class ExpectedViewsV2QueryHandler
       ),
     ]);
 
-    return Ok(this.calculateAverageViews(searchRelatedVideo, channelHistory));
+    return Ok(this.calculateAverageViews(filteredVideoByDate, channelHistory));
   }
 
   /**

@@ -54,7 +54,7 @@ export class FindDailyViewsQueryOsV3Handler
     const videos =
       await this.video.findVideoIdFullScanAndVideos<IFindVideoIdRes>(arg);
 
-    if (!videos) return Err(new VideoNotFoundError());
+    if (!videos.length) return Err(new VideoNotFoundError());
 
     const filteredVideoByDate = this.videoDataService.filterByDate(
       videos,
