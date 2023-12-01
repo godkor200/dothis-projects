@@ -5,7 +5,7 @@ import { DailyViewsApiV3Module } from '@Apps/modules/daily_views/queries/v3/dail
 
 @Module({
   imports: [
-    DailyViewsApiV2Module,
+    //DailyViewsApiV2Module,
     DailyViewsApiV3Module,
 
     //RouterModule.register([{ path: 'v2', module: DailyViewsApiV2Module }]),

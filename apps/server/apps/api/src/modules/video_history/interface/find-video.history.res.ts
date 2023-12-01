@@ -4,5 +4,5 @@ export interface IFindVideoHistoryResponse {
   video_likes: number;
   video_comments: number;
   crawled_date: string;
-  performance: number;
+  performance?: number;
 }

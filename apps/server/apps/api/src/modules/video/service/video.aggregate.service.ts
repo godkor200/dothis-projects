@@ -23,7 +23,6 @@ export class VideoAggregateService {
           const date = new Date(video.video_history[i].crawled_date)
             .toISOString()
             .split('T')[0]; // Extract only the date part
-
           const increaseViews =
             video.video_history[i].video_views - prevVideo.video_views;
           const increaseLikes =
