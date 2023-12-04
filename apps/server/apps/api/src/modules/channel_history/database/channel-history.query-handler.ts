@@ -7,6 +7,7 @@ import { FindAccumulateVideoV2 } from '@Apps/modules/video/dtos/find-accumulate-
 import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
 import { ConfigService } from '@nestjs/config';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
+import { Injectable } from '@nestjs/common';
 
 export class SearchQueryBuilder {
   static channelHistory(
@@ -24,41 +25,37 @@ export class SearchQueryBuilder {
           bool: {
             must: [
               {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_tag: `*${relWord}*`,
-                            },
+                nested: {
+                  path: 'video_list',
+                  query: {
+                    bool: {
+                      must: [
+                        {
+                          match: {
+                            'video_list.video_tags': `${keyword}`,
                           },
-                          {
-                            wildcard: {
-                              video_tag: `*${keyword}*`,
-                            },
+                        },
+                        {
+                          match: {
+                            'video_list.video_tags': `${relWord}`,
                           },
-                        ],
-                      },
+                        },
+                        {
+                          match: {
+                            'video_list.video_title': `${keyword}`,
+                          },
+                        },
+                        {
+                          match: {
+                            'video_list.video_title': `${relWord}`,
+                          },
+                        },
+                      ],
                     },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_title: `*${relWord}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_title: `*${keyword}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
+                  },
+                  inner_hits: {
+                    name: 'video_list',
+                  },
                 },
               },
             ],
@@ -69,12 +66,13 @@ export class SearchQueryBuilder {
     };
   }
 }
+@Injectable()
 export class ChannelHistoryQueryHandler
   extends AwsOpenSearchConnectionService
   implements ChannelHistoryOutboundPort
 {
   constructor(
-    private channelHistoryDataService: ChannelHistoryDataService,
+    private readonly channelHistoryDataService: ChannelHistoryDataService,
     configService: ConfigService,
     awsCredentialsService: AwsCredentialsService,
   ) {
@@ -124,7 +122,7 @@ export class ChannelHistoryQueryHandler
         _source: data,
       },
     };
-    return await this.fullScan<T>(searchQuery);
+    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
   }
 
   async findChannelHistoryByLimit(
@@ -182,9 +180,17 @@ export class ChannelHistoryQueryHandler
     props: FindAccumulateVideoV2,
   ): Promise<T[]> {
     const { from, to, keyword, relationKeyword } = props;
-    const index = this.channelHistoryDataService
-      .generateDatesBetween(from, to)
-      .join('channel-history-');
+    /**
+     * 데이터가 다 차면 사용할 로직
+    const dates = this.channelHistoryDataService.generateDatesBetween(from, to);
+    const index = dates
+      .map((date, i) =>
+        i === 0 ? `channel-history-${date}` : `,channel-history-${date}`,
+      )
+      .join('');
+     */
+    const index = 'channel-history-*';
+
     const searchQuery = SearchQueryBuilder.channelHistory(
       index,
       keyword,
@@ -192,9 +198,8 @@ export class ChannelHistoryQueryHandler
       [
         CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS,
         CHANNEL_DATA_KEY.CHANNEL_SEUBSCRIBERS,
-        CHANNEL_DATA_KEY.VIDEO_LIST,
       ],
     );
-    return await this.fullScan<T>(searchQuery);
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }
 }
