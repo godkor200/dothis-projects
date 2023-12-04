@@ -1,9 +1,9 @@
-import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/database/video_history.query-handler.port';
 import { VIDEO_HISTORY_DATA } from '@Apps/modules/video_history/interface/video_history.res';
 
 export class VideoHistoryQueryHandler
-  extends AwsOpensearchConnetionService
+  extends AwsOpenSearchConnectionService
   implements VideoHistoryQueryHandlerPort
 {
   async findVideoHistoryFullScan<T>(
@@ -41,6 +41,6 @@ export class VideoHistoryQueryHandler
       },
     };
 
-    return await this.fullScan<T>(searchQuery);
+    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
   }
 }
