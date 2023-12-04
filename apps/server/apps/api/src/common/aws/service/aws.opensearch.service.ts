@@ -30,7 +30,7 @@ export class AwsOpenSearchConnectionService {
     });
   }
 
-  async fullScan<T>(query: any): Promise<T[]> {
+  async fullScan<T>(query: any, processDoc: (doc: any) => T): Promise<T[]> {
     const startTime: number = Date.now(),
       firstQuery: any = query;
     let resp: any = await this.client.search(firstQuery);
@@ -40,7 +40,7 @@ export class AwsOpenSearchConnectionService {
 
     // 처음 출력된 결과 저장
     for (const doc of resp.body.hits.hits) {
-      result.push(doc._source);
+      result.push(processDoc(doc));
     }
 
     // SCROLL API를 통해 나온 결과 저장
@@ -52,7 +52,7 @@ export class AwsOpenSearchConnectionService {
       oldScrollId = resp.body._scroll_id;
 
       for (const doc of resp.body.hits.hits) {
-        result.push(doc._source);
+        result.push(processDoc(doc));
       }
     }
 
