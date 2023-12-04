@@ -1,3 +1,13 @@
+import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
+interface VideoSource {
+  video_title: string;
+  video_views: number;
+  crawled_date: string;
+  video_tags: string;
+  channel_id: string;
+  video_id: string;
+}
+
 export interface IFindAccumulateVideoRes<T> {
   videoTotal: number;
   userSection: SECTION_NUMBER;
@@ -36,7 +46,18 @@ export interface IVideoHistorySource {
   channel_subscribers: number;
 }
 
-export interface VideoHistory {
+export interface IVideoHistory {
   _id: string;
   _source: IVideoHistorySource[];
+}
+export interface IChannelHistory
+  extends OsRes<ISource, IChannelHistoryInnerHits<HitList<VideoSource>>> {}
+
+interface IChannelHistoryInnerHits<T> {
+  video_list: T;
+}
+
+interface ISource {
+  channel_subscribers: number;
+  channel_average_views: number;
 }
