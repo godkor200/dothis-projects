@@ -3,7 +3,7 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useCallback, useState, useTransition } from 'react';
 
-import TermsModal from '@/components/common/Modal/TermsModal/TermsModal';
+import Modal from '@/components/common/Modal/Modal';
 import SvgComp from '@/components/common/SvgComp';
 import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
 import {
@@ -167,7 +167,7 @@ const SearchBar = () => {
         )}
       </div>
       {openModal && (
-        <TermsModal setOnError={setOpenModal}>
+        <Modal dismissCallback={() => setOpenModal(false)}>
           <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
             <div className="mb-[0.625rem] flex justify-center">
               로그인이 필요합니다.
@@ -181,7 +181,7 @@ const SearchBar = () => {
               </Button>
             </div>
           </div>
-        </TermsModal>
+        </Modal>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import { AUTO_COMPLETEWORD_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 const useGetAutoCompleteWord = (
@@ -10,7 +11,7 @@ const useGetAutoCompleteWord = (
   >,
 ) => {
   const queryResult = apiClient(2).relwords.getAutoCompleteWords.useQuery(
-    ['autoComplete', word],
+    [AUTO_COMPLETEWORD_KEY.all, word],
     { params: { word } },
     { enabled: !!word, ...queryOptions },
   );

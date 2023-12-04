@@ -3,14 +3,20 @@ import { useRouter } from 'next/navigation';
 import type { MouseEventHandler } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 
-export default function AuthModal({ children }: { children: React.ReactNode }) {
+export default function Modal({
+  children,
+  dismissCallback,
+}: {
+  children: React.ReactNode;
+  dismissCallback?: () => void;
+}) {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
 
   const onDismiss = useCallback(() => {
-    router.back();
-  }, [router]);
+    dismissCallback ? dismissCallback() : router.back();
+  }, [router, dismissCallback]);
 
   const onClick: MouseEventHandler = useCallback(
     (e) => {

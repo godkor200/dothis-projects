@@ -18,6 +18,7 @@ export const isProduction = process.env.NODE_ENV === 'production';
 export const serverApiBaseUrl: Record<number, string> = {
   1: 'https://api.dothis.kr/v1',
   2: 'https://api.dothis.kr/v2',
+  3: 'https://api.dothis.kr/v3',
 };
 
 export const isServer = typeof window === 'undefined';

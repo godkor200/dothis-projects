@@ -71,6 +71,7 @@ const relatedContentApi: { [key: string]: any } = {
         date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
         image: externaImageLoader(getMainImage(item.images)),
         link: item.provider_link_page,
+        hilight: item.hilight,
       };
     });
     return returnData;

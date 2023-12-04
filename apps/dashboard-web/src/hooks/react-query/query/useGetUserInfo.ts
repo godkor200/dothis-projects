@@ -1,6 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
+import { USER_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 /**
@@ -16,7 +17,7 @@ const useGetUserInfo = (
   queryOptions?: UseQueryOptions<typeof apiRouter.auth.getOwnInfo>,
 ) => {
   const queryResult = apiClient(1).auth.getOwnInfo.useQuery(
-    ['user'],
+    USER_KEY.all,
     {},
     queryOptions,
   );

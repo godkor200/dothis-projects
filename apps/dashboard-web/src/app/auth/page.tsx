@@ -2,7 +2,10 @@ import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import type { Route } from 'next';
 import Link from 'next/link';
 
+import GoogleBtn from '@/components/Auth/GoogleBtn';
+import LoginButton from '@/components/Auth/LoginButton';
 import { BaseURL } from '@/constants/dev';
+import { OAUTH_DATA } from '@/constants/oauth';
 
 const LoginPage = () => {
   return (
@@ -12,19 +15,27 @@ const LoginPage = () => {
       </h1>
       <p className="mb-[20px]">Google 계정으로 로그인 (회원가입)</p>
 
-      <Link
-        href={(BaseURL + '/v1/auth/google-login') as Route}
-        className="mb-[60px]"
-      >
-        <Button theme="contained" size="L" paddingX="!px-[70px]">
-          회원가입
-        </Button>
-      </Link>
+      {OAUTH_DATA.map(({ iconName, title, colorSchemeName }) => {
+        return (
+          <LoginButton
+            iconName={iconName}
+            aria-label={title}
+            boderColor={colorSchemeName}
+          />
+        );
+      })}
+
       <p className="text-[14px]">
         계속 진행하기 위해 Google에서 내 이름, 이메일 주소, 언어 환경설정,
         프로필 사진을 <br /> Dothis와 공유합니다. 가입하기 전에{' '}
-        <span className="font-bold">개인정보처리방침</span> 및{' '}
-        <span className="font-bold">서비스 약관</span>을 검토하세요.
+        <Link href={'/privacy'}>
+          <span className="font-bold">개인정보처리방침</span>
+        </Link>{' '}
+        및{' '}
+        <Link href={'/policy'}>
+          <span className="font-bold">서비스 약관</span>
+        </Link>
+        을 검토하세요.
       </p>
     </>
   );

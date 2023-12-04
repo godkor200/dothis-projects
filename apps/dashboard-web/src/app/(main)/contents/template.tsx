@@ -48,7 +48,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
     router.replace(`${pathname}${query}` as Route);
   };
 
-  // 새로고침 trigger
+  // 새로고침 trigger (게스트 키워드를 랜덤으로 middleware에서 넣어주기위해 추가된 코드)
   useEffect(() => {
     router.replace('/contents');
   }, [router]);

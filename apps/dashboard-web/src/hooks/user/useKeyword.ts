@@ -30,7 +30,7 @@ const useKeyword = () => {
 
   return {
     hashKeywordList:
-      isSignedIn || !isNotSetTags
+      !isNotSetTags && isSignedIn
         ? getHashKeyword(
             convertKeywordsToArray(data?.personalizationTag, data?.searchWord),
           )

@@ -2,11 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
+import ParserContent from '@/components/common/ParserContent';
 import useKeyword from '@/hooks/user/useKeyword';
+import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import CurrentArticle from './CurrentArticle';
+import SummaryCard from './SummaryCard';
 
 const News = () => {
   const [contentIndex, setContentIndex] = useState(0);
@@ -17,11 +20,13 @@ const News = () => {
 
   const { hashKeywordList } = useKeyword();
 
+  const selectedRelWord = useSelectedRelWord();
+
   const retrievePosts = async () => {
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: hashKeywordList[0],
+        query: selectedRelWord,
 
         published_at: {
           from: '2023-09-01',
@@ -56,11 +61,11 @@ const News = () => {
     return data;
   };
 
-  const { data: original } = useQuery(
-    ['뉴스', hashKeywordList[0]],
+  const { data: original, isLoading } = useQuery(
+    ['뉴스', selectedRelWord],
     retrievePosts,
     {
-      enabled: !!hashKeywordList[0],
+      enabled: !!hashKeywordList[0] && !!selectedRelWord,
     },
   );
 
@@ -74,28 +79,49 @@ const News = () => {
           date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
           image: externaImageLoader(getMainImage(item.images)),
           link: item.provider_link_page,
+          hilight: item.hilight,
         };
       }),
     [original],
   );
 
-  if (!returnData) {
-    return null;
+  if (isLoading) {
+    return (
+      <div className="mt-10 flex gap-[1.25rem]">
+        <CurrentArticle.skeleton />
+        <ArticleList.skeleton />
+      </div>
+    );
+  }
+
+  if (returnData.length === 0) {
+    return (
+      <div className="mt-10 flex flex-wrap gap-[1.25rem]">
+        <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
+          해당 키워드에 대한 뉴스기사가 없습니다
+        </p>
+      </div>
+    );
   }
   return (
     <>
-      <CurrentArticle
-        title={returnData[contentIndex]?.title}
-        category={returnData[contentIndex]?.category}
-        provider={returnData[contentIndex]?.provider}
-        date={returnData[contentIndex]?.date}
-        image={returnData[contentIndex]?.image}
-        link={returnData[contentIndex]?.link}
-      />
-      <ArticleList
-        articleListData={returnData}
-        handleSetContentIndex={handleSetContentIndex}
-      />
+      <div className="mt-10 flex gap-[1.25rem]">
+        <CurrentArticle
+          title={returnData[contentIndex]?.title}
+          category={returnData[contentIndex]?.category}
+          provider={returnData[contentIndex]?.provider}
+          date={returnData[contentIndex]?.date}
+          image={returnData[contentIndex]?.image}
+          link={returnData[contentIndex]?.link}
+        />
+        <ArticleList
+          articleListData={returnData}
+          handleSetContentIndex={handleSetContentIndex}
+        />
+      </div>
+      <SummaryCard title="뉴스 요약">
+        <ParserContent content={returnData[contentIndex]?.hilight} />
+      </SummaryCard>
     </>
   );
 };

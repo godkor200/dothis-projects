@@ -1,5 +1,5 @@
 import TabNavigation from '@/components/common/TabNavigation';
-import MyPageContent from '@/components/mypage/MyPageContent';
+import MyPageContent from '@/components/MyPage/MyPageContent';
 import { MYPAGE_TABNAV_DATA } from '@/constants/TabNav';
 
 const MyPage = ({
