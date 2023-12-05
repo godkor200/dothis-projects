@@ -20,7 +20,7 @@ export const OAUTH_DATA: OauthInterface[] = [
   },
   {
     iconName: 'YoutubeSvg',
-    title: 'Youtube 로그인',
+    title: 'YouTube 로그인',
     colorSchemeName: 'primary500',
   },
 ];
