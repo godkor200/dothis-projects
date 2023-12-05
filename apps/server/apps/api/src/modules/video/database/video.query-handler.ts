@@ -3,7 +3,7 @@ import {
   FindVideoByMultipleIndex,
   VideoServicePort,
 } from './video.service.port';
-import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
   IFindManyVideoResult,
@@ -92,7 +92,7 @@ export class SearchQueryBuilder {
   }
 }
 export class VideoQueryHandler
-  extends AwsOpensearchConnetionService
+  extends AwsOpenSearchConnectionService
   implements VideoServicePort
 {
   async findVideosWithMultipleIndex<T>(
@@ -101,7 +101,7 @@ export class VideoQueryHandler
     const index = arg.cluster.map((e) => 'video-' + e).join(',');
     const { keyword, relWord, data } = arg;
     const searchQuery = SearchQueryBuilder.video(index, keyword, relWord, data);
-    return await this.fullScan<T>(searchQuery);
+    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
   }
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
@@ -191,7 +191,7 @@ export class VideoQueryHandler
       from,
       to,
     );
-    return await this.fullScan<T>(searchQuery);
+    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
   }
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {

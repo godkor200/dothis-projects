@@ -11,6 +11,7 @@ import { VideoHistoryQueryHandler } from '@Apps/modules/video_history/database/v
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { FindChannelHistoryHttpController } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.http.controller';
 import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.query-handler';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 
 const controllers = [
   ExpectedViewsHttpController,
@@ -31,7 +32,7 @@ const repositories: Provider[] = [
   },
 ];
 @Module({
-  imports: [CqrsModule, AwsModule],
+  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers,
   providers: [
     ...repositories,

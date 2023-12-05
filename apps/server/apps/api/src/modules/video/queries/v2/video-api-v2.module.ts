@@ -6,6 +6,8 @@ import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/databa
 import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/queries/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { FindAccumulateVideosV2HttpController } from '@Apps/modules/video/queries/v2/find-accumulate-videos/find-accumulate-videos.http.controller';
+import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 
 const commandHandlers: Provider[] = [];
 
@@ -18,7 +20,7 @@ const queryHandlers: Provider[] = [
   ChannelHistoryAggregateService,
 ];
 @Module({
-  imports: [CqrsModule, AwsModule],
+  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers: [FindAccumulateVideosV2HttpController],
   providers: [...queryHandlers, ...commandHandlers],
 })
