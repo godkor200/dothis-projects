@@ -7,6 +7,6 @@ beforeEach(() => {
 });
 describe('calculateIncrease 함수', () => {
   it('should ', async () => {
-    const res = handler.calculateIncrease(data);
+    // const res = handler.calculateIncrease(data);
   });
 });

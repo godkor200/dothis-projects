@@ -9,6 +9,7 @@ import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/const
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 
 const controllers = [ExpectedViewsV2HttpController];
 const repositories: Provider[] = [
@@ -25,6 +26,10 @@ const repositories: Provider[] = [
 @Module({
   imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers,
-  providers: [...repositories, ExpectedViewsV2QueryHandler],
+  providers: [
+    ...repositories,
+    ExpectedViewsV2QueryHandler,
+    ChannelHistoryAggregateService,
+  ],
 })
 export class ChannelHistoryV2Module {}

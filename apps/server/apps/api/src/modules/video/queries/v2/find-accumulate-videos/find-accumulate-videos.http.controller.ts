@@ -12,13 +12,11 @@ import {
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import {
-  FindAccumulateVideosV2Dtos,
-  FindAccumulateVideoV2,
-} from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
+import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
+  FindVideoV2,
   IFindAccumulateVideoRes,
   ISection,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
@@ -88,7 +86,7 @@ export class FindAccumulateVideosV2HttpController {
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
-    @Query() query: FindAccumulateVideoV2,
+    @Query() query: FindVideoV2,
   ): Promise<IRes<ISection[]>> {
     const arg = new FindAccumulateVideosV2Dtos({
       clusterNumber,

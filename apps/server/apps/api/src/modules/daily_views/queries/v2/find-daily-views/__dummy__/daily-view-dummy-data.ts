@@ -1,7 +1,5 @@
 import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
-data.map((e, i) => {
-  return { ...e, channel_id: i };
-});
+
 export const data: IFindVideoHistoryResponse[] = [
   {
     video_id: 'o8VVNtllsq4',

@@ -1,5 +1,9 @@
-import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
+import {
+  IFindVideoIdRes,
+  IVideoHistory,
+} from '@Apps/modules/video/interface/find-video.os.res';
 import { IIncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.v2.query-handler';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 
 export class VideoAggregateService {
   /**
@@ -7,28 +11,26 @@ export class VideoAggregateService {
    * @param videoData
    * @private
    */
-  calculateIncrease(videoData: IFindVideoIdRes[]): IIncreaseData[] {
+  calculateIncrease(videoData: IVideoHistory[]): IIncreaseData[] {
     let result: IIncreaseData[] = [];
 
     for (let video of videoData) {
+      let videoList = video.inner_hits.video_history.hits.hits;
       // Sort the data by 'crawled_date'
-      video.video_history.sort((a, b) =>
-        a.crawled_date.localeCompare(b.crawled_date),
+      videoList.sort((a, b) =>
+        a._source.crawled_date.localeCompare(b._source.crawled_date),
       );
 
-      let prevVideo = null;
+      let prevVideo: IFindVideoHistoryResponse = null;
 
-      for (let i = 0; i < video.video_history.length; i++) {
+      for (let i = 0; i < videoList.length; i++) {
         if (prevVideo) {
-          const date = new Date(video.video_history[i].crawled_date)
-            .toISOString()
-            .split('T')[0]; // Extract only the date part
-          const increaseViews =
-            video.video_history[i].video_views - prevVideo.video_views;
-          const increaseLikes =
-            video.video_history[i].video_likes - prevVideo.video_likes;
+          let video = videoList[i]._source;
+          const date = new Date(video.crawled_date).toISOString().split('T')[0]; // Extract only the date part
+          const increaseViews = video.video_views - prevVideo.video_views;
+          const increaseLikes = video.video_likes - prevVideo.video_likes;
           const increaseComments =
-            video.video_history[i].video_comments - prevVideo.video_comments;
+            video.video_comments - prevVideo.video_comments;
 
           if (!result[date]) {
             result[date] = {
@@ -44,7 +46,7 @@ export class VideoAggregateService {
           result[date].increase_comments += increaseComments;
         }
 
-        prevVideo = { ...video.video_history[i] };
+        prevVideo = { ...videoList[i]._source };
       }
     }
 
