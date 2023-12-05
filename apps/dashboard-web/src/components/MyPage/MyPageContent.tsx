@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { useLogOutMutation } from '@/hooks/react-query/mutation/useLogOutMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import { useAuthActions } from '@/store/authStore';
 
 const MyPageContent = () => {
   const { data: userData } = useGetUserInfo();
@@ -12,11 +13,14 @@ const MyPageContent = () => {
   const router = useRouter();
   const { mutate } = useLogOutMutation();
 
+  const { setIsSignedIn } = useAuthActions();
+
   const handleLogOut = () => {
     mutate(
       {},
       {
         onSuccess: () => {
+          setIsSignedIn(false);
           router.replace('/');
         },
       },

@@ -67,12 +67,12 @@ export class FindDailyViewsOsV3HttpController {
   @ApiQuery({
     name: 'from',
     description: '언제부터 날짜',
-    example: '2023-10-20',
+    example: '2023-11-20',
   })
   @ApiQuery({
     name: 'to',
     description: '까지 날짜',
-    example: '2023-10-22',
+    example: '2023-11-22',
   })
   @ApiNotFoundResponse({ description: 'Not Found' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })

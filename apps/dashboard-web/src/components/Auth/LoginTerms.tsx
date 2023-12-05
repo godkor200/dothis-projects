@@ -2,6 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { Input } from 'dashboard-storybook/src/components/Input/Input';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -70,7 +71,9 @@ const LoginTerms = () => {
             <span className="text-grey900 text-[12px] font-bold">
               {'('}필수{')'}
             </span>
-            <TermsBox>서비스 이용 약관 동의 </TermsBox>
+            <Link href={'/policy'} target="_blank">
+              <TermsBox>서비스 이용 약관 동의 </TermsBox>
+            </Link>
           </div>
 
           <div className="flex items-center gap-[6px]">
@@ -78,7 +81,9 @@ const LoginTerms = () => {
             <span className="text-grey900 text-[12px] font-bold">
               {'('}필수{')'}
             </span>
-            <TermsBox>개인정보 처리방침 동의</TermsBox>
+            <Link href={'/privacy'} target="_blank">
+              <TermsBox>개인정보 처리방침 동의</TermsBox>
+            </Link>
           </div>
           <div className="flex items-center gap-[6px]">
             <CheckBox $size="md" type="checkbox" {...register('marketing')} />

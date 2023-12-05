@@ -1,6 +1,6 @@
 import {
+  IChannelHistory,
   ISection,
-  IVideoHistorySource,
   SECTION_NUMBER,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 
@@ -48,18 +48,16 @@ export class ChannelHistoryAggregateService {
    * 비디오가 속한 채널을 확인해 구독자 구간에 카운팅
    * @param ChannelHistoryData 채널 히스토리 데이터
    */
-  countSubscribersByRange(
-    ChannelHistoryData: IVideoHistorySource[],
-  ): ISection[] {
+  countSubscribersByRange(ChannelHistoryData: IChannelHistory[]): ISection[] {
     const rangesWithCount = this.ranges.map((range) => ({
       ...range,
       number: 0,
     }));
     for (let item of ChannelHistoryData) {
-      const subscribers = item.channel_subscribers;
+      const subscribers = item._source.channel_subscribers;
       for (let range of rangesWithCount) {
         if (subscribers >= range.gte && subscribers < range.lte) {
-          range.number += item.video_list.length;
+          range.number += item.inner_hits.video_list.hits.total.value;
         }
       }
     }

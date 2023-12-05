@@ -7,9 +7,12 @@ import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-hand
 import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { AwsModule } from '@Apps/common/aws/aws.module';
+import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 
 const controllers = [ExpectedViewsV2HttpController];
 const repositories: Provider[] = [
+  VideoDataService,
   {
     provide: VIDEO_OS_DI_TOKEN,
     useClass: VideoQueryHandler,
@@ -20,7 +23,7 @@ const repositories: Provider[] = [
   },
 ];
 @Module({
-  imports: [CqrsModule, AwsModule],
+  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers,
   providers: [...repositories, ExpectedViewsV2QueryHandler],
 })

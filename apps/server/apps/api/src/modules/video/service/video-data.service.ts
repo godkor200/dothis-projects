@@ -1,11 +1,14 @@
-import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
+import {
+  IFindVideoIDAndChannelIdRes,
+  IFindVideoIdRes,
+} from '@Apps/modules/video/interface/find-video.os.res';
 
 export class VideoDataService {
   filterByDate(
-    videos: IFindVideoIdRes[],
+    videos: IFindVideoIdRes[] | IFindVideoIDAndChannelIdRes[],
     startDate: Date,
     endDate: Date,
-  ): IFindVideoIdRes[] {
+  ): IFindVideoIdRes[] | IFindVideoIDAndChannelIdRes[] {
     return videos.map((video) => {
       let filteredHistory = video.video_history.filter(
         (item) =>

@@ -7,9 +7,9 @@ import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
 import {
+  IChannelHistory,
   IFindAccumulateVideoWithOutUserSection,
   ISection,
-  IVideoHistorySource,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { Err, Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
@@ -50,10 +50,12 @@ export class FindAccumulateVideosV2QueryHandler
      * 관련된 동영상과 채널의 히스토리를 필터링해서 가져옴
      */
     const channelHistoryRes =
-      await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IVideoHistorySource>(
+      await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
         arg,
       );
-    if (!channelHistoryRes) return Err(new ChannelHistoryNotFoundError());
+
+    if (!channelHistoryRes.length)
+      return Err(new ChannelHistoryNotFoundError());
 
     const section =
       this.channelHistoryAggregateService.countSubscribersByRange(
@@ -62,7 +64,7 @@ export class FindAccumulateVideosV2QueryHandler
 
     return Ok({
       videoTotal: channelHistoryRes
-        .map((e) => e.video_list.length)
+        .map((e) => e.inner_hits.video_list.hits.total.value)
         .reduce((a, c) => a + c),
       section,
     });

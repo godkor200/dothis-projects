@@ -43,22 +43,22 @@ export class FindAccumulateVideosV2HttpController {
   @ApiQuery({
     name: 'keyword',
     description: '탐색어',
-    example: '먹방',
+    example: '페이커',
   })
   @ApiQuery({
     name: 'relationKeyword',
     description: '연관어, 연관어가 없다면 없어도됩니다.',
-    example: '불대창',
+    example: '롤드컵',
   })
   @ApiQuery({
     name: 'from',
     description: '언제부터 날짜',
-    example: '2023-10-11',
+    example: '2023-11-23',
   })
   @ApiQuery({
     name: 'to',
     description: '까지 날짜',
-    example: '2023-10-17',
+    example: '2023-11-30',
   })
   @ApiOperation({
     summary,
