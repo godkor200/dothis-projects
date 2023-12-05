@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AwsAthenaService } from './service/aws.athena.service';
-import { AwsOpensearchConnetionService } from '@Apps/common/aws/service/aws.opensearch.service';
+import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 
 @Module({
   providers: [
     AwsAthenaService,
-    AwsOpensearchConnetionService,
+    AwsOpenSearchConnectionService,
     AwsCredentialsService,
   ],
   exports: [
     AwsAthenaService,
-    AwsOpensearchConnetionService,
+    AwsOpenSearchConnectionService,
     AwsCredentialsService,
   ],
 })

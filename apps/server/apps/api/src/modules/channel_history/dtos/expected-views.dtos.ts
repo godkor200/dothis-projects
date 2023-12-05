@@ -7,6 +7,7 @@ export enum CHANNEL_DATA_KEY {
   'CHANNEL_TOTAL_VIDEOS' = 'channel_total_videos',
   'CHANNEL_AVERAGE_VIEWS' = 'channel_average_views',
   'CRAWLED_DATE' = 'crawled_date',
+  'VIDEO_LIST' = 'video_list',
 }
 
 export class ExpectedViewsQuery implements IQuery {

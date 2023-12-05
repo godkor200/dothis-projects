@@ -10,6 +10,7 @@ import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/const
 import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
 import { FindAccumulateVideosQueryHandler } from '@Apps/modules/video/queries/v1/find-accumulate-videos/find-accumulate-videos.query-handler';
 import { FindAccumulateVideosHttpController } from '@Apps/modules/video/queries/v1/find-accumulate-videos/find-accumulate-videos.http.controller';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 
 const commandHandlers: Provider[] = [];
 
@@ -27,7 +28,7 @@ const queryHandlers: Provider[] = [
   FindAccumulateVideosQueryHandler,
 ];
 @Module({
-  imports: [CqrsModule, AwsModule],
+  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers: [
     FindVideoPageHttpController,
     FindAccumulateVideosHttpController,
