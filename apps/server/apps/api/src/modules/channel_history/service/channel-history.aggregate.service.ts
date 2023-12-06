@@ -4,6 +4,7 @@ import {
   SECTION_NUMBER,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
+import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 
 export class ChannelHistoryAggregateService {
   /**
@@ -70,12 +71,14 @@ export class ChannelHistoryAggregateService {
    */
   /**
    * 평균 기대조회수 리턴
-   * @param searchRelatedVideo 관계된 비디오들
    * @param channelHistories
    * @private
    */
-  calculateAverageViews(channelHistories: IChannelHistory[]): IExpectedData[] {
-    let startTime = Date.now();
+  calculateAverageViews(
+    channelHistories:
+      | IChannelHistory[]
+      | IChannelHistoryWithoutChannelSubscribers[],
+  ): IExpectedData[] {
     let dateViewRatios: { [date: string]: { total: number; count: number } } =
       {};
     for (let channel of channelHistories) {
@@ -105,8 +108,6 @@ export class ChannelHistoryAggregateService {
         dateViewRatios[date].total / dateViewRatios[date].count;
       result.push({ date: date, expected_views: averageViewsRatio });
     }
-    let endTime = Date.now() - startTime;
-    console.log('end', endTime);
     return result;
   }
 }
