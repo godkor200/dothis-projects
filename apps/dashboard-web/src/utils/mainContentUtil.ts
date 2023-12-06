@@ -1,6 +1,9 @@
 const NUMBER_FORMAT_REGX = /\B(?=(\d{3})+(?!\d))/g;
 const KOREAN_NUMERICAL_UNIT = ['', '만', '억', '조', '경'];
 
+/**
+ * @numberFormat @setUnitText 함수는 Intl.NumberFormat의 존재를 모르고 있을 때 임시로 사용했던 한국숫자 포맷팅 함수입니다. (현재는 사용 X)
+ */
 const numberFormat = (value: number) => {
   return value.toString().replace(NUMBER_FORMAT_REGX, ',');
 };
