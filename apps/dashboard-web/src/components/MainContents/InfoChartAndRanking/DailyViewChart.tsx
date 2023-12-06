@@ -61,7 +61,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
 
   /**
    * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
-   * deviationByTick가 음수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * deviationByTick가 음수or 소수로 잡히는 경우도 존재해서 그런경우 1로 고정
    * @returns
    */
   const getAxisInterval = () => {

@@ -57,6 +57,11 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
     getRoundingUnit(Math.max(...yScales), 2),
   );
 
+  /**
+   * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
+   * deviationByTick가 음수or 소수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * @returns
+   */
   const getAxisInterval = () => {
     // tick이 1보다 작을경우 올림이 안되서 소수점으로 보기안좋게 보여짐 그래서 1로 설정
     const deviationByTick =
