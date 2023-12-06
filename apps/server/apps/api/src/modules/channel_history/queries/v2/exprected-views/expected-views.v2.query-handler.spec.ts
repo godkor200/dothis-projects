@@ -1,24 +1,20 @@
 import { mock } from 'jest-mock-extended';
-import { ExpectedViewsQueryHandler } from '@Apps/modules/channel_history/queries/v1/exprected-views/expected-views.query-handler';
-import { VideoHistoryQueryHandlerPort } from '@Apps/modules/video_history/database/video_history.query-handler.port';
+import { ExpectedViewsV2QueryHandler } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.query-handler';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { ExpectedViewsQuery } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-import { videoData } from '@Apps/modules/channel_history/queries/v1/exprected-views/__dummy__/video.dummy';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
-import { channelHistoryDummy } from '@Apps/modules/channel_history/queries/v1/exprected-views/__dummy__/channel_history.dummy';
-import { video_historyDummy } from '@Apps/modules/channel_history/queries/v1/exprected-views/__dummy__/video_history.dummy';
-import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
+import { channelHistoryDummy } from '@Apps/modules/channel_history/queries/v2/exprected-views/__dummy__/channel_history.dummy';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 
-const mockVideoHistoryQueryHandlerPort = mock<VideoHistoryQueryHandlerPort>();
-const mockFindVideoOsAdapter = mock<VideoServicePort>();
 const mockChannelHistoryHandler = mock<ChannelHistoryOutboundPort>();
-let handler: ExpectedViewsQueryHandler;
+const mockChannelHistoryAggregateService =
+  mock<ChannelHistoryAggregateService>();
+let handler: ExpectedViewsV2QueryHandler;
 beforeEach(async () => {
-  handler = new ExpectedViewsQueryHandler(
-    mockFindVideoOsAdapter,
-    mockVideoHistoryQueryHandlerPort,
+  handler = new ExpectedViewsV2QueryHandler(
     mockChannelHistoryHandler,
+    mockChannelHistoryAggregateService,
   );
 
   jest.spyOn(RequestContextService, 'getContext').mockReturnValue({
@@ -27,7 +23,9 @@ beforeEach(async () => {
     res: undefined,
   });
 });
-
+/**
+ * FIXME: 수정 필요
+ */
 describe('기대 조회수 평균 구하기 v2', () => {
   it('비디오', async () => {
     const arg: ExpectedViewsQuery = {
@@ -37,15 +35,11 @@ describe('기대 조회수 평균 구하기 v2', () => {
       from: new Date('2023-10-13'),
       to: new Date('2023-10-20'),
     };
-    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
-      Promise.resolve(videoData),
-    );
+
     mockChannelHistoryHandler.findChannelHistoryFullScan.mockReturnValue(
       Promise.resolve(channelHistoryDummy),
     );
-    mockVideoHistoryQueryHandlerPort.findVideoHistoryFullScan.mockReturnValue(
-      Promise.resolve(video_historyDummy),
-    );
+
     const res = await handler.execute(arg);
     expect(res.isOk()).toStrictEqual(true);
     expect(res.unwrap()).toStrictEqual([

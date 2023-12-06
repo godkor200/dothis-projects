@@ -3,7 +3,7 @@ import {
   ISection,
   SECTION_NUMBER,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
-import { IExpectedData } from '@Apps/modules/channel_history/queries/v1/exprected-views/expected-views.http.controller';
+import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
 
 export class ChannelHistoryAggregateService {
   /**
