@@ -59,6 +59,11 @@ const DailyViewChart = ({ dailyView }: Props) => {
     getRoundingUnit(Math.max(...yScales), 2),
   );
 
+  /**
+   * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
+   * deviationByTick가 음수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * @returns
+   */
   const getAxisInterval = () => {
     const deviationByTick =
       (yMaxScale - yMinScale) / (TICK_SIZE - 2) < 1
