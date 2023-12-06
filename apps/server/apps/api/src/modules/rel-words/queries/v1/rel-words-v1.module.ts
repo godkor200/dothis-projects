@@ -15,6 +15,10 @@ import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-hand
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { FindSearchKeywordHttpController } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.http.controller';
 import { FindSearchKeywordQueryHandler } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.query-handler';
+import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
+import { RankRelAggregateService } from '@Apps/modules/rel-words/service/rank-rel.aggregate.service';
 
 const controllers = [
   FindRelHttpV1Controller,
@@ -35,6 +39,11 @@ const repositories: Provider[] = [
     provide: VIDEO_OS_DI_TOKEN,
     useClass: VideoQueryHandler,
   },
+  {
+    provide: CHANNEL_HISTORY_OS_DI_TOKEN,
+    useClass: ChannelHistoryQueryHandler,
+  },
+  RankRelAggregateService,
 ];
 
 const handler = [
@@ -44,7 +53,12 @@ const handler = [
   FindSearchKeywordQueryHandler,
 ];
 @Module({
-  imports: [CqrsModule, RelatedWordsModule, AwsModule],
+  imports: [
+    CqrsModule,
+    AwsModule,
+    RelatedWordsModule,
+    ChannelHistoryServiceModule,
+  ],
   controllers,
   providers: [...repositories, ...handler],
 })

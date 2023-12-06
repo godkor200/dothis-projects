@@ -3,9 +3,6 @@ import { QueryBus } from '@nestjs/cqrs';
 import { FindRelRequestDto } from './find-rel.request.dto';
 import { apiRouter } from '@dothis/dto';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
-const c = nestControllerContract(apiRouter.relwords);
-const { getRelWords } = c;
-const { responses, description, summary } = getRelWords;
 import {
   ApiConflictResponse,
   ApiCookieAuth,
@@ -18,9 +15,12 @@ import {
 } from '@nestjs/swagger';
 import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
 import { IRes } from '@Libs/commons/src/types/res.types';
-import { RelwordsRes } from '@Libs/commons/src/types/dto.types';
+import { RelWordsEntity } from '@Libs/commons/src/types/dto.types';
 import { match, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+const c = nestControllerContract(apiRouter.relwords);
+const { getRelWords } = c;
+const { responses, description, summary } = getRelWords;
 
 @ApiTags('연관어')
 @ApiCookieAuth()
@@ -38,7 +38,7 @@ export class FindRelHttpController {
   })
   @ApiOkResponse({
     description: `해당하는 데이터를 보냅니다.`,
-    type: RelwordsRes,
+    type: RelWordsEntity,
   })
   @ApiConflictResponse({
     description: responses[401],
@@ -51,8 +51,8 @@ export class FindRelHttpController {
   })
   async execute(
     @Param() queryParams: FindRelRequestDto,
-  ): Promise<IRes<RelwordsRes>> {
-    const result: Result<RelwordsRes, RelwordsNotFoundError> =
+  ): Promise<IRes<RelWordsEntity>> {
+    const result: Result<RelWordsEntity, RelwordsNotFoundError> =
       await this.queryBus.execute(new FindRelV1Query(queryParams));
 
     return match(result, {
