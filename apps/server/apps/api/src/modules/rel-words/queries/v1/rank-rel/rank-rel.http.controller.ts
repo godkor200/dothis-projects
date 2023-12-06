@@ -1,11 +1,17 @@
 import { QueryBus } from '@nestjs/cqrs';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import { apiRouter, TRankRes } from '@dothis/dto';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Controller, NotFoundException, Param } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.relwords);
 const { rankRel } = c;
 const { summary, description } = rankRel;
@@ -30,7 +36,11 @@ export class RankRelHttpController {
   @ApiParam({
     name: 'keyword',
     description: '탐색어',
-    example: '가가',
+    example: '소고기',
+  })
+  @ApiNotFoundResponse({
+    description:
+      RelwordsNotFoundError.message + ' or ' + VideoNotFoundError.message,
   })
   async execute(@Param('keyword') keyword: string): Promise<IRes<TRankRes[]>> {
     const arg = new RankRelQueryDto({ keyword });
@@ -38,8 +48,12 @@ export class RankRelHttpController {
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof RelwordsNotFoundError)
+        if (
+          err instanceof RelwordsNotFoundError ||
+          err instanceof VideoNotFoundError
+        )
           throw new NotFoundException(err.message);
+
         throw err;
       },
     });

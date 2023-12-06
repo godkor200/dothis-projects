@@ -1,7 +1,7 @@
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
-interface VideoSource {
+export interface VideoSource {
   video_title: string;
   video_views: number;
   crawled_date: string;
@@ -55,11 +55,11 @@ export interface IVideoHistory {
 export interface IChannelHistory
   extends OsRes<ISource, IChannelHistoryInnerHits<HitList<VideoSource>>> {}
 
-interface IChannelHistoryInnerHits<T> {
+export interface IChannelHistoryInnerHits<T> {
   video_list: T;
 }
 
-interface ISource {
+export interface ISource {
   channel_subscribers: number;
   channel_average_views: number;
 }

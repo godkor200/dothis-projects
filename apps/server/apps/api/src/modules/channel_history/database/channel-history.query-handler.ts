@@ -62,7 +62,7 @@ export class SearchQueryBuilder {
             ],
           },
         },
-        _source: data,
+        _source: data || false,
       },
     };
   }
@@ -180,7 +180,7 @@ export class ChannelHistoryQueryHandler
   async findChannelHistoryByKeywordAndRelWordFullScan<T>(
     props: FindVideoV2,
   ): Promise<T[]> {
-    const { from, to, keyword, relationKeyword, data } = props;
+    const { keyword, relationKeyword, data, from, to } = props;
     /**
      * 데이터가 다 차면 사용할 로직
     const dates = this.channelHistoryDataService.generateDatesBetween(from, to);

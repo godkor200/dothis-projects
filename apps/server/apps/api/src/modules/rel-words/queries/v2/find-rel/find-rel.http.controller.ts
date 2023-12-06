@@ -12,7 +12,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { FindRelRequestDto } from '@Apps/modules/rel-words/queries/v1/find-rel/find-rel.request.dto';
 import { FindRelV2Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
-import { RelwordsRes } from '@Libs/commons/src/types/dto.types';
+import { RelWordsEntity } from '@Libs/commons/src/types/dto.types';
 const c = nestControllerContract(apiRouter.relwords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
@@ -32,7 +32,7 @@ export class FindRelHttpV2Controller {
   })
   @ApiOkResponse({
     description: `엘라스틱 캐시에서 연관어를 보냅니다.`,
-    type: RelwordsRes,
+    type: RelWordsEntity,
   })
   @ApiConflictResponse({
     description: responses[401],

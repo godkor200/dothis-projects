@@ -80,14 +80,14 @@ export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
   implements VideoServicePort
 {
-  async findVideosWithMultipleIndex<T>(
-    arg: FindVideoByMultipleIndex,
-  ): Promise<T[]> {
-    const index = arg.cluster.map((e) => 'video-' + e).join(',');
-    const { keyword, relWord, data } = arg;
-    const searchQuery = SearchQueryBuilder.video(index, keyword, relWord, data);
-    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
-  }
+  // async findVideosWithMultipleIndex<T>(
+  //   arg: FindVideoByMultipleIndex,
+  // ): Promise<T[]> {
+  //   const index = arg.cluster.map((e) => 'video-' + e).join(',');
+  //   const { keyword, relWord, data } = arg;
+  //   const searchQuery = SearchQueryBuilder.video(index, keyword, relWord, data);
+  //   return await this.fullScan<T>(searchQuery, (doc) => doc);
+  // }
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
       index: 'new_video',

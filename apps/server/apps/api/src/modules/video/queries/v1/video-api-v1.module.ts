@@ -8,8 +8,6 @@ import { FindVideoPageHttpController } from '@Apps/modules/video/queries/v1/find
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-page.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
-import { FindAccumulateVideosQueryHandler } from '@Apps/modules/video/queries/v1/find-accumulate-videos/find-accumulate-videos.query-handler';
-import { FindAccumulateVideosHttpController } from '@Apps/modules/video/queries/v1/find-accumulate-videos/find-accumulate-videos.http.controller';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 
 const commandHandlers: Provider[] = [];
@@ -25,14 +23,10 @@ const queryHandlers: Provider[] = [
   },
   FindVideoHandler,
   FindVideoPageQueryHandler,
-  FindAccumulateVideosQueryHandler,
 ];
 @Module({
   imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
-  controllers: [
-    FindVideoPageHttpController,
-    FindAccumulateVideosHttpController,
-  ],
+  controllers: [FindVideoPageHttpController],
   providers: [...queryHandlers, ...commandHandlers],
 })
 export class VideoApiV1Module {}

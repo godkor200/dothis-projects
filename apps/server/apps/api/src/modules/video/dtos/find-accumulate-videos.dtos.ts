@@ -34,9 +34,9 @@ export class FindAccumulateVideosV2Dtos implements IQuery {
 
   readonly relationKeyword: string;
 
-  readonly from: Date;
+  readonly from?: Date;
 
-  readonly to: Date;
+  readonly to?: Date;
 
   constructor(props: FindAccumulateVideosV2Dtos) {
     this.clusterNumber = props.clusterNumber;
