@@ -1,4 +1,4 @@
-type Documents = {
+export type Documents = {
   news_id: string;
   byline: string;
   category: Array<string>;
@@ -13,8 +13,13 @@ type Documents = {
   published_at: string;
   title: string;
 };
+export interface ServerResponse<T = null> {
+  status: { code: number; message: string };
+  content: T;
+  nextPage?: number;
+}
 
-type NewsResponse = {
+export type NewsResponse = {
   result: number;
   return_object: { documents: Array<Documents>; total_hits: number };
 };
