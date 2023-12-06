@@ -2,8 +2,8 @@ import {
   IFindVideoIdRes,
   IVideoHistory,
 } from '@Apps/modules/video/interface/find-video.os.res';
-import { IIncreaseData } from '@Apps/modules/daily_views/queries/v2/find-daily-views/find-daily-views.v2.query-handler';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
+import { IIncreaseData } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 
 export class VideoAggregateService {
   /**
