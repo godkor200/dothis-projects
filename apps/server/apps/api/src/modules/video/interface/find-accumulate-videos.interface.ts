@@ -1,4 +1,6 @@
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 interface VideoSource {
   video_title: string;
   video_views: number;
@@ -60,4 +62,9 @@ interface IChannelHistoryInnerHits<T> {
 interface ISource {
   channel_subscribers: number;
   channel_average_views: number;
+}
+
+export interface FindVideoV2
+  extends Omit<FindAccumulateVideosV2Dtos, 'clusterNumber'> {
+  readonly data?: CHANNEL_DATA_KEY[];
 }

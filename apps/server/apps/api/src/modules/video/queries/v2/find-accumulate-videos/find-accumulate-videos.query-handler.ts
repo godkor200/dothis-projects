@@ -16,6 +16,7 @@ import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 @QueryHandler(FindAccumulateVideosV2Dtos)
 export class FindAccumulateVideosV2QueryHandler
@@ -51,7 +52,13 @@ export class FindAccumulateVideosV2QueryHandler
      */
     const channelHistoryRes =
       await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
-        arg,
+        {
+          ...arg,
+          data: [
+            CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS,
+            CHANNEL_DATA_KEY.CHANNEL_SEUBSCRIBERS,
+          ],
+        },
       );
 
     if (!channelHistoryRes.length)

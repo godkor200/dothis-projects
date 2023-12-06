@@ -1,5 +1,6 @@
 import { IQuery } from '@nestjs/cqrs';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 
 export class FindAccumulateVideosDtos implements IQuery {
   readonly clusterNumber: string;
@@ -45,6 +46,3 @@ export class FindAccumulateVideosV2Dtos implements IQuery {
     this.to = props.to;
   }
 }
-
-export interface FindAccumulateVideoV2
-  extends Omit<FindAccumulateVideosV2Dtos, 'clusterNumber'> {}

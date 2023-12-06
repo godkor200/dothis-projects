@@ -3,11 +3,12 @@ import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/databa
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { from, lastValueFrom, map } from 'rxjs';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-import { FindAccumulateVideoV2 } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
+
 import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
 import { ConfigService } from '@nestjs/config';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { Injectable } from '@nestjs/common';
+import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 
 export class SearchQueryBuilder {
   static channelHistory(
@@ -177,9 +178,9 @@ export class ChannelHistoryQueryHandler
   }
 
   async findChannelHistoryByKeywordAndRelWordFullScan<T>(
-    props: FindAccumulateVideoV2,
+    props: FindVideoV2,
   ): Promise<T[]> {
-    const { from, to, keyword, relationKeyword } = props;
+    const { from, to, keyword, relationKeyword, data } = props;
     /**
      * 데이터가 다 차면 사용할 로직
     const dates = this.channelHistoryDataService.generateDatesBetween(from, to);
@@ -195,10 +196,7 @@ export class ChannelHistoryQueryHandler
       index,
       keyword,
       relationKeyword,
-      [
-        CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS,
-        CHANNEL_DATA_KEY.CHANNEL_SEUBSCRIBERS,
-      ],
+      data,
     );
     return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }

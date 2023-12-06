@@ -38,12 +38,12 @@ export class RankRelQueryHandler
       query.keyword,
     );
     if (!relWords) return Err(new RelwordsNotFoundError());
-    const relWordsArr = relWords.relWords.split(',');
+    const relWordsArr = relWords.data.relWords.split(',');
     await this.video.findVideosWithMultipleIndex<IFindVideoIDAndChannelIdRes>({
       keyword: query.keyword,
       relWord: relWordsArr[0],
       data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.CHANNEL_ID],
-      cluster: relWords.cluster.split(','),
+      cluster: relWords.data.cluster.split(','),
     });
   }
 }

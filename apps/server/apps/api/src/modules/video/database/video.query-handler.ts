@@ -20,7 +20,7 @@ export class SearchQueryBuilder {
     index: string,
     keyword: string,
     relWord: string,
-    data: VIDEO_DATA_KEY[],
+    data?: VIDEO_DATA_KEY[],
     from?: Date,
     to?: Date,
   ) {
@@ -33,41 +33,23 @@ export class SearchQueryBuilder {
           bool: {
             must: [
               {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_tag: `*${relWord}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_tag: `*${keyword}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_title: `*${relWord}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_title: `*${keyword}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
+                match: {
+                  video_tags: keyword,
+                },
+              },
+              {
+                match: {
+                  video_tags: relWord,
+                },
+              },
+              {
+                match: {
+                  video_title: relWord,
+                },
+              },
+              {
+                match: {
+                  video_title: keyword,
                 },
               },
               {
@@ -76,17 +58,20 @@ export class SearchQueryBuilder {
                   query: {
                     range: {
                       'video_history.crawled_date': {
-                        gte: from + ' 00:00:00',
-                        lte: to + ' 00:00:00',
+                        gte: `${from} 00:00:00`,
+                        lte: `${to} 00:00:00`,
                       },
                     },
+                  },
+                  inner_hits: {
+                    name: 'video_history',
                   },
                 },
               },
             ],
           },
         },
-        _source: data,
+        _source: data || false,
       },
     };
   }
@@ -191,7 +176,7 @@ export class VideoQueryHandler
       from,
       to,
     );
-    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
+    return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
