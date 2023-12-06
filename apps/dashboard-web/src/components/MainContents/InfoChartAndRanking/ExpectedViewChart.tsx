@@ -88,6 +88,21 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
 
   // every 함수를 넣어준 이유 -> 한개의 data만 들어왔을 때  yAxisRange가 5개 공통 값으로 형성이됩니다. 이렇게 형성이 되었을 경우 nivo 그래프가 렌더링 이슈로 인해 그래프 점선이 남아있음
 
+  if (expectedView[0].data.length === 0) {
+    return (
+      <div className="relative ">
+        <ExpectedViewSkeleton />
+
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {/* g태그 만큼 translate를 줬지만 정확치않다. */}
+          <p className="translate-x-[30px] translate-y-[-25px] transform">
+            데이터가 충분하지 않습니다
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <ResponsiveLine
       data={testExpectedView}

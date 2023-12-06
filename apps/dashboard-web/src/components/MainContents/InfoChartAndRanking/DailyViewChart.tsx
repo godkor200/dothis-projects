@@ -88,6 +88,21 @@ const DailyViewChart = ({ dailyView }: Props) => {
         index * Math.ceil(getAxisInterval()),
     );
 
+  if (dailyView[0].data.length === 0) {
+    return (
+      <div className="relative ">
+        <DailyViewSkeleton />
+
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {/* g태그 만큼 translate를 줬지만 정확치않다. */}
+          <p className="translate-x-[30px] translate-y-[25px] transform">
+            데이터가 충분하지 않습니다
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <ResponsiveLine
       data={testDailyView}
