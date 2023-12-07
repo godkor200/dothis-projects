@@ -11,8 +11,8 @@ export default {
     app.stack(function Site({ stack }) {
       const site = new NextjsSite(stack, 'site', {
         customDomain: {
-          domainName: 'dothis.kr',
-          domainAlias: 'www.dothis.kr',
+          domainName: app.stage === 'dev' ? 'dev.dothis.kr' : 'dothis.kr',
+          domainAlias: app.stage === 'dev' ? 'dev.dothis.kr' : 'www.dothis.kr',
           hostedZone: 'dothis.kr',
         },
       });
