@@ -90,7 +90,7 @@ const SearchBar = () => {
       className="relative  mx-auto max-w-[680px]"
       onClick={() => setOpen(true)}
     >
-      <div className=" rounded-8 bg-grey00 box-border w-full  pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)] ">
+      <div className=" rounded-8 bg-grey00 absolute box-border  w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
         <div className="px-[20px]">
           <div
             className={cn('flex items-center justify-between pb-[10px]', {
