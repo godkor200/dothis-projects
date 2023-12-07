@@ -57,6 +57,11 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
     getRoundingUnit(Math.max(...yScales), 2),
   );
 
+  /**
+   * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
+   * deviationByTick가 음수or 소수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * @returns
+   */
   const getAxisInterval = () => {
     // tick이 1보다 작을경우 올림이 안되서 소수점으로 보기안좋게 보여짐 그래서 1로 설정
     const deviationByTick =
@@ -82,6 +87,21 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
     );
 
   // every 함수를 넣어준 이유 -> 한개의 data만 들어왔을 때  yAxisRange가 5개 공통 값으로 형성이됩니다. 이렇게 형성이 되었을 경우 nivo 그래프가 렌더링 이슈로 인해 그래프 점선이 남아있음
+
+  if (expectedView[0].data.length === 0) {
+    return (
+      <div className="relative ">
+        <ExpectedViewSkeleton />
+
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {/* g태그 만큼 translate를 줬지만 정확치않다. */}
+          <p className="translate-x-[30px] translate-y-[-25px] transform">
+            데이터가 충분하지 않습니다
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ResponsiveLine

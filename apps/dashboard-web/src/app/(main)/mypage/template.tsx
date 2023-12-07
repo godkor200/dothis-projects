@@ -5,6 +5,7 @@ import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 
 import { useIsSignedIn, useIsTokenRequired } from '@/store/authStore';
+import { useStartDate } from '@/store/dateStore';
 
 const MyPageTemplate = ({ children }: PropsWithChildren) => {
   const isSignIn = useIsSignedIn();
@@ -12,6 +13,10 @@ const MyPageTemplate = ({ children }: PropsWithChildren) => {
   const isTokenRequired = useIsTokenRequired();
 
   const router = useRouter();
+
+  const startDate = useStartDate();
+
+  console.log(startDate);
 
   useEffect(() => {
     if (!isSignIn) {
