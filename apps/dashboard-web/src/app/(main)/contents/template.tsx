@@ -59,7 +59,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
       <SearchBar />
       <KeywordSearchResult />
 
-      <div className="bg-grey100 pt-[5rem]">{children}</div>
+      <div className="bg-grey100 pb-[200px] pt-[5rem]">{children}</div>
     </>
   );
 };
