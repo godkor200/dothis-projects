@@ -46,6 +46,8 @@ const SearchBar = () => {
 
   const [isPending, startTransition] = useTransition();
 
+  const isSignedIn = useIsSignedIn();
+
   const { data: userData } = useGetUserInfo();
 
   const { data } = useGetAutoCompleteWord(searchInput);
@@ -136,10 +138,12 @@ const SearchBar = () => {
               </div>
               <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
               <div className="border-grey300 mt-[20px] flex flex-wrap gap-[10px] border-b-2 pb-[30px]  ">
-                <MyKeywordList
-                  userKeywordList={userData?.personalizationTag}
-                  searchWordList={userData?.searchWord}
-                />
+                {isSignedIn && (
+                  <MyKeywordList
+                    userKeywordList={userData?.personalizationTag}
+                    searchWordList={userData?.searchWord}
+                  />
+                )}
               </div>
               <div className="my-5 flex items-center justify-between">
                 <p className="text-grey500 text-[18px]">키워드 초기화</p>
