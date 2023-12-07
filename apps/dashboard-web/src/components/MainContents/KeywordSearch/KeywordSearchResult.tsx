@@ -10,7 +10,7 @@ const KeywordSearchResult = () => {
 
   // 해당 로직은 백엔드에서 여러 키워드로 연관어를 뽑는 작업이 마무리되면 수정이 필요한 페이지입니다.
   return (
-    <h1 className="typo-h2 bg-primary50 mb-[3.1rem] mt-[60px] flex flex-col rounded-2xl py-10 pl-12 text-center">
+    <h1 className="bg-primary50 mx-auto mb-[3.1rem] mt-[60px] flex max-w-[680px] flex-col rounded-2xl py-[18px] text-center text-[20px] font-bold">
       <span className="mb-1">
         <span>{hashKeywordList[0]}</span>{' '}
         {hashKeywordList.length > 1 && `외 ${hashKeywordList.length - 1}개`}{' '}
