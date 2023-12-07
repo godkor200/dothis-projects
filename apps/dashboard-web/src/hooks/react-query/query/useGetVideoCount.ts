@@ -1,4 +1,5 @@
 import { VIDEO_COUNT_KEY } from '@/constants/querykey';
+import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -7,6 +8,10 @@ import useGetRelWords from './useGetRelWords';
 const useGetVideoCount = () => {
   const selectedRelWord = useSelectedRelWord();
   const { data } = useGetRelWords();
+
+  const startDate = useStartDate();
+
+  const endDate = useEndDate();
 
   let clusters: string[] = [];
 
@@ -18,7 +23,13 @@ const useGetVideoCount = () => {
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: VIDEO_COUNT_KEY.list([
-          { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
+          {
+            clusterNumber,
+            relword: selectedRelWord,
+            keyword: data?.keyword,
+            startDate,
+            endDate,
+          },
         ]),
         params: {
           clusterNumber,
@@ -26,10 +37,10 @@ const useGetVideoCount = () => {
         query: {
           keyword: data?.keyword!,
           relationKeyword: selectedRelWord!,
-          from: '2023-11-23',
-          to: '2023-11-30',
+          from: startDate,
+          to: endDate,
         },
-        enabled: !!data && !!selectedRelWord,
+        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
       };
     }),
   });

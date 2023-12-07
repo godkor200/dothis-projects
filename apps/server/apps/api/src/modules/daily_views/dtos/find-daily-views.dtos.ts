@@ -45,3 +45,9 @@ export class FindDailyViewsV3Query implements IQuery {
 
 export interface FindDailyViewsV3Dtos
   extends Omit<FindDailyViewsV3Query, 'clusterNumber'> {}
+export interface IIncreaseData {
+  date: string;
+  increase_views: number;
+  increase_likes: number;
+  increase_comments: number;
+}

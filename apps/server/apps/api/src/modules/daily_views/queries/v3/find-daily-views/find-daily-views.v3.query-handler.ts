@@ -15,7 +15,10 @@ import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
 } from '@Apps/modules/video/dtos/find-videos.dtos';
-import { IFindVideoIdRes } from '@Apps/modules/video/interface/find-video.os.res';
+import {
+  IFindVideoIdRes,
+  IVideoHistory,
+} from '@Apps/modules/video/interface/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 
@@ -49,21 +52,14 @@ export class FindDailyViewsQueryOsV3Handler
   > {
     const arg: FindVideoDateQuery = {
       ...query,
-      data: [VIDEO_DATA_KEY.VIDEO_ID, VIDEO_DATA_KEY.VIDEO_HISTORY],
     };
-    const videos =
-      await this.video.findVideoIdFullScanAndVideos<IFindVideoIdRes>(arg);
+    const videos = await this.video.findVideoIdFullScanAndVideos<IVideoHistory>(
+      arg,
+    );
 
     if (!videos.length) return Err(new VideoNotFoundError());
 
-    const filteredVideoByDate = this.videoDataService.filterByDate(
-      videos,
-      arg.from,
-      arg.to,
-    );
-
-    const result =
-      this.videoAggregateService.calculateIncrease(filteredVideoByDate);
+    const result = this.videoAggregateService.calculateIncrease(videos);
 
     return Ok(result);
   }

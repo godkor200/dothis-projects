@@ -21,6 +21,8 @@ export const zRankRel = z.object({
 
 export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
+export const zResWordsPickData = zRelWords.shape.data;
+
 export type TRankRes = z.TypeOf<typeof zRankRel>;
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;

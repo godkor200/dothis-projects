@@ -1,4 +1,3 @@
-import { sampleChannelHistoryDummy } from '@Apps/modules/video/queries/v1/find-accumulate-videos/__dummy__/channel_history.dummy';
 export const channelHistory = [
   {
     channel_id: 'channel_1',

@@ -3,6 +3,8 @@ import {
   ISection,
   SECTION_NUMBER,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
+import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 
 export class ChannelHistoryAggregateService {
   /**
@@ -62,5 +64,50 @@ export class ChannelHistoryAggregateService {
       }
     }
     return rangesWithCount;
+  }
+  /**
+   *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
+   *   2. 날짜 별로 계산된 것을 모두 더하고 평균을 내어 리턴
+   */
+  /**
+   * 평균 기대조회수 리턴
+   * @param channelHistories
+   * @private
+   */
+  calculateAverageViews(
+    channelHistories:
+      | IChannelHistory[]
+      | IChannelHistoryWithoutChannelSubscribers[],
+  ): IExpectedData[] {
+    let dateViewRatios: { [date: string]: { total: number; count: number } } =
+      {};
+    for (let channel of channelHistories) {
+      let channelAvgViews = channel._source.channel_average_views;
+      let videoList = channel.inner_hits.video_list.hits.hits;
+      for (let video of videoList) {
+        let videoViews = video._source.video_views;
+        if (channelAvgViews !== 0) {
+          let viewsRatio = videoViews / channelAvgViews;
+          let videoDate = new Date(video._source.crawled_date);
+          let dateString = `${videoDate.getFullYear()}-${
+            videoDate.getMonth() + 1
+          }-${videoDate.getDate()}`;
+
+          if (!dateViewRatios[dateString]) {
+            dateViewRatios[dateString] = { total: 0, count: 0 };
+          }
+          dateViewRatios[dateString].total += viewsRatio;
+          dateViewRatios[dateString].count += 1;
+        }
+      }
+    }
+
+    let result: IExpectedData[] = [];
+    for (let date in dateViewRatios) {
+      let averageViewsRatio =
+        dateViewRatios[date].total / dateViewRatios[date].count;
+      result.push({ date: date, expected_views: averageViewsRatio });
+    }
+    return result;
   }
 }

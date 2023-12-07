@@ -11,7 +11,7 @@ import {
 
 export class FindVideoByMultipleIndex {
   public readonly keyword: string;
-  public readonly relWord: string;
+  public readonly relWord: string[];
   public readonly cluster: string[];
   public readonly data: VIDEO_DATA_KEY[];
   constructor(props: FindVideoByMultipleIndex) {
@@ -30,8 +30,6 @@ export interface VideoServicePort {
   findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
 
   findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
-
-  findVideosWithMultipleIndex<T>(arg: FindVideoByMultipleIndex): Promise<T[]>;
 
   findVideosWithLastVideoHistory<T>(arg: FindVideoDateQuery): Promise<T[]>;
 }

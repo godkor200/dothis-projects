@@ -1,4 +1,5 @@
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
+import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -8,6 +9,10 @@ const useGetExpectedView = () => {
   const { data } = useGetRelWords();
 
   const selectedRelWord = useSelectedRelWord();
+
+  const startDate = useStartDate();
+
+  const endDate = useEndDate();
 
   let clusters: string[] = [];
 
@@ -19,7 +24,13 @@ const useGetExpectedView = () => {
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: EXPECTEDVIEW_KEY.list([
-          { clusterNumber, relword: selectedRelWord, keyword: data?.keyword },
+          {
+            clusterNumber,
+            relword: selectedRelWord,
+            keyword: data?.keyword,
+            startDate,
+            endDate,
+          },
         ]),
         params: {
           clusterNumber,
@@ -27,10 +38,10 @@ const useGetExpectedView = () => {
         query: {
           keyword: data?.keyword!,
           relationKeyword: selectedRelWord!,
-          from: '2023-11-23',
-          to: '2023-11-30',
+          from: startDate,
+          to: endDate,
         },
-        enabled: !!data && !!selectedRelWord,
+        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
       };
     }),
   });

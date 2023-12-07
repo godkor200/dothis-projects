@@ -1,5 +1,4 @@
 import { Module, Provider } from '@nestjs/common';
-import { FindRelHttpV2Controller } from '@Apps/modules/rel-words/queries/v2/find-rel/find-rel.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
 import { FindRelCache } from '@Apps/modules/rel-words/repository/cache/find-rel.cache';

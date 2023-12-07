@@ -27,27 +27,27 @@ function getRandomValue() {
 const DailyViewChart = ({ dailyView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
 
-  const testDailyView = useMemo(
-    () => [
-      {
-        id: '기대',
-        data: [
-          { x: '2023-11-16', y: getRandomValue() },
-          { x: '2023-11-17', y: getRandomValue() },
-          { x: '2023-11-18', y: getRandomValue() },
-          { x: '2023-11-19', y: getRandomValue() },
-          { x: '2023-11-20', y: getRandomValue() },
-          { x: '2023-11-21', y: getRandomValue() },
-          { x: '2023-11-22', y: getRandomValue() },
-        ],
-      },
-    ],
-    [selectedRelWord],
-  );
+  // const testDailyView = useMemo(
+  //   () => [
+  //     {
+  //       id: '기대',
+  //       data: [
+  //         { x: '2023-11-16', y: getRandomValue() },
+  //         { x: '2023-11-17', y: getRandomValue() },
+  //         { x: '2023-11-18', y: getRandomValue() },
+  //         { x: '2023-11-19', y: getRandomValue() },
+  //         { x: '2023-11-20', y: getRandomValue() },
+  //         { x: '2023-11-21', y: getRandomValue() },
+  //         { x: '2023-11-22', y: getRandomValue() },
+  //       ],
+  //     },
+  //   ],
+  //   [selectedRelWord],
+  // );
 
   const TICK_SIZE = 6;
 
-  const yScales = testDailyView[0].data.map((item) => Number(item.y));
+  const yScales = dailyView[0].data.map((item) => Number(item.y));
 
   const yMinScale = floorToNearest(
     Math.min(...yScales),
@@ -59,6 +59,11 @@ const DailyViewChart = ({ dailyView }: Props) => {
     getRoundingUnit(Math.max(...yScales), 2),
   );
 
+  /**
+   * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
+   * deviationByTick가 음수or 소수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * @returns
+   */
   const getAxisInterval = () => {
     const deviationByTick =
       (yMaxScale - yMinScale) / (TICK_SIZE - 2) < 1
@@ -83,9 +88,24 @@ const DailyViewChart = ({ dailyView }: Props) => {
         index * Math.ceil(getAxisInterval()),
     );
 
+  if (dailyView[0].data.length === 0) {
+    return (
+      <div className="relative ">
+        <DailyViewSkeleton />
+
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {/* g태그 만큼 translate를 줬지만 정확치않다. */}
+          <p className="translate-x-[30px] translate-y-[25px] transform">
+            데이터가 충분하지 않습니다
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <ResponsiveLine
-      data={testDailyView}
+      data={dailyView}
       margin={{ top: 50, left: 60 }}
       lineWidth={2}
       colors={['#F0516D']}
@@ -126,8 +146,8 @@ const DailyViewChart = ({ dailyView }: Props) => {
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
-          }).format(testDailyView[0].data[point.index].y)}
-          date={testDailyView[0].data[point.index].x}
+          }).format(dailyView[0].data[point.index].y)}
+          date={dailyView[0].data[point.index].x}
         />
       )}
       legends={[
