@@ -50,8 +50,8 @@ const CurrentArticle = ({
           />
         </div>
 
-        <div className="px-[1.875rem] py-10">
-          <h3 className="text-grey700 mb-6 text-[1.5rem] font-bold">{title}</h3>
+        <div className="p-[30px]">
+          <h3 className="text-grey700 mb-6 text-[20px] font-bold">{title}</h3>
           <ArticleInfo secondText={provider} thirdText={category} date={date} />
           <div onClick={(e) => handleCopy(e, link)}>
             <div className="bg-grey200 flex w-full items-center justify-center   rounded-lg py-4 text-center">
@@ -90,7 +90,7 @@ const CurrentArticleSkeleton = () => {
         <span className="sr-only">Loading...</span>
       </div>
 
-      <div className="px-[1.875rem] py-10">
+      <div className="p-[30px]">
         <h3 className="text-grey700 bg-grey300 dark:bg-grey700 mb-6 h-[1.5rem] rounded-full text-[1.5rem] font-bold"></h3>
 
         <div className=" mb-4 flex items-center gap-[0.5rem]">

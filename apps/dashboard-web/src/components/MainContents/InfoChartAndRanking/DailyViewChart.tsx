@@ -27,27 +27,27 @@ function getRandomValue() {
 const DailyViewChart = ({ dailyView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
 
-  const testDailyView = useMemo(
-    () => [
-      {
-        id: '기대',
-        data: [
-          { x: '2023-11-16', y: getRandomValue() },
-          { x: '2023-11-17', y: getRandomValue() },
-          { x: '2023-11-18', y: getRandomValue() },
-          { x: '2023-11-19', y: getRandomValue() },
-          { x: '2023-11-20', y: getRandomValue() },
-          { x: '2023-11-21', y: getRandomValue() },
-          { x: '2023-11-22', y: getRandomValue() },
-        ],
-      },
-    ],
-    [selectedRelWord],
-  );
+  // const testDailyView = useMemo(
+  //   () => [
+  //     {
+  //       id: '기대',
+  //       data: [
+  //         { x: '2023-11-16', y: getRandomValue() },
+  //         { x: '2023-11-17', y: getRandomValue() },
+  //         { x: '2023-11-18', y: getRandomValue() },
+  //         { x: '2023-11-19', y: getRandomValue() },
+  //         { x: '2023-11-20', y: getRandomValue() },
+  //         { x: '2023-11-21', y: getRandomValue() },
+  //         { x: '2023-11-22', y: getRandomValue() },
+  //       ],
+  //     },
+  //   ],
+  //   [selectedRelWord],
+  // );
 
   const TICK_SIZE = 6;
 
-  const yScales = testDailyView[0].data.map((item) => Number(item.y));
+  const yScales = dailyView[0].data.map((item) => Number(item.y));
 
   const yMinScale = floorToNearest(
     Math.min(...yScales),
@@ -105,7 +105,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
 
   return (
     <ResponsiveLine
-      data={testDailyView}
+      data={dailyView}
       margin={{ top: 50, left: 60 }}
       lineWidth={2}
       colors={['#F0516D']}
@@ -146,8 +146,8 @@ const DailyViewChart = ({ dailyView }: Props) => {
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
-          }).format(testDailyView[0].data[point.index].y)}
-          date={testDailyView[0].data[point.index].x}
+          }).format(dailyView[0].data[point.index].y)}
+          date={dailyView[0].data[point.index].x}
         />
       )}
       legends={[

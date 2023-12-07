@@ -13,7 +13,7 @@ const SummaryCard = ({
 }: SummaryCardProps) => {
   return (
     <div
-      className={`border-grey300 rounded-8 ${marginTop} border border-solid px-[30px] py-10`}
+      className={`border-grey300 rounded-8 ${marginTop} border border-solid p-[30px]`}
     >
       <h3 className="text-t2 text-grey700 mb-5 font-bold">{title}</h3>
       {children}

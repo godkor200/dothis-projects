@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -46,21 +47,27 @@ const GNB = () => {
       {/* 이 부분은 Hover 디자인과 클릭 시 기능을 파악하고 추가 작업 */}
 
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
-        {GNB_MENUS.map((item, index) => (
-          <div
-            className={cn(
-              'rounded-8 hover:bg-grey300 [&_path]:hover:stroke-grey600 p-3',
-              {
-                '[&_path]:stroke-[#F0516D] bg-primary100':
-                  pathName === item.link,
-              },
-            )}
-            onClick={() => handleRouter(item.link as Route)}
-            key={index}
-          >
-            <SvgComp icon={item.icon} size="1.5rem" />
-          </div>
-        ))}
+        {isSignedIn ? (
+          GNB_MENUS.map((item, index) => (
+            <div
+              className={cn(
+                'rounded-8 hover:bg-grey300 [&_path]:hover:stroke-grey600 p-3',
+                {
+                  '[&_path]:stroke-[#F0516D] bg-primary100':
+                    pathName === item.link,
+                },
+              )}
+              onClick={() => handleRouter(item.link as Route)}
+              key={index}
+            >
+              <SvgComp icon={item.icon} size="1.5rem" />
+            </div>
+          ))
+        ) : (
+          <Button size="M" theme="contained" onClick={checkIsSignedIn}>
+            로그인
+          </Button>
+        )}
       </div>
     </header>
   );

@@ -56,7 +56,7 @@ export const Button = styled.button<{ $active: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.grey00};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.grey500};
   background-color: ${({ theme }) => theme.colors.grey00};

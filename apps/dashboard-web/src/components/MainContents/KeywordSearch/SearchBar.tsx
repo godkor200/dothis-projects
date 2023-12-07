@@ -46,6 +46,8 @@ const SearchBar = () => {
 
   const [isPending, startTransition] = useTransition();
 
+  const isSignedIn = useIsSignedIn();
+
   const { data: userData } = useGetUserInfo();
 
   const { data } = useGetAutoCompleteWord(searchInput);
@@ -87,18 +89,18 @@ const SearchBar = () => {
 
   return (
     <div
-      className="relative  mx-auto max-w-[50rem]"
+      className="relative  mx-auto max-w-[680px]"
       onClick={() => setOpen(true)}
     >
-      <div className=" rounded-8 bg-grey00 box-border w-full  pt-[15px] shadow-[0_0_0_2px_rgb(228,228,231)] ">
-        <div className="px-[30px]">
+      <div className=" rounded-8 bg-grey00 absolute box-border  w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
+        <div className="px-[20px]">
           <div
-            className={cn('flex items-center justify-between pb-[15px]', {
+            className={cn('flex items-center justify-between pb-[10px]', {
               'border-b-1 border-grey300 ': open,
             })}
           >
             <input
-              className="w-full  text-[24px]  outline-none"
+              className="w-full  text-[16px]  outline-none"
               placeholder="키워드를 넣어주세요"
               value={input}
               onChange={(e) => {
@@ -109,7 +111,7 @@ const SearchBar = () => {
               // onKeyDown={handleSubmit}
             />
             <div className="cursor-pointer">
-              <SvgComp icon="HeaderPlus" size="40px" />
+              <SvgComp icon="HeaderPlus" size="32px" />
             </div>
           </div>
           {open && (
@@ -136,10 +138,12 @@ const SearchBar = () => {
               </div>
               <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
               <div className="border-grey300 mt-[20px] flex flex-wrap gap-[10px] border-b-2 pb-[30px]  ">
-                <MyKeywordList
-                  userKeywordList={userData?.personalizationTag}
-                  searchWordList={userData?.searchWord}
-                />
+                {isSignedIn && (
+                  <MyKeywordList
+                    userKeywordList={userData?.personalizationTag}
+                    searchWordList={userData?.searchWord}
+                  />
+                )}
               </div>
               <div className="my-5 flex items-center justify-between">
                 <p className="text-grey500 text-[18px]">키워드 초기화</p>
