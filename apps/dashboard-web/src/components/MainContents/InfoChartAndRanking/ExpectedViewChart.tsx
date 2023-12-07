@@ -26,26 +26,26 @@ function getRandomValue() {
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
   const selectedRelWord = useSelectedRelWord();
-  const testExpectedView = useMemo(
-    () => [
-      {
-        id: '기대',
-        data: [
-          { x: '2023-11-16', y: getRandomValue() },
-          { x: '2023-11-17', y: getRandomValue() },
-          { x: '2023-11-18', y: getRandomValue() },
-          { x: '2023-11-19', y: getRandomValue() },
-          { x: '2023-11-20', y: getRandomValue() },
-          { x: '2023-11-21', y: getRandomValue() },
-          { x: '2023-11-22', y: getRandomValue() },
-        ],
-      },
-    ],
-    [selectedRelWord],
-  );
+  // const testExpectedView = useMemo(
+  //   () => [
+  //     {
+  //       id: '기대',
+  //       data: [
+  //         { x: '2023-11-16', y: getRandomValue() },
+  //         { x: '2023-11-17', y: getRandomValue() },
+  //         { x: '2023-11-18', y: getRandomValue() },
+  //         { x: '2023-11-19', y: getRandomValue() },
+  //         { x: '2023-11-20', y: getRandomValue() },
+  //         { x: '2023-11-21', y: getRandomValue() },
+  //         { x: '2023-11-22', y: getRandomValue() },
+  //       ],
+  //     },
+  //   ],
+  //   [selectedRelWord],
+  // );
 
   const TICK_SIZE = 6;
-  const yScales = testExpectedView[0].data.map((item) => Number(item.y));
+  const yScales = expectedView[0].data.map((item) => Number(item.y));
 
   const yMinScale = floorToNearest(
     Math.min(...yScales),
@@ -105,7 +105,7 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
 
   return (
     <ResponsiveLine
-      data={testExpectedView}
+      data={expectedView}
       margin={{ bottom: 50, left: 60, top: 30 }}
       lineWidth={2}
       colors={['#818CF8']}
@@ -149,8 +149,8 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
         <CustomTooltip
           keyword={selectedRelWord!}
           label={VIEWCHART_LABEL.EXPECTEDVIEW}
-          value={testExpectedView[0].data[point.index].y}
-          date={testExpectedView[0].data[point.index].x}
+          value={expectedView[0].data[point.index].y}
+          date={expectedView[0].data[point.index].x}
         />
       )}
       legends={[
