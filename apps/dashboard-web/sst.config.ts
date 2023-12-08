@@ -1,5 +1,6 @@
 import type { SSTConfig } from 'sst';
 import { NextjsSite } from 'sst/constructs';
+
 export default {
   config(_input) {
     return {
@@ -8,17 +9,17 @@ export default {
     };
   },
   stacks(app) {
-    app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, 'site', {
+    app.stack(function Prod({ stack }) {
+      const prodSite = new NextjsSite(stack, 'prodSite', {
+        path: '.',
         customDomain: {
-          domainName: app.stage === 'dev' ? 'dev.dothis.kr' : 'dothis.kr',
-          domainAlias: app.stage === 'dev' ? 'dev.dothis.kr' : 'www.dothis.kr',
+          domainName: 'dothis.kr',
+          domainAlias: 'www.dothis.kr',
           hostedZone: 'dothis.kr',
         },
       });
-
       stack.addOutputs({
-        SiteUrl: site.url,
+        ProdSiteUrl: prodSite.url,
       });
     });
   },
