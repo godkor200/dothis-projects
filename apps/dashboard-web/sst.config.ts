@@ -29,7 +29,7 @@ export default {
       });
 
       stack.addOutputs({
-        SiteUrl: devSite.url,
+        DevSiteUrl: devSite.url,
       });
     });
   },
