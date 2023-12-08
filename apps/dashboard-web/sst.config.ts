@@ -9,16 +9,27 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, 'site', {
+      const prodSite = new NextjsSite(stack, 'prodSite', {
         customDomain: {
           domainName: app.stage === 'dev' ? 'dev.dothis.kr' : 'dothis.kr',
           domainAlias: app.stage === 'dev' ? 'dev.dothis.kr' : 'www.dothis.kr',
           hostedZone: 'dothis.kr',
         },
       });
+      const devSite = new NextjsSite(stack, 'devSite', {
+        customDomain: {
+          domainName: 'dev.dothis.kr',
+          domainAlias: 'dev.dothis.kr',
+          hostedZone: 'dothis.kr',
+        },
+      });
 
       stack.addOutputs({
-        SiteUrl: site.url,
+        SiteUrl: prodSite.url,
+      });
+
+      stack.addOutputs({
+        SiteUrl: devSite.url,
       });
     });
   },
