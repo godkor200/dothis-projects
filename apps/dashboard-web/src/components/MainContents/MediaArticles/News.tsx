@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
 import ParserContent from '@/components/common/ParserContent';
-import useKeyword from '@/hooks/user/useKeyword';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import useGetNewsArticle from '@/hooks/react-query/query/useGetNewsArticle';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -18,60 +16,11 @@ const News = () => {
     setContentIndex(index);
   };
 
-  const { hashKeywordList } = useKeyword();
-
-  const selectedRelWord = useSelectedRelWord();
-
-  const retrievePosts = async () => {
-    const obj = {
-      access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
-      argument: {
-        query: selectedRelWord,
-
-        published_at: {
-          from: '2023-09-01',
-          until: '2023-09-26',
-        },
-        // provider: ['경향신문'],
-        // category: ['정치>정치일반', 'IT_과학'],
-        // category_incident: ['범죄', '교통사고', '재해>자연재해'],
-        // byline: '',
-
-        sort: { date: 'desc' },
-        hilight: 200,
-        return_from: 0,
-        return_size: 5,
-        fields: [
-          'byline',
-          'category',
-          'category_incident',
-          'provider_news_id',
-          'images',
-          'provider_link_page',
-        ],
-      },
-    };
-
-    const response = await fetch(
-      'https://tools.kinds.or.kr/search/news?access_key=eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
-      { method: 'POST', body: JSON.stringify(obj) },
-    );
-
-    const data = await response.json();
-    return data;
-  };
-
-  const { data: original, isLoading } = useQuery(
-    ['뉴스', selectedRelWord],
-    retrievePosts,
-    {
-      enabled: !!hashKeywordList[0] && !!selectedRelWord,
-    },
-  );
+  const { data, isLoading } = useGetNewsArticle();
 
   const returnData = useMemo(
     () =>
-      original?.return_object?.documents?.map((item: any) => {
+      data?.return_object?.documents?.map((item: any) => {
         return {
           title: item.title,
           category: item.category[0],
@@ -82,7 +31,7 @@ const News = () => {
           hilight: item.hilight,
         };
       }),
-    [original],
+    [data],
   );
 
   if (isLoading) {
@@ -94,7 +43,7 @@ const News = () => {
     );
   }
 
-  if (returnData.length === 0) {
+  if (returnData?.length === 0 || !returnData) {
     return (
       <div className="mt-10 flex flex-wrap gap-[1.25rem]">
         <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">

@@ -59,6 +59,11 @@ const DailyViewChart = ({ dailyView }: Props) => {
     getRoundingUnit(Math.max(...yScales), 2),
   );
 
+  /**
+   * yMaxScale와 yMinScale에 따라 y축의 간격(yInterval)을 구하는 함수
+   * deviationByTick가 음수or 소수로 잡히는 경우도 존재해서 그런경우 1로 고정
+   * @returns
+   */
   const getAxisInterval = () => {
     const deviationByTick =
       (yMaxScale - yMinScale) / (TICK_SIZE - 2) < 1
@@ -82,6 +87,21 @@ const DailyViewChart = ({ dailyView }: Props) => {
         roundToNearest(getStartValue(), getRoundingUnit(getStartValue(), 2)) +
         index * Math.ceil(getAxisInterval()),
     );
+
+  if (dailyView[0].data.length === 0) {
+    return (
+      <div className="relative ">
+        <DailyViewSkeleton />
+
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {/* g태그 만큼 translate를 줬지만 정확치않다. */}
+          <p className="translate-x-[30px] translate-y-[25px] transform">
+            데이터가 충분하지 않습니다
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ResponsiveLine

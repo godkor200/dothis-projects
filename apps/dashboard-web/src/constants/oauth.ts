@@ -15,12 +15,12 @@ export interface OauthInterface {
 export const OAUTH_DATA: OauthInterface[] = [
   {
     iconName: 'GoogleSvg',
-    title: '구글 로그인',
+    title: 'Google 로그인',
     colorSchemeName: 'grey900',
   },
   {
     iconName: 'YoutubeSvg',
-    title: '유튜브 로그인',
+    title: 'YouTube 로그인',
     colorSchemeName: 'primary500',
   },
 ];
