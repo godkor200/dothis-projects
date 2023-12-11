@@ -21,10 +21,17 @@ const YouTube = () => {
   const validItems = data.filter((item) => item !== undefined);
 
   const returnData = validItems[pageIndex]?.data?.map((item) => {
+    const compactNumber = new Intl.NumberFormat('ko', {
+      notation: 'compact',
+    });
     return {
       isLoading: isLoading,
       title: item._source.video_title,
-      category: item._source.video_category,
+      category: `조회수 ${compactNumber.format(
+        item._source.video_history.sort(
+          (a, b) => b.video_views - a.video_views,
+        )[0].video_views,
+      )} `,
       image: externalYouTubeImageLoader(item._source.video_id),
       date: item._source.video_published,
       link: item._source.video_url,
