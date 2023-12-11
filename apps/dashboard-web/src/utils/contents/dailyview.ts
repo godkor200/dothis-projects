@@ -47,9 +47,10 @@ export const sumViews = (
   data?.forEach((item) => {
     if (item) {
       const date = item.date;
+
       const views = item.increase_views;
 
-      if (result[date]) {
+      if (result.hasOwnProperty(date)) {
         result[date] += views;
       }
     }
@@ -75,7 +76,7 @@ export const averageViews = (
       const date = item.date;
       const views = item.expected_views;
 
-      if (result[date]) {
+      if (result.hasOwnProperty(date)) {
         result[date] += views;
         dateCount[date] += 1;
       }
