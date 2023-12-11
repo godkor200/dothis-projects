@@ -7,7 +7,7 @@ export const MONTHLY_VIEW_DUMMY_DATA = [
 
 export const DUMMY_VIEW_DATA = [
   { views: 54000, videoTotalCounts: 1000 },
-  { views: 11600, videoTotalCounts: 2000 },
+  { views: 1000, videoTotalCounts: 2000 },
   { views: 32400, videoTotalCounts: 3000 },
   { views: 23200, videoTotalCounts: 4000 },
   { views: 44800, videoTotalCounts: 5000 },
