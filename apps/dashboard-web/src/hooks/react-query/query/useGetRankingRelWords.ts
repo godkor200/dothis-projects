@@ -1,7 +1,10 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
-import { AUTO_COMPLETEWORD_KEY } from '@/constants/querykey';
+import {
+  AUTO_COMPLETEWORD_KEY,
+  RANK_RELATIONWORD_KEY,
+} from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 const useGetRankingRelWords = (
@@ -9,7 +12,7 @@ const useGetRankingRelWords = (
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
 ) => {
   const queryResult = apiClient(1).relwords.rankRel.useQuery(
-    ['rank', keyword],
+    RANK_RELATIONWORD_KEY.list([{ keyword }]),
     { params: { keyword } },
     { enabled: !!keyword, ...queryOptions },
   );
