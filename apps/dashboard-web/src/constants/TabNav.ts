@@ -1,7 +1,7 @@
 export const MEDIA_TABNAV_DATA = [
   { title: '유튜브', category: 'youtube' },
-  // { title: '커뮤니티', category: 'community' },
-  // { title: 'SNS', category: 'SNS' },
+  { title: '커뮤니티', category: 'community' },
+  { title: 'SNS', category: 'SNS' },
   { title: '뉴스', category: 'news' },
 ] as const;
 
