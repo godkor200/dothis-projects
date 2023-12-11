@@ -4,7 +4,9 @@ import { ResponsiveRadar } from '@nivo/radar';
 import { useState } from 'react';
 
 import { clustersCategories } from '@/constants/clusterCategories';
+import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
+import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import getMaxValues from '@/utils/contents/getMaxValues';
 
@@ -29,32 +31,43 @@ const TITLE_BUTTON = [
 const MonthlyViewData = () => {
   const [selectedType, setSelectedType] = useState<TitleType>('category');
   const { data, isLoading: isWordLoading } = useGetRelWords();
-  // const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
-  // const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
+  const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
+  const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
-  // const categoryViewData: ViewData[] = viewData.map((item, idx) => {
-  //   const result: ViewData = (item ?? []).reduce(
-  //     (acc: ViewData, cur) => {
-  //       acc.views = ((acc.views as number) || 0) + cur.increase_views;
-  //       return acc;
-  //     },
-  //     { views: 0, videoTotalCounts: 0 },
-  //   );
-
-  //   result.views = result.views || 200;
-  //   result.videoTotalCounts = (videoData[idx]?.total.value as number) ?? 200;
-
-  //   return result;
-  // });
-
-  const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
-    getMaxValues(DUMMY_VIEW_DATA);
-
   const clusterData: number[] = data && JSON.parse(data.cluster);
 
-  const convertedDatas = DUMMY_VIEW_DATA.map(
+  const categoryViewData = viewData.map((item, idx) => {
+    const result = (item ?? []).reduce(
+      (acc, cur) => {
+        acc.views = ((acc.views as number) || 0) + cur.increase_views;
+        return acc;
+      },
+      {
+        views: 0,
+        videoTotalCounts: 0,
+        category:
+          clusterData &&
+          clustersCategories[
+            clusterData[idx] as keyof typeof clustersCategories
+          ],
+      },
+    );
+
+    result.views = result.views;
+    result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+
+    return result;
+  });
+
+  const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
+    getMaxValues(categoryViewData);
+
+  // 최대값을 백분율로 구해서 서로 개별로 독립적인 백분율 대비 값을 보여준다.
+
+  // 레이더 그래프는 최소가 저 그래프 안에들어온 최소값이 최소 레인지로 잡힌다.
+  const convertedDatas = categoryViewData.map(
     ({ views, videoTotalCounts }, idx) => {
       return {
         views: (views / maxViews) * viewAndVideoMaxValue,
@@ -130,6 +143,7 @@ const MonthlyViewData = () => {
               }}
               blendMode="multiply"
               motionConfig="wobbly"
+              animate={false}
               sliceTooltip={({ index, data }) => (
                 <MonthlyDataGraphToolTip
                   data={data}
