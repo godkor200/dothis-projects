@@ -96,6 +96,17 @@ export const zVideoResponse = z.object({
             .describe(
               'whether or not there is an advertisement and the number of advertisements',
             ),
+
+          video_history: z.array(
+            z.object({
+              channel_id: z.string(),
+              crawled_date: z.string(),
+              video_comments: z.number(),
+              video_id: z.string(),
+              video_likes: z.number(),
+              video_views: z.number(),
+            }),
+          ),
         }),
       }),
     ),
