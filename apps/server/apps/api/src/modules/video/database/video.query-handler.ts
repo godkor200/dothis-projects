@@ -59,7 +59,7 @@ export class SearchQueryBuilder {
                     range: {
                       'video_history.crawled_date': {
                         gte: `${from} 00:00:00`,
-                        lte: `${to} 00:00:00`,
+                        lte: `${to} 23:59:59`,
                       },
                     },
                   },
