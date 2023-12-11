@@ -1,5 +1,9 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { ClientInferResponseBody } from '@ts-rest/core';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+
+dayjs.extend(isSameOrBefore);
 
 type DailyView = ClientInferResponseBody<
   typeof apiRouter.dailyViews.getDailyViews,
@@ -12,12 +16,33 @@ type ExpectedView = ClientInferResponseBody<
 >['data'][0];
 
 /**
+ * Date에 따른 initial object를 생성한다.
+ * @returns sumViews, averageViews에서 사용하는 -> 설정한 날짜에 따른 initial Record<날짜,0> 객체가 들어가있는다
+ */
+const initViewsObjectByDate = (startDate: string, endDate: string) => {
+  const viewsObject: Record<string, number> = {};
+
+  for (
+    let date = dayjs(startDate);
+    date.isSameOrBefore(endDate, 'day');
+    date = date.add(1, 'day')
+  ) {
+    viewsObject[date.format('YYYY-MM-DD')] = 0;
+  }
+
+  return viewsObject;
+};
+
+/**
  * getDailyView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 increase_views를 모두 합산하는 함수
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
  * @returns { date: increase_views, ~~ } 형식을 가진다. (increase_views를 모두 합산한 날짜를 key로 가진다.)
  */
-export const sumViews = (data: (DailyView | undefined)[]) => {
-  const result: Record<string, number> = {};
+export const sumViews = (
+  data: (DailyView | undefined)[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const result = initViewsObjectByDate(startDate, endDate);
 
   data?.forEach((item) => {
     if (item) {
@@ -26,8 +51,6 @@ export const sumViews = (data: (DailyView | undefined)[]) => {
 
       if (result[date]) {
         result[date] += views;
-      } else {
-        result[date] = views;
       }
     }
   });
@@ -40,9 +63,12 @@ export const sumViews = (data: (DailyView | undefined)[]) => {
  * @param data getExpectedView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
  * @returns   date: expected_views의,  형식을 가진다. (expected_views의 평균을 value로, 날짜를 key로 가진다.)
  */
-export const averageViews = (data: (ExpectedView | undefined)[]) => {
-  const result: Record<string, number> = {};
-  const dateCount: Record<string, number> = {};
+export const averageViews = (
+  data: (ExpectedView | undefined)[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const result = initViewsObjectByDate(startDate, endDate);
+  const dateCount = initViewsObjectByDate(startDate, endDate);
 
   data?.forEach((item) => {
     if (item) {
@@ -52,19 +78,18 @@ export const averageViews = (data: (ExpectedView | undefined)[]) => {
       if (result[date]) {
         result[date] += views;
         dateCount[date] += 1;
-      } else {
-        result[date] = views;
-        dateCount[date] = 1;
       }
     }
   });
 
   for (const date in result) {
     //for-in 루프를 사용하여 객체의 속성을 반복할 때, 객체의 프로토타입 체인에 있는 속성도 포함될 수 있다, 이때 hasOwnProperty를 사용하면 해당 속성이 직접 객체에 속해 있는지를 확인하기 위해 안정성을 위해 추가
-    if (result.hasOwnProperty(date)) {
+    if (dateCount.hasOwnProperty(date)) {
       const count = dateCount[date];
 
-      result[date] = Math.round(Math.round(result[date]) / count);
+      result[date] = Math.round(
+        Math.round(result[date]) / count === 0 ? 1 : count,
+      );
     }
   }
 
