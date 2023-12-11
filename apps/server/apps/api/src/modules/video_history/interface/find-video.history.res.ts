@@ -4,7 +4,7 @@ export interface IFindVideoHistoryResponse {
   video_likes: number;
   video_comments: number;
   crawled_date: string;
-  channel_id: number;
+  channel_id: string;
   performance?: number;
 }
 

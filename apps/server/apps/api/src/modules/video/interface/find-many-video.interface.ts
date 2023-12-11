@@ -1,3 +1,5 @@
+import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
+
 export interface IFindManyVideoResult {
   _index: string;
   _id: string;
@@ -16,6 +18,7 @@ export interface IFindManyVideoResult {
     video_with_ads: number;
     video_end_screen: number;
     crawled_date: string;
+    video_history: IFindVideoHistoryResponse[];
   };
 }
 export interface IPagingRes {

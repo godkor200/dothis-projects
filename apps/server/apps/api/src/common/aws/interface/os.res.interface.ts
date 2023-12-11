@@ -2,7 +2,7 @@ export interface OsRes<T, S = undefined> {
   _index: string;
   _id: string;
   _score: number;
-  _source: T;
+  _source?: T;
   inner_hits?: S;
 }
 export interface INested {
