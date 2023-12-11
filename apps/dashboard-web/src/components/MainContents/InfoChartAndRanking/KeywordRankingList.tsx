@@ -10,6 +10,7 @@ import {
   useRemoveKeywordMutation,
   useResetKeywordMutation,
 } from '@/hooks/react-query/mutation/useKeywordMutation';
+import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
@@ -22,21 +23,21 @@ const KeywordRankingList = () => {
 
   const [onErrorModal, setOnErrorModal] = useState(false);
 
-  const {
-    data: relWordsData,
-    isLoading,
-    isError,
-    refetch,
-  } = useGetRelWords({
-    onError: (data) => {
-      setOnErrorModal(true);
-    },
-  });
-
   const { hashKeywordList } = useKeyword();
 
   const { mutate: resetKeywordMutate } = useResetKeywordMutation();
   const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
+
+  const {
+    data: rankRelWordList,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetRankingRelWords(hashKeywordList[0], {
+    onError: (data) => {
+      setOnErrorModal(true);
+    },
+  });
 
   const dismissModalCallback = useCallback(() => {
     setOnErrorModal(false);
@@ -51,22 +52,20 @@ const KeywordRankingList = () => {
     removeKeywordMutate(hashKeywordList[0]);
   }, [hashKeywordList]);
 
-  const relWordList = convertKeywordsToArray(relWordsData?.relWords);
-
   const { setRelWord } = useSelectedRelWordActions();
 
   useEffect(() => {
-    setRelWord(relWordList[selectedRelatedWord - 1]);
-  }, [selectedRelatedWord, relWordList]);
+    rankRelWordList && setRelWord(rankRelWordList[selectedRelatedWord - 1]);
+  }, [selectedRelatedWord, rankRelWordList]);
 
   return (
     <>
-      <div className="border-grey300 bg-grey00 flex h-full w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid py-[2.5rem] pr-[1.25rem]">
+      <div className="border-grey300 bg-grey00 flex h-auto  w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid py-[2.5rem] pr-[1.25rem]">
         {(isLoading || isError) &&
           [...new Array(10)].map((item, index) => (
             <KeywordRankingItem.skeleton isSelected={index === 0} key={index} />
           ))}
-        {relWordList.slice(0, 10).map((relatedWord, index) => (
+        {rankRelWordList?.slice(0, 10).map((relatedWord, index) => (
           <KeywordRankingItem
             key={index + 1}
             relatedWord={{ word: relatedWord, rank: index + 1 }}
