@@ -5,22 +5,13 @@ import {
   FindDailyViewsQuery,
   FindDailyViewsV3Query,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
-
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
-
-import {
-  FindVideoDateQuery,
-  VIDEO_DATA_KEY,
-} from '@Apps/modules/video/dtos/find-videos.dtos';
-import {
-  IFindVideoIdRes,
-  IVideoHistory,
-} from '@Apps/modules/video/interface/find-video.os.res';
+import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { IVideoHistory } from '@Apps/modules/video/interface/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
-import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 
 export interface IIncreaseData {
   date: string;
@@ -41,8 +32,6 @@ export class FindDailyViewsQueryOsV3Handler
     private readonly video: VideoServicePort,
 
     private readonly videoAggregateService: VideoAggregateService,
-
-    private readonly videoDataService: VideoDataService,
   ) {}
 
   async execute(
