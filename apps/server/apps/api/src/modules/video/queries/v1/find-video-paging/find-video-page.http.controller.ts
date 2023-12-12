@@ -59,7 +59,6 @@ export class FindVideoPageHttpController {
     name: 'last',
     required: false,
     description: '전 페이지 마지막 인덱스 _id',
-    example: '-74oaIoB-WWajabhPLZp',
   })
   @ApiParam({
     name: 'clusterNumber',
@@ -69,7 +68,9 @@ export class FindVideoPageHttpController {
   })
   @ApiOperation({
     summary,
-    description,
+    description:
+      description +
+      ' channel_name 추가,현재 채널 타이틀 데이터가 완전치 않아 없으면 객체도 없음',
   })
   @TsRest(c.getVideo)
   @ApiOkResponse({ type: VideoRes })
