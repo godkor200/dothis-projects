@@ -7,6 +7,7 @@ export interface IFindManyVideoResult {
   _source: {
     video_id: string;
     channel_id: string;
+    channel_name?: string;
     video_title: string;
     video_url: string;
     video_description: string;
