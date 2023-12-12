@@ -15,6 +15,9 @@ export class SearchQueryBuilder {
     index: string,
     keyword: string,
     relWord: string,
+    from: Date,
+    to: Date,
+    size: number,
     data: CHANNEL_DATA_KEY[],
   ) {
     return {
@@ -51,11 +54,20 @@ export class SearchQueryBuilder {
                             'video_list.video_title': `${relWord}`,
                           },
                         },
+                        {
+                          range: {
+                            'video_list.crawled_date': {
+                              gte: from + ' 00:00:00',
+                              lte: to + ' 23:59:59',
+                            },
+                          },
+                        },
                       ],
                     },
                   },
                   inner_hits: {
                     name: 'video_list',
+                    size,
                   },
                 },
               },
@@ -67,6 +79,7 @@ export class SearchQueryBuilder {
     };
   }
 }
+
 @Injectable()
 export class ChannelHistoryQueryHandler
   extends AwsOpenSearchConnectionService
@@ -191,11 +204,14 @@ export class ChannelHistoryQueryHandler
       .join('');
      */
     const index = 'channel-history-*';
-
+    const size = 100;
     const searchQuery = SearchQueryBuilder.channelHistory(
       index,
       keyword,
       relationKeyword,
+      from,
+      to,
+      size,
       data,
     );
     return await this.fullScan<T>(searchQuery, (doc: any) => doc);
