@@ -23,6 +23,7 @@ export class SearchQueryBuilder {
     data?: VIDEO_DATA_KEY[],
     from?: Date,
     to?: Date,
+    size: number = 100,
   ) {
     return {
       index,
@@ -65,6 +66,7 @@ export class SearchQueryBuilder {
                   },
                   inner_hits: {
                     name: 'video_history',
+                    size,
                   },
                 },
               },
@@ -176,6 +178,7 @@ export class VideoQueryHandler
       from,
       to,
     );
+    console.log('searchQuery', searchQuery.body.query.bool.must[0]);
     return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
