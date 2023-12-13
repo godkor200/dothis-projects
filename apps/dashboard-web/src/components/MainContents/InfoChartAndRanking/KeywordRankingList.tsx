@@ -10,6 +10,7 @@ import {
   useRemoveKeywordMutation,
   useResetKeywordMutation,
 } from '@/hooks/react-query/mutation/useKeywordMutation';
+import { useResetSearchwordMutation } from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useKeyword from '@/hooks/user/useKeyword';
@@ -24,8 +25,11 @@ const KeywordRankingList = () => {
   const [onErrorModal, setOnErrorModal] = useState(false);
 
   const { hashKeywordList } = useKeyword();
+  console.log(hashKeywordList);
 
   const { mutate: resetKeywordMutate } = useResetKeywordMutation();
+  const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
+
   const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
 
   const {
@@ -44,6 +48,7 @@ const KeywordRankingList = () => {
     if (hashKeywordList.length <= 1) {
       // 만약에 reset시켜주는 키워드가 이상한 키워드일 경우 계속 먹통일 수 있다. (예외가 필요하다.)
       resetKeywordMutate();
+      resetSearchwordMutate();
       return;
     }
     // 키워드가 여러개로 연관어를 가져올 수 있을경우 어떤 것이 빠져야할지 모호하므로
