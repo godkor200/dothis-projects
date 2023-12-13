@@ -18,7 +18,6 @@ beforeEach(() => {
   handler = new FindDailyViewsQueryOsV3Handler(
     mockFindVideoOsAdapter,
     mockVideoAggregateService,
-    mockVideoDataService,
   );
 });
 describe('calculateIncrease 함수', () => {
