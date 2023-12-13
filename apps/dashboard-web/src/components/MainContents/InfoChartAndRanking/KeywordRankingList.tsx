@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,6 +24,7 @@ const KeywordRankingList = () => {
   const [selectedRelatedWord, setSelectedRelatedWord] = useState(1);
 
   const [onErrorModal, setOnErrorModal] = useState(false);
+  const [onReTryModal, setOnReTryModal] = useState(false);
 
   const { hashKeywordList } = useKeyword();
   console.log(hashKeywordList);
@@ -39,9 +41,18 @@ const KeywordRankingList = () => {
     refetch,
   } = useGetRankingRelWords(hashKeywordList[0], {
     onError: (data) => {
+      if (data.status === 400) {
+        setOnReTryModal(true);
+        return;
+      }
       setOnErrorModal(true);
     },
   });
+
+  const dismissReTryModalCallback = useCallback(() => {
+    setOnReTryModal(false);
+    refetch();
+  }, []);
 
   const dismissModalCallback = useCallback(() => {
     setOnErrorModal(false);
@@ -82,6 +93,24 @@ const KeywordRankingList = () => {
       {onErrorModal && (
         <Modal dismissCallback={dismissModalCallback}>
           <RelwordErrorModal dismissCallback={dismissModalCallback} />
+        </Modal>
+      )}
+      {onReTryModal && (
+        <Modal dismissCallback={dismissReTryModalCallback}>
+          <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
+            <p className="text-t3 text-grey700 mb-5 text-center font-bold">
+              많은 요청으로 인해 <br /> 데이터를 가져오는데 실패하였습니다
+            </p>
+            <div className="flex justify-center gap-[1.25rem]">
+              <Button
+                theme="outlined"
+                size="L"
+                onClick={() => dismissReTryModalCallback()}
+              >
+                재시도
+              </Button>
+            </div>
+          </div>
         </Modal>
       )}
     </>
