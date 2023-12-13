@@ -25,6 +25,7 @@ const KeywordRankingList = () => {
 
   const [onErrorModal, setOnErrorModal] = useState(false);
   // 현재 잦은 재요청이 있는 api로 인하여 임시로 생성한 재요청 모달 trigger 상태입니다.
+  // 이런 컴포넌트 속 여러 모달을 불러올 경우를 대비해 dismiss및 content 컴포넌트를 한 곳에 지정할 수 있는 전역 or 공용 hook을 생성하려 합니다
   const [onReTryModal, setOnReTryModal] = useState(false);
 
   const { hashKeywordList } = useKeyword();
