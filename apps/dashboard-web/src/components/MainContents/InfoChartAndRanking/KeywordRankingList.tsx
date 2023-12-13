@@ -24,6 +24,7 @@ const KeywordRankingList = () => {
   const [selectedRelatedWord, setSelectedRelatedWord] = useState(1);
 
   const [onErrorModal, setOnErrorModal] = useState(false);
+  // 현재 잦은 재요청이 있는 api로 인하여 임시로 생성한 재요청 모달 trigger 상태입니다.
   const [onReTryModal, setOnReTryModal] = useState(false);
 
   const { hashKeywordList } = useKeyword();
