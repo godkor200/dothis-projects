@@ -5,6 +5,7 @@ import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
+import Container from '@/components/MainEntireRelWord/Container';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
 
@@ -52,7 +53,9 @@ const MainContentPage = async ({
   }
   return (
     <>
-      <div className="mx-[3rem] mb-[30px]">전체탭</div>
+      <div className="mx-[3rem] mb-[30px]">
+        <Container />
+      </div>
     </>
   );
 };
