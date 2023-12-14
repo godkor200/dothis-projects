@@ -42,7 +42,7 @@ const KeywordRankingList = () => {
     refetch,
   } = useGetRankingRelWords(hashKeywordList[0], {
     onError: (data) => {
-      if (data.status === 400) {
+      if (data.status === 400 || 429) {
         setOnReTryModal(true);
         return;
       }
