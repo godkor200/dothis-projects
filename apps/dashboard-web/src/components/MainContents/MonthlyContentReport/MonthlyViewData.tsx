@@ -2,6 +2,7 @@
 
 import type { GridLabelProps } from '@nivo/radar';
 import { ResponsiveRadar } from '@nivo/radar';
+import { access } from 'fs';
 import { useState } from 'react';
 
 import { clustersCategories } from '@/constants/clusterCategories';
@@ -204,14 +205,11 @@ const MonthlyViewData = () => {
 
 export default MonthlyViewData;
 
-const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => (
-  <g transform={`translate(${x}, ${y})`}>
-    <g
-      transform={`translate(${
-        anchor === 'end' ? -20 : anchor === 'middle' ? -15 : -10
-      }, 10)`}
-    >
+const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
       <text
+        textAnchor={anchor}
         style={{
           fontSize: 14,
           fontWeight: 'bold',
@@ -230,5 +228,5 @@ const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => (
         +{Math.round(Math.random() * 100)}%
       </text> */}
     </g>
-  </g>
-);
+  );
+};
