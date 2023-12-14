@@ -20,30 +20,39 @@ const MainContentPage = async ({
     '아시안게임',
   );
 
+  const selectedMainContent = searchParams?.main || 'recomand';
+
+  if (selectedMainContent === 'recomand') {
+    return (
+      <>
+        <Card>
+          <CardHeader title="콘텐츠 소재" />
+          <div className="flex">
+            <KeywordRankingList />
+
+            <KeywordAnalyticsView />
+          </div>
+        </Card>
+        <Card>
+          <CardHeader title="월간 콘텐츠 리포트" />
+          <MonthlyViewData />
+        </Card>
+        <Card>
+          <TabNavigation
+            selectedArticle={selectedArticle}
+            tabNavData={MEDIA_TABNAV_DATA}
+          />
+          <MediaArticlesContainer
+            articleListData={articleListData}
+            selectedArticle={selectedArticle}
+          />
+        </Card>
+      </>
+    );
+  }
   return (
     <>
-      <Card>
-        <CardHeader title="콘텐츠 소재" />
-        <div className="flex">
-          <KeywordRankingList />
-
-          <KeywordAnalyticsView />
-        </div>
-      </Card>
-      <Card>
-        <CardHeader title="월간 콘텐츠 리포트" />
-        <MonthlyViewData />
-      </Card>
-      <Card>
-        <TabNavigation
-          selectedArticle={selectedArticle}
-          tabNavData={MEDIA_TABNAV_DATA}
-        />
-        <MediaArticlesContainer
-          articleListData={articleListData}
-          selectedArticle={selectedArticle}
-        />
-      </Card>
+      <div className="mx-[3rem] mb-[30px]">전체탭</div>
     </>
   );
 };
