@@ -1,6 +1,8 @@
 'use client';
 
+import type { GridLabelProps } from '@nivo/radar';
 import { ResponsiveRadar } from '@nivo/radar';
+import { access } from 'fs';
 import { useState } from 'react';
 
 import { clustersCategories } from '@/constants/clusterCategories';
@@ -124,7 +126,7 @@ const MonthlyViewData = () => {
             </div>
           ))}
         </div>
-        <div className="h-[315px] w-[406px] self-center">
+        <div className="h-[315px] w-[406px] self-center [&_svg]:overflow-visible">
           {selectedType === 'category' ? (
             <ResponsiveRadar
               data={convertedDatas}
@@ -139,11 +141,49 @@ const MonthlyViewData = () => {
               dotBorderWidth={2}
               colors={{ scheme: 'nivo' }}
               theme={{
-                fontSize: 16,
+                legends: {
+                  text: { fontSize: 12, fontWeight: 700 },
+                },
+                labels: {
+                  text: { fontSize: 22, fontWeight: 900 },
+                },
+                textColor: '#999d3e',
               }}
               blendMode="multiply"
               motionConfig="wobbly"
               animate={false}
+              gridLabel={LabelComponent}
+              legends={[
+                {
+                  data: [
+                    {
+                      id: 'views',
+                      label: '일일 조회 수',
+                    },
+                    {
+                      id: 'videoTotalCounts',
+                      label: '누적 영상 수 ',
+                    },
+                  ],
+                  anchor: 'bottom-right',
+                  direction: 'column',
+                  translateX: -50,
+                  translateY: -80,
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemTextColor: '#999',
+                  symbolSize: 12,
+                  symbolShape: 'circle',
+                  effects: [
+                    {
+                      on: 'hover',
+                      style: {
+                        itemTextColor: '#000',
+                      },
+                    },
+                  ],
+                },
+              ]}
               sliceTooltip={({ index, data }) => (
                 <MonthlyDataGraphToolTip
                   data={data}
@@ -164,3 +204,29 @@ const MonthlyViewData = () => {
 };
 
 export default MonthlyViewData;
+
+const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <text
+        textAnchor={anchor}
+        style={{
+          fontSize: 14,
+          fontWeight: 'bold',
+        }}
+      >
+        {id}
+      </text>
+      {/* <text
+        y={24}
+        style={{
+          fontSize: 18,
+          fontWeight: 'bold',
+          fill: '#3a9896',
+        }}
+      >
+        +{Math.round(Math.random() * 100)}%
+      </text> */}
+    </g>
+  );
+};
