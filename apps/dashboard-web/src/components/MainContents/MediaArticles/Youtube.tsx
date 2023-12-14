@@ -29,10 +29,6 @@ const YouTube = () => {
 
   const { data, isLoading } = useGetVideoData();
 
-  console.log(data);
-
-  console.log(data.flatMap((item) => (item ? item?.data : [])));
-
   // 페이지에 대한 개념을 고려해서 수정하도록 해야함.
   const validItems = data.flatMap((item) => (item ? item?.data : []));
 
@@ -76,6 +72,9 @@ const YouTube = () => {
     );
   }, [data]);
 
+  console.log(returnData);
+  console.log(mediaDataList);
+
   // 현재 데이터 페이지 인덱스가 clusternumber인데,  한페이지만 보여주고 있어서 임의로 하나만 지정했습니다. 하지만 해당 clusternumber에 에러가 있을 시 계속 skeleton UI 만 나오는 현상이 있을 수 있어서 에러바운더리를 설정해주는게 좋습니다
   if (isLoading) {
     return (
@@ -89,7 +88,7 @@ const YouTube = () => {
   if (
     returnData === undefined ||
     returnData?.length === 0 ||
-    !mediaDataList ||
+    mediaDataList === undefined ||
     mediaDataList.length === 0
   ) {
     return (
@@ -100,6 +99,8 @@ const YouTube = () => {
       </div>
     );
   }
+
+  console.log(mediaDataList[pageIndex][contentIndex]);
 
   return (
     <>
@@ -126,7 +127,7 @@ const YouTube = () => {
       </div>
       <SummaryCard title="영상 태그">
         <div className="flex flex-wrap gap-[10px]">
-          {returnData[contentIndex]?.tags
+          {mediaDataList[pageIndex][contentIndex]?.tags
             ?.replace(/'|\[|\]/g, '')
             ?.split(', ')
             ?.map((item) => (
@@ -141,7 +142,7 @@ const YouTube = () => {
         </div>
       </SummaryCard>
       <SummaryCard title="영상 내용 요약" marginTop="mt-5">
-        {returnData[contentIndex].description}
+        {mediaDataList[pageIndex][contentIndex].description}
       </SummaryCard>
     </>
   );
