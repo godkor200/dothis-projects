@@ -37,7 +37,7 @@ const useGetNewsArticle = (
         sort: { date: 'desc' },
         hilight: 200,
         return_from: 0,
-        return_size: 5,
+        return_size: 25,
         fields: [
           'byline',
           'category',
