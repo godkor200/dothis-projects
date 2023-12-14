@@ -10,6 +10,10 @@ import PaginationButtons from './PaginationButtons';
 import SummaryCard from './SummaryCard';
 
 const YouTube = () => {
+  /**
+   * @state 페이지 네이션을 위한 pageIndex상태를 추가하였습니다
+   * @useEffect 연관어 변경 및 페이지 변경에 따른 index가 0으로 초기화 해야할 것 같아서 useEffect로 초기화를 해주었습니다! (지금 useEffect로 컨트롤하는게 사이드 이펙트가 있지않을까? 고민이 있어서.. 개선점이 있다면 언제든 피드백 환영입니다!!)
+   */
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
@@ -29,7 +33,9 @@ const YouTube = () => {
 
   const { data, isLoading } = useGetVideoData();
 
-  // 페이지에 대한 개념을 고려해서 수정하도록 해야함.
+  /**
+   * @validItems flatMap을 이용해서 useGetVideoData에서 얻은 data형식에서 MediaArticle을 그리는데 필요한 object만 flat하게 가져옵니다. (ex)[{videoObject},{videoObject},{videoObject}]
+   */
   const validItems = data.flatMap((item) => (item ? item?.data : []));
 
   const returnData = validItems.map((item) => {
@@ -53,6 +59,10 @@ const YouTube = () => {
     };
   });
 
+  /**
+   * @mediaDataList returnData로 포맷팅을 변환한 Object[] -> 페이지네이션에 맞게끔 포맷팅을 변경합니다! (ex)[Array(5),Array(5),Array(5),Array(5),Array(5)]
+   * @jsx 밑에 jsx는 mediaDataList를 이용해서 prop으로 전달하도록 수정하였습니다.
+   */
   const mediaDataList = useMemo(() => {
     return returnData?.reduce(
       (
