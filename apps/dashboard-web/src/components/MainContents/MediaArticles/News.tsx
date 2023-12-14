@@ -4,8 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import ParserContent from '@/components/common/ParserContent';
 import useGetNewsArticle from '@/hooks/react-query/query/useGetNewsArticle';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
-import type { NewsData } from '@/types/news';
-import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -33,7 +31,7 @@ const News = () => {
 
   const { data, isLoading } = useGetNewsArticle();
 
-  const returnData: NewsData[] | undefined = useMemo(
+  const returnData = useMemo(
     () =>
       data?.return_object?.documents?.map((item) => {
         return {
@@ -51,7 +49,11 @@ const News = () => {
 
   const mediaDataList = useMemo(() => {
     return returnData?.reduce(
-      (result: NewsData[][], item: NewsData, index: number) => {
+      (
+        result: (typeof returnData)[],
+        item: (typeof returnData)[0],
+        index: number,
+      ) => {
         const chunkIndex: number = Math.floor(index / 5);
         if (!result[chunkIndex]) {
           result[chunkIndex] = [];
