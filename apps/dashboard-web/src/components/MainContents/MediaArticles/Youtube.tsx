@@ -1,15 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
+import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
 import CurrentArticle from './CurrentArticle';
+import PaginationButtons from './PaginationButtons';
 import SummaryCard from './SummaryCard';
 
 const YouTube = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
+
+  const seletecRelWord = useSelectedRelWord();
+  useEffect(() => {
+    setPageIndex(0);
+    setContentIndex(0);
+  }, [seletecRelWord]);
+
+  useEffect(() => {
+    setContentIndex(0);
+  }, [pageIndex]);
 
   const handleSetContentIndex = (index: number) => {
     setContentIndex(index);
@@ -72,10 +84,17 @@ const YouTube = () => {
           image={returnData[contentIndex]?.image}
           link={returnData[contentIndex]?.link}
         />
-        <ArticleList
-          articleListData={returnData}
-          handleSetContentIndex={handleSetContentIndex}
-        />
+        <div>
+          <ArticleList
+            articleListData={returnData}
+            handleSetContentIndex={handleSetContentIndex}
+          />
+          <PaginationButtons
+            length={validItems.length}
+            pageIndex={pageIndex}
+            setPageIndex={setPageIndex}
+          />
+        </div>
       </div>
       <SummaryCard title="영상 태그">
         <div className="flex flex-wrap gap-[10px]">
