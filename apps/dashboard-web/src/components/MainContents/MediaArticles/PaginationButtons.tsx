@@ -8,6 +8,12 @@ interface Props {
   setPageIndex: Dispatch<SetStateAction<number>>;
 }
 
+/**
+ * @param length 페이지네이션의 갯수를 지정하는 파라미터입니다.
+ * @param pageIndex 현재 페이지의 스타일을 수정하기 위한 pageIndex state 파라미터입니다.
+ * @param setPageIndex pageIndex state의 setter 함수 파라미터입니다.
+ * @returns
+ */
 const PaginationButtons = ({ length, pageIndex, setPageIndex }: Props) => {
   return (
     <div className="mb-[66px] mt-[46px] flex justify-center gap-[20px]">
