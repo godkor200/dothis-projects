@@ -29,7 +29,6 @@ const KeywordRankingList = () => {
   const [onReTryModal, setOnReTryModal] = useState(false);
 
   const { hashKeywordList } = useKeyword();
-  console.log(hashKeywordList);
 
   const { mutate: resetKeywordMutate } = useResetKeywordMutation();
   const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
