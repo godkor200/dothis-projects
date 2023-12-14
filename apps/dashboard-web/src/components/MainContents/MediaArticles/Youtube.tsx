@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { useSelectedRelWord } from '@/store/selectedRelWordStore';
@@ -29,10 +29,14 @@ const YouTube = () => {
 
   const { data, isLoading } = useGetVideoData();
 
-  // 페이지에 대한 개념을 고려해서 수정하도록 해야함.
-  const validItems = data.filter((item) => item !== undefined);
+  console.log(data);
 
-  const returnData = validItems[pageIndex]?.data?.map((item) => {
+  console.log(data.flatMap((item) => (item ? item?.data : [])));
+
+  // 페이지에 대한 개념을 고려해서 수정하도록 해야함.
+  const validItems = data.flatMap((item) => (item ? item?.data : []));
+
+  const returnData = validItems.map((item) => {
     const compactNumber = new Intl.NumberFormat('ko', {
       notation: 'compact',
     });
@@ -53,6 +57,25 @@ const YouTube = () => {
     };
   });
 
+  const mediaDataList = useMemo(() => {
+    return returnData?.reduce(
+      (
+        result: (typeof returnData)[],
+        item: (typeof returnData)[0],
+        index: number,
+      ) => {
+        const chunkIndex: number = Math.floor(index / 5);
+        if (!result[chunkIndex]) {
+          result[chunkIndex] = [];
+        }
+
+        result[chunkIndex].push(item);
+        return result;
+      },
+      [],
+    );
+  }, [data]);
+
   // 현재 데이터 페이지 인덱스가 clusternumber인데,  한페이지만 보여주고 있어서 임의로 하나만 지정했습니다. 하지만 해당 clusternumber에 에러가 있을 시 계속 skeleton UI 만 나오는 현상이 있을 수 있어서 에러바운더리를 설정해주는게 좋습니다
   if (isLoading) {
     return (
@@ -63,7 +86,12 @@ const YouTube = () => {
     );
   }
 
-  if (returnData === undefined || returnData?.length === 0) {
+  if (
+    returnData === undefined ||
+    returnData?.length === 0 ||
+    !mediaDataList ||
+    mediaDataList.length === 0
+  ) {
     return (
       <div className="mt-10 flex flex-wrap gap-[1.25rem]">
         <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
@@ -77,20 +105,20 @@ const YouTube = () => {
     <>
       <div className="mt-10 flex gap-[1.25rem]">
         <CurrentArticle
-          title={returnData[contentIndex]?.title}
-          category={returnData[contentIndex]?.category}
-          provider={returnData[contentIndex]?.provider}
-          date={returnData[contentIndex]?.date}
-          image={returnData[contentIndex]?.image}
-          link={returnData[contentIndex]?.link}
+          title={mediaDataList[pageIndex][contentIndex]?.title}
+          category={mediaDataList[pageIndex][contentIndex]?.category}
+          provider={mediaDataList[pageIndex][contentIndex]?.provider}
+          date={mediaDataList[pageIndex][contentIndex]?.date}
+          image={mediaDataList[pageIndex][contentIndex]?.image}
+          link={mediaDataList[pageIndex][contentIndex]?.link}
         />
         <div>
           <ArticleList
-            articleListData={returnData}
+            articleListData={mediaDataList[pageIndex]}
             handleSetContentIndex={handleSetContentIndex}
           />
           <PaginationButtons
-            length={validItems.length}
+            length={mediaDataList.length}
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
           />
@@ -98,7 +126,7 @@ const YouTube = () => {
       </div>
       <SummaryCard title="영상 태그">
         <div className="flex flex-wrap gap-[10px]">
-          {returnData[contentIndex].tags
+          {returnData[contentIndex]?.tags
             ?.replace(/'|\[|\]/g, '')
             ?.split(', ')
             ?.map((item) => (
