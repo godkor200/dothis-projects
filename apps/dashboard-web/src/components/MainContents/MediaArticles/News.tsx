@@ -10,6 +10,7 @@ import CurrentArticle from './CurrentArticle';
 import SummaryCard from './SummaryCard';
 
 const News = () => {
+  const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
   const handleSetContentIndex = (index: number) => {
