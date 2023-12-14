@@ -13,6 +13,7 @@ const PaginationButtons = ({ length, pageIndex, setPageIndex }: Props) => {
     <div className="mb-[66px] mt-[46px] flex justify-center gap-[20px]">
       {[...new Array(length)].map((_, i) => (
         <button
+          key={i}
           className={cn(
             'hover:bg-grey200 rounded-[4px] px-[10px] py-[5px] text-[14px]',
             {
