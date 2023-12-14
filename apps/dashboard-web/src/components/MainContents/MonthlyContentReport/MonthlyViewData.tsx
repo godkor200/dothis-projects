@@ -208,8 +208,8 @@ const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => (
   <g transform={`translate(${x}, ${y})`}>
     <g
       transform={`translate(${
-        anchor === 'end' ? -60 : anchor === 'middle' ? -30 : 0
-      }, -20)`}
+        anchor === 'end' ? -20 : anchor === 'middle' ? -15 : -10
+      }, 10)`}
     >
       <text
         style={{
