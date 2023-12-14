@@ -12,10 +12,15 @@ import PaginationButtons from './PaginationButtons';
 import SummaryCard from './SummaryCard';
 
 const News = () => {
+  /**
+   * @state 페이지 네이션을 위한 pageIndex상태를 추가하였습니다
+   * @useEffect 연관어 변경 및 페이지 변경에 따른 index가 0으로 초기화 해야할 것 같아서 useEffect로 초기화를 해주었습니다! (지금 useEffect로 컨트롤하는게 사이드 이펙트가 있지않을까? 고민이 있어서.. 개선점이 있다면 언제든 피드백 환영입니다!!)
+   */
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
   const seletecRelWord = useSelectedRelWord();
+
   useEffect(() => {
     setPageIndex(0);
     setContentIndex(0);
@@ -47,6 +52,10 @@ const News = () => {
     [data],
   );
 
+  /**
+   * @mediaDataList returnData로 포맷팅을 변환한 Object[] -> 페이지네이션에 맞게끔 포맷팅을 변경합니다! (ex)[Array(5),Array(5),Array(5),Array(5),Array(5)]
+   * @jsx 밑에 jsx는 mediaDataList를 이용해서 prop으로 전달하도록 수정하였습니다.
+   */
   const mediaDataList = useMemo(() => {
     return returnData?.reduce(
       (
@@ -108,7 +117,9 @@ const News = () => {
         </div>
       </div>
       <SummaryCard title="뉴스 요약">
-        <ParserContent content={returnData[contentIndex]?.hilight} />
+        <ParserContent
+          content={mediaDataList[pageIndex][contentIndex]?.hilight}
+        />
       </SummaryCard>
     </>
   );
