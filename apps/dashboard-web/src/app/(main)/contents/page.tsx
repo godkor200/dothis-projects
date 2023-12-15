@@ -15,7 +15,7 @@ const MainContentPage = async ({
 }) => {
   const selectedArticle =
     (searchParams?.tab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
-    'news';
+    'youtube';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );

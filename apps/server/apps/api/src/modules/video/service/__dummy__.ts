@@ -1,2637 +1,8648 @@
-export const data = [
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:09:36',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: '--lq1l1KRhE',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:22:08',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: '--lq1l1KRhE',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:26:53',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: '--lq1l1KRhE',
-      },
-    ],
-    video_id: '--lq1l1KRhE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 74,
-        video_views: 20137,
-        video_likes: 177,
-        crawled_date: '2023-11-23 14:01:47',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: '5dJiObgLoXw',
-      },
-
-      {
-        video_comments: 74,
-        video_views: 20138,
-        video_likes: 177,
-        crawled_date: '2023-11-29 04:22:37',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: '5dJiObgLoXw',
-      },
-
-      {
-        video_comments: 74,
-        video_views: 20138,
-        video_likes: 177,
-        crawled_date: '2023-11-30 04:27:26',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: '5dJiObgLoXw',
-      },
-    ],
-    video_id: '5dJiObgLoXw',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 147,
-        video_views: 76630,
-        video_likes: 330,
-        crawled_date: '2023-11-23 14:01:51',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'kcIMWz0s_QU',
-      },
-
-      {
-        video_comments: 147,
-        video_views: 76650,
-        video_likes: 330,
-        crawled_date: '2023-11-29 04:22:57',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'kcIMWz0s_QU',
-      },
-
-      {
-        video_comments: 147,
-        video_views: 76653,
-        video_likes: 330,
-        crawled_date: '2023-11-30 04:27:55',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'kcIMWz0s_QU',
-      },
-    ],
-    video_id: 'kcIMWz0s_QU',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 918,
-        video_views: 321912,
-        video_likes: 2451,
-        crawled_date: '2023-11-23 14:02:19',
-        channel_id: 'UCOYl4i2HmddYjV2eoxVjlUw',
-        video_id: 'tD8H_C7UfrE',
-      },
-
-      {
-        video_comments: 916,
-        video_views: 322697,
-        video_likes: 2455,
-        crawled_date: '2023-11-29 04:24:09',
-        channel_id: 'UCOYl4i2HmddYjV2eoxVjlUw',
-        video_id: 'tD8H_C7UfrE',
-      },
-
-      {
-        video_comments: 916,
-        video_views: 322799,
-        video_likes: 2457,
-        crawled_date: '2023-11-30 04:28:54',
-        channel_id: 'UCOYl4i2HmddYjV2eoxVjlUw',
-        video_id: 'tD8H_C7UfrE',
-      },
-    ],
-    video_id: 'tD8H_C7UfrE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 21,
-        video_views: 12344,
-        video_likes: 99,
-        crawled_date: '2023-11-23 14:02:45',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: 'RuXJwJilx78',
-      },
-
-      {
-        video_comments: 21,
-        video_views: 12353,
-        video_likes: 99,
-        crawled_date: '2023-11-29 04:25:04',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: 'RuXJwJilx78',
-      },
-
-      {
-        video_comments: 21,
-        video_views: 12354,
-        video_likes: 99,
-        crawled_date: '2023-11-30 04:29:32',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: 'RuXJwJilx78',
-      },
-    ],
-    video_id: 'RuXJwJilx78',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 763,
-        video_views: 256385,
-        video_likes: 1840,
-        crawled_date: '2023-11-23 14:02:35',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'XoXWdPJlJ4Q',
-      },
-
-      {
-        video_comments: 762,
-        video_views: 256452,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:25:20',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'XoXWdPJlJ4Q',
-      },
-
-      {
-        video_comments: 762,
-        video_views: 256463,
-        video_likes: 1841,
-        crawled_date: '2023-11-30 04:29:37',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'XoXWdPJlJ4Q',
-      },
-    ],
-    video_id: 'XoXWdPJlJ4Q',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 677,
-        video_likes: 1,
-        crawled_date: '2023-11-23 14:02:33',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'WCxKFCZoK6I',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 677,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:25:25',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'WCxKFCZoK6I',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 677,
-        video_likes: 1,
-        crawled_date: '2023-11-30 04:29:40',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'WCxKFCZoK6I',
-      },
-    ],
-    video_id: 'WCxKFCZoK6I',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 622,
-        video_views: 220400,
-        video_likes: 1145,
-        crawled_date: '2023-11-23 14:02:35',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '5Y4YZsF43Vo',
-      },
-
-      {
-        video_comments: 622,
-        video_views: 220413,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:25:20',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '5Y4YZsF43Vo',
-      },
-
-      {
-        video_comments: 622,
-        video_views: 220415,
-        video_likes: 1145,
-        crawled_date: '2023-11-30 04:29:37',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '5Y4YZsF43Vo',
-      },
-    ],
-    video_id: '5Y4YZsF43Vo',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 8,
-        video_views: 14554,
-        video_likes: 40,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '6ZgSVq9acxM',
-      },
-
-      {
-        video_comments: 8,
-        video_views: 14554,
-        video_likes: 40,
-        crawled_date: '2023-11-29 04:26:21',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '6ZgSVq9acxM',
-      },
-
-      {
-        video_comments: 8,
-        video_views: 14554,
-        video_likes: 40,
-        crawled_date: '2023-11-30 04:30:01',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '6ZgSVq9acxM',
-      },
-    ],
-    video_id: '6ZgSVq9acxM',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:10:46',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'sschy0Q1i3g',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:27:39',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'sschy0Q1i3g',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:30:55',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'sschy0Q1i3g',
-      },
-    ],
-    video_id: 'sschy0Q1i3g',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 32,
-        video_views: 81138,
-        video_likes: 354,
-        crawled_date: '2023-11-23 14:03:57',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'StCHaOF2KeQ',
-      },
-
-      {
-        video_comments: 32,
-        video_views: 81497,
-        video_likes: 353,
-        crawled_date: '2023-11-29 04:28:57',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'StCHaOF2KeQ',
-      },
-
-      {
-        video_comments: 32,
-        video_views: 81544,
-        video_likes: 353,
-        crawled_date: '2023-11-30 04:38:21',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'StCHaOF2KeQ',
-      },
-    ],
-    video_id: 'StCHaOF2KeQ',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 275,
-        video_views: 56279,
-        video_likes: 464,
-        crawled_date: '2023-11-23 14:03:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: '62vqR_HUFss',
-      },
-
-      {
-        video_comments: 275,
-        video_views: 56280,
-        video_likes: 464,
-        crawled_date: '2023-11-29 04:28:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: '62vqR_HUFss',
-      },
-
-      {
-        video_comments: 275,
-        video_views: 56280,
-        video_likes: 464,
-        crawled_date: '2023-11-30 04:38:21',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: '62vqR_HUFss',
-      },
-    ],
-    video_id: '62vqR_HUFss',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 426,
-        video_views: 121027,
-        video_likes: 824,
-        crawled_date: '2023-11-23 14:03:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'Qh944Fc5XeE',
-      },
-
-      {
-        video_comments: 426,
-        video_views: 121027,
-        video_likes: 824,
-        crawled_date: '2023-11-29 04:28:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'Qh944Fc5XeE',
-      },
-
-      {
-        video_comments: 426,
-        video_views: 121027,
-        video_likes: 824,
-        crawled_date: '2023-11-30 04:38:21',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'Qh944Fc5XeE',
-      },
-    ],
-    video_id: 'Qh944Fc5XeE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 9,
-        video_views: 2158,
-        video_likes: 17,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'vqqpkUNXpBc',
-      },
-
-      {
-        video_comments: 9,
-        video_views: 2158,
-        video_likes: 17,
-        crawled_date: '2023-11-29 04:32:14',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'vqqpkUNXpBc',
-      },
-
-      {
-        video_comments: 9,
-        video_views: 2158,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:39:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'vqqpkUNXpBc',
-      },
-    ],
-    video_id: 'vqqpkUNXpBc',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 39,
-        video_views: 32746,
-        video_likes: 100,
-        crawled_date: '2023-11-23 14:09:12',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'QCFTnGmQ8vM',
-      },
-
-      {
-        video_comments: 39,
-        video_views: 32749,
-        video_likes: 100,
-        crawled_date: '2023-11-29 04:35:36',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'QCFTnGmQ8vM',
-      },
-
-      {
-        video_comments: 39,
-        video_views: 32749,
-        video_likes: 100,
-        crawled_date: '2023-11-30 04:43:01',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'QCFTnGmQ8vM',
-      },
-    ],
-    video_id: 'QCFTnGmQ8vM',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 12,
-        video_views: 4246,
-        video_likes: 28,
-        crawled_date: '2023-11-23 14:09:12',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'I59yetYqIvs',
-      },
-
-      {
-        video_comments: 12,
-        video_views: 4246,
-        video_likes: 28,
-        crawled_date: '2023-11-29 04:36:06',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'I59yetYqIvs',
-      },
-
-      {
-        video_comments: 12,
-        video_views: 4246,
-        video_likes: 28,
-        crawled_date: '2023-11-30 04:43:50',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'I59yetYqIvs',
-      },
-    ],
-    video_id: 'I59yetYqIvs',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:10:46',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'lNcOEw71NrM',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:36:33',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'lNcOEw71NrM',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:44:26',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'lNcOEw71NrM',
-      },
-    ],
-    video_id: 'lNcOEw71NrM',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 970,
-        video_views: 477503,
-        video_likes: 5948,
-        crawled_date: '2023-11-23 14:10:58',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: '2XYLA4zmPqo',
-      },
-
-      {
-        video_comments: 970,
-        video_views: 477770,
-        video_likes: 5951,
-        crawled_date: '2023-11-29 04:40:35',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: '2XYLA4zmPqo',
-      },
-
-      {
-        video_comments: 970,
-        video_views: 477803,
-        video_likes: 5952,
-        crawled_date: '2023-11-30 04:46:30',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: '2XYLA4zmPqo',
-      },
-    ],
-    video_id: '2XYLA4zmPqo',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 341,
-        video_views: 154974,
-        video_likes: 2560,
-        crawled_date: '2023-11-23 14:10:58',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'gBbx-JC5mDU',
-      },
-
-      {
-        video_comments: 341,
-        video_views: 154979,
-        video_likes: 2559,
-        crawled_date: '2023-11-29 04:40:35',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'gBbx-JC5mDU',
-      },
-
-      {
-        video_comments: 341,
-        video_views: 154979,
-        video_likes: 2559,
-        crawled_date: '2023-11-30 04:46:30',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'gBbx-JC5mDU',
-      },
-    ],
-    video_id: 'gBbx-JC5mDU',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 27,
-        video_views: 31975,
-        video_likes: 132,
-        crawled_date: '2023-11-23 14:11:42',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Vlbw9MPuP5Y',
-      },
-
-      {
-        video_comments: 28,
-        video_views: 33291,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:42:15',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Vlbw9MPuP5Y',
-      },
-
-      {
-        video_comments: 28,
-        video_views: 33540,
-        video_likes: 140,
-        crawled_date: '2023-11-30 04:47:28',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Vlbw9MPuP5Y',
-      },
-    ],
-    video_id: 'Vlbw9MPuP5Y',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 2,
-        video_views: 797,
-        video_likes: 8,
-        crawled_date: '2023-11-23 14:12:29',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'TKuJiLv-QAQ',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 798,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:43:00',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'TKuJiLv-QAQ',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 798,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:47:49',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'TKuJiLv-QAQ',
-      },
-    ],
-    video_id: 'TKuJiLv-QAQ',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 18,
-        video_views: 3356,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:12:29',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 't_dE8Br3DXE',
-      },
-
-      {
-        video_comments: 18,
-        video_views: 3357,
-        video_likes: 14,
-        crawled_date: '2023-11-29 04:43:00',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 't_dE8Br3DXE',
-      },
-
-      {
-        video_comments: 18,
-        video_views: 3357,
-        video_likes: 14,
-        crawled_date: '2023-11-30 04:47:49',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 't_dE8Br3DXE',
-      },
-    ],
-    video_id: 't_dE8Br3DXE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 4,
-        video_views: 4103,
-        video_likes: 37,
-        crawled_date: '2023-11-23 14:13:10',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: '_kkuo4CORrQ',
-      },
-
-      {
-        video_comments: 4,
-        video_views: 4110,
-        video_likes: 37,
-        crawled_date: '2023-11-29 04:46:12',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: '_kkuo4CORrQ',
-      },
-
-      {
-        video_comments: 4,
-        video_views: 4112,
-        video_likes: 37,
-        crawled_date: '2023-11-30 04:49:17',
-        channel_id: 'UC-7di7QmDGOTZmMlZXJjhaA',
-        video_id: '_kkuo4CORrQ',
-      },
-    ],
-    video_id: '_kkuo4CORrQ',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 349,
-        video_views: 105726,
-        video_likes: 675,
-        crawled_date: '2023-11-23 14:02:24',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'Ij1n0cAas8U',
-      },
-
-      {
-        video_comments: 349,
-        video_views: 105853,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:24:41',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'Ij1n0cAas8U',
-      },
-
-      {
-        video_comments: 349,
-        video_views: 105872,
-        video_likes: 678,
-        crawled_date: '2023-11-30 04:29:13',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'Ij1n0cAas8U',
-      },
-    ],
-    video_id: 'Ij1n0cAas8U',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 54,
-        video_views: 24288,
-        video_likes: 117,
-        crawled_date: '2023-11-23 14:03:58',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'aVjyk2yWYYY',
-      },
-
-      {
-        video_comments: 54,
-        video_views: 24288,
-        video_likes: 117,
-        crawled_date: '2023-11-29 04:28:58',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'aVjyk2yWYYY',
-      },
-
-      {
-        video_comments: 54,
-        video_views: 24288,
-        video_likes: 117,
-        crawled_date: '2023-11-30 04:38:22',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'aVjyk2yWYYY',
-      },
-    ],
-    video_id: 'aVjyk2yWYYY',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 9,
-        video_views: 5925,
-        video_likes: 17,
-        crawled_date: '2023-11-23 14:04:02',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'uLbldHwhLYo',
-      },
-
-      {
-        video_comments: 9,
-        video_views: 5926,
-        video_likes: 17,
-        crawled_date: '2023-11-29 04:28:45',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'uLbldHwhLYo',
-      },
-
-      {
-        video_comments: 9,
-        video_views: 5926,
-        video_likes: 17,
-        crawled_date: '2023-11-30 04:38:16',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'uLbldHwhLYo',
-      },
-    ],
-    video_id: 'uLbldHwhLYo',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 10,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:04:20',
-        channel_id: 'UCBOnjiXy_p7VS6DTtsQnJDw',
-        video_id: 'P08sf2MD6UI',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 10,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:30:28',
-        channel_id: 'UCBOnjiXy_p7VS6DTtsQnJDw',
-        video_id: 'P08sf2MD6UI',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 10,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:38:55',
-        channel_id: 'UCBOnjiXy_p7VS6DTtsQnJDw',
-        video_id: 'P08sf2MD6UI',
-      },
-    ],
-    video_id: 'P08sf2MD6UI',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 151,
-        video_views: 41907,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:04:16',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'OlIGQyjDz_Y',
-      },
-
-      {
-        video_comments: 151,
-        video_views: 41908,
-        video_likes: 374,
-        crawled_date: '2023-11-29 04:30:57',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'OlIGQyjDz_Y',
-      },
-
-      {
-        video_comments: 151,
-        video_views: 41909,
-        video_likes: 374,
-        crawled_date: '2023-11-30 04:39:08',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'OlIGQyjDz_Y',
-      },
-    ],
-    video_id: 'OlIGQyjDz_Y',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 11,
-        video_views: 8744,
-        video_likes: 37,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'QaBXQvKucAQ',
-      },
-
-      {
-        video_comments: 11,
-        video_views: 8744,
-        video_likes: 37,
-        crawled_date: '2023-11-29 04:32:14',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'QaBXQvKucAQ',
-      },
-
-      {
-        video_comments: 11,
-        video_views: 8744,
-        video_likes: 37,
-        crawled_date: '2023-11-30 04:39:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'QaBXQvKucAQ',
-      },
-    ],
-    video_id: 'QaBXQvKucAQ',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 13,
-        video_views: 10872,
-        video_likes: 137,
-        crawled_date: '2023-11-23 14:09:12',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'J-QH839Ynv0',
-      },
-
-      {
-        video_comments: 13,
-        video_views: 10873,
-        video_likes: 137,
-        crawled_date: '2023-11-29 04:36:05',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'J-QH839Ynv0',
-      },
-
-      {
-        video_comments: 13,
-        video_views: 10874,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:43:49',
-        channel_id: 'UC8DtgKoHmslXeN7bRyYcSzg',
-        video_id: 'J-QH839Ynv0',
-      },
-    ],
-    video_id: 'J-QH839Ynv0',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 75,
-        video_views: 5665,
-        video_likes: 341,
-        crawled_date: '2023-11-23 14:09:58',
-        channel_id: 'UCUaYM4Bn-9Hx84FjAbJperw',
-        video_id: '-PZACtTNMvU',
-      },
-
-      {
-        video_comments: 75,
-        video_views: 5667,
-        video_likes: 341,
-        crawled_date: '2023-11-29 04:38:41',
-        channel_id: 'UCUaYM4Bn-9Hx84FjAbJperw',
-        video_id: '-PZACtTNMvU',
-      },
-
-      {
-        video_comments: 75,
-        video_views: 5668,
-        video_likes: 341,
-        crawled_date: '2023-11-30 04:45:31',
-        channel_id: 'UCUaYM4Bn-9Hx84FjAbJperw',
-        video_id: '-PZACtTNMvU',
-      },
-    ],
-    video_id: '-PZACtTNMvU',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 90,
-        video_views: 39975,
-        video_likes: 624,
-        crawled_date: '2023-11-23 14:10:58',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'P--9ouON1t4',
-      },
-
-      {
-        video_comments: 90,
-        video_views: 39984,
-        video_likes: 624,
-        crawled_date: '2023-11-29 04:40:28',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'P--9ouON1t4',
-      },
-
-      {
-        video_comments: 90,
-        video_views: 39984,
-        video_likes: 624,
-        crawled_date: '2023-11-30 04:46:27',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'P--9ouON1t4',
-      },
-    ],
-    video_id: 'P--9ouON1t4',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 183,
-        video_views: 86625,
-        video_likes: 1008,
-        crawled_date: '2023-11-23 14:10:58',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'aWzTGEV4ymU',
-      },
-
-      {
-        video_comments: 183,
-        video_views: 86828,
-        video_likes: 1011,
-        crawled_date: '2023-11-29 04:40:35',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'aWzTGEV4ymU',
-      },
-
-      {
-        video_comments: 183,
-        video_views: 86858,
-        video_likes: 1011,
-        crawled_date: '2023-11-30 04:46:30',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'aWzTGEV4ymU',
-      },
-    ],
-    video_id: 'aWzTGEV4ymU',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 271,
-        video_views: 437123,
-        video_likes: 3400,
-        crawled_date: '2023-11-23 14:11:45',
-        channel_id: 'UCdwnjOkeZx1nfIOn_Ddt8gw',
-        video_id: 'rPBAwQvrNFc',
-      },
-
-      {
-        video_comments: 273,
-        video_views: 460903,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:42:21',
-        channel_id: 'UCdwnjOkeZx1nfIOn_Ddt8gw',
-        video_id: 'rPBAwQvrNFc',
-      },
-
-      {
-        video_comments: 273,
-        video_views: 462808,
-        video_likes: 3574,
-        crawled_date: '2023-11-30 04:47:31',
-        channel_id: 'UCdwnjOkeZx1nfIOn_Ddt8gw',
-        video_id: 'rPBAwQvrNFc',
-      },
-    ],
-    video_id: 'rPBAwQvrNFc',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 191,
-        video_views: 91701,
-        video_likes: 558,
-        crawled_date: '2023-11-23 14:12:17',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: '2PtLU4P6YaU',
-      },
-
-      {
-        video_comments: 191,
-        video_views: 91711,
-        video_likes: 558,
-        crawled_date: '2023-11-29 04:43:18',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: '2PtLU4P6YaU',
-      },
-
-      {
-        video_comments: 191,
-        video_views: 91713,
-        video_likes: 558,
-        crawled_date: '2023-11-30 04:47:55',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: '2PtLU4P6YaU',
-      },
-    ],
-    video_id: '2PtLU4P6YaU',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 1062,
-        video_likes: 2,
-        crawled_date: '2023-11-23 14:12:17',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'koF5UU8PWDw',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 1062,
-        video_likes: 2,
-        crawled_date: '2023-11-29 04:43:18',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'koF5UU8PWDw',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 1062,
-        video_likes: 2,
-        crawled_date: '2023-11-30 04:47:55',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'koF5UU8PWDw',
-      },
-    ],
-    video_id: 'koF5UU8PWDw',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 2,
-        video_views: 1896,
-        video_likes: 9,
-        crawled_date: '2023-11-23 14:12:29',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'RBTMa_JMowc',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1896,
-        video_likes: 9,
-        crawled_date: '2023-11-29 04:42:48',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'RBTMa_JMowc',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1896,
-        video_likes: 9,
-        crawled_date: '2023-11-30 04:47:45',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'RBTMa_JMowc',
-      },
-    ],
-    video_id: 'RBTMa_JMowc',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 85,
-        video_views: 35395,
-        video_likes: 165,
-        crawled_date: '2023-11-23 14:12:17',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'iazvIfKUGT0',
-      },
-
-      {
-        video_comments: 85,
-        video_views: 35447,
-        video_likes: 165,
-        crawled_date: '2023-11-29 04:43:41',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'iazvIfKUGT0',
-      },
-
-      {
-        video_comments: 85,
-        video_views: 35447,
-        video_likes: 165,
-        crawled_date: '2023-11-30 04:48:09',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'iazvIfKUGT0',
-      },
-    ],
-    video_id: 'iazvIfKUGT0',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 21,
-        video_views: 1861,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:12:37',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'hdUz4b0TwII',
-      },
-
-      {
-        video_comments: 21,
-        video_views: 1861,
-        video_likes: 24,
-        crawled_date: '2023-11-29 04:44:16',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'hdUz4b0TwII',
-      },
-
-      {
-        video_comments: 21,
-        video_views: 1861,
-        video_likes: 24,
-        crawled_date: '2023-11-30 04:48:24',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'hdUz4b0TwII',
-      },
-    ],
-    video_id: 'hdUz4b0TwII',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:09:37',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'oKT5fzaOvYo',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:22:06',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'oKT5fzaOvYo',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:26:50',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'oKT5fzaOvYo',
-      },
-    ],
-    video_id: 'oKT5fzaOvYo',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 278,
-        video_views: 138106,
-        video_likes: 772,
-        crawled_date: '2023-11-23 14:02:35',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'kDlCHtmG1Wg',
-      },
-
-      {
-        video_comments: 278,
-        video_views: 138109,
-        video_likes: 772,
-        crawled_date: '2023-11-29 04:25:21',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'kDlCHtmG1Wg',
-      },
-
-      {
-        video_comments: 278,
-        video_views: 138109,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:29:37',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'kDlCHtmG1Wg',
-      },
-    ],
-    video_id: 'kDlCHtmG1Wg',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 3,
-        video_views: 2795,
-        video_likes: 17,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '-IEEbqJmKZg',
-      },
-
-      {
-        video_comments: 3,
-        video_views: 2795,
-        video_likes: 17,
-        crawled_date: '2023-11-29 04:26:20',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '-IEEbqJmKZg',
-      },
-
-      {
-        video_comments: 3,
-        video_views: 2795,
-        video_likes: 17,
-        crawled_date: '2023-11-30 04:30:01',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '-IEEbqJmKZg',
-      },
-    ],
-    video_id: '-IEEbqJmKZg',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 14,
-        video_views: 4168,
-        video_likes: 32,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '9azW0pCw2ao',
-      },
-
-      {
-        video_comments: 14,
-        video_views: 4168,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:26:21',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '9azW0pCw2ao',
-      },
-
-      {
-        video_comments: 14,
-        video_views: 4168,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:30:02',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '9azW0pCw2ao',
-      },
-    ],
-    video_id: '9azW0pCw2ao',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 581,
-        video_views: 403777,
-        video_likes: 1903,
-        crawled_date: '2023-11-23 14:01:51',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'DbUfznr5TbM',
-      },
-
-      {
-        video_comments: 581,
-        video_views: 404115,
-        video_likes: 1906,
-        crawled_date: '2023-11-29 04:22:57',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'DbUfznr5TbM',
-      },
-
-      {
-        video_comments: 581,
-        video_views: 404138,
-        video_likes: 1906,
-        crawled_date: '2023-11-30 04:27:55',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'DbUfznr5TbM',
-      },
-    ],
-    video_id: 'DbUfznr5TbM',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 393,
-        video_views: 195448,
-        video_likes: 955,
-        crawled_date: '2023-11-23 14:08:52',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'UHj-N_D3qew',
-      },
-
-      {
-        video_comments: 393,
-        video_views: 195466,
-        video_likes: 957,
-        crawled_date: '2023-11-29 04:23:46',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'UHj-N_D3qew',
-      },
-
-      {
-        video_comments: 393,
-        video_views: 195466,
-        video_likes: 957,
-        crawled_date: '2023-11-30 04:28:43',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'UHj-N_D3qew',
-      },
-    ],
-    video_id: 'UHj-N_D3qew',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 4552,
-        video_likes: 22,
-        crawled_date: '2023-11-23 14:01:51',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'n3kGGisZVBg',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 4557,
-        video_likes: 22,
-        crawled_date: '2023-11-29 04:22:57',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'n3kGGisZVBg',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 4560,
-        video_likes: 22,
-        crawled_date: '2023-11-30 04:27:55',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'n3kGGisZVBg',
-      },
-    ],
-    video_id: 'n3kGGisZVBg',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 662,
-        video_views: 355014,
-        video_likes: 3213,
-        crawled_date: '2023-11-23 14:02:07',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'kiHgJmlolRw',
-      },
-
-      {
-        video_comments: 670,
-        video_views: 355043,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:24:28',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'kiHgJmlolRw',
-      },
-
-      {
-        video_comments: 671,
-        video_views: 355045,
-        video_likes: 3213,
-        crawled_date: '2023-11-30 04:29:05',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'kiHgJmlolRw',
-      },
-    ],
-    video_id: 'kiHgJmlolRw',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 128,
-        video_views: 35070,
-        video_likes: 299,
-        crawled_date: '2023-11-23 14:04:27',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'CNVuh46TiXI',
-      },
-
-      {
-        video_comments: 128,
-        video_views: 35076,
-        video_likes: 298,
-        crawled_date: '2023-11-29 04:31:24',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'CNVuh46TiXI',
-      },
-
-      {
-        video_comments: 128,
-        video_views: 35076,
-        video_likes: 298,
-        crawled_date: '2023-11-30 04:39:18',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: 'CNVuh46TiXI',
-      },
-    ],
-    video_id: 'CNVuh46TiXI',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:12:13',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'GFmhVyPCNO0',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:32:00',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'GFmhVyPCNO0',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:39:33',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'GFmhVyPCNO0',
-      },
-    ],
-    video_id: 'GFmhVyPCNO0',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 32,
-        video_views: 7130,
-        video_likes: 60,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'EzxhIC-Am2Q',
-      },
-
-      {
-        video_comments: 32,
-        video_views: 7132,
-        video_likes: 60,
-        crawled_date: '2023-11-29 04:32:11',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'EzxhIC-Am2Q',
-      },
-
-      {
-        video_comments: 32,
-        video_views: 7132,
-        video_likes: 60,
-        crawled_date: '2023-11-30 04:39:37',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'EzxhIC-Am2Q',
-      },
-    ],
-    video_id: 'EzxhIC-Am2Q',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 223,
-        video_views: 34207,
-        video_likes: 311,
-        crawled_date: '2023-11-23 14:03:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'tI7PkHSJGvI',
-      },
-
-      {
-        video_comments: 223,
-        video_views: 34207,
-        video_likes: 311,
-        crawled_date: '2023-11-29 04:28:58',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'tI7PkHSJGvI',
-      },
-
-      {
-        video_comments: 223,
-        video_views: 34207,
-        video_likes: 311,
-        crawled_date: '2023-11-30 04:38:21',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'tI7PkHSJGvI',
-      },
-    ],
-    video_id: 'tI7PkHSJGvI',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 8,
-        video_views: 3803,
-        video_likes: 15,
-        crawled_date: '2023-11-23 14:04:08',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'pDPzegwKmvc',
-      },
-
-      {
-        video_comments: 8,
-        video_views: 3803,
-        video_likes: 15,
-        crawled_date: '2023-11-29 04:29:30',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'pDPzegwKmvc',
-      },
-
-      {
-        video_comments: 8,
-        video_views: 3803,
-        video_likes: 15,
-        crawled_date: '2023-11-30 04:38:33',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'pDPzegwKmvc',
-      },
-    ],
-    video_id: 'pDPzegwKmvc',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 62,
-        video_views: 69111,
-        video_likes: 293,
-        crawled_date: '2023-11-23 14:10:15',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'z7HlKHjLWaY',
-      },
-
-      {
-        video_comments: 61,
-        video_views: 70472,
-        video_likes: 295,
-        crawled_date: '2023-11-29 04:38:53',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'z7HlKHjLWaY',
-      },
-
-      {
-        video_comments: 61,
-        video_views: 70660,
-        video_likes: 295,
-        crawled_date: '2023-11-30 04:45:39',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'z7HlKHjLWaY',
-      },
-    ],
-    video_id: 'z7HlKHjLWaY',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 4,
-        video_views: 812,
-        video_likes: 8,
-        crawled_date: '2023-11-23 14:10:32',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'p8e7N6Ya7Ps',
-      },
-
-      {
-        video_comments: 4,
-        video_views: 812,
-        video_likes: 8,
-        crawled_date: '2023-11-29 04:39:12',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'p8e7N6Ya7Ps',
-      },
-
-      {
-        video_comments: 4,
-        video_views: 812,
-        video_likes: 8,
-        crawled_date: '2023-11-30 04:45:46',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: 'p8e7N6Ya7Ps',
-      },
-    ],
-    video_id: 'p8e7N6Ya7Ps',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 295,
-        video_views: 305784,
-        video_likes: 1512,
-        crawled_date: '2023-11-23 14:10:52',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'O0UAZmOnqLE',
-      },
-
-      {
-        video_comments: 295,
-        video_views: 305787,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:36:36',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'O0UAZmOnqLE',
-      },
-
-      {
-        video_comments: 295,
-        video_views: 305790,
-        video_likes: 1512,
-        crawled_date: '2023-11-30 04:44:28',
-        channel_id: 'UCVmz2Fi5vxHJMovZGA9URLg',
-        video_id: 'O0UAZmOnqLE',
-      },
-    ],
-    video_id: 'O0UAZmOnqLE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 176,
-        video_views: 38973,
-        video_likes: 252,
-        crawled_date: '2023-11-23 14:10:08',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '_afjJhmzJBA',
-      },
-
-      {
-        video_comments: 176,
-        video_views: 38975,
-        video_likes: 252,
-        crawled_date: '2023-11-29 04:38:33',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '_afjJhmzJBA',
-      },
-
-      {
-        video_comments: 176,
-        video_views: 38975,
-        video_likes: 252,
-        crawled_date: '2023-11-30 04:45:27',
-        channel_id: 'UCUnA7OC8mkGgm5qOj-d7V8g',
-        video_id: '_afjJhmzJBA',
-      },
-    ],
-    video_id: '_afjJhmzJBA',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 117,
-        video_views: 29953,
-        video_likes: 729,
-        crawled_date: '2023-11-23 14:10:58',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'Eq5UfB-Eg6I',
-      },
-
-      {
-        video_comments: 117,
-        video_views: 29953,
-        video_likes: 729,
-        crawled_date: '2023-11-29 04:40:35',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'Eq5UfB-Eg6I',
-      },
-
-      {
-        video_comments: 117,
-        video_views: 29953,
-        video_likes: 729,
-        crawled_date: '2023-11-30 04:46:30',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'Eq5UfB-Eg6I',
-      },
-    ],
-    video_id: 'Eq5UfB-Eg6I',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 138,
-        video_views: 106812,
-        video_likes: 1131,
-        crawled_date: '2023-11-23 14:12:29',
-        channel_id: 'UC5FvzLMVNrTMW-ycrW-4KyA',
-        video_id: '_uY5bcfjmtw',
-      },
-
-      {
-        video_comments: 138,
-        video_views: 106836,
-        video_likes: 1131,
-        crawled_date: '2023-11-29 04:43:00',
-        channel_id: 'UC5FvzLMVNrTMW-ycrW-4KyA',
-        video_id: '_uY5bcfjmtw',
-      },
-
-      {
-        video_comments: 138,
-        video_views: 106839,
-        video_likes: 1131,
-        crawled_date: '2023-11-30 04:47:49',
-        channel_id: 'UC5FvzLMVNrTMW-ycrW-4KyA',
-        video_id: '_uY5bcfjmtw',
-      },
-    ],
-    video_id: '_uY5bcfjmtw',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 3,
-        video_views: 2412,
-        video_likes: 10,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'WTJm-wJlnaM',
-      },
-
-      {
-        video_comments: 3,
-        video_views: 2416,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:25:55',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'WTJm-wJlnaM',
-      },
-
-      {
-        video_comments: 3,
-        video_views: 2418,
-        video_likes: 10,
-        crawled_date: '2023-11-30 04:29:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'WTJm-wJlnaM',
-      },
-    ],
-    video_id: 'WTJm-wJlnaM',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 10,
-        video_views: 3464,
-        video_likes: 18,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '4hPixp2wmMA',
-      },
-
-      {
-        video_comments: 10,
-        video_views: 3464,
-        video_likes: 18,
-        crawled_date: '2023-11-29 04:26:20',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '4hPixp2wmMA',
-      },
-
-      {
-        video_comments: 10,
-        video_views: 3464,
-        video_likes: 18,
-        crawled_date: '2023-11-30 04:30:01',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '4hPixp2wmMA',
-      },
-    ],
-    video_id: '4hPixp2wmMA',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 24,
-        video_views: 16840,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'yv2kTZ1KfKE',
-      },
-
-      {
-        video_comments: 24,
-        video_views: 16840,
-        video_likes: 62,
-        crawled_date: '2023-11-29 04:26:21',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'yv2kTZ1KfKE',
-      },
-
-      {
-        video_comments: 24,
-        video_views: 16840,
-        video_likes: 62,
-        crawled_date: '2023-11-30 04:30:01',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'yv2kTZ1KfKE',
-      },
-    ],
-    video_id: 'yv2kTZ1KfKE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 63,
-        video_views: 53396,
-        video_likes: 129,
-        crawled_date: '2023-11-23 14:02:53',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'oF3qBDOFYxI',
-      },
-
-      {
-        video_comments: 63,
-        video_views: 53396,
-        video_likes: 129,
-        crawled_date: '2023-11-29 04:26:21',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'oF3qBDOFYxI',
-      },
-
-      {
-        video_comments: 63,
-        video_views: 53396,
-        video_likes: 129,
-        crawled_date: '2023-11-30 04:30:01',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'oF3qBDOFYxI',
-      },
-    ],
-    video_id: 'oF3qBDOFYxI',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:08:49',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'kFt2olS8fKg',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:27:12',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'kFt2olS8fKg',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:30:32',
-        channel_id: 'UCHBzepJnvhFXCQDT4B181hg',
-        video_id: 'kFt2olS8fKg',
-      },
-    ],
-    video_id: 'kFt2olS8fKg',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 15,
-        video_views: 15320,
-        video_likes: 145,
-        crawled_date: '2023-11-23 14:03:30',
-        channel_id: 'UCgrjiQULBgV-uyS5JDiUDMQ',
-        video_id: 'ZlRJRSs5_S0',
-      },
-
-      {
-        video_comments: 15,
-        video_views: 15320,
-        video_likes: 145,
-        crawled_date: '2023-11-29 04:28:20',
-        channel_id: 'UCgrjiQULBgV-uyS5JDiUDMQ',
-        video_id: 'ZlRJRSs5_S0',
-      },
-
-      {
-        video_comments: 15,
-        video_views: 15320,
-        video_likes: 145,
-        crawled_date: '2023-11-30 04:31:16',
-        channel_id: 'UCgrjiQULBgV-uyS5JDiUDMQ',
-        video_id: 'ZlRJRSs5_S0',
-      },
-    ],
-    video_id: 'ZlRJRSs5_S0',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 129,
-        video_views: 41207,
-        video_likes: 529,
-        crawled_date: '2023-11-23 14:04:03',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'assWvgMB6Lg',
-      },
-
-      {
-        video_comments: 131,
-        video_views: 41222,
-        video_likes: 529,
-        crawled_date: '2023-11-29 04:28:47',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'assWvgMB6Lg',
-      },
-
-      {
-        video_comments: 131,
-        video_views: 41226,
-        video_likes: 529,
-        crawled_date: '2023-11-30 04:38:16',
-        channel_id: 'UCmxfBO-8l9ZOt5NCnZHoJTw',
-        video_id: 'assWvgMB6Lg',
-      },
-    ],
-    video_id: 'assWvgMB6Lg',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 5,
-        video_views: 6816,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'ZQ77CjmyQ7w',
-      },
-
-      {
-        video_comments: 5,
-        video_views: 6816,
-        video_likes: 49,
-        crawled_date: '2023-11-29 04:32:13',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'ZQ77CjmyQ7w',
-      },
-
-      {
-        video_comments: 5,
-        video_views: 6816,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:39:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'ZQ77CjmyQ7w',
-      },
-    ],
-    video_id: 'ZQ77CjmyQ7w',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 105,
-        video_views: 223849,
-        video_likes: 550,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'iQ8q3Th8I5k',
-      },
-
-      {
-        video_comments: 105,
-        video_views: 223851,
-        video_likes: 550,
-        crawled_date: '2023-11-29 04:32:13',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'iQ8q3Th8I5k',
-      },
-
-      {
-        video_comments: 105,
-        video_views: 223852,
-        video_likes: 550,
-        crawled_date: '2023-11-30 04:39:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'iQ8q3Th8I5k',
-      },
-    ],
-    video_id: 'iQ8q3Th8I5k',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 2,
-        video_views: 1541,
-        video_likes: 7,
-        crawled_date: '2023-11-23 14:04:43',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'foqJyOBrgB4',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1541,
-        video_likes: 7,
-        crawled_date: '2023-11-29 04:32:14',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'foqJyOBrgB4',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1541,
-        video_likes: 7,
-        crawled_date: '2023-11-30 04:39:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: 'foqJyOBrgB4',
-      },
-    ],
-    video_id: 'foqJyOBrgB4',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 105,
-        video_views: 87025,
-        video_likes: 512,
-        crawled_date: '2023-11-23 14:04:16',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vlky1y9RLa8',
-      },
-
-      {
-        video_comments: 105,
-        video_views: 87026,
-        video_likes: 512,
-        crawled_date: '2023-11-29 04:30:15',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vlky1y9RLa8',
-      },
-
-      {
-        video_comments: 105,
-        video_views: 87026,
-        video_likes: 512,
-        crawled_date: '2023-11-30 04:38:49',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vlky1y9RLa8',
-      },
-    ],
-    video_id: 'vlky1y9RLa8',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 10,
-        video_views: 3335,
-        video_likes: 22,
-        crawled_date: '2023-11-23 14:04:25',
-        channel_id: 'UCOshyR9qFbR6w3DsHc9lQPA',
-        video_id: 'nfPOyvXpPok',
-      },
-
-      {
-        video_comments: 10,
-        video_views: 3335,
-        video_likes: 22,
-        crawled_date: '2023-11-29 04:30:55',
-        channel_id: 'UCOshyR9qFbR6w3DsHc9lQPA',
-        video_id: 'nfPOyvXpPok',
-      },
-
-      {
-        video_comments: 10,
-        video_views: 3335,
-        video_likes: 22,
-        crawled_date: '2023-11-30 04:39:08',
-        channel_id: 'UCOshyR9qFbR6w3DsHc9lQPA',
-        video_id: 'nfPOyvXpPok',
-      },
-    ],
-    video_id: 'nfPOyvXpPok',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 198,
-        video_views: 84025,
-        video_likes: 644,
-        crawled_date: '2023-11-23 14:09:12',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'IM3jvhLEjY4',
-      },
-
-      {
-        video_comments: 198,
-        video_views: 84025,
-        video_likes: 644,
-        crawled_date: '2023-11-29 04:36:02',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'IM3jvhLEjY4',
-      },
-
-      {
-        video_comments: 198,
-        video_views: 84025,
-        video_likes: 644,
-        crawled_date: '2023-11-30 04:43:46',
-        channel_id: 'UCtphR2lNRmqH9Z0tOyu0t4A',
-        video_id: 'IM3jvhLEjY4',
-      },
-    ],
-    video_id: 'IM3jvhLEjY4',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 64,
-        video_views: 25539,
-        video_likes: 158,
-        crawled_date: '2023-11-23 14:10:15',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'EzCepH28xAE',
-      },
-
-      {
-        video_comments: 64,
-        video_views: 25561,
-        video_likes: 158,
-        crawled_date: '2023-11-29 04:38:54',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'EzCepH28xAE',
-      },
-
-      {
-        video_comments: 64,
-        video_views: 25563,
-        video_likes: 158,
-        crawled_date: '2023-11-30 04:45:39',
-        channel_id: 'UClzVd1hH9YHaoApNwnncmOQ',
-        video_id: 'EzCepH28xAE',
-      },
-    ],
-    video_id: 'EzCepH28xAE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:12:19',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'PeThEcei-MQ',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:37:33',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'PeThEcei-MQ',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:44:51',
-        channel_id: 'UCGt6h41qCj0i4WR6cYFYrvA',
-        video_id: 'PeThEcei-MQ',
-      },
-    ],
-    video_id: 'PeThEcei-MQ',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 20,
-        video_views: 13634,
-        video_likes: 126,
-        crawled_date: '2023-11-23 14:10:12',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vISuIOx3HpY',
-      },
-
-      {
-        video_comments: 20,
-        video_views: 13634,
-        video_likes: 125,
-        crawled_date: '2023-11-29 04:38:39',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vISuIOx3HpY',
-      },
-
-      {
-        video_comments: 20,
-        video_views: 13635,
-        video_likes: 125,
-        crawled_date: '2023-11-30 04:45:29',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'vISuIOx3HpY',
-      },
-    ],
-    video_id: 'vISuIOx3HpY',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 37,
-        video_views: 125738,
-        video_likes: 255,
-        crawled_date: '2023-11-23 14:10:32',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: '-30AWgXbQDA',
-      },
-
-      {
-        video_comments: 37,
-        video_views: 125760,
-        video_likes: 255,
-        crawled_date: '2023-11-29 04:39:14',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: '-30AWgXbQDA',
-      },
-
-      {
-        video_comments: 37,
-        video_views: 125761,
-        video_likes: 255,
-        crawled_date: '2023-11-30 04:45:48',
-        channel_id: 'UC-N9O2cNpA5nzJiw-Ap6_gQ',
-        video_id: '-30AWgXbQDA',
-      },
-    ],
-    video_id: '-30AWgXbQDA',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-23 14:10:34',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: '7FaUy7ViAig',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:39:34',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: '7FaUy7ViAig',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 0,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:45:58',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: '7FaUy7ViAig',
-      },
-    ],
-    video_id: '7FaUy7ViAig',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 1,
-        video_views: 2924,
-        video_likes: 6,
-        crawled_date: '2023-11-23 14:10:34',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'eRno_MjlCPk',
-      },
-
-      {
-        video_comments: 1,
-        video_views: 2924,
-        video_likes: 6,
-        crawled_date: '2023-11-29 04:39:35',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'eRno_MjlCPk',
-      },
-
-      {
-        video_comments: 1,
-        video_views: 2924,
-        video_likes: 6,
-        crawled_date: '2023-11-30 04:45:58',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'eRno_MjlCPk',
-      },
-    ],
-    video_id: 'eRno_MjlCPk',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 7,
-        video_views: 3754,
-        video_likes: 20,
-        crawled_date: '2023-11-23 14:11:07',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '04b0v0QP7gE',
-      },
-
-      {
-        video_comments: 7,
-        video_views: 3754,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:40:49',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '04b0v0QP7gE',
-      },
-
-      {
-        video_comments: 7,
-        video_views: 3754,
-        video_likes: 20,
-        crawled_date: '2023-11-30 04:46:38',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '04b0v0QP7gE',
-      },
-    ],
-    video_id: '04b0v0QP7gE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 7,
-        video_views: 3165,
-        video_likes: 23,
-        crawled_date: '2023-11-23 14:11:07',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '54CcbZSg9c4',
-      },
-
-      {
-        video_comments: 7,
-        video_views: 3165,
-        video_likes: 23,
-        crawled_date: '2023-11-29 04:40:52',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '54CcbZSg9c4',
-      },
-
-      {
-        video_comments: 7,
-        video_views: 3165,
-        video_likes: 23,
-        crawled_date: '2023-11-30 04:46:39',
-        channel_id: 'UC4aekNNF8rX1ykQUmwuTRFg',
-        video_id: '54CcbZSg9c4',
-      },
-    ],
-    video_id: '54CcbZSg9c4',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 28,
-        video_views: 972,
-        video_likes: 30,
-        crawled_date: '2023-11-23 14:11:27',
-        channel_id: 'UCR3sppptOxoliY0RfpwB__w',
-        video_id: 'Gc81R3iRbMo',
-      },
-
-      {
-        video_comments: 28,
-        video_views: 972,
-        video_likes: 30,
-        crawled_date: '2023-11-29 04:41:25',
-        channel_id: 'UCR3sppptOxoliY0RfpwB__w',
-        video_id: 'Gc81R3iRbMo',
-      },
-
-      {
-        video_comments: 28,
-        video_views: 972,
-        video_likes: 30,
-        crawled_date: '2023-11-30 04:46:59',
-        channel_id: 'UCR3sppptOxoliY0RfpwB__w',
-        video_id: 'Gc81R3iRbMo',
-      },
-    ],
-    video_id: 'Gc81R3iRbMo',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 2,
-        video_views: 1652,
-        video_likes: 19,
-        crawled_date: '2023-11-23 14:11:42',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Dk7VbnZ2Hv4',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1659,
-        video_likes: 19,
-        crawled_date: '2023-11-29 04:42:16',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Dk7VbnZ2Hv4',
-      },
-
-      {
-        video_comments: 2,
-        video_views: 1659,
-        video_likes: 19,
-        crawled_date: '2023-11-30 04:47:28',
-        channel_id: 'UC05hnXU790Y_FMIx00m93gQ',
-        video_id: 'Dk7VbnZ2Hv4',
-      },
-    ],
-    video_id: 'Dk7VbnZ2Hv4',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 0,
-        video_views: 1650,
-        video_likes: 5,
-        crawled_date: '2023-11-23 14:12:29',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'H4j8YgAEfM8',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 1650,
-        video_likes: 0,
-        crawled_date: '2023-11-29 04:42:48',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'H4j8YgAEfM8',
-      },
-
-      {
-        video_comments: 0,
-        video_views: 1650,
-        video_likes: 5,
-        crawled_date: '2023-11-30 04:47:45',
-        channel_id: 'UChNaHNz0yWwEqw5xGo3UudA',
-        video_id: 'H4j8YgAEfM8',
-      },
-    ],
-    video_id: 'H4j8YgAEfM8',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 169,
-        video_views: 310309,
-        video_likes: 2053,
-        crawled_date: '2023-11-23 14:12:26',
-        channel_id: 'UCugNO83_V7xZLzCsjpABGeg',
-        video_id: 'eGbC7O4J2f8',
-      },
-
-      {
-        video_comments: 170,
-        video_views: 311023,
-        video_likes: 2057,
-        crawled_date: '2023-11-29 04:43:52',
-        channel_id: 'UCugNO83_V7xZLzCsjpABGeg',
-        video_id: 'eGbC7O4J2f8',
-      },
-
-      {
-        video_comments: 170,
-        video_views: 311134,
-        video_likes: 0,
-        crawled_date: '2023-11-30 04:48:14',
-        channel_id: 'UCugNO83_V7xZLzCsjpABGeg',
-        video_id: 'eGbC7O4J2f8',
-      },
-    ],
-    video_id: 'eGbC7O4J2f8',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 71,
-        video_views: 20177,
-        video_likes: 139,
-        crawled_date: '2023-11-23 14:12:43',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'DOw0vvmyoLE',
-      },
-
-      {
-        video_comments: 71,
-        video_views: 20177,
-        video_likes: 139,
-        crawled_date: '2023-11-29 04:44:32',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'DOw0vvmyoLE',
-      },
-
-      {
-        video_comments: 71,
-        video_views: 20177,
-        video_likes: 139,
-        crawled_date: '2023-11-30 04:48:32',
-        channel_id: 'UC6UPKcYILeeC0nrXqdWc6Wg',
-        video_id: 'DOw0vvmyoLE',
-      },
-    ],
-    video_id: 'DOw0vvmyoLE',
-  },
-  {
-    video_history: [
-      {
-        video_comments: 332,
-        video_views: 118110,
-        video_likes: 1763,
-        crawled_date: '2023-11-23 14:13:19',
-        channel_id: 'UCFvQpH3ZAkW7_Y4WkvrFYbQ',
-        video_id: 'RWXqvVJokXQ',
-      },
+import { IVideoHistory } from '@Apps/modules/video/interface/find-video.os.res';
 
-      {
-        video_comments: 333,
-        video_views: 118506,
-        video_likes: 1772,
-        crawled_date: '2023-11-29 04:46:15',
-        channel_id: 'UCFvQpH3ZAkW7_Y4WkvrFYbQ',
-        video_id: 'RWXqvVJokXQ',
-      },
+// 데이터 비교군
+export const oneToTen: IVideoHistory[] = [
+  {
+    _index: 'video-20',
+    _id: 'mzwyOrDzCx8',
+    _score: 12.888937,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2443,
+                video_likes: 76,
+                crawled_date: '2023-12-01 10:51:32',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2443,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:23',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2452,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:26',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'U2YTUI-d4lw',
+    _score: 12.555458,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 443,
+                video_likes: 25,
+                crawled_date: '2023-12-01 10:56:27',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 444,
+                video_likes: 25,
+                crawled_date: '2023-12-02 22:41:46',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 444,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:47',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'DDCTJD1WWEw',
+    _score: 11.88429,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12479,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:51:40',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12483,
+                video_likes: 297,
+                crawled_date: '2023-12-02 22:39:26',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12498,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:28',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'xUjX-ESnBUU',
+    _score: 11.018515,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2942,
+                video_likes: 50,
+                crawled_date: '2023-12-01 11:01:51',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2944,
+                video_likes: 50,
+                crawled_date: '2023-12-02 22:47:41',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2957,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:55',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'mjouYqPGaPA',
+    _score: 10.998594,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3184,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:53:29',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3186,
+                video_likes: 18,
+                crawled_date: '2023-12-02 22:40:15',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3200,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:15',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'IuCjJ2g5TtM',
+    _score: 10.787593,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:50:58',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:09',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:00',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'EX7kPe6lKb0',
+    _score: 10.771958,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7252,
+                video_likes: 158,
+                crawled_date: '2023-12-01 10:55:02',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7256,
+                video_likes: 159,
+                crawled_date: '2023-12-02 22:41:08',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7260,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:47',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RVfQAqas3d8',
+    _score: 10.70693,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:52:39',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:47',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:12',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RDqta4lqawY',
+    _score: 10.663538,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 24461,
+                video_likes: 107,
+                crawled_date: '2023-12-01 11:02:29',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 24603,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:48:30',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 25590,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:34',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'gC8g-CuAQus',
+    _score: 10.617884,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 502,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:27',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 502,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:54',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 504,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:17',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'iBSxZuYxPBQ',
+    _score: 10.530831,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:47',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:40:57',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:33',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'f-PnqdEyz98',
+    _score: 10.506075,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14772,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:08',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14786,
+                video_likes: 218,
+                crawled_date: '2023-12-02 22:40:39',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14819,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'lrYm2s1L-ug',
+    _score: 10.383951,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 240,
+                crawled_date: '2023-12-01 11:02:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 240,
+                crawled_date: '2023-12-02 22:48:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '4kzTym7DQNw',
+    _score: 10.368401,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:55:28',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 274,
+                crawled_date: '2023-12-02 22:41:20',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'CUMIlKIbn5A',
+    _score: 10.316633,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:55:29',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 375,
+                crawled_date: '2023-12-02 22:41:21',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'sFCQtrtUBuk',
+    _score: 10.24822,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 2,
+                crawled_date: '2023-12-01 10:49:40',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 2,
+                crawled_date: '2023-12-02 22:38:30',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:25',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'YjjlEojXoc4',
+    _score: 10.219301,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 6986,
+                video_likes: 130,
+                crawled_date: '2023-12-01 10:51:58',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 6994,
+                video_likes: 130,
+                crawled_date: '2023-12-02 22:39:31',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 7054,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:41',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'UBXdqxn0WTo',
+    _score: 10.214366,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47093,
+                video_likes: 530,
+                crawled_date: '2023-12-01 10:51:59',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47097,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:31',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47106,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:41',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'OQyzC2MeV6c',
+    _score: 10.192089,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 3,
+                crawled_date: '2023-12-01 10:51:22',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 3,
+                crawled_date: '2023-12-02 22:39:18',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:19',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '6OcF21FfZzs',
+    _score: 10.132117,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 7,
+                crawled_date: '2023-12-01 11:01:42',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 7,
+                crawled_date: '2023-12-02 22:47:30',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:49',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'NjM_9lQx5nk',
+    _score: 10.070824,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2544,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:08',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2546,
+                video_likes: 72,
+                crawled_date: '2023-12-02 22:40:39',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2548,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'Ma00iCBp4-k',
+    _score: 10.017521,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 263,
+                video_likes: 13,
+                crawled_date: '2023-12-01 11:01:36',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 262,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:47:22',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 265,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:45',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'WEdMk11w3bM',
+    _score: 9.890883,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 26,
+                crawled_date: '2023-12-01 11:01:29',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:47:12',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'ovj9TirNr2M',
+    _score: 9.769374,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:23',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:13',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'bTEDMtBa7bQ',
+    _score: 9.719983,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:52:40',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 170,
+                crawled_date: '2023-12-02 22:39:47',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:12',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'maGDBae-HdE',
+    _score: 9.708152,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1232,
+                video_likes: 46,
+                crawled_date: '2023-12-01 11:04:19',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1232,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:47',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1234,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vlOJhRHUrDU',
+    _score: 9.67451,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 792,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:08',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 793,
+                video_likes: 28,
+                crawled_date: '2023-12-02 22:40:39',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 793,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'C5IKxN8oaU0',
+    _score: 9.666898,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1188,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:55:28',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1188,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:41:20',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1189,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dza5o_C8vvU',
+    _score: 9.658567,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:02:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 623,
+                crawled_date: '2023-12-02 22:48:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'YnbyXFdUd3k',
+    _score: 9.535466,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 556,
+                video_likes: 33,
+                crawled_date: '2023-12-01 11:01:28',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 556,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:47:11',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 558,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'jdH2MJy8-Sc',
+    _score: 9.508667,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 936,
+                video_likes: 43,
+                crawled_date: '2023-12-01 11:03:56',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 937,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:33',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 937,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:53',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'At6zlQOx_dI',
+    _score: 9.505642,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1345,
+                video_likes: 34,
+                crawled_date: '2023-12-01 11:01:29',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1346,
+                video_likes: 34,
+                crawled_date: '2023-12-02 22:47:12',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1351,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'LW3pIQM8KuY',
+    _score: 9.479518,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 9,
+                crawled_date: '2023-12-01 11:03:25',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 9,
+                crawled_date: '2023-12-02 22:49:14',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:26',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'C-Wf5RjDrVY',
+    _score: 9.464504,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 13,
+                crawled_date: '2023-12-01 11:00:25',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 13,
+                crawled_date: '2023-12-02 22:45:48',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:02',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vr18xoddjUE',
+    _score: 9.4215,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:03:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 15,
+                crawled_date: '2023-12-02 22:49:33',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:52',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_SYyQenqsaM',
+    _score: 9.368015,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25983,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:19',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25983,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:47',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25984,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'UQrAYsh_9zs',
+    _score: 9.364477,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:49:40',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 14,
+                crawled_date: '2023-12-02 22:38:30',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:25',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'Iiao7FjBpHk',
+    _score: 9.35797,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2361,
+                video_likes: 52,
+                crawled_date: '2023-12-01 10:49:58',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2363,
+                video_likes: 53,
+                crawled_date: '2023-12-02 22:38:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2368,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:35',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'eerK77e1-pY',
+    _score: 9.28481,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 765,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:08',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 766,
+                video_likes: 54,
+                crawled_date: '2023-12-02 22:40:39',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 766,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dAf3-KwI9ls',
+    _score: 9.279458,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3080,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:03:23',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3081,
+                video_likes: 88,
+                crawled_date: '2023-12-02 22:49:12',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3085,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:24',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'qBTlETs2nQ0',
+    _score: 9.2506,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:52:40',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 304,
+                crawled_date: '2023-12-02 22:39:47',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:14',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '4RguEXWSxIU',
+    _score: 9.236161,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1904,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:01:29',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1904,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:47:11',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1905,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'pjvpJdd80zg',
+    _score: 9.219634,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2126,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:01',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2126,
+                video_likes: 47,
+                crawled_date: '2023-12-02 22:49:36',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2131,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:56',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'behotYsFUNA',
+    _score: 9.2101965,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:51:58',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:31',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:40',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'jnyPjS4VBGg',
+    _score: 9.093592,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 602,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:51:25',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 602,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:39:20',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 607,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:20',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'w66Z3JUW2yo',
+    _score: 9.010567,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3412,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:00:13',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3412,
+                video_likes: 53,
+                crawled_date: '2023-12-02 22:45:25',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3415,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:38:42',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '8epTHuOohaM',
+    _score: 9.005735,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 775,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:54:33',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 775,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:40:51',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 776,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:19',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'J5ZkMQjQqZA',
+    _score: 8.82898,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 485,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:02:13',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 488,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:48:08',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 497,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:16',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '2QF4P1zCaHA',
+    _score: 8.74391,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14128,
+                video_likes: 408,
+                crawled_date: '2023-12-01 10:49:59',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14139,
+                video_likes: 407,
+                crawled_date: '2023-12-02 22:38:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14185,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:36',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dQo31aamxAc',
+    _score: 8.741487,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6949,
+                video_likes: 174,
+                crawled_date: '2023-12-01 10:49:58',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6950,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:38:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6954,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:35',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'KMo8ESa1aSk',
+    _score: 8.713229,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-01 10:55:48',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:41:31',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:18',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'iro2PkUuEME',
+    _score: 8.6924925,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:27',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 16,
+                crawled_date: '2023-12-02 22:49:53',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:16',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RcLhkKQymIw',
+    _score: 8.64626,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 112,
+                crawled_date: '2023-12-01 11:04:19',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:47',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:12',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '1hxP6okUOos',
+    _score: 8.6298895,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 5,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3256,
+                video_likes: 110,
+                crawled_date: '2023-12-01 10:53:14',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3256,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:40:03',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3279,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:59',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_h_Engb4NFg',
+    _score: 8.284696,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 644,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:23',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 644,
+                video_likes: 0,
+                crawled_date: '2023-12-02 22:49:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 645,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:13',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'wqqUl5YUheY',
+    _score: 8.13938,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20540,
+                video_likes: 330,
+                crawled_date: '2023-12-01 11:01:14',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20581,
+                video_likes: 330,
+                crawled_date: '2023-12-02 22:46:49',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20762,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:31',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_W9dBpuhH7s',
+    _score: 7.863328,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8411,
+                video_likes: 98,
+                crawled_date: '2023-12-01 11:04:19',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8413,
+                video_likes: 98,
+                crawled_date: '2023-12-02 22:49:47',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8443,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'ydVFJQYYdn8',
+    _score: 7.5344605,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 451,
+                video_likes: 18,
+                crawled_date: '2023-12-01 11:03:57',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 452,
+                video_likes: 18,
+                crawled_date: '2023-12-02 22:49:33',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 460,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:53',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'eizsQdRRhNk',
+    _score: 7.3551445,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:04:19',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 25,
+                crawled_date: '2023-12-02 22:49:47',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vemZ87D8rXU',
+    _score: 7.0532894,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 5,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 6,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4823,
+                video_likes: 0,
+                crawled_date: '2023-12-01 11:02:29',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4823,
+                video_likes: 103,
+                crawled_date: '2023-12-02 22:48:30',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4825,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:34',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+];
 
-      {
-        video_comments: 333,
-        video_views: 118549,
-        video_likes: 1773,
-        crawled_date: '2023-11-30 04:49:18',
-        channel_id: 'UCFvQpH3ZAkW7_Y4WkvrFYbQ',
-        video_id: 'RWXqvVJokXQ',
-      },
-    ],
-    video_id: 'RWXqvVJokXQ',
+export const fourToTen: IVideoHistory[] = [
+  {
+    _index: 'video-20',
+    _id: 'mzwyOrDzCx8',
+    _score: 12.856215,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2452,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:26',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2452,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:08',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mzwyOrDzCx8',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 2456,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:12',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'mzwyOrDzCx8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'U2YTUI-d4lw',
+    _score: 12.525526,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 444,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:47',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 444,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:49:11',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'U2YTUI-d4lw',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 444,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:08:17',
+                channel_id: 'UCjf8_OSNvMwAzj9z-_rSWsw',
+                video_id: 'U2YTUI-d4lw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'DDCTJD1WWEw',
+    _score: 11.852943,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12498,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:28',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12500,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:14',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'DDCTJD1WWEw',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 12499,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:17',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'DDCTJD1WWEw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'xUjX-ESnBUU',
+    _score: 11.025677,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2957,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:55',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2959,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:01',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'xUjX-ESnBUU',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 2964,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:14:23',
+                channel_id: 'UCssVWsvAyLzoJQtVy78WTgg',
+                video_id: 'xUjX-ESnBUU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'mjouYqPGaPA',
+    _score: 10.971101,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3200,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:15',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3207,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:46:44',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'mjouYqPGaPA',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 3,
+                video_views: 3211,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:22',
+                channel_id: 'UCRZPuKvyKeuaq84Wge3yKhg',
+                video_id: 'mjouYqPGaPA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'EX7kPe6lKb0',
+    _score: 10.7971325,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7260,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:47',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7264,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:48:13',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'EX7kPe6lKb0',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 7264,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:07:45',
+                channel_id: 'UCD3UooIG6x6vxFOhHwYEXEw',
+                video_id: 'EX7kPe6lKb0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'IuCjJ2g5TtM',
+    _score: 10.763192,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:00',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:49',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'IuCjJ2g5TtM',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 147,
+                video_views: 406,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:55',
+                channel_id: 'UCzLFmtMhaQ2KL-_OZr_j18g',
+                video_id: 'IuCjJ2g5TtM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RDqta4lqawY',
+    _score: 10.687084,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 25590,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:34',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 25781,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:32',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RDqta4lqawY',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 26024,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:15:44',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'RDqta4lqawY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RVfQAqas3d8',
+    _score: 10.680001,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:12',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:55',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RVfQAqas3d8',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 129,
+                video_views: 2416,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'RVfQAqas3d8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'f-PnqdEyz98',
+    _score: 10.530559,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14819,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14818,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:27',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'f-PnqdEyz98',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 30,
+                video_views: 14835,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'f-PnqdEyz98',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'iBSxZuYxPBQ',
+    _score: 10.50373,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:33',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:56',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iBSxZuYxPBQ',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 310,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:00:43',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'iBSxZuYxPBQ',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'gC8g-CuAQus',
+    _score: 10.465672,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 504,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:17',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 505,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:56:07',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'gC8g-CuAQus',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 68,
+                video_views: 505,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:19:01',
+                channel_id: 'UCjJoOZ1_HjWdbjidIRO0Xbg',
+                video_id: 'gC8g-CuAQus',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '4kzTym7DQNw',
+    _score: 10.341139,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:48:28',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4kzTym7DQNw',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 138,
+                video_views: 2055,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:07:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '4kzTym7DQNw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'CUMIlKIbn5A',
+    _score: 10.321495,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:48:28',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'CUMIlKIbn5A',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 118,
+                video_views: 3025,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:07:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'CUMIlKIbn5A',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'sFCQtrtUBuk',
+    _score: 10.2551155,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:25',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:12',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'sFCQtrtUBuk',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 230,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:21',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'sFCQtrtUBuk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'lrYm2s1L-ug',
+    _score: 10.236238,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:51',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'lrYm2s1L-ug',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 44,
+                video_views: 2224,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:16:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'lrYm2s1L-ug',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'YjjlEojXoc4',
+    _score: 10.193459,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 7054,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:41',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 7062,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:28',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YjjlEojXoc4',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 7073,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:29',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'YjjlEojXoc4',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'UBXdqxn0WTo',
+    _score: 10.190243,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47106,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:41',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47106,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:28',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UBXdqxn0WTo',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 47109,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:29',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'UBXdqxn0WTo',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'OQyzC2MeV6c',
+    _score: 10.165411,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:19',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:59',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'OQyzC2MeV6c',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 259,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:05',
+                channel_id: 'UCtsi5d-Ukf8jMA_prrVEgiw',
+                video_id: 'OQyzC2MeV6c',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '6OcF21FfZzs',
+    _score: 10.106249,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:49',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:54',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '6OcF21FfZzs',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 475,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:14:10',
+                channel_id: 'UCk-rlf99uFhzNSu5VrhNsmA',
+                video_id: '6OcF21FfZzs',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'NjM_9lQx5nk',
+    _score: 9.928824,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2548,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2548,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:27',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'NjM_9lQx5nk',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 46,
+                video_views: 2550,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'NjM_9lQx5nk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'Ma00iCBp4-k',
+    _score: 9.876966,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 265,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:45',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 265,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:50',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Ma00iCBp4-k',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 266,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:59',
+                channel_id: 'UCHwW3wgcLmW0WID0Z07rlPQ',
+                video_id: 'Ma00iCBp4-k',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'WEdMk11w3bM',
+    _score: 9.751436,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:43',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'WEdMk11w3bM',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 11,
+                video_views: 560,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:49',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'WEdMk11w3bM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'ovj9TirNr2M',
+    _score: 9.744225,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:13',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:59',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ovj9TirNr2M',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 100,
+                video_views: 7937,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'ovj9TirNr2M',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'C5IKxN8oaU0',
+    _score: 9.671032,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1189,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:01',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1189,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:48:28',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C5IKxN8oaU0',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 47,
+                video_views: 1189,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:07:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'C5IKxN8oaU0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vlOJhRHUrDU',
+    _score: 9.649454,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 793,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 793,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:27',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vlOJhRHUrDU',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 793,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vlOJhRHUrDU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'bTEDMtBa7bQ',
+    _score: 9.583029,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:12',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:55',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'bTEDMtBa7bQ',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 94,
+                video_views: 1156,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'bTEDMtBa7bQ',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'maGDBae-HdE',
+    _score: 9.573025,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1234,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1234,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:57',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'maGDBae-HdE',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 4,
+                video_views: 1234,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:51',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'maGDBae-HdE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'YnbyXFdUd3k',
+    _score: 9.556096,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 558,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 558,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:43',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'YnbyXFdUd3k',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 15,
+                video_views: 558,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:49',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'YnbyXFdUd3k',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dza5o_C8vvU',
+    _score: 9.522395,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:51',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dza5o_C8vvU',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 73,
+                video_views: 9115,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:16:50',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'dza5o_C8vvU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'At6zlQOx_dI',
+    _score: 9.509151,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1351,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1352,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:43',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'At6zlQOx_dI',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 12,
+                video_views: 1353,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:49',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'At6zlQOx_dI',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'jdH2MJy8-Sc',
+    _score: 9.483887,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 937,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:53',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 937,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jdH2MJy8-Sc',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 937,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:20',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'jdH2MJy8-Sc',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'C-Wf5RjDrVY',
+    _score: 9.48289,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:02',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:05',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'C-Wf5RjDrVY',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 389,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:12:14',
+                channel_id: 'UC0Kkrs0NAZ_nk5DM6N7Frgg',
+                video_id: 'C-Wf5RjDrVY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_SYyQenqsaM',
+    _score: 9.370708,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25984,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25985,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:57',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_SYyQenqsaM',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 36,
+                video_views: 25985,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:51',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: '_SYyQenqsaM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'UQrAYsh_9zs',
+    _score: 9.370302,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:25',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:12',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'UQrAYsh_9zs',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 745,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:21',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'UQrAYsh_9zs',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'Iiao7FjBpHk',
+    _score: 9.361248,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2368,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:35',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2368,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:24',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'Iiao7FjBpHk',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 16,
+                video_views: 2369,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:32',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'Iiao7FjBpHk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'LW3pIQM8KuY',
+    _score: 9.353625,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:26',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:18',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'LW3pIQM8KuY',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 2,
+                video_views: 166,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:17:39',
+                channel_id: 'UCOlWvJOqXI0E09yCMughXCg',
+                video_id: 'LW3pIQM8KuY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vr18xoddjUE',
+    _score: 9.28871,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:52',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vr18xoddjUE',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 6,
+                video_views: 218,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:19',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'vr18xoddjUE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '4RguEXWSxIU',
+    _score: 9.255621,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1905,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:40',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1907,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:43',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '4RguEXWSxIU',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 39,
+                video_views: 1907,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:49',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '4RguEXWSxIU',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'behotYsFUNA',
+    _score: 9.235884,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:40',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:27',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'behotYsFUNA',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 0,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:29',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'behotYsFUNA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'pjvpJdd80zg',
+    _score: 9.222694,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2131,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:56',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2132,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:45',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'pjvpJdd80zg',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 25,
+                video_views: 2132,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:29',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'pjvpJdd80zg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dAf3-KwI9ls',
+    _score: 9.158149,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3085,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:24',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3085,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:16',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dAf3-KwI9ls',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 14,
+                video_views: 3085,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:17:36',
+                channel_id: 'UCc304QpqtMOfYHra9VJ4CKQ',
+                video_id: 'dAf3-KwI9ls',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'eerK77e1-pY',
+    _score: 9.153956,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 766,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:32:55',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 766,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:27',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eerK77e1-pY',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 20,
+                video_views: 766,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:41',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'eerK77e1-pY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'qBTlETs2nQ0',
+    _score: 9.120302,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:14',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:56',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'qBTlETs2nQ0',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 87,
+                video_views: 3617,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:52',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: 'qBTlETs2nQ0',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'jnyPjS4VBGg',
+    _score: 9.070069,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 607,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:30:20',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 608,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:45:01',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'jnyPjS4VBGg',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 610,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:58:08',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: 'jnyPjS4VBGg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '8epTHuOohaM',
+    _score: 9.026297,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 776,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:33:19',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 776,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:47:46',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '8epTHuOohaM',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 776,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:00:00',
+                channel_id: 'UCkjk77yUtLnuSalpGrlrG2Q',
+                video_id: '8epTHuOohaM',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'w66Z3JUW2yo',
+    _score: 8.906778,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3415,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:38:42',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3415,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:52:48',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'w66Z3JUW2yo',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 21,
+                video_views: 3415,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:11:39',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'w66Z3JUW2yo',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'J5ZkMQjQqZA',
+    _score: 8.803267,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 497,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:16',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 500,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:18',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'J5ZkMQjQqZA',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 1,
+                video_views: 505,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:14:56',
+                channel_id: 'UCPdyoq6nH2rjSI3SEZPL8gQ',
+                video_id: 'J5ZkMQjQqZA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'dQo31aamxAc',
+    _score: 8.759031,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6954,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:35',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6954,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:24',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'dQo31aamxAc',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 26,
+                video_views: 6955,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:32',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: 'dQo31aamxAc',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '2QF4P1zCaHA',
+    _score: 8.746249,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14185,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:29:36',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14193,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:44:24',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '2QF4P1zCaHA',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 84,
+                video_views: 14197,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:57:32',
+                channel_id: 'UCB713gNK96WX4AqTbfRVsbQ',
+                video_id: '2QF4P1zCaHA',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'RcLhkKQymIw',
+    _score: 8.652743,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:12',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:57',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'RcLhkKQymIw',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 2393,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:51',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'RcLhkKQymIw',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '1hxP6okUOos',
+    _score: 8.609495,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 7,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3279,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:31:59',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3282,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:46:29',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '1hxP6okUOos',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 8,
+                video_views: 3283,
+                video_likes: 0,
+                crawled_date: '2023-12-10 09:59:15',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: '1hxP6okUOos',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'KMo8ESa1aSk',
+    _score: 8.590479,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:34:18',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:48:42',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'KMo8ESa1aSk',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 5,
+                video_views: 467,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:07:59',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'KMo8ESa1aSk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'iro2PkUuEME',
+    _score: 8.571436,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:16',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:56:06',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'iro2PkUuEME',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 10,
+                video_views: 146,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:19:00',
+                channel_id: 'UCPrC98bl73i1hfEp2HUJV5w',
+                video_id: 'iro2PkUuEME',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_h_Engb4NFg',
+    _score: 8.171464,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 645,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:13',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 645,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:59',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_h_Engb4NFg',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 22,
+                video_views: 645,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:54',
+                channel_id: 'UCG3EWj0-R_Zc1h0ha021rwQ',
+                video_id: '_h_Engb4NFg',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'wqqUl5YUheY',
+    _score: 8.028058,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20762,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:39:31',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20784,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:53:34',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'wqqUl5YUheY',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 28,
+                video_views: 20800,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:13:29',
+                channel_id: 'UCrC5IxCbE7BwNkEyDOEGo4g',
+                video_id: 'wqqUl5YUheY',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: '_W9dBpuhH7s',
+    _score: 7.771699,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8443,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8450,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:56',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: '_W9dBpuhH7s',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 18,
+                video_views: 8460,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:50',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: '_W9dBpuhH7s',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'ydVFJQYYdn8',
+    _score: 7.4321923,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 460,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:41:53',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 460,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:41',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'ydVFJQYYdn8',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 9,
+                video_views: 460,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:22',
+                channel_id: 'UC1JUP5e_8utEtToXGMSjMyw',
+                video_id: 'ydVFJQYYdn8',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'eizsQdRRhNk',
+    _score: 7.256445,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:42:11',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:55:57',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'eizsQdRRhNk',
+              _nested: {
+                field: 'video_history',
+                offset: 11,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 0,
+                video_views: 884,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:18:51',
+                channel_id: 'UC7fyfh_b3OQKl9QDT0i3Lww',
+                video_id: 'eizsQdRRhNk',
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    _index: 'video-20',
+    _id: 'vemZ87D8rXU',
+    _score: 6.95837,
+    inner_hits: {
+      video_history: {
+        hits: {
+          total: {
+            value: 3,
+            relation: 'eq',
+          },
+          max_score: 1,
+          hits: [
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 8,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4825,
+                video_likes: 0,
+                crawled_date: '2023-12-08 09:40:34',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 9,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4825,
+                video_likes: 0,
+                crawled_date: '2023-12-09 09:54:32',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+            {
+              _index: 'video-20',
+              _id: 'vemZ87D8rXU',
+              _nested: {
+                field: 'video_history',
+                offset: 10,
+              },
+              _score: 1,
+              _source: {
+                performance: 0,
+                video_comments: 29,
+                video_views: 4825,
+                video_likes: 0,
+                crawled_date: '2023-12-10 10:15:44',
+                channel_id: 'UCWtftqO1NJeNtYxBR_JeblQ',
+                video_id: 'vemZ87D8rXU',
+              },
+            },
+          ],
+        },
+      },
+    },
   },
 ];

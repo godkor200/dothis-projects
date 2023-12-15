@@ -13,6 +13,17 @@ export type Documents = {
   published_at: string;
   title: string;
 };
+
+export type NewsData = {
+  title: string;
+  category: string;
+  provider: string;
+  date: string;
+  image: string;
+  link: string;
+  hilight?: string;
+};
+
 export interface ServerResponse<T = null> {
   status: { code: number; message: string };
   content: T;

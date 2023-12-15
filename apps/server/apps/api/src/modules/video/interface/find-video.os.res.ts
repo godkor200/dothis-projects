@@ -30,3 +30,15 @@ export interface IVideoHistory
     undefined,
     { video_history: HitList<IFindVideoHistoryResponse> }
   > {}
+export enum CHANNEL_DATA {
+  'CHANNEL_ID' = 'channel_id',
+  'CHANNEL_NAME' = 'channel_name',
+  'CHANNEL_URL' = 'channel_url',
+  'CHANNEL_DESCRIPTION' = 'channel_description',
+  'CHANNEL_SINCE' = 'channel_since',
+  'CHANNEL_COUNTRY' = 'channel_country',
+  'CHANNEL_LINK' = 'channel_link',
+  'CHANNEL_CLUSTER' = 'channel_cluster',
+  'CRAWLED_DATE' = 'crawled_date',
+  'VIDEO_LIST' = 'video_list',
+}

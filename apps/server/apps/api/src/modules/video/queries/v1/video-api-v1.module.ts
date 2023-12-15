@@ -9,6 +9,8 @@ import { FindVideoPageQueryHandler } from '@Apps/modules/video/queries/v1/find-v
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
+import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
+import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 
 const commandHandlers: Provider[] = [];
 
@@ -20,6 +22,10 @@ const queryHandlers: Provider[] = [
   {
     provide: CHANNEL_HISTORY_OS_DI_TOKEN,
     useClass: ChannelHistoryQueryHandler,
+  },
+  {
+    provide: CHANNEL_OS_DI_TOKEN,
+    useClass: ChannelQueryHandler,
   },
   FindVideoHandler,
   FindVideoPageQueryHandler,

@@ -8,3 +8,4 @@ export const EXPECTEDVIEW_KEY = createQueryKeys('expectedview');
 export const AUTO_COMPLETEWORD_KEY = createQueryKeys('autocompleteword');
 export const VIDEODATA_KEY = createQueryKeys('videodata');
 export const VIDEO_COUNT_KEY = createQueryKeys('videocount');
+export const RANK_RELATIONWORD_KEY = createQueryKeys('rank_relationword');

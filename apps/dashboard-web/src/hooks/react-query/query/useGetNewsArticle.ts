@@ -37,7 +37,8 @@ const useGetNewsArticle = (
         sort: { date: 'desc' },
         hilight: 200,
         return_from: 0,
-        return_size: 5,
+        // 페이지네이션을 위해 25개로 수정하였습니다.
+        return_size: 25,
         fields: [
           'byline',
           'category',

@@ -12,26 +12,26 @@ export const SIDE_MENUS: SideMenus[] = [
     icon: 'SideMain',
     link: '/contents',
   },
-  // {
-  //   title: '인기 영상 분석',
-  //   icon: 'SideMagicPen',
-  //   link: '/chart2',
-  // },
-  // {
-  //   title: '내 채널 분석',
-  //   icon: 'SideUser',
-  //   link: '/chart3',
-  // },
-  // {
-  //   title: '인기 키워드 분석',
-  //   icon: 'SideTrendUp',
-  //   link: '/chart4',
-  // },
-  // {
-  //   title: '커뮤니티',
-  //   icon: 'SideMessage',
-  //   link: '/chart5',
-  // },
+  {
+    title: '인기 영상 분석',
+    icon: 'SideMagicPen',
+    link: '/chart2',
+  },
+  {
+    title: '내 채널 분석',
+    icon: 'SideUser',
+    link: '/chart3',
+  },
+  {
+    title: '인기 키워드 분석',
+    icon: 'SideTrendUp',
+    link: '/chart4',
+  },
+  {
+    title: '커뮤니티',
+    icon: 'SideMessage',
+    link: '/chart5',
+  },
 ];
 
 interface GNBMenus {
@@ -40,18 +40,18 @@ interface GNBMenus {
 }
 
 export const GNB_MENUS: GNBMenus[] = [
-  // {
-  //   icon: 'HeaderEdit',
-  //   link: '/about',
-  // },
+  {
+    icon: 'HeaderEdit',
+    link: '/about',
+  },
   {
     icon: 'HeaderTicket',
     link: '/pricing',
   },
-  // {
-  //   icon: 'HeaderNotification',
-  //   link: '/about',
-  // },
+  {
+    icon: 'HeaderNotification',
+    link: '/about',
+  },
   {
     icon: 'HeaderUserProfile',
     link: '/mypage',

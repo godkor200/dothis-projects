@@ -33,7 +33,7 @@ const CurrentArticle = ({
   return (
     <div className="rounded-10 border-grey300 w-[640px] cursor-pointer overflow-hidden border border-solid">
       <Link href={`${link}` as Route} target="_blank">
-        <div className="relative h-[300px] w-[640px] overflow-hidden bg-black">
+        <div className="relative h-[360px] w-[640px] overflow-hidden bg-black">
           <Image
             unoptimized
             src={image}
@@ -50,8 +50,8 @@ const CurrentArticle = ({
           />
         </div>
 
-        <div className="p-[30px]">
-          <h3 className="text-grey700 mb-6 text-[20px] font-bold">{title}</h3>
+        <div className="px-[30px] py-[40px]">
+          <h3 className="text-grey700 mb-5 text-[20px] font-bold">{title}</h3>
           <ArticleInfo secondText={provider} thirdText={category} date={date} />
           <div onClick={(e) => handleCopy(e, link)}>
             <div className="bg-grey200 flex w-full items-center justify-center   rounded-lg py-4 text-center">
@@ -75,7 +75,7 @@ const CurrentArticleSkeleton = () => {
     >
       <div
         role="status"
-        className="bg-grey300 dark:bg-grey700 flex h-[300px] w-[640px] animate-pulse items-center justify-center"
+        className="bg-grey300 dark:bg-grey700 flex h-[360px] w-[640px] animate-pulse items-center justify-center"
       >
         <svg
           className="text-grey200 dark:text-grey600 h-10 w-10"
