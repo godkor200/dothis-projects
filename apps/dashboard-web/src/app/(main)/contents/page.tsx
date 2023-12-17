@@ -5,7 +5,7 @@ import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/
 import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
 import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
-import Container from '@/components/MainOverallView/Container';
+import Container from '@/components/MainOverallView/RelatedWordList/Container';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
 
@@ -21,7 +21,7 @@ const MainContentPage = async ({
     '아시안게임',
   );
 
-  const selectedMainContent = searchParams?.main || 'recomand';
+  const selectedMainContent = searchParams?.main || 'all';
 
   if (selectedMainContent === 'recomand') {
     return (
