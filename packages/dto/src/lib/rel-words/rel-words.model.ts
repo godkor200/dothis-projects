@@ -18,12 +18,17 @@ export const zRankRel = z.object({
   expectedViews: z.number().describe('기대조회수'),
   word: z.string().describe('연관어'),
 });
-
+export const zRankRes = z.object({
+  keyword: z.string(),
+  ranking: zRankRel.array(),
+});
 export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
 export const zResWordsPickData = zRelWords.shape.data;
 
-export type TRankRes = z.TypeOf<typeof zRankRel>;
+export type TRankResData = z.TypeOf<typeof zRankRel>;
+
+export type TRankRes = z.TypeOf<typeof zRankRes>;
 
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;
 
