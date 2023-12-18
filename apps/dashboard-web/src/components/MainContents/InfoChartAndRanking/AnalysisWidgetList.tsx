@@ -1,7 +1,7 @@
 'use client';
 
 import AnalysisWidgetItem from '@/components/MainContents/AnalysisWidgetItem';
-import useKeyword from '@/hooks/user/useKeyword';
+import { useSelectedWord } from '@/store/selectedWordStore';
 
 interface Props {
   expectedView: number;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
-  const { hashKeywordList } = useKeyword();
+  const selectedWord = useSelectedWord();
 
   const getCompetitionText = (competitionScore: number | undefined) => {
     if (competitionScore === undefined) {
@@ -33,7 +33,7 @@ const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
   const analysisData = [
     {
       title: '키워드',
-      content: hashKeywordList[0],
+      content: selectedWord.keyword!,
     },
     {
       title: '기대 조회 수',
