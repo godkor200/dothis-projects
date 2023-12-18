@@ -3,6 +3,7 @@ import {
   Entity,
   JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
@@ -81,7 +82,7 @@ export class User {
   })
   isEnvLocal: boolean;
 
-  @OneToMany((type) => Membership, (Membership) => Membership.userId)
+  @OneToOne((type) => Membership, (Membership) => Membership.userId)
   Membership: Membership[];
 
   @OneToMany((type) => ChannelEntity, (channel) => channel.user)
