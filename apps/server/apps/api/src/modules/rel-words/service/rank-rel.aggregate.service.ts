@@ -1,6 +1,6 @@
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { IRankingRelWords } from '@Apps/modules/rel-words/interface/rank-rel.interface';
-import { TRankRes } from '@dothis/dto';
+import { TRankResData } from '@dothis/dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -11,8 +11,8 @@ export class RankRelAggregateService {
 
   calculationExpectationNumberRelatedWord(
     channelVideoData: IRankingRelWords[],
-  ): TRankRes[] {
-    let result: TRankRes[] = [];
+  ): TRankResData[] {
+    let result: TRankResData[] = [];
 
     for (let i = 0; i < channelVideoData.length; i++) {
       let videos = channelVideoData[i].data;

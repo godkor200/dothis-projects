@@ -7,7 +7,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/wait-for-it.sh:/wait-for-it.sh
       - ./nginx/docker-entrypoint.production.sh:/docker-entrypoint.production.sh
-    command: "sh -c /docker-entrypoint.production.sh"
+    command: /bin/bash -c "chmod +x /docker-entrypoint.production.sh && /docker-entrypoint.production.sh"
     ports:
       - "80:80"
     depends_on:

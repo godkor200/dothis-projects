@@ -5,13 +5,17 @@ import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interf
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
+import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 
 const mockVideoServicePort = mock<VideoServicePort>();
-
+const mockChannelQueryHandlerPort = mock<ChannelQueryHandlerPort>();
 let handler: FindVideoPageQueryHandler;
 
 beforeEach(async () => {
-  handler = new FindVideoPageQueryHandler(mockVideoServicePort);
+  handler = new FindVideoPageQueryHandler(
+    mockVideoServicePort,
+    mockChannelQueryHandlerPort,
+  );
   jest.spyOn(RequestContextService, 'getContext').mockReturnValue({
     requestId: nanoid(6),
     req: undefined,
