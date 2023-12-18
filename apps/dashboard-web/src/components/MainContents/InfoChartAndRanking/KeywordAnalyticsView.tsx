@@ -56,7 +56,7 @@ const KeywordAnalyticsView = () => {
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
-  const { data: videoCountData } = useGetVideoCount();
+  const { data: videoCountData } = useGetVideoCount(selectedWord);
 
   const { totalCount, videoCountViewChartData } = useMemo(
     () =>
