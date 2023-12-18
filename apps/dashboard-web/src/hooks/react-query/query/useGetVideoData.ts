@@ -1,3 +1,6 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedWord } from '@/store/selectedWordStore';
@@ -9,11 +12,18 @@ export const videoKeys = {
   video: ['video'],
 };
 
-const useGetVideoData = () => {
-  const { data } = useGetRelWords();
+const useGetVideoData = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideo>,
+) => {
+  const { data } = useGetRelWords(keyword);
 
-  const { hashKeywordList } = useKeyword();
-  const seletedWord = useSelectedWord();
   let clusters: string[] = [];
 
   if (data && data.cluster) {
@@ -26,8 +36,8 @@ const useGetVideoData = () => {
         queryKey: VIDEODATA_KEY.list([
           {
             clusterNumber,
-            relword: seletedWord.relword,
-            keyword: seletedWord.keyword,
+            relword: relword,
+            keyword: keyword,
           },
         ]),
         params: {
@@ -36,10 +46,11 @@ const useGetVideoData = () => {
         query: {
           // last:0,
           limit: 5,
-          related: seletedWord.relword!,
-          search: seletedWord.keyword!,
+          related: relword!,
+          search: keyword!,
         },
-        enabled: !!data && !!seletedWord.relword,
+        ...queryOptions,
+        enabled: !!data && !!relword,
       };
     }),
   });
