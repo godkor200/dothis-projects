@@ -1,24 +1,31 @@
 import { create } from 'zustand';
 
 interface SelectedRelWordAction {
-  setRelWord: (value: string) => void;
+  setRelWord: ({
+    keyword,
+    relword,
+  }: {
+    keyword: string;
+    relword: string;
+  }) => void;
 }
 
 interface SelectedRelWordState {
-  relWord: string | null;
+  selectedWord: { keyword: string | null; relword: string | null };
   actions: SelectedRelWordAction;
 }
 
 export const selectedRelWordStore = create<SelectedRelWordState>((set) => ({
-  relWord: null,
+  selectedWord: { keyword: null, relword: null },
   actions: {
-    setRelWord: (value: string) => set(() => ({ relWord: value })),
+    setRelWord: ({ keyword, relword }: { keyword: string; relword: string }) =>
+      set(() => ({ selectedWord: { keyword: keyword, relword: relword } })),
   },
 }));
 
 // State
 export const useSelectedRelWord = () =>
-  selectedRelWordStore((state) => state.relWord);
+  selectedRelWordStore((state) => state.selectedWord);
 
 // Actions
 export const useSelectedRelWordActions = () =>
