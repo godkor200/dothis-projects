@@ -2,14 +2,10 @@ import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { RELATIONWORD_KEY } from '@/constants/querykey';
-import useKeyword from '@/hooks/user/useKeyword';
-import { RELATED_WORDS } from '@/mocks';
-import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
-import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 import useGetUserInfo from './useGetUserInfo';
-const guestKeyword = ['먹방', '와인'];
+
 /**
  * 쿼리 훅 내에서 의존성이 필요한 keyword를 가져오기 위해 useGetUserInfo를 통해 personalizationTag와 키워드 util함수를 이용해 키워드를 가져온다
  * @param queryOptions
@@ -20,23 +16,19 @@ const guestKeyword = ['먹방', '와인'];
  * 키워드를 해당 훅에 파라미터로 넣을 수 있도록 고민해보았지만, enbled loading 값이 필요하여 이런 형태로 작성하였습니다.
  */
 const useGetRelWords = (
+  keyword: string | null,
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.getRelWords>,
 ) => {
-  const { data, isLoading } = useGetUserInfo();
-
-  const isSignedIn = useIsSignedIn();
-
-  const { hashKeywordList } = useKeyword();
-  const isNotSetTags = !data?.personalizationTag;
+  const { isLoading } = useGetUserInfo();
 
   const queryResult = apiClient(1).relwords.getRelWords.useQuery(
-    RELATIONWORD_KEY.list([{ keyword: hashKeywordList[0] }]),
+    RELATIONWORD_KEY.list([{ keyword: keyword }]),
     {
       params: {
-        keyword: hashKeywordList[0],
+        keyword: keyword!,
       },
     },
-    { ...queryOptions, enabled: !isLoading },
+    { ...queryOptions, enabled: !isLoading && !!keyword },
   );
   queryResult.data;
   return {
