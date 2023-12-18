@@ -31,7 +31,7 @@ const YouTube = () => {
     setContentIndex(index);
   };
 
-  const { data, isLoading } = useGetVideoData();
+  const { data, isLoading } = useGetVideoData(seletedWord);
 
   /**
    * @validItems flatMap을 이용해서 useGetVideoData에서 얻은 data형식에서 MediaArticle을 그리는데 필요한 object만 flat하게 가져옵니다. (ex)[{videoObject},{videoObject},{videoObject}]
