@@ -2,8 +2,6 @@ import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
-import useKeyword from '@/hooks/user/useKeyword';
-import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';

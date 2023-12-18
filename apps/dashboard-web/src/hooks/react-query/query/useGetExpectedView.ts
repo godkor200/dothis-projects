@@ -3,7 +3,6 @@ import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
