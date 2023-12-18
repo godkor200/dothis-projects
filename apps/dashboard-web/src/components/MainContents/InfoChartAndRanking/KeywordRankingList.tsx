@@ -55,11 +55,7 @@ const KeywordRankingList = () => {
     isLoading,
     isError,
     isErrorKeyword,
-  } = useGetRankingWordList(hashKeywordList, {
-    onError: (data) => {
-      console.log(data);
-    },
-  });
+  } = useGetRankingWordList(hashKeywordList, {});
 
   // 모달 리팩토링하면서 같이 작업
 
