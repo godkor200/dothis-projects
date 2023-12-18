@@ -1,4 +1,3 @@
-import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedWord } from '@/store/selectedWordStore';
@@ -8,8 +7,6 @@ const KeywordSearchResult = () => {
   const selectedWord = useSelectedWord();
 
   // const { data: relWords } = useGetRelWords();
-
-  // const { data: rankRelWords } = useGetRankingRelWords(selectedWord.keyword);
 
   const {
     data: rankRelWordList,

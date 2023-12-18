@@ -1,8 +1,6 @@
 'use client';
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 import Modal from '@/components/common/Modal/Modal';
@@ -12,11 +10,9 @@ import {
   useResetKeywordMutation,
 } from '@/hooks/react-query/mutation/useKeywordMutation';
 import { useResetSearchwordMutation } from '@/hooks/react-query/mutation/useSearchwordMutation';
-import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedWordActions } from '@/store/selectedWordStore';
-import { convertKeywordsToArray } from '@/utils/keyword';
 
 import KeywordRankingItem from './KeywordRankingItem';
 
