@@ -1,3 +1,6 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
@@ -5,10 +8,17 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetExpectedView = () => {
-  const { data } = useGetRelWords();
-
-  const seletedWord = useSelectedWord();
+const useGetExpectedView = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.expectViews.getExpectedViews>,
+) => {
+  const { data } = useGetRelWords(keyword);
 
   const startDate = useStartDate();
 
@@ -26,8 +36,8 @@ const useGetExpectedView = () => {
         queryKey: EXPECTEDVIEW_KEY.list([
           {
             clusterNumber,
-            relword: seletedWord.relword,
-            keyword: seletedWord.keyword,
+            relword,
+            keyword,
             startDate,
             endDate,
           },
@@ -36,12 +46,13 @@ const useGetExpectedView = () => {
           clusterNumber,
         },
         query: {
-          keyword: seletedWord.keyword!,
-          relationKeyword: seletedWord.relword!,
+          keyword: keyword!,
+          relationKeyword: relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!seletedWord.relword && !!startDate && !!endDate,
+        ...queryOptions,
+        enabled: !!data && !!relword && !!startDate && !!endDate,
       };
     }),
   });
