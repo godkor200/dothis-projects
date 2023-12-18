@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import { useEndDate, useStartDate } from '@/store/dateStore';
 import {
   averageViews,
   formatToLineGraph,
@@ -17,8 +18,15 @@ const ViewChart = () => {
   const { data: dailyViewData, isLoading: dailyViewIsLoading } =
     useGetDailyView();
 
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
   const dailyViewChartData = useMemo(
-    () => formatToLineGraph(sumViews(dailyViewData.flat()), '일일 조회 수'),
+    () =>
+      formatToLineGraph(
+        sumViews(dailyViewData.flat(), { startDate, endDate }),
+        '일일 조회 수',
+      ),
     [dailyViewData],
   );
 
@@ -27,7 +35,10 @@ const ViewChart = () => {
 
   const expectedViewChartData = useMemo(
     () =>
-      formatToLineGraph(averageViews(expectedViewData.flat()), '기대 조회 수'),
+      formatToLineGraph(
+        averageViews(expectedViewData.flat(), { startDate, endDate }),
+        '기대 조회 수',
+      ),
     [expectedViewData],
   );
 

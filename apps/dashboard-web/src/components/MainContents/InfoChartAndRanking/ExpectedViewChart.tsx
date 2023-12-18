@@ -133,7 +133,7 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
       axisBottom={{
         format: '%m.%d',
         legendOffset: -12,
-        tickValues: 'every 1 days',
+        tickValues: 7,
       }}
       axisLeft={{
         tickSize: 0,

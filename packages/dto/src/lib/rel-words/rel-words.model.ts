@@ -15,8 +15,12 @@ export const zRelWords = z.object({
 });
 
 export const zRankRel = z.object({
-  expectedViews: z.number().describe('기대조회수'),
-  word: z.string().describe('연관어'),
+  data: z.array(
+    z.object({
+      expectedViews: z.number().describe('기대조회수'),
+      word: z.string().describe('연관어'),
+    }),
+  ),
 });
 export const zRankRes = z.object({
   keyword: z.string(),
