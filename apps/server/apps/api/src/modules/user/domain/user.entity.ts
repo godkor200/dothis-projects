@@ -82,7 +82,7 @@ export class User {
   })
   isEnvLocal: boolean;
 
-  @OneToOne((type) => Membership, (Membership) => Membership.userId)
+  @OneToMany((type) => Membership, (Membership) => Membership.userId)
   Membership: Membership[];
 
   @OneToMany((type) => ChannelEntity, (channel) => channel.user)

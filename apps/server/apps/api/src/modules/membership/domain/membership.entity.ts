@@ -4,7 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity({ name: 'membership' })
@@ -33,7 +33,7 @@ export class Membership {
   @Column({ name: 'created_at' })
   createdAt: Date;
 
-  @OneToOne((type) => User, (user) => user.id)
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne((type) => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
   User: User;
 }
