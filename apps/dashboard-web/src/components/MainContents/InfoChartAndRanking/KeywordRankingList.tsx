@@ -15,7 +15,7 @@ import { useResetSearchwordMutation } from '@/hooks/react-query/mutation/useSear
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useKeyword from '@/hooks/user/useKeyword';
-import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
+import { useSelectedWordActions } from '@/store/selectedWordStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
 import KeywordRankingItem from './KeywordRankingItem';
@@ -82,7 +82,7 @@ const KeywordRankingList = () => {
     removeKeywordMutate(hashKeywordList[0]);
   }, [hashKeywordList]);
 
-  const { setRelWord } = useSelectedRelWordActions();
+  const { setRelWord } = useSelectedWordActions();
 
   useEffect(() => {
     rankRelWordList.length !== 0 &&

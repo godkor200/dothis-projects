@@ -3,7 +3,7 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useCallback, useMemo } from 'react';
 
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import {
   ceilToNearest,
   floorToNearest,
@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
   // const testExpectedView = useMemo(
   //   () => [
   //     {

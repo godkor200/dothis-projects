@@ -3,7 +3,7 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useMemo } from 'react';
 
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 
 import {
   ceilToNearest,
@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const DailyViewChart = ({ dailyView }: Props) => {
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
 
   // const testDailyView = useMemo(
   //   () => [

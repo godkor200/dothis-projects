@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import type { NewsResponse, ServerResponse } from '@/types/news';
 
 /**
@@ -14,7 +14,7 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
 const useGetNewsArticle = (
   queryOptions?: QueryOptions,
 ): UseQueryResult<NewsResponse> => {
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
 
   const startDate = useStartDate();
   const endDate = useEndDate();

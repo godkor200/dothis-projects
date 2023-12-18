@@ -1,6 +1,6 @@
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import useKeyword from '@/hooks/user/useKeyword';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
@@ -13,7 +13,7 @@ const useGetVideoData = () => {
   const { data } = useGetRelWords();
 
   const { hashKeywordList } = useKeyword();
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
   let clusters: string[] = [];
 
   if (data && data.cluster) {

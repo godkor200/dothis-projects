@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -17,7 +17,7 @@ const YouTube = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
-  const seletecRelWord = useSelectedRelWord();
+  const seletecRelWord = useSelectedWord();
   useEffect(() => {
     setPageIndex(0);
     setContentIndex(0);

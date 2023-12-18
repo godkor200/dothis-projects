@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface SelectedRelWordAction {
+interface SelectedWordAction {
   setRelWord: ({
     keyword,
     relword,
@@ -10,12 +10,12 @@ interface SelectedRelWordAction {
   }) => void;
 }
 
-interface SelectedRelWordState {
+interface SeletedWordState {
   selectedWord: { keyword: string | null; relword: string | null };
-  actions: SelectedRelWordAction;
+  actions: SelectedWordAction;
 }
 
-export const selectedRelWordStore = create<SelectedRelWordState>((set) => ({
+export const selectedWordStore = create<SeletedWordState>((set) => ({
   selectedWord: { keyword: null, relword: null },
   actions: {
     setRelWord: ({ keyword, relword }: { keyword: string; relword: string }) =>
@@ -24,9 +24,9 @@ export const selectedRelWordStore = create<SelectedRelWordState>((set) => ({
 }));
 
 // State
-export const useSelectedRelWord = () =>
-  selectedRelWordStore((state) => state.selectedWord);
+export const useSelectedWord = () =>
+  selectedWordStore((state) => state.selectedWord);
 
 // Actions
-export const useSelectedRelWordActions = () =>
-  selectedRelWordStore((state) => state.actions);
+export const useSelectedWordActions = () =>
+  selectedWordStore((state) => state.actions);

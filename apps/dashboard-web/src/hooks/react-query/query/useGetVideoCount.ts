@@ -1,12 +1,12 @@
 import { VIDEO_COUNT_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
 const useGetVideoCount = () => {
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
   const { data } = useGetRelWords();
 
   const startDate = useStartDate();

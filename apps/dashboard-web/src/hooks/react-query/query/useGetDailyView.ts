@@ -1,14 +1,14 @@
 import { DAILYVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetDailyView = () => {
-  const { data } = useGetRelWords();
+const useGetDailyView = (keyword: string, relword: string) => {
+  const { data } = useGetRelWords(keyword);
 
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
 
   const startDate = useStartDate();
 

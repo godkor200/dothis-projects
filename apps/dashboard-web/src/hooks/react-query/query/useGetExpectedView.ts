@@ -1,6 +1,6 @@
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
@@ -8,7 +8,7 @@ import useGetRelWords from './useGetRelWords';
 const useGetExpectedView = () => {
   const { data } = useGetRelWords();
 
-  const selectedRelWord = useSelectedRelWord();
+  const selectedRelWord = useSelectedWord();
 
   const startDate = useStartDate();
 
