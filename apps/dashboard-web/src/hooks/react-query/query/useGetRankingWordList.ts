@@ -64,8 +64,22 @@ const useGetRankingWordList = (
     (a, b) => b.expectedViews - a.expectedViews,
   );
 
+  const isLoading = queryResults.every((query) => query.isLoading);
+
+  const isError = queryResults.every((query) => query.isError);
+
+  const isErrorKeyword = queryResults
+    .map((item, index) => (item.isError === true ? keywordArray[index] : null))
+    .filter(Boolean);
+
   return {
-    data: sortArray.map((item) => ({ word: item.word, keyword: item.keyword })),
+    isLoading,
+    isError,
+    isErrorKeyword,
+    data: sortArray.map((item) => ({
+      relword: item.word,
+      keyword: item.keyword,
+    })),
   };
 };
 
