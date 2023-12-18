@@ -21,7 +21,7 @@ const MainContentPage = async ({
     '아시안게임',
   );
 
-  const selectedMainContent = searchParams?.main || 'all';
+  const selectedMainContent = searchParams?.main || 'recomand';
 
   if (selectedMainContent === 'recomand') {
     return (
