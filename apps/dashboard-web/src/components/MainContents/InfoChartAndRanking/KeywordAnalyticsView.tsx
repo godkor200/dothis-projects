@@ -43,7 +43,7 @@ const KeywordAnalyticsView = () => {
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
-  const { data: expectedViewData } = useGetExpectedView();
+  const { data: expectedViewData } = useGetExpectedView(selectedWord);
 
   const expectedViewChartData = useMemo(
     () =>

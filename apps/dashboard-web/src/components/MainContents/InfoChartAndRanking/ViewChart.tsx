@@ -33,7 +33,7 @@ const ViewChart = () => {
   );
 
   const { data: expectedViewData, isLoading: expectedViewIsLoading } =
-    useGetExpectedView();
+    useGetExpectedView(selectedWord);
 
   const expectedViewChartData = useMemo(
     () =>
