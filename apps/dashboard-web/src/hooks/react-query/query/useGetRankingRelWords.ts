@@ -26,7 +26,7 @@ const useGetRankingRelWords = (
 
   return {
     ...queryResult,
-    data: queryResult.data?.body.data
+    data: queryResult.data?.body.data.ranking
       .sort((a, b) => b.expectedViews - a.expectedViews)
       .map((item) => item.word),
   };

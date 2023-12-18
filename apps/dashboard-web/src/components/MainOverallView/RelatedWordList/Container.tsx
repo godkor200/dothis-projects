@@ -40,7 +40,7 @@ const Container = () => {
       <ul>
         {rank?.map((item, index, arr) => (
           <div
-            key={item + index}
+            key={item.word + index}
             className={cn(
               'grid grid-cols-[minmax(250px,1fr)_140px_110px_110px_100px_100px_minmax(150px,1fr)_minmax(150px,1fr)] items-center gap-[12px] ',
               {
@@ -49,10 +49,10 @@ const Container = () => {
             )}
           >
             <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-              {item}
+              {item.word}
             </div>
             <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-              키워드
+              {item.keyword}
             </div>
             <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
               기대 조회 수(배)
