@@ -14,6 +14,7 @@ import { apiClient } from '@/utils/api/apiClient';
  * @returns 해당 data에 기대조회수를 기반으로 정렬을 시킨 뒤 연관어(string) 데이터들만 배열형식으로 반환합니다.
  * @특이사항 현재 데이터를 수집하는 요청과 겹쳐서 높은확률로 429에러(Trying to create too many scroll contexts)가 response로 들어옵니다. 조금이라도 그것을 방지하기 위해 retry를 걸어주었습니다.
  */
+
 const useGetRankingWordList = (
   keyword: string[],
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
@@ -26,25 +27,45 @@ const useGetRankingWordList = (
         ...queryOptions,
         enabled: keyword.length > 0,
         retry: 3,
+        select(data) {
+          return data;
+        },
       };
     }),
   });
 
-  console.log(queryResults);
-  const filterArray = queryResults.filter(
-    (queryResult) => queryResult.data !== undefined,
+  const keywordArray = [...keyword];
+
+  const removeKeywordList: string[] = [];
+
+  const filterArray = queryResults.filter((queryResult, index) => {
+    if (queryResult.data === undefined) {
+      removeKeywordList.push(keywordArray[index]);
+    }
+
+    return queryResult.data !== undefined;
+  });
+
+  const keywordList = keywordArray.filter(
+    (item) => removeKeywordList.indexOf(item) === -1,
   );
-  const flattenArray = filterArray.flatMap(
-    (queryResults) => queryResults.data?.body.data || [],
-  );
+
+  const flattenArray = filterArray.flatMap((queryResults, index) => {
+    return (
+      queryResults.data?.body.data.ranking.map((item) => ({
+        ...item,
+        keyword: keywordList[index],
+        // keyword: queryResults.data.body.data.keyword, 현재 프로퍼티가 추가되어서 이런식으로 사용해도 된다.
+      })) || []
+    );
+  });
 
   const sortArray = [...flattenArray].sort(
     (a, b) => b.expectedViews - a.expectedViews,
   );
 
-  console.log(sortArray);
   return {
-    data: sortArray.map((item) => item.word),
+    data: sortArray.map((item) => ({ word: item.word, keyword: item.keyword })),
   };
 };
 
