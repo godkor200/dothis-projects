@@ -34,8 +34,11 @@ const TITLE_BUTTON = [
 const MonthlyViewData = () => {
   const [selectedType, setSelectedType] = useState<TitleType>('category');
   const seletedWord = useSelectedWord();
-  const { data, isLoading: isWordLoading } = useGetRelWords();
-  const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
+  const { data, isLoading: isWordLoading } = useGetRelWords(
+    seletedWord.keyword,
+  );
+  const { data: viewData, isLoading: isViewLoading } =
+    useGetDailyView(seletedWord);
   const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;

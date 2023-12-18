@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import { useEndDate, useStartDate } from '@/store/dateStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import {
   averageViews,
   formatToLineGraph,
@@ -15,8 +16,9 @@ import DailyViewChart from './DailyViewChart';
 import ExpectedViewChart from './ExpectedViewChart';
 
 const ViewChart = () => {
+  const selectedWord = useSelectedWord();
   const { data: dailyViewData, isLoading: dailyViewIsLoading } =
-    useGetDailyView();
+    useGetDailyView(selectedWord);
 
   const startDate = useStartDate();
   const endDate = useEndDate();

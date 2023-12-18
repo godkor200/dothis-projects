@@ -8,6 +8,7 @@ import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useEndDate, useStartDate } from '@/store/dateStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import {
   averageViews,
   formatToLineGraph,
@@ -25,7 +26,8 @@ export const VIEWCHART_LABEL = {
 } as const;
 
 const KeywordAnalyticsView = () => {
-  const { data: dailyViewData } = useGetDailyView();
+  const selectedWord = useSelectedWord();
+  const { data: dailyViewData } = useGetDailyView(selectedWord);
 
   const startDate = useStartDate();
   const endDate = useEndDate();

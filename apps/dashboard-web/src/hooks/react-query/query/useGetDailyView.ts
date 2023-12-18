@@ -57,6 +57,7 @@ const useGetDailyView = (
     }),
   });
 
+  console.log(queryResults.map((result) => result.data?.body.data));
   // const isLoading = queryResults.some((result) => result.isLoading);
   const isLoading = queryResults.map((item) => item.isLoading);
 
