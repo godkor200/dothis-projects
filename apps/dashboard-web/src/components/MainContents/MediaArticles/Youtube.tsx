@@ -53,7 +53,7 @@ const YouTube = () => {
       image: externalYouTubeImageLoader(item._source.video_id),
       date: item._source.video_published,
       link: item._source.video_url,
-      provider: item._source.video_category,
+      provider: item._source.channel_name,
       tags: item._source.video_tag,
       description: item._source.video_description,
     };
