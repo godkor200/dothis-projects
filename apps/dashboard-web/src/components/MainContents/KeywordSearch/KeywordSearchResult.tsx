@@ -1,8 +1,5 @@
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
-import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
-import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useKeyword from '@/hooks/user/useKeyword';
-import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
 const KeywordSearchResult = () => {
   const { hashKeywordList } = useKeyword();

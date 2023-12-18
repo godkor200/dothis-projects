@@ -13,7 +13,6 @@ import {
 } from '@/hooks/react-query/mutation/useKeywordMutation';
 import { useResetSearchwordMutation } from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
-import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
