@@ -13,6 +13,7 @@ import {
 } from '@/hooks/react-query/mutation/useKeywordMutation';
 import { useResetSearchwordMutation } from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
+import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useKeyword from '@/hooks/user/useKeyword';
 import { useSelectedRelWordActions } from '@/store/selectedRelWordStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
@@ -34,24 +35,37 @@ const KeywordRankingList = () => {
 
   const { mutate: removeKeywordMutate } = useRemoveKeywordMutation();
 
+  // const {
+  //   data: rankRelWordList,
+  //   isLoading,
+  //   isError,
+  //   refetch,
+  // } = useGetRankingRelWords(hashKeywordList[0], {
+  //   onError: (data) => {
+  //     if (data.status === 400 || 429) {
+  //       setOnReTryModal(true);
+  //       return;
+  //     }
+  //     setOnErrorModal(true);
+  //   },
+  // });
+
   const {
     data: rankRelWordList,
     isLoading,
     isError,
-    refetch,
-  } = useGetRankingRelWords(hashKeywordList[0], {
+    isErrorKeyword,
+  } = useGetRankingWordList(hashKeywordList, {
     onError: (data) => {
-      if (data.status === 400 || 429) {
-        setOnReTryModal(true);
-        return;
-      }
-      setOnErrorModal(true);
+      console.log(data);
     },
   });
 
+  // 모달 리팩토링하면서 같이 작업
+
   const dismissReTryModalCallback = useCallback(() => {
     setOnReTryModal(false);
-    refetch();
+    // refetch();
   }, []);
 
   const dismissModalCallback = useCallback(() => {
@@ -71,20 +85,22 @@ const KeywordRankingList = () => {
   const { setRelWord } = useSelectedRelWordActions();
 
   useEffect(() => {
-    rankRelWordList && setRelWord(rankRelWordList[selectedRelatedWord - 1]);
+    rankRelWordList.length !== 0 &&
+      setRelWord(rankRelWordList[selectedRelatedWord - 1]);
   }, [selectedRelatedWord, rankRelWordList]);
 
+  // false isError에서 하나라도 true면 보여야함  (맨처음 fetch되었지만error일 수도 있으니깐)
   return (
     <>
       <div className="border-grey300 bg-grey00 flex h-auto  w-[11.8rem] flex-col gap-[1.2rem] border-r border-solid py-[2.5rem] pr-[1.25rem]">
-        {(isLoading || isError) &&
+        {rankRelWordList.length === 0 &&
           [...new Array(10)].map((item, index) => (
             <KeywordRankingItem.skeleton isSelected={index === 0} key={index} />
           ))}
         {rankRelWordList?.slice(0, 10).map((relatedWord, index) => (
           <KeywordRankingItem
             key={index + 1}
-            relatedWord={{ word: relatedWord, rank: index + 1 }}
+            relatedWord={{ word: relatedWord.relword, rank: index + 1 }}
             isSelected={selectedRelatedWord === index + 1}
             onClick={setSelectedRelatedWord}
           />
