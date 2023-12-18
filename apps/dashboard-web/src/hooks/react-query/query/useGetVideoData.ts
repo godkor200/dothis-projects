@@ -13,7 +13,7 @@ const useGetVideoData = () => {
   const { data } = useGetRelWords();
 
   const { hashKeywordList } = useKeyword();
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
   let clusters: string[] = [];
 
   if (data && data.cluster) {
@@ -26,8 +26,8 @@ const useGetVideoData = () => {
         queryKey: VIDEODATA_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: hashKeywordList[0],
+            relword: seletedWord.relword,
+            keyword: seletedWord.keyword,
           },
         ]),
         params: {
@@ -36,10 +36,10 @@ const useGetVideoData = () => {
         query: {
           // last:0,
           limit: 5,
-          related: selectedRelWord!,
-          search: hashKeywordList[0],
+          related: seletedWord.relword!,
+          search: seletedWord.keyword!,
         },
-        enabled: !!data && !!selectedRelWord,
+        enabled: !!data && !!seletedWord.relword,
       };
     }),
   });

@@ -14,7 +14,7 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
 const useGetNewsArticle = (
   queryOptions?: QueryOptions,
 ): UseQueryResult<NewsResponse> => {
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -23,7 +23,7 @@ const useGetNewsArticle = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: selectedRelWord,
+        query: seletedWord.relword,
 
         published_at: {
           from: startDate,
@@ -58,9 +58,9 @@ const useGetNewsArticle = (
     return response.data;
   };
 
-  return useQuery(['뉴스', selectedRelWord], () => retrievePosts(), {
+  return useQuery(['뉴스', seletedWord.relword], () => retrievePosts(), {
     ...queryOptions,
-    enabled: !!selectedRelWord && !!startDate && !!endDate,
+    enabled: !!seletedWord.relword && !!startDate && !!endDate,
   });
 };
 

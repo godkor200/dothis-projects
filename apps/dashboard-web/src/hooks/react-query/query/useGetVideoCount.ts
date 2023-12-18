@@ -6,7 +6,7 @@ import { apiClient } from '@/utils/api/apiClient';
 import useGetRelWords from './useGetRelWords';
 
 const useGetVideoCount = () => {
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
   const { data } = useGetRelWords();
 
   const startDate = useStartDate();
@@ -25,8 +25,8 @@ const useGetVideoCount = () => {
         queryKey: VIDEO_COUNT_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: data?.keyword,
+            relword: seletedWord.relword,
+            keyword: seletedWord.keyword,
             startDate,
             endDate,
           },
@@ -35,12 +35,12 @@ const useGetVideoCount = () => {
           clusterNumber,
         },
         query: {
-          keyword: data?.keyword!,
-          relationKeyword: selectedRelWord!,
+          keyword: seletedWord.keyword!,
+          relationKeyword: seletedWord.relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
+        enabled: !!data && !!seletedWord.relword && !!startDate && !!endDate,
       };
     }),
   });

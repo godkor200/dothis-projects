@@ -8,7 +8,7 @@ import useGetRelWords from './useGetRelWords';
 const useGetExpectedView = () => {
   const { data } = useGetRelWords();
 
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
 
   const startDate = useStartDate();
 
@@ -26,8 +26,8 @@ const useGetExpectedView = () => {
         queryKey: EXPECTEDVIEW_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: data?.keyword,
+            relword: seletedWord.relword,
+            keyword: seletedWord.keyword,
             startDate,
             endDate,
           },
@@ -36,12 +36,12 @@ const useGetExpectedView = () => {
           clusterNumber,
         },
         query: {
-          keyword: data?.keyword!,
-          relationKeyword: selectedRelWord!,
+          keyword: seletedWord.keyword!,
+          relationKeyword: seletedWord.relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
+        enabled: !!data && !!seletedWord.relword && !!startDate && !!endDate,
       };
     }),
   });

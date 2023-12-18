@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
   // const testExpectedView = useMemo(
   //   () => [
   //     {
@@ -147,7 +147,7 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword={selectedRelWord!}
+          keyword={seletedWord.relword!}
           label={VIEWCHART_LABEL.EXPECTEDVIEW}
           value={expectedView[0].data[point.index].y}
           date={expectedView[0].data[point.index].x}

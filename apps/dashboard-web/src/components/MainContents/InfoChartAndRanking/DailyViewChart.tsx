@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const DailyViewChart = ({ dailyView }: Props) => {
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
 
   // const testDailyView = useMemo(
   //   () => [
@@ -142,7 +142,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword={selectedRelWord!}
+          keyword={seletedWord.relword!}
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',

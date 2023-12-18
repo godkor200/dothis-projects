@@ -17,11 +17,11 @@ const YouTube = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
-  const seletecRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
   useEffect(() => {
     setPageIndex(0);
     setContentIndex(0);
-  }, [seletecRelWord]);
+  }, [seletedWord]);
 
   useEffect(() => {
     setContentIndex(0);

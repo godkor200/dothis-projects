@@ -8,7 +8,7 @@ import useGetRelWords from './useGetRelWords';
 const useGetDailyView = (keyword: string, relword: string) => {
   const { data } = useGetRelWords(keyword);
 
-  const selectedRelWord = useSelectedWord();
+  const seletedWord = useSelectedWord();
 
   const startDate = useStartDate();
 
@@ -26,8 +26,8 @@ const useGetDailyView = (keyword: string, relword: string) => {
         queryKey: DAILYVIEW_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: data?.keyword,
+            relword: seletedWord.relword,
+            keyword: seletedWord.keyword,
             startDate,
             endDate,
           },
@@ -36,12 +36,12 @@ const useGetDailyView = (keyword: string, relword: string) => {
           clusterNumber,
         },
         query: {
-          keyword: data?.keyword!,
-          relationKeyword: selectedRelWord!,
+          keyword: seletedWord.keyword!,
+          relationKeyword: seletedWord.relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
+        enabled: !!data && !!seletedWord.relword && !!startDate && !!endDate,
       };
     }),
   });
