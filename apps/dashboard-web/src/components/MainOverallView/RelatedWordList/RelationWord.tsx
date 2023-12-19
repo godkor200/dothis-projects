@@ -1,34 +1,40 @@
-'use client';
-
 import { useMemo } from 'react';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedWord } from '@/store/selectedWordStore';
-import { getCompetitionScore } from '@/utils/contents/competitionScore';
+import { cn } from '@/utils/cn';
+import {
+  convertCompetitionScoreFormat,
+  getCompetitionScore,
+} from '@/utils/contents/competitionScore';
 import {
   averageViews,
   formatToLineGraph,
   sumViews,
 } from '@/utils/contents/dailyview';
 
-import AnalysisWidgetList from './AnalysisWidgetList';
-import CumulativeVideoChart from './CumulativeVideoChart';
-import DailyView from './DailyView';
-import ViewChart from './ViewChart';
+interface Props {
+  keyword: string;
+  relword: string;
+  index: number;
+  arr: {
+    relword: string;
+    keyword: string;
+  }[];
+}
 
-export const VIEWCHART_LABEL = {
-  DAILYVIEW: '일일 조회수',
-  EXPECTEDVIEW: '기대 조회수',
-} as const;
+const RelationWord = ({ keyword, relword, index, arr }: Props) => {
+  // const { data: relword } = useGetRelWords(keyword);
 
-const KeywordAnalyticsView = () => {
-  const selectedWord = useSelectedWord();
-  const { data: dailyViewData } = useGetDailyView(selectedWord);
+  const { data: dailyViewData } = useGetDailyView({
+    keyword: keyword,
+    relword: relword,
+  });
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -44,7 +50,10 @@ const KeywordAnalyticsView = () => {
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
-  const { data: expectedViewData } = useGetExpectedView(selectedWord);
+  const { data: expectedViewData } = useGetExpectedView({
+    keyword: keyword,
+    relword: relword,
+  });
 
   const expectedViewChartData = useMemo(
     () =>
@@ -57,7 +66,10 @@ const KeywordAnalyticsView = () => {
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
-  const { data: videoCountData } = useGetVideoCount(selectedWord);
+  const { data: videoCountData } = useGetVideoCount({
+    keyword: keyword,
+    relword: relword,
+  });
 
   const { totalCount, videoCountViewChartData } = useMemo(
     () =>
@@ -100,28 +112,50 @@ const KeywordAnalyticsView = () => {
     [videoCountData],
   );
 
-  const competitionScore = getCompetitionScore(lastDailyView, totalCount);
+  console.log(videoCountViewChartData);
+
+  const competitionText = convertCompetitionScoreFormat(
+    getCompetitionScore(lastDailyView, totalCount),
+  );
+
+  const subscribersVideoCount =
+    videoCountViewChartData['100000~500000']?.value ||
+    0 + videoCountViewChartData['500000이상']?.value ||
+    0;
 
   return (
-    <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
-      <AnalysisWidgetList
-        expectedView={lastExpectedView || 0}
-        competitionScore={competitionScore}
-      />
-      <div className="flex h-[520px] w-full">
-        <ViewChart />
-        <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
-          <DailyView view={lastDailyView || 0} />
-          <CumulativeVideoChart
-            totalCount={totalCount}
-            videoCountsBySection={Object.values(
-              videoCountViewChartData,
-            ).reverse()}
-          />
-        </div>
+    <div
+      key={relword + index}
+      className={cn(
+        'grid grid-cols-[minmax(250px,1fr)_140px_150px_150px_150px_100px_minmax(150px,1fr)] items-center gap-[12px] ',
+        {
+          'shadow-[inset_0_-2px_0_0_#f4f4f5]': index !== arr.length - 1,
+        },
+      )}
+    >
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {relword}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {keyword}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {lastExpectedView}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {lastDailyView}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {totalCount}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {competitionText}
+      </div>
+      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+        {subscribersVideoCount}
       </div>
     </div>
   );
 };
 
-export default KeywordAnalyticsView;
+export default RelationWord;

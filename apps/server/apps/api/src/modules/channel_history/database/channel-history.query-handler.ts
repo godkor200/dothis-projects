@@ -3,7 +3,6 @@ import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/databa
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { from, lastValueFrom, map } from 'rxjs';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-
 import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
 import { ConfigService } from '@nestjs/config';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
@@ -15,12 +14,12 @@ export class SearchQueryBuilder {
     index: string,
     keyword: string,
     relWord: string,
-    from: Date,
-    to: Date,
     size: number,
     data: CHANNEL_DATA_KEY[],
+    from?: Date,
+    to?: Date,
   ) {
-    return {
+    let searchQuery = {
       index,
       scroll: '10s',
       size: 10000,
@@ -54,14 +53,6 @@ export class SearchQueryBuilder {
                             'video_list.video_title': `${relWord}`,
                           },
                         },
-                        {
-                          range: {
-                            'video_list.crawled_date': {
-                              gte: from + ' 00:00:00',
-                              lte: to + ' 23:59:59',
-                            },
-                          },
-                        },
                       ],
                     },
                   },
@@ -77,6 +68,18 @@ export class SearchQueryBuilder {
         _source: data || false,
       },
     };
+    if (from && to) {
+      searchQuery.body.query.bool.must[0].nested.query.bool.must.push({
+        range: {
+          'video_list.crawled_date': {
+            gte: from + ' 00:00:00',
+            lte: to + ' 23:59:59',
+          },
+        },
+      } as any);
+    }
+
+    return searchQuery;
   }
 }
 
@@ -194,25 +197,17 @@ export class ChannelHistoryQueryHandler
     props: FindVideoV2,
   ): Promise<T[]> {
     const { keyword, relationKeyword, data, from, to } = props;
-    /**
-     * 데이터가 다 차면 사용할 로직
-    const dates = this.channelHistoryDataService.generateDatesBetween(from, to);
-    const index = dates
-      .map((date, i) =>
-        i === 0 ? `channel-history-${date}` : `,channel-history-${date}`,
-      )
-      .join('');
-     */
+
     const index = 'channel-history-*';
     const size = 100;
     const searchQuery = SearchQueryBuilder.channelHistory(
       index,
       keyword,
       relationKeyword,
-      from,
-      to,
       size,
       data,
+      from,
+      to,
     );
     return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }

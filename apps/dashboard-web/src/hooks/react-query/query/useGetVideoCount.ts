@@ -1,13 +1,23 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { VIDEO_COUNT_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetVideoCount = () => {
-  const selectedRelWord = useSelectedRelWord();
-  const { data } = useGetRelWords();
+const useGetVideoCount = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getAccVideo>,
+) => {
+  const { data } = useGetRelWords(keyword);
 
   const startDate = useStartDate();
 
@@ -25,8 +35,8 @@ const useGetVideoCount = () => {
         queryKey: VIDEO_COUNT_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: data?.keyword,
+            relword: relword,
+            keyword: keyword,
             startDate,
             endDate,
           },
@@ -35,12 +45,13 @@ const useGetVideoCount = () => {
           clusterNumber,
         },
         query: {
-          keyword: data?.keyword!,
-          relationKeyword: selectedRelWord!,
+          keyword: keyword!,
+          relationKeyword: relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
+        ...queryOptions,
+        enabled: !!data && !!relword && !!startDate && !!endDate,
       };
     }),
   });

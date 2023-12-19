@@ -22,14 +22,19 @@ const ArticleInfo = ({
         'mb-10': !isList,
       })}
     >
-      <span
-        className={cn('text-grey500 font-semibold', {
-          'text-[0.75rem]': isList,
-        })}
-      >
-        {secondText}
-      </span>
-      <div className="bg-grey400 h-4 w-[1px]" />
+      {secondText && (
+        <span
+          className={cn(
+            'text-grey500 font-semibold max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis',
+            {
+              'text-[0.75rem]': isList,
+            },
+          )}
+        >
+          {secondText}
+        </span>
+      )}
+      {secondText && <div className="bg-grey400 h-4 w-[1px]" />}
       <span
         className={cn('text-grey600 font-semibold', {
           'text-[0.75rem]': isList,

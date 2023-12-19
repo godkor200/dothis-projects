@@ -3,6 +3,7 @@ import { IRes } from '@Libs/commons/src/types/res.types';
 import { apiRouter, TRankRes } from '@dothis/dto';
 import {
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiParam,
   ApiTags,
@@ -12,6 +13,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { RelWordsRankingRes } from '@Libs/commons/src/types/dto.types';
 const c = nestControllerContract(apiRouter.relwords);
 const { rankRel } = c;
 const { summary, description } = rankRel;
@@ -42,7 +44,10 @@ export class RankRelHttpController {
     description:
       RelwordsNotFoundError.message + ' or ' + VideoNotFoundError.message,
   })
-  async execute(@Param('keyword') keyword: string): Promise<IRes<TRankRes[]>> {
+  @ApiOkResponse({
+    type: RelWordsRankingRes,
+  })
+  async execute(@Param('keyword') keyword: string): Promise<IRes<TRankRes>> {
     const arg = new RankRelQueryDto({ keyword });
     const result = await this.queryBus.execute(arg);
     return match(result, {

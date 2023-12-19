@@ -75,6 +75,7 @@ export const zVideoResponse = z.object({
         _score: z.null(),
         _source: z.object({
           channel_id: z.string(),
+          channel_name: z.string(),
           video_id: z.string(),
           crawled_date: z.string(),
           video_category: z.string().describe('video category').default('[]'),

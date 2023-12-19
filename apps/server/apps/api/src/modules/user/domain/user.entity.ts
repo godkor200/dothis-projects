@@ -3,6 +3,7 @@ import {
   Entity,
   JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';

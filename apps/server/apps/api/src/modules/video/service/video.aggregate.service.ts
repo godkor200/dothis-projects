@@ -22,22 +22,35 @@ export class VideoAggregateService {
       );
 
       let prevVideo: IFindVideoHistoryResponse = null;
-      console.log('전체 데이터 :', videoList);
+      let sumViews = 0;
+      let sumLikes = 0;
+      let sumComments = 0;
       for (let i = 0; i < videoList.length; i++) {
-        console.log(prevVideo, `prevVideo ${i}번쨰`);
-        debugger;
         if (prevVideo) {
           let video = videoList[i]._source;
           const date = new Date(video.crawled_date).toISOString().split('T')[0]; // Extract only the date part
+          /**
+           * 증가량의 평균을 계산
+           */
+          sumViews += video.video_views;
+          sumLikes += video.video_likes;
+          sumComments += video.video_comments;
 
-          const increaseViews = video.video_views - prevVideo.video_views;
-
-          const increaseLikes = Math.abs(
-            video.video_likes - prevVideo.video_likes,
-          );
-          const increaseComments = Math.abs(
-            video.video_comments - prevVideo.video_comments,
-          );
+          let averageIncreaseViews = sumViews / i + 1;
+          let averageIncreaseLikes = sumLikes / i + 1;
+          let averageIncreaseComments = sumComments / i + 1;
+          const increaseViews =
+            video.video_views !== 0
+              ? video.video_views - prevVideo.video_views
+              : averageIncreaseViews;
+          const increaseLikes =
+            video.video_likes !== 0
+              ? Math.abs(video.video_likes - prevVideo.video_likes)
+              : averageIncreaseLikes;
+          const increaseComments =
+            video.video_comments !== 0
+              ? Math.abs(video.video_comments - prevVideo.video_comments)
+              : averageIncreaseComments;
           // 중복 체크를 위한 키값 생성
           if (!result[date]) {
             result[date] = {
@@ -54,7 +67,6 @@ export class VideoAggregateService {
         }
 
         prevVideo = { ...videoList[i]._source };
-        console.log(result, `${i}번쨰`);
       }
     }
 

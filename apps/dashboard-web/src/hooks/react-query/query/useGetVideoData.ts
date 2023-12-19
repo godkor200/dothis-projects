@@ -1,6 +1,7 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { VIDEODATA_KEY } from '@/constants/querykey';
-import useKeyword from '@/hooks/user/useKeyword';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
@@ -9,11 +10,18 @@ export const videoKeys = {
   video: ['video'],
 };
 
-const useGetVideoData = () => {
-  const { data } = useGetRelWords();
+const useGetVideoData = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideo>,
+) => {
+  const { data } = useGetRelWords(keyword);
 
-  const { hashKeywordList } = useKeyword();
-  const selectedRelWord = useSelectedRelWord();
   let clusters: string[] = [];
 
   if (data && data.cluster) {
@@ -26,8 +34,8 @@ const useGetVideoData = () => {
         queryKey: VIDEODATA_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: hashKeywordList[0],
+            relword: relword,
+            keyword: keyword,
           },
         ]),
         params: {
@@ -36,10 +44,11 @@ const useGetVideoData = () => {
         query: {
           // last:0,
           limit: 5,
-          related: selectedRelWord!,
-          search: hashKeywordList[0],
+          related: relword!,
+          search: keyword!,
         },
-        enabled: !!data && !!selectedRelWord,
+        ...queryOptions,
+        enabled: !!data && !!relword,
       };
     }),
   });

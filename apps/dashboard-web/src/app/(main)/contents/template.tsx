@@ -14,6 +14,7 @@ import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
 import { GUEST_KEYWORD } from '@/constants/guestKeyword';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
+import { cn } from '@/utils/cn';
 
 const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { data } = useGetUserInfo();
@@ -31,6 +32,8 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const mainTab = searchParams?.get('main');
 
   const onSelect = () => {
     // now you got a read/write object
@@ -59,6 +62,26 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
       <SearchBar />
       <KeywordSearchResult />
 
+      <ul className=" flex justify-center gap-[24px] text-[28px] font-bold">
+        <li
+          className={cn('  cursor-pointer text-grey500', {
+            'border-primary500   border-b-4 border-solid text-grey700':
+              mainTab !== 'all',
+          })}
+          onClick={() => router.push('?main=recomand')}
+        >
+          추천
+        </li>
+        <li
+          className={cn('  cursor-pointer text-grey500', {
+            'border-primary500   border-b-4 border-solid text-grey700':
+              mainTab === 'all',
+          })}
+          onClick={() => router.push('?main=all')}
+        >
+          전체
+        </li>
+      </ul>
       <div className="bg-grey100 pb-[200px] pt-[5rem]">{children}</div>
     </>
   );

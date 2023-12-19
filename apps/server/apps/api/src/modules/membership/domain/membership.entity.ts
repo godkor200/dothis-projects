@@ -3,8 +3,8 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity({ name: 'membership' })
@@ -33,7 +33,7 @@ export class Membership {
   @Column({ name: 'created_at' })
   createdAt: Date;
 
-  // @ManyToOne((type) => User, (user) => user.UserChannelData)
-  // @JoinColumn({ name: 'userId' })
-  // User: User;
+  @ManyToOne((type) => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
+  User: User;
 }

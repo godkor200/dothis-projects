@@ -21,7 +21,7 @@ export class RankRelQueryHandler
   implements
     IQueryHandler<
       RankRelQueryDto,
-      Result<TRankRes[], RelwordsNotFoundError | VideoNotFoundError>
+      Result<TRankRes, RelwordsNotFoundError | VideoNotFoundError>
     >
 {
   constructor(
@@ -43,7 +43,7 @@ export class RankRelQueryHandler
    */
   async execute(
     query: RankRelQueryDto,
-  ): Promise<Result<TRankRes[], RelwordsNotFoundError | VideoNotFoundError>> {
+  ): Promise<Result<TRankRes, RelwordsNotFoundError | VideoNotFoundError>> {
     const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
       query.keyword,
     );
@@ -74,10 +74,15 @@ export class RankRelQueryHandler
       )
     ).filter((item) => item !== null);
     if (!channelVideoData.length) return Err(new VideoNotFoundError());
-    return Ok(
+
+    const res =
       this.rankRelAggregateService.calculationExpectationNumberRelatedWord(
         channelVideoData,
-      ),
-    );
+      );
+
+    return Ok({
+      keyword: query.keyword,
+      ranking: res,
+    });
   }
 }

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import ParserContent from '@/components/common/ParserContent';
 import useGetNewsArticle from '@/hooks/react-query/query/useGetNewsArticle';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -19,12 +19,12 @@ const News = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
-  const seletecRelWord = useSelectedRelWord();
+  const seletedWord = useSelectedWord();
 
   useEffect(() => {
     setPageIndex(0);
     setContentIndex(0);
-  }, [seletecRelWord]);
+  }, [seletedWord]);
 
   useEffect(() => {
     setContentIndex(0);
