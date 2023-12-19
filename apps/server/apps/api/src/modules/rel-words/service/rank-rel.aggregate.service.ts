@@ -11,8 +11,8 @@ export class RankRelAggregateService {
 
   calculationExpectationNumberRelatedWord(
     channelVideoData: IRankingRelWords[],
-  ): TRankResData[] {
-    let result: TRankResData[] = [];
+  ): TRankResData {
+    let result: TRankResData = [];
 
     for (let i = 0; i < channelVideoData.length; i++) {
       let videos = channelVideoData[i].data;
