@@ -1,5 +1,9 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { ClientInferResponseBody } from '@ts-rest/core';
 import { useMemo } from 'react';
 
+import type { ResponseType, VideoCount } from '@/constants/convertText';
+import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import {
   averageViews,
@@ -9,6 +13,12 @@ import {
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetExpectedView from '../react-query/query/useGetExpectedView';
+import useGetVideoCount from '../react-query/query/useGetVideoCount';
+
+type Post = ClientInferResponseBody<
+  typeof apiRouter.video.getAccVideo,
+  200
+>['data']['section'];
 
 export const useDailyViewChartDataForNivo = ({
   keyword,
@@ -51,5 +61,56 @@ export const useExpectedViewChartDataForNivo = ({
         '기대 조회 수',
       ),
     [expectedViewData],
+  );
+};
+
+export const useVideoCountViewChartData = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: videoCountData } = useGetVideoCount({ keyword, relword });
+
+  return useMemo(
+    () =>
+      videoCountData.reduce<{
+        totalCount: number;
+        videoCountViewChartData: ResponseType;
+      }>(
+        (acc, dataItem) => {
+          acc.totalCount += dataItem?.videoTotal || 0;
+          dataItem?.section.forEach((sectionItem) => {
+            const key = sectionItem.section;
+
+            if (key in CONVERT_SUBSCRIBERANGE) {
+              const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+              const existingItem =
+                acc.videoCountViewChartData[key as VideoCount];
+
+              if (existingItem) {
+                existingItem.value += sectionItem.number;
+              } else {
+                acc.videoCountViewChartData[key as VideoCount] = {
+                  id: existingRange,
+                  label: existingRange,
+                  value: sectionItem.number,
+                };
+              }
+            }
+          });
+
+          return acc;
+        },
+        {
+          totalCount: 0,
+          videoCountViewChartData: {},
+        } as {
+          totalCount: number;
+          videoCountViewChartData: ResponseType;
+        },
+      ),
+    [videoCountData],
   );
 };
