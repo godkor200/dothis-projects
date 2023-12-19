@@ -114,3 +114,25 @@ export const useVideoCountViewChartData = ({
     [videoCountData],
   );
 };
+
+const updateVideoCountViewChartData = (
+  acc: { totalCount: number; videoCountViewChartData: ResponseType },
+  sectionItem: Post[0],
+) => {
+  const key = sectionItem.section;
+
+  if (key in CONVERT_SUBSCRIBERANGE) {
+    const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+    const existingItem = acc.videoCountViewChartData[key as VideoCount];
+
+    if (existingItem) {
+      existingItem.value += sectionItem.number;
+    } else {
+      acc.videoCountViewChartData[key as VideoCount] = {
+        id: existingRange,
+        label: existingRange,
+        value: sectionItem.number,
+      };
+    }
+  }
+};
