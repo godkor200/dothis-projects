@@ -3,7 +3,7 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useCallback, useMemo } from 'react';
 
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import {
   ceilToNearest,
   floorToNearest,
@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
-  const selectedRelWord = useSelectedRelWord();
+  const seletedWord = useSelectedWord();
   // const testExpectedView = useMemo(
   //   () => [
   //     {
@@ -147,7 +147,7 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword={selectedRelWord!}
+          keyword={seletedWord.relword!}
           label={VIEWCHART_LABEL.EXPECTEDVIEW}
           value={expectedView[0].data[point.index].y}
           date={expectedView[0].data[point.index].x}
