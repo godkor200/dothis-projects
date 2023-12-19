@@ -101,13 +101,18 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
 
           return acc;
         },
-        { totalCount: 0, videoCountViewChartData: {} } as {
+        {
+          totalCount: 0,
+          videoCountViewChartData: {},
+        } as {
           totalCount: number;
           videoCountViewChartData: ResponseType;
         },
       ),
     [videoCountData],
   );
+
+  console.log(videoCountViewChartData);
 
   const competitionText = convertCompetitionScoreFormat(
     getCompetitionScore(lastDailyView, totalCount),

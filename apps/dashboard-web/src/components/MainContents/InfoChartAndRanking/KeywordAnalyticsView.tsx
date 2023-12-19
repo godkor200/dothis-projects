@@ -89,7 +89,10 @@ const KeywordAnalyticsView = () => {
 
           return acc;
         },
-        { totalCount: 0, videoCountViewChartData: {} } as {
+        {
+          totalCount: 0,
+          videoCountViewChartData: {},
+        } as {
           totalCount: number;
           videoCountViewChartData: ResponseType;
         },
