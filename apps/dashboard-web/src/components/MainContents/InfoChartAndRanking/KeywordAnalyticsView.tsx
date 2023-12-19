@@ -9,6 +9,7 @@ import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
+import { getCompetitionScore } from '@/utils/contents/competitionScore';
 import {
   averageViews,
   formatToLineGraph,
@@ -96,11 +97,13 @@ const KeywordAnalyticsView = () => {
     [videoCountData],
   );
 
+  const competitionScore = getCompetitionScore(lastDailyView, totalCount);
+
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
       <AnalysisWidgetList
         expectedView={lastExpectedView || 0}
-        competitionScore={lastDailyView && lastDailyView / totalCount}
+        competitionScore={competitionScore}
       />
       <div className="flex h-[520px] w-full">
         <ViewChart />
