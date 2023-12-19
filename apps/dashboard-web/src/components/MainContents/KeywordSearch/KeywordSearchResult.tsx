@@ -20,7 +20,7 @@ const KeywordSearchResult = () => {
   return (
     <h1 className="bg-primary50 mx-auto mb-[3.1rem] mt-[calc(24px+52px+60px)] flex max-w-[680px] flex-col rounded-2xl py-[18px] text-center text-[20px] font-bold">
       <span className="mb-1">
-        <span>{selectedWord.keyword}</span>{' '}
+        <span>{hashKeywordList[0]}</span>{' '}
         {hashKeywordList.length > 1 && `외 ${hashKeywordList.length - 1}개`}{' '}
         키워드에서 다루기 좋은 소재는
       </span>
