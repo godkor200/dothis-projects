@@ -9,6 +9,10 @@ import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { cn } from '@/utils/cn';
 import {
+  convertCompetitionScoreFormat,
+  getCompetitionScore,
+} from '@/utils/contents/competitionScore';
+import {
   averageViews,
   formatToLineGraph,
   sumViews,
@@ -105,14 +109,20 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
     [videoCountData],
   );
 
-  console.log(totalCount);
-  console.log(videoCountViewChartData);
+  const competitionText = convertCompetitionScoreFormat(
+    getCompetitionScore(lastDailyView, totalCount),
+  );
+
+  const subscribersVideoCount =
+    videoCountViewChartData['100000~500000']?.value ||
+    0 + videoCountViewChartData['500000이상']?.value ||
+    0;
 
   return (
     <div
       key={relword + index}
       className={cn(
-        'grid grid-cols-[minmax(250px,1fr)_140px_110px_110px_100px_100px_minmax(150px,1fr)_minmax(150px,1fr)] items-center gap-[12px] ',
+        'grid grid-cols-[minmax(250px,1fr)_140px_150px_150px_150px_100px_minmax(150px,1fr)] items-center gap-[12px] ',
         {
           'shadow-[inset_0_-2px_0_0_#f4f4f5]': index !== arr.length - 1,
         },
@@ -131,16 +141,13 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
         {lastDailyView}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        누적 영상 수
+        {totalCount}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        경쟁강도
+        {competitionText}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        구독자 10만 이상 채널
-      </div>
-      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        구독자 수 비슷한 채널
+        {subscribersVideoCount}
       </div>
     </div>
   );
