@@ -34,23 +34,19 @@ export class SearchQueryBuilder {
           bool: {
             must: [
               {
-                match: {
-                  video_tags: keyword,
+                bool: {
+                  should: [
+                    { wildcard: { video_tags: `*${keyword}*` } },
+                    { wildcard: { video_title: `*${relWord}*` } },
+                  ],
                 },
               },
               {
-                match: {
-                  video_tags: relWord,
-                },
-              },
-              {
-                match: {
-                  video_title: relWord,
-                },
-              },
-              {
-                match: {
-                  video_title: keyword,
+                bool: {
+                  should: [
+                    { wildcard: { video_tags: `*${relWord}*` } },
+                    { wildcard: { video_title: `*${keyword}*` } },
+                  ],
                 },
               },
               {
@@ -178,7 +174,7 @@ export class VideoQueryHandler
       from,
       to,
     );
-    console.log('searchQuery', searchQuery.body.query.bool.must[0]);
+
     return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
@@ -194,24 +190,19 @@ export class VideoQueryHandler
               {
                 bool: {
                   should: [
-                    { wildcard: { video_tag: `*${search}*` } },
+                    { wildcard: { video_tags: `*${search}*` } },
+                    { wildcard: { video_title: `*${related}*` } },
+                  ],
+                },
+              },
+              {
+                bool: {
+                  should: [
+                    { wildcard: { video_tags: `*${related}*` } },
                     { wildcard: { video_title: `*${search}*` } },
                   ],
                 },
               },
-              // If related is not null or undefined
-              ...(related
-                ? [
-                    {
-                      bool: {
-                        should: [
-                          { wildcard: { video_tag: `*${related}*` } },
-                          { wildcard: { video_title: `*${related}*` } },
-                        ],
-                      },
-                    },
-                  ]
-                : []),
             ],
           },
         },
