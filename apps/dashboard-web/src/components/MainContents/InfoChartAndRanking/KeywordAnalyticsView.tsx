@@ -100,6 +100,7 @@ const KeywordAnalyticsView = () => {
     [videoCountData],
   );
 
+  // 경쟁강도 구하는 로직 lastDailyView 절대값 설정도 고려해봐야함
   const competitionScore = getCompetitionScore(lastDailyView, totalCount);
 
   return (
