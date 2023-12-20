@@ -29,7 +29,7 @@ const ViewChart = () => {
         sumViews(dailyViewData.flat(), { startDate, endDate }),
         '일일 조회 수',
       ),
-    [dailyViewData],
+    [JSON.stringify(dailyViewData)],
   );
 
   const { data: expectedViewData, isLoading: expectedViewIsLoading } =
@@ -41,7 +41,7 @@ const ViewChart = () => {
         averageViews(expectedViewData.flat(), { startDate, endDate }),
         '기대 조회 수',
       ),
-    [expectedViewData],
+    [JSON.stringify(expectedViewData)],
   );
 
   // 1. true의 개수 세기
@@ -72,7 +72,7 @@ const ViewChart = () => {
       calculatePercentage(combinedArray)
         ? `${calculatePercentage(combinedArray)}%`
         : '0%',
-    [dailyViewData, expectedViewData],
+    [JSON.stringify(dailyViewData), JSON.stringify(expectedViewData)],
   );
 
   if (
