@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
+import { NIVO_CHART_COLOR } from '@/constants/nivoChartColor';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
@@ -18,6 +19,8 @@ import {
   sumViews,
 } from '@/utils/contents/dailyview';
 
+import type { NivoLineChart } from './Container';
+
 interface Props {
   keyword: string;
   relword: string;
@@ -26,9 +29,26 @@ interface Props {
     relword: string;
     keyword: string;
   }[];
+  setDailyViewChartDataList: () => React.Dispatch<
+    React.SetStateAction<NivoLineChart>
+  >;
+  setExpectedViewChartDataList: () => React.Dispatch<
+    React.SetStateAction<NivoLineChart>
+  >;
+
+  // setExpectedViewChartDataList: React.Dispatch<
+  //   React.SetStateAction<NivoLineChart>
+  // >;
 }
 
-const RelationWord = ({ keyword, relword, index, arr }: Props) => {
+const RelationWord = ({
+  keyword,
+  relword,
+  index,
+  arr,
+  setDailyViewChartDataList,
+  setExpectedViewChartDataList,
+}: Props) => {
   // const { data: relword } = useGetRelWords(keyword);
 
   const { data: dailyViewData } = useGetDailyView({
@@ -43,10 +63,47 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
     () =>
       formatToLineGraph(
         sumViews(dailyViewData.flat(), { startDate, endDate }),
-        '일일 조회 수',
+        relword,
       ),
     [dailyViewData],
   );
+
+  /**
+   * 현재 이 함수는 무조건 setState를 한다.
+   */
+  const handleUpdateChartDataList = (
+    prev: NivoLineChart,
+    dailyViewChartData: {
+      id: string;
+      data: {
+        x: string;
+        y: number;
+      }[];
+    }[],
+  ) => {
+    const prevDataIndex = prev.findIndex(
+      (item) => item.id === dailyViewChartData[0].id,
+    );
+
+    const copyPrevData = [...prev];
+
+    if (prevDataIndex !== -1) {
+      copyPrevData[prevDataIndex] = {
+        id: dailyViewChartData[0].id,
+        data: dailyViewChartData[0].data,
+      };
+      return copyPrevData;
+    } else {
+      return [...prev, { ...dailyViewChartData[0] }];
+    }
+  };
+
+  // useEffect 의존성배열에 계속 실행되는 곳에 setState를 넣으면 무한으로 렌더링을 야기한다. (부모가 렌더되면 React.memo를 적용시키지않는 이상 자식도 렌더링 되기때문에 서로 계속 렌덜링이 된다)
+  useEffect(() => {
+    setDailyViewChartDataList()((prev) =>
+      handleUpdateChartDataList(prev, dailyViewChartData),
+    );
+  }, [JSON.stringify(dailyViewData)]);
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
@@ -59,10 +116,15 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
     () =>
       formatToLineGraph(
         averageViews(expectedViewData.flat(), { startDate, endDate }),
-        '기대 조회 수',
+        relword,
       ),
     [expectedViewData],
   );
+  useEffect(() => {
+    setExpectedViewChartDataList()((prev) =>
+      handleUpdateChartDataList(prev, expectedViewChartData),
+    );
+  }, [JSON.stringify(expectedViewData)]);
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
@@ -141,7 +203,9 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
         {lastExpectedView}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        {lastDailyView}
+        {new Intl.NumberFormat('ko', {
+          notation: 'compact',
+        }).format(lastDailyView || 0) + '회'}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
         {totalCount}
