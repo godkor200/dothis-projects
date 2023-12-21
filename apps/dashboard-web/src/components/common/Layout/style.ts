@@ -78,12 +78,16 @@ export const IconWrapper = styled.div<{ $isInActive: boolean }>`
 `;
 
 export const Container = styled.aside`
+  position: absolute;
+
+  /* top:0;
+  bottom:0; */
   display: flex;
   flex-direction: column;
   gap: 3.75rem;
 
   width: 5rem;
-  height: auto;
+  height: 100%;
   padding: 1.5rem 1rem;
   border-right: 1px solid ${({ theme }) => theme.colors.grey400};
   box-sizing: border-box;
