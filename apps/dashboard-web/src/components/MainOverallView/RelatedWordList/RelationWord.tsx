@@ -112,8 +112,6 @@ const RelationWord = ({ keyword, relword, index, arr }: Props) => {
     [videoCountData],
   );
 
-  console.log(videoCountViewChartData);
-
   const competitionText = convertCompetitionScoreFormat(
     getCompetitionScore(lastDailyView, totalCount),
   );

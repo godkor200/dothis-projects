@@ -23,7 +23,6 @@ const ViewChart = () => {
   const startDate = useStartDate();
   const endDate = useEndDate();
 
-  console.log(dailyViewData);
   const dailyViewChartData = useMemo(
     () =>
       formatToLineGraph(

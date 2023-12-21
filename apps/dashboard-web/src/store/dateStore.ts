@@ -18,7 +18,7 @@ interface DateState {
  */
 export const dateStore = create<DateState>((set) => ({
   startDate: dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
-  endDate: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
+  endDate: dayjs().subtract(0, 'day').format('YYYY-MM-DD'),
   actions: {
     setStartDate: (value: string) => set(() => ({ startDate: value })),
     setEndDate: (value: string) => set(() => ({ endDate: value })),
