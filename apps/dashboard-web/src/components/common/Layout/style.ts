@@ -111,7 +111,7 @@ export const Container = styled.aside`
     }
   }
 
-  @media screen and (min-width: 1980px) {
+  @media screen and (min-width: 1600px) {
     width: 16.625rem;
     z-index: 9999;
 
