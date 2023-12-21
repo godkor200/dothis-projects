@@ -106,4 +106,20 @@ export const Container = styled.aside`
       transition: width 0.3s ease-out;
     }
   }
+
+  @media screen and (min-width: 1980px) {
+    width: 16.625rem;
+    z-index: 9999;
+
+    ${SideText} {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+
+    ${IconWrapper} {
+      width: 13.625rem;
+      transition: width 0.3s ease-out;
+    }
+  }
 `;
