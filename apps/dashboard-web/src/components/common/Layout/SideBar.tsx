@@ -18,13 +18,13 @@ const SideBar = () => {
   return (
     <Style.Container>
       <div className="cursor-pointer" onClick={() => router.push('/contents')}>
-        <SvgComp icon="SideLogo" size={50} />
+        <SvgComp icon="SideLogo" size={40} />
       </div>
       <div className="flex flex-col gap-[2.5rem]">
         {SIDE_MENUS.map((item, index) => (
           <Style.IconWrapper $isInActive={pathName !== item.link} key={index}>
             <Style.IconBox>
-              <SvgComp icon={item.icon} size={24} />
+              <SvgComp icon={item.icon} size={16} />
             </Style.IconBox>
             <Style.SideText>{item.title}</Style.SideText>
           </Style.IconWrapper>
