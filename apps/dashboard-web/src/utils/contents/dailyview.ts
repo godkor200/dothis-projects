@@ -24,7 +24,7 @@ const initViewsObjectByDate = (startDate: string, endDate: string) => {
 
   for (
     let date = dayjs(startDate);
-    date.isSameOrBefore(endDate, 'day');
+    date.isBefore(endDate, 'day');
     date = date.add(1, 'day')
   ) {
     viewsObject[date.format('YYYY-MM-DD')] = 0;
