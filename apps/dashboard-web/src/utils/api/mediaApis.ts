@@ -1,9 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-
-import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { apiInstance } from '@/utils/api/apiInstance';
-import { apiServer } from '@/utils/api/apiServer';
 
 import { externaImageLoader, getMainImage } from '../imagesUtil';
 

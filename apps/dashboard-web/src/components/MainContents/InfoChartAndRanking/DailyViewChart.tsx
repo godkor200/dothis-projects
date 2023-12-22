@@ -3,7 +3,7 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useMemo } from 'react';
 
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 
 import {
   ceilToNearest,
@@ -25,7 +25,7 @@ function getRandomValue() {
 }
 
 const DailyViewChart = ({ dailyView }: Props) => {
-  const selectedRelWord = useSelectedRelWord();
+  const seletedWord = useSelectedWord();
 
   // const testDailyView = useMemo(
   //   () => [
@@ -142,7 +142,7 @@ const DailyViewChart = ({ dailyView }: Props) => {
       useMesh={true}
       tooltip={({ point }) => (
         <CustomTooltip
-          keyword={selectedRelWord!}
+          keyword={seletedWord.relword!}
           label={VIEWCHART_LABEL.DAILYVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',

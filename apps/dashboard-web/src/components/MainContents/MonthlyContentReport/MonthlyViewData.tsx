@@ -10,6 +10,7 @@ import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import getMaxValues from '@/utils/contents/getMaxValues';
 
 import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
@@ -32,9 +33,18 @@ const TITLE_BUTTON = [
 
 const MonthlyViewData = () => {
   const [selectedType, setSelectedType] = useState<TitleType>('category');
-  const { data, isLoading: isWordLoading } = useGetRelWords();
-  const { data: viewData, isLoading: isViewLoading } = useGetDailyView();
-  const { data: videoData, isLoading: isVideoLoading } = useGetVideoData();
+
+  const seletedWord = useSelectedWord();
+
+  const { data, isLoading: isWordLoading } = useGetRelWords(
+    seletedWord.keyword,
+  );
+
+  const { data: viewData, isLoading: isViewLoading } =
+    useGetDailyView(seletedWord);
+
+  const { data: videoData, isLoading: isVideoLoading } =
+    useGetVideoData(seletedWord);
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 

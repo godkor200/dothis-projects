@@ -16,8 +16,6 @@ const MyPageTemplate = ({ children }: PropsWithChildren) => {
 
   const startDate = useStartDate();
 
-  console.log(startDate);
-
   useEffect(() => {
     if (!isSignIn) {
       if (isTokenRequired) {
