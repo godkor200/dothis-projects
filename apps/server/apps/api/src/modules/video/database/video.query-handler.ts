@@ -36,16 +36,38 @@ export class SearchQueryBuilder {
               {
                 bool: {
                   should: [
-                    { wildcard: { video_tags: `*${keyword}*` } },
-                    { wildcard: { video_title: `*${relWord}*` } },
-                  ],
-                },
-              },
-              {
-                bool: {
-                  should: [
-                    { wildcard: { video_tags: `*${relWord}*` } },
-                    { wildcard: { video_title: `*${keyword}*` } },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_tags: `*${keyword}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_title: `*${relWord}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_title: `*${keyword}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_tags: `*${relWord}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
                   ],
                 },
               },
@@ -190,16 +212,38 @@ export class VideoQueryHandler
               {
                 bool: {
                   should: [
-                    { wildcard: { video_tags: `*${search}*` } },
-                    { wildcard: { video_title: `*${related}*` } },
-                  ],
-                },
-              },
-              {
-                bool: {
-                  should: [
-                    { wildcard: { video_tags: `*${related}*` } },
-                    { wildcard: { video_title: `*${search}*` } },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_tags: `*${search}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_title: `*${related}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_title: `*${search}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_tags: `*${related}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
                   ],
                 },
               },
