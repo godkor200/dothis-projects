@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
 import ArticleList from './ArticleList';
@@ -17,11 +17,11 @@ const YouTube = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
-  const seletecRelWord = useSelectedRelWord();
+  const seletedWord = useSelectedWord();
   useEffect(() => {
     setPageIndex(0);
     setContentIndex(0);
-  }, [seletecRelWord]);
+  }, [seletedWord]);
 
   useEffect(() => {
     setContentIndex(0);
@@ -31,7 +31,7 @@ const YouTube = () => {
     setContentIndex(index);
   };
 
-  const { data, isLoading } = useGetVideoData();
+  const { data, isLoading } = useGetVideoData(seletedWord);
 
   /**
    * @validItems flatMap을 이용해서 useGetVideoData에서 얻은 data형식에서 MediaArticle을 그리는데 필요한 object만 flat하게 가져옵니다. (ex)[{videoObject},{videoObject},{videoObject}]
@@ -53,7 +53,7 @@ const YouTube = () => {
       image: externalYouTubeImageLoader(item._source.video_id),
       date: item._source.video_published,
       link: item._source.video_url,
-      provider: item._source.video_category,
+      provider: item._source.channel_name,
       tags: item._source.video_tag,
       description: item._source.video_description,
     };

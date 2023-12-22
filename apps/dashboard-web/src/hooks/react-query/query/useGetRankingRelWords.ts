@@ -15,18 +15,18 @@ import { apiClient } from '@/utils/api/apiClient';
  * @특이사항 현재 데이터를 수집하는 요청과 겹쳐서 높은확률로 429에러(Trying to create too many scroll contexts)가 response로 들어옵니다. 조금이라도 그것을 방지하기 위해 retry를 걸어주었습니다.
  */
 const useGetRankingRelWords = (
-  keyword: string,
+  keyword: string | null,
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
 ) => {
   const queryResult = apiClient(1).relwords.rankRel.useQuery(
     RANK_RELATIONWORD_KEY.list([{ keyword }]),
-    { params: { keyword } },
+    { params: { keyword: keyword! } },
     { ...queryOptions, enabled: !!keyword, retry: 3 },
   );
 
   return {
     ...queryResult,
-    data: queryResult.data?.body.data
+    data: queryResult.data?.body.data.ranking
       .sort((a, b) => b.expectedViews - a.expectedViews)
       .map((item) => item.word),
   };

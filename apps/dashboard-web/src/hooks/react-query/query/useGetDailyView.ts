@@ -1,14 +1,23 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { DAILYVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedRelWord } from '@/store/selectedRelWordStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import useGetRelWords from './useGetRelWords';
 
-const useGetDailyView = () => {
-  const { data } = useGetRelWords();
-
-  const selectedRelWord = useSelectedRelWord();
+const useGetDailyView = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.dailyViews.getDailyViews>,
+) => {
+  const { data } = useGetRelWords(keyword);
 
   const startDate = useStartDate();
 
@@ -26,8 +35,8 @@ const useGetDailyView = () => {
         queryKey: DAILYVIEW_KEY.list([
           {
             clusterNumber,
-            relword: selectedRelWord,
-            keyword: data?.keyword,
+            relword,
+            keyword,
             startDate,
             endDate,
           },
@@ -36,12 +45,13 @@ const useGetDailyView = () => {
           clusterNumber,
         },
         query: {
-          keyword: data?.keyword!,
-          relationKeyword: selectedRelWord!,
+          keyword: keyword!,
+          relationKeyword: relword!,
           from: startDate,
           to: endDate,
         },
-        enabled: !!data && !!selectedRelWord && !!startDate && !!endDate,
+        ...queryOptions,
+        enabled: !!data && !!relword && !!startDate && !!endDate,
       };
     }),
   });
