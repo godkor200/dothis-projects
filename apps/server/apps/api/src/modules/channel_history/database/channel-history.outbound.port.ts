@@ -3,10 +3,7 @@ import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-vi
 import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 
 export interface ChannelHistoryOutboundPort {
-  findChannelHistoryFullScan<T>(
-    channelIds: string[],
-    data?: CHANNEL_DATA_KEY[],
-  ): Promise<T[]>;
+  findChannelHistoryInfo(channelIds: string): Promise<IChannelHistoryRes>;
 
   findChannelHistoryByLimit(
     channelIds: string[],
