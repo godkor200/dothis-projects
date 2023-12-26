@@ -33,11 +33,6 @@ const { summary, responses, description } = c.getAccVideo;
 export class FindAccumulateVideosV2HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @ApiParam({
-    name: 'clusterNumber',
-    description: '클러스터 번호, 탐색어를 찾을때 클러스터 번호가 표기됩니다.',
-    example: 6,
-  })
   @ApiQuery({
     name: 'keyword',
     description: '탐색어',
@@ -62,12 +57,6 @@ export class FindAccumulateVideosV2HttpController {
     summary,
     description,
   })
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
-    },
-  ])
   @TsRest(c.getAccVideo)
   @ApiBearerAuth('Authorization')
   @ApiNotFoundResponse({
@@ -84,12 +73,8 @@ export class FindAccumulateVideosV2HttpController {
   @ApiInternalServerErrorResponse()
   @ApiBadRequestResponse({ description: 'Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  async execute(
-    @Param('clusterNumber') clusterNumber: string,
-    @Query() query: FindVideoV2,
-  ): Promise<IRes<ISection[]>> {
+  async execute(@Query() query: FindVideoV2): Promise<IRes<ISection[]>> {
     const arg = new FindAccumulateVideosV2Dtos({
-      clusterNumber,
       ...query,
     });
 
@@ -101,13 +86,11 @@ export class FindAccumulateVideosV2HttpController {
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof ChannelNotFoundError) {
-          throw new NotFoundException(err.message);
-        }
-        if (err instanceof VideoNotFoundError) {
-          throw new NotFoundException(err.message);
-        }
-        if (err instanceof ChannelHistoryNotFoundError) {
+        if (
+          err instanceof ChannelNotFoundError ||
+          err instanceof VideoNotFoundError ||
+          err instanceof ChannelHistoryNotFoundError
+        ) {
           throw new NotFoundException(err.message);
         }
         throw err;
