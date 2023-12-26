@@ -12,13 +12,14 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { IChannelHistory } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 
 @QueryHandler(ExpectedViewsV2Query)
 export class ExpectedViewsV2QueryHandler
   implements
     IQueryHandler<
       ExpectedViewsV2Query,
-      Result<IExpectedData[], VideoNotFoundError>
+      Result<IExpectedData[], VideoNotFoundError | ChannelNotFoundError>
     >
 {
   constructor(
@@ -38,7 +39,9 @@ export class ExpectedViewsV2QueryHandler
    */
   async execute(
     query: ExpectedViewsV2Query,
-  ): Promise<Result<IExpectedData[], VideoNotFoundError>> {
+  ): Promise<
+    Result<IExpectedData[], VideoNotFoundError | ChannelNotFoundError>
+  > {
     const arg = {
       ...query,
       data: [CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS],
@@ -50,6 +53,7 @@ export class ExpectedViewsV2QueryHandler
       await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
         arg,
       );
+    if (!channelHistory) return Err(new ChannelNotFoundError());
 
     const result =
       this.channelHistoryAggregateService.calculateAverageViews(channelHistory);
