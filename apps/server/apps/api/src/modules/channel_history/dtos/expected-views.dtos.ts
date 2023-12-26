@@ -34,8 +34,6 @@ export interface ExpectedViewsDto
   extends Omit<ExpectedViewsQuery, 'clusterNumber'> {}
 
 export class ExpectedViewsV2Query implements IQuery {
-  readonly clusterNumber: string;
-
   readonly keyword: string;
 
   readonly relationKeyword: string;
@@ -45,7 +43,6 @@ export class ExpectedViewsV2Query implements IQuery {
   readonly to: Date;
 
   constructor(props: ExpectedViewsV2Query) {
-    this.clusterNumber = props.clusterNumber;
     this.keyword = props.keyword;
     this.relationKeyword = props.relationKeyword;
     this.from = props.from;
