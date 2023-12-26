@@ -14,26 +14,24 @@ export const zRelWords = z.object({
   }),
 });
 
+export const zRankingArray = z.array(
+  z.object({
+    expectedViews: z.number().describe('기대조회수'),
+    word: z.string().describe('연관어'),
+  }),
+);
 export const zRankRel = z.object({
   data: z.object({
     keyword: z.string(),
-    ranking: z.array(
-      z.object({
-        expectedViews: z.number().describe('기대조회수'),
-        word: z.string().describe('연관어'),
-      }),
-    ),
+    ranking: zRankingArray,
   }),
 });
-export const zRankRes = z.object({
-  keyword: z.string(),
-  ranking: zRankRel.shape.data,
-});
+export const zRankRes = zRankRel.shape.data;
 export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
 export const zResWordsPickData = zRelWords.shape.data;
 
-export type TRankResData = z.TypeOf<typeof zRankRel.shape.data>;
+export type TRankResData = z.TypeOf<typeof zRankingArray>;
 
 export type TRankRes = z.TypeOf<typeof zRankRes>;
 
