@@ -15,22 +15,22 @@ export const SIDE_MENUS: SideMenus[] = [
   {
     title: '인기 영상 분석',
     icon: 'SideMagicPen',
-    link: '/chart2',
+    link: '/preparing',
   },
   {
     title: '내 채널 분석',
     icon: 'SideUser',
-    link: '/chart3',
+    link: '/preparing',
   },
   {
     title: '인기 키워드 분석',
     icon: 'SideTrendUp',
-    link: '/chart4',
+    link: '/preparing',
   },
   {
     title: '커뮤니티',
     icon: 'SideMessage',
-    link: '/chart5',
+    link: '/preparing',
   },
 ];
 

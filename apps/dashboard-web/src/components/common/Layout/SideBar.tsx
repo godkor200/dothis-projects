@@ -22,7 +22,13 @@ const SideBar = () => {
       </div>
       <div className="flex flex-col gap-[2.5rem]">
         {SIDE_MENUS.map((item, index) => (
-          <Style.IconWrapper $isInActive={pathName !== item.link} key={index}>
+          <Style.IconWrapper
+            $isInActive={pathName !== item.link}
+            key={index}
+            onClick={() => {
+              !item.link.includes('preparing') && router.push('/contents');
+            }}
+          >
             <Style.IconBox>
               <SvgComp icon={item.icon} size={16} />
             </Style.IconBox>
