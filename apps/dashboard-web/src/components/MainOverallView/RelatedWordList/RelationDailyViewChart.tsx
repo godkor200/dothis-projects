@@ -47,7 +47,7 @@ const RelationDailyViewChart = ({ dailyViewChartDataList }: Props) => {
         ? 1
         : (yMaxScale - yMinScale) / (TICK_SIZE - 2);
 
-    return roundToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
+    return ceilToNearest(deviationByTick, getRoundingUnit(deviationByTick, 1));
     // 여기는 floor여야겠다 너무 편차가 크다. 기존(ceil)
   };
 
