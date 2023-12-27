@@ -2,7 +2,7 @@ import { mock } from 'jest-mock-extended';
 import { ExpectedViewsV2QueryHandler } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.query-handler';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
-import { ExpectedViewsQuery } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { ExpectedViewsV2Query } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
 import { channelHistoryDummy } from '@Apps/modules/channel_history/queries/v2/exprected-views/__dummy__/channel_history.dummy';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
@@ -28,15 +28,14 @@ beforeEach(async () => {
  */
 describe('기대 조회수 평균 구하기 v2', () => {
   it('비디오', async () => {
-    const arg: ExpectedViewsQuery = {
-      clusterNumber: '6',
+    const arg: ExpectedViewsV2Query = {
       keyword: '고기',
       relationKeyword: '돼지고기',
       from: new Date('2023-10-13'),
       to: new Date('2023-10-20'),
     };
 
-    mockChannelHistoryHandler.findChannelHistoryFullScan.mockReturnValue(
+    mockChannelHistoryHandler.findChannelHistoryByKeywordAndRelWordFullScan.mockReturnValue(
       Promise.resolve(channelHistoryDummy),
     );
 

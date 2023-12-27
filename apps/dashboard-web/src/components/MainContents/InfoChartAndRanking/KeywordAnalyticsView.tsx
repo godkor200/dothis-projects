@@ -4,17 +4,13 @@ import { useMemo } from 'react';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import {
+  useDailyViewChartDataForNivo,
+  useExpectedViewChartDataForNivo,
+} from '@/hooks/contents/useLineGraph';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
-import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { getCompetitionScore } from '@/utils/contents/competitionScore';
-import {
-  averageViews,
-  formatToLineGraph,
-  sumViews,
-} from '@/utils/contents/dailyview';
 
 import AnalysisWidgetList from './AnalysisWidgetList';
 import CumulativeVideoChart from './CumulativeVideoChart';
@@ -28,31 +24,23 @@ export const VIEWCHART_LABEL = {
 
 const KeywordAnalyticsView = () => {
   const selectedWord = useSelectedWord();
-  const { data: dailyViewData } = useGetDailyView(selectedWord);
 
-  const startDate = useStartDate();
-  const endDate = useEndDate();
-
-  const dailyViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        sumViews(dailyViewData.flat(), { startDate, endDate }),
-        '일일 조회 수',
-      ),
-    [dailyViewData],
+  const dailyViewChartData = useDailyViewChartDataForNivo(
+    selectedWord,
+    '일일 조회 수',
   );
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
+  const totalDailyView = dailyViewChartData[0].data.reduce(
+    (accumulator: number, currentValue: { x: string; y: number }) => {
+      return accumulator + Number(currentValue.y);
+    },
+    0,
+  );
 
-  const { data: expectedViewData } = useGetExpectedView(selectedWord);
-
-  const expectedViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        averageViews(expectedViewData.flat(), { startDate, endDate }),
-        '기대 조회 수',
-      ),
-    [expectedViewData],
+  const expectedViewChartData = useExpectedViewChartDataForNivo(
+    selectedWord,
+    '기대 조회 수',
   );
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
@@ -100,6 +88,7 @@ const KeywordAnalyticsView = () => {
     [videoCountData],
   );
 
+  // 경쟁강도 구하는 로직 lastDailyView 절대값 설정도 고려해봐야함
   const competitionScore = getCompetitionScore(lastDailyView, totalCount);
 
   return (
@@ -111,7 +100,7 @@ const KeywordAnalyticsView = () => {
       <div className="flex h-[520px] w-full">
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
-          <DailyView view={lastDailyView || 0} />
+          <DailyView view={totalDailyView || 0} />
           <CumulativeVideoChart
             totalCount={totalCount}
             videoCountsBySection={Object.values(

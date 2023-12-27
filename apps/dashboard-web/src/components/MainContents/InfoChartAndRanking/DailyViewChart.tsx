@@ -140,16 +140,18 @@ const DailyViewChart = ({ dailyView }: Props) => {
         format: (value: number) => unitFormat(value, Math.min(...yAxisRange())),
       }}
       useMesh={true}
-      tooltip={({ point }) => (
-        <CustomTooltip
-          keyword={seletedWord.relword!}
-          label={VIEWCHART_LABEL.DAILYVIEW}
-          value={new Intl.NumberFormat('ko', {
-            notation: 'compact',
-          }).format(dailyView[0].data[point.index].y)}
-          date={dailyView[0].data[point.index].x}
-        />
-      )}
+      tooltip={({ point }) => {
+        return (
+          <CustomTooltip
+            keyword={seletedWord.relword!}
+            label={VIEWCHART_LABEL.DAILYVIEW}
+            value={new Intl.NumberFormat('ko', {
+              notation: 'compact',
+            }).format(dailyView[0].data[point.index].y)}
+            date={dailyView[0].data[point.index].x}
+          />
+        );
+      }}
       legends={[
         {
           anchor: 'bottom',

@@ -11,7 +11,7 @@ import { type PropsWithChildren, useEffect } from 'react';
 import KeywordSearchResult from '@/components/MainContents/KeywordSearch/KeywordSearchResult';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
-import { GUEST_KEYWORD } from '@/constants/guestKeyword';
+import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
 import { cn } from '@/utils/cn';

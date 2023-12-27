@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { GUEST_KEYWORD } from '@/constants/guestKeyword';
+import { GUEST_KEYWORD } from '@/constants/guest';
 import type { KeywordSchema } from '@/constants/schema/login';
 import { LOGIN_KEYWORD_SCHEMA } from '@/constants/schema/login';
 import { useInitialKeywordMutations } from '@/hooks/react-query/mutation/useKeywordMutation';

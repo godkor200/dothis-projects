@@ -145,14 +145,18 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
         format: (value: number) => unitFormat(value, Math.max(...yAxisRange())),
       }}
       useMesh={true}
-      tooltip={({ point }) => (
-        <CustomTooltip
-          keyword={seletedWord.relword!}
-          label={VIEWCHART_LABEL.EXPECTEDVIEW}
-          value={expectedView[0].data[point.index].y}
-          date={expectedView[0].data[point.index].x}
-        />
-      )}
+      tooltip={({ point }) => {
+        return (
+          <CustomTooltip
+            keyword={seletedWord.relword!}
+            label={VIEWCHART_LABEL.EXPECTEDVIEW}
+            value={new Intl.NumberFormat('ko', {
+              notation: 'compact',
+            }).format(expectedView[0].data[point.index].y)}
+            date={expectedView[0].data[point.index].x}
+          />
+        );
+      }}
       legends={[
         {
           anchor: 'bottom',

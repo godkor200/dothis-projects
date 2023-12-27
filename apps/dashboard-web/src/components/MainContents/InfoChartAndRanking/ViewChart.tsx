@@ -2,46 +2,32 @@
 
 import { useMemo } from 'react';
 
+import {
+  useDailyViewChartDataForNivo,
+  useExpectedViewChartDataForNivo,
+} from '@/hooks/contents/useLineGraph';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
-import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import {
-  averageViews,
-  formatToLineGraph,
-  sumViews,
-} from '@/utils/contents/dailyview';
 
 import DailyViewChart from './DailyViewChart';
 import ExpectedViewChart from './ExpectedViewChart';
 
 const ViewChart = () => {
   const selectedWord = useSelectedWord();
-  const { data: dailyViewData, isLoading: dailyViewIsLoading } =
-    useGetDailyView(selectedWord);
 
-  const startDate = useStartDate();
-  const endDate = useEndDate();
+  const { isLoading: dailyViewIsLoading } = useGetDailyView(selectedWord);
 
-  const dailyViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        sumViews(dailyViewData.flat(), { startDate, endDate }),
-        '일일 조회 수',
-      ),
-    [dailyViewData],
+  const dailyViewChartData = useDailyViewChartDataForNivo(
+    selectedWord,
+    '일일 조회 수',
   );
 
-  const { data: expectedViewData, isLoading: expectedViewIsLoading } =
-    useGetExpectedView(selectedWord);
+  const { isLoading: expectedViewIsLoading } = useGetExpectedView(selectedWord);
 
-  const expectedViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        averageViews(expectedViewData.flat(), { startDate, endDate }),
-        '기대 조회 수',
-      ),
-    [expectedViewData],
+  const expectedViewChartData = useExpectedViewChartDataForNivo(
+    selectedWord,
+    '기대 조회 수',
   );
 
   // 1. true의 개수 세기
@@ -64,7 +50,7 @@ const ViewChart = () => {
     (countTrue(arr) / arr.length) * 100;
 
   // 두 배열을 합치기
-  const combinedArray = [...dailyViewIsLoading, ...expectedViewIsLoading];
+  const combinedArray = [...dailyViewIsLoading, expectedViewIsLoading];
 
   // 전체 배열에 대한 퍼센트 계산
   const totalPercentage = useMemo(
@@ -72,7 +58,7 @@ const ViewChart = () => {
       calculatePercentage(combinedArray)
         ? `${calculatePercentage(combinedArray)}%`
         : '0%',
-    [dailyViewData, expectedViewData],
+    [JSON.stringify(dailyViewChartData), JSON.stringify(expectedViewChartData)],
   );
 
   if (

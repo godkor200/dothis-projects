@@ -8,11 +8,13 @@ export class RankRelAggregateService {
   constructor(
     private readonly channelHistoryAggregateService: ChannelHistoryAggregateService,
   ) {}
-
+  /**
+   * 관련어의 기대조회수를 계산하는 집계 함수
+   * */
   calculationExpectationNumberRelatedWord(
     channelVideoData: IRankingRelWords[],
-  ): TRankResData[] {
-    let result: TRankResData[] = [];
+  ): TRankResData {
+    let result: TRankResData = [];
 
     for (let i = 0; i < channelVideoData.length; i++) {
       let videos = channelVideoData[i].data;

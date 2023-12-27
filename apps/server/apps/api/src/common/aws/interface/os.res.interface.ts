@@ -30,3 +30,12 @@ export interface Hits<T> {
 export interface HitList<TS> {
   hits: Hits<TS>;
 }
+export interface IdocRes<T> {
+  _index: string;
+  _id: string;
+  _version: number;
+  _seq_no: number;
+  _primary_term: number;
+  found: boolean;
+  _source: T;
+}

@@ -1,13 +1,11 @@
 import { from, last, lastValueFrom, map } from 'rxjs';
-import {
-  FindVideoByMultipleIndex,
-  VideoServicePort,
-} from './video.service.port';
+import { VideoServicePort } from './video.service.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
   IFindManyVideoResult,
   IPagingRes,
+  IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
 
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
@@ -15,6 +13,8 @@ import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
 } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+
 export class SearchQueryBuilder {
   static video(
     index: string,
@@ -34,23 +34,41 @@ export class SearchQueryBuilder {
           bool: {
             must: [
               {
-                match: {
-                  video_tags: keyword,
-                },
-              },
-              {
-                match: {
-                  video_tags: relWord,
-                },
-              },
-              {
-                match: {
-                  video_title: relWord,
-                },
-              },
-              {
-                match: {
-                  video_title: keyword,
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_tags: `*${keyword}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_title: `*${relWord}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_title: `*${keyword}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_tags: `*${relWord}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
                 },
               },
               {
@@ -77,19 +95,18 @@ export class SearchQueryBuilder {
       },
     };
   }
+
+  static individualVideo(id: string) {
+    return {
+      index: 'video-*',
+      id,
+    };
+  }
 }
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
   implements VideoServicePort
 {
-  // async findVideosWithMultipleIndex<T>(
-  //   arg: FindVideoByMultipleIndex,
-  // ): Promise<T[]> {
-  //   const index = arg.cluster.map((e) => 'video-' + e).join(',');
-  //   const { keyword, relWord, data } = arg;
-  //   const searchQuery = SearchQueryBuilder.video(index, keyword, relWord, data);
-  //   return await this.fullScan<T>(searchQuery, (doc) => doc);
-  // }
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
       index: 'new_video',
@@ -178,7 +195,7 @@ export class VideoQueryHandler
       from,
       to,
     );
-    console.log('searchQuery', searchQuery.body.query.bool.must[0]);
+
     return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
@@ -194,24 +211,41 @@ export class VideoQueryHandler
               {
                 bool: {
                   should: [
-                    { wildcard: { video_tag: `*${search}*` } },
-                    { wildcard: { video_title: `*${search}*` } },
-                  ],
-                },
-              },
-              // If related is not null or undefined
-              ...(related
-                ? [
                     {
                       bool: {
-                        should: [
-                          { wildcard: { video_tag: `*${related}*` } },
-                          { wildcard: { video_title: `*${related}*` } },
+                        must: [
+                          {
+                            wildcard: {
+                              video_tags: `*${search}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_title: `*${related}*`,
+                            },
+                          },
                         ],
                       },
                     },
-                  ]
-                : []),
+                    {
+                      bool: {
+                        must: [
+                          {
+                            wildcard: {
+                              video_title: `*${search}*`,
+                            },
+                          },
+                          {
+                            wildcard: {
+                              video_tags: `*${related}*`,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
             ],
           },
         },
@@ -292,5 +326,14 @@ export class VideoQueryHandler
       },
     };
     return Promise.resolve([]);
+  }
+
+  async findVideoInfo(id: string): Promise<IdocRes<IVideo>> {
+    const searchQuery = SearchQueryBuilder.individualVideo(id);
+    const observable$ = from(
+      this.client.get(searchQuery).then((res) => res.body._source),
+    );
+
+    return await lastValueFrom(observable$);
   }
 }

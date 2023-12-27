@@ -30,7 +30,6 @@ describe('함수 처리', () => {
     );
 
     const arg: FindAccumulateVideosV2Dtos = {
-      clusterNumber: '0',
       keyword: '이태원',
       relationKeyword: undefined,
       from: new Date('2023-10-12'),

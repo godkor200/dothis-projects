@@ -43,17 +43,24 @@ export class AwsOpenSearchConnectionService {
       result.push(processDoc(doc));
     }
 
-    // SCROLL API를 통해 나온 결과 저장
-    while (resp.body.hits.hits.length) {
-      resp = await this.client.scroll({
-        scroll_id: oldScrollId,
-        scroll: '10s',
-      });
-      oldScrollId = resp.body._scroll_id;
+    try {
+      // SCROLL API를 통해 나온 결과 저장
+      while (resp.body.hits.hits.length) {
+        resp = await this.client.scroll({
+          scroll_id: oldScrollId,
+          scroll: '10s',
+        });
+        oldScrollId = resp.body._scroll_id;
 
-      for (const doc of resp.body.hits.hits) {
-        result.push(processDoc(doc));
+        for (const doc of resp.body.hits.hits) {
+          result.push(processDoc(doc));
+        }
       }
+    } catch (error) {
+      console.error('Scroll 작업 중 오류 발생:', error);
+    } finally {
+      // Scroll 작업 완료 후에 clearScroll 호출
+      await this.client.clear_scroll({ scroll_id: oldScrollId });
     }
 
     console.log('길이가 맞나?', totalLength, result.length === totalLength);

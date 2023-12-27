@@ -22,6 +22,8 @@ import {
 } from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ExpectedViewsData } from '@Libs/commons/src/types/dto.types';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const { summary, description } = getExpectedViews;
 export interface IExpectedData {
   date: string;
@@ -43,11 +45,6 @@ export class ExpectedViewsV2HttpController {
     isArray: true,
     description: '평균 기대 조회수 데이터',
     type: ExpectedViewsData,
-  })
-  @ApiParam({
-    name: 'clusterNumber',
-    description: '클러스터 번호, 탐색어를 찾을때 클러스터 번호가 표기됩니다.',
-    example: 43,
   })
   @ApiQuery({
     name: 'keyword',
@@ -72,17 +69,21 @@ export class ExpectedViewsV2HttpController {
   @ApiNotFoundResponse({ description: 'The video could not be found.' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
-    @Param('clusterNumber') clusterNumber: string,
     @Query() query: ExpectedViewsV2Dto,
   ): Promise<IRes<IExpectedData[]>> {
-    const arg = new ExpectedViewsV2Query({ clusterNumber, ...query });
-    const result: Result<IExpectedData[], VideoNotFoundError> =
-      await this.queryBus.execute(arg);
+    const arg = new ExpectedViewsV2Query(query);
+    const result: Result<
+      IExpectedData[],
+      VideoNotFoundError | ChannelNotFoundError
+    > = await this.queryBus.execute(arg);
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof VideoNotFoundError) {
+        if (
+          err instanceof VideoNotFoundError ||
+          err instanceof ChannelNotFoundError
+        ) {
           throw new NotFoundException(err.message);
         }
         throw err;

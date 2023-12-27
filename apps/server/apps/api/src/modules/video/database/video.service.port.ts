@@ -7,7 +7,9 @@ import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-v
 import {
   IFindManyVideoResult,
   IPagingRes,
+  IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
+import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 
 export class FindVideoByMultipleIndex {
   public readonly keyword: string;
@@ -32,4 +34,6 @@ export interface VideoServicePort {
   findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
 
   findVideosWithLastVideoHistory<T>(arg: FindVideoDateQuery): Promise<T[]>;
+
+  findVideoInfo(id: string): Promise<IdocRes<IVideo>>;
 }

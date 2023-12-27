@@ -26,8 +26,7 @@ export const videoApi = c.router({
   },
   getAccVideo: {
     method: 'GET',
-    path: `${videoBaseApiUrl}/accumulate/:clusterNumber`,
-    pathParams: z.number(), // 비디오 카테고리(cluster) 넘버
+    path: `${videoBaseApiUrl}/accumulate`,
     query: findVideoBySearchKeyword,
     responses: {
       200: zAccVideoModel,
@@ -36,6 +35,6 @@ export const videoApi = c.router({
     },
     summary: '관련어와 탐색어를 기준으로 누적 영상수를 가져옵니다.',
     description:
-      '클러스터 번호(clusterNumber),탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 누적 영상수를 가져옵니다.',
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 누적 영상수를 가져옵니다 .기존에꺼 대비해서 한번만 호출하면 됩니다.',
   },
 });
