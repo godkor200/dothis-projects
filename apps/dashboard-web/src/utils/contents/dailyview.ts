@@ -93,7 +93,6 @@ export const averageViews = (
       );
     }
   }
-
   // for (const date of Object.keys(result)) {
   //   const count = data.filter((item) => item?.date === date).length;
   //   result[date] = Math.round(result[date]) / count;
