@@ -38,7 +38,7 @@ export const useDailyViewChartDataForNivo = ({
         sumViews(dailyViewData.flat(), { startDate, endDate }),
         '일일 조회 수 ',
       ),
-    [dailyViewData],
+    [JSON.stringify(dailyViewData)],
   );
 };
 
@@ -57,10 +57,10 @@ export const useExpectedViewChartDataForNivo = ({
   return useMemo(
     () =>
       formatToLineGraph(
-        averageViews(expectedViewData.flat(), { startDate, endDate }),
+        averageViews(expectedViewData, { startDate, endDate }),
         '기대 조회 수',
       ),
-    [expectedViewData],
+    [JSON.stringify(expectedViewData)],
   );
 };
 

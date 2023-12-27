@@ -65,7 +65,7 @@ export const sumViews = (
  * @returns   date: expected_views의,  형식을 가진다. (expected_views의 평균을 value로, 날짜를 key로 가진다.)
  */
 export const averageViews = (
-  data: (ExpectedView | undefined)[],
+  data: (ExpectedView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const result = initViewsObjectByDate(startDate, endDate);
