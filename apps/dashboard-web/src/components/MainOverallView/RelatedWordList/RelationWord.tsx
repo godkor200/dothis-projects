@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
+import CheckboxContainer from '@/components/common/Checkbox';
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import { NIVO_CHART_COLOR } from '@/constants/nivoChartColor';
@@ -29,10 +30,12 @@ interface Props {
     relword: string;
     keyword: string;
   }[];
-  setDailyViewChartDataList: () => React.Dispatch<
+  dailyViewChartDataList: NivoLineChart;
+  expectedViewChartDataList: NivoLineChart;
+  setDailyViewChartDataList: React.Dispatch<
     React.SetStateAction<NivoLineChart>
   >;
-  setExpectedViewChartDataList: () => React.Dispatch<
+  setExpectedViewChartDataList: React.Dispatch<
     React.SetStateAction<NivoLineChart>
   >;
 
@@ -46,11 +49,11 @@ const RelationWord = ({
   relword,
   index,
   arr,
+  dailyViewChartDataList,
+  expectedViewChartDataList,
   setDailyViewChartDataList,
   setExpectedViewChartDataList,
 }: Props) => {
-  // const { data: relword } = useGetRelWords(keyword);
-
   const { data: dailyViewData } = useGetDailyView({
     keyword: keyword,
     relword: relword,
@@ -69,40 +72,16 @@ const RelationWord = ({
   );
 
   /**
-   * 현재 이 함수는 무조건 setState를 한다.
+   *
    */
-  const handleUpdateChartDataList = (
-    prev: NivoLineChart,
-    dailyViewChartData: {
-      id: string;
-      data: {
-        x: string;
-        y: number;
-      }[];
-    }[],
-  ) => {
-    const prevDataIndex = prev.findIndex(
-      (item) => item.id === dailyViewChartData[0].id,
-    );
-
-    const copyPrevData = [...prev];
-
-    if (prevDataIndex !== -1) {
-      copyPrevData[prevDataIndex] = {
-        id: dailyViewChartData[0].id,
-        data: dailyViewChartData[0].data,
-      };
-      return copyPrevData;
-    } else {
-      return [...prev, { ...dailyViewChartData[0] }];
-    }
-  };
 
   // useEffect 의존성배열에 계속 실행되는 곳에 setState를 넣으면 무한으로 렌더링을 야기한다. (부모가 렌더되면 React.memo를 적용시키지않는 이상 자식도 렌더링 되기때문에 서로 계속 렌덜링이 된다)
   useEffect(() => {
-    setDailyViewChartDataList()((prev) =>
-      handleUpdateChartDataList(prev, dailyViewChartData),
-    );
+    dailyViewChartDataList.length < 2 &&
+      index === 0 &&
+      setDailyViewChartDataList((prev) =>
+        handleAddChartDataList(prev, dailyViewChartData),
+      );
   }, [JSON.stringify(dailyViewData)]);
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
@@ -120,10 +99,13 @@ const RelationWord = ({
       ),
     [expectedViewData],
   );
+
   useEffect(() => {
-    setExpectedViewChartDataList()((prev) =>
-      handleUpdateChartDataList(prev, expectedViewChartData),
-    );
+    dailyViewChartDataList.length < 2 &&
+      index === 0 &&
+      setExpectedViewChartDataList((prev) =>
+        handleAddChartDataList(prev, expectedViewChartData),
+      );
   }, [JSON.stringify(expectedViewData)]);
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
@@ -174,6 +156,35 @@ const RelationWord = ({
     [videoCountData],
   );
 
+  const handleOnChangeCheckBox = (isChecked: boolean) => {
+    if (isChecked) {
+      /**
+       * 이미 연관어가 check되었을 경우
+       */
+
+      if (dailyViewChartDataList.length === 1) {
+        return;
+      }
+      setDailyViewChartDataList((prev) =>
+        handleRemoveChartDataList(prev, relword),
+      );
+      setExpectedViewChartDataList((prev) =>
+        handleRemoveChartDataList(prev, relword),
+      );
+    } else {
+      /**
+       * 연관어가  check 되어있지않을 경우
+       */
+      setDailyViewChartDataList((prev) =>
+        handleAddChartDataList(prev, dailyViewChartData),
+      );
+
+      setExpectedViewChartDataList((prev) =>
+        handleAddChartDataList(prev, dailyViewChartData),
+      );
+    }
+  };
+
   const competitionText = convertCompetitionScoreFormat(
     getCompetitionScore(lastDailyView, totalCount),
   );
@@ -193,8 +204,22 @@ const RelationWord = ({
         },
       )}
     >
-      <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        {relword}
+      <div className="flex items-center gap-[10px] pl-[8px] ">
+        <CheckboxContainer
+          id={relword + index}
+          isChecked={dailyViewChartDataList.some((item) => item.id === relword)}
+          key={relword + index}
+          onChange={() => {
+            handleOnChangeCheckBox(
+              dailyViewChartDataList.some((item) => item.id === relword),
+            );
+          }}
+        >
+          <CheckboxContainer.Checkbox />
+        </CheckboxContainer>
+        <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
+          {relword}
+        </div>
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
         {keyword}
@@ -221,3 +246,37 @@ const RelationWord = ({
 };
 
 export default RelationWord;
+
+/**
+ * 현재 이 함수는 무조건 setState를 한다.
+ */
+const handleAddChartDataList = (
+  prev: NivoLineChart,
+  dailyViewChartData: {
+    id: string;
+    data: {
+      x: string;
+      y: number;
+    }[];
+  }[],
+) => {
+  const prevDataIndex = prev.findIndex(
+    (item) => item.id === dailyViewChartData[0].id,
+  );
+
+  const copyPrevData = [...prev];
+
+  if (prevDataIndex !== -1) {
+    copyPrevData[prevDataIndex] = {
+      id: dailyViewChartData[0].id,
+      data: dailyViewChartData[0].data,
+    };
+    return copyPrevData;
+  } else {
+    return [...prev, { ...dailyViewChartData[0] }];
+  }
+};
+
+const handleRemoveChartDataList = (prev: NivoLineChart, relword: string) => {
+  return [...prev.filter((item) => item.id !== relword)];
+};
