@@ -20,13 +20,16 @@ type Post = ClientInferResponseBody<
   200
 >['data']['section'];
 
-export const useDailyViewChartDataForNivo = ({
-  keyword,
-  relword,
-}: {
-  keyword: string | null;
-  relword: string | null;
-}) => {
+export const useDailyViewChartDataForNivo = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  title: string,
+) => {
   const { data: dailyViewData } = useGetDailyView({ keyword, relword });
 
   const startDate = useStartDate();
@@ -36,19 +39,22 @@ export const useDailyViewChartDataForNivo = ({
     () =>
       formatToLineGraph(
         sumViews(dailyViewData.flat(), { startDate, endDate }),
-        '일일 조회 수 ',
+        title,
       ),
     [JSON.stringify(dailyViewData)],
   );
 };
 
-export const useExpectedViewChartDataForNivo = ({
-  keyword,
-  relword,
-}: {
-  keyword: string | null;
-  relword: string | null;
-}) => {
+export const useExpectedViewChartDataForNivo = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string | null;
+    relword: string | null;
+  },
+  title: string,
+) => {
   const { data: expectedViewData } = useGetExpectedView({ keyword, relword });
 
   const startDate = useStartDate();
@@ -58,7 +64,7 @@ export const useExpectedViewChartDataForNivo = ({
     () =>
       formatToLineGraph(
         averageViews(expectedViewData, { startDate, endDate }),
-        '기대 조회 수',
+        title,
       ),
     [JSON.stringify(expectedViewData)],
   );
