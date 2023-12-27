@@ -23,14 +23,8 @@ export class FindChannelHistoryQueryHandler
     arg: FindChannelInfoDto,
   ): Promise<Result<ChannelHistoryModel, ChannelNotFoundError>> {
     const channelId = arg.channelId;
-    const channel = await this.channelHistory.findChannelHistoryByLimit(
-      [channelId],
-      1,
-      'desc',
-    );
-
+    const channel = await this.channelHistory.findChannelHistoryInfo(channelId);
     if (!channel) return Err(new ChannelNotFoundError());
-
-    return Ok(channel[0]);
+    return Ok(channel);
   }
 }
