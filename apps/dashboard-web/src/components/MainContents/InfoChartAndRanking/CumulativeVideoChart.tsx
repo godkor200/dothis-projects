@@ -13,10 +13,10 @@ interface Props {
 const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
   return (
     <div className="rounded-8 border-grey400 bg-grey00 text-grey600 flex h-[368px] flex-col border p-6 font-bold">
-      <div>누적 영상 수</div>
+      <div>연간 영상 수</div>
       <div className="relative h-full">
         <div className="absolute left-2/4 top-[82px] flex translate-x-[-50%] flex-col items-center justify-center">
-          <div>전체 영상</div>
+          <div>영상 수</div>
           <div className="text-[20px]">
             <span className="text-primary500">{totalCount}</span>개
           </div>

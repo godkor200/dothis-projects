@@ -25,7 +25,6 @@ function getRandomValue() {
 }
 
 const ExpectedViewChart = ({ expectedView }: Props) => {
-  console.log(expectedView);
   const seletedWord = useSelectedWord();
   // const testExpectedView = useMemo(
   //   () => [
