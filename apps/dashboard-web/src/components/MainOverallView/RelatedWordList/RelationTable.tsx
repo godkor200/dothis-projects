@@ -51,7 +51,7 @@ const RelationTable = ({
   return (
     <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
       <div className="grid grid-cols-[minmax(250px,1fr)_140px_150px_150px_150px_100px_minmax(150px,1fr)] items-center gap-[12px] py-[30px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
-        <div className="text-grey500 pl-[8px] text-[14px] font-bold">소재</div>
+        <div className="text-grey500 pl-[16px] text-[14px] font-bold">소재</div>
         <div className="text-grey500 pl-[8px] text-[14px] font-bold">
           키워드
         </div>
