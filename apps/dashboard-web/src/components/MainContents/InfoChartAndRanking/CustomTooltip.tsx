@@ -36,6 +36,12 @@ const CustomTooltip = ({ keyword, label, value, date }: CustomTooltip) => {
         </div>
         <span className="text-grey500 text-[12px]">{label}</span>
       </div>
+      {label === VIEWCHART_LABEL.EXPECTEDVIEW && (
+        <p className="text-grey500 mt-3 text-[12px]">
+          고객님 채널에 데이터가 부족해 평균 조회수를{' '}
+          <span className="font-bold">1,000회</span>를 기준으로 추정하였습니다
+        </p>
+      )}
     </div>
   );
 };
