@@ -31,6 +31,12 @@ const KeywordAnalyticsView = () => {
   );
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
+  const totalDailyView = dailyViewChartData[0].data.reduce(
+    (accumulator: number, currentValue: { x: string; y: number }) => {
+      return accumulator + Number(currentValue.y);
+    },
+    0,
+  );
 
   const expectedViewChartData = useExpectedViewChartDataForNivo(
     selectedWord,
@@ -94,7 +100,7 @@ const KeywordAnalyticsView = () => {
       <div className="flex h-[520px] w-full">
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
-          <DailyView view={lastDailyView || 0} />
+          <DailyView view={totalDailyView || 0} />
           <CumulativeVideoChart
             totalCount={totalCount}
             videoCountsBySection={Object.values(
