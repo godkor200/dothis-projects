@@ -7,21 +7,13 @@ import {
   useDailyViewChartDataForNivo,
   useExpectedViewChartDataForNivo,
 } from '@/hooks/contents/useLineGraph';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import useKeyword from '@/hooks/user/useKeyword';
-import { useEndDate, useStartDate } from '@/store/dateStore';
 import { cn } from '@/utils/cn';
 import {
   convertCompetitionScoreFormat,
   getCompetitionScore,
 } from '@/utils/contents/competitionScore';
-import {
-  averageViews,
-  formatToLineGraph,
-  sumViews,
-} from '@/utils/contents/dailyview';
 
 import type { NivoLineChart } from './Container';
 
