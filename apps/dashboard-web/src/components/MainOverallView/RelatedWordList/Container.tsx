@@ -28,14 +28,6 @@ const Container = () => {
   const [expectedViewChartDataList, setExpectedViewChartDataList] =
     useState<NivoLineChart>([]);
 
-  const setDaily = useCallback(() => {
-    return setDailyViewChartDataList;
-  }, []);
-
-  const setExpected = useCallback(() => {
-    return setExpectedViewChartDataList;
-  }, []);
-
   return (
     <div className="flex flex-col gap-[20px]">
       {dailyViewChartDataList.length === 0 ? null : (
@@ -46,8 +38,10 @@ const Container = () => {
       )}
 
       <RelationTable
-        setDailyViewChartDataList={setDaily}
-        setExpectedViewChartDataList={setExpected}
+        dailyViewChartDataList={dailyViewChartDataList}
+        expectedViewChartDataList={expectedViewChartDataList}
+        setDailyViewChartDataList={setDailyViewChartDataList}
+        setExpectedViewChartDataList={setExpectedViewChartDataList}
       />
     </div>
   );
