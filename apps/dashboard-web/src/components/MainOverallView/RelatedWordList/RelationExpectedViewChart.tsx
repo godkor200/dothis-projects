@@ -123,7 +123,7 @@ const RelationExpectedViewChart = ({ expectedViewChartDataList }: Props) => {
       tooltip={({ point }) => (
         <CustomTooltip
           keyword={point.serieId as string}
-          label={VIEWCHART_LABEL.DAILYVIEW}
+          label={VIEWCHART_LABEL.EXPECTEDVIEW}
           value={new Intl.NumberFormat('ko', {
             notation: 'compact',
           }).format(point.data.y as number)}
