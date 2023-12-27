@@ -3,6 +3,8 @@ import type { ClientInferResponseBody } from '@ts-rest/core';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
+import { GUEST_AVERAGEVIEW } from '@/constants/guest';
+
 dayjs.extend(isSameOrBefore);
 
 type DailyView = ClientInferResponseBody<
@@ -125,4 +127,30 @@ export const formatToLineGraph = (
   );
 
   return [{ id: title, data: formattedResult }];
+};
+
+export const expectedViews = (
+  data: (ExpectedView | undefined)[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const result = initViewsObjectByDate(startDate, endDate);
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+      // 소수점을 지우기 위해 round
+      const views = Math.round(item.expected_views * GUEST_AVERAGEVIEW);
+
+      if (result.hasOwnProperty(date)) {
+        result[date] += views;
+      }
+    }
+  });
+
+  // for (const date of Object.keys(result)) {
+  //   const count = data.filter((item) => item?.date === date).length;
+  //   result[date] = Math.round(result[date]) / count;
+  // }
+
+  return result;
 };
