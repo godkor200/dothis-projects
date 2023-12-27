@@ -8,6 +8,7 @@ import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
+import useKeyword from '@/hooks/user/useKeyword';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { cn } from '@/utils/cn';
 import {
@@ -62,6 +63,8 @@ const RelationWord = ({
   const startDate = useStartDate();
   const endDate = useEndDate();
 
+  const { hashKeywordList } = useKeyword();
+
   const dailyViewChartData = useMemo(
     () =>
       formatToLineGraph(
@@ -77,12 +80,24 @@ const RelationWord = ({
 
   // useEffect 의존성배열에 계속 실행되는 곳에 setState를 넣으면 무한으로 렌더링을 야기한다. (부모가 렌더되면 React.memo를 적용시키지않는 이상 자식도 렌더링 되기때문에 서로 계속 렌덜링이 된다)
   useEffect(() => {
-    dailyViewChartDataList.length < 2 &&
+    const prevDataIndex = dailyViewChartDataList.findIndex(
+      (item) => item.id === dailyViewChartData[0].id,
+    );
+    (prevDataIndex !== -1 || dailyViewChartDataList.length < 1) &&
       index === 0 &&
       setDailyViewChartDataList((prev) =>
         handleAddChartDataList(prev, dailyViewChartData),
       );
-  }, [JSON.stringify(dailyViewData)]);
+  }, [
+    JSON.stringify(dailyViewData),
+    JSON.stringify(hashKeywordList),
+    JSON.stringify(dailyViewChartDataList),
+    /**
+     * dailyViewChartDataList 넣은 이유 RelationTable에서
+     * hashKeywordList에 변동이 있을 경우 (어떤 키워드를 제거할 경우) 제거한 키워드에 연관어를 지우는 useEffect 후 에 한번 더 실행이 필요함.
+     * 아니면 동시성 제어로 여기 useEffect의 setState를 RelationTable 다음에 진행하게 할 수 있나?
+     */
+  ]);
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
@@ -101,12 +116,19 @@ const RelationWord = ({
   );
 
   useEffect(() => {
-    dailyViewChartDataList.length < 2 &&
+    const prevDataIndex = dailyViewChartDataList.findIndex(
+      (item) => item.id === dailyViewChartData[0].id,
+    );
+    (prevDataIndex !== -1 || dailyViewChartDataList.length < 1) &&
       index === 0 &&
       setExpectedViewChartDataList((prev) =>
         handleAddChartDataList(prev, expectedViewChartData),
       );
-  }, [JSON.stringify(expectedViewData)]);
+  }, [
+    JSON.stringify(expectedViewData),
+    JSON.stringify(hashKeywordList),
+    JSON.stringify(expectedViewChartDataList),
+  ]);
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
