@@ -7,6 +7,7 @@ import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import {
   averageViews,
+  expectedViews,
   formatToLineGraph,
   sumViews,
 } from '@/utils/contents/dailyview';
@@ -63,7 +64,7 @@ export const useExpectedViewChartDataForNivo = (
   return useMemo(
     () =>
       formatToLineGraph(
-        averageViews(expectedViewData, { startDate, endDate }),
+        expectedViews(expectedViewData, { startDate, endDate }),
         title,
       ),
     [JSON.stringify(expectedViewData)],
