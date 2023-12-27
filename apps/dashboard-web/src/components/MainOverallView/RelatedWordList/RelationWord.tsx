@@ -222,7 +222,7 @@ const RelationWord = ({
         {keyword}
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
-        {lastExpectedView}
+        {lastExpectedView}회
       </div>
       <div className="text-grey700 py-[26px] pl-[8px] text-[14px] font-bold ">
         {new Intl.NumberFormat('ko', {
