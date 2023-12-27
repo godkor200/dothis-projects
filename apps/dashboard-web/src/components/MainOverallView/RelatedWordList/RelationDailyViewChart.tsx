@@ -1,6 +1,5 @@
 import { ResponsiveLine } from '@nivo/line';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 
 import CustomTooltip from '@/components/MainContents/InfoChartAndRanking/CustomTooltip';
 import { VIEWCHART_LABEL } from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
