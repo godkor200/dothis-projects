@@ -34,7 +34,7 @@ const KeywordAnalyticsView = () => {
 
   const expectedViewChartData = useExpectedViewChartDataForNivo(
     selectedWord,
-    '기대 조회수',
+    '기대 조회 수',
   );
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
