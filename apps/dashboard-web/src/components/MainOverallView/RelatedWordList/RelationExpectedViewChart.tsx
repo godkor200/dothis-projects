@@ -75,7 +75,7 @@ const RelationExpectedViewChart = ({ expectedViewChartDataList }: Props) => {
         index * Math.ceil(getAxisInterval()),
     );
 
-  if (expectedViewChartDataList[0].data.length === 0) {
+  if (expectedViewChartDataList[0]?.data.length === 0) {
     return null;
   }
   return (
