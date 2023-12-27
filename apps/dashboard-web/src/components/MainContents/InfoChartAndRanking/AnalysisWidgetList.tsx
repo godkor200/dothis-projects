@@ -19,7 +19,7 @@ const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
     },
     {
       title: '기대 조회 수',
-      content: `${expectedView}배`,
+      content: `${expectedView}회`,
     },
     {
       title: '경쟁 강도',

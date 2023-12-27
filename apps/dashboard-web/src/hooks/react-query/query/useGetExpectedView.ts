@@ -5,8 +5,6 @@ import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
-import useGetRelWords from './useGetRelWords';
-
 const useGetExpectedView = (
   {
     keyword,
@@ -17,52 +15,36 @@ const useGetExpectedView = (
   },
   queryOptions?: UseQueryOptions<typeof apiRouter.expectViews.getExpectedViews>,
 ) => {
-  const { data } = useGetRelWords(keyword);
-
   const startDate = useStartDate();
 
   const endDate = useEndDate();
 
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
-  }
-
-  const queryResults = apiClient(2).expectViews.getExpectedViews.useQueries({
-    queries: clusters.map((clusterNumber) => {
-      return {
-        queryKey: EXPECTEDVIEW_KEY.list([
-          {
-            clusterNumber,
-            relword,
-            keyword,
-            startDate,
-            endDate,
-          },
-        ]),
-        params: {
-          clusterNumber,
-        },
-        query: {
-          keyword: keyword!,
-          relationKeyword: relword!,
-          from: startDate,
-          to: endDate,
-        },
-        ...queryOptions,
-        enabled: !!data && !!relword && !!startDate && !!endDate,
-      };
-    }),
-  });
-
-  // const isLoading = queryResults.some((result) => result.isLoading);
-
-  const isLoading = queryResults.map((item) => item.isLoading);
+  const queryResult = apiClient(2).expectViews.getExpectedViews.useQuery(
+    EXPECTEDVIEW_KEY.list([
+      {
+        relword,
+        keyword,
+        startDate,
+        endDate,
+      },
+    ]),
+    {
+      query: {
+        keyword: keyword!,
+        relationKeyword: relword!,
+        from: startDate,
+        to: endDate,
+      },
+    },
+    {
+      ...queryOptions,
+      enabled: !!relword && !!startDate && !!endDate,
+    },
+  );
 
   return {
-    isLoading,
-    data: queryResults.map((result) => result.data?.body.data),
+    ...queryResult,
+    data: queryResult.data?.body.data,
   };
 };
 

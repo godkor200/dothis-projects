@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { useEffect, useState } from 'react';
 
 import { isServer } from '@/constants/dev';
-import { GUEST_KEYWORD } from '@/constants/guestKeyword';
+import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useIsSignedIn } from '@/store/authStore';
 import { useRandomIndex } from '@/store/randomIndexStore';
