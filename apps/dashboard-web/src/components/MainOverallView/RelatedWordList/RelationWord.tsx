@@ -39,12 +39,11 @@ interface Props {
   setExpectedViewChartDataList: React.Dispatch<
     React.SetStateAction<NivoLineChart>
   >;
-
-  // setExpectedViewChartDataList: React.Dispatch<
-  //   React.SetStateAction<NivoLineChart>
-  // >;
 }
 
+/**
+ * 해당 컴포넌트에 대한 주석을 추 후에 추가하도록 하겠습니다
+ */
 const RelationWord = ({
   keyword,
   relword,
