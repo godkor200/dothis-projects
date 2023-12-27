@@ -26,6 +26,7 @@ const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
           margin={{ top: 26, bottom: 100 }}
           sortByValue={false}
           innerRadius={0.8}
+          padAngle={2}
           activeOuterRadiusOffset={8}
           colors={[
             colors.primary600,
