@@ -73,8 +73,6 @@ const RelationWord = ({
     const prevDataIndex = dailyViewChartDataList.findIndex(
       (item) => item.id === dailyViewChartData[0].id,
     );
-    console.log(dailyViewChartDataList);
-    console.log(index);
 
     (prevDataIndex !== -1 || dailyViewChartDataList.length < 1) &&
       index === 0 &&
