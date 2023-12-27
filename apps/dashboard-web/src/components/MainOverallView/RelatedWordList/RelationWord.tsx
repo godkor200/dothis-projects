@@ -3,6 +3,10 @@ import React, { useEffect, useMemo } from 'react';
 import CheckboxContainer from '@/components/common/Checkbox';
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
+import {
+  useDailyViewChartDataForNivo,
+  useExpectedViewChartDataForNivo,
+} from '@/hooks/contents/useLineGraph';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
@@ -52,41 +56,33 @@ const RelationWord = ({
   setDailyViewChartDataList,
   setExpectedViewChartDataList,
 }: Props) => {
-  const { data: dailyViewData } = useGetDailyView({
-    keyword: keyword,
-    relword: relword,
-  });
-
-  const startDate = useStartDate();
-  const endDate = useEndDate();
-
   const { hashKeywordList } = useKeyword();
 
-  const dailyViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        sumViews(dailyViewData.flat(), { startDate, endDate }),
-        relword,
-      ),
-    [dailyViewData],
+  const dailyViewChartData = useDailyViewChartDataForNivo(
+    {
+      keyword: keyword,
+      relword: relword,
+    },
+    relword,
   );
 
-  /**
-   *
-   */
+  const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
   // useEffect 의존성배열에 계속 실행되는 곳에 setState를 넣으면 무한으로 렌더링을 야기한다. (부모가 렌더되면 React.memo를 적용시키지않는 이상 자식도 렌더링 되기때문에 서로 계속 렌덜링이 된다)
   useEffect(() => {
     const prevDataIndex = dailyViewChartDataList.findIndex(
       (item) => item.id === dailyViewChartData[0].id,
     );
+    console.log(dailyViewChartDataList);
+    console.log(index);
+
     (prevDataIndex !== -1 || dailyViewChartDataList.length < 1) &&
       index === 0 &&
       setDailyViewChartDataList((prev) =>
         handleAddChartDataList(prev, dailyViewChartData),
       );
   }, [
-    JSON.stringify(dailyViewData),
+    JSON.stringify(dailyViewChartData),
     JSON.stringify(hashKeywordList),
     JSON.stringify(dailyViewChartDataList),
     /**
@@ -96,21 +92,15 @@ const RelationWord = ({
      */
   ]);
 
-  const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
-
-  const { data: expectedViewData } = useGetExpectedView({
-    keyword: keyword,
-    relword: relword,
-  });
-
-  const expectedViewChartData = useMemo(
-    () =>
-      formatToLineGraph(
-        averageViews(expectedViewData.flat(), { startDate, endDate }),
-        relword,
-      ),
-    [expectedViewData],
+  const expectedViewChartData = useExpectedViewChartDataForNivo(
+    {
+      keyword: keyword,
+      relword: relword,
+    },
+    relword,
   );
+
+  const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
   useEffect(() => {
     const prevDataIndex = dailyViewChartDataList.findIndex(
@@ -122,12 +112,10 @@ const RelationWord = ({
         handleAddChartDataList(prev, expectedViewChartData),
       );
   }, [
-    JSON.stringify(expectedViewData),
+    JSON.stringify(expectedViewChartData),
     JSON.stringify(hashKeywordList),
     JSON.stringify(expectedViewChartDataList),
   ]);
-
-  const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
   const { data: videoCountData } = useGetVideoCount({
     keyword: keyword,
