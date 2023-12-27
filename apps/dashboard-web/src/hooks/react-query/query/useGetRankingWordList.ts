@@ -64,7 +64,7 @@ const useGetRankingWordList = (
     (a, b) => b.expectedViews - a.expectedViews,
   );
 
-  const isLoading = queryResults.every((query) => query.isLoading);
+  const isLoading = queryResults.some((query) => query.isLoading);
 
   const isError = queryResults.every((query) => query.isError);
 
