@@ -8,12 +8,13 @@ const MyPage = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedMyPageType =
-    (searchParams?.relatedContent as (typeof MYPAGE_TABNAV_DATA)[number]['category']) ||
+    (searchParams?.tab as (typeof MYPAGE_TABNAV_DATA)[number]['category']) ||
     'info';
 
   return (
     <div className="min-h-[calc(100vh-428px)] px-12 pt-20">
       <TabNavigation
+        tabKey="tab"
         selectedArticle={selectedMyPageType}
         tabNavData={MYPAGE_TABNAV_DATA}
       />
