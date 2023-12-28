@@ -119,11 +119,11 @@ const RelationWord = ({
         videoCountViewChartData: ResponseType;
       }>(
         (acc, dataItem) => {
-          acc.totalCount += dataItem?.videoTotal || 0;
           dataItem?.section.forEach((sectionItem) => {
             const key = sectionItem.section;
 
             if (key in CONVERT_SUBSCRIBERANGE) {
+              acc.totalCount += sectionItem.number;
               const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
               const existingItem =
                 acc.videoCountViewChartData[key as VideoCount];
