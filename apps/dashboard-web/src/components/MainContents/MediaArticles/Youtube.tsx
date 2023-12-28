@@ -147,7 +147,7 @@ const YouTube = () => {
         </div>
       </SummaryCard>
       <SummaryCard title="영상 내용 요약" marginTop="mt-5">
-        {mediaDataList[pageIndex][contentIndex].description}
+        {mediaDataList[pageIndex][contentIndex]?.description}
       </SummaryCard>
     </>
   );

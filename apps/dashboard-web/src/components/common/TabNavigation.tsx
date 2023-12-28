@@ -6,19 +6,31 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
-import type { MEDIA_TABNAV_DATA, MYPAGE_TABNAV_DATA } from '@/constants/TabNav';
+import type {
+  CATEGORY_TABNAV_DATA,
+  MEDIA_TABNAV_DATA,
+  MYPAGE_TABNAV_DATA,
+} from '@/constants/TabNav';
 import { cn } from '@/utils/cn';
 
 interface MediaArticlesTabNavProps<
-  T extends typeof MEDIA_TABNAV_DATA | typeof MYPAGE_TABNAV_DATA,
+  T extends
+    | typeof MEDIA_TABNAV_DATA
+    | typeof MYPAGE_TABNAV_DATA
+    | typeof CATEGORY_TABNAV_DATA,
 > {
+  tabKey: string;
   tabNavData: T;
   selectedArticle: T[number]['category'];
 }
 
 const TabNavigation = <
-  T extends typeof MEDIA_TABNAV_DATA | typeof MYPAGE_TABNAV_DATA,
+  T extends
+    | typeof MEDIA_TABNAV_DATA
+    | typeof MYPAGE_TABNAV_DATA
+    | typeof CATEGORY_TABNAV_DATA,
 >({
+  tabKey,
   tabNavData,
   selectedArticle,
 }: MediaArticlesTabNavProps<T>) => {
@@ -47,8 +59,8 @@ const TabNavigation = <
             href={
               (pathName +
                 '?' +
-                createQueryString('tab', item.category) +
-                '#tab') as Route
+                createQueryString(tabKey, item.category) +
+                `#${tabKey}`) as Route
             }
             replace
             className={cn('cursor-pointer text-[32px] font-bold', {

@@ -6,6 +6,7 @@ import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/Ke
 import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import Container from '@/components/MainOverallView/RelatedWordList/Container';
+import { CATEGORY_TABNAV_DATA } from '@/constants/TabNav';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 import relatedContentApi from '@/utils/api/mediaApis';
 
@@ -15,13 +16,17 @@ const MainContentPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const selectedArticle =
-    (searchParams?.tab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
+    (searchParams?.snsTab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
     'youtube';
   const articleListData = await relatedContentApi[selectedArticle](
     '아시안게임',
   );
 
   const selectedMainContent = searchParams?.main || 'recomand';
+
+  const secondSection =
+    (searchParams?.tab as (typeof CATEGORY_TABNAV_DATA)[number]['category']) ||
+    'category';
 
   if (selectedMainContent === 'recomand') {
     return (
@@ -35,11 +40,16 @@ const MainContentPage = async ({
           </div>
         </Card>
         <Card>
-          <CardHeader title="월간 콘텐츠 리포트" />
-          <MonthlyViewData />
+          <TabNavigation
+            tabKey="tab"
+            selectedArticle={secondSection}
+            tabNavData={CATEGORY_TABNAV_DATA}
+          />
+          <MonthlyViewData currentTab={secondSection} />
         </Card>
         <Card>
           <TabNavigation
+            tabKey="snsTab"
             selectedArticle={selectedArticle}
             tabNavData={MEDIA_TABNAV_DATA}
           />
