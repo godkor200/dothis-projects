@@ -43,7 +43,6 @@ const useGetVideoCount = (
     },
   );
 
-  console.log(queryResults.data?.body.data);
   return {
     ...queryResults,
     data: [queryResults.data?.body.data],

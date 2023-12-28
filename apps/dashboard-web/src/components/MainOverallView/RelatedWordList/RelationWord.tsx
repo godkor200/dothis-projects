@@ -177,7 +177,7 @@ const RelationWord = ({
       );
 
       setExpectedViewChartDataList((prev) =>
-        handleAddChartDataList(prev, dailyViewChartData),
+        handleAddChartDataList(prev, expectedViewChartData),
       );
     }
   };

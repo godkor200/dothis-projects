@@ -1,3 +1,7 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseMutateFunction } from '@tanstack/react-query';
+import type { ClientArgs } from '@ts-rest/core';
+import type { UseMutationResult } from '@ts-rest/react-query';
 import { useCallback, useMemo } from 'react';
 
 import { convertKeywordsToArray } from '@/utils/keyword';
@@ -35,6 +39,10 @@ const useSearchInput = () => {
       userKeyword: string | undefined | null,
       personalizationTag: string | undefined | null,
       keyword: string,
+      keywordMutationResult: UseMutationResult<
+        typeof apiRouter.user.putUpdatePersonalTag,
+        ClientArgs
+      >,
     ) => {
       const dataArray = userKeyword ? userKeyword.split(',') : [];
 
@@ -61,6 +69,14 @@ const useSearchInput = () => {
       ) {
         if (hashindex !== -1 || personalizationHashIndex !== -1) {
           return dataArray;
+        }
+
+        if (personalizationIndex !== -1) {
+          keywordMutationResult.mutate({
+            body: {
+              tag: addHashAndConvertToArray(personalizationTag, keyword),
+            },
+          });
         }
 
         dataArray[index] = `${keyword}#`;
