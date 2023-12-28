@@ -34,6 +34,9 @@ export const useCreateSearchwordMutation = (
     },
   });
 
+  /**
+   * 유저 키워드 mutation을 추가한 이유 -> 검색어 추가 시 이미 유저 키워드에 포함된 키워드일 경우에는, 해당 유저 키워드를 활성화 시켜주는 mutation이 필요하다
+   */
   const keywordMutationResult = apiClient(
     1,
   ).user.putUpdatePersonalTag.useMutation({
