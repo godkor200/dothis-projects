@@ -13,11 +13,6 @@ export const SIDE_MENUS: SideMenus[] = [
     link: '/contents',
   },
   {
-    title: '인기 영상 분석',
-    icon: 'SideMagicPen',
-    link: '/preparing',
-  },
-  {
     title: '내 채널 분석',
     icon: 'SideUser',
     link: '/preparing',
