@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { ClientArgs } from '@ts-rest/core';
 import type { UseMutationOptions } from '@ts-rest/react-query';
 
-import { USER_KEY } from '@/constants/querykey';
+import { KEYWORD_KEY, USER_KEY } from '@/constants/querykey';
 import useSearchInput from '@/hooks/useSearchInput';
 import { apiClient } from '@/utils/api/apiClient';
 
@@ -34,6 +34,15 @@ export const useCreateSearchwordMutation = (
     },
   });
 
+  const keywordMutationResult = apiClient(
+    1,
+  ).user.putUpdatePersonalTag.useMutation({
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(KEYWORD_KEY.all);
+      queryClient.invalidateQueries(USER_KEY.all);
+    },
+  });
+
   return {
     ...mutationResult,
     mutate: (item: string) =>
@@ -43,6 +52,7 @@ export const useCreateSearchwordMutation = (
             data?.searchWord,
             data?.personalizationTag,
             item,
+            keywordMutationResult,
           ),
         },
       }),
