@@ -32,25 +32,23 @@ export class SearchQueryBuilder {
                   path: 'video_list',
                   query: {
                     bool: {
-                      must: [
+                      filter: [
                         {
-                          match: {
-                            'video_list.video_tags': `${keyword}`,
+                          multi_match: {
+                            query: `${keyword}`,
+                            fields: [
+                              'video_list.video_tags',
+                              'video_list.video_title',
+                            ],
                           },
                         },
                         {
-                          match: {
-                            'video_list.video_tags': `${relWord}`,
-                          },
-                        },
-                        {
-                          match: {
-                            'video_list.video_title': `${keyword}`,
-                          },
-                        },
-                        {
-                          match: {
-                            'video_list.video_title': `${relWord}`,
+                          multi_match: {
+                            query: `${relWord}`,
+                            fields: [
+                              'video_list.video_tags',
+                              'video_list.video_title',
+                            ],
                           },
                         },
                       ],
@@ -69,7 +67,7 @@ export class SearchQueryBuilder {
       },
     };
     if (from && to) {
-      searchQuery.body.query.bool.must[0].nested.query.bool.must.push({
+      searchQuery.body.query.bool.must[0].nested.query.bool.filter.push({
         range: {
           'video_list.crawled_date': {
             gte: from + ' 00:00:00',
