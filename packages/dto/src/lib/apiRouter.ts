@@ -7,6 +7,7 @@ import { relWordsApi } from './rel-words';
 import { dailyViewApi } from './daily-views/daily-views.api';
 import { videoApi } from './video';
 import { channelHistoryApi, expectedViewsApi } from './channel-history';
+import { channelApi } from './channel/channel.api';
 
 export const apiRouter = c.router({
   auth: authApi,
@@ -14,6 +15,7 @@ export const apiRouter = c.router({
   cache: cacheApi,
   dailyViews: dailyViewApi,
   channelHistory: channelHistoryApi,
+  channel: channelApi,
   expectViews: expectedViewsApi,
   relwords: relWordsApi,
   video: videoApi,
