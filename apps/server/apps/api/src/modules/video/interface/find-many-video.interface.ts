@@ -19,7 +19,7 @@ export interface IVideo {
   video_description: string;
   video_duration: number;
   video_published: string;
-  video_tag: string;
+  video_tags: string;
   video_category: string;
   video_info_card: number;
   video_with_ads: number;
