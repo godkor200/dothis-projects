@@ -13,7 +13,7 @@ import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-vi
 import { VideoRes } from '@Libs/commons/src/types/dto.types';
 import { IRes } from '@Libs/commons/src/types/res.types';
 const c = nestControllerContract(apiRouter.video);
-const { pathParams, summary, responses, description } = c.getVideo;
+const { pathParams, summary, responses, description } = c.getVideoPageV1;
 
 @ApiTags('영상')
 @Controller()
