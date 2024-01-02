@@ -1,6 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
+import axios from 'axios';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -21,15 +22,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
        * 이 콜백 url 부분은 프로덕션/데브 부분이 나눠져야합니다.
        * 배포시에 앞단 뒷단 같은 도메인을 갖게 된다면 콜백 url  api.dothis.kr 로 바꿔야합니다.
        */
-      //   `http${
-      //   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
-      //     ? ''
-      //     : 's'
-      // }://${
-      //   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
-      //     ? 'localhost:3666'
-      //     : 'api.dothis.kr'
-      // }/v1/jwt/google-redirect`,
 
       scope: [
         'email',
@@ -46,8 +38,22 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     done: VerifyCallback,
   ) {
     const { id, name, emails, photos } = profile;
+    // YouTube Data API 호출
+    const response = await axios.get(
+      'https://www.googleapis.com/youtube/v3/channels',
+      {
+        params: {
+          part: 'id',
+          mine: true,
+          access_token: accessToken,
+        },
+      },
+    );
+
+    const channelId = response.data.items[0].id;
     const info = {
       id: Number(id),
+      channelId,
       userEmail: emails[0].value,
       tokenRefresh: null,
     };
