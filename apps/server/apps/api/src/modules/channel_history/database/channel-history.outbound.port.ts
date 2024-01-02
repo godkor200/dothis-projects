@@ -1,6 +1,10 @@
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+import {
+  FindVideoChannelHistory,
+  IFindVideoByKeyword,
+} from '@Apps/modules/channel_history/dtos/channel-history.interface';
 
 export interface ChannelHistoryOutboundPort {
   findChannelHistoryInfo(channelIds: string): Promise<IChannelHistoryRes>;
@@ -13,5 +17,9 @@ export interface ChannelHistoryOutboundPort {
 
   findChannelHistoryByKeywordAndRelWordFullScan<T>(
     props: FindVideoV2,
+  ): Promise<T[]>;
+
+  scanLatestChannelHistoryByKeywordAndRelWord<T>(
+    props: FindVideoChannelHistory,
   ): Promise<T[]>;
 }
