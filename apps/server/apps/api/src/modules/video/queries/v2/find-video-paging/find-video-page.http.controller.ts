@@ -10,7 +10,7 @@ import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import {
-  FindVideoPageQuery,
+  FindVideoPageV2Query,
   IFindVideoPageQuery,
 } from './find-video-paging.req.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
@@ -20,11 +20,11 @@ import { VideoRes } from '@Libs/commons/src/types/dto.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.video);
-const { summary, responses, description } = c.getVideoPageV1;
+const { summary, responses, description } = c.getVideoPageV2;
 
 @ApiTags('영상')
 @Controller()
-export class FindVideoPageHttpController {
+export class FindVideoPageV2HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   /**
@@ -60,26 +60,27 @@ export class FindVideoPageHttpController {
     required: false,
     description: '전 페이지 마지막 인덱스 _id',
   })
-  @ApiParam({
-    name: 'clusterNumber',
+  @ApiQuery({
+    name: 'cluster',
     required: true,
     description: '클러스터 인덱스',
-    example: '6',
+    example: '6,34,48,16,7',
   })
   @ApiOperation({
     summary,
     description,
   })
-  @TsRest(c.getVideoPageV1)
+  @TsRest(c.getVideoPageV2)
   @ApiOkResponse({ type: VideoRes })
   @ApiNotFoundResponse({ description: VideoNotFoundError.message })
   async execute(
-    @Param('clusterNumber') clusterNumber: string,
     @Query() query: IFindVideoPageQuery,
   ): Promise<IRes<IPagingRes>> {
-    const { limit, search, related, last } = query;
-    const arg = new FindVideoPageQuery({
-      clusterNumber: Number(clusterNumber),
+    const { limit, search, related, last, cluster } = query;
+    const clusterNumbers = cluster.split(',').map((item) => Number(item));
+    console.log(clusterNumbers, cluster);
+    const arg = new FindVideoPageV2Query({
+      clusterNumbers,
       limit,
       search,
       related,

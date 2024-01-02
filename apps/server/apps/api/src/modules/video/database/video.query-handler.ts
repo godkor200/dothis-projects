@@ -1,4 +1,4 @@
-import { from, lastValueFrom, map, Observable, throwError } from 'rxjs';
+import { from, last, lastValueFrom, map, Observable, throwError } from 'rxjs';
 import { VideoServicePort } from './video.service.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
@@ -16,6 +16,8 @@ import {
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Err } from 'oxide.ts';
+import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
+import { undefined } from 'zod';
 
 export class SearchQueryBuilder {
   static video(
@@ -89,6 +91,56 @@ export class SearchQueryBuilder {
       index: 'video-' + clusterNumber,
       id,
     };
+  }
+
+  static videoPage(
+    cluster: string,
+    limit: number,
+    search: string,
+    related: string,
+    last: string,
+  ) {
+    let searchQuery = {
+      index: cluster,
+      size: limit,
+      body: {
+        query: {
+          bool: {
+            must: [
+              {
+                bool: {
+                  filter: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            multi_match: {
+                              query: search,
+                              fields: ['video_tags', 'video_title'],
+                            },
+                          },
+                          {
+                            multi_match: {
+                              query: related,
+                              fields: ['video_tags', 'video_title'],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        sort: ['_id'],
+      },
+    };
+
+    if (last) searchQuery.body['search_after'] = [last];
+
+    return searchQuery;
   }
 }
 export class VideoQueryHandler
@@ -186,46 +238,13 @@ export class VideoQueryHandler
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
     const { clusterNumber, limit, search, related, last } = arg;
-    let searchQuery = {
-      index: `video-${clusterNumber}`,
-      size: limit,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  filter: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            multi_match: {
-                              query: search,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          },
-                          {
-                            multi_match: {
-                              query: related,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-        sort: ['_id'],
-      },
-    };
-
-    if (last) searchQuery.body['search_after'] = [last];
-
+    const searchQuery = SearchQueryBuilder.videoPage(
+      'video-' + clusterNumber,
+      limit,
+      search,
+      related,
+      last,
+    );
     const observable$ = from(
       this.client.search(searchQuery).then((res) => ({
         total: res.body.hits.total,
@@ -316,6 +335,30 @@ export class VideoQueryHandler
           if (!err.meta.body.found) return Err(new VideoNotFoundError());
           return err;
         }),
+    );
+
+    return await lastValueFrom(observable$);
+  }
+
+  async findVideoMultiIndexPaging(
+    arg: FindVideoPageV2Query,
+  ): Promise<IPagingRes> {
+    const { search, related, last, limit } = arg;
+    const multiIndex = arg.clusterNumbers
+      .map((item) => 'video-' + item)
+      .join(',');
+    const searchQuery = SearchQueryBuilder.videoPage(
+      multiIndex,
+      limit,
+      search,
+      related,
+      last,
+    );
+    const observable$ = from(
+      this.client.search(searchQuery).then((res) => ({
+        total: res.body.hits.total,
+        data: res.body.hits.hits,
+      })),
     );
 
     return await lastValueFrom(observable$);

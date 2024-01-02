@@ -120,6 +120,10 @@ export const zPaginatedQuery = z.object({
   last: z.string().describe('Last index returned').optional(),
 });
 
+export const zClusterQueryParams = z.object({
+  cluster: z.string(),
+});
+
 export const zKeyword = z.object({
   search: z.string().describe('탐색어'),
   related: z.string().describe('연관어').optional(),
@@ -132,7 +136,49 @@ export const findVideoBySearchKeyword = z.object({
   to: z.string(),
 });
 export const findVideoPageQuery = zKeyword.merge(zPaginatedQuery);
+export const findVideoPageV2Query = zKeyword
+  .merge(zPaginatedQuery)
+  .merge(zClusterQueryParams);
+
 export type IKeyword = z.TypeOf<typeof zKeyword>;
 export type IPageQuery = z.TypeOf<typeof zPaginatedQuery>;
+export type TPageV2Query = z.TypeOf<typeof findVideoPageV2Query>;
 
 export type VideoModel = z.TypeOf<typeof zVideoModel>;
+
+/**
+ * 개별 비디오
+ * */
+
+export const zPredictionStatus = z.enum(['INSUFFICIENT_DATA', 'PREDICTING']);
+
+export const VideoPerformance = z.object({
+  expectedViews: z.number(),
+  participationRate: z.number(),
+});
+
+export const zPredictedViews = z.object({
+  date: z.string(),
+  predictedViews: z.number(),
+});
+
+export const zVideoPrediction = z.object({
+  status: zPredictionStatus,
+  dailyViews: z.array(zPredictedViews).nullable(),
+});
+
+export const ChannelPerformance = z.object({
+  subscribers: z.number(),
+  averageViews: z.number(),
+});
+
+export const zVideoDetails = z.object({
+  videoTags: z.string(),
+  videoPerformance: VideoPerformance,
+  videoPrediction: zVideoPrediction,
+  channelPerformance: ChannelPerformance,
+});
+
+export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails>;
+export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;
+export type PredictedViews = z.TypeOf<typeof zPredictedViews>;

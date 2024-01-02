@@ -10,6 +10,7 @@ import {
   IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 
 export class FindVideoByMultipleIndex {
   public readonly keyword: string;
@@ -29,11 +30,13 @@ export interface VideoServicePort {
 
   findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes>;
 
+  findVideoMultiIndexPaging(arg: FindVideoPageV2Query): Promise<IPagingRes>;
+
   findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
 
   findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
 
   findVideosWithLastVideoHistory<T>(arg: FindVideoDateQuery): Promise<T[]>;
 
-  findVideoInfo(id: string): Promise<IdocRes<IVideo>>;
+  findVideoInfo(clusterNumber: string, id: string): Promise<IdocRes<IVideo>>;
 }

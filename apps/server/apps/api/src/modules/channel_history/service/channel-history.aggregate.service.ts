@@ -89,9 +89,14 @@ export class ChannelHistoryAggregateService {
         if (channelAvgViews !== 0) {
           let viewsRatio = videoViews / channelAvgViews;
           let videoDate = new Date(video._source.crawled_date);
-          let dateString = `${videoDate.getFullYear()}-${
+          let dateString = `${videoDate.getFullYear()}-${(
             videoDate.getMonth() + 1
-          }-${videoDate.getDate()}`;
+          )
+            .toString()
+            .padStart(2, '0')}-${videoDate
+            .getDate()
+            .toString()
+            .padStart(2, '0')}`;
 
           if (!dateViewRatios[dateString]) {
             dateViewRatios[dateString] = { total: 0, count: 0 };

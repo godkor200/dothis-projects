@@ -51,7 +51,7 @@ export class FindAccumulateVideosV2QueryHandler
      * 관련된 동영상과 채널의 히스토리를 필터링해서 가져옴
      */
     const channelHistoryRes =
-      await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
+      await this.channelHistory.scanLatestChannelHistoryByKeywordAndRelWord<IChannelHistory>(
         {
           ...arg,
           data: [
