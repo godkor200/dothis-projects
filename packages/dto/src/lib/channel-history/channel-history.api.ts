@@ -36,7 +36,7 @@ export const channelHistoryApi = c.router({
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },
-    summary: '채널 정보를 가져옵니다',
-    description: '채널 정보를 출력합니다.',
+    summary: '채널 히스토리 정보를 가져옵니다',
+    description: '채널 히스토리 정보를 출력합니다.',
   },
 });
