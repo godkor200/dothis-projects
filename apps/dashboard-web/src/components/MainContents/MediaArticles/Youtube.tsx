@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
+import useGetVideoPagination from '@/hooks/react-query/query/useGetVideoPagination';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
@@ -37,6 +38,26 @@ const YouTube = () => {
    * @validItems flatMap을 이용해서 useGetVideoData에서 얻은 data형식에서 MediaArticle을 그리는데 필요한 object만 flat하게 가져옵니다. (ex)[{videoObject},{videoObject},{videoObject}]
    */
   const validItems = data.flatMap((item) => (item ? item?.data : []));
+
+  const [page, setPage] = useState(0);
+
+  const [pageLastID, setPageLastID] = useState<Record<number, string>>({});
+
+  const { data: videoPageData } = useGetVideoPagination(
+    page,
+    seletedWord,
+    pageLastID[page],
+  );
+
+  useEffect(() => {
+    setPageLastID((prev) => ({
+      ...prev,
+      [page]: videoPageData?.data.data.at(-1)?._id!,
+    }));
+  }, [videoPageData]);
+
+  console.log(pageLastID);
+  console.log(videoPageData);
 
   const returnData = validItems.map((item) => {
     const compactNumber = new Intl.NumberFormat('ko', {
@@ -110,6 +131,9 @@ const YouTube = () => {
   return (
     <>
       <div className="mt-10 flex gap-[1.25rem]">
+        {/* {Array.from({ length: 10 }, (_, i) => (
+          <div onClick={() => setPage(i + 1)}>{i + 1}</div>
+        ))} */}
         <CurrentArticle
           title={mediaDataList[pageIndex][contentIndex]?.title}
           category={mediaDataList[pageIndex][contentIndex]?.category}
@@ -118,20 +142,20 @@ const YouTube = () => {
           image={mediaDataList[pageIndex][contentIndex]?.image}
           link={mediaDataList[pageIndex][contentIndex]?.link}
         />
-        <div>
+        <div className="h-[630px]">
           <ArticleList
             articleListData={mediaDataList[pageIndex]}
             handleSetContentIndex={handleSetContentIndex}
           />
-          <PaginationButtons
+          {/* <PaginationButtons
             length={mediaDataList.length}
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
-          />
+          /> */}
         </div>
       </div>
       <SummaryCard title="영상 태그">
-        <div className="flex flex-wrap gap-[10px]">
+        <div className="flex flex-wrap gap-[10px] ">
           {mediaDataList[pageIndex][contentIndex]?.tags
             ?.replace(/'|\[|\]/g, '')
             ?.split(', ')
