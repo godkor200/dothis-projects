@@ -70,7 +70,7 @@ export const zVideoResponse = z.object({
     data: z.array(
       z.object({
         sort: z.object({ 0: z.string() }),
-        _id: z.number().nullable().describe('The id of video'),
+        _id: z.string(),
         _index: z.string(),
         _score: z.null(),
         _source: z.object({
