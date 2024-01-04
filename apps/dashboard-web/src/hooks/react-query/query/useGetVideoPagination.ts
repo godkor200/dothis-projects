@@ -26,8 +26,6 @@ const useGetVideoPagination = (
 
   let clusters: string[] = [];
 
-  console.log(lastIndex_ID);
-
   if (data && data.cluster) {
     clusters = JSON.parse(data.cluster);
   }
@@ -52,7 +50,6 @@ const useGetVideoPagination = (
     { ...queryOptions, enabled: !!data && !!relword },
   );
 
-  queryResults.isPreviousData;
   return {
     ...queryResults,
     data: queryResults.data?.body,
