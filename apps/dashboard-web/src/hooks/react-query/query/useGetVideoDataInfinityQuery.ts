@@ -62,8 +62,6 @@ const useGetVideoDataInfinityQuery = (
     },
   );
 
-  console.log(queryResults.data);
-  queryResults.isPreviousData;
   return {
     ...queryResults,
     data: queryResults.data?.pages.flatMap((item) => item.body.data.data),
