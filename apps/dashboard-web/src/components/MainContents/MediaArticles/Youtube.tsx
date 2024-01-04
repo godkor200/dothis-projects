@@ -33,7 +33,6 @@ const YouTube = () => {
 
   const onChange = useCallback(
     (isInview: boolean) => {
-      console.log('occurred');
       if (isInview && hasNextPage) {
         fetchNextPage();
       }

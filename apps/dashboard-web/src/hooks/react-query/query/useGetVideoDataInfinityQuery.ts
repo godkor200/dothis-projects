@@ -52,7 +52,6 @@ const useGetVideoDataInfinityQuery = (
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        console.log(lastPage.body.data.data.length);
         return lastPage.body.data.data.length < 10 || allPages.length > 4
           ? false
           : true;
