@@ -1,16 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback } from 'react';
 
 import InView from '@/components/common/InView/InView';
-import { useSelectedWord } from '@/store/selectedWordStore';
 
-import {
-  externaImageLoader,
-  getMainImage,
-  handleImageError,
-} from '../../../utils/imagesUtil';
+import { handleImageError } from '../../../utils/imagesUtil';
 import ArticleInfo from './ArticleInfo';
 import type { CurrentArticleProps } from './CurrentArticle';
 
@@ -25,8 +19,6 @@ const ArticleList = ({
   handleSetContentIndex,
   onChange,
 }: ArticleListProps) => {
-  const seletedWord = useSelectedWord();
-
   return (
     <div className="accodient-box h-[630px]  cursor-pointer  overflow-auto px-5 pt-[0.375rem] ">
       <InView onChange={onChange} threshold={0.5}>
