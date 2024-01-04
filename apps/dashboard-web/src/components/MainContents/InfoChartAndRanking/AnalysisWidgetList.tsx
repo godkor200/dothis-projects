@@ -16,21 +16,33 @@ const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
     {
       title: '키워드',
       content: selectedWord.keyword!,
+      hasTooltip: false,
+      tooltipText: '',
     },
     {
       title: '기대 조회 수',
       content: `${expectedView}회`,
+      hasTooltip: true,
+      tooltipText: '기대 조회 수 툴팁',
     },
     {
       title: '경쟁 강도',
       content: convertCompetitionScoreFormat(competitionScore),
+      hasTooltip: true,
+      tooltipText: '경쟁 강도 툴팁',
     },
   ];
 
   return (
     <ul className="flex gap-[22px]">
-      {analysisData.map(({ title, content }) => (
-        <AnalysisWidgetItem key={title} title={title} content={content} />
+      {analysisData.map(({ title, content, hasTooltip, tooltipText }) => (
+        <AnalysisWidgetItem
+          key={title}
+          title={title}
+          content={content}
+          hasTooltip={hasTooltip}
+          tooltipText={tooltipText}
+        />
       ))}
     </ul>
   );
