@@ -29,7 +29,7 @@ export class SearchQueryBuilder {
     to?: Date,
     size: number = 100,
   ) {
-    const relWords = relWord.split(' ');
+    const relWords = relWord.split(/\s+/);
     return {
       index,
       scroll: '10s',
@@ -101,7 +101,7 @@ export class SearchQueryBuilder {
     related: string,
     last: string,
   ) {
-    const relWords = related.split(' ');
+    const relWords = related.split(/\s+/);
 
     let searchQuery = {
       index: cluster,
