@@ -1,8 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
-import useGetVideoPagination from '@/hooks/react-query/query/useGetVideoPagination';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
@@ -11,11 +9,6 @@ import CurrentArticle from './CurrentArticle';
 import SummaryCard from './SummaryCard';
 
 const YouTube = () => {
-  /**
-   * @state 페이지 네이션을 위한 pageIndex상태를 추가하였습니다
-   * @useEffect 연관어 변경 및 페이지 변경에 따른 index가 0으로 초기화 해야할 것 같아서 useEffect로 초기화를 해주었습니다! (지금 useEffect로 컨트롤하는게 사이드 이펙트가 있지않을까? 고민이 있어서.. 개선점이 있다면 언제든 피드백 환영입니다!!)
-   */
-
   const [contentIndex, setContentIndex] = useState(0);
 
   const [lastId, setLastId] = useState<string | undefined>('');
@@ -69,6 +62,13 @@ const YouTube = () => {
   });
 
   /**
+   * 밑에 주석들은 기존 useGetVideoData로 페이지네이션을 구성했을 때의 코드입니다.
+   *
+   * @state 페이지 네이션을 위한 pageIndex상태를 추가하였습니다
+   * @useEffect 연관어 변경 및 페이지 변경에 따른 index가 0으로 초기화 해야할 것 같아서 useEffect로 초기화를 해주었습니다! (지금 useEffect로 컨트롤하는게 사이드 이펙트가 있지않을까? 고민이 있어서.. 개선점이 있다면 언제든 피드백 환영입니다!!)
+   */
+
+  /**
    * @validItems flatMap을 이용해서 useGetVideoData에서 얻은 data형식에서 MediaArticle을 그리는데 필요한 object만 flat하게 가져옵니다. (ex)[{videoObject},{videoObject},{videoObject}]
    * const validItems = data.flatMap((item) => (item ? item?.data : []));  무한스크롤추가로 인한 비활성화
    */
@@ -120,9 +120,6 @@ const YouTube = () => {
   return (
     <>
       <div className="mt-10 flex gap-[1.25rem]">
-        {/* {Array.from({ length: 10 }, (_, i) => (
-          <div onClick={() => setPage(i + 1)}>{i + 1}</div>
-        ))} */}
         <CurrentArticle
           title={returnData[contentIndex]?.title}
           category={returnData[contentIndex]?.category}
@@ -137,11 +134,6 @@ const YouTube = () => {
             handleSetContentIndex={handleSetContentIndex}
             onChange={onChange}
           />
-          {/* <PaginationButtons
-            length={mediaDataList.length}
-            pageIndex={pageIndex}
-            setPageIndex={setPageIndex}
-          /> */}
         </div>
       </div>
       <SummaryCard title="영상 태그">
