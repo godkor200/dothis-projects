@@ -19,6 +19,7 @@ export class SearchQueryBuilder {
     from?: Date,
     to?: Date,
   ) {
+    const relWords = relWord.split(' ');
     let searchQuery = {
       index,
       scroll: '10s',
@@ -42,15 +43,15 @@ export class SearchQueryBuilder {
                             ],
                           },
                         },
-                        {
+                        ...relWords.map((word) => ({
                           multi_match: {
-                            query: `${relWord}`,
+                            query: `${word}`,
                             fields: [
                               'video_list.video_tags',
                               'video_list.video_title',
                             ],
                           },
-                        },
+                        })),
                       ],
                     },
                   },
