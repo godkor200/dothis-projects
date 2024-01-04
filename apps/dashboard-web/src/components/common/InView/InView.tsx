@@ -32,7 +32,7 @@ export default function InView({
   return (
     <div>
       {children}
-      <div ref={ref} />
+      <div className="h-[1px]" ref={ref} />
     </div>
   );
 }
