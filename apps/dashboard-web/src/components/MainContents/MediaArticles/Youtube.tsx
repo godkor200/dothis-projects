@@ -128,7 +128,7 @@ const YouTube = () => {
           image={returnData[contentIndex]?.image}
           link={returnData[contentIndex]?.link}
         />
-        <div className="">
+        <div className="flex-1">
           <ArticleList
             articleListData={returnData}
             handleSetContentIndex={handleSetContentIndex}
