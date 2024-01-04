@@ -5,13 +5,17 @@ import React from 'react';
 
 import SvgComp from '../SvgComp';
 
-const TooltipComponent = () => {
+interface Props {
+  title: string;
+}
+
+const TooltipComponent = ({ title }: Props) => {
   return (
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
           <button className="IconButton">
-            <SvgComp icon="Question" size={26} />
+            <SvgComp icon="Question" size={18} />
           </button>
         </Tooltip.Trigger>
         <Tooltip.Portal>
@@ -19,7 +23,7 @@ const TooltipComponent = () => {
             className="TooltipContent bg-primary400"
             sideOffset={5}
           >
-            Add to library
+            {title}
             <Tooltip.TooltipArrow className="TooltipArrow" />
           </Tooltip.Content>
         </Tooltip.Portal>
