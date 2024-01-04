@@ -29,6 +29,7 @@ export class SearchQueryBuilder {
     to?: Date,
     size: number = 100,
   ) {
+    const relWords = relWord.split(' ');
     return {
       index,
       scroll: '10s',
@@ -49,12 +50,12 @@ export class SearchQueryBuilder {
                               fields: ['video_tags', 'video_title'],
                             },
                           },
-                          {
+                          ...relWords.map((word) => ({
                             multi_match: {
-                              query: relWord,
+                              query: word,
                               fields: ['video_tags', 'video_title'],
                             },
-                          },
+                          })),
                         ],
                       },
                     },
@@ -100,6 +101,8 @@ export class SearchQueryBuilder {
     related: string,
     last: string,
   ) {
+    const relWords = related.split(' ');
+
     let searchQuery = {
       index: cluster,
       size: limit,
@@ -119,12 +122,12 @@ export class SearchQueryBuilder {
                               fields: ['video_tags', 'video_title'],
                             },
                           },
-                          {
+                          ...relWords.map((word) => ({
                             multi_match: {
-                              query: related,
+                              query: word,
                               fields: ['video_tags', 'video_title'],
                             },
-                          },
+                          })),
                         ],
                       },
                     },
@@ -256,65 +259,18 @@ export class VideoQueryHandler
   }
 
   /**
-   * 곧 쓸일이 있을듯
+   * 비디오 히스토리의 마지막을 찾아 리턴
    * @param arg
    */
   async findVideosWithLastVideoHistory<T>(
     arg: FindVideoDateQuery,
   ): Promise<T[]> {
-    const { keyword, relationKeyword } = arg;
-    let searchQuery = {
-      index: 'video-' + arg.clusterNumber,
-      scroll: '10s',
-      size: 10000,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_tag: `*${relationKeyword}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_tag: `*${keyword}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_title: `*${relationKeyword}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_title: `*${keyword}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-        _source: arg.data,
-      },
-    };
+    const { clusterNumber, keyword, relationKeyword } = arg;
+    let searchQuery = SearchQueryBuilder.video(
+      clusterNumber,
+      keyword,
+      relationKeyword,
+    );
     return Promise.resolve([]);
   }
 
