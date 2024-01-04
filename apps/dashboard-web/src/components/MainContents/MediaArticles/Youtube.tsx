@@ -56,10 +56,9 @@ const YouTube = () => {
     }));
   }, [videoPageData]);
 
-  console.log(pageLastID);
   console.log(videoPageData);
 
-  const returnData = validItems.map((item) => {
+  const returnData = videoPageData?.data.data.map((item) => {
     const compactNumber = new Intl.NumberFormat('ko', {
       notation: 'compact',
     });
@@ -80,6 +79,7 @@ const YouTube = () => {
     };
   });
 
+  console.log(returnData);
   /**
    * @mediaDataList returnData로 포맷팅을 변환한 Object[] -> 페이지네이션에 맞게끔 포맷팅을 변경합니다! (ex)[Array(5),Array(5),Array(5),Array(5),Array(5)]
    * @jsx 밑에 jsx는 mediaDataList를 이용해서 prop으로 전달하도록 수정하였습니다.
@@ -102,6 +102,8 @@ const YouTube = () => {
       [],
     );
   }, [data]);
+
+  console.log(mediaDataList);
 
   // 현재 데이터 페이지 인덱스가 clusternumber인데,  한페이지만 보여주고 있어서 임의로 하나만 지정했습니다. 하지만 해당 clusternumber에 에러가 있을 시 계속 skeleton UI 만 나오는 현상이 있을 수 있어서 에러바운더리를 설정해주는게 좋습니다
   if (isLoading) {
@@ -142,9 +144,9 @@ const YouTube = () => {
           image={mediaDataList[pageIndex][contentIndex]?.image}
           link={mediaDataList[pageIndex][contentIndex]?.link}
         />
-        <div className="h-[630px]">
+        <div className=" accodient-box h-[630px] overflow-auto">
           <ArticleList
-            articleListData={mediaDataList[pageIndex]}
+            articleListData={returnData}
             handleSetContentIndex={handleSetContentIndex}
           />
           {/* <PaginationButtons
