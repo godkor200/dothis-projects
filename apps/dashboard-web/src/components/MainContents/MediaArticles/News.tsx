@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import ParserContent from '@/components/common/ParserContent';
 import useGetNewsArticle from '@/hooks/react-query/query/useGetNewsArticle';
+import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
@@ -34,11 +35,33 @@ const News = () => {
     setContentIndex(index);
   };
 
-  const { data, isLoading } = useGetNewsArticle();
+  const { data } = useGetNewsArticle();
+
+  const {
+    data: scrollData,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetching,
+  } = useGetNewsInfiniteQuery();
+  console.log(scrollData);
+
+  const onChange = useCallback(
+    (isInview: boolean) => {
+      if (isInview && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage],
+  );
+
+  const dataObj = scrollData?.pages.flatMap(
+    (item) => item.return_object.documents,
+  );
 
   const returnData = useMemo(
     () =>
-      data?.return_object?.documents?.map((item) => {
+      dataObj?.map((item) => {
         return {
           title: item.title,
           category: item.category[0],
@@ -55,8 +78,7 @@ const News = () => {
   /**
    * @mediaDataList returnData로 포맷팅을 변환한 Object[] -> 페이지네이션에 맞게끔 포맷팅을 변경합니다! (ex)[Array(5),Array(5),Array(5),Array(5),Array(5)]
    * @jsx 밑에 jsx는 mediaDataList를 이용해서 prop으로 전달하도록 수정하였습니다.
-   */
-  const mediaDataList = useMemo(() => {
+   * const mediaDataList = useMemo(() => {
     return returnData?.reduce(
       (
         result: (typeof returnData)[],
@@ -74,6 +96,7 @@ const News = () => {
       [],
     );
   }, [data]);
+   */
 
   if (isLoading) {
     return (
@@ -84,7 +107,7 @@ const News = () => {
     );
   }
 
-  if (returnData?.length === 0 || !returnData || !mediaDataList) {
+  if (returnData?.length === 0 || !returnData) {
     return (
       <div className="mt-10 flex flex-wrap gap-[1.25rem]">
         <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
@@ -97,29 +120,23 @@ const News = () => {
     <>
       <div className="mt-10 flex gap-[1.25rem]">
         <CurrentArticle
-          title={mediaDataList[pageIndex][contentIndex]?.title}
-          category={mediaDataList[pageIndex][contentIndex]?.category}
-          provider={mediaDataList[pageIndex][contentIndex]?.provider}
-          date={mediaDataList[pageIndex][contentIndex]?.date}
-          image={mediaDataList[pageIndex][contentIndex]?.image}
-          link={mediaDataList[pageIndex][contentIndex]?.link}
+          title={returnData[contentIndex]?.title}
+          category={returnData[contentIndex]?.category}
+          provider={returnData[contentIndex]?.provider}
+          date={returnData[contentIndex]?.date}
+          image={returnData[contentIndex]?.image}
+          link={returnData[contentIndex]?.link}
         />
-        <div>
+        <div className="flex-1">
           <ArticleList
-            articleListData={mediaDataList[pageIndex]}
+            articleListData={returnData}
             handleSetContentIndex={handleSetContentIndex}
-          />
-          <PaginationButtons
-            length={mediaDataList.length}
-            pageIndex={pageIndex}
-            setPageIndex={setPageIndex}
+            onChange={onChange}
           />
         </div>
       </div>
       <SummaryCard title="뉴스 요약">
-        <ParserContent
-          content={mediaDataList[pageIndex][contentIndex]?.hilight}
-        />
+        <ParserContent content={returnData[contentIndex]?.hilight} />
       </SummaryCard>
     </>
   );
