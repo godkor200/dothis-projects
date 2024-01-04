@@ -43,7 +43,7 @@ const useGetVideoPagination = (
     {
       query: {
         last: lastIndex_ID ? lastIndex_ID : undefined,
-        limit: 5,
+        limit: 10,
         related: relword!,
         search: keyword!,
         cluster: clusters.join(','),
