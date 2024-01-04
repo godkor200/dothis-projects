@@ -12,29 +12,30 @@ export class ChannelHistoryAggregateService {
    * @private
    */
   private readonly ranges = [
-    { gte: 0, lte: 100, max: 100, section: SECTION_NUMBER.RANGE_0_100 }, // 구독자 제로에서 100명까지에 구간이 없어 추가 없으면 에러가 남!
-    { gte: 100, lte: 1000, max: 1000, section: SECTION_NUMBER.RANGE_100_1000 },
+    //구독자 1000명 이하는 분석을 안해 구간을 사용하지 않음, 그러나 나중을 대비
+    { gte: 0, lte: 99, max: 100, section: SECTION_NUMBER.RANGE_0_100 },
+    { gte: 100, lte: 999, max: 1000, section: SECTION_NUMBER.RANGE_100_1000 },
     {
       gte: 1000,
-      lte: 10000,
+      lte: 9999,
       max: 10000,
       section: SECTION_NUMBER.RANGE_1000_10000,
     },
     {
       gte: 10000,
-      lte: 50000,
+      lte: 49999,
       max: 50000,
       section: SECTION_NUMBER.RANGE_10000_50000,
     },
     {
       gte: 50000,
-      lte: 100000,
+      lte: 99999,
       max: 100000,
       section: SECTION_NUMBER.RANGE_50000_100000,
     },
     {
       gte: 100000,
-      lte: 500000,
+      lte: 499999,
       max: 500000,
       section: SECTION_NUMBER.RANGE_100000_500000,
     },
@@ -58,8 +59,11 @@ export class ChannelHistoryAggregateService {
     for (let item of ChannelHistoryData) {
       const subscribers = item._source.channel_subscribers;
       for (let range of rangesWithCount) {
+        //구독자 1000명 이하는 분석을 안해 구간을 사용하지 않음, 그러나 나중을 대비
+        if (rangesWithCount[1].lte > subscribers) break;
         if (subscribers >= range.gte && subscribers < range.lte) {
           range.number += item.inner_hits.video_list.hits.total.value;
+          break;
         }
       }
     }
