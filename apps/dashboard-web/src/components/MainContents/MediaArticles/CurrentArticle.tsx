@@ -51,7 +51,7 @@ const CurrentArticle = ({
         </div>
 
         <div className="px-[30px] py-[40px]">
-          <h3 className="text-grey700 mb-5 line-clamp-2 text-[20px] font-bold">
+          <h3 className="text-grey700 mb-5 line-clamp-2 min-h-[60px] text-[20px] font-bold">
             {title}
           </h3>
           <ArticleInfo secondText={provider} thirdText={category} date={date} />
