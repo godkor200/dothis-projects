@@ -20,7 +20,7 @@ const ArticleList = ({
   onChange,
 }: ArticleListProps) => {
   return (
-    <div className="accodient-box h-[630px]  cursor-pointer  overflow-auto px-5 pt-[0.375rem] ">
+    <div className="accodient-box h-[630px] cursor-pointer  overflow-hidden px-5  pt-[0.375rem] hover:overflow-auto ">
       <InView onChange={onChange} threshold={0.5}>
         {articleListData.map(
           ({ title, category, date, provider, image }, index) => {

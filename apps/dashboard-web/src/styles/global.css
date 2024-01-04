@@ -34,6 +34,7 @@ em {
 
     .accodient-box::-webkit-scrollbar {
       width: 8px; /* 스크롤바의 너비 */
+      /* display: block; */
     }
     .accodient-box::-webkit-scrollbar-thumb {
       height: 30%; /* 스크롤바의 길이 */
