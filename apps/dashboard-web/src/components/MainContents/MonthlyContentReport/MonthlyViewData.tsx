@@ -136,14 +136,21 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     {
       title: '조회수가 가장 높은 카테고리',
       content: maxViewsObject?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
     },
+
     {
       title: '발행 영상 수가 가장 많은 카테고리',
       content: maxVideoCountObject?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
     },
     {
       title: '경쟁강도가 가장 좋은 카테고리',
       content: maxRatioElement?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
     },
   ];
 
@@ -233,13 +240,17 @@ const MonthlyViewData = ({ currentTab }: Props) => {
               </div>
             </div>
             <ul className="flex flex-col gap-[20px]">
-              {analysisData.map(({ title, content }) => (
-                <AnalysisWidgetItem
-                  key={title}
-                  title={title}
-                  content={content}
-                />
-              ))}
+              {analysisData.map(
+                ({ title, content, tooltipText, hasTooltip }) => (
+                  <AnalysisWidgetItem
+                    key={title}
+                    title={title}
+                    content={content}
+                    hasTooltip={hasTooltip}
+                    tooltipText={tooltipText}
+                  />
+                ),
+              )}
             </ul>
           </>
         ) : (
