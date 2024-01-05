@@ -49,6 +49,7 @@ const News = () => {
   const onChange = useCallback(
     (isInview: boolean) => {
       if (isInview && hasNextPage) {
+        console.log('occurred');
         fetchNextPage();
       }
     },
@@ -59,21 +60,17 @@ const News = () => {
     (item) => item.return_object.documents,
   );
 
-  const returnData = useMemo(
-    () =>
-      dataObj?.map((item) => {
-        return {
-          title: item.title,
-          category: item.category[0],
-          provider: item.provider,
-          date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
-          image: externaImageLoader(getMainImage(item.images)),
-          link: item.provider_link_page,
-          hilight: item.hilight,
-        };
-      }),
-    [data],
-  );
+  const returnData = dataObj?.map((item) => {
+    return {
+      title: item.title,
+      category: item.category[0],
+      provider: item.provider,
+      date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
+      image: externaImageLoader(getMainImage(item.images)),
+      link: item.provider_link_page,
+      hilight: item.hilight,
+    };
+  });
 
   /**
    * @mediaDataList returnData로 포맷팅을 변환한 Object[] -> 페이지네이션에 맞게끔 포맷팅을 변경합니다! (ex)[Array(5),Array(5),Array(5),Array(5),Array(5)]
