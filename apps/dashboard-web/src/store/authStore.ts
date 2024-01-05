@@ -4,7 +4,7 @@ import type { AuthState } from '@/types/auth';
 
 export const authStore = create<AuthState>((set) => ({
   isSignedIn: false,
-  isTokenRequired: false,
+  isTokenRequired: null,
   isOpenSignUpModal: false,
   actions: {
     setIsSignedIn: (value: boolean) => set(() => ({ isSignedIn: value })),
