@@ -25,7 +25,6 @@ const useGetNewsInfiniteQuery = (
   const endDate = useEndDate();
 
   const retrievePosts = async (pageParam: number): Promise<NewsResponse> => {
-    console.log(pageParam);
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
@@ -70,9 +69,6 @@ const useGetNewsInfiniteQuery = (
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        console.log(lastPage);
-        console.log(allPages);
-
         return lastPage.return_object.documents.length < 10 ||
           allPages.length > 4
           ? false
