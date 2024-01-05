@@ -1,13 +1,10 @@
-import { Inject, NotFoundException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { Err, Ok, Result } from 'oxide.ts';
 
 import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
-import {
-  ChannelKeywordOrtagDtos,
-  ResultChannelKeywordTag,
-} from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { ResultChannelKeywordTag } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 
 export class FindKeywordTagByUserCommand {
@@ -40,8 +37,8 @@ export class GetUserV2CommandHandler
     if (!res) return Err(new ChannelNotFoundError());
     const { keyword, tag } = res;
     return Ok({
-      channel_keywords: keyword && keyword.split(','),
-      channel_tags: tag && tag.split(','),
+      channelKeywords: keyword && keyword.split(','),
+      channelTags: tag && tag.split(','),
     });
   }
 }

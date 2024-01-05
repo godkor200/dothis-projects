@@ -19,7 +19,7 @@ const ArticleInfo = ({
   return (
     <div
       className={cn('flex items-center gap-[0.5rem] ', {
-        'mb-10': !isList,
+        'mb-[30px]': !isList,
       })}
     >
       {secondText && (

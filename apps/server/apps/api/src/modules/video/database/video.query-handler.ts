@@ -1,4 +1,4 @@
-import { from, last, lastValueFrom, map } from 'rxjs';
+import { from, last, lastValueFrom, map, Observable, throwError } from 'rxjs';
 import { VideoServicePort } from './video.service.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
@@ -7,13 +7,17 @@ import {
   IPagingRes,
   IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
-
+import { catchError } from 'rxjs/operators';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
 } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { Err } from 'oxide.ts';
+import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
+import { undefined } from 'zod';
 
 export class SearchQueryBuilder {
   static video(
@@ -35,34 +39,20 @@ export class SearchQueryBuilder {
             must: [
               {
                 bool: {
-                  should: [
+                  filter: [
                     {
                       bool: {
                         must: [
                           {
-                            wildcard: {
-                              video_tags: `*${keyword}*`,
+                            multi_match: {
+                              query: keyword,
+                              fields: ['video_tags', 'video_title'],
                             },
                           },
                           {
-                            wildcard: {
-                              video_title: `*${relWord}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_title: `*${keyword}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_tags: `*${relWord}*`,
+                            multi_match: {
+                              query: relWord,
+                              fields: ['video_tags', 'video_title'],
                             },
                           },
                         ],
@@ -96,11 +86,61 @@ export class SearchQueryBuilder {
     };
   }
 
-  static individualVideo(id: string) {
+  static individualVideo(clusterNumber: string, id: string) {
     return {
-      index: 'video-*',
+      index: 'video-' + clusterNumber,
       id,
     };
+  }
+
+  static videoPage(
+    cluster: string,
+    limit: number,
+    search: string,
+    related: string,
+    last: string,
+  ) {
+    let searchQuery = {
+      index: cluster,
+      size: limit,
+      body: {
+        query: {
+          bool: {
+            must: [
+              {
+                bool: {
+                  filter: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            multi_match: {
+                              query: search,
+                              fields: ['video_tags', 'video_title'],
+                            },
+                          },
+                          {
+                            multi_match: {
+                              query: related,
+                              fields: ['video_tags', 'video_title'],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        sort: ['_id'],
+      },
+    };
+
+    if (last) searchQuery.body['search_after'] = [last];
+
+    return searchQuery;
   }
 }
 export class VideoQueryHandler
@@ -180,9 +220,6 @@ export class VideoQueryHandler
     return await lastValueFrom(observable$);
   }
 
-  /**
-   * @param query
-   */
   async findVideoIdFullScanAndVideos<T>(
     query: FindVideoDateQuery,
   ): Promise<T[]> {
@@ -201,60 +238,13 @@ export class VideoQueryHandler
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
     const { clusterNumber, limit, search, related, last } = arg;
-    let searchQuery = {
-      index: `video-${clusterNumber}`,
-      size: limit,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_tags: `*${search}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_title: `*${related}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            wildcard: {
-                              video_title: `*${search}*`,
-                            },
-                          },
-                          {
-                            wildcard: {
-                              video_tags: `*${related}*`,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-        sort: ['_id'],
-      },
-    };
-
-    if (last) searchQuery.body['search_after'] = [last];
-
+    const searchQuery = SearchQueryBuilder.videoPage(
+      'video-' + clusterNumber,
+      limit,
+      search,
+      related,
+      last,
+    );
     const observable$ = from(
       this.client.search(searchQuery).then((res) => ({
         total: res.body.hits.total,
@@ -328,10 +318,47 @@ export class VideoQueryHandler
     return Promise.resolve([]);
   }
 
-  async findVideoInfo(id: string): Promise<IdocRes<IVideo>> {
-    const searchQuery = SearchQueryBuilder.individualVideo(id);
+  async findVideoInfo(
+    clusterNumber: string,
+    id: string,
+  ): Promise<IdocRes<IVideo>> {
+    const searchQuery = SearchQueryBuilder.individualVideo(clusterNumber, id);
     const observable$ = from(
-      this.client.get(searchQuery).then((res) => res.body._source),
+      this.client
+        .get(searchQuery)
+        .then((res) => {
+          if (res.body.found) {
+            return res.body as IdocRes<IVideo>;
+          }
+        })
+        .catch((err) => {
+          if (!err.meta.body.found) return Err(new VideoNotFoundError());
+          return err;
+        }),
+    );
+
+    return await lastValueFrom(observable$);
+  }
+
+  async findVideoMultiIndexPaging(
+    arg: FindVideoPageV2Query,
+  ): Promise<IPagingRes> {
+    const { search, related, last, limit } = arg;
+    const multiIndex = arg.clusterNumbers
+      .map((item) => 'video-' + item)
+      .join(',');
+    const searchQuery = SearchQueryBuilder.videoPage(
+      multiIndex,
+      limit,
+      search,
+      related,
+      last,
+    );
+    const observable$ = from(
+      this.client.search(searchQuery).then((res) => ({
+        total: res.body.hits.total,
+        data: res.body.hits.hits,
+      })),
     );
 
     return await lastValueFrom(observable$);

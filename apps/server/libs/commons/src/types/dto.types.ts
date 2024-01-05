@@ -8,6 +8,8 @@ import {
   zKeywords,
   zResWordsPickData,
   zRankRes,
+  zVideoDetails,
+  zChannelAnalysis,
 } from '@dothis/dto';
 import { zExpectedData, zIncreaseData } from '@Libs/commons/src/types/res.zod';
 
@@ -27,14 +29,9 @@ export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
 export class ExpectedViewsData extends createZodDto(extendApi(zExpectedData)) {}
 
 export class IncreaseData extends createZodDto(extendApi(zIncreaseData)) {}
-// export class CreateUserInput extends createZodDto(
-//   // userModel.omit({
-//   //   dateSignIn: true,
-//   // }),
-// ) {}
 
-// export class UpdateUserInput extends createZodDto(
-//   userModel.omit({
-//     dateSignIn: true,
-//   }),
-// ) {}
+export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
+
+export class ChannelAnalysisRes extends createZodDto(
+  extendApi(zChannelAnalysis),
+) {}

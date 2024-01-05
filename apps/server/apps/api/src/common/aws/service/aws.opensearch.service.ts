@@ -1,9 +1,10 @@
-import { Client } from '@opensearch-project/opensearch';
+import { ApiResponse, Client } from '@opensearch-project/opensearch';
 import { AwsSigv4Signer } from '@opensearch-project/opensearch/aws';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import aws from 'aws-sdk';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
+import { IIndicesServerResponse } from '@Apps/common/aws/interface/os.res.interface';
 
 @Injectable()
 export class AwsOpenSearchConnectionService {
@@ -62,18 +63,21 @@ export class AwsOpenSearchConnectionService {
       // Scroll 작업 완료 후에 clearScroll 호출
       await this.client.clear_scroll({ scroll_id: oldScrollId });
     }
-
-    console.log('길이가 맞나?', totalLength, result.length === totalLength);
-
-    console.log('TOTAL TIME:', Date.now() - startTime, 'milliseconds.');
-    console.log(
-      '쿼리타입 , 함수타입',
-      query,
-      'TOTAL TIME:',
-      (Date.now() - startTime) / 1000,
-      'seconds.',
-    );
-
     return result;
+  }
+  async getIndices(alias: string) {
+    try {
+      const res: ApiResponse<IIndicesServerResponse<{ index: string }>> =
+        await this.client.cat.indices({
+          index: alias,
+          format: 'json',
+          h: 'index',
+          s: 'index:desc',
+        });
+
+      return res.body;
+    } catch (e) {
+      console.error('getIndices  오류 발생:', e);
+    }
   }
 }

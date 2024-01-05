@@ -17,7 +17,7 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domai
 const c = nestControllerContract(apiRouter.channelHistory);
 const { findChannelInfo } = c;
 const { summary, description } = findChannelInfo;
-@ApiTags('채널')
+@ApiTags('채널 히스토리')
 @Controller()
 export class FindChannelHistoryHttpController {
   constructor(private readonly queryBus: QueryBus) {}

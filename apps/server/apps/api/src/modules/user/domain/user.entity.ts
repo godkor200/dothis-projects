@@ -57,7 +57,12 @@ export class User {
   })
   status: string;
 
-  @Column({ type: 'date', name: 'date_sign_in', comment: '생성일' })
+  @Column({
+    type: 'timestamp',
+    name: 'date_sign_in',
+    comment: '생성일',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   dateSignIn: Date;
 
   @Column({
@@ -92,6 +97,8 @@ export class User {
   static create(user: UserInfoCommandDto) {
     const newUser = new User();
     newUser.userEmail = user.userEmail;
+    newUser.channelId = user.channelId;
+
     return newUser;
   }
 }

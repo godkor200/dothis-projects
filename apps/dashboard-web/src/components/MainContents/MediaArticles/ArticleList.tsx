@@ -2,65 +2,68 @@
 
 import Image from 'next/image';
 
-import {
-  externaImageLoader,
-  getMainImage,
-  handleImageError,
-} from '../../../utils/imagesUtil';
+import InView from '@/components/common/InView/InView';
+
+import { handleImageError } from '../../../utils/imagesUtil';
 import ArticleInfo from './ArticleInfo';
 import type { CurrentArticleProps } from './CurrentArticle';
 
 interface ArticleListProps {
   articleListData: CurrentArticleProps[];
   handleSetContentIndex: (index: number) => void;
+  onChange: (isInview: boolean) => void;
 }
 
 const ArticleList = ({
   articleListData,
   handleSetContentIndex,
+  onChange,
 }: ArticleListProps) => {
   return (
-    <div className="cursor-pointer px-5  pt-[0.375rem]">
-      {articleListData.map(
-        ({ title, category, date, provider, image }, index) => {
-          return (
-            <div
-              className="flex gap-[1rem] py-[0.875rem]"
-              onClick={() => handleSetContentIndex(index)}
-              key={index}
-            >
-              <div className="relative h-[74px] w-[132px] overflow-hidden rounded-md bg-black">
-                <Image
-                  unoptimized
-                  src={image}
-                  onError={handleImageError}
-                  width={0}
-                  height={0}
-                  alt="Picture of the author"
-                  style={{
-                    objectFit: 'cover',
-                    layout: 'fill',
-                    width: '132px',
-                    height: '100%',
-                  }}
-                />
-              </div>
+    // hover:overflow-auto
+    <div className="accodient-box h-[630px] cursor-pointer  overflow-auto pl-5 pr-3  pt-[0.375rem]">
+      <InView onChange={onChange} threshold={0.5}>
+        {articleListData.map(
+          ({ title, category, date, provider, image }, index) => {
+            return (
+              <div
+                className="flex gap-[1rem] py-[0.875rem]"
+                onClick={() => handleSetContentIndex(index)}
+                key={index}
+              >
+                <div className="relative h-[74px] w-[132px] overflow-hidden rounded-md bg-black">
+                  <Image
+                    unoptimized
+                    src={image}
+                    onError={handleImageError}
+                    width={0}
+                    height={0}
+                    alt="Picture of the author"
+                    style={{
+                      objectFit: 'cover',
+                      layout: 'fill',
+                      width: '132px',
+                      height: '100%',
+                    }}
+                  />
+                </div>
 
-              <div>
-                <p className="text-grey700 mb-2 line-clamp-2 w-[278px] font-medium">
-                  {title}
-                </p>
-                <ArticleInfo
-                  secondText={provider}
-                  thirdText={category}
-                  date={date}
-                  isList={true}
-                />
+                <div>
+                  <p className="text-grey700 mb-2 line-clamp-2 w-[278px] font-medium">
+                    {title}
+                  </p>
+                  <ArticleInfo
+                    secondText={provider}
+                    thirdText={category}
+                    date={date}
+                    isList={true}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        },
-      )}
+            );
+          },
+        )}
+      </InView>
     </div>
   );
 };

@@ -3,11 +3,11 @@ import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/databa
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { from, lastValueFrom, map } from 'rxjs';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
 import { ConfigService } from '@nestjs/config';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { Injectable } from '@nestjs/common';
 import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
 
 export class SearchQueryBuilder {
   static channelHistory(
@@ -32,25 +32,23 @@ export class SearchQueryBuilder {
                   path: 'video_list',
                   query: {
                     bool: {
-                      must: [
+                      filter: [
                         {
-                          match: {
-                            'video_list.video_tags': `${keyword}`,
+                          multi_match: {
+                            query: `${keyword}`,
+                            fields: [
+                              'video_list.video_tags',
+                              'video_list.video_title',
+                            ],
                           },
                         },
                         {
-                          match: {
-                            'video_list.video_tags': `${relWord}`,
-                          },
-                        },
-                        {
-                          match: {
-                            'video_list.video_title': `${keyword}`,
-                          },
-                        },
-                        {
-                          match: {
-                            'video_list.video_title': `${relWord}`,
+                          multi_match: {
+                            query: `${relWord}`,
+                            fields: [
+                              'video_list.video_tags',
+                              'video_list.video_title',
+                            ],
                           },
                         },
                       ],
@@ -69,7 +67,7 @@ export class SearchQueryBuilder {
       },
     };
     if (from && to) {
-      searchQuery.body.query.bool.must[0].nested.query.bool.must.push({
+      searchQuery.body.query.bool.must[0].nested.query.bool.filter.push({
         range: {
           'video_list.crawled_date': {
             gte: from + ' 00:00:00',
@@ -95,7 +93,6 @@ export class ChannelHistoryQueryHandler
   implements ChannelHistoryOutboundPort
 {
   constructor(
-    private readonly channelHistoryDataService: ChannelHistoryDataService,
     configService: ConfigService,
     awsCredentialsService: AwsCredentialsService,
   ) {
@@ -192,6 +189,23 @@ export class ChannelHistoryQueryHandler
       data,
       from,
       to,
+    );
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
+  }
+
+  async scanLatestChannelHistoryByKeywordAndRelWord<T>(
+    props: FindVideoChannelHistory,
+  ): Promise<T[]> {
+    const indexNames = await this.getIndices('channel-history*');
+    const lastIndex = indexNames[0].index;
+    const { keyword, relationKeyword, data } = props;
+    const size = 100;
+    const searchQuery = SearchQueryBuilder.channelHistory(
+      lastIndex,
+      keyword,
+      relationKeyword,
+      size,
+      data,
     );
     return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }

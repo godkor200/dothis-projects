@@ -19,8 +19,33 @@ em {
   width: 1px;
   height: 1px;
   border: 0;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
   word-break: initial;
   word-wrap: initial;
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .accodient-box::-webkit-scrollbar {
+      width: 8px; /* 스크롤바의 너비 */
+      /* display: block; */
+    }
+    .accodient-box::-webkit-scrollbar-thumb {
+      height: 30%; /* 스크롤바의 길이 */
+      background: #848484; /* 스크롤바의 색상 */
+      border-radius: 10px;
+    }
+    .accodient-box::-webkit-scrollbar-track {
+      background: #84848447; /*스크롤바 뒷 배경 색상*/
+      border-radius: 10px;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+  }
 }

@@ -27,7 +27,7 @@ export interface AuthState {
   /**
    * 로그인이 (토큰이) 필요한지 여부
    */
-  isTokenRequired: boolean;
+  isTokenRequired: boolean | null;
   /**
    * 회원가입/로그인 모달 트리거 값
    */

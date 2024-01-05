@@ -54,7 +54,7 @@ export class RankRelQueryHandler
       await Promise.all(
         relWordsArr.map(async (relWord) => {
           const data =
-            await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistoryWithoutChannelSubscribers>(
+            await this.channelHistory.scanLatestChannelHistoryByKeywordAndRelWord<IChannelHistoryWithoutChannelSubscribers>(
               {
                 keyword: query.keyword,
                 relationKeyword: relWord,
@@ -74,7 +74,6 @@ export class RankRelQueryHandler
       )
     ).filter((item) => item !== null);
     if (!channelVideoData.length) return Err(new VideoNotFoundError());
-
     const res =
       this.rankRelAggregateService.calculationExpectationNumberRelatedWord(
         channelVideoData,

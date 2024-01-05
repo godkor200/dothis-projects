@@ -38,6 +38,7 @@ describe('GoogleLoginRedirectCommandHandler 예외 처리', () => {
       tokenRefresh: 'aaaaa',
       googleAccessToken: 'googleAccessToken',
       googleRefreshToken: 'googleRefreshToken',
+      dateSignIn: new Date(),
     };
 
     mockUserRepositoryPort.findOneByEmail.mockReturnValue(null);

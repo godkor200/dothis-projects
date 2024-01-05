@@ -42,12 +42,12 @@ export default function Modal({
   return (
     <div
       ref={overlay}
-      className="bg-grey300 fixed inset-0 z-10 mx-auto bg-opacity-10"
+      className="bg-grey300 fixed inset-0 z-[98] mx-auto bg-opacity-10"
       onClick={onClick}
     >
       <div
         ref={wrapper}
-        className="absolute left-1/2 top-1/2  -translate-x-1/2 -translate-y-1/2 p-6"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-6"
       >
         {children}
       </div>

@@ -15,7 +15,6 @@ export class RankRelAggregateService {
     channelVideoData: IRankingRelWords[],
   ): TRankResData {
     let result: TRankResData = [];
-
     for (let i = 0; i < channelVideoData.length; i++) {
       let videos = channelVideoData[i].data;
       let relWord = channelVideoData[i].relWord;

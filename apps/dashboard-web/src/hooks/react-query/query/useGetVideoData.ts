@@ -18,7 +18,7 @@ const useGetVideoData = (
     keyword: string | null;
     relword: string | null;
   },
-  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideo>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV1>,
 ) => {
   const { data } = useGetRelWords(keyword);
 
@@ -28,7 +28,7 @@ const useGetVideoData = (
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(1).video.getVideo.useQueries({
+  const queryResults = apiClient(1).video.getVideoPageV1.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: VIDEODATA_KEY.list([

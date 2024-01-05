@@ -20,7 +20,7 @@ import { VideoRes } from '@Libs/commons/src/types/dto.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.video);
-const { summary, responses, description } = c.getVideo;
+const { summary, responses, description } = c.getVideoPageV1;
 
 @ApiTags('영상')
 @Controller()
@@ -68,11 +68,9 @@ export class FindVideoPageHttpController {
   })
   @ApiOperation({
     summary,
-    description:
-      description +
-      ' channel_name 추가,현재 채널 타이틀 데이터가 완전치 않아 없으면 객체도 없음',
+    description,
   })
-  @TsRest(c.getVideo)
+  @TsRest(c.getVideoPageV1)
   @ApiOkResponse({ type: VideoRes })
   @ApiNotFoundResponse({ description: VideoNotFoundError.message })
   async execute(

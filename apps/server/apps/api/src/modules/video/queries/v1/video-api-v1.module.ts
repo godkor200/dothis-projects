@@ -12,6 +12,8 @@ import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/servi
 import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { FindIndividualVideoInfoHttpController } from '@Apps/modules/video/queries/v1/find-individual-video-info/find-individual-video-info.http.controller';
+import { FindIndividualVideoInfoQueryHandler } from '@Apps/modules/video/queries/v1/find-individual-video-info/find-individual-video-info.query-handler';
+import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 
 const commandHandlers: Provider[] = [];
 
@@ -30,6 +32,7 @@ const queryHandlers: Provider[] = [
   },
   FindVideoHandler,
   FindVideoPageQueryHandler,
+  FindIndividualVideoInfoQueryHandler,
 ];
 @Module({
   imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
@@ -37,6 +40,6 @@ const queryHandlers: Provider[] = [
     FindVideoPageHttpController,
     FindIndividualVideoInfoHttpController,
   ],
-  providers: [...queryHandlers, ...commandHandlers],
+  providers: [...queryHandlers, ...commandHandlers, VideoAggregateService],
 })
 export class VideoApiV1Module {}

@@ -1,6 +1,9 @@
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { CHANNEL_DATA } from '@Apps/modules/video/interface/find-video.os.res';
+import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+import { ChannelInfoOs } from '@Apps/modules/channel/interface/analyze-channel.interface';
+import { ApiResponse } from '@opensearch-project/opensearch';
 
 export class ChannelQueryHandler
   extends AwsOpenSearchConnectionService
@@ -17,6 +20,21 @@ export class ChannelQueryHandler
       return res.body._source?.channel_name;
     } catch (e) {
       if (e.statusCode == 404) return undefined;
+    }
+  }
+
+  async findChannelInfo(channelId: string): Promise<ChannelInfoOs> {
+    try {
+      const searchQuery = {
+        index: 'channel_data',
+        id: channelId,
+      };
+      const res: ApiResponse<IdocRes<ChannelInfoOs>> = await this.client.get(
+        searchQuery,
+      );
+      return res.body._source;
+    } catch (e) {
+      console.log(e);
     }
   }
 }

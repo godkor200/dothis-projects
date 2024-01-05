@@ -25,7 +25,7 @@ export const zUserModel = z.object({
     personalizationTag: z
       .string()
       .nullable()
-      .describe('tags saved for the user to analyze'),
+      .describe('tags saved for the user to analyze-channel'),
     searchWord: z.string().nullable().describe('search_word'),
   }),
 });
