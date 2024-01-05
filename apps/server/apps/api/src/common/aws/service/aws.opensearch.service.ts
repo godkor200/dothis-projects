@@ -32,39 +32,47 @@ export class AwsOpenSearchConnectionService {
   }
 
   async fullScan<T>(query: any, processDoc: (doc: any) => T): Promise<T[]> {
-    const startTime: number = Date.now(),
-      firstQuery: any = query;
-    let resp: any = await this.client.search(firstQuery);
+    let resp = await this.client.search(query);
+    let result: T[] = resp.body.hits.hits.map(processDoc);
     const totalLength: number = resp.body.hits.total.value;
-    let oldScrollId: string = resp.body._scroll_id;
-    let result: T[] = [];
-
-    // 처음 출력된 결과 저장
-    for (const doc of resp.body.hits.hits) {
-      result.push(processDoc(doc));
-    }
-
+    const hitLen = resp.body.hits.hits.length;
+    const innerHitsLength = resp.body.hits.hits.reduce(
+      (a, inner_hit) => a + inner_hit.inner_hits.video_list.hits.total.value,
+      0,
+    );
+    /**
+     *  실사용 디버깅용으로 한동한 콘솔 놔둘 계획 24년 1월 4일
+     */
+    console.log(
+      '처음 출력된 결과가 전체의 데이터의 길이 인지:',
+      totalLength >= hitLen,
+      'while SCROLL API hitLen:',
+      hitLen,
+      '전체의 데이터:',
+      totalLength,
+      'innerHitsLength:',
+      innerHitsLength,
+    );
+    if (totalLength >= hitLen) return result;
     try {
-      // SCROLL API를 통해 나온 결과 저장
       while (resp.body.hits.hits.length) {
         resp = await this.client.scroll({
-          scroll_id: oldScrollId,
+          scroll_id: resp.body._scroll_id,
           scroll: '10s',
         });
-        oldScrollId = resp.body._scroll_id;
 
-        for (const doc of resp.body.hits.hits) {
-          result.push(processDoc(doc));
-        }
+        result.push(...resp.body.hits.hits.map(processDoc));
       }
     } catch (error) {
       console.error('Scroll 작업 중 오류 발생:', error);
     } finally {
       // Scroll 작업 완료 후에 clearScroll 호출
-      await this.client.clear_scroll({ scroll_id: oldScrollId });
+      await this.client.clear_scroll({ scroll_id: resp.body._scroll_id });
     }
+    console.log('여기로 갔니????');
     return result;
   }
+
   async getIndices(alias: string) {
     try {
       const res: ApiResponse<IIndicesServerResponse<{ index: string }>> =

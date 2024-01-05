@@ -72,8 +72,22 @@ interface Meta {
   aborted: boolean;
 }
 
+interface Shards {
+  total: number;
+  successful: number;
+  skipped: number;
+  failed: number;
+}
+
+interface LogData<T> {
+  _scroll_id: string;
+  took: number;
+  timed_out: boolean;
+  _shards: Shards;
+  hits: Hits<T>;
+}
 export interface IIndicesServerResponse<T> {
-  body: T[];
+  body: LogData<T[]>;
   statusCode: number;
   headers: Headers;
   meta: Meta;

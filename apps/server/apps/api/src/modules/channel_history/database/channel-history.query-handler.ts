@@ -19,6 +19,7 @@ export class SearchQueryBuilder {
     from?: Date,
     to?: Date,
   ) {
+    const relWords = relWord?.split(/\s+/);
     let searchQuery = {
       index,
       scroll: '10s',
@@ -42,15 +43,17 @@ export class SearchQueryBuilder {
                             ],
                           },
                         },
-                        {
-                          multi_match: {
-                            query: `${relWord}`,
-                            fields: [
-                              'video_list.video_tags',
-                              'video_list.video_title',
-                            ],
-                          },
-                        },
+                        ...(relWords
+                          ? relWords.map((word) => ({
+                              multi_match: {
+                                query: `${word}`,
+                                fields: [
+                                  'video_list.video_tags',
+                                  'video_list.video_title',
+                                ],
+                              },
+                            }))
+                          : []),
                       ],
                     },
                   },
@@ -66,6 +69,9 @@ export class SearchQueryBuilder {
         _source: data || false,
       },
     };
+    /**
+     *  필요가 있을까?
+     */
     if (from && to) {
       searchQuery.body.query.bool.must[0].nested.query.bool.filter.push({
         range: {
@@ -207,6 +213,7 @@ export class ChannelHistoryQueryHandler
       size,
       data,
     );
+
     return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }
 }
