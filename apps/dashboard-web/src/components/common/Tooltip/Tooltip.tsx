@@ -10,6 +10,7 @@ interface Props {
 }
 
 const TooltipComponent = ({ title }: Props) => {
+  const splitEscape = title.split('\n');
   return (
     <Tooltip.Provider>
       <Tooltip.Root>
@@ -23,7 +24,9 @@ const TooltipComponent = ({ title }: Props) => {
             className="TooltipContent bg-primary400"
             sideOffset={5}
           >
-            {title}
+            {splitEscape.map((item) => (
+              <p>{item}</p>
+            ))}
             <Tooltip.TooltipArrow className="TooltipArrow" />
           </Tooltip.Content>
         </Tooltip.Portal>

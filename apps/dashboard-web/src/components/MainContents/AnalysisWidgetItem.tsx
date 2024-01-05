@@ -1,4 +1,4 @@
-import TooltipComponent from '../common/tooltips/Tooltip';
+import TooltipComponent from '../common/Tooltip/Tooltip';
 
 export interface AnalysisWidgetItemProps {
   title: string;
