@@ -49,7 +49,7 @@ const TabNavigation = <
   );
   return (
     <header
-      id="tab"
+      id={tabKey}
       className="border-grey400 bg-grey00 text-grey400 flex gap-[0.75rem] border-b border-solid pb-[30px]"
     >
       {tabNavData.map((item, index) => (

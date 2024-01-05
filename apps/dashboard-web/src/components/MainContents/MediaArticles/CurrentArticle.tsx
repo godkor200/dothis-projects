@@ -51,12 +51,14 @@ const CurrentArticle = ({
         </div>
 
         <div className="px-[30px] py-[40px]">
-          <h3 className="text-grey700 mb-5 text-[20px] font-bold">{title}</h3>
+          <h3 className="text-grey700 mb-5 line-clamp-2 min-h-[60px] text-[20px] font-bold">
+            {title}
+          </h3>
           <ArticleInfo secondText={provider} thirdText={category} date={date} />
           <div onClick={(e) => handleCopy(e, link)}>
             <div className="bg-grey200 flex w-full items-center justify-center   rounded-lg py-4 text-center">
               <button className="inline-flex items-center gap-[0.7rem]">
-                <SvgComp icon="Share" size={26} />
+                <SvgComp icon="Share" size={20} />
                 <p className="text-grey700 font-bold">공유하기</p>
               </button>
             </div>
