@@ -187,7 +187,7 @@ const RelationWord = ({
   );
 
   const subscribersVideoCount =
-    videoCountViewChartData['100000~500000']?.value ||
+    videoCountViewChartData['100000~499999']?.value ||
     0 + videoCountViewChartData['500000이상']?.value ||
     0;
 
