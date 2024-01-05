@@ -36,10 +36,16 @@ export class AwsOpenSearchConnectionService {
     let result: T[] = resp.body.hits.hits.map(processDoc);
     const totalLength: number = resp.body.hits.total.value;
     const hitLen = resp.body.hits.hits.length;
-    const innerHitsLength = resp.body.hits.hits.reduce(
-      (a, inner_hit) => a + inner_hit.inner_hits.video_list.hits.total.value,
-      0,
-    );
+    const innerHitsLength = resp.body.hits.hits.reduce((a, inner_hit) => {
+      const hits = inner_hit.inner_hits;
+      const length = hits.video_list
+        ? hits.video_list.hits.total.value
+        : hits.video_history
+        ? hits.video_history.hits.total.value
+        : 0;
+      return a + length;
+    }, 0);
+
     /**
      *  실사용 디버깅용으로 한동한 콘솔 놔둘 계획 24년 1월 4일
      */
