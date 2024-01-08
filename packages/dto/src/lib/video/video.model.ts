@@ -173,10 +173,12 @@ export const ChannelPerformance = z.object({
 });
 
 export const zVideoDetails = z.object({
-  videoTags: z.string(),
-  videoPerformance: VideoPerformance,
-  videoPrediction: zVideoPrediction,
-  channelPerformance: ChannelPerformance,
+  data: z.object({
+    videoTags: z.string(),
+    videoPerformance: VideoPerformance,
+    videoPrediction: zVideoPrediction,
+    channelPerformance: ChannelPerformance,
+  }),
 });
 
 export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails>;
