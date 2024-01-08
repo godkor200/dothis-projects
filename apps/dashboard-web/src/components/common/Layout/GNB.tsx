@@ -51,7 +51,7 @@ const GNB = () => {
           GNB_MENUS.map((item, index) => (
             <div
               className={cn(
-                'rounded-8 hover:bg-grey300 [&_path]:hover:stroke-grey600 p-3',
+                'rounded-8 hover:bg-grey300 [&_path]:hover:stroke-grey600 p-3 cursor-pointer',
                 {
                   '[&_path]:stroke-[#F0516D] bg-primary100':
                     pathName === item.link,
