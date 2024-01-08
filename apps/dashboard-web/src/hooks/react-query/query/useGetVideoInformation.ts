@@ -1,9 +1,15 @@
+import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 const useGetVideoInformation = (
-  videoId: string | undefined,
-  cluster: number | undefined,
+  {
+    videoId,
+    clusterNumber,
+  }: { videoId: string | undefined; clusterNumber: number | undefined },
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getIndividualVideo>,
 ) => {
   const queryResult = apiClient(1).video.getIndividualVideo.useQuery(
     VIDEODATA_KEY.detail([
@@ -13,12 +19,13 @@ const useGetVideoInformation = (
     ]),
     {
       params: {
-        clusterNumber: String(cluster),
+        clusterNumber: String(clusterNumber),
         videoId: videoId!,
       },
     },
     {
-      enabled: !!videoId && !!cluster,
+      ...queryOptions,
+      enabled: !!videoId && !!clusterNumber,
     },
   );
 
