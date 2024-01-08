@@ -106,8 +106,9 @@ const YouTube = () => {
       content: convertParticipationRateFormat(
         videoInfo?.videoPerformance.participationRate,
       ),
-      hasTooltip: false,
-      tooltipText: '',
+      hasTooltip: true,
+      tooltipText:
+        '영상의 조회수 대비 영상에 댓글, 좋아요 등으로 참여한 시청자의 수를 나타내는 지표입니다. \n 시청자 반응이 뜨거운 주제인지 확인하세요.',
     },
   ];
 
@@ -224,7 +225,7 @@ const YouTube = () => {
             <p className="text-grey700 text-[24px] font-bold">
               영상 조회수 성장 예측
             </p>
-            <TooltipComponent title="영상 조회수" />
+            <TooltipComponent title="영상 데이터가 부족하면 그래프가 완성되지 않을 수 있습니다." />
           </div>
 
           <div className="flex h-[340px] w-full justify-between">
