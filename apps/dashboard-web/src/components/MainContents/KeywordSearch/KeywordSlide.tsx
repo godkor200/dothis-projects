@@ -52,9 +52,9 @@ const KeywordSlide = () => {
 
   return (
     <Style.KeywordTapContiner>
-      <Style.ArrowLeftButton onClick={handleLeftScroll}>
+      {/* <Style.ArrowLeftButton onClick={handleLeftScroll}>
         <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
-      </Style.ArrowLeftButton>
+      </Style.ArrowLeftButton> */}
       <Style.ButtonContainer ref={containerRef}>
         {isSignedIn && (
           <>
@@ -102,9 +102,9 @@ const KeywordSlide = () => {
             />
           ))}
       </Style.ButtonContainer>
-      <Style.ArrowRightButton onClick={handleRightScroll}>
+      {/* <Style.ArrowRightButton onClick={handleRightScroll}>
         <SvgComp icon="KeywordRightArrow" size="1.5rem" />
-      </Style.ArrowRightButton>
+      </Style.ArrowRightButton> */}
     </Style.KeywordTapContiner>
   );
 };
