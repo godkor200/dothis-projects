@@ -1,3 +1,5 @@
+import { GUEST_AVERAGEVIEW } from '@/constants/guest';
+
 export const convertCompetitionScoreFormat = (
   competitionScore: number | undefined,
 ) => {
@@ -5,13 +7,13 @@ export const convertCompetitionScoreFormat = (
     return '파악중';
   }
 
-  if (competitionScore > 90) {
+  if (competitionScore > 20) {
     return '아주 좋음 😄';
-  } else if (competitionScore > 70) {
+  } else if (competitionScore > 5) {
     return '좋음 😊';
-  } else if (competitionScore > 30) {
+  } else if (competitionScore > 1) {
     return '보통 🙂';
-  } else if (competitionScore > 10) {
+  } else if (competitionScore > 0.1) {
     return '나쁨 🙁';
   } else if (competitionScore >= 0) {
     return '매우 나쁨 ☹';
@@ -25,12 +27,18 @@ export const convertCompetitionScoreFormat = (
  * @param videoCount 총 비디오 갯수를 가져옵니다.
  * @returns params 중 하나라도 Boolean이 존재할 때 0을 반환하며, 그 외  lastDailyView / videoCount 를 반환합니다.
  */
-export const getCompetitionScore = (
-  lastDailyView: number | undefined,
-  videoCount: number,
-) => {
-  if (!lastDailyView || !videoCount) {
+
+export const getCompetitionScore = ({
+  totalDailyView,
+  videoCount,
+  userAverageViews,
+}: {
+  totalDailyView: number;
+  videoCount: number;
+  userAverageViews?: number;
+}) => {
+  if (!totalDailyView || !videoCount) {
     return 0;
   }
-  return lastDailyView / videoCount;
+  return totalDailyView / videoCount / (userAverageViews || GUEST_AVERAGEVIEW);
 };

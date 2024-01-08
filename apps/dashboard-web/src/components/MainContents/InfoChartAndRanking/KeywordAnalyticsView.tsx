@@ -89,7 +89,11 @@ const KeywordAnalyticsView = () => {
   );
 
   // 경쟁강도 구하는 로직 lastDailyView 절대값 설정도 고려해봐야함
-  const competitionScore = getCompetitionScore(lastDailyView, totalCount);
+
+  const competitionScore = getCompetitionScore({
+    totalDailyView,
+    videoCount: totalCount,
+  });
 
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
