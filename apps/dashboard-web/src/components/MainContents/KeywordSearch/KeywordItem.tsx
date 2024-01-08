@@ -52,7 +52,7 @@ const KeywordItem = <T extends HTMLButtonElement>({
       {isSearchWord && (
         <SvgComp
           icon="KeywordDelete"
-          size="1rem"
+          size={10}
           onClick={(event) => deleteKeyword(event, keyValue)}
         />
       )}
