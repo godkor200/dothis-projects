@@ -22,4 +22,4 @@ import { ChannelHistoryApiModule } from '@Apps/modules/channel_history/channel-h
     ChannelHistoryApiModule,
   ],
 })
-export class BusinessModules {}
+export class BusinessModule {}
