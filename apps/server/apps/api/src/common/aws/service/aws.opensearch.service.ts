@@ -5,6 +5,9 @@ import { Injectable } from '@nestjs/common';
 import aws from 'aws-sdk';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { IIndicesServerResponse } from '@Apps/common/aws/interface/os.res.interface';
+import { Err, Ok } from 'oxide.ts';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { ResultType } from 'oxide.ts/dist/result';
 
 @Injectable()
 export class AwsOpenSearchConnectionService {
@@ -31,35 +34,16 @@ export class AwsOpenSearchConnectionService {
     });
   }
 
-  async fullScan<T>(query: any, processDoc: (doc: any) => T): Promise<T[]> {
+  async fullScan<T>(
+    query: any,
+    processDoc: (doc: any) => T,
+  ): Promise<ResultType<T[], ScrollApiError>> {
     let resp = await this.client.search(query);
     let result: T[] = resp.body.hits.hits.map(processDoc);
     const totalLength: number = resp.body.hits.total.value;
     const hitLen = resp.body.hits.hits.length;
-    const innerHitsLength = resp.body.hits.hits.reduce((a, inner_hit) => {
-      const hits = inner_hit.inner_hits;
-      const length = hits.video_list
-        ? hits.video_list.hits.total.value
-        : hits.video_history
-        ? hits.video_history.hits.total.value
-        : 0;
-      return a + length;
-    }, 0);
 
-    /**
-     *  실사용 디버깅용으로 한동한 콘솔 놔둘 계획 24년 1월 4일
-     */
-    console.log(
-      '처음 출력된 결과가 전체의 데이터의 길이 인지:',
-      totalLength >= hitLen,
-      'while SCROLL API hitLen:',
-      hitLen,
-      '전체의 데이터:',
-      totalLength,
-      'innerHitsLength:',
-      innerHitsLength,
-    );
-    if (totalLength >= hitLen) return result;
+    if (totalLength >= hitLen) return Ok(result);
     try {
       while (resp.body.hits.hits.length) {
         resp = await this.client.scroll({
@@ -69,14 +53,15 @@ export class AwsOpenSearchConnectionService {
 
         result.push(...resp.body.hits.hits.map(processDoc));
       }
+      return Ok(result);
     } catch (error) {
+      if (error.meta.statusCode === 429) return Err(new ScrollApiError(error));
       console.error('Scroll 작업 중 오류 발생:', error);
+      return error;
     } finally {
       // Scroll 작업 완료 후에 clearScroll 호출
       await this.client.clear_scroll({ scroll_id: resp.body._scroll_id });
     }
-    console.log('여기로 갔니????');
-    return result;
   }
 
   async getIndices(alias: string) {
