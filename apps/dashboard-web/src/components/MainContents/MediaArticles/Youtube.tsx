@@ -204,7 +204,7 @@ const YouTube = () => {
         </div>
       </SummaryCard>
       <SummaryCard title="영상 내용 요약" marginTop="mt-5">
-        {returnData[contentIndex]?.description}
+        <p className=" break-words">{returnData[contentIndex]?.description}</p>
       </SummaryCard>
 
       <SummaryCard title="영상 성과" marginTop="mt-5">
