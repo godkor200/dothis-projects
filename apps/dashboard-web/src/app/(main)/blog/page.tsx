@@ -2,7 +2,7 @@ import BlogDetail from '@/components/Blog/BlogDetail';
 
 const BlogPage = () => {
   return (
-    <ul>
+    <ul className="py-[160px]">
       <BlogDetail title="dd" content="232" date="232" />
     </ul>
   );
