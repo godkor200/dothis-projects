@@ -1,5 +1,10 @@
 import { QueryBus } from '@nestjs/cqrs';
-import { Controller, NotFoundException, Param } from '@nestjs/common';
+import {
+  Controller,
+  InternalServerErrorException,
+  NotFoundException,
+  Param,
+} from '@nestjs/common';
 import { IRes } from '@Libs/commons/src/types/res.types';
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/dtos/find-individual-video-info.dto';
 import { match, Result } from 'oxide.ts';
@@ -17,6 +22,7 @@ import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoInfoRes } from '@Libs/commons/src/types/dto.types';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;
 
@@ -53,10 +59,13 @@ export class FindIndividualVideoInfoHttpController {
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
-        if (err instanceof VideoNotFoundError) {
+        if (
+          err instanceof VideoNotFoundError ||
+          err instanceof ChannelHistoryNotFoundError
+        ) {
           throw new NotFoundException(err.message);
         }
-        throw err;
+        throw new InternalServerErrorException(err);
       },
     });
   }

@@ -8,6 +8,8 @@ import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { Injectable } from '@nestjs/common';
 import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
+import { Err } from 'oxide.ts';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 
 export class SearchQueryBuilder {
   static channelHistory(
@@ -117,11 +119,19 @@ export class ChannelHistoryQueryHandler
       designatedDate,
     );
     const observable$ = from(
-      this.client.get(searchQuery).then((res) => res.body._source),
+      this.client
+        .get(searchQuery)
+        .then((res) => res.body._source)
+        .catch((err) => {
+          if (!err.meta.body.found) {
+            return Err(new ChannelHistoryNotFoundError());
+          }
+          return err;
+        }),
     );
-
     return await lastValueFrom(observable$);
   }
+
   /**
    * 채널아이디로 채널의 히스토리를 불러온다.
    * ps: 어제자 channelhistory index에 적제된 데이터를 가져오면 최신화된 데이터를 가져올수 있음
@@ -196,7 +206,9 @@ export class ChannelHistoryQueryHandler
       from,
       to,
     );
-    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc)
+      .then((res) => res)
+      .catch((err) => err);
   }
 
   async scanLatestChannelHistoryByKeywordAndRelWord<T>(
@@ -214,6 +226,8 @@ export class ChannelHistoryQueryHandler
       data,
     );
 
-    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc)
+      .then((res) => res)
+      .catch((err) => err);
   }
 }
