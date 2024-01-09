@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState, useTransition } from 'react';
 
 import Modal from '@/components/common/Modal/Modal';
@@ -13,7 +14,7 @@ import {
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
-import { useIsSignedIn } from '@/store/authStore';
+import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
 import MyKeywordList from './MyKeywordList';
@@ -39,8 +40,6 @@ const SearchBar = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const [searchInput, setSearchInput] = useState('');
-
-  const isSignIn = useIsSignedIn();
 
   const [input, setInput] = useState('');
 
@@ -87,6 +86,20 @@ const SearchBar = () => {
     [],
   );
 
+  //로그인 유도 시퀀스
+
+  const { setIsOpenSignUpModal } = useAuthActions();
+
+  const router = useRouter();
+
+  const checkIsSignedIn = () => {
+    if (isSignedIn) return true;
+    setIsOpenSignUpModal(true);
+    // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+    router.push('?steps=signUp');
+    return false;
+  };
+
   return (
     <div
       className="relative  mx-auto max-w-[680px]"
@@ -124,8 +137,7 @@ const SearchBar = () => {
                     <span
                       className="text-grey700 cursor-pointer text-[18px]"
                       onClick={() => {
-                        if (!isSignIn) {
-                          setOpenModal(true);
+                        if (!checkIsSignedIn()) {
                           return;
                         }
                         createSearchwordMutate(item.replace('*', ''));

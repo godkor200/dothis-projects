@@ -78,7 +78,7 @@ export const IconWrapper = styled.div<{ $isInActive: boolean }>`
 `;
 
 export const Container = styled.aside`
-  position: absolute;
+  position: fixed;
 
   /* top:0;
   bottom:0; */
@@ -93,7 +93,7 @@ export const Container = styled.aside`
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.colors.grey00};
   transition: all 0.3s ease-out;
-  z-index: 2;
+  z-index: 25;
 
   &:hover {
     width: 16.625rem;
