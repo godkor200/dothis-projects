@@ -13,7 +13,7 @@ const TooltipComponent = ({ title }: Props) => {
   const splitEscape = title.split('\n');
   return (
     <Tooltip.Provider>
-      <Tooltip.Root>
+      <Tooltip.Root delayDuration={200}>
         <Tooltip.Trigger asChild>
           <button className="IconButton">
             <SvgComp icon="Question" size={18} />

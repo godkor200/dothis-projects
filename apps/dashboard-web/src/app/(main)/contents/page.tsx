@@ -30,7 +30,7 @@ const MainContentPage = async ({
 
   if (selectedMainContent === 'recomand') {
     return (
-      <>
+      <div className=" mx-auto w-[1342px] ">
         <Card>
           <CardHeader title="콘텐츠 소재" />
           <div className="flex">
@@ -58,7 +58,7 @@ const MainContentPage = async ({
             selectedArticle={selectedArticle}
           />
         </Card>
-      </>
+      </div>
     );
   }
   return (

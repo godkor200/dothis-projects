@@ -60,6 +60,13 @@ const RelationWord = ({
 
   const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
 
+  const totalDailyView = dailyViewChartData[0].data.reduce(
+    (accumulator: number, currentValue: { x: string; y: number }) => {
+      return accumulator + Number(currentValue.y);
+    },
+    0,
+  );
+
   // useEffect 의존성배열에 계속 실행되는 곳에 setState를 넣으면 무한으로 렌더링을 야기한다. (부모가 렌더되면 React.memo를 적용시키지않는 이상 자식도 렌더링 되기때문에 서로 계속 렌덜링이 된다)
   useEffect(() => {
     const prevDataIndex = dailyViewChartDataList.findIndex(
@@ -183,7 +190,10 @@ const RelationWord = ({
   };
 
   const competitionText = convertCompetitionScoreFormat(
-    getCompetitionScore(lastDailyView, totalCount),
+    getCompetitionScore({
+      totalDailyView: totalDailyView,
+      videoCount: totalCount,
+    }),
   );
 
   const subscribersVideoCount =

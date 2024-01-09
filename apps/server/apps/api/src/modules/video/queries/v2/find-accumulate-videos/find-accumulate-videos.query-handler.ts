@@ -70,9 +70,7 @@ export class FindAccumulateVideosV2QueryHandler
       );
 
     return Ok({
-      videoTotal: channelHistoryRes
-        .map((e) => e.inner_hits.video_list.hits.total.value)
-        .reduce((a, c) => a + c),
+      videoTotal: section.reduce((a, c) => a + c.number, 0),
       section,
     });
   }
