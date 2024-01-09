@@ -11,7 +11,7 @@ import { HeathApiController } from 'apps/api/src/health.controller';
 import { HealthService } from 'apps/api/src/health.service';
 import { ScheduleModule } from '@nestjs/schedule';
 
-import { BusinessModules } from '@Apps/modules/modules';
+import { BusinessModule } from '@Apps/modules/business.modules';
 import { CommonModule } from '@Apps/common/common.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@Libs/commons/src/application/context/context.interceptor';
@@ -40,7 +40,7 @@ const interceptors = [
     TypeormModule,
     CommonModule,
     //module
-    BusinessModules,
+    BusinessModule,
   ],
   providers: [HealthService, ...interceptors],
 })
