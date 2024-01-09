@@ -73,7 +73,7 @@ const YouTube = () => {
     {
       title: '채널 구독자',
       content: `${
-        videoInfo?.channelPerformance.subscribers.toLocaleString('ko-KR') || 0
+        videoInfo?.channelPerformance.subscribers?.toLocaleString('ko-KR') || 0
       }명`,
       hasTooltip: false,
       tooltipText: '',
@@ -81,7 +81,7 @@ const YouTube = () => {
     {
       title: '채널 평균 조회 수',
       content: `${
-        videoInfo?.channelPerformance.averageViews.toLocaleString('ko-kr', {
+        videoInfo?.channelPerformance.averageViews?.toLocaleString('ko-kr', {
           maximumFractionDigits: 0,
         }) || 0
       }회`,
@@ -94,7 +94,7 @@ const YouTube = () => {
     {
       title: '기대 조회수',
       content: `${
-        videoInfo?.videoPerformance.expectedViews.toLocaleString('ko-KR', {
+        videoInfo?.videoPerformance.expectedViews?.toLocaleString('ko-KR', {
           maximumFractionDigits: 2,
         }) || 0
       }회`,

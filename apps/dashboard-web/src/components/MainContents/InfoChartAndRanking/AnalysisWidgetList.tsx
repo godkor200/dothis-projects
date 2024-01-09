@@ -21,7 +21,7 @@ const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
     },
     {
       title: '기대 조회 수',
-      content: `${expectedView.toLocaleString('ko-kr')}회`,
+      content: `${expectedView?.toLocaleString('ko-kr')}회`,
       hasTooltip: true,
       tooltipText:
         '기대 조회수란, 검색된 영상들의 성과와 사용자 채널의 평균 조회수를 바탕으로 계산한 조회수 예측 값입니다. \n 검색된 키워드를 주제로 영상을 만들면 해당 조회수 만큼 얻을 것으로 예상됩니다.',
