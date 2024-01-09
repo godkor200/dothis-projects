@@ -1,45 +1,74 @@
 .container {
-  width: 700px;
+  width: 480px;
   margin: 0 auto;
 
-  .date {
-    color: #adb5bd;
+  --font-size-xlg: 2.5rem;
+  --font-size-lg: 2rem;
+  --font-size-md: 1.5rem;
+  --font-size-sm: 1rem;
+
+  @media (min-width: 768px) {
+    width: 600px;
+
+    --font-size-xlg: 3.5rem;
+    --font-size-lg: 2.75rem;
+    --font-size-md: 2rem;
+    --font-size-sm: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    width: 900px;
+
+    --font-size-xlg: 4.5rem;
+    --font-size-lg: 3.5rem;
+    --font-size-md: 2.5rem;
+    --font-size-sm: 1.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 2rem 0 0.6rem;
+    font-weight: bold;
   }
 
   h1 {
-    margin: 2rem 0 0.6rem;
-    font-size: 2em;
-    font-weight: bold;
+    font-size: var(--font-size-xlg);
   }
 
   h2 {
-    margin: 2rem 0 0.6rem;
-    font-size: 1.75rem;
-    font-weight: bold;
+    font-size: var(--font-size-lg);
   }
-
   h3 {
-    margin: 2rem 0 0.6rem;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: var(--font-size-md);
   }
-
-  h4 {
-    margin: 2rem 0 0.6rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-
+  h4,
   h5 {
-    margin: 2rem 0 0.6rem;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: var(--font-size-sm);
+  }
+
+  p {
+    font-size: var(--font-size-sm);
+  }
+
+  li {
+    font-size: var(--font-size-sm);
   }
 
   a {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     text-decoration: underline;
     color: #0d6efd;
+  }
+
+  blockquote {
+    font-size: var(--font-size-md);
+  }
+
+  .date {
+    color: #adb5bd;
   }
 
   p {
@@ -50,3 +79,7 @@
 /* css 벨류어블 사용해서 미디어 쿼리 대응
 https://www.daleseo.com/css-responsive-typography/
 */
+
+.contentDivision {
+  margin-top: 10rem;
+}

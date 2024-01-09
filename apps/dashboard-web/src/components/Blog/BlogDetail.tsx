@@ -12,7 +12,7 @@ const BlogDetail = ({ title, date, content }: Props) => {
       <h1>{'개인 투자자를 위한 비상장주식 VS. 상장주식'}</h1>
       <p className={styles.date}>{'2023-04-05'}</p>
 
-      <div className={styles.container}>
+      <div className={styles.contentDivision}>
         <h3 id="뭐가-다를까">뭐가 다를까?</h3>
 
         <h5 id="상장-여부">상장 여부</h5>
