@@ -6,7 +6,7 @@ interface Props {
   content: string;
 }
 
-const BlogDetail = ({ title, date, content }: Props) => {
+const BlogDetail = () => {
   return (
     <li className={styles.container}>
       <h1>{'개인 투자자를 위한 비상장주식 VS. 상장주식'}</h1>
