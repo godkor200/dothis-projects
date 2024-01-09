@@ -30,6 +30,7 @@ export class SearchQueryBuilder {
     size: number = 100,
   ) {
     const relWords = relWord.split(/\s+/);
+
     return {
       index,
       scroll: '10s',
@@ -236,7 +237,9 @@ export class VideoQueryHandler
       to,
     );
 
-    return await this.fullScan<T>(searchQuery, (doc) => doc);
+    return await this.fullScan<T>(searchQuery, (doc) => doc)
+      .then((res) => res)
+      .catch((err) => err);
   }
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {

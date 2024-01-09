@@ -41,6 +41,8 @@ export class VideoHistoryQueryHandler
       },
     };
 
-    return await this.fullScan<T>(searchQuery, (doc) => doc._source);
+    return await this.fullScan<T>(searchQuery, (doc) => doc._source)
+      .then((res) => res)
+      .catch((err) => err);
   }
 }
