@@ -13,13 +13,17 @@ import { IChannelHistory } from '@Apps/modules/video/interface/find-accumulate-v
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 @QueryHandler(ExpectedViewsV2Query)
 export class ExpectedViewsV2QueryHandler
   implements
     IQueryHandler<
       ExpectedViewsV2Query,
-      Result<IExpectedData[], VideoNotFoundError | ChannelNotFoundError>
+      Result<
+        IExpectedData[],
+        VideoNotFoundError | ChannelNotFoundError | ScrollApiError
+      >
     >
 {
   constructor(
@@ -40,7 +44,10 @@ export class ExpectedViewsV2QueryHandler
   async execute(
     query: ExpectedViewsV2Query,
   ): Promise<
-    Result<IExpectedData[], VideoNotFoundError | ChannelNotFoundError>
+    Result<
+      IExpectedData[],
+      VideoNotFoundError | ChannelNotFoundError | ScrollApiError
+    >
   > {
     const arg = {
       ...query,
@@ -53,7 +60,9 @@ export class ExpectedViewsV2QueryHandler
       await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
         arg,
       );
-    if (!channelHistory) return Err(new ChannelNotFoundError());
+    if (channelHistory instanceof ScrollApiError)
+      return Err(new ScrollApiError());
+    if (!channelHistory.length) return Err(new ChannelNotFoundError());
 
     const result =
       this.channelHistoryAggregateService.calculateAverageViews(channelHistory);

@@ -37,13 +37,21 @@ export class AwsOpenSearchConnectionService {
   async fullScan<T>(
     query: any,
     processDoc: (doc: any) => T,
-  ): Promise<ResultType<T[], ScrollApiError>> {
+  ): Promise<T[] | ScrollApiError> {
+    const countRes = await this.client.count({
+      index: query.index,
+      body: { query: query.body.query },
+    });
+
     let resp = await this.client.search(query);
     let result: T[] = resp.body.hits.hits.map(processDoc);
     const totalLength: number = resp.body.hits.total.value;
     const hitLen = resp.body.hits.hits.length;
 
-    if (totalLength >= hitLen) return Ok(result);
+    if (totalLength >= hitLen && countRes.body.count < query.size)
+      return result;
+
+    resp['scroll'] = '10s';
     try {
       while (resp.body.hits.hits.length) {
         resp = await this.client.scroll({
@@ -53,9 +61,9 @@ export class AwsOpenSearchConnectionService {
 
         result.push(...resp.body.hits.hits.map(processDoc));
       }
-      return Ok(result);
+      return result;
     } catch (error) {
-      if (error.meta.statusCode === 429) return Err(new ScrollApiError(error));
+      if (error.meta.statusCode === 429) return new ScrollApiError(error);
       console.error('Scroll 작업 중 오류 발생:', error);
       return error;
     } finally {

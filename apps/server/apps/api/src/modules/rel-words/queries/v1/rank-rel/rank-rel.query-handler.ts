@@ -15,13 +15,17 @@ import {
 } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 import { RankRelAggregateService } from '@Apps/modules/rel-words/service/rank-rel.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 @QueryHandler(RankRelQueryDto)
 export class RankRelQueryHandler
   implements
     IQueryHandler<
       RankRelQueryDto,
-      Result<TRankRes, RelwordsNotFoundError | VideoNotFoundError>
+      Result<
+        TRankRes,
+        RelwordsNotFoundError | VideoNotFoundError | ScrollApiError
+      >
     >
 {
   constructor(
@@ -43,7 +47,12 @@ export class RankRelQueryHandler
    */
   async execute(
     query: RankRelQueryDto,
-  ): Promise<Result<TRankRes, RelwordsNotFoundError | VideoNotFoundError>> {
+  ): Promise<
+    Result<
+      TRankRes,
+      RelwordsNotFoundError | VideoNotFoundError | ScrollApiError
+    >
+  > {
     const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
       query.keyword,
     );
@@ -61,7 +70,9 @@ export class RankRelQueryHandler
                 data: [CHANNEL_DATA_KEY.CHANNEL_AVERAGE_VIEWS],
               },
             );
-
+          if (data instanceof ScrollApiError) {
+            return null;
+          }
           if (!data.length) {
             return null;
           }
@@ -73,6 +84,7 @@ export class RankRelQueryHandler
         }),
       )
     ).filter((item) => item !== null);
+
     if (!channelVideoData.length) return Err(new VideoNotFoundError());
     const res =
       this.rankRelAggregateService.calculationExpectationNumberRelatedWord(

@@ -11,6 +11,7 @@ import {
 } from '@Apps/modules/video/interface/find-many-video.interface';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export class FindVideoByMultipleIndex {
   public readonly keyword: string;
@@ -34,9 +35,13 @@ export interface VideoServicePort {
 
   findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
 
-  findVideoIdFullScanAndVideos<T>(query: FindVideoDateQuery): Promise<T[]>;
+  findVideoIdFullScanAndVideos<T>(
+    query: FindVideoDateQuery,
+  ): Promise<T[] | ScrollApiError>;
 
-  findVideosWithLastVideoHistory<T>(arg: FindVideoDateQuery): Promise<T[]>;
+  findVideosWithLastVideoHistory<T>(
+    arg: FindVideoDateQuery,
+  ): Promise<T[] | ScrollApiError>;
 
   findVideoInfo(clusterNumber: string, id: string): Promise<IdocRes<IVideo>>;
 }
