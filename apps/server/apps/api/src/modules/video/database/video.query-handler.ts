@@ -1,5 +1,5 @@
 import { from, last, lastValueFrom, map, Observable, throwError } from 'rxjs';
-import { VideoServicePort } from './video.service.port';
+import { VideoOutboundPort } from './video.outbound.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
@@ -149,7 +149,7 @@ export class SearchQueryBuilder {
 }
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
-  implements VideoServicePort
+  implements VideoOutboundPort
 {
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
