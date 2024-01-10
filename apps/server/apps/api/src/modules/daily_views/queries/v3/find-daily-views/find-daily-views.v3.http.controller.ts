@@ -33,7 +33,7 @@ const c = nestControllerContract(apiRouter.dailyViews);
 
 const { getDailyViews } = c;
 const { summary, description } = getDailyViews;
-@ApiTags('데일리뷰')
+@ApiTags('조회수')
 @Controller()
 export class FindDailyViewsOsV3HttpController {
   constructor(private readonly queryBus: QueryBus) {}
