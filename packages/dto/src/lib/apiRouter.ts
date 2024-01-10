@@ -4,7 +4,7 @@ import { userApi } from './user';
 import { authApi } from './auth';
 import { cacheApi } from './cache';
 import { relWordsApi } from './rel-words';
-import { dailyViewApi } from './daily-views/daily-views.api';
+import { dailyViewApi, weeklyViewApi } from './views/views.api';
 import { videoApi } from './video';
 import { channelHistoryApi, expectedViewsApi } from './channel-history';
 import { channelApi } from './channel/channel.api';
@@ -14,6 +14,7 @@ export const apiRouter = c.router({
   user: userApi,
   cache: cacheApi,
   dailyViews: dailyViewApi,
+  weeklyViews: weeklyViewApi,
   channelHistory: channelHistoryApi,
   channel: channelApi,
   expectViews: expectedViewsApi,
