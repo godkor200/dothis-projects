@@ -2,9 +2,9 @@ import RevealList from './RevealList';
 import RevealWrapper from './RevealWrapper';
 
 export const reveal = {
-  delay: 350,
+  delay: 250,
   distance: '50px',
-  duration: 1000,
+  duration: 1500,
   easing: 'cubic-bezier(0.5, 0, 0, 1)',
   opacity: 0,
   origin: 'top',
@@ -18,7 +18,7 @@ export const reveal = {
   // container: document.documentElement,
   desktop: true,
   mobile: true,
-  reset: true,
+  reset: false,
   useDelay: 'always',
   viewFactor: 0.0,
   viewOffset: {
