@@ -17,6 +17,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 @QueryHandler(FindAccumulateVideosV2Dtos)
 export class FindAccumulateVideosV2QueryHandler
@@ -25,7 +26,10 @@ export class FindAccumulateVideosV2QueryHandler
       FindAccumulateVideosDtos,
       Result<
         IFindAccumulateVideoWithOutUserSection<ISection[]>,
-        ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
+        | ChannelNotFoundError
+        | VideoNotFoundError
+        | ChannelHistoryNotFoundError
+        | ScrollApiError
       >
     >
 {
@@ -37,6 +41,7 @@ export class FindAccumulateVideosV2QueryHandler
   ) {}
 
   /**
+   * 연간 조회수 기능
    * @param arg
    */
   async execute(
@@ -44,7 +49,10 @@ export class FindAccumulateVideosV2QueryHandler
   ): Promise<
     Result<
       IFindAccumulateVideoWithOutUserSection<ISection[]>,
-      ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
+      | ChannelNotFoundError
+      | VideoNotFoundError
+      | ChannelHistoryNotFoundError
+      | ScrollApiError
     >
   > {
     /**
@@ -60,6 +68,8 @@ export class FindAccumulateVideosV2QueryHandler
           ],
         },
       );
+    if (channelHistoryRes instanceof ScrollApiError)
+      return Err(new ScrollApiError());
 
     if (!channelHistoryRes.length)
       return Err(new ChannelHistoryNotFoundError());

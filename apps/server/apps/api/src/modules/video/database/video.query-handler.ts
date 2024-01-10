@@ -15,9 +15,10 @@ import {
 } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { Err } from 'oxide.ts';
+import { Err, Ok } from 'oxide.ts';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { undefined } from 'zod';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export class SearchQueryBuilder {
   static video(
@@ -33,7 +34,6 @@ export class SearchQueryBuilder {
 
     return {
       index,
-      scroll: '10s',
       size: 10000,
       body: {
         query: {
@@ -226,7 +226,7 @@ export class VideoQueryHandler
 
   async findVideoIdFullScanAndVideos<T>(
     query: FindVideoDateQuery,
-  ): Promise<T[]> {
+  ): Promise<T[] | ScrollApiError> {
     const { clusterNumber, keyword, relationKeyword, data, from, to } = query;
     const searchQuery = SearchQueryBuilder.video(
       'video-' + clusterNumber,
@@ -237,9 +237,7 @@ export class VideoQueryHandler
       to,
     );
 
-    return await this.fullScan<T>(searchQuery, (doc) => doc)
-      .then((res) => res)
-      .catch((err) => err);
+    return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
@@ -267,14 +265,14 @@ export class VideoQueryHandler
    */
   async findVideosWithLastVideoHistory<T>(
     arg: FindVideoDateQuery,
-  ): Promise<T[]> {
+  ): Promise<T[] | ScrollApiError> {
     const { clusterNumber, keyword, relationKeyword } = arg;
     let searchQuery = SearchQueryBuilder.video(
       clusterNumber,
       keyword,
       relationKeyword,
     );
-    return Promise.resolve([]);
+    return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
   async findVideoInfo(

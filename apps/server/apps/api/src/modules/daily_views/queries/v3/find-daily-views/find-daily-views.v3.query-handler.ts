@@ -12,6 +12,7 @@ import { VideoServicePort } from '@Apps/modules/video/database/video.service.por
 import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IVideoHistory } from '@Apps/modules/video/interface/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export interface IIncreaseData {
   date: string;
@@ -24,7 +25,10 @@ export class FindDailyViewsQueryOsV3Handler
   implements
     IQueryHandler<
       FindDailyViewsQuery,
-      Result<IIncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
+      Result<
+        IIncreaseData[],
+        VideoNotFoundError | VideoHistoryNotFoundError | ScrollApiError
+      >
     >
 {
   constructor(
@@ -37,7 +41,10 @@ export class FindDailyViewsQueryOsV3Handler
   async execute(
     query: FindDailyViewsQuery,
   ): Promise<
-    Result<IIncreaseData[], VideoNotFoundError | VideoHistoryNotFoundError>
+    Result<
+      IIncreaseData[],
+      VideoNotFoundError | VideoHistoryNotFoundError | ScrollApiError
+    >
   > {
     const arg: FindVideoDateQuery = {
       ...query,
@@ -45,7 +52,7 @@ export class FindDailyViewsQueryOsV3Handler
     const videos = await this.video.findVideoIdFullScanAndVideos<IVideoHistory>(
       arg,
     );
-
+    if (videos instanceof ScrollApiError) return Err(new ScrollApiError());
     if (!videos.length) return Err(new VideoNotFoundError());
 
     const result = this.videoAggregateService.calculateIncrease(videos);

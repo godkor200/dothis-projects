@@ -10,6 +10,8 @@ import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-video
 import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
 import { Err } from 'oxide.ts';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export class SearchQueryBuilder {
   static channelHistory(
@@ -24,7 +26,6 @@ export class SearchQueryBuilder {
     const relWords = relWord?.split(/\s+/);
     let searchQuery = {
       index,
-      scroll: '10s',
       size: 10000,
       body: {
         query: {
@@ -192,7 +193,7 @@ export class ChannelHistoryQueryHandler
 
   async findChannelHistoryByKeywordAndRelWordFullScan<T>(
     props: FindVideoV2,
-  ): Promise<T[]> {
+  ): Promise<T[] | ScrollApiError> {
     const { keyword, relationKeyword, data, from, to } = props;
 
     const index = 'channel-history-*';
@@ -206,14 +207,12 @@ export class ChannelHistoryQueryHandler
       from,
       to,
     );
-    return await this.fullScan<T>(searchQuery, (doc: any) => doc)
-      .then((res) => res)
-      .catch((err) => err);
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }
 
   async scanLatestChannelHistoryByKeywordAndRelWord<T>(
     props: FindVideoChannelHistory,
-  ): Promise<T[]> {
+  ): Promise<T[] | ScrollApiError> {
     const indexNames = await this.getIndices('channel-history*');
     const lastIndex = indexNames[0].index;
     const { keyword, relationKeyword, data } = props;
@@ -226,8 +225,6 @@ export class ChannelHistoryQueryHandler
       data,
     );
 
-    return await this.fullScan<T>(searchQuery, (doc: any) => doc)
-      .then((res) => res)
-      .catch((err) => err);
+    return await this.fullScan<T>(searchQuery, (doc: any) => doc);
   }
 }

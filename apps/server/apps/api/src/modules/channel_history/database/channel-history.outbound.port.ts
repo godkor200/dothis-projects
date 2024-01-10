@@ -5,6 +5,7 @@ import {
   FindVideoChannelHistory,
   IFindVideoByKeyword,
 } from '@Apps/modules/channel_history/dtos/channel-history.interface';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export interface ChannelHistoryOutboundPort {
   findChannelHistoryInfo(channelIds: string): Promise<IChannelHistoryRes>;
@@ -17,9 +18,9 @@ export interface ChannelHistoryOutboundPort {
 
   findChannelHistoryByKeywordAndRelWordFullScan<T>(
     props: FindVideoV2,
-  ): Promise<T[]>;
+  ): Promise<T[] | ScrollApiError>;
 
   scanLatestChannelHistoryByKeywordAndRelWord<T>(
     props: FindVideoChannelHistory,
-  ): Promise<T[]>;
+  ): Promise<T[] | ScrollApiError>;
 }
