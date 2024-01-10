@@ -9,13 +9,17 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 
 @QueryHandler(FindIndividualVideoInfoV1Dto)
 export class FindIndividualVideoInfoQueryHandler
   implements
     IQueryHandler<
       FindIndividualVideoInfoV1Dto,
-      Result<VideoDetailsModel, VideoNotFoundError>
+      Result<
+        VideoDetailsModel,
+        VideoNotFoundError | ChannelHistoryNotFoundError
+      >
     >
 {
   constructor(
@@ -30,17 +34,22 @@ export class FindIndividualVideoInfoQueryHandler
 
   async execute(
     query: FindIndividualVideoInfoV1Dto,
-  ): Promise<Result<VideoDetailsModel, VideoNotFoundError>> {
+  ): Promise<
+    Result<VideoDetailsModel, VideoNotFoundError | ChannelHistoryNotFoundError>
+  > {
     //영상 태그 불러오기
     const video = await this.video.findVideoInfo(
       query.clusterNumber,
       query.videoId,
     );
+
     const channel = await this.channelHistory.findChannelHistoryInfo(
       video._source.channel_id,
     );
 
     if (!video.found) return Err(new VideoNotFoundError());
+    if (!channel.channel_subscribers)
+      return Err(new ChannelHistoryNotFoundError());
 
     const videoData = video._source;
     const videoTags = videoData.video_tags;

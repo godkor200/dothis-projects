@@ -394,9 +394,6 @@ importers:
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
-      filter:
-        specifier: ^0.1.1
-        version: 0.1.1
       googleapis:
         specifier: ^111.0.0
         version: 111.0.0
@@ -409,6 +406,9 @@ importers:
       joi:
         specifier: ^17.8.3
         version: 17.8.3
+      minimal-discord-webhook-node:
+        specifier: ^1.0.1
+        version: 1.0.1
       mysql:
         specifier: ^2.18.1
         version: 2.18.1
@@ -17073,10 +17073,6 @@ packages:
     dependencies:
       to-regex-range: 5.0.1
 
-  /filter@0.1.1:
-    resolution: {integrity: sha512-fHi0Gg8j7NJHmOJITCQZBwN2dPT03KiOllxf6xkT+tr8WAAUcgYVwZXc2F13wgXHwyVwY/LpA/O9c+tHi7aSPg==}
-    dev: false
-
   /finalhandler@1.2.0:
     resolution: {integrity: sha512-5uXcUVftlQMFnWC9qu/svkWv3GTd2PfUhK/3PLkYNAe7FbqJMt3515HaxE6eRL74GdsriiwujiawdaB1BpEISg==}
     engines: {node: '>= 0.8'}
@@ -20321,6 +20317,11 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
     dev: true
+
+  /minimal-discord-webhook-node@1.0.1:
+    resolution: {integrity: sha512-sizvEp4Z0OyLPOfB/1l/6NgDd5BG/v9xDwyIALgOH9gpe2ANstMCqMywf/yvn9QwdV4Kz5U/Il8+fS4n+tCGRw==}
+    engines: {node: '>=18.0.0'}
+    dev: false
 
   /minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
