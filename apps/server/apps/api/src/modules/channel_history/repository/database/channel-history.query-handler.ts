@@ -1,5 +1,5 @@
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
 import { from, lastValueFrom, map } from 'rxjs';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
@@ -10,7 +10,6 @@ import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-video
 import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
 import { Err } from 'oxide.ts';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
-import { ChannelHistoryDataService } from '@Apps/modules/channel_history/service/channel-history-data.service';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 export class SearchQueryBuilder {
