@@ -9,7 +9,7 @@ import { ChannelDataRepository } from 'apps/api/src/modules/channel/repository/d
 import { CHANNEL_REPOSITORY } from '@Apps/modules/channel/channel.di-token';
 import { ChannelRepository } from '@Apps/modules/channel/database/channel.repository';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
-import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
 import { AnalyzeChannelHttpController } from '@Apps/modules/channel/queries/v1/analyze-channel/analyze-channel.http.controller';
 import { AtStrategy } from '@Libs/commons/src';
 import { CqrsModule } from '@nestjs/cqrs';
