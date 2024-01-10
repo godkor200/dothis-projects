@@ -3,7 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
 import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
-import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { VideoHistoryQueryHandler } from '@Apps/modules/video_history/database/video_history.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
