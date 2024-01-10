@@ -18,7 +18,7 @@ export const SIDE_MENUS: SideMenus[] = [
     link: '/preparing',
   },
   {
-    title: '인기 키워드 분석',
+    title: '키워드 순위 분석',
     icon: 'SideTrendUp',
     link: '/preparing',
   },
