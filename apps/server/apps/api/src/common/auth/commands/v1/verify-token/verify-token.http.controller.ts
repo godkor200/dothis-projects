@@ -18,7 +18,7 @@ import { IRes } from '@Libs/commons/src/types/res.types';
 import { ITokenRes } from '@Apps/common/auth/interface/get-own-info.interface';
 import { match, Result } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
-import { TokenExpired } from '@Libs/commons/src/types/dto.types';
+import { TokenExpired } from '@Libs/commons/src/types/res.types';
 
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getVerifyToken;
