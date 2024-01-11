@@ -115,11 +115,13 @@ export const zVideoResponse = z.object({
   }),
 });
 export const dateQuery = z.object({ from: z.string(), to: z.string() });
-
 export const zPaginatedQuery = z.object({
   limit: z.number().describe('Specifies a limit of returned records'),
   last: z.string().describe('Last index returned').optional(),
 });
+export const zGetWeeklyViewsQuery = zPaginatedQuery.merge(
+  dateQuery.pick({ from: true }),
+);
 
 export const zClusterQueryParams = z.object({
   cluster: z.string(),

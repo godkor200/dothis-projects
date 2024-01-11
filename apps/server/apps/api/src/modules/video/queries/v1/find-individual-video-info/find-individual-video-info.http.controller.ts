@@ -5,11 +5,9 @@ import {
   NotFoundException,
   Param,
 } from '@nestjs/common';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/dtos/find-individual-video-info.dto';
 import { match, Result } from 'oxide.ts';
 import {
-  ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -21,7 +19,7 @@ import {
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { VideoInfoRes } from '@Libs/commons/src/types/dto.types';
+import { VideoInfoRes, IRes } from '@Libs/commons/src/types/res.types';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;

@@ -14,8 +14,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
-import { RelWordsEntity } from '@Libs/commons/src/types/dto.types';
+import { RelWordsEntity, IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
 const c = nestControllerContract(apiRouter.relwords);

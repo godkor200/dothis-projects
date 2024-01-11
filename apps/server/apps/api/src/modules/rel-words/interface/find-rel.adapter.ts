@@ -1,4 +1,4 @@
-import { KeywordRes, RelWordsEntity } from '@Libs/commons/src/types/dto.types';
+import { KeywordRes, RelWordsEntity } from '@Libs/commons/src/types/res.types';
 
 export interface FindRelAdapter {
   findOneByKeyword: (option: string) => Promise<RelWordsEntity>;

@@ -9,11 +9,15 @@ import {
 } from '@nestjs/swagger';
 import { Controller, Get, NotFoundException, Query } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { apiRouter, TWeeklyKeywordsListSource } from '@dothis/dto';
-import { IncreaseData, WeeklyData } from '@Libs/commons/src/types/dto.types';
+import { apiRouter } from '@dothis/dto';
+import {
+  WeeklyData,
+  IRes,
+  WeeklyKeywordsRes,
+} from '@Libs/commons/src/types/res.types';
 import { GetWeeklyViewsQuery } from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
+import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
 
 const c = nestControllerContract(apiRouter.weeklyViews);
 const { getWeeklyKeywordListWithPaging } = c;
@@ -39,26 +43,35 @@ export class GetWeeklyViewsListV1HttpController {
   })
   @ApiQuery({
     name: 'from',
-    description: '언제부터 날짜',
+    description: '위클리 날짜',
     example: '2024-01-08',
   })
   @ApiQuery({
-    name: 'to',
-    description: '까지 날짜',
-    example: '2024-01-15',
+    name: 'limit',
+    description: '한번에 나올 문서의 갯수',
+    example: '5',
   })
-  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiQuery({
+    name: 'last',
+    description:
+      '페이지네이션을 하기 위해 마지막 나온 객체의 인덱스 _id에 해당',
+    required: false,
+  })
+  @ApiNotFoundResponse({ description: WeeklyViewsError.message })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
     @Query() query: GetWeeklyViewsQuery,
-  ): Promise<IRes<TWeeklyKeywordsListSource[]>> {
+  ): Promise<IRes<WeeklyKeywordsRes[]>> {
     const arg = new GetWeeklyViewsQuery(query);
-    const result: Result<TWeeklyKeywordsListSource[], any> =
+    const result: Result<WeeklyKeywordsRes[], WeeklyViewsError> =
       await this.queryBus.execute(arg);
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
+        if (err instanceof WeeklyViewsError) {
+          throw new NotFoundException(err.message);
+        }
         throw err;
       },
     });

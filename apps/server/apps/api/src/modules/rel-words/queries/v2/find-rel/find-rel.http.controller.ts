@@ -12,7 +12,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { FindRelRequestDto } from '@Apps/modules/rel-words/queries/v1/find-rel/find-rel.request.dto';
 import { FindRelV2Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
-import { RelWordsEntity } from '@Libs/commons/src/types/dto.types';
+import { RelWordsEntity } from '@Libs/commons/src/types/res.types';
 const c = nestControllerContract(apiRouter.relwords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
