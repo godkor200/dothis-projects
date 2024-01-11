@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
+import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Inject } from '@nestjs/common';
 import { Ok, Result, Err } from 'oxide.ts';
@@ -14,7 +14,7 @@ export class FindVideoPageQueryHandler
 {
   constructor(
     @Inject(VIDEO_OS_DI_TOKEN)
-    protected readonly video: VideoServicePort,
+    protected readonly video: VideoOutboundPort,
 
     @Inject(CHANNEL_OS_DI_TOKEN)
     protected readonly channelData: ChannelQueryHandlerPort,

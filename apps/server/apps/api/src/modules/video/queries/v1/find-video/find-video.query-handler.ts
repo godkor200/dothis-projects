@@ -2,7 +2,7 @@ import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
-import { VideoServicePort } from '@Apps/modules/video/database/video.service.port';
+import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
 
 export class FindVideoQuery implements IQuery {
   readonly search: string;
@@ -18,7 +18,7 @@ export class FindVideoHandler
 {
   constructor(
     @Inject(VIDEO_OS_DI_TOKEN)
-    protected readonly videoRepo: VideoServicePort,
+    protected readonly videoRepo: VideoOutboundPort,
   ) {}
 
   async execute(query: FindVideoQuery): Promise<IFindManyVideoResult[]> {

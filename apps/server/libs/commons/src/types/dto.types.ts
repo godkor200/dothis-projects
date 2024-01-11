@@ -10,8 +10,10 @@ import {
   zRankRes,
   zVideoDetails,
   zChannelAnalysis,
+  zDailyViewData,
+  zExpectedViewsData,
+  WeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
-import { zExpectedData, zIncreaseData } from '@Libs/commons/src/types/res.zod';
 
 export class UserDto extends createZodDto(extendApi(zUserModel)) {}
 export class UserRes extends UserDto {}
@@ -26,10 +28,14 @@ export class RelWordsRankingRes extends createZodDto(extendApi(zRankRes)) {}
 export class KeywordRes extends createZodDto(extendApi(zKeywords)) {}
 export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
 
-export class ExpectedViewsData extends createZodDto(extendApi(zExpectedData)) {}
+export class ExpectedViewsData extends createZodDto(
+  extendApi(zExpectedViewsData),
+) {}
 
-export class IncreaseData extends createZodDto(extendApi(zIncreaseData)) {}
-
+export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
+export class WeeklyData extends createZodDto(
+  extendApi(WeeklyKeywordsListSourceSchema),
+) {}
 export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
 
 export class ChannelAnalysisRes extends createZodDto(

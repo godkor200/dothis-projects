@@ -114,6 +114,7 @@ export const zVideoResponse = z.object({
     total: z.object({ value: z.number(), relation: z.string() }),
   }),
 });
+export const dateQuery = z.object({ from: z.string(), to: z.string() });
 
 export const zPaginatedQuery = z.object({
   limit: z.number().describe('Specifies a limit of returned records'),
@@ -129,12 +130,13 @@ export const zKeyword = z.object({
   related: z.string().describe('연관어').optional(),
 });
 
-export const findVideoBySearchKeyword = z.object({
-  keyword: z.string(),
-  relationKeyword: z.string().optional(),
-  from: z.string(),
-  to: z.string(),
-});
+export const findVideoBySearchKeyword = z
+  .object({
+    keyword: z.string(),
+    relationKeyword: z.string().optional(),
+  })
+  .merge(dateQuery);
+
 export const findVideoPageQuery = zKeyword.merge(zPaginatedQuery);
 export const findVideoPageV2Query = zKeyword
   .merge(zPaginatedQuery)

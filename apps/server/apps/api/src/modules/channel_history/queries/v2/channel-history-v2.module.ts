@@ -4,7 +4,7 @@ import { ExpectedViewsV2QueryHandler } from '@Apps/modules/channel_history/queri
 import { ExpectedViewsV2HttpController } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
-import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { VideoDataService } from '@Apps/modules/video/service/video-data.service';

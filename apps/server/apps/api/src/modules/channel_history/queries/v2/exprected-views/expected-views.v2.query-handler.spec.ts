@@ -3,7 +3,7 @@ import { ExpectedViewsV2QueryHandler } from '@Apps/modules/channel_history/queri
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { ExpectedViewsV2Query } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { channelHistoryDummy } from '@Apps/modules/channel_history/queries/v2/exprected-views/__dummy__/channel_history.dummy';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 

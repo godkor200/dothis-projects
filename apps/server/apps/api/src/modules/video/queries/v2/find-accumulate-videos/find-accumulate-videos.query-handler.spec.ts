@@ -1,5 +1,5 @@
 import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/queries/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { mock } from 'jest-mock-extended';
 import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';

@@ -13,14 +13,13 @@ export const zChannelHistoryModel = z.object({
 
   crawled_date: z.string(),
 });
-
-export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
+export const zExpectedViewsData = z.object({
+  date: z.string(),
+  expected_views: z.number(),
+});
 
 export const zExpectedViews = z.object({
-  data: z.array(
-    z.object({
-      date: z.string(),
-      expected_views: z.number(),
-    }),
-  ),
+  data: z.array(zExpectedViewsData),
 });
+
+export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;

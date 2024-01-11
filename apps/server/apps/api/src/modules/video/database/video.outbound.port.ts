@@ -13,20 +13,7 @@ import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
-export class FindVideoByMultipleIndex {
-  public readonly keyword: string;
-  public readonly relWord: string[];
-  public readonly cluster: string[];
-  public readonly data: VIDEO_DATA_KEY[];
-  constructor(props: FindVideoByMultipleIndex) {
-    this.keyword = props.keyword;
-    this.relWord = props.relWord;
-    this.cluster = props.cluster;
-    this.data = props.data;
-  }
-}
-
-export interface VideoServicePort {
+export interface VideoOutboundPort {
   findManyVideo(tag: string): Promise<string[]>;
 
   findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes>;

@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { IdBaseEntityAbstract } from '@Apps/modules/community-crawling/domain/abstract/id.base-entity.abstract';
+
 import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
+import { IdBaseEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
 
 @Entity({ name: 'daily_views' })
 export class DailyViewsEntity extends IdBaseEntityAbstract {

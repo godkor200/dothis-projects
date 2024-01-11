@@ -6,7 +6,7 @@ import { FindRelAdapter } from '@Apps/modules/rel-words/interface/find-rel.adapt
 import { RankRelQueryDto } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.http.controller';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import {
