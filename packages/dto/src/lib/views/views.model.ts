@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { dataObject, zTotalData } from '../common.model';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -45,6 +46,6 @@ export const zVideoHistory = OsCommonSchema.extend({
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
-export type TWeeklyKeywordsListSource = z.infer<
-  typeof WeeklyKeywordsListSourceSchema
->;
+export const zWeeklyKeywordsList = zTotalData.merge(
+  dataObject(OsCommonSchema.merge(zWeeklyKeywordsLisSchema)),
+);

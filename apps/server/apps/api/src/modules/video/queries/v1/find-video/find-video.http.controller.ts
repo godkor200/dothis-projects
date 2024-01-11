@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { apiRouter } from '@dothis/dto';
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
+import { nestControllerContract } from '@ts-rest/nest';
 import {
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -10,8 +10,8 @@ import {
 } from '@nestjs/swagger';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
-import { VideoRes } from '@Libs/commons/src/types/dto.types';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { VideoRes, IRes } from '@Libs/commons/src/types/res.types';
+
 const c = nestControllerContract(apiRouter.video);
 const { pathParams, summary, responses, description } = c.getVideoPageV1;
 

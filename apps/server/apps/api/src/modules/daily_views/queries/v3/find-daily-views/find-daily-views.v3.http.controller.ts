@@ -22,10 +22,7 @@ import {
   FindDailyViewsV3Query,
   IIncreaseData,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
-import { IncreaseData } from '@Libs/commons/src/types/dto.types';
-
-import { IRes } from '@Libs/commons/src/types/res.types';
-
+import { IncreaseData, IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';

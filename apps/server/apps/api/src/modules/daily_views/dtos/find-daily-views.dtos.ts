@@ -1,5 +1,13 @@
 import { IQuery } from '@nestjs/cqrs';
 
+export interface IPickDateFromLimitLast
+  extends Pick<IDateRange, 'from'>,
+    IPageQuery {}
+
+export interface IPageQuery {
+  readonly limit: number;
+  readonly last?: string;
+}
 export interface IDateRange {
   readonly from: Date;
   readonly to: Date;

@@ -5,9 +5,7 @@ import { Injectable } from '@nestjs/common';
 import aws from 'aws-sdk';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { IIndicesServerResponse } from '@Apps/common/aws/interface/os.res.interface';
-import { Err, Ok } from 'oxide.ts';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { ResultType } from 'oxide.ts/dist/result';
 
 @Injectable()
 export class AwsOpenSearchConnectionService {
@@ -33,23 +31,29 @@ export class AwsOpenSearchConnectionService {
       node: this.configService.get<string>('aws.OPENSEARCH_NODE'),
     });
   }
-
+  async countDocuments(query: any): Promise<number> {
+    try {
+      const countRes = await this.client.count({
+        index: query.index,
+        body: { query: query.body.query },
+      });
+      return countRes.body.count;
+    } catch (error) {
+      throw error; // 오류를 다시 던져 호출한 쪽에서 처리할 수 있게 합니다.
+    }
+  }
   async fullScan<T>(
     query: any,
     processDoc: (doc: any) => T,
   ): Promise<T[] | ScrollApiError> {
-    const countRes = await this.client.count({
-      index: query.index,
-      body: { query: query.body.query },
-    });
+    const documentCount = await this.countDocuments(query);
 
     let resp = await this.client.search(query);
     let result: T[] = resp.body.hits.hits.map(processDoc);
     const totalLength: number = resp.body.hits.total.value;
     const hitLen = resp.body.hits.hits.length;
 
-    if (totalLength >= hitLen && countRes.body.count < query.size)
-      return result;
+    if (totalLength >= hitLen && documentCount < query.size) return result;
 
     resp['scroll'] = '10s';
     try {
