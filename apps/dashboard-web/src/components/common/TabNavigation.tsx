@@ -63,7 +63,7 @@ const TabNavigation = <
                 `#${tabKey}`) as Route
             }
             replace
-            className={cn('cursor-pointer text-[32px] font-bold', {
+            className={cn('cursor-pointer text-[28px] font-bold', {
               'text-grey700': selectedArticle === item.category,
             })}
           >
