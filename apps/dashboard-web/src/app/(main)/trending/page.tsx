@@ -2,6 +2,16 @@ import InView from '@/components/common/InView/InView';
 import { cn } from '@/utils/cn';
 
 const TrendingPage = () => {
+  const trendingTableHeaders = [
+    { label: '순위', key: 'rank' },
+    { label: '키워드', key: 'keyword' },
+    { label: '대표 카테고리', key: 'category' },
+    { label: '주간 조회수', key: 'views' },
+    { label: '영상 수', key: 'count' },
+    { label: '경쟁강도', key: 'competitive' },
+    { label: '구독자 10만 이상 채널', key: 'megachannel' },
+  ];
+
   return (
     <div className="mx-auto min-h-screen max-w-[1100px]">
       <div className="flex items-center gap-[28px] py-[30px]">
@@ -13,17 +23,11 @@ const TrendingPage = () => {
       </div>
       <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
         <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] items-center gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
-          <div className="text-grey500 text-[14px] font-bold">순위</div>
-          <div className="text-grey500 text-[14px] font-bold">키워드</div>
-          <div className="text-grey500 text-[14px] font-bold">
-            대표 카테고리
-          </div>
-          <div className="text-grey500  text-[14px] font-bold">주간 조회수</div>
-          <div className="text-grey500  text-[14px] font-bold">영상 수</div>
-          <div className="text-grey500 text-[14px] font-bold">경쟁강도</div>
-          <div className="text-grey500  text-[14px] font-bold">
-            구독자 10만 이상 채널
-          </div>
+          {trendingTableHeaders.map(({ label, key }) => (
+            <div key={key} className="text-grey500 text-[14px] font-bold">
+              {label}
+            </div>
+          ))}
         </div>
         <InView onChange={() => {}} threshold={0.4}>
           <ul>
