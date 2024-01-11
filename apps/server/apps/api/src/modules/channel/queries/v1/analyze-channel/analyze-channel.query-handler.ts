@@ -5,7 +5,7 @@ import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 

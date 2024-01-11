@@ -7,7 +7,7 @@ import {
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { IChannelHistory } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';

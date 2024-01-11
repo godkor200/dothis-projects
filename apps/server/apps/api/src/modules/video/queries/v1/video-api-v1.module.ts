@@ -7,7 +7,7 @@ import { FindVideoHandler } from '@Apps/modules/video/queries/v1/find-video/find
 import { FindVideoPageHttpController } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-page.http.controller';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-page.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
-import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/database/channel-history.query-handler';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';

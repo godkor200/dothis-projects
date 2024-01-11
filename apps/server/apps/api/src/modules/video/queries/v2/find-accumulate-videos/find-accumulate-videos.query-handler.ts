@@ -5,7 +5,7 @@ import {
 } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import {
   IChannelHistory,
   IFindAccumulateVideoWithOutUserSection,
