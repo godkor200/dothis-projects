@@ -1,8 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
-import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { Controller, NotFoundException, Query } from '@nestjs/common';
 import {
-  ExpectedViewsDto,
   ExpectedViewsV2Dto,
   ExpectedViewsV2Query,
 } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
@@ -15,14 +13,12 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { ExpectedViewsData } from '@Libs/commons/src/types/dto.types';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { ExpectedViewsData, IRes } from '@Libs/commons/src/types/res.types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const { summary, description } = getExpectedViews;
 export interface IExpectedData {
