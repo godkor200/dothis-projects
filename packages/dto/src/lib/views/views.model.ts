@@ -8,9 +8,7 @@ export const zDailyViewData = z.object({
   increase_views: z.number(),
 });
 
-export const zDailyViews = z.object({
-  data: z.array(zDailyViewData),
-});
+export const zDailyViews = dataObject(z.array(zDailyViewData));
 
 const OsCommonSchema = z.object({
   _index: z.string(),
@@ -47,5 +45,5 @@ export const zVideoHistory = OsCommonSchema.extend({
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
 export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(OsCommonSchema.merge(zWeeklyKeywordsLisSchema)),
+  dataObject(z.array(VideoHistorySourceSchema)),
 );
