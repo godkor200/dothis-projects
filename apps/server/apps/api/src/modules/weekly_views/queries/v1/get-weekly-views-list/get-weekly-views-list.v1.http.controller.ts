@@ -65,8 +65,8 @@ export class GetWeeklyViewsListV1HttpController {
   async execute(
     @Query() query: GetWeeklyViewsQuery,
   ): Promise<IRes<WeeklyKeywordsRes[]>> {
-    const { from, limit, last } = query;
-    const arg = new GetWeeklyViewsDto({ from, limit, last });
+    const { from, limit, last, sort, order } = query;
+    const arg = new GetWeeklyViewsDto({ from, limit, last, sort, order });
     const result: Result<WeeklyKeywordsRes[], WeeklyViewsError> =
       await this.queryBus.execute(arg);
 
