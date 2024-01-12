@@ -1,5 +1,12 @@
 import { z } from 'zod';
-import { dataObject, zTotalData } from '../common.model';
+import {
+  dataObject,
+  zTotalData,
+  dateQuery,
+  zPaginatedQuery,
+  zSortQuery,
+} from '../common.model';
+import * as cluster from 'cluster';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -16,7 +23,7 @@ const OsCommonSchema = z.object({
   _score: z.number(),
 });
 
-export const WeeklyKeywordsListSourceSchema = z.object({
+const createWeeklyKeywordsListSourceSchema = () => ({
   keyword: z.string(),
   category: z.string(),
   weekly_views: z.number(),
@@ -24,9 +31,16 @@ export const WeeklyKeywordsListSourceSchema = z.object({
   competitive: z.number(),
   mega_channel: z.number(),
 });
+export const SortOrderQuery = Object.keys(
+  createWeeklyKeywordsListSourceSchema(),
+);
+
+export const zWeeklyKeywordsListSourceSchema = z.object(
+  createWeeklyKeywordsListSourceSchema(),
+);
 
 export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
-  _source: WeeklyKeywordsListSourceSchema,
+  _source: zWeeklyKeywordsListSourceSchema,
 });
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
@@ -45,5 +59,11 @@ export const zVideoHistory = OsCommonSchema.extend({
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
 export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(z.array(VideoHistorySourceSchema)),
+  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
 );
+
+const zSortWeeklyViews = zSortQuery(SortOrderQuery);
+
+export const zGetWeeklyViewsQuery = zPaginatedQuery
+  .merge(dateQuery.pick({ from: true }))
+  .merge(zSortWeeklyViews);
