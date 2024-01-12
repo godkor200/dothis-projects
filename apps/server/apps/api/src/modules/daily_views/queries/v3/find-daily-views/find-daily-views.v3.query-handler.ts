@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import {
   FindDailyViewsQuery,
+  FindDailyViewsV3Dto,
   FindDailyViewsV3Query,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
@@ -39,18 +40,15 @@ export class FindDailyViewsQueryOsV3Handler
   ) {}
 
   async execute(
-    query: FindDailyViewsQuery,
+    query: FindDailyViewsV3Dto,
   ): Promise<
     Result<
       IIncreaseData[],
       VideoNotFoundError | VideoHistoryNotFoundError | ScrollApiError
     >
   > {
-    const arg: FindVideoDateQuery = {
-      ...query,
-    };
     const videos = await this.video.findVideoIdFullScanAndVideos<IVideoHistory>(
-      arg,
+      query,
     );
     if (videos instanceof ScrollApiError) return Err(new ScrollApiError());
     if (!videos.length) return Err(new VideoNotFoundError());
