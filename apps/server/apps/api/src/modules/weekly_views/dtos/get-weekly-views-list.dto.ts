@@ -1,16 +1,24 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { zGetWeeklyViewsQuery } from '@dothis/dto';
-import { IPickDateFromLimitLast } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+import { SortOrderQuery as SORT_ENUM, zGetWeeklyViewsQuery } from '@dothis/dto';
 
 export class GetWeeklyViewsQuery extends createZodDto(
   extendApi(zGetWeeklyViewsQuery),
 ) {}
-export class GetWeeklyViewsDto implements IPickDateFromLimitLast {
-  readonly from: string;
-  readonly limit: number;
-  readonly last?: string;
+export class GetWeeklyViewsDto implements GetWeeklyViewsQuery {
   constructor(props: GetWeeklyViewsDto) {
     Object.assign(this, props);
   }
+}
+
+/**
+ * zod enum은 조드에서 typescript enum 직접적 변환이 어려움
+ */
+export enum SortQueryEnum {
+  KEYWORD = 'keyword',
+  CATEGORY = 'category',
+  WEEKLY_VIEWS = 'weekly_views',
+  VIDEO_COUNT = 'video_count',
+  COMPETITIVE = 'competitive',
+  MEGA_CHANNEL = 'mega_channel',
 }
