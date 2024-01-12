@@ -6,7 +6,7 @@ import {
   zDailyViewData,
   zExpectedViewsData,
   zKeywords,
-  zRankRes,
+  zRanking,
   zResWordsPickData,
   zTokenExpired,
   zVideoDetails,
@@ -29,7 +29,7 @@ export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),
 ) {}
-export class RelWordsRankingRes extends createZodDto(extendApi(zRankRes)) {}
+export class RelWordsRankingRes extends createZodDto(extendApi(zRanking)) {}
 export class KeywordRes extends createZodDto(extendApi(zKeywords)) {}
 export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
 
