@@ -1,7 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import {
-  WeeklyKeywordsListSourceSchema,
   zChannelAnalysis,
   zDailyViewData,
   zExpectedViewsData,
@@ -13,6 +12,7 @@ import {
   zVideoHistory,
   zVideoModel,
   zWeeklyKeywordsList,
+  zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/types/dto.types';
 
@@ -39,7 +39,7 @@ export class ExpectedViewsData extends createZodDto(
 
 export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
 export class WeeklyData extends createZodDto(
-  extendApi(WeeklyKeywordsListSourceSchema),
+  extendApi(zWeeklyKeywordsListSourceSchema),
 ) {}
 export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
 
