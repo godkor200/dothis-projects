@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
@@ -26,7 +27,7 @@ const SideBar = () => {
             $isInActive={pathName !== item.link}
             key={index}
             onClick={() => {
-              !item.link.includes('preparing') && router.push('/contents');
+              router.push(item.link);
             }}
           >
             <Style.IconBox>
