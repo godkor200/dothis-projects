@@ -1,6 +1,10 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import { WeeklyKeywordsListSourceSchema, zDailyViews } from './views.model';
+import {
+  zDailyViews,
+  zWeeklyKeywordsList,
+  zWeeklyKeywordsListResponse,
+} from './views.model';
 import { findVideoBySearchKeyword, zGetWeeklyViewsQuery } from '../video';
 
 export const viewApiUrl = '/views';
@@ -31,7 +35,7 @@ export const weeklyViewApi = c.router({
     path: `${viewApiUrl}${weeklyApiUrl}-list`,
     query: zGetWeeklyViewsQuery,
     responses: {
-      200: WeeklyKeywordsListSourceSchema,
+      200: zWeeklyKeywordsList,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },

@@ -27,6 +27,10 @@ export const WeeklyKeywordsListSourceSchema = z.object({
   mega_channel: z.number(),
 });
 
+export const zWeeklyKeywordsListResponse = dataObject(
+  WeeklyKeywordsListSourceSchema,
+);
+
 export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
   _source: WeeklyKeywordsListSourceSchema,
 });
@@ -46,6 +50,6 @@ export const zVideoHistory = OsCommonSchema.extend({
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(OsCommonSchema.merge(zWeeklyKeywordsLisSchema)),
+export const zWeeklyKeywordsList = dataObject(
+  zTotalData.merge(dataObject(OsCommonSchema.merge(zWeeklyKeywordsLisSchema))),
 );
