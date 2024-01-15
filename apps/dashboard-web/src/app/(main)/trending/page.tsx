@@ -1,6 +1,10 @@
 'use client';
 
-import InView from '@/components/common/InView/InView';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+
+import SvgComp from '@/components/common/SvgComp';
+import TrendingFilter from '@/components/Trending/TrendingFilter';
 import { clustersCategories } from '@/constants/clusterCategories';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
 import { cn } from '@/utils/cn';
@@ -19,14 +23,31 @@ const TrendingPage = () => {
 
   const { data, total } = useGetTrendingKeywords({ date: '2024-01-08' });
 
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
+
+  const [selectOptions, setSelectOptions] = useState<
+    { value: number; label: string }[]
+  >([]);
+
+  const [keywordList, setKeywordList] = useState<string[]>([]);
+
+  const [startDate, setStartDate] = useState(
+    dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
+  );
+
   return (
-    <div className="relative mx-auto max-w-[1100px] translate-x-0">
+    <div className=" mx-auto max-w-[1100px] ">
       <div className="flex items-center gap-[28px] py-[30px]">
         <p className="text-grey700 text-[20px] font-bold">키워드 {total}개</p>
         <p className="text-grey500 font-bold">{'2024-01-07 - 2024-01-14'}</p>
         <button className="text-primary500 bg-primary100 rounded-8 ml-auto px-4 py-2 text-[14px]">
           엑셀 데이터로 다운로드 받기
         </button>
+        <SvgComp
+          icon="Filter"
+          size={20}
+          onClick={() => setOpenFilter((prev) => !prev)}
+        />
       </div>
       <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
         <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] items-center gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
@@ -81,9 +102,16 @@ const TrendingPage = () => {
         </ul>
       </div>
 
-      <div className="bg-primary400 fixed inset-y-0 right-0 w-[465px]">
-        필터링 컴포넌트{' '}
-      </div>
+      {openFilter && (
+        <TrendingFilter
+          selectOptions={selectOptions}
+          setSelectOptions={setSelectOptions}
+          keywordList={keywordList}
+          setKeywordList={setKeywordList}
+          startDate={startDate}
+          setStartDate={setStartDate}
+        />
+      )}
     </div>
   );
 };
