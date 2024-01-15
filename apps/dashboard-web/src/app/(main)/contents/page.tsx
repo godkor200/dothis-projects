@@ -22,13 +22,13 @@ const MainContentPage = async ({
     '아시안게임',
   );
 
-  const selectedMainContent = searchParams?.main || 'recomand';
+  const selectedMainContent = searchParams?.main || 'recommend';
 
   const secondSection =
     (searchParams?.tab as (typeof CATEGORY_TABNAV_DATA)[number]['category']) ||
     'category';
 
-  if (selectedMainContent === 'recomand') {
+  if (selectedMainContent === 'recommend') {
     return (
       <div className=" mx-auto w-[1342px] ">
         <Card>
