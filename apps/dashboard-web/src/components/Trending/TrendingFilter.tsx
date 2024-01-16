@@ -1,7 +1,9 @@
+import { Button as DesignButton } from 'dashboard-storybook/src/components/Button/Button';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
+import type { TrendingQuery } from '@/app/(main)/trending/page';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
 import SearchBar from '@/components/Trending/TrendingFilter/SearchBar';
@@ -20,6 +22,8 @@ interface Props {
   setKeywordList: React.Dispatch<React.SetStateAction<string[]>>;
   startDate: Dayjs;
   setStartDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  setTrendingQueryOption: React.Dispatch<React.SetStateAction<TrendingQuery>>;
+  setOpenFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TrendingFilter = ({
@@ -29,13 +33,15 @@ const TrendingFilter = ({
   setKeywordList,
   startDate,
   setStartDate,
+  setTrendingQueryOption,
+  setOpenFilter,
 }: Props) => {
   const handleDeleteKeyword = (keyword: string) => {
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
   };
 
   return (
-    <div className="bg-grey00 border-l-1 border-grey400 fixed inset-y-0 right-0 z-10 w-[465px] px-[26px] pt-[80px]">
+    <div className="bg-grey00 border-l-1 border-grey400 fixed inset-y-0 right-0  z-auto w-[465px] px-[26px] pt-[80px]">
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
       <SearchBar setKeywordList={setKeywordList} />
@@ -69,6 +75,25 @@ const TrendingFilter = ({
         selectOptions={selectOptions}
         setSelectOptions={setSelectOptions}
       />
+
+      <div className="mt-[80px] flex justify-center gap-[40px]">
+        <DesignButton
+          size="L"
+          theme="contained"
+          onClick={() => {
+            setTrendingQueryOption({ keywordList, selectOptions, startDate });
+          }}
+        >
+          적용
+        </DesignButton>
+        <DesignButton
+          size="L"
+          theme="outlined"
+          onClick={() => setOpenFilter(false)}
+        >
+          취소
+        </DesignButton>
+      </div>
     </div>
   );
 };
