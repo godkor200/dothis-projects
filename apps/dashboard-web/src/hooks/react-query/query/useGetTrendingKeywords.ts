@@ -5,7 +5,7 @@ import type {
   SortingQuery,
   TrendingQuery,
   trendingTableHeaders,
-} from '@/app/(main)/trending/page';
+} from '@/app/(main)/(searchGNB)/trending/page';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';

@@ -87,11 +87,11 @@ const TrendingPage = () => {
 
   return (
     <div className="relative translate-x-0">
-      <div className="p-[24px]">
+      <div className="flex items-center gap-[20px] p-[24px] ">
         <h3 className="text-grey600 font-bold">검색 키워드</h3>
-        <ul>
-          <li>
-            {keywordList.map((item) => (
+        <ul className="flex items-center gap-[10px]">
+          {trendingQueryOption.keywordList.map((item) => (
+            <li>
               <Button key={item} $active={true}>
                 {item.replace('#', '').replace('*', '')}
 
@@ -105,8 +105,8 @@ const TrendingPage = () => {
                 />
                 {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
               </Button>
-            ))}
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="bg-grey200">

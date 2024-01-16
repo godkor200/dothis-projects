@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
-import type { TrendingQuery } from '@/app/(main)/trending/page';
+import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/page';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
 import SearchBar from '@/components/Trending/TrendingFilter/SearchBar';
