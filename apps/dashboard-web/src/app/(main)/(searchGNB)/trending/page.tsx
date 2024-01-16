@@ -1,6 +1,5 @@
 'use client';
 
-import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 
@@ -8,6 +7,7 @@ import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
 import TrendingFilter from '@/components/Trending/TrendingFilter';
 import { clustersCategories } from '@/constants/clusterCategories';
+import { trendingTableHeaders } from '@/constants/trendingTable';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
@@ -19,16 +19,6 @@ export type SortingQuery = {
   sort: (typeof trendingTableHeaders)[number]['key'];
   order: 'asc' | 'desc';
 };
-
-export const trendingTableHeaders = [
-  { label: '순위', key: 'rank' },
-  { label: '키워드', key: 'keyword' },
-  { label: '대표 카테고리', key: 'category' },
-  { label: '주간 조회수', key: 'weekly_views' },
-  { label: '영상 수', key: 'video_count' },
-  { label: '경쟁강도', key: 'competitive' },
-  { label: '구독자 10만 이상 채널', key: 'mega_channel' },
-] as const;
 
 const TrendingPage = () => {
   const { trendingQueryOption, setTrendingQueryOption } =

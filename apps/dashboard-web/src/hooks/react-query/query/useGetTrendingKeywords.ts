@@ -1,10 +1,7 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
-import type {
-  SortingQuery,
-  trendingTableHeaders,
-} from '@/app/(main)/(searchGNB)/trending/page';
+import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
