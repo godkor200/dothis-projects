@@ -18,14 +18,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import {
-  FindDailyViewsV3Dtos,
+  FindDailyViewsV3Params,
   FindDailyViewsV3Query,
   IIncreaseData,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
-import { IncreaseData } from '@Libs/commons/src/types/dto.types';
-
-import { IRes } from '@Libs/commons/src/types/res.types';
-
+import { IncreaseData, IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
@@ -79,7 +76,7 @@ export class FindDailyViewsOsV3HttpController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
-    @Query() query: FindDailyViewsV3Dtos,
+    @Query() query: FindDailyViewsV3Params,
   ): Promise<IRes<IIncreaseData[]>> {
     const arg = new FindDailyViewsV3Query({
       clusterNumber,

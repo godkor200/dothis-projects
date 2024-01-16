@@ -8,7 +8,6 @@ import {
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import {
   FindVideoPageQuery,
   IFindVideoPageQuery,
@@ -16,7 +15,7 @@ import {
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
-import { VideoRes } from '@Libs/commons/src/types/dto.types';
+import { VideoRes, IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.video);

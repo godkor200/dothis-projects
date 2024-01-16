@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import styles from '../normalize.module.css';
+
+import style from '../../normalize.module.css';
 
 const PrivacyPage = () => {
   return (
-    <div className={styles.container}>
+    <div className={style.container}>
       <h1>두디스 개인정보 처리방침</h1>
       <ul>
         <li>시행일 : 2023년 11월 16일</li>

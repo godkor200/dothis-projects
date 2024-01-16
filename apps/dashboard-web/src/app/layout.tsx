@@ -31,6 +31,9 @@ export const metadata: Metadata = {
       ['naver-site-verification']: '61cf01795f8a825e98136f98401fd7f3aa1bfa20',
     },
   },
+  icons: {
+    icon: '/logo.ico',
+  },
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {

@@ -1,13 +1,11 @@
 import { QueryBus } from '@nestjs/cqrs';
-import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { Controller, NotFoundException, Query } from '@nestjs/common';
 import {
-  ExpectedViewsDto,
   ExpectedViewsV2Dto,
   ExpectedViewsV2Query,
 } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { match, Result } from 'oxide.ts';
-import { apiRouter } from '@dothis/dto';
+import { apiRouter, TExpectedViewsArr, TExpectedViewsRes } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const c = nestControllerContract(apiRouter.expectViews);
 const { getExpectedViews } = c;
@@ -15,20 +13,14 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { ExpectedViewsData } from '@Libs/commons/src/types/dto.types';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { ExpectedViewsData, IRes } from '@Libs/commons/src/types/res.types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const { summary, description } = getExpectedViews;
-export interface IExpectedData {
-  date: string;
-  expected_views: number;
-}
 
 @ApiTags('기대 조회수')
 @Controller()
@@ -70,10 +62,10 @@ export class ExpectedViewsV2HttpController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
     @Query() query: ExpectedViewsV2Dto,
-  ): Promise<IRes<IExpectedData[]>> {
+  ): Promise<IRes<TExpectedViewsRes>> {
     const arg = new ExpectedViewsV2Query(query);
     const result: Result<
-      IExpectedData[],
+      TExpectedViewsArr,
       VideoNotFoundError | ChannelNotFoundError
     > = await this.queryBus.execute(arg);
 

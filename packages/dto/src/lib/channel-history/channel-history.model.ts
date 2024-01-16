@@ -18,8 +18,14 @@ export const zExpectedViewsData = z.object({
   expected_views: z.number(),
 });
 
+export const zExpectedViewsArr = z.array(zExpectedViewsData);
+
 export const zExpectedViews = z.object({
-  data: z.array(zExpectedViewsData),
+  data: zExpectedViewsArr,
 });
 
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
+
+export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
+
+export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;

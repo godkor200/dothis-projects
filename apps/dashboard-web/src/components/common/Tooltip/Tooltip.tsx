@@ -25,7 +25,7 @@ const TooltipComponent = ({ title }: Props) => {
             sideOffset={5}
           >
             {splitEscape.map((item) => (
-              <p>{item}</p>
+              <p key={item}>{item}</p>
             ))}
             <Tooltip.TooltipArrow className="TooltipArrow" />
           </Tooltip.Content>

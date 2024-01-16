@@ -19,12 +19,11 @@ import { apiRouter, USER_AUTH } from '@dothis/dto';
 import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interface';
-const { getOwnInfo } = nestControllerContract(apiRouter.auth);
 import { User as UserEntity } from '@Apps/modules/user/domain/user.entity';
-import { UserRes } from '@Libs/commons/src/types/dto.types';
+import { UserRes, IRes } from '@Libs/commons/src/types/res.types';
 import { match, Result } from 'oxide.ts';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
+const { getOwnInfo } = nestControllerContract(apiRouter.auth);
 const { summary, description } = getOwnInfo;
 
 @ApiTags('유저 인증')

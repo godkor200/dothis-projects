@@ -37,8 +37,8 @@ const LoginKeyword = () => {
 
   const { mutate } = useInitialKeywordMutations();
 
-  const channel_keywords = keywordData?.channel_keywords;
-  const channel_tags = keywordData?.channel_tags;
+  const channel_keywords = keywordData?.channelKeywords;
+  const channel_tags = keywordData?.channelTags;
 
   // isGuest 조건 변경 현재 채널 지정이 되어서 아무것도 지정안한 처음 진입한 user가 isGuest가 된다.
   const isGuest = !combinedKeywordsAndTags(channel_keywords, channel_tags)

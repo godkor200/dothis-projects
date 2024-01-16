@@ -1,4 +1,4 @@
-import { from, last, lastValueFrom, map, Observable, throwError } from 'rxjs';
+import { from, lastValueFrom, map } from 'rxjs';
 import { VideoOutboundPort } from './video.outbound.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
@@ -7,7 +7,6 @@ import {
   IPagingRes,
   IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
-import { catchError } from 'rxjs/operators';
 import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import {
   FindVideoDateQuery,
@@ -15,10 +14,10 @@ import {
 } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { Err, Ok } from 'oxide.ts';
+import { Err } from 'oxide.ts';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
-import { undefined } from 'zod';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 
 export class SearchQueryBuilder {
   static video(
@@ -26,8 +25,8 @@ export class SearchQueryBuilder {
     keyword: string,
     relWord: string,
     data?: VIDEO_DATA_KEY[],
-    from?: Date,
-    to?: Date,
+    from?: string,
+    to?: string,
     size: number = 100,
   ) {
     const relWords = relWord.split(/\s+/);
@@ -225,7 +224,7 @@ export class VideoQueryHandler
   }
 
   async findVideoIdFullScanAndVideos<T>(
-    query: FindVideoDateQuery,
+    query: FindDailyViewsV3Dto,
   ): Promise<T[] | ScrollApiError> {
     const { clusterNumber, keyword, relationKeyword, data, from, to } = query;
     const searchQuery = SearchQueryBuilder.video(

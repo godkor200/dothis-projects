@@ -13,9 +13,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className=" expandSideBar:w-[16.625rem]  w-[80px] flex-shrink-0" />
 
       <div className=" flex-1">
-        <div className="mx-auto  max-w-[1342px]">
-          <GNB />
-        </div>
         <>{children}</>
         {/* Footer infinity border */}
         <div className=" mx-auto max-w-[1342px]">

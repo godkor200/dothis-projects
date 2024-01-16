@@ -34,7 +34,7 @@ export type TUserModel = z.TypeOf<typeof zUserModel>;
 
 export const zKeywordModel = z.object({
   data: z.object({
-    channel_keywords: z.array(z.string()).nullable(),
-    channel_tags: z.array(z.string()).nullable(),
+    channelKeywords: z.array(z.string()).nullable(),
+    channelTags: z.array(z.string()).nullable(),
   }),
 });

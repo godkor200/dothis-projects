@@ -29,11 +29,14 @@ describe('calculateIncrease 함수', () => {
       clusterNumber: '0',
       keyword: '이태원',
       relationKeyword: undefined,
-      from: new Date('2023-10-12'),
-      to: new Date('2023-10-14'),
+      from: '2023-10-12',
+      to: '2023-10-14',
     };
 
-    const res = await handler.execute(arg);
+    const res = await handler.execute({
+      clusterNumber: arg.clusterNumber,
+      ...arg,
+    });
     expect(res.unwrap()).toStrictEqual([
       {
         date: '2023-10-13',
@@ -65,8 +68,8 @@ describe('예외 처리', () => {
       clusterNumber: '0',
       keyword: '이태원',
       relationKeyword: undefined,
-      from: new Date('2023-10-12'),
-      to: new Date('2023-10-14'),
+      from: '2023-10-12',
+      to: '2023-10-14',
     };
 
     const res = await handler.execute(arg);

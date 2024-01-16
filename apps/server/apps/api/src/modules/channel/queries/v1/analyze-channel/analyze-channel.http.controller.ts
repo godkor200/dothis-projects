@@ -20,9 +20,8 @@ import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { AnalyzeChannelDto } from '@Apps/modules/channel/interface/analyze-channel.interface';
-import { IRes } from '@Libs/commons/src/types/res.types';
 import { match } from 'oxide.ts';
-import { ChannelAnalysisRes } from '@Libs/commons/src/types/dto.types';
+import { ChannelAnalysisRes, IRes } from '@Libs/commons/src/types/res.types';
 
 const { analyzeChannel } = nestControllerContract(apiRouter.channel);
 

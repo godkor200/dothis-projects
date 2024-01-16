@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { dateQuery, zPaginatedQuery } from '../common.model';
 
 export const zVideoSection = z.enum([
   '0~100',
@@ -113,12 +114,6 @@ export const zVideoResponse = z.object({
     ),
     total: z.object({ value: z.number(), relation: z.string() }),
   }),
-});
-export const dateQuery = z.object({ from: z.string(), to: z.string() });
-
-export const zPaginatedQuery = z.object({
-  limit: z.number().describe('Specifies a limit of returned records'),
-  last: z.string().describe('Last index returned').optional(),
 });
 
 export const zClusterQueryParams = z.object({
