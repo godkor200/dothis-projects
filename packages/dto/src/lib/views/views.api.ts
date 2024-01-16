@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { c } from '../contract';
 import {
   zDailyViews,
-  zWeeklyKeywordsListSourceSchema,
   zGetWeeklyViewsQuery,
   zWeeklyKeywordsList,
 } from './views.model';
