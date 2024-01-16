@@ -3,7 +3,6 @@ import {
   CHANNEL_DATA_KEY,
   ExpectedViewsV2Query,
 } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
@@ -11,9 +10,9 @@ import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/reposi
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { IChannelHistory } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
-import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { TExpectedViewsArr } from '@dothis/dto';
 
 @QueryHandler(ExpectedViewsV2Query)
 export class ExpectedViewsV2QueryHandler
@@ -21,7 +20,7 @@ export class ExpectedViewsV2QueryHandler
     IQueryHandler<
       ExpectedViewsV2Query,
       Result<
-        IExpectedData[],
+        TExpectedViewsArr,
         VideoNotFoundError | ChannelNotFoundError | ScrollApiError
       >
     >
@@ -45,7 +44,7 @@ export class ExpectedViewsV2QueryHandler
     query: ExpectedViewsV2Query,
   ): Promise<
     Result<
-      IExpectedData[],
+      TExpectedViewsArr,
       VideoNotFoundError | ChannelNotFoundError | ScrollApiError
     >
   > {
@@ -64,8 +63,15 @@ export class ExpectedViewsV2QueryHandler
       return Err(new ScrollApiError());
     if (!channelHistory.length) return Err(new ChannelNotFoundError());
 
+    const dailyPerformance =
+      this.channelHistoryAggregateService.calculateDailyPerformance(
+        channelHistory,
+      );
+
     const result =
-      this.channelHistoryAggregateService.calculateAverageViews(channelHistory);
+      this.channelHistoryAggregateService.calculateKeywordPerformance(
+        dailyPerformance,
+      );
 
     return Ok(result);
   }

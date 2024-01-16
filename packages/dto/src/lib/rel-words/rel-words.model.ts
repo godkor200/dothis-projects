@@ -13,13 +13,14 @@ export const zRelWords = z.object({
       ),
   }),
 });
+export const zRanking = z.object({
+  expectedViews: z.number().describe('기대조회수'),
+  sortFigure: z.number().describe('연관어 정렬 수치'),
+  word: z.string().describe('연관어'),
+});
+export const zRankingArray = z.array(zRanking);
 
-export const zRankingArray = z.array(
-  z.object({
-    expectedViews: z.number().describe('기대조회수'),
-    word: z.string().describe('연관어'),
-  }),
-);
+export const zRankingArrayOmitWord = zRanking.omit({ word: true });
 export const zRankRel = z.object({
   data: z.object({
     keyword: z.string(),
@@ -27,6 +28,8 @@ export const zRankRel = z.object({
   }),
 });
 export const zRankRes = zRankRel.shape.data;
+export const zKeywordsCopy = zRelWords.pick({ data: true }).shape.data.shape
+  .keyword;
 export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
 export const zResWordsPickData = zRelWords.shape.data;
@@ -38,6 +41,7 @@ export type TRankRes = z.TypeOf<typeof zRankRes>;
 export type RelWordsModel = z.TypeOf<typeof zRelWords>;
 
 export type TKeyword = z.TypeOf<typeof zKeywords>;
+export type TRankingArrayOmitWord = z.TypeOf<typeof zRankingArrayOmitWord>;
 
 export const zAutoCompleteWords = z.object({
   data: z.array(z.string()),

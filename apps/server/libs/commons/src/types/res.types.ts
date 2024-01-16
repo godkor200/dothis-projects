@@ -1,18 +1,18 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import {
-  WeeklyKeywordsListSourceSchema,
   zChannelAnalysis,
   zDailyViewData,
   zExpectedViewsData,
   zKeywords,
-  zRankRes,
+  zRanking,
   zResWordsPickData,
   zTokenExpired,
   zVideoDetails,
   zVideoHistory,
   zVideoModel,
   zWeeklyKeywordsList,
+  zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/types/dto.types';
 
@@ -29,7 +29,7 @@ export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),
 ) {}
-export class RelWordsRankingRes extends createZodDto(extendApi(zRankRes)) {}
+export class RelWordsRankingRes extends createZodDto(extendApi(zRanking)) {}
 export class KeywordRes extends createZodDto(extendApi(zKeywords)) {}
 export class TokenExpired extends createZodDto(extendApi(zTokenExpired)) {}
 
@@ -39,7 +39,7 @@ export class ExpectedViewsData extends createZodDto(
 
 export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
 export class WeeklyData extends createZodDto(
-  extendApi(WeeklyKeywordsListSourceSchema),
+  extendApi(zWeeklyKeywordsListSourceSchema),
 ) {}
 export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
 

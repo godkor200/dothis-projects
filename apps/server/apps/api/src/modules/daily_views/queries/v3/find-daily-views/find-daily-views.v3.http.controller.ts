@@ -18,7 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import {
-  FindDailyViewsV3Dtos,
+  FindDailyViewsV3Params,
   FindDailyViewsV3Query,
   IIncreaseData,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
@@ -76,7 +76,7 @@ export class FindDailyViewsOsV3HttpController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
     @Param('clusterNumber') clusterNumber: string,
-    @Query() query: FindDailyViewsV3Dtos,
+    @Query() query: FindDailyViewsV3Params,
   ): Promise<IRes<IIncreaseData[]>> {
     const arg = new FindDailyViewsV3Query({
       clusterNumber,

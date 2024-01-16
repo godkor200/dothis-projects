@@ -86,6 +86,9 @@ export class RankRelQueryHandler
     ).filter((item) => item !== null);
 
     if (!channelVideoData.length) return Err(new VideoNotFoundError());
+    /**
+     * 연관어별 기대조회수와 정렬 수치를 계산하는 집계 함수
+     */
     const res =
       this.rankRelAggregateService.calculationExpectationNumberRelatedWord(
         channelVideoData,

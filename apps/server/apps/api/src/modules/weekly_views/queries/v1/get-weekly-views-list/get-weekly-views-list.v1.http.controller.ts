@@ -15,7 +15,10 @@ import {
   IRes,
   WeeklyKeywordsRes,
 } from '@Libs/commons/src/types/res.types';
-import { GetWeeklyViewsQuery } from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
+import {
+  GetWeeklyViewsDto,
+  GetWeeklyViewsQuery,
+} from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
 import { match, Result } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
 
@@ -62,7 +65,8 @@ export class GetWeeklyViewsListV1HttpController {
   async execute(
     @Query() query: GetWeeklyViewsQuery,
   ): Promise<IRes<WeeklyKeywordsRes[]>> {
-    const arg = new GetWeeklyViewsQuery(query);
+    const { from, limit, last, sort, order } = query;
+    const arg = new GetWeeklyViewsDto({ from, limit, last, sort, order });
     const result: Result<WeeklyKeywordsRes[], WeeklyViewsError> =
       await this.queryBus.execute(arg);
 
