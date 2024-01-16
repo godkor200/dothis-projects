@@ -39,13 +39,13 @@ export const zWeeklyKeywordsListSourceSchema = z.object(
   createWeeklyKeywordsListSourceSchema(),
 );
 
-export const zWeeklyKeywordsListResponse = dataObject(
-  zWeeklyKeywordsListSourceSchema,
-);
-
 export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
   _source: zWeeklyKeywordsListSourceSchema,
 });
+
+export const zWeeklyKeywordsList = dataObject(
+  zTotalData.merge(dataObject(z.array(zWeeklyKeywordsLisSchema))),
+);
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
   video_id: z.string(),
@@ -61,10 +61,6 @@ export const zVideoHistory = OsCommonSchema.extend({
 });
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
-
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
-);
 
 const zSortWeeklyViews = zSortQuery(SortOrderQuery);
 
