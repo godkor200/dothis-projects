@@ -1,5 +1,5 @@
 import { from, lastValueFrom, map } from 'rxjs';
-import { VideoOutboundPort } from './video.outbound.port';
+import { VideoQueryHandlerOutboundPort } from './video.query-handler.outbound.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
@@ -18,6 +18,7 @@ import { Err } from 'oxide.ts';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+import { FindVideosDao } from './video.dao';
 
 export class SearchQueryBuilder {
   static video(
@@ -94,14 +95,15 @@ export class SearchQueryBuilder {
     };
   }
 
-  static videoPage(
+  static videoSearchAfter(
     cluster: string,
     limit: number,
     search: string,
     related: string,
-    last: string,
+    last?: string,
+    data?: VIDEO_DATA_KEY[],
   ) {
-    const relWords = related.split(/\s+/);
+    const relWords = related?.split(/\s+/);
 
     let searchQuery = {
       index: cluster,
@@ -137,6 +139,7 @@ export class SearchQueryBuilder {
             ],
           },
         },
+        _source: data || false,
         sort: ['_id'],
       },
     };
@@ -146,10 +149,25 @@ export class SearchQueryBuilder {
     return searchQuery;
   }
 }
+
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
-  implements VideoOutboundPort
+  implements VideoQueryHandlerOutboundPort
 {
+  async findRelatedVideoIdAndChannelIdFullScan(
+    arg: FindVideosDao,
+  ): Promise<any> {
+    const { cluster, keyword, relationKeyword, from, to } = arg;
+    const searchQuery = SearchQueryBuilder.videoSearchAfter(
+      'video-' + cluster,
+      10000,
+      keyword,
+      relationKeyword,
+      undefined,
+      [VIDEO_DATA_KEY.CHANNEL_ID, VIDEO_DATA_KEY.CHANNEL_ID],
+    );
+    return await this.fullScanBySearchAfter(searchQuery, (doc) => doc);
+  }
   async findManyVideo(tag: string): Promise<string[]> {
     const searchQuery = {
       index: 'new_video',
@@ -241,7 +259,7 @@ export class VideoQueryHandler
 
   async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
     const { clusterNumber, limit, search, related, last } = arg;
-    const searchQuery = SearchQueryBuilder.videoPage(
+    const searchQuery = SearchQueryBuilder.videoSearchAfter(
       'video-' + clusterNumber,
       limit,
       search,
@@ -303,7 +321,7 @@ export class VideoQueryHandler
     const multiIndex = arg.clusterNumbers
       .map((item) => 'video-' + item)
       .join(',');
-    const searchQuery = SearchQueryBuilder.videoPage(
+    const searchQuery = SearchQueryBuilder.videoSearchAfter(
       multiIndex,
       limit,
       search,
