@@ -1,6 +1,11 @@
 import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
+import type {
+  SortingQuery,
+  TrendingQuery,
+  trendingTableHeaders,
+} from '@/app/(main)/trending/page';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
@@ -11,16 +16,19 @@ export const videoKeys = {
 
 const useGetTrendingKeywords = (
   {
-    date,
+    startDate,
+    keywordList,
+    selectOptions,
+    sort,
+    order,
     lastIndex_ID,
-  }: {
-    date: string;
-    lastIndex_ID?: string;
-  },
+  }: SortingQuery & TrendingQuery & { lastIndex_ID?: string },
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.weeklyViews.getWeeklyKeywordListWithPaging
   >,
 ) => {
+  const date = startDate.format('YYYY-MM-DD');
+
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
     1,
@@ -30,6 +38,8 @@ const useGetTrendingKeywords = (
         date: date,
         limit: isSignedIn ? 10 : 300,
         lastIndex_ID,
+        sort,
+        order,
       },
     ]),
 
@@ -41,6 +51,8 @@ const useGetTrendingKeywords = (
         limit: isSignedIn ? 10 : 300,
         from: date,
         last: lastIndex_ID,
+        order: order,
+        sort: sort === 'rank' ? 'keyword' : sort,
       },
     }),
     {
