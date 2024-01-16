@@ -32,7 +32,6 @@ const MultiSelector = ({ selectOptions, setSelectOptions }: Props) => {
           return 'bg-grey00 ';
         },
         multiValueRemove: (props) => {
-          console.log(props);
           return 'bg-grey00 hover:!bg-grey00 ';
         },
       }}
