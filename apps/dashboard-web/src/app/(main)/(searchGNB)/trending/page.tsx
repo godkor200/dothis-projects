@@ -12,6 +12,7 @@ import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeyw
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
 
+import { useOpenFilterContext } from './OpenFilterContext';
 import { useTrendingQueryContext } from './TrendingQueryContext';
 
 export type SortingQuery = {
@@ -38,7 +39,7 @@ const TrendingPage = () => {
     order: 'desc',
   });
 
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
   const [selectOptions, setSelectOptions] = useState<
     { value: number; label: string }[]
@@ -78,7 +79,7 @@ const TrendingPage = () => {
 
   return (
     <div className="relative translate-x-0">
-      <div className="flex items-center gap-[20px] p-[24px] ">
+      <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
         <h3 className="text-grey600 font-bold">검색 키워드</h3>
         <ul className="flex items-center gap-[10px]">
           {trendingQueryOption.keywordList.map((item) => (
@@ -100,7 +101,7 @@ const TrendingPage = () => {
           ))}
         </ul>
       </div>
-      <div className="bg-grey200">
+      <div className="bg-grey200 px-[20px]">
         <div className=" mx-auto max-w-[1100px] ">
           <div className="flex items-center gap-[28px] py-[30px]">
             <p className="text-grey700 text-[20px] font-bold">
@@ -112,11 +113,6 @@ const TrendingPage = () => {
             <button className="text-primary500 bg-primary100 rounded-8 ml-auto px-4 py-2 text-[14px]">
               엑셀 데이터로 다운로드 받기
             </button>
-            <SvgComp
-              icon="Filter"
-              size={20}
-              onClick={() => setOpenFilter((prev) => !prev)}
-            />
           </div>
           <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
             <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">

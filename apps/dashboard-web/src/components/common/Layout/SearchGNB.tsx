@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
+import { useOpenFilterContext } from '@/app/(main)/(searchGNB)/trending/OpenFilterContext';
 import { useTrendingQueryContext } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import SvgComp from '@/components/common/SvgComp';
 import SearchBar from '@/components/Trending/TrendingFilter/SearchBar';
@@ -21,6 +22,8 @@ import { cn } from '@/utils/cn';
 const SearchGNB = () => {
   const { trendingQueryOption, setTrendingQueryOption } =
     useTrendingQueryContext('SearchGNB');
+
+  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
   const pathName = usePathname();
   const isSignedIn = useIsSignedIn();
@@ -60,12 +63,9 @@ const SearchGNB = () => {
   };
 
   return (
-    <header className="border-grey300 relative box-border flex h-[5.5rem] w-full items-center border-b border-solid p-5">
+    <header className="border-grey300 relative  box-border  flex h-[5.5rem] w-full items-center border-b  border-solid p-5">
       {/* 이 부분은 Hover 디자인과 클릭 시 기능을 파악하고 추가 작업 */}
 
-      <SearchBar setKeywordList={handleKeywordList} />
-
-      <div>sdsdsds</div>
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
         {isSignedIn ? (
           GNB_MENUS.map((item, index) => (
@@ -88,6 +88,20 @@ const SearchGNB = () => {
             로그인
           </Button>
         )}
+      </div>
+
+      <div className="w-[680px]">
+        <SearchBar setKeywordList={handleKeywordList} />
+      </div>
+
+      <div
+        className={cn(
+          'rounded-8 border-grey400 ml-[20px] flex h-[52px] w-[52px] items-center justify-center border',
+          { '[&_path]:stroke-[#F0516D] bg-primary100': openFilter },
+        )}
+        onClick={() => setOpenFilter((prev) => !prev)}
+      >
+        <SvgComp icon="Filter" size={22} />
       </div>
     </header>
   );
