@@ -12,7 +12,7 @@ import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
 interface Props {
-  setKeywordList: React.Dispatch<React.SetStateAction<string[]>>;
+  setKeywordList: (keyword: string) => void;
 }
 
 const SearchBar = ({ setKeywordList }: Props) => {
@@ -48,12 +48,6 @@ const SearchBar = ({ setKeywordList }: Props) => {
   const handleInput = useDebounce((input) => setSearchInput(input), 200, [
     searchInput,
   ]);
-
-  const handleSetKeywordList = (keyword: string) => {
-    setKeywordList((prev) =>
-      prev.indexOf(keyword) !== -1 ? prev : [...prev, keyword],
-    );
-  };
 
   //로그인 유도 시퀀스
 
@@ -109,7 +103,7 @@ const SearchBar = ({ setKeywordList }: Props) => {
                         if (!checkIsSignedIn()) {
                           return;
                         }
-                        handleSetKeywordList(item);
+                        setKeywordList(item);
                         return;
                       }}
                     >

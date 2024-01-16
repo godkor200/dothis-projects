@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
-import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/page';
+import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
 import SearchBar from '@/components/Trending/TrendingFilter/SearchBar';
@@ -40,11 +40,17 @@ const TrendingFilter = ({
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
   };
 
+  const handleSetKeywordList = (keyword: string) => {
+    setKeywordList((prev) =>
+      prev.indexOf(keyword) !== -1 ? prev : [...prev, keyword],
+    );
+  };
+
   return (
     <div className="bg-grey00 border-l-1 border-grey400 fixed inset-y-0 right-0  z-auto w-[465px] px-[26px] pt-[80px]">
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
-      <SearchBar setKeywordList={setKeywordList} />
+      <SearchBar setKeywordList={handleSetKeywordList} />
 
       <p className="text-grey600 mb-[20px] mt-[80px] font-bold">검색 키워드</p>
 
