@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import styles from '../normalize.module.css';
+import styles from '../..normalize.module.css';
 
 const PrivacyPage = () => {
   return (

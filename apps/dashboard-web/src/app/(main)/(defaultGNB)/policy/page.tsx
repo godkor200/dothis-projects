@@ -1,4 +1,4 @@
-import styles from '../normalize.module.css';
+import styles from '../../normalize.module.css';
 
 const PolicyPage = () => {
   return (
