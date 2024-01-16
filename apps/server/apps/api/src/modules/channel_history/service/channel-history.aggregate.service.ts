@@ -3,9 +3,16 @@ import {
   ISection,
   SECTION_NUMBER,
 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
-import { IExpectedData } from '@Apps/modules/channel_history/queries/v2/exprected-views/expected-views.v2.http.controller';
-import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 
+import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
+import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
+interface IDailyPerformance {
+  [date: string]: {
+    performanceTotal: number;
+    videoViewsTotal: number;
+    videoCount: number;
+  };
+}
 export class ChannelHistoryAggregateService {
   /**
    * 기획상 구독자 범위
@@ -70,28 +77,31 @@ export class ChannelHistoryAggregateService {
     return rangesWithCount;
   }
   /**
-   *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수 계산
+   * 날짜별 성과 리턴
+   *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수(성과) 계산
    *   2. 날짜 별로 계산된 것을 모두 더하고 평균을 내어 리턴
-   */
-  /**
-   * 평균 기대조회수 리턴
+   *
+   *   성과 :  이 주제로 인해 영상 조회수가 채널의 평소 조회수보다 얼마나 많이 나왔는가를 뜻하는 수치
+   *   계산식 :
+   *    영상의 조회수 / 채널의 평균 조회수
+   *
    * @param channelHistories
    * @private
    */
-  calculateAverageViews(
+  calculateDailyPerformance(
     channelHistories:
       | IChannelHistory[]
       | IChannelHistoryWithoutChannelSubscribers[],
-  ): IExpectedData[] {
-    let dateViewRatios: { [date: string]: { total: number; count: number } } =
-      {};
+  ): IDailyPerformance {
+    let dateViewRatios: IDailyPerformance = {};
     for (let channel of channelHistories) {
       let channelAvgViews = channel._source.channel_average_views;
       let videoList = channel.inner_hits.video_list.hits.hits;
       for (let video of videoList) {
         let videoViews = video._source.video_views;
         if (channelAvgViews !== 0) {
-          let viewsRatio = videoViews / channelAvgViews;
+          // 성과
+          let performance = videoViews / channelAvgViews;
           let videoDate = new Date(video._source.crawled_date);
           let dateString = `${videoDate.getFullYear()}-${(
             videoDate.getMonth() + 1
@@ -103,19 +113,53 @@ export class ChannelHistoryAggregateService {
             .padStart(2, '0')}`;
 
           if (!dateViewRatios[dateString]) {
-            dateViewRatios[dateString] = { total: 0, count: 0 };
+            dateViewRatios[dateString] = {
+              performanceTotal: 0,
+              videoViewsTotal: 0,
+              videoCount: 0,
+            };
           }
-          dateViewRatios[dateString].total += viewsRatio;
-          dateViewRatios[dateString].count += 1;
+          dateViewRatios[dateString].performanceTotal += performance;
+          dateViewRatios[dateString].videoViewsTotal += videoViews;
+          dateViewRatios[dateString].videoCount += 1;
         }
       }
     }
-
-    let result: IExpectedData[] = [];
+    return dateViewRatios;
+  }
+  /**
+   * 키워드 성과 계산
+   */
+  calculateKeywordPerformance(
+    dateViewRatios: IDailyPerformance,
+  ): TExpectedViewsArr {
+    let result: TExpectedViewsArr = [];
     for (let date in dateViewRatios) {
-      let averageViewsRatio =
-        dateViewRatios[date].total / dateViewRatios[date].count;
-      result.push({ date: date, expected_views: averageViewsRatio });
+      let keywordPerformance =
+        dateViewRatios[date].performanceTotal / dateViewRatios[date].videoCount;
+
+      result.push({
+        date: date,
+        expected_views: keywordPerformance,
+      });
+    }
+    return result;
+  }
+
+  calculateKeywordSortFigure(dateViewRatios: IDailyPerformance) {
+    let result: TRankingArrayOmitWord[] = [];
+
+    for (let date in dateViewRatios) {
+      let figure =
+        (dateViewRatios[date].performanceTotal *
+          dateViewRatios[date].videoViewsTotal) /
+        dateViewRatios[date].videoCount;
+      let keywordPerformance =
+        dateViewRatios[date].performanceTotal / dateViewRatios[date].videoCount;
+      result.push({
+        expectedViews: keywordPerformance,
+        sortFigure: figure,
+      });
     }
     return result;
   }

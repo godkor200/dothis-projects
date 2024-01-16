@@ -1,5 +1,12 @@
 import { z } from 'zod';
-import { dataObject, zTotalData } from '../common.model';
+import {
+  dataObject,
+  zTotalData,
+  dateQuery,
+  zPaginatedQuery,
+  zSortQuery,
+} from '../common.model';
+import * as cluster from 'cluster';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -8,9 +15,7 @@ export const zDailyViewData = z.object({
   increase_views: z.number(),
 });
 
-export const zDailyViews = z.object({
-  data: z.array(zDailyViewData),
-});
+export const zDailyViews = dataObject(z.array(zDailyViewData));
 
 const OsCommonSchema = z.object({
   _index: z.string(),
@@ -18,7 +23,7 @@ const OsCommonSchema = z.object({
   _score: z.number(),
 });
 
-export const WeeklyKeywordsListSourceSchema = z.object({
+const createWeeklyKeywordsListSourceSchema = () => ({
   keyword: z.string(),
   category: z.string(),
   weekly_views: z.number(),
@@ -26,13 +31,20 @@ export const WeeklyKeywordsListSourceSchema = z.object({
   competitive: z.number(),
   mega_channel: z.number(),
 });
+export const SortOrderQuery = Object.keys(
+  createWeeklyKeywordsListSourceSchema(),
+);
+
+export const zWeeklyKeywordsListSourceSchema = z.object(
+  createWeeklyKeywordsListSourceSchema(),
+);
 
 export const zWeeklyKeywordsListResponse = dataObject(
-  WeeklyKeywordsListSourceSchema,
+  zWeeklyKeywordsListSourceSchema,
 );
 
 export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
-  _source: WeeklyKeywordsListSourceSchema,
+  _source: zWeeklyKeywordsListSourceSchema,
 });
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
@@ -50,6 +62,12 @@ export const zVideoHistory = OsCommonSchema.extend({
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
-export const zWeeklyKeywordsList = dataObject(
-  zTotalData.merge(dataObject(OsCommonSchema.merge(zWeeklyKeywordsLisSchema))),
+export const zWeeklyKeywordsList = zTotalData.merge(
+  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
 );
+
+const zSortWeeklyViews = zSortQuery(SortOrderQuery);
+
+export const zGetWeeklyViewsQuery = zPaginatedQuery
+  .merge(dateQuery.pick({ from: true }))
+  .merge(zSortWeeklyViews);

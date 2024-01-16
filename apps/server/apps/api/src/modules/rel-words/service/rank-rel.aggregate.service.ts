@@ -19,17 +19,27 @@ export class RankRelAggregateService {
       let videos = channelVideoData[i].data;
       let relWord = channelVideoData[i].relWord;
 
-      const expectedViewsData =
-        this.channelHistoryAggregateService.calculateAverageViews(videos);
+      const dailyPerformance =
+        this.channelHistoryAggregateService.calculateDailyPerformance(videos);
 
+      const expectedViewsData =
+        this.channelHistoryAggregateService.calculateKeywordSortFigure(
+          dailyPerformance,
+        );
       let totalExpectedViews = 0;
+      let totalVideoViews = 0;
       for (let data of expectedViewsData) {
-        totalExpectedViews += data.expected_views;
+        totalExpectedViews += data.expectedViews;
+        totalVideoViews += data.sortFigure;
       }
 
       let averageExpectedViews = totalExpectedViews / expectedViewsData.length;
-
-      result.push({ expectedViews: averageExpectedViews, word: relWord });
+      let sortFigure = totalVideoViews / expectedViewsData.length;
+      result.push({
+        expectedViews: averageExpectedViews,
+        sortFigure,
+        word: relWord,
+      });
     }
 
     return result;

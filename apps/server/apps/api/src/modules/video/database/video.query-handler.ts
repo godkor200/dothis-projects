@@ -17,6 +17,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { Err } from 'oxide.ts';
 import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 
 export class SearchQueryBuilder {
   static video(
@@ -24,8 +25,8 @@ export class SearchQueryBuilder {
     keyword: string,
     relWord: string,
     data?: VIDEO_DATA_KEY[],
-    from?: Date,
-    to?: Date,
+    from?: string,
+    to?: string,
     size: number = 100,
   ) {
     const relWords = relWord.split(/\s+/);
@@ -223,7 +224,7 @@ export class VideoQueryHandler
   }
 
   async findVideoIdFullScanAndVideos<T>(
-    query: FindVideoDateQuery,
+    query: FindDailyViewsV3Dto,
   ): Promise<T[] | ScrollApiError> {
     const { clusterNumber, keyword, relationKeyword, data, from, to } = query;
     const searchQuery = SearchQueryBuilder.video(

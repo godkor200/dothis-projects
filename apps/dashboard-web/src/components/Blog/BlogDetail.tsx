@@ -10,7 +10,7 @@ const BlogDetail = () => {
   return (
     <li className={styles.container}>
       <h1>{'유튜브 조회수 카운팅 기준은?'}</h1>
-      <p className={styles.date}>{'2023-09-08 11:57'}</p>
+      <p className={styles.date}>{'2023.09.08. 11:57'}</p>
       <div className={styles.contentDivision}>
         <p>
           안녕하세요! 영상 기획 어시스턴트 두디스입니다. 오늘은 유튜브 영상
