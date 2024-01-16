@@ -14,7 +14,7 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
   return (
     <AuthProvider>
       {children}
-      {searchParams?.get('steps') === 'signUp' && isOpenSignUpModal && (
+      {searchParams?.get('steps') === 'sign_up' && isOpenSignUpModal && (
         <Modal>
           <SignUpModal />
         </Modal>

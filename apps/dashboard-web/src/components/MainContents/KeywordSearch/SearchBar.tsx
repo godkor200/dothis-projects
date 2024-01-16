@@ -96,7 +96,7 @@ const SearchBar = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
-    router.push('?steps=signUp');
+    router.push('?steps=sign_up');
     return false;
   };
 
