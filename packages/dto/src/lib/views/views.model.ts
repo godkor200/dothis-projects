@@ -6,7 +6,6 @@ import {
   zPaginatedQuery,
   zSortQuery,
 } from '../common.model';
-import * as cluster from 'cluster';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -43,6 +42,10 @@ export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
   _source: zWeeklyKeywordsListSourceSchema,
 });
 
+export const zWeeklyKeywordsList = dataObject(
+  zTotalData.merge(dataObject(z.array(zWeeklyKeywordsLisSchema))),
+);
+
 const VideoHistorySourceSchema = OsCommonSchema.extend({
   video_id: z.string(),
   video_views: z.number(),
@@ -57,10 +60,6 @@ export const zVideoHistory = OsCommonSchema.extend({
 });
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
-
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
-);
 
 const zSortWeeklyViews = zSortQuery(SortOrderQuery);
 

@@ -2,24 +2,20 @@
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 import Modal from '@/components/common/Modal/Modal';
 import SvgComp from '@/components/common/SvgComp';
-import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
-import {
-  useCreateSearchwordMutation,
-  useResetSearchwordMutation,
-} from '@/hooks/react-query/mutation/useSearchwordMutation';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
-import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
-import MyKeywordList from './MyKeywordList';
+interface Props {
+  setKeywordList: (keyword: string) => void;
+}
 
-const SearchBar = () => {
+const SearchBar = ({ setKeywordList }: Props) => {
   // 비제어로 하려고 했지만, submit조건이 아니고 계속 트랙킹을 해야해서 적절하지않은 것 같다.
   // const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -47,44 +43,11 @@ const SearchBar = () => {
 
   const isSignedIn = useIsSignedIn();
 
-  const { data: userData } = useGetUserInfo();
-
   const { data } = useGetAutoCompleteWord(searchInput);
 
   const handleInput = useDebounce((input) => setSearchInput(input), 200, [
     searchInput,
   ]);
-
-  const { mutate: createSearchwordMutate } = useCreateSearchwordMutation();
-
-  const { mutate: resetKeywordMutate } = useResetKeywordMutation();
-
-  const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
-
-  const handleResetKeyword = () => {
-    resetSearchwordMutate();
-    resetKeywordMutate();
-  };
-
-  const checkHashKeyword = useCallback(
-    (userKeyword: string | undefined | null, keyword: string) => {
-      if (userKeyword === null || userKeyword === undefined) {
-        return false;
-      }
-
-      // 문자열을 콤마(,)로 분리하여 배열로 만듭니다.
-      const dataArray = userKeyword.split(',');
-
-      for (let i = 0; i < dataArray.length; i++) {
-        if (dataArray[i].includes(keyword)) {
-          return dataArray[i].endsWith('#');
-        }
-      }
-      // 키워드를 찾지 못한 경우
-      return false;
-    },
-    [],
-  );
 
   //로그인 유도 시퀀스
 
@@ -140,31 +103,13 @@ const SearchBar = () => {
                         if (!checkIsSignedIn()) {
                           return;
                         }
-                        createSearchwordMutate(item.replace('*', ''));
+                        setKeywordList(item);
                         return;
                       }}
                     >
                       {item.replace('*', '')}
                     </span>
                   ))}
-              </div>
-              <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
-              <div className="border-grey300 mt-[20px] flex flex-wrap gap-[10px] border-b-2 pb-[30px]  ">
-                {isSignedIn && (
-                  <MyKeywordList
-                    userKeywordList={userData?.personalizationTag}
-                    searchWordList={userData?.searchWord}
-                  />
-                )}
-              </div>
-              <div className="my-5 flex items-center justify-between">
-                <p className="text-grey500 text-[18px]">키워드 초기화</p>
-                <div
-                  className="border-1 border-grey500 bg-grey200 rounded-8 cursor-pointer px-5 py-2"
-                  onClick={handleResetKeyword}
-                >
-                  <SvgComp icon="KeywordReset" size={24} />
-                </div>
               </div>
             </>
           )}

@@ -1,18 +1,30 @@
 'use client';
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
+import { useOpenFilterContext } from '@/app/(main)/(searchGNB)/trending/OpenFilterContext';
+import { useTrendingQueryContext } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import SvgComp from '@/components/common/SvgComp';
+import SearchBar from '@/components/Trending/TrendingFilter/SearchBar';
 import { GNB_MENUS } from '@/constants/SideMenus';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
-const GNB = () => {
+
+const SearchGNB = () => {
+  const { trendingQueryOption, setTrendingQueryOption } =
+    useTrendingQueryContext('SearchGNB');
+
+  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
+
   const pathName = usePathname();
   const isSignedIn = useIsSignedIn();
   const { setIsOpenSignUpModal } = useAuthActions();
@@ -42,8 +54,16 @@ const GNB = () => {
     router.push(route);
   };
 
+  const handleKeywordList = (keyword: string) => {
+    setTrendingQueryOption((prev) =>
+      prev.keywordList.indexOf(keyword) !== -1
+        ? prev
+        : { ...prev, keywordList: [...prev.keywordList, keyword] },
+    );
+  };
+
   return (
-    <header className="border-grey300 relative box-border flex h-[5.5rem] w-full items-center justify-center border-b border-solid p-5">
+    <header className="border-grey300 relative  box-border  flex h-[5.5rem] w-full items-center border-b  border-solid p-5">
       {/* 이 부분은 Hover 디자인과 클릭 시 기능을 파악하고 추가 작업 */}
 
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
@@ -69,7 +89,21 @@ const GNB = () => {
           </Button>
         )}
       </div>
+
+      <div className="w-[680px]">
+        <SearchBar setKeywordList={handleKeywordList} />
+      </div>
+
+      <div
+        className={cn(
+          'rounded-8 border-grey400 ml-[20px] flex h-[52px] w-[52px] items-center justify-center border',
+          { '[&_path]:stroke-[#F0516D] bg-primary100': openFilter },
+        )}
+        onClick={() => setOpenFilter((prev) => !prev)}
+      >
+        <SvgComp icon="Filter" size={22} />
+      </div>
     </header>
   );
 };
-export default GNB;
+export default SearchGNB;
