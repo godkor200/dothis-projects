@@ -10,9 +10,9 @@ export const zPaginatedQuery = z.object({
 });
 
 export const zSortQuery = (enumElement: Array<string>) => {
-  if (!enumElement.length) {
-    return z.object(undefined);
-  }
+  // if (!enumElement.length) {
+  //   return z.object(undefined);
+  // }
   return z.object({
     sort: z.enum([enumElement[0], ...enumElement.slice(1)]).optional(),
     order: z.enum(['asc', 'desc'] as const).optional(),
