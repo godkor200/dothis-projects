@@ -3,9 +3,9 @@ import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
 import type {
   SortingQuery,
-  TrendingQuery,
   trendingTableHeaders,
 } from '@/app/(main)/(searchGNB)/trending/page';
+import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';

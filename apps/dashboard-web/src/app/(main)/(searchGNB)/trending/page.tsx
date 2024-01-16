@@ -2,7 +2,7 @@
 
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -12,11 +12,7 @@ import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeyw
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
 
-export type TrendingQuery = {
-  selectOptions: { value: number; label: string }[];
-  keywordList: string[];
-  startDate: Dayjs;
-};
+import { useTrendingQueryContext } from './TrendingQueryContext';
 
 export type SortingQuery = {
   sort: (typeof trendingTableHeaders)[number]['key'];
@@ -34,13 +30,8 @@ export const trendingTableHeaders = [
 ] as const;
 
 const TrendingPage = () => {
-  const [trendingQueryOption, setTrendingQueryOption] = useState<TrendingQuery>(
-    {
-      selectOptions: [],
-      keywordList: [],
-      startDate: dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
-    },
-  );
+  const { trendingQueryOption, setTrendingQueryOption } =
+    useTrendingQueryContext('trendingPage');
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
