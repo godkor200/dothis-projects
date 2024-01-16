@@ -91,7 +91,7 @@ const TrendingPage = () => {
           ))}
         </ul>
       </div>
-      <div className="bg-grey200 px-[20px]">
+      <div className="bg-grey200 min-h-[1200px] px-[20px] pb-[300px]">
         <div className=" mx-auto max-w-[1100px] ">
           <div className="flex items-center gap-[28px] py-[30px]">
             <p className="text-grey700 text-[20px] font-bold">
