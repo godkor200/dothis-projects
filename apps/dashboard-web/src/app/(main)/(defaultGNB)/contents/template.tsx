@@ -68,7 +68,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
             'border-primary500   border-b-4 border-solid text-grey700':
               mainTab !== 'all',
           })}
-          onClick={() => router.push('?main=recomand')}
+          onClick={() => router.push('?main=recommend')}
         >
           추천
         </li>
