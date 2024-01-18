@@ -7,7 +7,7 @@ import SvgComp from '../SvgComp';
 
 const Footer = () => {
   return (
-    <footer className="border-t-grey400 h-[340px] border-t border-solid py-[4rem] pl-[3rem] pr-12">
+    <footer className="border-t-grey400 h-[300px] border-t border-solid py-[3rem] pl-[3rem] pr-12">
       <div className="mb-10 flex items-center justify-end">
         <div className="mr-auto">
           <Link href={'/'} title="두디스 홈">
@@ -60,7 +60,7 @@ const Footer = () => {
       <p className="text-grey600 mb-[1.25rem] text-[0.875rem]">
         두디스 | 대표 : 민상현 | 개인정보 보호 최고책임자 : 유병국
         <br />
-        사업자등록번호 : 685-87-02606 | 메일 : &nbsp;
+        사업자등록번호 : 685-87-02606 | TEL : 070-8028-1139 | 메일 : &nbsp;
         <a href={`mailto:${ContactMail}`}>{ContactMail}</a>
         <br />
         주소 : 서울시 서대문구 연세로2다길 19, 304호(창천동)
@@ -68,7 +68,7 @@ const Footer = () => {
         19, Yonsei-ro 2da-gil, Seodaemun-gu, Seoul, Republic of Korea
       </p>
       <span className="text-grey500 text-[0.75rem]">
-        Copyright ⓒ 2023 Dothis, Inc. All rights reserved
+        Copyright ⓒ 2024 Dothis, Inc. All rights reserved
       </span>
     </footer>
   );
