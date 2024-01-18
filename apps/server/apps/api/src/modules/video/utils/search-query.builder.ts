@@ -104,12 +104,14 @@ export class SearchQueryBuilder {
                               fields: ['video_tags', 'video_title'],
                             },
                           },
-                          ...relWords.map((word) => ({
-                            multi_match: {
-                              query: word,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          })),
+                          ...(relWords
+                            ? relWords.map((word) => ({
+                                multi_match: {
+                                  query: word,
+                                  fields: ['video_tags', 'video_title'],
+                                },
+                              }))
+                            : []),
                         ],
                       },
                     },

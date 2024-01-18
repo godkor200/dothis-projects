@@ -41,10 +41,11 @@ $ npm run start:prod
 ├── infrastructure
 │   ├── repositories
 │   └── services
-└── interfaces
-├── controllers
-├── dtos
-└── middlewares
+├── interfaces
+│   ├── dtos
+│   └── middlewares
+└── controllers
+
 
 ```
 
@@ -99,9 +100,6 @@ $ npm run start:prod
 4. **interfaces**: 인터페이스 계층은 사용자 인터페이스나 외부 시스템과의 통신을 담당합니다. 이 폴더에는 컨트롤러, 라우터, 미들웨어, 요청/응답 DTO 등이 들어갑니다.
 
 ```bash
-├── controllers
-│   ├── UserController.ts
-│   └── PostController.ts
 ├── dtos
 │   ├── CreateUserRequestDto.ts
 │   └── CreateUserResponseDto.ts

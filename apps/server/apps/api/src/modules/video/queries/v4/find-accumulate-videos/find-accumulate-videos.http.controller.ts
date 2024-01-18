@@ -33,26 +33,6 @@ const { summary, responses, description } = c.getAccVideo;
 export class FindAccumulateVideosV4HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @ApiQuery({
-    name: 'keyword',
-    description: '탐색어',
-    example: '페이커',
-  })
-  @ApiQuery({
-    name: 'relationKeyword',
-    description: '연관어, 연관어가 없다면 없어도됩니다.',
-    example: '롤드컵',
-  })
-  @ApiQuery({
-    name: 'from',
-    description: '언제부터 날짜',
-    example: '2023-11-23',
-  })
-  @ApiQuery({
-    name: 'to',
-    description: '까지 날짜',
-    example: '2023-11-30',
-  })
   @ApiOperation({
     summary,
     description,

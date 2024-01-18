@@ -5,7 +5,12 @@ import { z, ZodTypeAny } from 'zod';
  */
 export const zSearchKeyword = z.object({
   keyword: z.string().describe('탐색어').default('먹방'),
-  related: z.string().describe('연관어').default('돼지고기').optional(),
+  related: z
+    .string()
+    .describe('연관어')
+    .default('돼지고기')
+    .optional()
+    .nullable(),
 });
 /**
  * 기본 날짜 쿼리

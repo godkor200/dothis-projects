@@ -55,6 +55,7 @@ export class FindAccumulateVideosV4QueryHandler
      */
     const dao = new FindVideosDao({ cluster: 'data', ...arg });
     const videos = await this.video.findRelatedVideoIdAndChannelIdFullScan(dao);
+    console.log(videos);
     /**
      * TODO: 비디오의 채널 id를 통해 channel_history에 채널 구독자수를 불러오는 로직 추가해야됨
      */
