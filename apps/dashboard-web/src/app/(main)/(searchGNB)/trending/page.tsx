@@ -2,6 +2,7 @@
 
 import { Button as DesignButton } from 'dashboard-storybook/src/components/Button/Button';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -143,7 +144,7 @@ const TrendingPage = () => {
             </button>
           </div>
           <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
-            <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
+            <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
               {trendingTableHeaders.map(({ label, key }) => (
                 <div
                   key={key}
@@ -173,7 +174,7 @@ const TrendingPage = () => {
                 <li
                   key={index}
                   className={cn(
-                    'grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] pl-[18px] items-center gap-[12px] ',
+                    'grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] pl-[18px] items-center gap-[12px] group',
                     {
                       'shadow-[inset_0_-2px_0_0_#f4f4f5]':
                         index !== arr.length - 1 || hasNextPage,
@@ -208,6 +209,13 @@ const TrendingPage = () => {
                   </div>
                   <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
                     {item._source.mega_channel?.toLocaleString('ko-kr')}
+                  </div>
+                  <div className="invisible group-hover:visible">
+                    <Link href={`/contents?keyword=${item._source.keyword}`}>
+                      <DesignButton theme="outlined" size="S">
+                        자세히
+                      </DesignButton>
+                    </Link>
                   </div>
                 </li>
               ))}
