@@ -117,3 +117,12 @@ $ npm run start:prod
 로그인 시퀀스 : [read more here](https://docs.google.com/presentation/d/e/2PACX-1vR9SYkIkXdMKt1jiBZ-KcU3rHpkAvCqYYoKhRTQwIjg9UO6sWmgU1yrMJuW67Cr69Tc82cSxxuOExsV/pub?start=false&loop=false&delayms=3000).
 
 api doc : [doc](https://api.dothis.kr/docs)
+
+## Author Information
+
+이름: 유병국
+
+Email: godkor200@gmail.com
+
+GitHub: [GitHub](https://github.com/godkor200)
+
