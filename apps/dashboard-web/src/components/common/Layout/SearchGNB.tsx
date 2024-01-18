@@ -96,7 +96,7 @@ const SearchGNB = () => {
 
       <div
         className={cn(
-          'rounded-8 border-grey400 ml-[20px] flex h-[52px] w-[52px] items-center justify-center border',
+          'rounded-8 border-grey400 ml-[20px] flex h-[52px] w-[52px] items-center justify-center border cursor-pointer',
           { '[&_path]:stroke-[#F0516D] bg-primary100': openFilter },
         )}
         onClick={() => setOpenFilter((prev) => !prev)}
