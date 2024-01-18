@@ -10,7 +10,7 @@ import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IRes, VideoRes } from '@Libs/commons/src/types/res.types';
 import {
-  FindVideoPageV2Query,
+  FindVideoPageV2Dto,
   IFindVideoPageQuery,
 } from './find-video-paging.req.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
@@ -26,22 +26,6 @@ const { summary, responses, description } = c.getVideoPageV2;
 export class FindVideoPageV2HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  /**
-   * 연관콘텐츠 영상 api
-   * 입력 : 탐색어, 연관어
-   * - perfomence field 기준 정렬
-   * - 영상 50개까지 큐레이팅
-   * - 페이지 당 5개씩 페이지네이션
-   * 출력 : video_id[50] (list)
-   *
-   * 하단부 연관 콘텐츠 부분 유튜브 영상 나열하는데 사용
-   */
-  @ApiQuery({
-    name: 'search',
-    required: true,
-    description: '탐색어',
-    example: '고기',
-  })
   @ApiQuery({
     name: 'related',
     required: false,
@@ -75,16 +59,16 @@ export class FindVideoPageV2HttpController {
   async execute(
     @Query() query: IFindVideoPageQuery,
   ): Promise<IRes<IPagingRes>> {
-    const { limit, search, related, last, cluster } = query;
-    const clusterNumbers = cluster.split(',').map((item) => Number(item));
-    console.log(clusterNumbers, cluster);
-    const arg = new FindVideoPageV2Query({
-      clusterNumbers,
+    const { limit, keyword, related, last, cluster } = query;
+
+    const arg = new FindVideoPageV2Dto({
+      cluster,
       limit,
-      search,
+      keyword,
       related,
       last,
     });
+    console.log(arg);
     const result: Result<IPagingRes, VideoNotFoundError> =
       await this.queryBus.execute(arg);
 

@@ -1,6 +1,8 @@
 import { IQuery } from '@nestjs/cqrs';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
-import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { zFindAccumulateQuery } from '@dothis/dto';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { extendApi } from '@anatine/zod-openapi';
 
 export class FindAccumulateVideosDtos implements IQuery {
   readonly clusterNumber: string;
@@ -41,5 +43,25 @@ export class FindAccumulateVideosV2Dtos implements IQuery {
     this.keyword = props.keyword;
     this.from = props.from;
     this.to = props.to;
+  }
+}
+
+export class FindAccumulateQuery extends createZodDto(
+  extendApi(zFindAccumulateQuery),
+) {
+  constructor(props: FindAccumulateQuery) {
+    super();
+    Object.assign(this, props);
+  }
+}
+
+export class FindAccumulateVideosV1Dto extends FindAccumulateQuery {
+  constructor(props: FindAccumulateVideosV1Dto) {
+    super(props);
+  }
+}
+export class FindAccumulateVideosV4Dto extends FindAccumulateQuery {
+  constructor(props: FindAccumulateVideosV4Dto) {
+    super(props);
   }
 }

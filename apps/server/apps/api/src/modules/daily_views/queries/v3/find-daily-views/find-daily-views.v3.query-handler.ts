@@ -9,7 +9,7 @@ import {
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
-import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
+import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
 import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IVideoHistory } from '@Apps/modules/video/interface/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
@@ -34,7 +34,7 @@ export class FindDailyViewsQueryOsV3Handler
 {
   constructor(
     @Inject(VIDEO_OS_DI_TOKEN)
-    private readonly video: VideoOutboundPort,
+    private readonly video: VideoQueryHandlerOutboundPort,
 
     private readonly videoAggregateService: VideoAggregateService,
   ) {}

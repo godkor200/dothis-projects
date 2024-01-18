@@ -16,7 +16,7 @@ describe('예외 처리', () => {
     try {
       await controller.execute('6', {
         limit: 5,
-        search: '고기',
+        keyword: '고기',
         related: '영화평론',
       });
     } catch (err) {
