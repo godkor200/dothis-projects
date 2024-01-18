@@ -2,7 +2,7 @@ import { z } from 'zod';
 import {
   dataObject,
   zTotalData,
-  dateQuery,
+  zDateQuery,
   zPaginatedQuery,
   zSortQuery,
 } from '../common.model';
@@ -65,5 +65,5 @@ export const zWeeklyKeywordsList = zTotalData.merge(
 const zSortWeeklyViews = zSortQuery(SortOrderQuery);
 
 export const zGetWeeklyViewsQuery = zPaginatedQuery
-  .merge(dateQuery.pick({ from: true }))
+  .merge(zDateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews);
