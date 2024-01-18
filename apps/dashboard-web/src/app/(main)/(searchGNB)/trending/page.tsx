@@ -1,7 +1,9 @@
 'use client';
 
+import { Button as DesignButton } from 'dashboard-storybook/src/components/Button/Button';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -9,6 +11,7 @@ import TrendingFilter from '@/components/Trending/TrendingFilter';
 import { clustersCategories } from '@/constants/clusterCategories';
 import { trendingTableHeaders } from '@/constants/trendingTable';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
+import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
 
@@ -24,12 +27,14 @@ const TrendingPage = () => {
   const { trendingQueryOption, setTrendingQueryOption } =
     useTrendingQueryContext('trendingPage');
 
+  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
+
+  const [lastId, setLastId] = useState<string | undefined>('');
+
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
     order: 'desc',
   });
-
-  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
   const [selectOptions, setSelectOptions] = useState<
     { value: number; label: string }[]
@@ -41,13 +46,42 @@ const TrendingPage = () => {
     dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
   );
 
-  const { data, total } = useGetTrendingKeywords({
-    selectOptions: trendingQueryOption.selectOptions,
-    keywordList: trendingQueryOption.keywordList,
-    startDate: trendingQueryOption.startDate,
-    order: sortingParams.order,
-    sort: sortingParams.sort,
-  });
+  const isSignedIn = useIsSignedIn();
+
+  const { setIsOpenSignUpModal } = useAuthActions();
+
+  const router = useRouter();
+
+  const { data, total, fetchNextPage, hasNextPage, isLoading, isFetching } =
+    useGetTrendingKeywords({
+      selectOptions: trendingQueryOption.selectOptions,
+      keywordList: trendingQueryOption.keywordList,
+      startDate: trendingQueryOption.startDate,
+      order: sortingParams.order,
+      sort: sortingParams.sort,
+      lastIndex_ID: lastId,
+    });
+
+  const handleFetchNextPage = () => {
+    if (!isSignedIn) {
+      setIsOpenSignUpModal(true);
+
+      router.push('?steps=sign_up', false);
+      return;
+    }
+
+    // if(basic){
+    // 회원 레벨 조건
+    // }
+
+    fetchNextPageWithCheck();
+  };
+
+  const fetchNextPageWithCheck = () => {
+    if (!isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const handleDeleteKeyword = (keyword: string) => {
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
@@ -66,6 +100,10 @@ const TrendingPage = () => {
       return { ...prev, sort: key };
     });
   };
+
+  useEffect(() => {
+    setLastId(data?.at(-1)?._id);
+  }, [JSON.stringify(data)]);
 
   return (
     <div className="relative translate-x-0">
@@ -132,19 +170,19 @@ const TrendingPage = () => {
             </div>
             <ul>
               {data?.map((item, index, arr) => (
-                <div
+                <li
                   key={index}
                   className={cn(
                     'grid grid-cols-[40px_140px_140px_140px_140px_140px_minmax(150px,1fr)] pl-[18px] items-center gap-[12px] ',
                     {
                       'shadow-[inset_0_-2px_0_0_#f4f4f5]':
-                        index !== arr.length - 1,
+                        index !== arr.length - 1 || hasNextPage,
                     },
                   )}
                 >
                   <div className=" items-center gap-[10px]">
                     <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                      {index + 1}
+                      {Number(item._id) + 1}
                     </div>
                   </div>
                   <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
@@ -171,8 +209,17 @@ const TrendingPage = () => {
                   <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
                     {item._source.mega_channel?.toLocaleString('ko-kr')}
                   </div>
-                </div>
+                </li>
               ))}
+              <div className="flex justify-center py-[42px]">
+                <DesignButton
+                  theme="outlined"
+                  size="L"
+                  onClick={handleFetchNextPage}
+                >
+                  더보기
+                </DesignButton>
+              </div>
             </ul>
           </div>
 
