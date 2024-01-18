@@ -1,9 +1,11 @@
+import type { Route } from 'next';
+
 import type { SVGType } from '@/components/common/SvgComp';
 
 interface SideMenus {
   title: string;
   icon: SVGType;
-  link: string;
+  link: Route;
 }
 
 export const SIDE_MENUS: SideMenus[] = [
@@ -13,24 +15,19 @@ export const SIDE_MENUS: SideMenus[] = [
     link: '/contents',
   },
   {
-    title: '인기 영상 분석',
-    icon: 'SideMagicPen',
-    link: '/chart2',
-  },
-  {
     title: '내 채널 분석',
     icon: 'SideUser',
-    link: '/chart3',
+    link: '/preparing',
   },
   {
-    title: '인기 키워드 분석',
+    title: '키워드 순위 분석',
     icon: 'SideTrendUp',
-    link: '/chart4',
+    link: '/trending',
   },
   {
     title: '커뮤니티',
     icon: 'SideMessage',
-    link: '/chart5',
+    link: '/preparing',
   },
 ];
 

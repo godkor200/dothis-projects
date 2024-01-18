@@ -56,6 +56,7 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
           const data = await apiServer(1).auth.getOwnInfo();
 
           if (data.status === 200) {
+            setIsTokenRequired(false);
             if (!data.body.data?.agreePromotion) {
               router.push('/auth/terms');
             }

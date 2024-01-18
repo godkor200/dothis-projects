@@ -76,7 +76,7 @@ export const zVideoResponse = z.object({
     data: z.array(
       z.object({
         sort: z.object({ 0: z.string() }),
-        _id: z.number().nullable().describe('The id of video'),
+        _id: z.string(),
         _index: z.string(),
         _score: z.null(),
         _source: z.object({
@@ -167,10 +167,12 @@ export const ChannelPerformance = z.object({
 });
 
 export const zVideoDetails = z.object({
-  videoTags: z.string(),
-  videoPerformance: VideoPerformance,
-  videoPrediction: zVideoPrediction,
-  channelPerformance: ChannelPerformance,
+  data: z.object({
+    videoTags: z.string(),
+    videoPerformance: VideoPerformance,
+    videoPrediction: zVideoPrediction,
+    channelPerformance: ChannelPerformance,
+  }),
 });
 /*
  * 연간 비디오수 v2

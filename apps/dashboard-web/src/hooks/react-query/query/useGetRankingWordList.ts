@@ -5,7 +5,10 @@ import {
   AUTO_COMPLETEWORD_KEY,
   RANK_RELATIONWORD_KEY,
 } from '@/constants/querykey';
+import { useIsTokenRequired } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
+
+import useGetUserInfo from './useGetUserInfo';
 
 /**
  * params로 들어온 keyword에 대한 기대조회수에 기반한 연관어를 가져올 수 있는 api 쿼리 훅입니다.
@@ -19,13 +22,17 @@ const useGetRankingWordList = (
   keyword: string[],
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
 ) => {
+  const { isLoading: userLoading } = useGetUserInfo();
+
+  const isTokenRequired = useIsTokenRequired();
+
   const queryResults = apiClient(1).relwords.rankRel.useQueries({
     queries: keyword.map((keyword) => {
       return {
         queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
         params: { keyword },
         ...queryOptions,
-        enabled: keyword.length > 0,
+        enabled: isTokenRequired !== null && keyword.length > 0 && !userLoading,
         retry: 3,
         select(data) {
           return data;
@@ -64,7 +71,7 @@ const useGetRankingWordList = (
     (a, b) => b.expectedViews - a.expectedViews,
   );
 
-  const isLoading = queryResults.every((query) => query.isLoading);
+  const isLoading = queryResults.some((query) => query.isLoading);
 
   const isError = queryResults.every((query) => query.isError);
 

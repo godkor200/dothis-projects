@@ -43,7 +43,6 @@ export const videoApi = c.router({
     method: 'GET',
     path: `${videoBaseApiUrl}/:clusterNumber/:videoId`,
     pathParams: { clusterNumber: z.number(), videoId: z.string() }, // 비디오 카테고리(cluster) 넘버, 비디오 아이디
-    query: findVideoPageQuery,
     responses: {
       200: zVideoDetails,
       401: 'Not Found',

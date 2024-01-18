@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
@@ -22,7 +23,13 @@ const SideBar = () => {
       </div>
       <div className="flex flex-col gap-[2.5rem]">
         {SIDE_MENUS.map((item, index) => (
-          <Style.IconWrapper $isInActive={pathName !== item.link} key={index}>
+          <Style.IconWrapper
+            $isInActive={pathName !== item.link}
+            key={index}
+            onClick={() => {
+              router.push(item.link);
+            }}
+          >
             <Style.IconBox>
               <SvgComp icon={item.icon} size={16} />
             </Style.IconBox>

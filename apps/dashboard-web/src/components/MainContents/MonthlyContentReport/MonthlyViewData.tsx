@@ -6,6 +6,7 @@ import { access } from 'fs';
 import { useState } from 'react';
 
 import { clustersCategories } from '@/constants/clusterCategories';
+import type { CategoryTabNavDataCategoryType } from '@/constants/TabNav';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
@@ -13,6 +14,7 @@ import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import getMaxValues from '@/utils/contents/getMaxValues';
 
+import AnalysisWidgetItem from '../AnalysisWidgetItem';
 import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
 
 /**
@@ -31,7 +33,10 @@ const TITLE_BUTTON = [
   { label: '채널비교', type: 'channel' },
 ] as const;
 
-const MonthlyViewData = () => {
+interface Props {
+  currentTab: CategoryTabNavDataCategoryType;
+}
+const MonthlyViewData = ({ currentTab }: Props) => {
   const [selectedType, setSelectedType] = useState<TitleType>('category');
 
   const seletedWord = useSelectedWord();
@@ -94,6 +99,29 @@ const MonthlyViewData = () => {
     },
   );
 
+  const maxViewsObject = convertedDatas.reduce(
+    (max, current) => (current.views > max.views ? current : max),
+    convertedDatas[0],
+  );
+
+  const maxVideoCountObject = convertedDatas.reduce(
+    (max, current) =>
+      current.videoTotalCounts > max.videoTotalCounts ? current : max,
+    convertedDatas[0],
+  );
+
+  let maxRatioElement = null;
+
+  for (const element of categoryViewData) {
+    const ratio =
+      element.views /
+      (element.videoTotalCounts !== 0 ? element.videoTotalCounts : 1); // Avoid division by zero
+
+    if (!maxRatioElement || ratio > maxRatioElement.ratio) {
+      maxRatioElement = { ...element, ratio }; // Store the ratio along with the element
+    }
+  }
+
   const onClickTitle = (type: TitleType) => {
     setSelectedType(type);
   };
@@ -103,6 +131,28 @@ const MonthlyViewData = () => {
     maxVideoTotalCounts,
     viewAndVideoMaxValue,
   };
+
+  const analysisData = [
+    {
+      title: '조회수가 가장 높은 카테고리',
+      content: maxViewsObject?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
+    },
+
+    {
+      title: '발행 영상 수가 가장 많은 카테고리',
+      content: maxVideoCountObject?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
+    },
+    {
+      title: '경쟁강도가 가장 좋은 카테고리',
+      content: maxRatioElement?.category || '조회중',
+      hasTooltip: false,
+      tooltipText: '',
+    },
+  ];
 
   if (isWordLoading) return null;
 
@@ -118,96 +168,96 @@ const MonthlyViewData = () => {
         ))}
       </ul> */}
 
-      <div className="rounded-8 border-grey400 mt-10 flex flex-col border border-solid px-[30px] py-[40px] ">
-        <div className="text-t2 text-grey400 flex items-center gap-[10px] font-bold">
-          {TITLE_BUTTON.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-[10px]">
-              <button
-                className={`${
-                  selectedType === item.type ? 'text-grey700' : ''
-                }`}
-                onClick={() => onClickTitle(item.type)}
-              >
-                {item.label}
-              </button>
-              {idx !== TITLE_BUTTON.length - 1 && (
-                <span className="bg-grey400 h-1 w-1 rounded"></span>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="h-[315px] w-[406px] self-center [&_svg]:overflow-visible">
-          {selectedType === 'category' ? (
-            <ResponsiveRadar
-              data={convertedDatas}
-              keys={['views', 'videoTotalCounts']}
-              indexBy="category"
-              valueFormat=">-.2f"
-              margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-              borderColor={{ from: 'color' }}
-              gridLabelOffset={36}
-              dotSize={10}
-              dotColor={{ theme: 'background' }}
-              dotBorderWidth={2}
-              colors={{ scheme: 'nivo' }}
-              theme={{
-                legends: {
-                  text: { fontSize: 12, fontWeight: 700 },
-                },
-                labels: {
-                  text: { fontSize: 22, fontWeight: 900 },
-                },
-                textColor: '#999d3e',
-              }}
-              blendMode="multiply"
-              motionConfig="wobbly"
-              animate={false}
-              gridLabel={LabelComponent}
-              legends={[
-                {
-                  data: [
-                    {
-                      id: 'views',
-                      label: '일일 조회 수',
+      <div className="mt-10 flex  justify-between px-[30px] py-[40px]">
+        {currentTab === 'category' ? (
+          <>
+            <div className="flex flex-1 justify-center">
+              <div className="h-[315px] w-[406px]  self-center  [&_svg]:overflow-visible">
+                <ResponsiveRadar
+                  data={convertedDatas}
+                  keys={['views', 'videoTotalCounts']}
+                  indexBy="category"
+                  valueFormat=">-.2f"
+                  margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+                  borderColor={{ from: 'color' }}
+                  gridLabelOffset={36}
+                  // dotSize={10}
+                  dotColor={{ theme: 'background' }}
+                  // dotBorderWidth={2}
+                  colors={{ scheme: 'nivo' }}
+                  theme={{
+                    legends: {
+                      text: { fontSize: 12, fontWeight: 700 },
                     },
-                    {
-                      id: 'videoTotalCounts',
-                      label: '누적 영상 수 ',
+                    labels: {
+                      text: { fontSize: 22, fontWeight: 900 },
                     },
-                  ],
-                  anchor: 'bottom-right',
-                  direction: 'column',
-                  translateX: -50,
-                  translateY: -80,
-                  itemWidth: 80,
-                  itemHeight: 20,
-                  itemTextColor: '#999',
-                  symbolSize: 12,
-                  symbolShape: 'circle',
-                  effects: [
+                    textColor: '#999d3e',
+                  }}
+                  blendMode="multiply"
+                  motionConfig="wobbly"
+                  animate={false}
+                  gridLabel={LabelComponent}
+                  legends={[
                     {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
-                      },
+                      data: [
+                        {
+                          id: 'views',
+                          label: '일일 조회 수',
+                        },
+                        {
+                          id: 'videoTotalCounts',
+                          label: '누적 영상 수 ',
+                        },
+                      ],
+                      anchor: 'bottom-right',
+                      direction: 'column',
+                      translateX: -0,
+                      translateY: -80,
+                      itemWidth: 80,
+                      itemHeight: 20,
+                      itemTextColor: '#999',
+                      symbolSize: 12,
+                      symbolShape: 'circle',
+                      effects: [
+                        {
+                          on: 'hover',
+                          style: {
+                            itemTextColor: '#000',
+                          },
+                        },
+                      ],
                     },
-                  ],
-                },
-              ]}
-              sliceTooltip={({ index, data }) => (
-                <MonthlyDataGraphToolTip
-                  data={data}
-                  label={index}
-                  {...toolTipProps}
+                  ]}
+                  sliceTooltip={({ index, data }) => (
+                    <MonthlyDataGraphToolTip
+                      data={data}
+                      label={index}
+                      {...toolTipProps}
+                    />
+                  )}
                 />
+              </div>
+            </div>
+            <ul className="flex flex-col gap-[20px]">
+              {analysisData.map(
+                ({ title, content, tooltipText, hasTooltip }) => (
+                  <AnalysisWidgetItem
+                    key={title}
+                    title={title}
+                    content={content}
+                    hasTooltip={hasTooltip}
+                    tooltipText={tooltipText}
+                  />
+                ),
               )}
-            />
-          ) : (
-            <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
-              서비스 준비중 입니다.
-            </p>
-          )}
-        </div>
+            </ul>
+          </>
+        ) : (
+          <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">
+            서비스 준비중 입니다.
+          </p>
+        )}
       </div>
     </>
   );

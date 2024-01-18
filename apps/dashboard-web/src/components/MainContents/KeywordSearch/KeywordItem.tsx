@@ -29,7 +29,12 @@ const KeywordItem = <T extends HTMLButtonElement>({
   //선택된 키워드를 해당 KeywordList에서 아예 제거해버리는 함수입니다.
   const deleteKeyword = (event: MouseEvent, keyValue: string) => {
     event.stopPropagation();
-    setDeleteSearchword!(keyValue);
+
+    /**
+     * 밑에 #을 붙여준 이유 -> 현재 keywordSlide는 활성화가 된 단어만 list로 불러와서 getHashKeyword메서드로 #을 공백으로 replace해주었다
+     * 그로인해 setDeleteSearchword에서 제거 조건에서 필요로하는 #이 추가되지않음에 따라 수동으로 #을 추가로 삽입해주었다.
+     */
+    setDeleteSearchword!(keyValue + '#');
   };
 
   const handleRemoveKeyword = (keyword: string) => {
@@ -47,7 +52,7 @@ const KeywordItem = <T extends HTMLButtonElement>({
       {isSearchWord && (
         <SvgComp
           icon="KeywordDelete"
-          size="1rem"
+          size={10}
           onClick={(event) => deleteKeyword(event, keyValue)}
         />
       )}

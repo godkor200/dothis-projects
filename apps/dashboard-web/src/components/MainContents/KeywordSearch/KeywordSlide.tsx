@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -37,6 +38,10 @@ const KeywordSlide = () => {
     [userData],
   );
 
+  const searchParams = useSearchParams();
+
+  const keyword = searchParams?.get('keyword');
+
   const {
     containerRef,
     handleTapScrollX,
@@ -52,11 +57,20 @@ const KeywordSlide = () => {
 
   return (
     <Style.KeywordTapContiner>
-      <Style.ArrowLeftButton onClick={handleLeftScroll}>
-        <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
-      </Style.ArrowLeftButton>
       <Style.ButtonContainer ref={containerRef}>
-        {isSignedIn && (
+        {keyword &&
+          hashKeywordList.map((keyword) => (
+            <KeywordItem
+              key={keyword}
+              $active={true}
+              label={keyword}
+              isSearchWord={false}
+              keyValue={keyword}
+              handleScrollX={handleTapScrollX}
+              setRemoveKeyword={removeKeywordMutate}
+            />
+          ))}
+        {isSignedIn && !keyword && (
           <>
             {keywordList.map((keyword) => (
               <KeywordItem
@@ -88,8 +102,9 @@ const KeywordSlide = () => {
          * 해당 isGuest -> keywordList 및 searchWordList로 변경한 이유는 isGuest가 silent refresh에서 verify되었냐 안되었냐(isLogedIn 전역상태)에 따라 달라지는데, 간혹 verifyToken동시성 문제로 인한 interceptor error 핸들링 코드 실패로 userData를 못 가져올 때가 존재함 (Login된 상태임에도 불구하고)
          * 위에 같은 상황일 때  keywordList 및 searchWordList도 가져오는데 실패했지만 isGuest도 false여서 빈 컴포넌트로 출력될 때가 존재했음.
          */}
-        {((keywordList.length === 0 && searchWordList.length === 0) ||
-          !isSignedIn) &&
+        {!keyword &&
+          ((keywordList.length === 0 && searchWordList.length === 0) ||
+            !isSignedIn) &&
           hashKeywordList.map((keyword) => (
             <KeywordItem
               key={keyword}
@@ -102,9 +117,14 @@ const KeywordSlide = () => {
             />
           ))}
       </Style.ButtonContainer>
-      <Style.ArrowRightButton onClick={handleRightScroll}>
+
+      {/* 좌우 슬라이드 화살표 비활성화 */}
+      {/* <Style.ArrowLeftButton onClick={handleLeftScroll}>
+        <SvgComp icon="KeywordLeftArrow" size="1.5rem" />
+      </Style.ArrowLeftButton> */}
+      {/* <Style.ArrowRightButton onClick={handleRightScroll}>
         <SvgComp icon="KeywordRightArrow" size="1.5rem" />
-      </Style.ArrowRightButton>
+      </Style.ArrowRightButton> */}
     </Style.KeywordTapContiner>
   );
 };

@@ -31,6 +31,10 @@ export const theme = {
 
     // @media (min-width: 1280px) { ... }
     desktop: '1280px',
+
+    // @media (min-width:1600px) { ... }
+
+    expandSideBar: '1600px',
   },
   gap: {
     30: px2rem(30),
