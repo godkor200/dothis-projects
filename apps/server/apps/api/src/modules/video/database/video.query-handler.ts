@@ -1,5 +1,8 @@
 import { from, lastValueFrom, map } from 'rxjs';
-import { VideoQueryHandlerOutboundPort } from './video.query-handler.outbound.port';
+import {
+  IFindVideoPageDao,
+  VideoQueryHandlerOutboundPort,
+} from './video.query-handler.outbound.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
 import {
@@ -7,7 +10,6 @@ import {
   IPagingRes,
   IVideo,
 } from '@Apps/modules/video/interface/find-many-video.interface';
-import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
@@ -15,140 +17,11 @@ import {
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Err } from 'oxide.ts';
-import { FindVideoPageV2Query } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
-import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+import { SearchQueryBuilder } from '@Apps/modules/video/utils/search-query.builder';
+import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { FindVideosDao } from './video.dao';
-
-export class SearchQueryBuilder {
-  static video(
-    index: string,
-    keyword: string,
-    relWord: string,
-    data?: VIDEO_DATA_KEY[],
-    from?: string,
-    to?: string,
-    size: number = 100,
-  ) {
-    const relWords = relWord.split(/\s+/);
-
-    return {
-      index,
-      size: 10000,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  filter: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            multi_match: {
-                              query: keyword,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          },
-                          ...relWords.map((word) => ({
-                            multi_match: {
-                              query: word,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          })),
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-              {
-                nested: {
-                  path: 'video_history',
-                  query: {
-                    range: {
-                      'video_history.crawled_date': {
-                        gte: `${from} 00:00:00`,
-                        lte: `${to} 23:59:59`,
-                      },
-                    },
-                  },
-                  inner_hits: {
-                    name: 'video_history',
-                    size,
-                  },
-                },
-              },
-            ],
-          },
-        },
-        _source: data || false,
-      },
-    };
-  }
-
-  static individualVideo(clusterNumber: string, id: string) {
-    return {
-      index: 'video-' + clusterNumber,
-      id,
-    };
-  }
-
-  static videoSearchAfter(
-    cluster: string,
-    limit: number,
-    search: string,
-    related: string,
-    last?: string,
-    data?: VIDEO_DATA_KEY[],
-  ) {
-    const relWords = related?.split(/\s+/);
-
-    let searchQuery = {
-      index: cluster,
-      size: limit,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  filter: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            multi_match: {
-                              query: search,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          },
-                          ...relWords.map((word) => ({
-                            multi_match: {
-                              query: word,
-                              fields: ['video_tags', 'video_title'],
-                            },
-                          })),
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-        _source: data || false,
-        sort: ['_id'],
-      },
-    };
-
-    if (last) searchQuery.body['search_after'] = [last];
-
-    return searchQuery;
-  }
-}
 
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
@@ -157,12 +30,15 @@ export class VideoQueryHandler
   async findRelatedVideoIdAndChannelIdFullScan(
     arg: FindVideosDao,
   ): Promise<any> {
-    const { cluster, keyword, relationKeyword, from, to } = arg;
+    /**
+     * FIXME: any 고치기
+     */
+    const { cluster, keyword, related, from, to } = arg;
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       'video-' + cluster,
       10000,
       keyword,
-      relationKeyword,
+      related,
       undefined,
       [VIDEO_DATA_KEY.CHANNEL_ID, VIDEO_DATA_KEY.CHANNEL_ID],
     );
@@ -257,14 +133,15 @@ export class VideoQueryHandler
     return await this.fullScan<T>(searchQuery, (doc) => doc);
   }
 
-  async findVideoPaging(arg: FindVideoPageQuery): Promise<IPagingRes> {
-    const { clusterNumber, limit, search, related, last } = arg;
+  async findVideoPaging(arg: IFindVideoPageDao): Promise<IPagingRes> {
+    const { cluster, limit, keyword, related, last, data } = arg;
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
-      'video-' + clusterNumber,
+      'video-' + cluster,
       limit,
-      search,
+      keyword,
       related,
       last,
+      data,
     );
     const observable$ = from(
       this.client.search(searchQuery).then((res) => ({
@@ -315,16 +192,16 @@ export class VideoQueryHandler
   }
 
   async findVideoMultiIndexPaging(
-    arg: FindVideoPageV2Query,
+    arg: FindVideoPageV2Dto,
   ): Promise<IPagingRes> {
-    const { search, related, last, limit } = arg;
+    const { keyword, related, last, limit } = arg;
     const multiIndex = arg.clusterNumbers
       .map((item) => 'video-' + item)
       .join(',');
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       multiIndex,
       limit,
-      search,
+      keyword,
       related,
       last,
     );
