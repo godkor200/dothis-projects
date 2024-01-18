@@ -53,7 +53,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
 
   // 새로고침 trigger (게스트 키워드를 랜덤으로 middleware에서 넣어주기위해 추가된 코드)
   useEffect(() => {
-    router.replace('/contents');
+    // router.replace('/contents');
   }, [router]);
 
   return (
@@ -68,7 +68,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
             'border-primary500   border-b-4 border-solid text-grey700':
               mainTab !== 'all',
           })}
-          onClick={() => router.push('?main=recomand')}
+          onClick={() => router.push('?main=recommend')}
         >
           추천
         </li>
