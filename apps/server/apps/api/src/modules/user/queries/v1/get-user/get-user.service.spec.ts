@@ -20,6 +20,7 @@ describe('get-user spec', () => {
       personalizationTag: 's',
       isEnvLocal: false,
       searchWord: "['1111']",
+      recentStoryboards: [],
     };
     const getOneUserService = new GetUserCommandHandler(new MockGetUser(user));
 
