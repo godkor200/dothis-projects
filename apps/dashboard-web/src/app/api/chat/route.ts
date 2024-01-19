@@ -6,7 +6,6 @@ const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'] as string,
 });
 
-console.log(process.env.)
 // Set the runtime to edge for best performance
 export const runtime = 'edge';
 
