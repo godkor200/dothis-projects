@@ -12,19 +12,15 @@ export const runtime = 'edge';
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  console.log(new Date().getTime());
   // Ask OpenAI for a streaming chat completion given the prompt
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
-    stream: false,
+    stream: true,
     messages,
   });
 
-  console.log(new Date().getTime());
-
-  console.log(response);
   // Convert the response into a friendly text-stream
-  // const stream = OpenAIStream(response);
+  const stream = OpenAIStream(response);
   // Respond with the stream
-  return response.created;
+  return new StreamingTextResponse(stream);
 }
