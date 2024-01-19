@@ -8,11 +8,13 @@
       "dependsOn": ["^build"]
     },
     "build:dashboard": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "env": ["OPENAI_API_KEY"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["OPENAI_API_KEY"]
     },
     "request-web#build": {
       "dependsOn": ["^request-web#db-generate", "^build"],
@@ -27,14 +29,16 @@
         "@dothis/theme#build",
         "@dothis/dto#build",
         "dashboard-storybook#build"
-      ]
+      ],
+      "env": ["OPENAI_API_KEY"]
     },
     "dashboard-web#build": {
       "dependsOn": [
         "@dothis/theme#build",
         "@dothis/dto#build",
         "dashboard-storybook#build"
-      ]
+      ],
+      "env": ["OPENAI_API_KEY"]
     },
     "dashboard-storybook#build": {
       "dependsOn": ["@dothis/theme#build"]
@@ -136,7 +140,9 @@
     "NEXTAUTH_SECRET",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
-    "NODE_ENV"
+    "NODE_ENV",
+    "VERCEL",
+    "OPENAI_API_KEY"
   ],
   "globalDependencies": [".env", ".env.local", "tsconfig.json"]
 }

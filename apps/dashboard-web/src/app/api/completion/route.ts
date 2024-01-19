@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 export const runtime = 'edge';
 
 const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'] || 'empthKey',
+  apiKey: process.env['OPENAI_API_KEY'],
 });
 
 export async function POST(req: Request) {
