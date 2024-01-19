@@ -8,7 +8,6 @@ import { VideoApiModule } from '@Apps/modules/video/video.module';
 import { VideoHistoryApiModule } from '@Apps/modules/video_history/video_history.module';
 import { ChannelHistoryApiModule } from '@Apps/modules/channel_history/channel-history-api.module';
 import { WeeklyViewsApiModule } from '@Apps/modules/weekly_views/weekly-views-api.module';
-import { StoryBoardApiModule } from '@Apps/modules/story_board/domain/story-board.api.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { StoryBoardApiModule } from '@Apps/modules/story_board/domain/story-boar
     VideoApiModule,
     VideoHistoryApiModule,
     ChannelHistoryApiModule,
-    StoryBoardApiModule,
   ],
 })
 export class BusinessModule {}
