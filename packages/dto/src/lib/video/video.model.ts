@@ -1,10 +1,5 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zDateQuery,
-  zPaginatedQuery,
-  zSearchKeyword,
-} from '../common.model';
+import { dateQuery, zPaginatedQuery } from '../common.model';
 
 export const zVideoSection = z.enum([
   '0~100',
@@ -16,8 +11,8 @@ export const zVideoSection = z.enum([
   '500000이상',
 ]);
 
-export const zAccVideoModel = dataObject(
-  z.object({
+export const zAccVideoModel = z.object({
+  data: z.object({
     section: z.array(
       z.object({
         gte: z.number(),
@@ -30,7 +25,7 @@ export const zAccVideoModel = dataObject(
     userSection: z.string(),
     videoTotal: z.number(),
   }),
-);
+});
 
 export const zVideoModel = z.object({
   id: z.number().nullable().describe('The id of video'),
@@ -125,18 +120,26 @@ export const zClusterQueryParams = z.object({
   cluster: z.string(),
 });
 
-export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
+export const zKeyword = z.object({
+  search: z.string().describe('탐색어'),
+  related: z.string().describe('연관어').optional(),
+});
 
-export const findVideoPageQuery = zSearchKeyword.merge(zPaginatedQuery);
-export const zFindVideoPageWithClusterQuery = zSearchKeyword
+export const findVideoBySearchKeyword = z
+  .object({
+    keyword: z.string(),
+    relationKeyword: z.string().optional(),
+  })
+  .merge(dateQuery);
+
+export const findVideoPageQuery = zKeyword.merge(zPaginatedQuery);
+export const findVideoPageV2Query = zKeyword
   .merge(zPaginatedQuery)
   .merge(zClusterQueryParams);
 
-export type IKeyword = z.TypeOf<typeof zSearchKeyword>;
+export type IKeyword = z.TypeOf<typeof zKeyword>;
 export type IPageQuery = z.TypeOf<typeof zPaginatedQuery>;
-export type TPageWithClusterQueryQuery = z.TypeOf<
-  typeof zFindVideoPageWithClusterQuery
->;
+export type TPageV2Query = z.TypeOf<typeof findVideoPageV2Query>;
 
 export type VideoModel = z.TypeOf<typeof zVideoModel>;
 
@@ -174,10 +177,6 @@ export const zVideoDetails = z.object({
     channelPerformance: ChannelPerformance,
   }),
 });
-/*
- * 연간 비디오수 v2
- */
-export const zFindAccumulateQuery = findVideoBySearchKeyword;
 
 export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails>;
 export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;

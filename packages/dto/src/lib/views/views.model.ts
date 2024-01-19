@@ -2,7 +2,7 @@ import { z } from 'zod';
 import {
   dataObject,
   zTotalData,
-  zDateQuery,
+  dateQuery,
   zPaginatedQuery,
   zSortQuery,
 } from '../common.model';
@@ -23,13 +23,12 @@ const OsCommonSchema = z.object({
 });
 
 const createWeeklyKeywordsListSourceSchema = () => ({
-  keyword: z.string().describe('탐색어'),
-  category: z.string().describe('연관어'),
-  weekly_views: z.number().describe('주간 조회수'),
-  video_count: z.number().describe('비디오 수'),
-  competitive: z.number().describe('경쟁강도'),
-  mega_channel: z.number().describe('10만이상 구독자 채널 수'),
-  changes: z.number().describe('순위 변동'),
+  keyword: z.string(),
+  category: z.string(),
+  weekly_views: z.number(),
+  video_count: z.number(),
+  competitive: z.number(),
+  mega_channel: z.number(),
 });
 export const SortOrderQuery = Object.keys(
   createWeeklyKeywordsListSourceSchema(),
@@ -65,5 +64,5 @@ export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 const zSortWeeklyViews = zSortQuery(SortOrderQuery);
 
 export const zGetWeeklyViewsQuery = zPaginatedQuery
-  .merge(zDateQuery.pick({ from: true }))
+  .merge(dateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews);

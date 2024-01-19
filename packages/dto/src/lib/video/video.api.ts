@@ -3,8 +3,8 @@ import { c } from '../contract';
 import {
   findVideoBySearchKeyword,
   findVideoPageQuery,
+  findVideoPageV2Query,
   zAccVideoModel,
-  zFindVideoPageWithClusterQuery,
   zVideoDetails,
   zVideoResponse,
 } from './video.model';
@@ -29,7 +29,7 @@ export const videoApi = c.router({
   getVideoPageV2: {
     method: 'GET',
     path: `${videoBaseApiUrl}`,
-    query: zFindVideoPageWithClusterQuery,
+    query: findVideoPageV2Query,
     responses: {
       200: zVideoResponse,
       401: 'Not Found',

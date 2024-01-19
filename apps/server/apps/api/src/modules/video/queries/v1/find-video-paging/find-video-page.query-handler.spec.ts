@@ -1,13 +1,13 @@
 import { mock } from 'jest-mock-extended';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
+import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-page.query-handler';
 import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
-import { IFindVideoPageV1Dto } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
+import { FindVideoPageQuery } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 
-const mockVideoServicePort = mock<VideoQueryHandlerOutboundPort>();
+const mockVideoServicePort = mock<VideoOutboundPort>();
 const mockChannelQueryHandlerPort = mock<ChannelQueryHandlerPort>();
 let handler: FindVideoPageQueryHandler;
 
@@ -25,10 +25,10 @@ beforeEach(async () => {
 
 describe('예외 처리', () => {
   it('해당 키워드에 비디오가 없을 경우 Not Found를 띄웁니다.', async () => {
-    const arg: IFindVideoPageV1Dto = {
-      cluster: '6',
+    const arg: FindVideoPageQuery = {
+      clusterNumber: 6,
       limit: 5,
-      keyword: '고기',
+      search: '고기',
       related: '영화평론',
     };
     mockVideoServicePort.findVideoPaging.mockReturnValue(
