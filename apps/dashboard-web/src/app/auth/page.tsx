@@ -10,7 +10,7 @@ import { OAUTH_DATA } from '@/constants/oauth';
 const LoginPage = () => {
   return (
     <>
-      <h1 className="text-grey700 mb-10  text-center  text-[28px] font-semibold">
+      <h1 className="text-grey700 mb-10  text-center  text-[20px] font-semibold">
         반가워요😊 회원가입을 도와드릴게요! <br /> Let`s Do This!
       </h1>
       <p className="mb-[20px]">Google 계정으로 로그인 (회원가입)</p>
