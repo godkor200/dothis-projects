@@ -42,55 +42,18 @@ export class AwsOpenSearchConnectionService {
       throw error; // 오류를 다시 던져 호출한 쪽에서 처리할 수 있게 합니다.
     }
   }
-  /**
-   * 초기 검색을 수행하고, 검색 결과와 문서 개수를 반환합니다.
-   * @param query
-   * @param processDoc
-   * @returns
-   */
-  async initialSearch<T>(
-    query: any,
-    processDoc: (doc: any) => T,
-    useScroll?: boolean,
-  ): Promise<{
-    isComplete: boolean;
-    result: T[];
-    resp?: Record<string, any>;
-  }> {
-    const documentCount = await this.countDocuments(query);
-    try {
-      if (useScroll && documentCount > query.size) {
-        query['scroll'] = '10s';
-      }
-      let resp = await this.client.search(query);
-      let result: T[] = resp.body.hits.hits.map(processDoc);
-      const totalLength: number = resp.body.hits.total.value;
-      const hitLen = resp.body.hits.hits.length;
-      const isComplete = totalLength >= hitLen && documentCount < query.size;
-      if (isComplete) return { isComplete, result };
-
-      return { isComplete, result, resp };
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  /**
-   * scroll api 방식 풀스캔
-   * @param query
-   * @param processDoc
-   */
   async fullScan<T>(
     query: any,
     processDoc: (doc: any) => T,
   ): Promise<T[] | ScrollApiError> {
-    const initResult = await this.initialSearch(query, processDoc, true);
+    const documentCount = await this.countDocuments(query);
 
-    const { isComplete, result } = initResult;
-    if (isComplete) {
-      return result;
-    }
-    let resp = initResult.resp;
+    let resp = await this.client.search(query);
+    let result: T[] = resp.body.hits.hits.map(processDoc);
+    const totalLength: number = resp.body.hits.total.value;
+    const hitLen = resp.body.hits.hits.length;
+
+    if (totalLength >= hitLen && documentCount < query.size) return result;
 
     resp['scroll'] = '10s';
     try {
@@ -110,45 +73,6 @@ export class AwsOpenSearchConnectionService {
     } finally {
       // Scroll 작업 완료 후에 clearScroll 호출
       await this.client.clear_scroll({ scroll_id: resp.body._scroll_id });
-    }
-  }
-
-  /**
-   * SearchAfterApi 방식의 풀스캔
-   * @param query
-   * @param processDoc
-   */
-  async fullScanBySearchAfter<T>(
-    query: any,
-    processDoc: (doc: any) => T,
-  ): Promise<T[] | ScrollApiError> {
-    const initResult = await this.initialSearch(query, processDoc);
-
-    const { isComplete, result } = initResult;
-
-    if (isComplete) {
-      return result;
-    }
-    let resp = initResult.resp;
-
-    try {
-      while (resp.body.hits.hits.length) {
-        resp = await this.client.search({
-          ...query,
-          body: {
-            ...query.body,
-            search_after:
-              resp.body.hits.hits[resp.body.hits.hits.length - 1].sort,
-          },
-        });
-
-        result.push(...resp.body.hits.hits.map(processDoc));
-      }
-      return result;
-    } catch (error) {
-      console.error('search_after 작업 중 오류 발생:', error);
-      if (error.meta.statusCode === 429) return new ScrollApiError(error);
-      return error;
     }
   }
 

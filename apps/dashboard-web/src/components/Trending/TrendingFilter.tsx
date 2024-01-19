@@ -47,7 +47,10 @@ const TrendingFilter = ({
   };
 
   return (
-    <div className="bg-grey00 border-l-1 border-grey400 fixed inset-y-0 right-0  z-auto w-[465px] px-[26px] pt-[80px]">
+    <div
+      className="bg-grey00 border-l-1 border-grey400 fixed inset-y-0 right-0  z-[200] w-[465px]  px-[26px]
+    pt-[80px]"
+    >
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
       <SearchBar setKeywordList={handleSetKeywordList} />

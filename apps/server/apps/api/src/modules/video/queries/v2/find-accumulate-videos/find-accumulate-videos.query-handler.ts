@@ -68,7 +68,6 @@ export class FindAccumulateVideosV2QueryHandler
           ],
         },
       );
-
     if (channelHistoryRes instanceof ScrollApiError)
       return Err(new ScrollApiError());
 

@@ -63,14 +63,14 @@ const TabNavigation = <
                 `#${tabKey}`) as Route
             }
             replace
-            className={cn('cursor-pointer text-[28px] font-bold', {
+            className={cn('cursor-pointer text-[20px] font-bold', {
               'text-grey700': selectedArticle === item.category,
             })}
           >
             {item.title}
           </Link>
           {index !== tabNavData.length - 1 && (
-            <p className="text-[28px] font-bold">/</p>
+            <p className="text-[20px] font-bold">/</p>
           )}
         </div>
       ))}

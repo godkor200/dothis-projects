@@ -9,7 +9,6 @@ import {
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
-import { RecentStoryBoardEntity } from '@Apps/modules/story_board/domain/entities/recent-story-board.entity';
 enum PLAN {
   PRO = 'PRO',
   TRIAL = 'TRIAL',
@@ -94,12 +93,6 @@ export class User {
   @OneToMany((type) => ChannelEntity, (channel) => channel.user)
   @JoinColumn({ name: 'channel_id' })
   channel: ChannelEntity[];
-
-  @OneToMany(
-    () => RecentStoryBoardEntity,
-    (RecentStoryboard) => RecentStoryboard.user,
-  )
-  recentStoryboards: RecentStoryBoardEntity[];
 
   static create(user: UserInfoCommandDto) {
     const newUser = new User();

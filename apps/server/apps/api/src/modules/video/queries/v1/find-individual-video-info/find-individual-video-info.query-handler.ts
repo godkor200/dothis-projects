@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/dtos/find-individual-video-info.dto';
 import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
+import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
 import { VideoDetailsModel } from '@dothis/dto';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
@@ -11,17 +11,6 @@ import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/const
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 
-/**
- * 데이터 30일 미만 : “데이터가 부족합니다.”
- *
- * 데이터 30일 이상 ~ 90일 미만:
- * 날짜 -30   -25   -20   -15   -10   -5   오늘    +5
- * +5 : -5~오늘 까지의 조회수
- *
- * 데이터 90일 이상:
- * 날짜 -90   -75   -60   -45   -30   -15   오늘    +15
- * +15 : -15~오늘 까지의 조회수
- */
 @QueryHandler(FindIndividualVideoInfoV1Dto)
 export class FindIndividualVideoInfoQueryHandler
   implements
@@ -35,7 +24,7 @@ export class FindIndividualVideoInfoQueryHandler
 {
   constructor(
     @Inject(VIDEO_OS_DI_TOKEN)
-    private readonly video: VideoQueryHandlerOutboundPort,
+    private readonly video: VideoOutboundPort,
 
     @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
@@ -48,7 +37,7 @@ export class FindIndividualVideoInfoQueryHandler
   ): Promise<
     Result<VideoDetailsModel, VideoNotFoundError | ChannelHistoryNotFoundError>
   > {
-    //영상 정보 불러오기
+    //영상 태그 불러오기
     const video = await this.video.findVideoInfo(
       query.clusterNumber,
       query.videoId,
