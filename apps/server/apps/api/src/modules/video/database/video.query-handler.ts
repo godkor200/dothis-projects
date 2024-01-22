@@ -33,11 +33,11 @@ export class VideoQueryHandler
     /**
      * FIXME: any 고치기
      */
-    const { cluster, keyword, related, from, to } = arg;
+    const { cluster, search, related, from, to } = arg;
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       'video-' + cluster,
       10000,
-      keyword,
+      search,
       related,
       undefined,
       [VIDEO_DATA_KEY.CHANNEL_ID, VIDEO_DATA_KEY.CHANNEL_ID],
@@ -134,11 +134,11 @@ export class VideoQueryHandler
   }
 
   async findVideoPaging(arg: IFindVideoPageDao): Promise<IPagingRes> {
-    const { cluster, limit, keyword, related, last, data } = arg;
+    const { cluster, limit, search, related, last, data } = arg;
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       'video-' + cluster,
       limit,
-      keyword,
+      search,
       related,
       last,
       data,
@@ -194,14 +194,14 @@ export class VideoQueryHandler
   async findVideoMultiIndexPaging(
     arg: FindVideoPageV2Dto,
   ): Promise<IPagingRes> {
-    const { keyword, related, last, limit } = arg;
+    const { search, related, last, limit } = arg;
     const multiIndex = arg.clusterNumbers
       .map((item) => 'video-' + item)
       .join(',');
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       multiIndex,
       limit,
-      keyword,
+      search,
       related,
       last,
     );
