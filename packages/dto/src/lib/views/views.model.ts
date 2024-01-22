@@ -22,7 +22,7 @@ const OsCommonSchema = z.object({
   _score: z.number(),
 });
 
-const createWeeklyKeywordsListSourceSchema = () => ({
+const createWeeklyKeywordsListSourceSchema = {
   keyword: z.string().describe('탐색어'),
   category: z.string().describe('연관어'),
   weekly_views: z.number().describe('주간 조회수'),
@@ -30,13 +30,11 @@ const createWeeklyKeywordsListSourceSchema = () => ({
   competitive: z.number().describe('경쟁강도'),
   mega_channel: z.number().describe('10만이상 구독자 채널 수'),
   changes: z.number().describe('순위 변동'),
-});
-export const SortOrderQuery = Object.keys(
-  createWeeklyKeywordsListSourceSchema(),
-);
+};
+export const SortOrderQuery = Object.keys(createWeeklyKeywordsListSourceSchema);
 
 export const zWeeklyKeywordsListSourceSchema = z.object(
-  createWeeklyKeywordsListSourceSchema(),
+  createWeeklyKeywordsListSourceSchema,
 );
 
 export const zWeeklyKeywordsLisSchema = OsCommonSchema.extend({
