@@ -10,3 +10,4 @@ export * from './lib/channel-history';
 export * from './lib/apiRouter';
 export * from './lib/contract';
 export * from './lib/membership';
+export * from './lib/story-board';
