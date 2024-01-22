@@ -59,7 +59,8 @@ jobs:
         run: |
           pwd
           touch .env
-          echo - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
+          echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
+          cat .env
 
       - name: build dashboard
         run: |
