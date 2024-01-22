@@ -1,6 +1,6 @@
 /* styles.css */
 .DialogOverlay {
-  background: rgba(0 0 0 / 0.5);
+  background: rgba(0 0 0 / 0.1);
   position: fixed;
   top: 0;
   left: 0;
@@ -15,6 +15,6 @@
 .DialogContent {
   min-width: 300px;
   background: white;
-  padding: 30px;
-  border-radius: 4px;
+  /* padding: 30px; */
+  border-radius: 8px;
 }
