@@ -70,7 +70,7 @@ const TabNavigation = <
             {item.title}
           </Link>
           {index !== tabNavData.length - 1 && (
-            <p className="text-[28px] font-bold">/</p>
+            <p className="text-[20px] font-bold">/</p>
           )}
         </div>
       ))}

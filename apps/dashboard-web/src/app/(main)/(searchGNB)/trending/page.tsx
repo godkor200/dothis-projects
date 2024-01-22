@@ -114,7 +114,7 @@ const TrendingPage = () => {
 
   return (
     <>
-      <div className="relative translate-x-0">
+      <div className="relative">
         <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
           <h3 className="text-grey600 font-bold">검색 키워드</h3>
           <ul className="flex items-center gap-[10px]">
