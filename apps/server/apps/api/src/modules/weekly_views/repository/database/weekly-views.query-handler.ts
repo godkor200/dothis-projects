@@ -2,6 +2,7 @@ import { WeeklyViewsOutboundPort } from '@Apps/modules/weekly_views/repository/d
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import {
   GetWeeklyViewsQuery,
+  isValidSortQuery,
   SortQueryEnum,
 } from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
 import { from, lastValueFrom } from 'rxjs';
@@ -48,7 +49,7 @@ export class WeeklyViewsQueryHandler
       index,
       limit,
       last,
-      sort,
+      isValidSortQuery(sort) ? sort : undefined,
       order,
     );
     const totalDoc = await this.countDocuments(searchQuery);
