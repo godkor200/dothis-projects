@@ -55,7 +55,11 @@ jobs:
       #          echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env.production
 
       - name: Generate Environment Variables File for Production
-        run: cd apps/dashboard-web && echo - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
+        working-directory: ./apps/dashboard-web
+        run: |
+          pwd
+          touch .env
+          echo - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
 
       - name: build dashboard
         run: |
