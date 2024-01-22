@@ -3,7 +3,6 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useCallback, useEffect, useState } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
 import RelatedRetryModal from '@/components/common/Modal/ModalContent/RelatedRetryModal';
 import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
 import {
@@ -29,7 +28,7 @@ const KeywordRankingList = () => {
 
   const { hashKeywordList } = useKeyword();
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setModalOpen, setModalContent, initializeModal } = useModalActions();
 
   const { mutate: resetKeywordMutate } = useResetKeywordMutation();
   const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
@@ -79,11 +78,11 @@ const KeywordRankingList = () => {
   // 모달 리팩토링하면서 같이 작업
 
   const dismissReTryModalCallback = useCallback(() => {
-    setModalOpen(false);
+    initializeModal();
   }, []);
 
   const dismissModalCallback = useCallback(() => {
-    setModalOpen(false);
+    initializeModal();
     if (hashKeywordList.length <= 1) {
       // 만약에 reset시켜주는 키워드가 이상한 키워드일 경우 계속 먹통일 수 있다. (예외가 필요하다.)
       resetKeywordMutate();

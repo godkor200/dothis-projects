@@ -6,7 +6,7 @@ import SvgComp from '@/components/common/SvgComp';
 import { useModalActions } from '@/store/modalStore';
 
 const TermsModal = ({ errorMessage }: { errorMessage: string | undefined }) => {
-  const { setModalOpen } = useModalActions();
+  const { initializeModal } = useModalActions();
 
   function replaceWithBr() {
     return errorMessage?.replace(/\n/g, '<br />');
@@ -23,7 +23,7 @@ const TermsModal = ({ errorMessage }: { errorMessage: string | undefined }) => {
       ></p>
       <div
         className="flex justify-center gap-[1.25rem] "
-        onClick={() => setModalOpen(false)}
+        onClick={initializeModal}
       >
         <Button theme="contained" size="L" paddingX="!px-[85px]">
           확인
