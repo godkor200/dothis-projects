@@ -10,15 +10,13 @@ import { useForm } from 'react-hook-form';
 import { LOGIN_TERMS_SCHEMA } from '@/constants/schema/loginTerms';
 import { useSignUpTermsMutation } from '@/hooks/react-query/mutation/useSignUpTermsMutation';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import { useModalActions } from '@/store/modalStore';
 import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
 import { CheckBox } from '../common/Checkbox/style';
-import Modal from '../common/Modal/Modal';
 import TermsModal from '../common/Modal/ModalContent/TermsModal';
 
 const LoginTerms = () => {
-  const [onError, setOnError] = useState(false);
-
   const { data: userData } = useGetUserInfo();
 
   const { mutate } = useSignUpTermsMutation();
@@ -33,6 +31,8 @@ const LoginTerms = () => {
       marketing: false,
     },
   });
+
+  const { setModalOpen, setModalContent } = useModalActions();
 
   const {
     register,
@@ -59,7 +59,15 @@ const LoginTerms = () => {
   };
 
   useEffect(() => {
-    (errors.privacy || errors.service) && setOnError(true);
+    if (errors.privacy || errors.service) {
+      setModalContent(
+        <TermsModal
+          errorMessage={errors.service?.message || errors.privacy?.message}
+        />,
+      );
+      setModalOpen(true);
+      return;
+    }
   }, [errors]);
 
   return (
@@ -106,14 +114,6 @@ const LoginTerms = () => {
           </Button>
         </div>
       </form>
-      {onError && (
-        <Modal dismissCallback={() => setOnError(false)}>
-          <TermsModal
-            errorMessage={errors.service?.message || errors.privacy?.message}
-            setOnError={setOnError}
-          />
-        </Modal>
-      )}
     </>
   );
 };
