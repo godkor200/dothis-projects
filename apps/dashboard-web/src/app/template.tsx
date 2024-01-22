@@ -21,11 +21,11 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
 
   const modal = useModalOpen();
   const content = useModalContent();
-  const { setOpen } = useModalActions();
+  const { setModalOpen } = useModalActions();
 
   return (
     <AuthProvider>
-      <Dialog.Root open={modal} onOpenChange={setOpen}>
+      <Dialog.Root open={modal} onOpenChange={setModalOpen}>
         {children}
         {searchParams?.get('steps') === 'sign_up' && isOpenSignUpModal && (
           <Modal>

@@ -1,28 +1,29 @@
 import { create } from 'zustand';
 
 interface modalState {
-  open: boolean;
-  content: React.ReactNode | null;
+  modalOpen: boolean;
+  modalContent: React.ReactNode | null;
   actions: modalAction;
 }
 
 interface modalAction {
-  setOpen: (value: boolean) => void;
-  setContent: (value: React.ReactNode) => void;
+  setModalOpen: (value: boolean) => void;
+  setModalContent: (value: React.ReactNode) => void;
 }
 
 export const modalStore = create<modalState>((set) => ({
-  open: false,
-  content: null,
+  modalOpen: false,
+  modalContent: null,
   actions: {
-    setOpen: (value: boolean) => set(() => ({ open: value })),
-    setContent: (value: React.ReactNode) => set(() => ({ content: value })),
+    setModalOpen: (value: boolean) => set(() => ({ modalOpen: value })),
+    setModalContent: (value: React.ReactNode) =>
+      set(() => ({ modalContent: value })),
   },
 }));
 
 // State
-export const useModalOpen = () => modalStore((state) => state.open);
-export const useModalContent = () => modalStore((state) => state.content);
+export const useModalOpen = () => modalStore((state) => state.modalOpen);
+export const useModalContent = () => modalStore((state) => state.modalContent);
 
 // Actions
 export const useModalActions = () => modalStore((state) => state.actions);

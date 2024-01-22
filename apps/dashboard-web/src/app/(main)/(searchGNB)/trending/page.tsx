@@ -108,7 +108,7 @@ const TrendingPage = () => {
     setLastId(data?.at(-1)?._id);
   }, [JSON.stringify(data)]);
 
-  const { setContent, setOpen } = useModalActions();
+  const { setModalOpen, setModalContent } = useModalActions();
 
   return (
     <>
@@ -219,7 +219,7 @@ const TrendingPage = () => {
                       <Dialog.Trigger
                         asChild
                         onClick={() =>
-                          setContent(
+                          setModalContent(
                             <TrendingModal keyword={item._source.keyword} />,
                           )
                         }

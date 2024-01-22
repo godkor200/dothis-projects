@@ -6,11 +6,11 @@ import { useModalActions } from '@/store/modalStore';
 import SvgComp from '../../SvgComp';
 
 const TrendingModal = ({ keyword }: { keyword: string }) => {
-  const { setOpen } = useModalActions();
+  const { setModalOpen } = useModalActions();
 
   return (
     <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
-      <div className="flex justify-end" onClick={() => setOpen(false)}>
+      <div className="flex justify-end" onClick={() => setModalOpen(false)}>
         <SvgComp icon="Close" size={24} />
       </div>
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
@@ -18,12 +18,12 @@ const TrendingModal = ({ keyword }: { keyword: string }) => {
       </p>
 
       <div className="flex justify-center gap-[1.25rem]">
-        <Button theme="outlined" size="L" onClick={() => setOpen(false)}>
+        <Button theme="outlined" size="L" onClick={() => setModalOpen(false)}>
           취소
         </Button>
         <Link
           href={`/contents?keyword=${keyword}`}
-          onClick={() => setOpen(false)}
+          onClick={() => setModalOpen(false)}
         >
           <Button theme="contained" size="L">
             이동

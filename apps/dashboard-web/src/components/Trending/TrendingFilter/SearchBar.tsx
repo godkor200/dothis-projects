@@ -1,10 +1,8 @@
 'use client';
 
-import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
 import SvgComp from '@/components/common/SvgComp';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useDebounce from '@/hooks/useDebounce';
@@ -31,9 +29,7 @@ const SearchBar = ({ setKeywordList }: Props) => {
   //   }
   // };
 
-  const [open, setOpen] = useState(false);
-
-  const [openModal, setOpenModal] = useState(false);
+  const [openInput, setOpenInput] = useState(false);
 
   const [searchInput, setSearchInput] = useState('');
 
@@ -66,13 +62,13 @@ const SearchBar = ({ setKeywordList }: Props) => {
   return (
     <div
       className="relative  mx-auto min-h-[52px] max-w-[680px]"
-      onClick={() => setOpen(true)}
+      onClick={() => setOpenInput(true)}
     >
       <div className=" rounded-8 bg-grey00 absolute z-20  box-border w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
         <div className="px-[20px]">
           <div
             className={cn('flex items-center justify-between pb-[10px]', {
-              'border-b-1 border-grey300 ': open,
+              'border-b-1 border-grey300 ': openInput,
             })}
           >
             <input
@@ -90,7 +86,7 @@ const SearchBar = ({ setKeywordList }: Props) => {
               <SvgComp icon="HeaderPlus" size="32px" />
             </div>
           </div>
-          {open && (
+          {openInput && (
             <>
               <div className="inline-flex flex-col gap-[12px] py-10">
                 {data
@@ -115,35 +111,18 @@ const SearchBar = ({ setKeywordList }: Props) => {
           )}
         </div>
 
-        {open && (
+        {openInput && (
           <div
             className="bg-grey200 text-grey500 rounded-b-8  cursor-pointer py-4 text-center font-bold"
             onClick={(event) => {
               event.stopPropagation();
-              setOpen(false);
+              setOpenInput(false);
             }}
           >
             닫기
           </div>
         )}
       </div>
-      {openModal && (
-        <Modal dismissCallback={() => setOpenModal(false)}>
-          <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
-            <div className="mb-[0.625rem] flex justify-center">
-              로그인이 필요합니다.
-            </div>
-            <div
-              className="flex justify-center gap-[1.25rem] "
-              onClick={() => setOpenModal(false)}
-            >
-              <Button theme="contained" size="L" paddingX="!px-[85px]">
-                확인
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };
