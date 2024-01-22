@@ -179,6 +179,6 @@ export const zVideoDetails = z.object({
  */
 export const zFindAccumulateQuery = findVideoBySearchKeyword;
 
-export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails>;
+export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails.shape.data>;
 export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;
 export type PredictedViews = z.TypeOf<typeof zPredictedViews>;
