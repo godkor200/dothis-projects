@@ -23,3 +23,7 @@ export enum SortQueryEnum {
   MEGA_CHANNEL = 'mega_channel',
   CHANEGES = 'changes',
 }
+
+export function isValidSortQuery(query: string): query is SortQueryEnum {
+  return Object.values(SortQueryEnum).includes(query as SortQueryEnum);
+}
