@@ -69,7 +69,7 @@ const TrendingPage = () => {
     if (!isSignedIn) {
       setIsOpenSignUpModal(true);
 
-      router.push('?steps=sign_up', false);
+      router.push('?steps=sign_up', { scroll: false });
       return;
     }
 
