@@ -28,7 +28,7 @@ describe('예외 처리', () => {
     const arg: IFindVideoPageV1Dto = {
       cluster: '6',
       limit: 5,
-      keyword: '고기',
+      search: '고기',
       related: '영화평론',
     };
     mockVideoServicePort.findVideoPaging.mockReturnValue(

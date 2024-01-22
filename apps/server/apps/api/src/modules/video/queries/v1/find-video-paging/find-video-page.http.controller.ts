@@ -73,11 +73,11 @@ export class FindVideoPageHttpController {
     @Param('clusterNumber') clusterNumber: string,
     @Query() query: IFindVideoPageQuery,
   ): Promise<IRes<IPagingRes>> {
-    const { limit, keyword, related, last } = query;
+    const { limit, search, related, last } = query;
     const arg = new IFindVideoPageV1Dto({
       cluster: clusterNumber,
       limit,
-      keyword,
+      search,
       related,
       last,
     });

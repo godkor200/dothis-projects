@@ -59,16 +59,16 @@ export class FindVideoPageV2HttpController {
   async execute(
     @Query() query: IFindVideoPageQuery,
   ): Promise<IRes<IPagingRes>> {
-    const { limit, keyword, related, last, cluster } = query;
+    const { limit, search, related, last, cluster } = query;
 
     const arg = new FindVideoPageV2Dto({
       cluster,
       limit,
-      keyword,
+      search,
       related,
       last,
     });
-    console.log(arg);
+
     const result: Result<IPagingRes, VideoNotFoundError> =
       await this.queryBus.execute(arg);
 
