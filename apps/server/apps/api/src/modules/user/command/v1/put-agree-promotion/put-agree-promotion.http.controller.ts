@@ -20,7 +20,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { PutAgreePromotionDtos } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
+import { PutAgreePromotionDto } from '@Apps/modules/user/dtos/put-agree-promotion.dtos';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
@@ -67,7 +67,7 @@ export class PutAgreePromotionHttpController {
     @Body('isAgree') isAgree: boolean,
     @User() user: UserInfoCommandDto,
   ): Promise<IRes<void>> {
-    const arg = new PutAgreePromotionDtos({ isAgree, id: user.id });
+    const arg = new PutAgreePromotionDto({ isAgree, id: user.id });
     const result: Result<boolean, NotFoundException> =
       await this.commandBus.execute(arg);
     return match(result, {
