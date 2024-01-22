@@ -9,12 +9,11 @@ import News from './News';
 import YouTube from './Youtube';
 
 interface MediaArticlesContainerProps {
-  articleListData: CurrentArticleProps[];
+  // articleListData: CurrentArticleProps[];
   selectedArticle: MedialTabNavDataCategoryType;
 }
 
 const MediaArticlesContainer = ({
-  articleListData,
   selectedArticle,
 }: MediaArticlesContainerProps) => {
   const [pageIndex, setPageIndex] = useState(4);
