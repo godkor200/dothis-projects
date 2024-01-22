@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
+import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import TrendingModal from '@/components/common/Modal/ModalContent/TrendingModal';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -33,6 +34,8 @@ const TrendingPage = () => {
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
   const [lastId, setLastId] = useState<string | undefined>('');
+
+  const { setModalOpen, setModalContent } = useModalActions();
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
@@ -69,7 +72,8 @@ const TrendingPage = () => {
     if (!isSignedIn) {
       setIsOpenSignUpModal(true);
 
-      router.push('?steps=sign_up', { scroll: false });
+      setModalContent(<SignUpModal />);
+      setModalOpen(true);
       return;
     }
 
@@ -107,8 +111,6 @@ const TrendingPage = () => {
   useEffect(() => {
     setLastId(data?.at(-1)?._id);
   }, [JSON.stringify(data)]);
-
-  const { setModalOpen, setModalContent } = useModalActions();
 
   return (
     <>

@@ -3,10 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
+import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import SvgComp from '@/components/common/SvgComp';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useDebounce from '@/hooks/useDebounce';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
 interface Props {
@@ -39,6 +41,8 @@ const SearchBar = ({ setKeywordList }: Props) => {
 
   const isSignedIn = useIsSignedIn();
 
+  const { setModalOpen, setModalContent } = useModalActions();
+
   const { data } = useGetAutoCompleteWord(searchInput);
 
   const handleInput = useDebounce((input) => setSearchInput(input), 200, [
@@ -55,7 +59,10 @@ const SearchBar = ({ setKeywordList }: Props) => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
-    router.push('?steps=sign_up', { scroll: false });
+
+    setModalContent(<SignUpModal />);
+    setModalOpen(true);
+
     return false;
   };
 
