@@ -1,13 +1,11 @@
 'use client';
 
+import * as Dialog from '@radix-ui/react-dialog';
 import { Button as DesignButton } from 'dashboard-storybook/src/components/Button/Button';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
-import TermsModal from '@/components/common/Modal/ModalContent/TermsModal';
 import TrendingModal from '@/components/common/Modal/ModalContent/TrendingModal';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -16,6 +14,7 @@ import { clustersCategories } from '@/constants/clusterCategories';
 import { trendingTableHeaders } from '@/constants/trendingTable';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
 
@@ -35,8 +34,6 @@ const TrendingPage = () => {
 
   const [lastId, setLastId] = useState<string | undefined>('');
 
-  const [openModal, setOpenModal] = useState(false);
-
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
     order: 'desc',
@@ -45,8 +42,6 @@ const TrendingPage = () => {
   const [selectOptions, setSelectOptions] = useState<
     { value: number; label: string }[]
   >([]);
-
-  const [routeKeyword, setRouteKeyword] = useState('');
 
   const [keywordList, setKeywordList] = useState<string[]>([]);
 
@@ -112,6 +107,8 @@ const TrendingPage = () => {
   useEffect(() => {
     setLastId(data?.at(-1)?._id);
   }, [JSON.stringify(data)]);
+
+  const { setContent, setOpen } = useModalActions();
 
   return (
     <>
@@ -219,16 +216,18 @@ const TrendingPage = () => {
                       {item._source.mega_channel?.toLocaleString('ko-kr')}
                     </div>
                     <div className="invisible group-hover:visible">
-                      <DesignButton
-                        theme="outlined"
-                        size="S"
-                        onClick={() => {
-                          setRouteKeyword(item._source.keyword);
-                          setOpenModal(true);
-                        }}
+                      <Dialog.Trigger
+                        asChild
+                        onClick={() =>
+                          setContent(
+                            <TrendingModal keyword={item._source.keyword} />,
+                          )
+                        }
                       >
-                        자세히
-                      </DesignButton>
+                        <DesignButton theme="outlined" size="S">
+                          자세히
+                        </DesignButton>
+                      </Dialog.Trigger>
                     </div>
                   </li>
                 ))}
@@ -259,14 +258,6 @@ const TrendingPage = () => {
           </div>
         </div>
       </div>
-      {openModal && (
-        <Modal dismissCallback={() => setOpenModal(false)}>
-          <TrendingModal
-            keyword={routeKeyword}
-            dismissCallback={() => setOpenModal(false)}
-          />
-        </Modal>
-      )}
     </>
   );
 };
