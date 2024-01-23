@@ -52,3 +52,5 @@ export {
   zReferenceSchema,
   zMemoSchema,
 };
+
+export type TRecentStoryBoardModel = z.TypeOf<typeof zStoryBoardSchema>;
