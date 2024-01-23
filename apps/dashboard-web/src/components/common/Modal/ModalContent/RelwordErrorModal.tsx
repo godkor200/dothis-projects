@@ -13,7 +13,7 @@ const RelwordErrorModal = ({
   dismissCallback: () => void;
 }) => {
   return (
-    <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
+    <div className=" rounded-8 bg-grey00 w-[500px] p-10">
       <div className="flex justify-end" onClick={() => dismissCallback()}>
         <SvgComp icon="Close" size={24} />
       </div>
