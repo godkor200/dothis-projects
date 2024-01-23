@@ -13,7 +13,7 @@ const TermsModal = ({ errorMessage }: { errorMessage: string | undefined }) => {
   }
 
   return (
-    <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
+    <div className=" bg-grey00 w-[320px] rounded-[8px]  p-10">
       <div className="mb-[0.625rem] flex justify-center">
         <SvgComp icon="Alert" size={24} />
       </div>

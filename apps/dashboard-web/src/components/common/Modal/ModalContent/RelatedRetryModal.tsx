@@ -8,7 +8,7 @@ const RelatedRetryModal = ({
   dismissCallback: () => void;
 }) => {
   return (
-    <div className=" rounded-8 bg-grey00 border-grey400 w-[500px] border border-solid p-10">
+    <div className=" rounded-8 bg-grey00 w-[500px] p-10">
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
         많은 요청으로 인해 <br /> 데이터를 가져오는데 실패하였습니다
       </p>
