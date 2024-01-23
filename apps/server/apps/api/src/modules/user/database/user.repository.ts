@@ -11,7 +11,7 @@ export class UserRepository
   implements UserRepositoryPort
 {
   protected tableName = 'User';
-  protected schema = zUserModel;
+  protected schema = zUserModel.shape.data;
 
   @InjectRepository(User) protected readonly repository: Repository<User>;
 
