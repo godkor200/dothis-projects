@@ -1,5 +1,5 @@
 export class UpdateSearchWordDto {
-  id: string;
+  id: number;
   searchWord: string[];
   constructor(props: UpdateSearchWordDto) {
     this.searchWord = props.searchWord;
