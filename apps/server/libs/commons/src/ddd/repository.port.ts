@@ -23,7 +23,7 @@ export type PaginatedQueryParams = {
 };
 
 export type updateObject = {
-  id: string;
+  id: string | number;
   [key: string]: any;
 };
 
