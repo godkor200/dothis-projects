@@ -48,6 +48,8 @@ const zMemoSchema = z
 
 type TRecentStoryBoardModel = z.TypeOf<typeof zStoryBoardSchema>;
 type TStoryBoardDetailModel = z.TypeOf<typeof zStoryBoardDetailSchema>;
+type TReferenceModel = z.TypeOf<typeof zReferenceSchema>;
+type TMemoModel = z.TypeOf<typeof zMemoSchema>;
 export {
   zStoryBoardSchema,
   zStoryBoardDetailSchema,
@@ -55,4 +57,6 @@ export {
   zMemoSchema,
   TRecentStoryBoardModel,
   TStoryBoardDetailModel,
+  TReferenceModel,
+  TMemoModel,
 };

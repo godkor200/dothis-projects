@@ -7,6 +7,7 @@ import {
   zPostStoryBoardBody,
   TPostStoryBoardBody,
   zStoryBoardId,
+  zPostStoryBoardBodyBoolean,
 } from '@dothis/dto';
 
 /**
@@ -46,6 +47,11 @@ export class PostStoryBoardMainDto extends PostStoryBoardMainParams {
 export class PostStoryBoardBody extends createZodDto(
   extendApi(zPostStoryBoardBody),
 ) {}
+
+export class PostStoryBoardBodyBoolean extends createZodDto(
+  extendApi(zPostStoryBoardBodyBoolean),
+) {}
+
 export class PostStoryBoardMainDraftDto extends PostStoryBoardMainParams {
   readonly body: TPostStoryBoardBody;
   constructor(props: PostStoryBoardMainDraftDto) {

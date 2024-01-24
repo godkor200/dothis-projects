@@ -1,0 +1,1 @@
+export const MEMO_DI_TOKEN_CONSTANT = Symbol('MEMO_DI_TOKEN_CONSTANT');

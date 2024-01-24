@@ -1,5 +1,11 @@
-// StoryBoardDetailEntity
-import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { ReferenceEntity } from './reference.entity';
 import { MemoEntity } from './memo.entity';
 
@@ -44,16 +50,16 @@ export class StoryBoardDetailEntity extends IdBaseDateEntityAbstract {
   })
   location: string;
 
-  @OneToMany(() => ReferenceEntity, (reference) => reference.storyId)
+  @OneToMany(() => ReferenceEntity, (reference) => reference.storyDetail)
   references: ReferenceEntity[];
 
-  @OneToMany(() => MemoEntity, (memo) => memo.id)
+  @OneToMany(() => MemoEntity, (memo) => memo.storyDetail)
   memos: MemoEntity[];
 
-  @ManyToOne(
+  @OneToOne(
     () => RecentStoryBoardEntity,
-    (recentStoryboard) => recentStoryboard.id,
+    (recentStoryboard) => recentStoryboard.overview,
   )
   @JoinColumn({ name: 'board_id' })
-  board: RecentStoryBoardEntity[];
+  board: RecentStoryBoardEntity;
 }

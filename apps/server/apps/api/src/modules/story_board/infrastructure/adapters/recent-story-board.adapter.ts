@@ -29,7 +29,7 @@ export class RecentStoryBoardAdapter
       where: {
         id,
       },
-      relations: { storyboard: true },
+      relations: ['overview', 'overview.references', 'overview.memos'],
     });
   }
 }

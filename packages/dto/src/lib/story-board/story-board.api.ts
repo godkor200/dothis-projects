@@ -3,7 +3,9 @@ import {
   zPostStoryBoardBody,
   zPostStoryBoardDetailParams,
   zPostStoryBoardMainParams,
+  zPostStoryBoardMemoParams,
   zPostStoryBoardPathParams,
+  zPostStoryBoardReferenceParams,
   zStoryBoardDetails,
   zStoryBoardId,
 } from './story-board.zod';
@@ -48,16 +50,16 @@ export const storyBoardApi = c.router({
     body: zStoryBoardDetails,
     pathParams: zPostStoryBoardDetailParams,
     responses,
-    summary: '스토리 보드 세부 정보를 추가합니다',
-    description: '스토리 보드 세부 정보를 추가합니다.',
+    summary: '스토리 보드 영상 개요를 추가합니다',
+    description: '스토리 보드 영상 개요를 추가합니다.',
   },
 
   // 스토리보드 참조 추가 API 라우터
   addStoryBoardReference: {
     method: 'POST',
-    path: `${storyBoardUrl}/references/:referenceId`,
+    path: `${storyBoardUrl}/:storyBoardId/references`,
     body: zPostStoryBoardBody,
-    pathParams: zPostStoryBoardPathParams,
+    pathParams: zPostStoryBoardReferenceParams,
     responses,
     summary: '스토리 보드 참조를 추가합니다',
     description: '스토리 보드 참조를 추가합니다.',
@@ -66,9 +68,9 @@ export const storyBoardApi = c.router({
   // 스토리보드 메모 추가 API 라우터
   addStoryBoardMemo: {
     method: 'POST',
-    path: `${storyBoardUrl}/memos/memoId`,
+    path: `${storyBoardUrl}/:storyBoardId/memos`,
     body: zPostStoryBoardBody,
-    pathParams: zPostStoryBoardPathParams,
+    pathParams: zPostStoryBoardMemoParams,
     responses,
     summary: '스토리 보드 메모를 추가합니다',
     description: '스토리 보드 메모를 추가합니다.',

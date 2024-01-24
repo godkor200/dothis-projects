@@ -12,6 +12,12 @@ import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story_board/
 import { StoryBoardDetailAdapter } from '@Apps/modules/story_board/infrastructure/adapters/story-board-detail.adapter';
 import { GetStoryBoardHttpV1Controller } from '@Apps/modules/story_board/controllers/v1/queries/get-story-board/get-story-board.http.controller';
 import { GetStoryBoardQuery } from '@Apps/modules/story_board/application/service/get-story-board.query';
+import { PostReferenceCommand } from '@Apps/modules/story_board/application/service/post-reference.command';
+import { REFERENCE_DI_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/reference.di-token.constant';
+import { ReferenceAdapter } from '@Apps/modules/story_board/infrastructure/adapters/reference.adapter';
+import { MemoAdapter } from '@Apps/modules/story_board/infrastructure/adapters/memo.adapter';
+import { MEMO_DI_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/memo.di-token.constant';
+import { PostMemoCommand } from '@Apps/modules/story_board/application/service/post-memo.command';
 const controllers = [
   PostStoryBoardHttpV1Controller,
   GetStoryBoardHttpV1Controller,
@@ -23,6 +29,8 @@ const commands: Provider[] = [
   PostStoryBoardTitleCommand,
   PostStoryBoardDraftCommand,
   PostStoryBoardDetailCommand,
+  PostReferenceCommand,
+  PostMemoCommand,
 ];
 const providers: Provider[] = [
   {
@@ -33,6 +41,11 @@ const providers: Provider[] = [
     provide: STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT,
     useClass: StoryBoardDetailAdapter,
   },
+  {
+    provide: REFERENCE_DI_TOKEN_CONSTANT,
+    useClass: ReferenceAdapter,
+  },
+  { provide: MEMO_DI_TOKEN_CONSTANT, useClass: MemoAdapter },
   ...queries,
   ...commands,
 ];

@@ -1,12 +1,10 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
   Column,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
@@ -38,9 +36,9 @@ export class RecentStoryBoardEntity extends IdBaseDateEntityAbstract {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(
+  @OneToOne(
     () => StoryBoardDetailEntity,
     (StoryBoardDetail) => StoryBoardDetail.board,
   )
-  storyboard: StoryBoardDetailEntity[];
+  overview: StoryBoardDetailEntity;
 }

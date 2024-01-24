@@ -1,4 +1,3 @@
-import type {} from 'zod';
 import { c } from './contract';
 import { userApi } from './user';
 import { authApi } from './auth';
