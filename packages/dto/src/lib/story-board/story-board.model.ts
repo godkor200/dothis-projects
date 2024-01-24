@@ -46,11 +46,13 @@ const zMemoSchema = z
   })
   .describe('메모 정보를 나타내는 스키마');
 
+type TRecentStoryBoardModel = z.TypeOf<typeof zStoryBoardSchema>;
+type TStoryBoardDetailModel = z.TypeOf<typeof zStoryBoardDetailSchema>;
 export {
   zStoryBoardSchema,
   zStoryBoardDetailSchema,
   zReferenceSchema,
   zMemoSchema,
+  TRecentStoryBoardModel,
+  TStoryBoardDetailModel,
 };
-
-export type TRecentStoryBoardModel = z.TypeOf<typeof zStoryBoardSchema>;
