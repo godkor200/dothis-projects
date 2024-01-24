@@ -17,9 +17,6 @@ export class PostStoryBoardDetailCommand
     >
 {
   constructor(
-    @Inject(RECENT_STORY_BOARD_DI_TOKEN_CONSTANT)
-    private readonly recentStoryBoard: RecentStoryBoardOutboundPort,
-
     @Inject(STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT)
     private readonly storyBoardDetail: StoryBoardDetailOutboundPort,
   ) {}
