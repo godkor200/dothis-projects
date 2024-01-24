@@ -17,7 +17,13 @@ export class RecentStoryBoardEntity extends IdBaseDateEntityAbstract {
   @Column({ name: 'user_id' })
   userId: number;
 
-  @Column({ name: 'title', type: 'varchar', length: 200, comment: '제목' })
+  @Column({
+    name: 'title',
+    type: 'varchar',
+    length: 200,
+    comment: '제목',
+    default: '제목 없음',
+  })
   title: string;
 
   @Column({
@@ -34,7 +40,7 @@ export class RecentStoryBoardEntity extends IdBaseDateEntityAbstract {
 
   @OneToMany(
     () => StoryBoardDetailEntity,
-    (StoryBoardDetail) => StoryBoardDetail.id,
+    (StoryBoardDetail) => StoryBoardDetail.board,
   )
   storyboard: StoryBoardDetailEntity[];
 }
