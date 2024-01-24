@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@ts-rest/core": "^3.19.3",
-    "zod": "^3.21.4"
+    "@ts-rest/open-api": "^3.33.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",
