@@ -1,13 +1,12 @@
 'use client';
 
+import * as Dialog from '@radix-ui/react-dialog';
 import { Button as DesignButton } from 'dashboard-storybook/src/components/Button/Button';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
-import TermsModal from '@/components/common/Modal/ModalContent/TermsModal';
+import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import TrendingModal from '@/components/common/Modal/ModalContent/TrendingModal';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -16,6 +15,7 @@ import { clustersCategories } from '@/constants/clusterCategories';
 import { trendingTableHeaders } from '@/constants/trendingTable';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
 
@@ -35,7 +35,7 @@ const TrendingPage = () => {
 
   const [lastId, setLastId] = useState<string | undefined>('');
 
-  const [openModal, setOpenModal] = useState(false);
+  const { setModalOpen, setModalContent } = useModalActions();
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
@@ -45,8 +45,6 @@ const TrendingPage = () => {
   const [selectOptions, setSelectOptions] = useState<
     { value: number; label: string }[]
   >([]);
-
-  const [routeKeyword, setRouteKeyword] = useState('');
 
   const [keywordList, setKeywordList] = useState<string[]>([]);
 
@@ -74,7 +72,8 @@ const TrendingPage = () => {
     if (!isSignedIn) {
       setIsOpenSignUpModal(true);
 
-      router.push('?steps=sign_up', false);
+      setModalContent(<SignUpModal />);
+      setModalOpen(true);
       return;
     }
 
@@ -115,7 +114,7 @@ const TrendingPage = () => {
 
   return (
     <>
-      <div className="relative translate-x-0">
+      <div className="relative">
         <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
           <h3 className="text-grey600 font-bold">검색 키워드</h3>
           <ul className="flex items-center gap-[10px]">
@@ -219,16 +218,18 @@ const TrendingPage = () => {
                       {item._source.mega_channel?.toLocaleString('ko-kr')}
                     </div>
                     <div className="invisible group-hover:visible">
-                      <DesignButton
-                        theme="outlined"
-                        size="S"
-                        onClick={() => {
-                          setRouteKeyword(item._source.keyword);
-                          setOpenModal(true);
-                        }}
+                      <Dialog.Trigger
+                        asChild
+                        onClick={() =>
+                          setModalContent(
+                            <TrendingModal keyword={item._source.keyword} />,
+                          )
+                        }
                       >
-                        자세히
-                      </DesignButton>
+                        <DesignButton theme="outlined" size="S">
+                          자세히
+                        </DesignButton>
+                      </Dialog.Trigger>
                     </div>
                   </li>
                 ))}
@@ -259,14 +260,6 @@ const TrendingPage = () => {
           </div>
         </div>
       </div>
-      {openModal && (
-        <Modal dismissCallback={() => setOpenModal(false)}>
-          <TrendingModal
-            keyword={routeKeyword}
-            dismissCallback={() => setOpenModal(false)}
-          />
-        </Modal>
-      )}
     </>
   );
 };

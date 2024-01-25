@@ -62,7 +62,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
       <SearchBar />
       <KeywordSearchResult />
 
-      <ul className=" flex justify-center gap-[24px] text-[28px] font-bold">
+      <ul className=" flex justify-center gap-[24px] text-[20px] font-bold">
         <li
           className={cn('  cursor-pointer text-grey500', {
             'border-primary500   border-b-4 border-solid text-grey700':

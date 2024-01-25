@@ -52,9 +52,10 @@ const MainContentPage = async ({
   const selectedArticle =
     (searchParams?.snsTab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
     'youtube';
-  const articleListData = await relatedContentApi[selectedArticle](
-    '아시안게임',
-  );
+
+  // const articleListData = await relatedContentApi[selectedArticle](
+  //   '아시안게임',
+  // );
 
   const selectedMainContent = searchParams?.main || 'recommend';
 
@@ -87,10 +88,7 @@ const MainContentPage = async ({
             selectedArticle={selectedArticle}
             tabNavData={MEDIA_TABNAV_DATA}
           />
-          <MediaArticlesContainer
-            articleListData={articleListData}
-            selectedArticle={selectedArticle}
-          />
+          <MediaArticlesContainer selectedArticle={selectedArticle} />
         </Card>
       </div>
     );

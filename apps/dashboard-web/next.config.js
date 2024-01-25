@@ -24,6 +24,8 @@ const config = {
     appDir: true,
     typedRoutes: true,
     esmExternals: 'loose',
+    scrollRestoration: true
+    // scroll history역할로써 추가해줬지만, 동작하는지 안하는지 확인X.. (next 버전올려서 router scroll 이슈 해결하였습니다.)
   },
 
   compiler: {

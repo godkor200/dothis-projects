@@ -20,6 +20,9 @@ Apps에서 쓰일 공통 ui, util, type, theme 같이 여러 앱에서 사용되
 
 #### 추후 만들어야하는 app
 
+**api**
+API 서버, 현재 prisma, trpc로 구성되어 있는 db, api 서버단을 분리.
+
 **app**
 두디스 모바일 애플리케이션 (`request-web`, `dashboard` 등을 포함)
 
@@ -60,7 +63,6 @@ client
 ### 각 패키지, 앱별 README!
 ### [request-web](./apps/request-web/README.md)
 ### [share](./packages/share/README.md)
-### [api](https://github.com/dothis-world/dothis-projects/blob/main/apps/server/README.md)
 
 ## CLI
 서버를 실행하거나 빌드하기 전에 환경변수들이 정의되어 있는 .env 파일이 필요합니다. 

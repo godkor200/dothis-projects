@@ -59,10 +59,10 @@ const TabNavigation = <
             href={
               (pathName +
                 '?' +
-                createQueryString(tabKey, item.category) +
-                `#${tabKey}`) as Route
+                createQueryString(tabKey, item.category)) as Route
             }
             replace
+            scroll={false}
             className={cn('cursor-pointer text-[28px] font-bold', {
               'text-grey700': selectedArticle === item.category,
             })}
@@ -70,7 +70,7 @@ const TabNavigation = <
             {item.title}
           </Link>
           {index !== tabNavData.length - 1 && (
-            <p className="text-[28px] font-bold">/</p>
+            <p className="text-[20px] font-bold">/</p>
           )}
         </div>
       ))}
