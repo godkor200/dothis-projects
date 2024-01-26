@@ -15,7 +15,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserDto } from '@Libs/commons/src/types/dto.types';
+import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
 import {
   nestControllerContract,
   TsRest,
@@ -23,7 +23,7 @@ import {
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { match, Result } from 'oxide.ts';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUser;
