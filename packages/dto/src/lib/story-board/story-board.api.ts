@@ -1,15 +1,16 @@
 import { c } from '../contract';
 import {
   zPostStoryBoardBody,
-  zPostStoryBoardDetailParams,
   zPostStoryBoardMainParams,
   zPostStoryBoardMemoParams,
+  zPostStoryBoardOverviewParams,
   zPostStoryBoardPathParams,
   zPostStoryBoardReferenceParams,
   zStoryBoardDetails,
   zStoryBoardId,
 } from './story-board.zod';
 import { responses } from '../response';
+import { zPaginatedSqlQueryParams } from '../common.model';
 
 export const storyBoardUrl = '/story-board';
 export const storyBoardApi = c.router({
@@ -43,12 +44,12 @@ export const storyBoardApi = c.router({
     summary: '스토리 보드의 자동 저장을 PUT 합니다',
     description: '스토리 보드의 자동 저장을 PUT 합니다.',
   },
-  // 스토리보드 세부 정보 추가 API 라우터
+  // 스토리보드 개괄 정보 추가 API 라우터
   addStoryBoardDetail: {
     method: 'POST',
-    path: `${storyBoardUrl}/details/:detailId`,
+    path: `${storyBoardUrl}/overviews/:overviewsId`,
     body: zStoryBoardDetails,
-    pathParams: zPostStoryBoardDetailParams,
+    pathParams: zPostStoryBoardOverviewParams,
     responses,
     summary: '스토리 보드 영상 개요를 추가합니다',
     description: '스토리 보드 영상 개요를 추가합니다.',
@@ -76,14 +77,23 @@ export const storyBoardApi = c.router({
     description: '스토리 보드 메모를 추가합니다.',
   },
 
+  getManyStoryBoard: {
+    method: 'GET',
+    path: `${storyBoardUrl}`,
+    query: zPaginatedSqlQueryParams,
+    responses,
+    summary: '사용자의 스토리 보드 페이지네이션 조회합니다',
+    description: '사용자의 스토리 보드 페이지네이션 조회합니다.',
+  },
+
   // 스토리 보드 조회 API 라우터
-  getStoryBoard: {
+  getOneStoryBoard: {
     method: 'GET',
     path: `${storyBoardUrl}/:storyBoardId`,
     pathParams: zStoryBoardId,
     responses,
-    summary: '스토리 보드를 조회합니다',
-    description: '스토리 보드를 조회합니다.',
+    summary: '스토리 보드 하나를 조회합니다',
+    description: '스토리 보드 하나를 조회합니다.',
   },
 
   // 스토리 보드 수정 API 라우터
