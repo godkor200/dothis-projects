@@ -7,9 +7,10 @@ export const zPostStoryBoardPathParams = z.object({
   memoId: z.string().describe('스토리 보드 메모 id'),
 });
 
-export const zStoryBoardId = zPostStoryBoardPathParams
-  .pick({ storyBoardId: true })
-  .required();
+export const zStoryBoardId = zPostStoryBoardPathParams.pick({
+  storyBoardId: true,
+});
+
 export const zPostStoryBoardBody = z
   .object({
     value: z.string().describe('해당하는 객체의 value'),
@@ -22,9 +23,9 @@ export const zPostStoryBoardBodyBoolean = z
   .required();
 export const zPostStoryBoardMainParams = zStoryBoardId;
 
-export const zPostStoryBoardDetailParams = z
+export const zPostStoryBoardOverviewParams = z
   .object({
-    detailId: z.string().describe('스토리 보드 디테일 id'),
+    overviewId: z.string().describe('스토리 보드 디테일 id'),
   })
   .required();
 export const zPostStoryBoardReferenceParams = zPostStoryBoardPathParams
