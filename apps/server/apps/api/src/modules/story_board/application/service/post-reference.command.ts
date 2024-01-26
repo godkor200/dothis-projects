@@ -12,10 +12,7 @@ export class PostReferenceCommand
   implements
     ICommandHandler<
       PostStoryBoardReferenceDto,
-      Result<
-        ReferenceEntity,
-        ReferNotExistsError | InternalServerErrorException
-      >
+      Result<boolean, ReferNotExistsError | InternalServerErrorException>
     >
 {
   constructor(
@@ -26,10 +23,10 @@ export class PostReferenceCommand
   async execute(
     command: PostStoryBoardReferenceDto,
   ): Promise<
-    Result<ReferenceEntity, ReferNotExistsError | InternalServerErrorException>
+    Result<boolean, ReferNotExistsError | InternalServerErrorException>
   > {
     const res = await this.referenceRepository.create(command);
     if (!res.id) return Err(new ReferNotExistsError());
-    return Ok(res);
+    return Ok(!!res.id);
   }
 }
