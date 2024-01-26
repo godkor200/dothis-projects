@@ -1,5 +1,5 @@
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { updateObject } from '@Libs/commons/src';
 import { User } from '../domain/user.entity';
 
