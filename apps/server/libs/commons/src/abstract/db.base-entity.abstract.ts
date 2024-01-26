@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,6 +32,8 @@ export interface idBaseDateEntityInterface
   createdAt: Date;
 
   updatedAt: Date;
+
+  deletedAt?: Date;
 }
 
 export class IdBaseDateEntityAbstract implements idBaseDateEntityInterface {
@@ -50,4 +53,7 @@ export class IdBaseDateEntityAbstract implements idBaseDateEntityInterface {
     comment: '수정된 날짜',
   })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
 }
