@@ -1,7 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
-import { StoryBoardDetailEntity } from '@Apps/modules/story_board/domain/entities/story-board-detail.entity';
+import { StoryBoardOverviewEntity } from '@Apps/modules/story_board/domain/entities/story-board-overview.entity';
 
+/**
+ * s3에서 받아 url 에 저장
+ */
 @Entity({ name: 'reference' })
 export class ReferenceEntity extends IdBaseDateEntityAbstract {
   @Column({ type: 'varchar', length: 2000, comment: 'URL', nullable: false })
@@ -14,9 +17,9 @@ export class ReferenceEntity extends IdBaseDateEntityAbstract {
   boardId: number;
 
   @ManyToOne(
-    () => StoryBoardDetailEntity,
+    () => StoryBoardOverviewEntity,
     (storyBoardDetailEntity) => storyBoardDetailEntity.boardId,
   )
   @JoinColumn({ name: 'board_id' })
-  storyDetail: StoryBoardDetailEntity;
+  storyOverview: StoryBoardOverviewEntity;
 }
