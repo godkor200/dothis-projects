@@ -13,7 +13,7 @@ import {
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
   FindVideoV2,

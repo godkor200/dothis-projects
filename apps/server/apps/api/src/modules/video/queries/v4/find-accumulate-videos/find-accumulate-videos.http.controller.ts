@@ -14,7 +14,7 @@ import {
   FindAccumulateQuery,
   FindAccumulateVideosV4Dto,
 } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
   IFindAccumulateVideoRes,
