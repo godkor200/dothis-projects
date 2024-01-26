@@ -1,6 +1,6 @@
 import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { StoryBoardDetailEntity } from '@Apps/modules/story_board/domain/entities/story-board-detail.entity';
+import { StoryBoardOverviewEntity } from '@Apps/modules/story_board/domain/entities/story-board-overview.entity';
 
 @Entity({ name: 'memo' })
 export class MemoEntity extends IdBaseDateEntityAbstract {
@@ -14,9 +14,9 @@ export class MemoEntity extends IdBaseDateEntityAbstract {
   content: string;
 
   @ManyToOne(
-    () => StoryBoardDetailEntity,
+    () => StoryBoardOverviewEntity,
     (storyBoardDetailEntity) => storyBoardDetailEntity.memos,
   )
   @JoinColumn({ name: 'board_id' })
-  storyDetail: StoryBoardDetailEntity;
+  storyOverview: StoryBoardOverviewEntity;
 }
