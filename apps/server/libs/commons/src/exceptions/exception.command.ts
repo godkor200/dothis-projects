@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 
 export class CommandExecutor {
   private commandBus: CommandBus;
