@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { RecentStoryBoardCreateDto } from '@Apps/modules/story_board/interfaces/dtos/story-board.dto';
-import { RecentStoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/story-board.outbound';
+import { StoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/story-board.outbound';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/recent-story-board.di-token.constant';
 import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
@@ -18,7 +18,7 @@ export class CreateStoryBoardCommand
 {
   constructor(
     @Inject(RECENT_STORY_BOARD_DI_TOKEN_CONSTANT)
-    private readonly recentStoryBoard: RecentStoryBoardOutboundPort,
+    private readonly recentStoryBoard: StoryBoardOutboundPort,
 
     @Inject(STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT)
     private readonly storyBoardDetail: StoryBoardDetailOutboundPort,

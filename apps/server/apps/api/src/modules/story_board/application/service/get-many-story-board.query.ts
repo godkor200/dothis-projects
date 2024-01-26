@@ -6,7 +6,7 @@ import { Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story_board/domain/errors';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/recent-story-board.di-token.constant';
-import { RecentStoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/story-board.outbound';
+import { StoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/story-board.outbound';
 import { StoryBoardDao } from '@Apps/modules/story_board/interfaces/daos/story-board.dao';
 export type TGetManyStoryBoardRes = Result<
   Paginated<StoryBoardEntity>,
@@ -18,7 +18,7 @@ export class GetManyStoryBoardQuery
 {
   constructor(
     @Inject(RECENT_STORY_BOARD_DI_TOKEN_CONSTANT)
-    private readonly storyBoardRepository: RecentStoryBoardOutboundPort,
+    private readonly storyBoardRepository: StoryBoardOutboundPort,
   ) {}
 
   async execute(query: getManyStoryBoardDto): Promise<TGetManyStoryBoardRes> {
