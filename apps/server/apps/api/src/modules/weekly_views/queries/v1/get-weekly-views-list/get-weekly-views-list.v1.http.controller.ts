@@ -14,7 +14,7 @@ import {
   WeeklyData,
   IRes,
   WeeklyKeywordsRes,
-} from '@Libs/commons/src/types/res.types';
+} from '@Libs/commons/src/interfaces/types/res.types';
 import {
   GetWeeklyViewsDto,
   GetWeeklyViewsQuery,

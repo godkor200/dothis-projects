@@ -4,7 +4,7 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { WEEKLY_VIEWS_REPOSITORY_BY_OS } from '@Apps/modules/weekly_views/constants/weekly_views.di-token.constants';
 import { WeeklyViewsOutboundPort } from '@Apps/modules/weekly_views/repository/database/weekly-views.outbound.port';
-import { WeeklyKeywordsRes } from '@Libs/commons/src/types/res.types';
+import { WeeklyKeywordsRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
 
 @QueryHandler(GetWeeklyViewsDto)
