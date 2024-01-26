@@ -1,8 +1,8 @@
 import TooltipComponent from '../common/Tooltip/Tooltip';
 
 export interface AnalysisWidgetItemProps {
-  title: string;
-  content: string;
+  title: string | null;
+  content: string | null;
   hasTooltip: boolean;
   tooltipText: string;
 }
