@@ -1,11 +1,11 @@
 import { extendApi } from '@anatine/zod-openapi';
 import { createZodDto } from '@anatine/zod-nestjs';
-import { zPostStoryBoardDetailParams, zStoryBoardDetails } from '@dothis/dto';
+import { zPostStoryBoardOverviewParams, zStoryBoardDetails } from '@dothis/dto';
 export class StoryBoardDetails extends createZodDto(
   extendApi(zStoryBoardDetails),
 ) {}
 export class PostStoryBoardDetailParams extends createZodDto(
-  extendApi(zPostStoryBoardDetailParams),
+  extendApi(zPostStoryBoardOverviewParams),
 ) {
   constructor(props: PostStoryBoardDetailParams) {
     super();
