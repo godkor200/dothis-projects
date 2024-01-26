@@ -24,10 +24,10 @@ import {
   TsRestRequest,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { RecentStoryBoardEntity } from '@Apps/modules/story_board/domain/entities/recent-story-board.entity';
+import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
 import { match, Result } from 'oxide.ts';
 import {
   PostStoryBoardBody,
@@ -86,7 +86,8 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiInternalServerErrorResponse({
@@ -94,10 +95,10 @@ export class PostStoryBoardHttpV1Controller {
   })
   async createStoryBoard(
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<IRes<RecentStoryBoardEntity>> {
+  ): Promise<IRes<StoryBoardEntity>> {
     const arg = new RecentStoryBoardCreateDto(userInfo);
 
-    const result: Result<RecentStoryBoardEntity, InternalServerErrorException> =
+    const result: Result<StoryBoardEntity, InternalServerErrorException> =
       await this.commandBus.execute(arg);
 
     return match(result, {
@@ -118,7 +119,8 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiParam({
@@ -160,7 +162,8 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiOperation({
@@ -203,11 +206,12 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiParam({
-    name: 'detailId',
+    name: 'overviewId',
     description: '생성된 overview id 값을 받습니다.',
     example: 1,
   })
@@ -295,7 +299,8 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiParam({
@@ -359,7 +364,8 @@ export class PostStoryBoardHttpV1Controller {
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiParam({
