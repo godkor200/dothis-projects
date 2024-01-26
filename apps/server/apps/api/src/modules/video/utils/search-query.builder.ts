@@ -77,7 +77,7 @@ export class SearchQueryBuilder {
 
   static videoSearchAfter(
     cluster: string,
-    limit: number,
+    limit: string,
     search: string,
     related: string,
     last?: string,
@@ -87,7 +87,7 @@ export class SearchQueryBuilder {
 
     let searchQuery = {
       index: cluster,
-      size: limit,
+      size: Number(limit),
       body: {
         query: {
           bool: {
