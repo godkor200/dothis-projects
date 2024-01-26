@@ -5,15 +5,16 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ReferenceEntity } from './reference.entity';
 import { MemoEntity } from './memo.entity';
 
 import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
-import { RecentStoryBoardEntity } from '@Apps/modules/story_board/domain/entities/recent-story-board.entity';
+import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
 
-@Entity({ name: 'story_board_detail' })
-export class StoryBoardDetailEntity extends IdBaseDateEntityAbstract {
+@Entity({ name: 'story_board_overview' })
+export class StoryBoardOverviewEntity extends IdBaseDateEntityAbstract {
   @Column({
     name: 'upload_date',
     type: 'timestamp',
@@ -50,16 +51,13 @@ export class StoryBoardDetailEntity extends IdBaseDateEntityAbstract {
   })
   location: string;
 
-  @OneToMany(() => ReferenceEntity, (reference) => reference.storyDetail)
+  @OneToMany(() => ReferenceEntity, (reference) => reference.storyOverview)
   references: ReferenceEntity[];
 
-  @OneToMany(() => MemoEntity, (memo) => memo.storyDetail)
+  @OneToMany(() => MemoEntity, (memo) => memo.storyOverview)
   memos: MemoEntity[];
 
-  @OneToOne(
-    () => RecentStoryBoardEntity,
-    (recentStoryboard) => recentStoryboard.overview,
-  )
+  @OneToOne(() => StoryBoardEntity, (storyboard) => storyboard.overview)
   @JoinColumn({ name: 'board_id' })
-  board: RecentStoryBoardEntity;
+  board: StoryBoardEntity;
 }
