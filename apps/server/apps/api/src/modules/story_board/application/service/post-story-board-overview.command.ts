@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { PostStoryBoardDetailDto } from '@Apps/modules/story_board/interfaces/dtos/story-board-detail.dto';
+import { PostStoryBoardDetailDto } from '@Apps/modules/story_board/interfaces/dtos/story-board-overview.dto';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { Ok, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story_board/domain/errors/story.error';
@@ -7,7 +7,7 @@ import { StoryBoardDetailOutboundPort } from '@Apps/modules/story_board/domain/p
 import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/story-board-details.di-token.constant';
 
 @CommandHandler(PostStoryBoardDetailDto)
-export class PostStoryBoardDetailCommand
+export class PostStoryBoardOverviewCommand
   implements
     ICommandHandler<
       PostStoryBoardDetailDto,
@@ -23,7 +23,7 @@ export class PostStoryBoardDetailCommand
   ): Promise<
     Result<boolean, StoryNotExistsError | InternalServerErrorException>
   > {
-    const { detailId: id, body } = command;
+    const { overviewId: id, body } = command;
     if (body.hasOwnProperty('uploadDate')) {
       body['uploadDate'] = new Date(body['uploadDate']);
     }

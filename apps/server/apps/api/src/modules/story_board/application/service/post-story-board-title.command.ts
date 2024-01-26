@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { PostStoryBoardMainDto } from '@Apps/modules/story_board/interfaces/dtos/recent-story-board.dto';
+import { PostStoryBoardMainDto } from '@Apps/modules/story_board/interfaces/dtos/story-board.dto';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story_board/constants/recent-story-board.di-token.constant';
-import { RecentStoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/recent-story-board.outbound';
+import { RecentStoryBoardOutboundPort } from '@Apps/modules/story_board/domain/ports/outbound/story-board.outbound';
 import { Err, Ok, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story_board/domain/errors/story.error';
 
