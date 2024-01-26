@@ -21,7 +21,7 @@ export const zDateQuery = z
 
 export const zPaginatedQuery = z
   .object({
-    limit: z.number().describe('리턴되는 레코드의 숫자').default(5),
+    limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
     last: z.string().describe('마지막 인덱스').optional(),
   })
   .describe('페이지네이션 쿼리');
@@ -29,17 +29,67 @@ export const zPaginatedQuery = z
  * 정렬 쿼리
  * @param enumElement
  */
+
+const storyBoardSchemaKey = [
+  'id',
+  'userId',
+  'title',
+  'isDraft',
+  'createdAt',
+  'updatedAt',
+] as const;
+
 export const zSortQuery = (enumElement: Array<string>) => {
   // if (!enumElement.length) {
   //   return z.object(undefined);
   // }
   return z
     .object({
-      sort: z.enum([enumElement[0], ...enumElement.slice(1)]).optional(),
+      sort: z
+        .enum([enumElement[0], ...enumElement.slice(1)])
+        .describe(
+          '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
+        )
+        .optional(),
       order: z.enum(['asc', 'desc'] as const).optional(),
     })
     .describe('소트 쿼리');
 };
+
+export const zSortSqlQuery = z
+  .object({
+    field: z
+      .enum(storyBoardSchemaKey)
+      .describe(
+        '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
+      )
+      .optional(),
+    param: z.enum(['asc', 'desc'] as const).optional(),
+  })
+  .describe('소트 쿼리');
+
+export const zOrderBy = z.object({
+  field: z
+    .string()
+    .describe(
+      '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
+    ),
+  param: z
+    .enum(['asc', 'desc'] as const)
+    .describe(
+      "정렬 방식을 나타냅니다. 'asc'는 오름차순, 'desc'는 내림차순을 의미",
+    ),
+});
+
+export const zPaginatedSqlQueryParams = z
+  .object({
+    limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
+    page: z.string().describe('현재 페이지 번호를 나타냅니다.'),
+    offset: z.string().describe('건너뛸 데이터의 수를 나타냅니다'),
+  })
+  .merge(zSortSqlQuery)
+  .optional()
+  .describe('페이지네이션 쿼리 파라미터');
 
 export const zTotalData = z
   .object({ total: z.number() })
