@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
@@ -8,7 +8,11 @@ import {
   useDailyViewChartDataForNivo,
   useExpectedViewChartDataForNivo,
 } from '@/hooks/contents/useLineGraph';
+import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
+import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelData';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
+import { useGptOption, useGptOptionAction } from '@/store/gptOptionStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { getCompetitionScore } from '@/utils/contents/competitionScore';
 
@@ -25,6 +29,8 @@ export const VIEWCHART_LABEL = {
 const KeywordAnalyticsView = () => {
   const selectedWord = useSelectedWord();
 
+  const { isLoading: dailyViewIsLoading } = useGetDailyView(selectedWord);
+
   const dailyViewChartData = useDailyViewChartDataForNivo(
     selectedWord,
     '일일 조회 수',
@@ -38,6 +44,8 @@ const KeywordAnalyticsView = () => {
     0,
   );
 
+  const { isLoading: expectedViewIsLoading } = useGetExpectedView(selectedWord);
+
   const expectedViewChartData = useExpectedViewChartDataForNivo(
     selectedWord,
     '기대 조회 수',
@@ -45,7 +53,7 @@ const KeywordAnalyticsView = () => {
 
   const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
 
-  const { data: videoCountData } = useGetVideoCount(selectedWord);
+  const { data: videoCountData, isLoading } = useGetVideoCount(selectedWord);
 
   const { totalCount, videoCountViewChartData } = useMemo(
     () =>
@@ -85,7 +93,7 @@ const KeywordAnalyticsView = () => {
           videoCountViewChartData: ResponseType;
         },
       ),
-    [videoCountData],
+    [JSON.stringify(videoCountData)],
   );
 
   // 경쟁강도 구하는 로직 lastDailyView 절대값 설정도 고려해봐야함
@@ -94,6 +102,75 @@ const KeywordAnalyticsView = () => {
     totalDailyView,
     videoCount: totalCount,
   });
+
+  const {
+    setVideoCount,
+    setDailyViewTendency,
+    setTotalDailyView,
+    setCompetitionScore,
+    setHigherSubscribedChannelsCount,
+  } = useGptOptionAction();
+
+  useEffect(() => {
+    if (!isLoading) {
+      setVideoCount(videoCountData[0]?.videoTotal!);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!dailyViewIsLoading.some((item) => item === true)) {
+      setTotalDailyView(totalDailyView);
+      console.log(dailyViewChartData[0].data.at(-1)?.y);
+      console.log(dailyViewChartData[0].data[0]?.y);
+      setDailyViewTendency(
+        dailyViewChartData[0].data.at(-1)?.y! /
+          dailyViewChartData[0].data[0]?.y,
+      );
+    }
+  }, [JSON.stringify(dailyViewIsLoading)]);
+
+  const { data: userChannelData, isLoading: userChannelIsLoading } =
+    useGetUserChannelData();
+
+  useEffect(() => {
+    if (!isLoading && !dailyViewIsLoading.some((item) => item === true)) {
+      setCompetitionScore(competitionScore);
+    }
+  }, [isLoading, JSON.stringify(dailyViewIsLoading)]);
+
+  useEffect(() => {
+    if (!userChannelIsLoading && !isLoading) {
+      // findRange(userChannelData?.data.subscribers!);
+
+      const current = findRangeKey(4444);
+
+      setHigherSubscribedChannelsCount(
+        findRangeValueSum(userChannelData?.data.subscribers!),
+      );
+    }
+  }, [userChannelIsLoading, isLoading]);
+
+  function findRangeValueSum(number: number) {
+    let sum = 0;
+
+    for (let range in CONVERT_SUBSCRIBERANGE) {
+      if (range.includes('~')) {
+        let [min, max] = range.split('~').map(Number);
+        if (number < max) {
+          sum += videoCountViewChartData[range as VideoCount].value;
+        }
+      } else if (range.includes('이상')) {
+        let min = parseInt(range);
+        if (number < min) {
+          sum += videoCountViewChartData[range as VideoCount].value;
+        }
+      }
+    }
+
+    return sum;
+  }
+
+  const sd = useGptOption();
 
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
@@ -118,3 +195,19 @@ const KeywordAnalyticsView = () => {
 };
 
 export default KeywordAnalyticsView;
+function findRangeKey(number: number) {
+  for (let range in CONVERT_SUBSCRIBERANGE) {
+    if (range.includes('~')) {
+      let [min, max] = range.split('~').map(Number);
+      if (number >= min && number <= max) {
+        return range;
+      }
+    } else if (range.includes('이상')) {
+      let min = parseInt(range);
+      if (number >= min) {
+        return range;
+      }
+    }
+  }
+  return '1000~9999';
+}

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { MedialTabNavDataCategoryType } from '@/constants/TabNav';
+import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
+import { useGptOptionAction } from '@/store/gptOptionStore';
 
-import type { CurrentArticleProps } from './CurrentArticle';
 import News from './News';
 import YouTube from './Youtube';
 
@@ -23,6 +24,27 @@ const MediaArticlesContainer = ({
   const handleSetContentIndex = (index: number) => {
     setContentIndex(index);
   };
+
+  const { setRelatedNews } = useGptOptionAction();
+
+  const {
+    data: scrollData,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetching,
+  } = useGetNewsInfiniteQuery();
+
+  useEffect(() => {
+    if (!isLoading) {
+      console.log(scrollData?.pages);
+      scrollData?.pages[0].return_object.documents.map((item, index) => {
+        if (index < 3) {
+          setRelatedNews((prev) => [...prev, item.title]);
+        }
+      });
+    }
+  }, [isLoading]);
 
   return (
     <>
