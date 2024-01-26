@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 
+import Chat from '@/app/openai/chat';
 import TabNavigation from '@/components/common/TabNavigation';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
@@ -66,6 +67,7 @@ const MainContentPage = async ({
   if (selectedMainContent === 'recommend') {
     return (
       <div className=" mx-auto w-[1342px] ">
+        <Chat />
         <Card>
           <CardHeader title="콘텐츠 소재" />
           <div className="flex">
