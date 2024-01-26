@@ -19,7 +19,10 @@ import {
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { VideoInfoRes, IRes } from '@Libs/commons/src/types/res.types';
+import {
+  VideoInfoRes,
+  IRes,
+} from '@Libs/commons/src/interfaces/types/res.types';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;

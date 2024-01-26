@@ -20,13 +20,14 @@ import { match, Result } from 'oxide.ts';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+
 import {
   ChannelKeywordOrtagDtos,
   ResultChannelKeywordTag,
 } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUserKeyword;
 

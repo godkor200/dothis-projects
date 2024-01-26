@@ -8,7 +8,7 @@ import {
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { IRes, VideoRes } from '@Libs/commons/src/types/res.types';
+import { IRes, VideoRes } from '@Libs/commons/src/interfaces/types/res.types';
 import {
   FindVideoPageV2Dto,
   IFindVideoPageQuery,

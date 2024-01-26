@@ -1,8 +1,9 @@
 import { IQuery } from '@nestjs/cqrs';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+
 import { zFindAccumulateQuery } from '@dothis/dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 
 export class FindAccumulateVideosDtos implements IQuery {
   readonly clusterNumber: string;
