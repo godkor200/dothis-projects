@@ -27,7 +27,7 @@ describe('예외 처리', () => {
   it('해당 키워드에 비디오가 없을 경우 Not Found를 띄웁니다.', async () => {
     const arg: IFindVideoPageV1Dto = {
       cluster: '6',
-      limit: 5,
+      limit: '5',
       search: '고기',
       related: '영화평론',
     };
