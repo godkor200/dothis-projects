@@ -1,9 +1,7 @@
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { mock } from 'jest-mock-extended';
-import {
-  GoogleLoginRedirectCommandHandler,
-  UserInfoCommandDto,
-} from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { GoogleLoginRedirectCommandHandler } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
