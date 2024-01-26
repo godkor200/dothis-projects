@@ -42,7 +42,7 @@ export default function Topbar() {
             width={30}
             height={30}
           />
-          <p>설문조사 참여하고 커피 쿠폰 받기</p>
+          <p>1분 설문조사 참여하고, 스타벅스 커피 무료로 받자!</p>
         </Button>
       </Main>
     </Background>
