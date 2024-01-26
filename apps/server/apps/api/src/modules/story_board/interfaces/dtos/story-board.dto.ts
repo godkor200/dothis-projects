@@ -1,4 +1,4 @@
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import {
@@ -9,6 +9,7 @@ import {
   zStoryBoardId,
   zPostStoryBoardBodyBoolean,
 } from '@dothis/dto';
+import { PaginatedSqlQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
 
 /**
  * FIXME: 이렇게 다 정의 할 필요 없을텐데..
@@ -60,9 +61,20 @@ export class PostStoryBoardMainDraftDto extends PostStoryBoardMainParams {
   }
 }
 
-export class getStoryBoardDto extends createZodDto(extendApi(zStoryBoardId)) {
-  constructor(props: getStoryBoardDto) {
+export class getOneStoryBoardDto extends createZodDto(
+  extendApi(zStoryBoardId),
+) {
+  readonly userInfo: UserInfoCommandDto;
+  constructor(props: getOneStoryBoardDto) {
     super();
-    this.storyBoardId = props.storyBoardId;
+    Object.assign(this, props);
+  }
+}
+
+export class getManyStoryBoardDto extends PaginatedSqlQueryParams {
+  readonly userInfo: UserInfoCommandDto;
+  constructor(props: getManyStoryBoardDto) {
+    super(props);
+    Object.assign(this, props);
   }
 }
