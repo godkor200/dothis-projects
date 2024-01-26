@@ -2,14 +2,18 @@ import {
   Controller,
   InternalServerErrorException,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
+
 import {
+  ApiBearerAuth,
   ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
@@ -19,31 +23,39 @@ import {
   TsRest,
   TsRestRequest,
 } from '@ts-rest/nest';
-import { IRes } from '@Libs/commons/src/types/res.types';
-import { apiRouter } from '@dothis/dto';
-import { getStoryBoardDto } from '@Apps/modules/story_board/interfaces/dtos/recent-story-board.dto';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { apiRouter, zOrderBy } from '@dothis/dto';
+import { getOneStoryBoardDto } from '@Apps/modules/story_board/interfaces/dtos/story-board.dto';
 import { match, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story_board/domain/errors/story.error';
-import { RecentStoryBoardEntity } from '@Apps/modules/story_board/domain/entities/recent-story-board.entity';
+import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
+import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
+
+import { TGetOneStoryBoardRes } from '@Apps/modules/story_board/application/service/get-one-story-board.query';
+
 const c = nestControllerContract(apiRouter.storyBoard);
-const { getStoryBoard } = c;
+const { getOneStoryBoard } = c;
 type RequestShapes = NestRequestShapes<typeof c>;
-const { summary, description, responses } = getStoryBoard;
+const { summary, description, responses } = getOneStoryBoard;
 @Controller()
 @ApiTags('스토리 보드')
-export class GetStoryBoardHttpV1Controller {
+export class GetOneStoryBoardHttpV1Controller {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @TsRest(getStoryBoard)
+  @TsRest(getOneStoryBoard)
   @ApiParam({
     name: 'storyBoardId',
     description: '생성된 스토리보드 id 값을 받습니다.',
-    example: 26,
+    example: 1,
+    required: false,
   })
+  @ApiBearerAuth('Authorization')
   @ApiHeaders([
     {
       name: 'Authorization',
-      description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
+      description:
+        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
   @ApiOkResponse({
@@ -70,14 +82,18 @@ export class GetStoryBoardHttpV1Controller {
   @ApiInternalServerErrorResponse({
     description: responses['internalServerError'][500],
   })
+  @UseGuards(JwtAccessGuard)
   async execute(
-    @TsRestRequest() { params }: RequestShapes['getStoryBoard'],
-  ): Promise<IRes<RecentStoryBoardEntity>> {
-    const arg = new getStoryBoardDto(params);
-    const result: Result<
-      RecentStoryBoardEntity,
-      StoryNotExistsError | InternalServerErrorException
-    > = await this.queryBus.execute(arg);
+    @TsRestRequest()
+    { params }: RequestShapes['getOneStoryBoard'],
+    @User() userInfo: UserInfoCommandDto,
+  ): Promise<IRes<StoryBoardEntity>> {
+    const arg = new getOneStoryBoardDto({
+      storyBoardId: params.storyBoardId,
+      userInfo,
+    });
+
+    const result: TGetOneStoryBoardRes = await this.queryBus.execute(arg);
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err: Error) => {
