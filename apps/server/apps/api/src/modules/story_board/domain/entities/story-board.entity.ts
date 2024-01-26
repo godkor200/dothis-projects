@@ -5,13 +5,14 @@ import {
   JoinColumn,
   OneToMany,
   OneToOne,
+  DeleteDateColumn,
 } from 'typeorm';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
-import { StoryBoardDetailEntity } from '@Apps/modules/story_board/domain/entities/story-board-detail.entity';
+import { StoryBoardOverviewEntity } from '@Apps/modules/story_board/domain/entities/story-board-overview.entity';
 
 @Entity({ name: 'story_board' })
-export class RecentStoryBoardEntity extends IdBaseDateEntityAbstract {
+export class StoryBoardEntity extends IdBaseDateEntityAbstract {
   @Column({ name: 'user_id' })
   userId: number;
 
@@ -32,13 +33,16 @@ export class RecentStoryBoardEntity extends IdBaseDateEntityAbstract {
   })
   isDraft: boolean;
 
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
+
   @ManyToOne(() => User, (user) => user)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToOne(
-    () => StoryBoardDetailEntity,
+    () => StoryBoardOverviewEntity,
     (StoryBoardDetail) => StoryBoardDetail.board,
   )
-  overview: StoryBoardDetailEntity;
+  overview: StoryBoardOverviewEntity;
 }
