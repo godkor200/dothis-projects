@@ -6,8 +6,6 @@ import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
-import { generateOpenApi } from '@ts-rest/open-api';
-import { apiRouter } from '@dothis/dto';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +17,7 @@ async function bootstrap() {
   const logger = new Logger();
   app.use(cookieParser());
   app.useGlobalFilters(new HttpExceptionFilter());
+
   app.enableCors({
     origin: [
       'http://localhost:3666',
