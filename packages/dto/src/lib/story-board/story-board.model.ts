@@ -11,7 +11,7 @@ const zStoryBoardSchema = z
   })
   .describe('스토리 보드의 기본 정보를 나타내는 스키마');
 
-const zStoryBoardDetailSchema = z
+const zStoryBoardOverviewSchema = z
   .object({
     id: z.number().describe('스토리 보드 세부 정보의 고유 ID'),
     uploadDate: z.date().describe('유튜브 업로드 예정일'),
@@ -47,16 +47,16 @@ const zMemoSchema = z
   .describe('메모 정보를 나타내는 스키마');
 
 type TRecentStoryBoardModel = z.TypeOf<typeof zStoryBoardSchema>;
-type TStoryBoardDetailModel = z.TypeOf<typeof zStoryBoardDetailSchema>;
+type TStoryBoardOverviewModel = z.TypeOf<typeof zStoryBoardOverviewSchema>;
 type TReferenceModel = z.TypeOf<typeof zReferenceSchema>;
 type TMemoModel = z.TypeOf<typeof zMemoSchema>;
 export {
   zStoryBoardSchema,
-  zStoryBoardDetailSchema,
+  zStoryBoardOverviewSchema,
   zReferenceSchema,
   zMemoSchema,
   TRecentStoryBoardModel,
-  TStoryBoardDetailModel,
+  TStoryBoardOverviewModel,
   TReferenceModel,
   TMemoModel,
 };
