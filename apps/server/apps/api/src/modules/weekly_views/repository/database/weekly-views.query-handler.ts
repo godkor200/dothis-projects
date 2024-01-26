@@ -7,20 +7,20 @@ import {
 } from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
 import { from, lastValueFrom } from 'rxjs';
 import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
-import { WeeklyKeywordsRes } from '@Libs/commons/src/types/res.types';
-import { OrderEnum } from '@Libs/commons/src/types/dto.types';
+import { WeeklyKeywordsRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { OrderEnum } from '@Libs/commons/src/interfaces/types/dto.types';
 
 export class SearchQueryBuilder {
   static WeeklyViews(
     index: string,
-    limit: number,
+    limit: string,
     last?: string,
     sort: SortQueryEnum = SortQueryEnum.WEEKLY_VIEWS,
     order: OrderEnum = 'desc',
   ) {
     let searchQuery = {
       index,
-      size: limit,
+      size: Number(limit),
       body: {},
     };
     if (last) searchQuery.body['search_after'] = [last];

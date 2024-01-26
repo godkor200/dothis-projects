@@ -36,7 +36,7 @@ export class VideoQueryHandler
     const { cluster, search, related, from, to } = arg;
     const searchQuery = SearchQueryBuilder.videoSearchAfter(
       'video-' + cluster,
-      10000,
+      '10000',
       search,
       related,
       undefined,
