@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MemoEntity } from '@Apps/modules/story_board/domain/entities/memo.entity';
-import { RecentStoryBoardEntity } from '@Apps/modules/story_board/domain/entities/recent-story-board.entity';
+import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
 import { ReferenceEntity } from '@Apps/modules/story_board/domain/entities/reference.entity';
-import { StoryBoardDetailEntity } from '@Apps/modules/story_board/domain/entities/story-board-detail.entity';
+import { StoryBoardOverviewEntity } from '@Apps/modules/story_board/domain/entities/story-board-overview.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       MemoEntity,
       ReferenceEntity,
-      RecentStoryBoardEntity,
-      StoryBoardDetailEntity,
+      StoryBoardEntity,
+      StoryBoardOverviewEntity,
     ]),
   ],
   exports: [TypeOrmModule],
