@@ -14,7 +14,7 @@ import {
   zWeeklyKeywordsList,
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
-import { UserDto } from '@Libs/commons/src/types/dto.types';
+import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
 import { zPostStoryBoardPathParams } from '@dothis/dto';
 import { PickType } from '@nestjs/swagger';
 import { extend } from 'joi';
