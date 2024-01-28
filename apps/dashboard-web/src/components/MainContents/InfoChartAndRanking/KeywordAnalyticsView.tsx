@@ -14,6 +14,7 @@ import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelDa
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useGptOption, useGptOptionAction } from '@/store/gptOptionStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
+import { handleZeroDivision } from '@/utils/common';
 import { getCompetitionScore } from '@/utils/contents/competitionScore';
 
 import AnalysisWidgetList from './AnalysisWidgetList';
@@ -122,8 +123,10 @@ const KeywordAnalyticsView = () => {
       setTotalDailyView(totalDailyView);
 
       setDailyViewTendency(
-        dailyViewChartData[0].data.at(-1)?.y! /
+        handleZeroDivision(
+          dailyViewChartData[0].data.at(-1)?.y!,
           dailyViewChartData[0].data[0]?.y,
+        ),
       );
     }
   }, [JSON.stringify(dailyViewIsLoading)]);
@@ -133,7 +136,7 @@ const KeywordAnalyticsView = () => {
 
   useEffect(() => {
     if (!isLoading && !dailyViewIsLoading.some((item) => item === true)) {
-      setCompetitionScore(competitionScore);
+      setCompetitionScore(Math.round(competitionScore * 100) / 100);
     }
   }, [isLoading, JSON.stringify(dailyViewIsLoading)]);
 
