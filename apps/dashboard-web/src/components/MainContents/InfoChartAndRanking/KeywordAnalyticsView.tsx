@@ -120,8 +120,7 @@ const KeywordAnalyticsView = () => {
   useEffect(() => {
     if (!dailyViewIsLoading.some((item) => item === true)) {
       setTotalDailyView(totalDailyView);
-      console.log(dailyViewChartData[0].data.at(-1)?.y);
-      console.log(dailyViewChartData[0].data[0]?.y);
+
       setDailyViewTendency(
         dailyViewChartData[0].data.at(-1)?.y! /
           dailyViewChartData[0].data[0]?.y,
