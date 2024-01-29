@@ -1,7 +1,7 @@
 'use client';
 
-import Chat from '@/components/OpenAI/Chat';
+// import Chat from '@/components/OpenAI/Chat';
 
 export default function Page() {
-  return <Chat />;
+  return <div>테스트용</div>;
 }
