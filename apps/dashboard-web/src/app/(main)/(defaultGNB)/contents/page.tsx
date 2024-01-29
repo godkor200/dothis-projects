@@ -67,9 +67,10 @@ const MainContentPage = async ({
   if (selectedMainContent === 'recommend') {
     return (
       <div className=" mx-auto w-[1342px] ">
-        <Chat />
         <Card>
-          <CardHeader title="콘텐츠 소재" />
+          <CardHeader title="콘텐츠 소재">
+            <Chat />
+          </CardHeader>
           <div className="flex">
             <KeywordRankingList />
 

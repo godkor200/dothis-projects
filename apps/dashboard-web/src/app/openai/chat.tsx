@@ -157,7 +157,7 @@ export default function Chat() {
   }, [input]);
 
   return (
-    <div>
+    <>
       {/* user와 ai 질문에 대한 tag */}
       {/* <ul>
         {messages.map((m, index) => (
@@ -173,7 +173,7 @@ export default function Chat() {
           e.preventDefault();
           handleSubmit(e);
         }}
-        className="invisible"
+        className="invisible h-0"
       >
         <label>
           Say something...
@@ -188,38 +188,32 @@ export default function Chat() {
         </button>
       </form>
 
-      <Card>
-        <CardHeader title="콘텐츠 소재">
-          <div className="flex items-start gap-[20px]">
-            <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
-              {analysisData?.map(
-                ({ title, content, hasTooltip, tooltipText }, index) => (
-                  <AnalysisWidgetItem
-                    key={index}
-                    title={title}
-                    content={content}
-                    hasTooltip={hasTooltip}
-                    tooltipText={tooltipText}
-                  />
-                ),
-              )}
-            </ul>
-            <ul className="flex grow flex-wrap items-start gap-[20px] [&>*]:min-h-[160px]">
-              {analy?.map(
-                ({ title, content, hasTooltip, tooltipText }, index) => (
-                  <AnalysisWidgetItem
-                    key={index}
-                    title={title}
-                    content={content}
-                    hasTooltip={hasTooltip}
-                    tooltipText={tooltipText}
-                  />
-                ),
-              )}
-            </ul>
-          </div>
-        </CardHeader>
-      </Card>
-    </div>
+      <div className="flex items-start gap-[20px]">
+        <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
+          {analysisData?.map(
+            ({ title, content, hasTooltip, tooltipText }, index) => (
+              <AnalysisWidgetItem
+                key={index}
+                title={title}
+                content={content}
+                hasTooltip={hasTooltip}
+                tooltipText={tooltipText}
+              />
+            ),
+          )}
+        </ul>
+        <ul className="flex grow flex-wrap items-start gap-[20px] [&>*]:min-h-[160px]">
+          {analy?.map(({ title, content, hasTooltip, tooltipText }, index) => (
+            <AnalysisWidgetItem
+              key={index}
+              title={title}
+              content={content}
+              hasTooltip={hasTooltip}
+              tooltipText={tooltipText}
+            />
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
