@@ -27,6 +27,9 @@ export default function Chat() {
     stop,
   } = useChat();
 
+  console.log(messages);
+  console.log(input);
+
   const selectedWord = useSelectedWord();
 
   const startDate = useStartDate();
