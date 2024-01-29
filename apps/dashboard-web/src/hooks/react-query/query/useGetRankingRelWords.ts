@@ -8,7 +8,7 @@ import {
 import { apiClient } from '@/utils/api/apiClient';
 
 /**
- * params로 들어온 keyword에 대한 기대조회수에 기반한 연관어를 가져올 수 있는 api 쿼리 훅입니다.
+ * params로 들어온 keyword에 대해 기대조회수에 기반한 연관어를 가져올 수 있는 api 쿼리 훅입니다.
  * @param keyword 연관어를 가져올 keyword
  * @param queryOptions
  * @returns 해당 data에 기대조회수를 기반으로 정렬을 시킨 뒤 연관어(string) 데이터들만 배열형식으로 반환합니다.
