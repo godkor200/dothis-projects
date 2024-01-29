@@ -37,14 +37,18 @@ const MediaArticlesContainer = ({
 
   useEffect(() => {
     if (!isLoading) {
-      console.log(scrollData?.pages);
-      scrollData?.pages[0].return_object.documents.map((item, index) => {
-        if (index < 3) {
-          setRelatedNews((prev) => [...prev, item.title]);
-        }
-      });
+      const relatedNewsData = scrollData?.pages[0].return_object.documents
+        .filter((item, index) => index < 3)
+        .map((item) => item.title);
+
+      setRelatedNews((prev) => [...relatedNewsData!]);
+      // scrollData?.pages[0].return_object.documents.map((item, index) => {
+      //   if (index < 3) {
+      //     setRelatedNews((prev) => [...prev, item.title]);
+      //   }
+      // });
     }
-  }, [isLoading]);
+  }, [isLoading, JSON.stringify(scrollData)]);
 
   return (
     <>
