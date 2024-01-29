@@ -8,6 +8,7 @@ interface GptOptionActios {
   setHigherSubscribedChannelsCount: (value: number | null) => void;
   setRelatedNews: (fn: (prev: string[]) => string[]) => void;
   setRelatedVideo: (fn: (prev: string[]) => string[]) => void;
+  initializeGptOption: () => void;
 }
 
 interface GptOptionState {
@@ -46,6 +47,16 @@ export const gptOptionStore = create<GptOptionState>((set, get) => ({
     setRelatedVideo: (fn: (prev: string[]) => string[]) => {
       set((state) => ({ relatedVideo: fn(state.relatedVideo) }));
     },
+    initializeGptOption: () =>
+      set(() => ({
+        totalDailyView: null,
+        dailyViewTendency: null,
+        videoCount: null,
+        competitionScore: null,
+        higherSubscribedChannelsCount: null,
+        relatedNews: [],
+        relatedVideo: [],
+      })),
   },
 }));
 
