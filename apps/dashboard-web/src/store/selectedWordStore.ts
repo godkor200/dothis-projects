@@ -15,9 +15,6 @@ interface SeletedWordState {
   actions: SelectedWordAction;
 }
 
-/**
- * 현재 선택된 탐색어와 연관어를 전역으로 관리하기 위한 Store 입니다.
- */
 export const selectedWordStore = create<SeletedWordState>((set) => ({
   selectedWord: { keyword: null, relword: null },
   actions: {
