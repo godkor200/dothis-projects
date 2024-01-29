@@ -9,7 +9,7 @@ import CardHeader from '@/components/MainContents/CardHeader';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useGptOption } from '@/store/gptOptionStore';
+import { useGptOption, useGptOptionAction } from '@/store/gptOptionStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 
 const AnalysisWidgetItem = dynamic(
@@ -26,6 +26,7 @@ export default function Chat() {
     setInput,
     append,
     isLoading,
+    stop,
   } = useChat();
 
   const selectedWord = useSelectedWord();
@@ -46,6 +47,8 @@ export default function Chat() {
     relatedVideo,
   } = useGptOption();
 
+  const { initializeGptOption } = useGptOptionAction();
+
   /**
    * 아래 Query들은 setInput에 trigger 및 조건에서 사용된다
    */
@@ -59,7 +62,10 @@ export default function Chat() {
     ?.content.match(/### 키워드 평가\n([\s\S]+?)(?:###|\n\n|$)/);
   const matchContentRecommendations = messages
     .at(-1)
-    ?.content.match(/### 콘텐츠 주제 추천 \(3\)\n([\s\S]+?)(?:###|\n\n|$)/);
+    ?.content.match(
+      /### 콘텐츠 주제 추천(?: ?\(\d+\))?\n([\s\S]+?)(?:###|\n\n|$)/,
+    );
+  // ?.content.match(/### 콘텐츠 주제 추천 \(3\)\n([\s\S]+?)(?:###|\n\n|$)/);
   const matchDescription = messages
     .at(-1)
     ?.content.match(/### 상세 조언\n([\s\S]+?)(?:###|\n\n|$)/);
@@ -82,7 +88,10 @@ export default function Chat() {
    */
   const openAIDataPrimary = [
     {
-      title: `${selectedWord.keyword} & ${selectedWord.relword}`,
+      title:
+        selectedWord.keyword !== null && selectedWord.relword !== null
+          ? `${selectedWord.keyword} & ${selectedWord.relword}`
+          : '집계 중',
       content: '키워드 종합 평가',
       hasTooltip: false,
       tooltipText: '',
@@ -105,7 +114,14 @@ export default function Chat() {
 
   const openAIDataSecondary = [
     {
-      title: `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${competitionScore}%`,
+      title:
+        dailyViewTendency !== null &&
+        totalDailyView !== null &&
+        videoCount !== null &&
+        competitionScore !== null &&
+        higherSubscribedChannelsCount !== null
+          ? `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${competitionScore}%`
+          : `집계 중`,
       content: '요약',
       hasTooltip: false,
       tooltipText:
@@ -121,6 +137,15 @@ export default function Chat() {
   ];
 
   useEffect(() => {
+    stop();
+    initializeGptOption();
+  }, [selectedWord.keyword, selectedWord.relword]);
+
+  useEffect(() => {
+    // if (isLoading) {
+    //   stop();
+    // }
+
     if (
       dailyViewTendency !== null &&
       totalDailyView !== null &&
@@ -128,7 +153,8 @@ export default function Chat() {
       competitionScore !== null &&
       higherSubscribedChannelsCount !== null &&
       !newIsLoading &&
-      !videoIsLoading
+      !videoIsLoading &&
+      !isLoading
     ) {
       setInput(`
       Analysis Keywords: ${selectedWord.keyword}&${selectedWord.relword}
@@ -156,6 +182,7 @@ export default function Chat() {
   useEffect(() => {
     if (buttonRef.current) {
       buttonRef.current!.click();
+      // initializeGptOption();
     }
   }, [input]);
 
@@ -171,6 +198,9 @@ export default function Chat() {
         ))}
       </ul> */}
 
+      <div className="text-primary800 h-[50px] font-bold " onClick={stop}>
+        스탑
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -191,7 +221,7 @@ export default function Chat() {
         </button>
       </form>
 
-      <div className="mt-4 flex items-start gap-[20px]">
+      <div className="mt-4 flex  gap-[20px]">
         <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
           {openAIDataPrimary?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
@@ -205,7 +235,7 @@ export default function Chat() {
             ),
           )}
         </ul>
-        <ul className="flex grow flex-wrap items-start gap-[20px] [&>*]:min-h-[160px]">
+        <ul className="flex grow flex-wrap  gap-[20px] [&>*]:min-h-[160px]">
           {openAIDataSecondary?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
               <AnalysisWidgetItem
