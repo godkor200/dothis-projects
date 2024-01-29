@@ -9,7 +9,10 @@ import { usePathname } from 'next/navigation';
 import SvgComp from '@/components/common/SvgComp';
 import { GNB_MENUS } from '@/constants/SideMenus';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
+
+import SignUpModal from '../Modal/ModalContent/SignUpModal';
 
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
 const GNB = () => {
@@ -17,13 +20,17 @@ const GNB = () => {
   const isSignedIn = useIsSignedIn();
   const { setIsOpenSignUpModal } = useAuthActions();
 
+  const { setModalOpen, setModalContent } = useModalActions();
+
   const router = useRouter();
 
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
-    router.push('?steps=sign_up');
+
+    setModalContent(<SignUpModal />);
+    setModalOpen(true);
     return false;
   };
 

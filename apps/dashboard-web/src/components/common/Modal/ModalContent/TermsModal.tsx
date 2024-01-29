@@ -3,19 +3,17 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
 import SvgComp from '@/components/common/SvgComp';
+import { useModalActions } from '@/store/modalStore';
 
-const TermsModal = ({
-  errorMessage,
-  setOnError,
-}: {
-  errorMessage: string | undefined;
-  setOnError: (trigger: boolean) => void;
-}) => {
+const TermsModal = ({ errorMessage }: { errorMessage: string | undefined }) => {
+  const { initializeModal } = useModalActions();
+
   function replaceWithBr() {
     return errorMessage?.replace(/\n/g, '<br />');
   }
+
   return (
-    <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
+    <div className=" bg-grey00 w-[320px] rounded-[8px]  p-10">
       <div className="mb-[0.625rem] flex justify-center">
         <SvgComp icon="Alert" size={24} />
       </div>
@@ -25,7 +23,7 @@ const TermsModal = ({
       ></p>
       <div
         className="flex justify-center gap-[1.25rem] "
-        onClick={() => setOnError(false)}
+        onClick={initializeModal}
       >
         <Button theme="contained" size="L" paddingX="!px-[85px]">
           확인

@@ -7,18 +7,20 @@ import Page4 from './page4';
 import Page5 from './page5';
 import Page6 from './page6';
 import { Layout } from './style';
+import Temp_page from './temp_page';
 import Toolbar from './toolbar';
 
 export default function Landing() {
   return (
     <Layout>
       <Toolbar />
-      <Page1 />
+      <Temp_page />
+      {/* <Page1 />
       <Page2 />
       <Page3 />
       <Page4 />
       <Page5 />
-      <Page6 />
+      <Page6 /> */}
     </Layout>
   );
 }

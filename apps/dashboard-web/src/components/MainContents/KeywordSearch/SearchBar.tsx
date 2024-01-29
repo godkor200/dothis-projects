@@ -1,10 +1,9 @@
 'use client';
 
-import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState, useTransition } from 'react';
 
-import Modal from '@/components/common/Modal/Modal';
+import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import SvgComp from '@/components/common/SvgComp';
 import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
 import {
@@ -15,6 +14,7 @@ import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoComplete
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
+import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
 import MyKeywordList from './MyKeywordList';
@@ -35,9 +35,7 @@ const SearchBar = () => {
   //   }
   // };
 
-  const [open, setOpen] = useState(false);
-
-  const [openModal, setOpenModal] = useState(false);
+  const [openInput, setOpenInput] = useState(false);
 
   const [searchInput, setSearchInput] = useState('');
 
@@ -46,6 +44,8 @@ const SearchBar = () => {
   const [isPending, startTransition] = useTransition();
 
   const isSignedIn = useIsSignedIn();
+
+  const { setModalOpen, setModalContent } = useModalActions();
 
   const { data: userData } = useGetUserInfo();
 
@@ -96,20 +96,22 @@ const SearchBar = () => {
     if (isSignedIn) return true;
     setIsOpenSignUpModal(true);
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
-    router.push('?steps=sign_up');
+
+    setModalContent(<SignUpModal />);
+    setModalOpen(true);
     return false;
   };
 
   return (
     <div
       className="relative  mx-auto min-h-[52px] max-w-[680px]"
-      onClick={() => setOpen(true)}
+      onClick={() => setOpenInput(true)}
     >
       <div className=" rounded-8 bg-grey00 absolute z-20  box-border w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
         <div className="px-[20px]">
           <div
             className={cn('flex items-center justify-between pb-[10px]', {
-              'border-b-1 border-grey300 ': open,
+              'border-b-1 border-grey300 ': openInput,
             })}
           >
             <input
@@ -127,7 +129,7 @@ const SearchBar = () => {
               <SvgComp icon="HeaderPlus" size="32px" />
             </div>
           </div>
-          {open && (
+          {openInput && (
             <>
               <div className="inline-flex flex-col gap-[12px] py-10">
                 {data
@@ -170,35 +172,18 @@ const SearchBar = () => {
           )}
         </div>
 
-        {open && (
+        {openInput && (
           <div
             className="bg-grey200 text-grey500 rounded-b-8  cursor-pointer py-4 text-center font-bold"
             onClick={(event) => {
               event.stopPropagation();
-              setOpen(false);
+              setOpenInput(false);
             }}
           >
             닫기
           </div>
         )}
       </div>
-      {openModal && (
-        <Modal dismissCallback={() => setOpenModal(false)}>
-          <div className=" bg-grey00 border-grey400 w-[320px] rounded-[8px] border border-solid p-10">
-            <div className="mb-[0.625rem] flex justify-center">
-              로그인이 필요합니다.
-            </div>
-            <div
-              className="flex justify-center gap-[1.25rem] "
-              onClick={() => setOpenModal(false)}
-            >
-              <Button theme="contained" size="L" paddingX="!px-[85px]">
-                확인
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };

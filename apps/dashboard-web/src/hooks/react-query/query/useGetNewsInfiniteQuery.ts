@@ -12,7 +12,8 @@ import { useSelectedWord } from '@/store/selectedWordStore';
 import type { NewsResponse, ServerResponse } from '@/types/news';
 
 /**
- *
+ * infinityQuery로써 무한 scroll 형식에 맞도록 생성된 hook
+ * 해당 query는 빅카인즈 공공 데이터 오픈 API로 뉴스 data를 가져오기 위한 hook입니다.
  * @param queryOptions
  * @returns queryOptions 타입에서 제네릭을 생략해서 사용하면 UseQueryResult에서라도 제네릭으로 return 타입을 지정해줘야한다.
  */
