@@ -18,7 +18,7 @@ export default {
           hostedZone: 'dothis.kr',
         },
         environment: {
-          OPENAI_API_KEY: process.env.OPENAI_API_KEY as string,
+          // OPENAI_API_KEY: process.env.OPENAI_API_KEY as string,
         },
       });
       stack.addOutputs({
