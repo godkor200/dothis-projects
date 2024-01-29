@@ -4,14 +4,11 @@ import { useChat } from 'ai/react';
 import dynamic from 'next/dynamic';
 import type { FormEvent } from 'react';
 import { useEffect, useRef } from 'react';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
-import useKeyword from '@/hooks/user/useKeyword';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useGptOption } from '@/store/gptOptionStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
