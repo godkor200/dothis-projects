@@ -4,8 +4,6 @@ import { useChat } from 'ai/react';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 
-import Card from '@/components/MainContents/Card';
-import CardHeader from '@/components/MainContents/CardHeader';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import { useEndDate, useStartDate } from '@/store/dateStore';

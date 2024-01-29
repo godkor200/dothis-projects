@@ -1,6 +1,5 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 
-import Chat from '@/app/openai/chat';
 import TabNavigation from '@/components/common/TabNavigation';
 import Card from '@/components/MainContents/Card';
 import CardHeader from '@/components/MainContents/CardHeader';
@@ -9,9 +8,9 @@ import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/Ke
 import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import Container from '@/components/MainOverallView/RelatedWordList/Container';
+import Chat from '@/components/OpenAI/Chat';
 import { CATEGORY_TABNAV_DATA } from '@/constants/TabNav';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
-import relatedContentApi from '@/utils/api/mediaApis';
 
 type Props = {
   params: { id: string };
