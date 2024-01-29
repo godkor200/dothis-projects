@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 export const runtime = 'edge';
 
 const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'],
+  apiKey: process.env['OPENAI_API_KEY'] || 'nokey',
 });
 
 export async function POST(req: Request) {
@@ -19,10 +19,10 @@ export async function POST(req: Request) {
     messages: [
       {
         role: 'user',
-        content: `Given the following post content, detect if it has typo or not. 
+        content: `Given the following post content, detect if it has typo or not.
 Respond with a JSON array of typos ["typo1", "typo2", ...] or an empty [] if there's none. Only respond with an array. Post content:
 ${prompt}
-        
+
 Output:\n`,
       },
     ],
