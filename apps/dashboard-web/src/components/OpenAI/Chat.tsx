@@ -39,7 +39,7 @@ export default function Chat() {
     dailyViewTendency,
     totalDailyView,
     videoCount,
-    competitionScore,
+    expectedPercentage,
     higherSubscribedChannelsCount,
     relatedNews,
     relatedVideo,
@@ -126,9 +126,9 @@ export default function Chat() {
         dailyViewTendency !== null &&
         totalDailyView !== null &&
         videoCount !== null &&
-        competitionScore !== null &&
+        expectedPercentage !== null &&
         higherSubscribedChannelsCount !== null
-          ? `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${competitionScore}%`
+          ? `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${expectedPercentage}%`
           : `집계 중`,
       content: '요약',
       hasTooltip: false,
@@ -164,7 +164,7 @@ export default function Chat() {
       dailyViewTendency !== null &&
       totalDailyView !== null &&
       videoCount !== null &&
-      competitionScore !== null &&
+      expectedPercentage !== null &&
       higherSubscribedChannelsCount !== null &&
       !newIsLoading &&
       !videoIsLoading &&
@@ -176,7 +176,7 @@ export default function Chat() {
       Trend of daily views of all content: ${totalDailyView} (${dailyViewTendency}% increase)
       Number of published content: ${videoCount}
       Channels with more subscribers than me: ${higherSubscribedChannelsCount}
-      Average ratio of content views to channel's typical views: ${competitionScore}%
+      Average ratio of content views to channel's typical views: ${expectedPercentage}%
       Related news:
       ${relatedNews.map((item, index) => `${index + 1}. ${item}  \n`).join('')}
       Related high-performance videos:
@@ -187,7 +187,7 @@ export default function Chat() {
     dailyViewTendency,
     totalDailyView,
     videoCount,
-    competitionScore,
+    expectedPercentage,
     higherSubscribedChannelsCount,
     newIsLoading,
     videoIsLoading,

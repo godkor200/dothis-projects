@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
+import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 import {
   useDailyViewChartDataForNivo,
   useExpectedViewChartDataForNivo,
@@ -108,7 +109,7 @@ const KeywordAnalyticsView = () => {
     setVideoCount,
     setDailyViewTendency,
     setTotalDailyView,
-    setCompetitionScore,
+    setExpectedPercentage,
     setHigherSubscribedChannelsCount,
   } = useGptOptionAction();
 
@@ -136,12 +137,23 @@ const KeywordAnalyticsView = () => {
 
   useEffect(() => {
     if (!isLoading && !dailyViewIsLoading.some((item) => item === true)) {
-      setCompetitionScore(Math.round(competitionScore * 100) / 100);
+      // setCompetitionScore(Math.round(competitionScore * 100) / 100);
+
+      // if('유저 데이터의 평균 조회수') {
+      //   setCompetitionScore(lastExpectedView||0 /'유저 데이터의 평균 조회수')
+      //   return
+      // }
+      if (lastExpectedView) {
+        setExpectedPercentage(
+          Number(((lastExpectedView / GUEST_AVERAGEVIEW) * 100).toFixed()),
+        );
+      }
     }
   }, [
     isLoading,
     JSON.stringify(videoCountViewChartData),
     JSON.stringify(dailyViewIsLoading),
+    lastExpectedView,
   ]);
 
   useEffect(() => {

@@ -4,7 +4,7 @@ interface GptOptionActios {
   setTotalDailyView: (value: number | null) => void;
   setDailyViewTendency: (value: number | null) => void;
   setVideoCount: (value: number | null) => void;
-  setCompetitionScore: (value: number | null) => void;
+  setExpectedPercentage: (value: number | null) => void;
   setHigherSubscribedChannelsCount: (value: number | null) => void;
   setRelatedNews: (fn: (prev: string[]) => string[]) => void;
   setRelatedVideo: (fn: (prev: string[]) => string[]) => void;
@@ -15,7 +15,7 @@ interface GptOptionState {
   totalDailyView: number | null;
   dailyViewTendency: number | null;
   videoCount: number | null;
-  competitionScore: number | null;
+  expectedPercentage: number | null;
   higherSubscribedChannelsCount: number | null;
   relatedNews: string[];
   relatedVideo: string[];
@@ -27,7 +27,7 @@ export const gptOptionStore = create<GptOptionState>((set, get) => ({
   totalDailyView: null,
   dailyViewTendency: null,
   videoCount: null,
-  competitionScore: null,
+  expectedPercentage: null,
   higherSubscribedChannelsCount: null,
   relatedNews: [],
   relatedVideo: [],
@@ -37,8 +37,8 @@ export const gptOptionStore = create<GptOptionState>((set, get) => ({
     setDailyViewTendency: (value: number | null) =>
       set(() => ({ dailyViewTendency: value })),
     setVideoCount: (value: number | null) => set(() => ({ videoCount: value })),
-    setCompetitionScore: (value: number | null) =>
-      set(() => ({ competitionScore: value })),
+    setExpectedPercentage: (value: number | null) =>
+      set(() => ({ expectedPercentage: value })),
     setHigherSubscribedChannelsCount: (value: number | null) =>
       set(() => ({ higherSubscribedChannelsCount: value })),
     setRelatedNews: (fn: (prev: string[]) => string[]) => {
@@ -52,7 +52,7 @@ export const gptOptionStore = create<GptOptionState>((set, get) => ({
         totalDailyView: null,
         dailyViewTendency: null,
         videoCount: null,
-        competitionScore: null,
+        expectedPercentage: null,
         higherSubscribedChannelsCount: null,
         relatedNews: [],
         relatedVideo: [],
@@ -67,7 +67,7 @@ export const useGptOption = () =>
       totalDailyView,
       dailyViewTendency,
       videoCount,
-      competitionScore,
+      expectedPercentage,
       higherSubscribedChannelsCount,
       relatedNews,
       relatedVideo,
@@ -75,7 +75,7 @@ export const useGptOption = () =>
       totalDailyView,
       dailyViewTendency,
       videoCount,
-      competitionScore,
+      expectedPercentage,
       higherSubscribedChannelsCount,
       relatedNews,
       relatedVideo,
