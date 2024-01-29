@@ -188,7 +188,7 @@ export default function Chat() {
         </button>
       </form>
 
-      <div className="flex items-start gap-[20px]">
+      <div className="mt-4 flex items-start gap-[20px]">
         <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
           {analysisData?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
