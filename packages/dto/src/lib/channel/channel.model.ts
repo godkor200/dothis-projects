@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { dataObject } from '../common.model';
 
 export const zChannelData = z.object({
   id: z.number(),
@@ -34,5 +33,3 @@ export const zChannelAnalysis = z.object({
   mainKeywordsAndTags: z.array(z.string()), // 주사용 키워드 & 태그
 });
 export type ChannelAnalysisRes = z.TypeOf<typeof zChannelAnalysis>;
-
-export const zChannelResponse = dataObject(zChannelAnalysis);
