@@ -77,7 +77,10 @@ export default function Chat() {
     ? matchDescription[1].trim()
     : null;
 
-  const analysisData = [
+  /**
+   * openAIDataPrimary, openAIDataSecondary 두 개로 구분한 이유는 디자인을 충족하기 위해 2개의 block 나눠서 마크업을 진행했기 때문입니다.
+   */
+  const openAIDataPrimary = [
     {
       title: `${selectedWord.keyword} & ${selectedWord.relword}`,
       content: '키워드 종합 평가',
@@ -100,7 +103,7 @@ export default function Chat() {
     },
   ];
 
-  const analy = [
+  const openAIDataSecondary = [
     {
       title: `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${competitionScore}%`,
       content: '요약',
@@ -190,7 +193,7 @@ export default function Chat() {
 
       <div className="mt-4 flex items-start gap-[20px]">
         <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
-          {analysisData?.map(
+          {openAIDataPrimary?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
               <AnalysisWidgetItem
                 key={index}
@@ -203,15 +206,17 @@ export default function Chat() {
           )}
         </ul>
         <ul className="flex grow flex-wrap items-start gap-[20px] [&>*]:min-h-[160px]">
-          {analy?.map(({ title, content, hasTooltip, tooltipText }, index) => (
-            <AnalysisWidgetItem
-              key={index}
-              title={title}
-              content={content}
-              hasTooltip={hasTooltip}
-              tooltipText={tooltipText}
-            />
-          ))}
+          {openAIDataSecondary?.map(
+            ({ title, content, hasTooltip, tooltipText }, index) => (
+              <AnalysisWidgetItem
+                key={index}
+                title={title}
+                content={content}
+                hasTooltip={hasTooltip}
+                tooltipText={tooltipText}
+              />
+            ),
+          )}
         </ul>
       </div>
     </>
