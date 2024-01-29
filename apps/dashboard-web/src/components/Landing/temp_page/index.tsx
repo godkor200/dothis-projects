@@ -37,8 +37,8 @@ export default function Temp_page() {
         <Container>
           <Texts>
             <Title>
-              잘 나가는 키워드로 만든 콘텐츠, <Pink>조회수</Pink>는 얼마나
-              나올까? <br /> 지금 <Pink>두디스</Pink>에서 확인하세요!
+              <Pink>조회수</Pink>가 잘 나오는 키워드는 뭘까? <br />
+              지금 <Pink>두디스</Pink>에서 확인하세요!
             </Title>
           </Texts>
           <ButtonContainer>
