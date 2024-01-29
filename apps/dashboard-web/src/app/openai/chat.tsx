@@ -129,7 +129,7 @@ export default function Chat() {
     },
     {
       title: responseContentRecommendations,
-      content: '콘텐츠 주제 평가',
+      content: '콘텐츠 주제 추천',
       hasTooltip: false,
       tooltipText:
         '경쟁 강도란, 검색된 키워드로 영상을 만들 시, 경쟁해야 하는 영상에 비해 시청자의 관심이 많은 주제인지에 대해 나타내는 지표입니다. \n 경쟁에 유리하면 "좋음", 불리하면 "나쁨"으로 표기됩니다.',
@@ -189,15 +189,16 @@ export default function Chat() {
   return (
     <>
       {/* user와 ai 질문에 대한 tag */}
-      <ul>
-        {/* {messages.map((m, index) => (
+      {/* <ul>
+        {messages.map((m, index) => (
           <li key={index} className="whitespace-pre-line">
             {m.role === 'user' ? 'User: ' : 'AI: '}
             {m.content}
           </li>
-        ))} */}
-        <p className="whitespace-pre-line">{messages.at(-1)?.content}</p>
-      </ul>
+        ))}
+      </ul> */}
+
+      {/* <p className="whitespace-pre-line">{messages.at(-1)?.content}</p> */}
 
       <form
         onSubmit={(e) => {
