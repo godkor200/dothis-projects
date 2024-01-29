@@ -116,7 +116,7 @@ const KeywordAnalyticsView = () => {
     if (!isLoading) {
       setVideoCount(videoCountData[0]?.videoTotal!);
     }
-  }, [isLoading]);
+  }, [JSON.stringify(videoCountData)]);
 
   useEffect(() => {
     if (!dailyViewIsLoading.some((item) => item === true)) {
@@ -129,7 +129,7 @@ const KeywordAnalyticsView = () => {
         ),
       );
     }
-  }, [JSON.stringify(dailyViewIsLoading)]);
+  }, [JSON.stringify(dailyViewChartData), JSON.stringify(dailyViewIsLoading)]);
 
   const { data: userChannelData, isLoading: userChannelIsLoading } =
     useGetUserChannelData();
@@ -138,7 +138,11 @@ const KeywordAnalyticsView = () => {
     if (!isLoading && !dailyViewIsLoading.some((item) => item === true)) {
       setCompetitionScore(Math.round(competitionScore * 100) / 100);
     }
-  }, [isLoading, JSON.stringify(dailyViewIsLoading)]);
+  }, [
+    isLoading,
+    JSON.stringify(videoCountViewChartData),
+    JSON.stringify(dailyViewIsLoading),
+  ]);
 
   useEffect(() => {
     if (!userChannelIsLoading && !isLoading) {
@@ -150,7 +154,11 @@ const KeywordAnalyticsView = () => {
         findRangeValueSum(userChannelData?.data.subscribers!),
       );
     }
-  }, [userChannelIsLoading, isLoading]);
+  }, [
+    userChannelIsLoading,
+    isLoading,
+    JSON.stringify(videoCountViewChartData),
+  ]);
 
   function findRangeValueSum(number: number) {
     let sum = 0;
