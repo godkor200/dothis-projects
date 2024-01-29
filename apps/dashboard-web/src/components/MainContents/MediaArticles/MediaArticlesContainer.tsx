@@ -54,7 +54,9 @@ const MediaArticlesContainer = ({
       const relatedVideoData = videoData
         ?.filter((item, index) => index < 3)
         .map((item) => item._source.video_title);
-      setRelatedVideo((prev) => [...relatedVideoData!]);
+      if (relatedVideoData) {
+        setRelatedVideo((prev) => [...relatedVideoData!]);
+      }
     }
   }, [videoIsLoading]);
 
