@@ -3,5 +3,5 @@ export function handleZeroDivision(a: number, b: number) {
     return 0;
   }
 
-  return a / b;
+  return Math.round((a / b) * 100) / 100;
 }
