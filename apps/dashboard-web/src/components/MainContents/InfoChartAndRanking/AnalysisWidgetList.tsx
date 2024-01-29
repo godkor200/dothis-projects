@@ -12,7 +12,6 @@ interface Props {
 const AnalysisWidgetList = ({ expectedView, competitionScore }: Props) => {
   const selectedWord = useSelectedWord();
 
-  // console.log(process.env.OPENAI_API_KEY);
   const analysisData = [
     {
       title: '키워드',

@@ -1,6 +1,7 @@
 'use client';
 
+import Chat from '@/components/OpenAI/Chat';
+
 export default function Page() {
-  // console.log(process.env.OPENAI_API_KEY);
-  return <>테스트용 </>;
+  return <Chat />;
 }
