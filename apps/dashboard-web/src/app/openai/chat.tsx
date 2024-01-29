@@ -189,18 +189,16 @@ export default function Chat() {
   return (
     <>
       {/* user와 ai 질문에 대한 tag */}
-      {/* <ul>
-        {messages.map((m, index) => (
+      <ul>
+        {/* {messages.map((m, index) => (
           <li key={index} className="whitespace-pre-line">
             {m.role === 'user' ? 'User: ' : 'AI: '}
             {m.content}
           </li>
-        ))}
-      </ul> */}
+        ))} */}
+        <p className="whitespace-pre-line">{messages.at(-1)?.content}</p>
+      </ul>
 
-      <div className="text-primary800 h-[50px] font-bold " onClick={stop}>
-        스탑
-      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
