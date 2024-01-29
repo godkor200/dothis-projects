@@ -96,13 +96,23 @@ export default function Chat() {
     },
 
     {
-      title: responseKeywordEvaluation,
+      title:
+        input && !isLoading
+          ? '집계 중 오류가 발생했습니다.'
+          : responseKeywordEvaluation
+          ? responseKeywordEvaluation
+          : '집계 중',
       content: '키워드 종합 평가',
       hasTooltip: false,
       tooltipText: '',
     },
     {
-      title: responsematchDescription,
+      title:
+        input && !isLoading
+          ? '집계 중 오류가 발생했습니다.'
+          : responsematchDescription
+          ? responsematchDescription
+          : '집계 중',
       content: '상세 조언, 평가',
       hasTooltip: false,
       tooltipText:
@@ -126,7 +136,13 @@ export default function Chat() {
         '경쟁 강도란, 검색된 키워드로 영상을 만들 시, 경쟁해야 하는 영상에 비해 시청자의 관심이 많은 주제인지에 대해 나타내는 지표입니다. \n 경쟁에 유리하면 "좋음", 불리하면 "나쁨"으로 표기됩니다.',
     },
     {
-      title: responseContentRecommendations,
+      title:
+        input && !isLoading
+          ? '집계 중 오류가 발생했습니다.'
+          : responseContentRecommendations
+          ? responseContentRecommendations
+          : '집계 중',
+
       content: '콘텐츠 주제 추천',
       hasTooltip: false,
       tooltipText:
