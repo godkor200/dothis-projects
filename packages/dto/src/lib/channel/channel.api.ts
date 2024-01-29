@@ -1,5 +1,6 @@
 import { c } from '../contract';
 import { z } from 'zod';
+import { zChannelResponse } from './channel.model';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
@@ -8,7 +9,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}`,
     pathParams: z.object({ channelId: z.string() }),
     responses: {
-      200: '채널 snb',
+      200: zChannelResponse,
       401: 'Not Found',
       500: '서버에 문제가 있으면 리턴한다.',
     },

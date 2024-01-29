@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import TooltipComponent from '@/components/common/Tooltip/Tooltip';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import useGetVideoInformation from '@/hooks/react-query/query/useGetVideoInformation';
+import { useGptOptionAction } from '@/store/gptOptionStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 
@@ -25,6 +26,18 @@ const YouTube = () => {
     isLoading,
     isFetching,
   } = useGetVideoDataInfinityQuery(seletedWord, lastId);
+
+  const { setRelatedVideo } = useGptOptionAction();
+
+  useEffect(() => {
+    if (!isLoading) {
+      scrollData?.map((item, index) => {
+        if (index < 3) {
+          setRelatedVideo((prev) => [...prev, item._source.video_title]);
+        }
+      });
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     setLastId(scrollData?.at(-1)?._id);

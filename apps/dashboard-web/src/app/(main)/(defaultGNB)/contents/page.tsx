@@ -8,9 +8,9 @@ import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/Ke
 import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 import Container from '@/components/MainOverallView/RelatedWordList/Container';
+import Chat from '@/components/OpenAI/Chat';
 import { CATEGORY_TABNAV_DATA } from '@/constants/TabNav';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
-import relatedContentApi from '@/utils/api/mediaApis';
 
 type Props = {
   params: { id: string };
@@ -67,7 +67,9 @@ const MainContentPage = async ({
     return (
       <div className=" mx-auto w-[1342px] ">
         <Card>
-          <CardHeader title="콘텐츠 소재" />
+          <CardHeader title="콘텐츠 소재">
+            <Chat />
+          </CardHeader>
           <div className="flex">
             <KeywordRankingList />
 

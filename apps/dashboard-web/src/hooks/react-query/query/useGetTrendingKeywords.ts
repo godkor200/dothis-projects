@@ -11,6 +11,12 @@ export const videoKeys = {
   video: ['video'],
 };
 
+/**
+ * 해당 query는 수집한 키워드 및 연관어에 대한 정보 한눈에 쉽게 볼 수 있도록 순위별로 가져올 수 있는 hook입니다
+ * @param param 필터 및 정렬의 필요한 data들의 object파라미터입니다.
+ * @param queryOptions
+ * @returns
+ */
 const useGetTrendingKeywords = (
   {
     startDate,
