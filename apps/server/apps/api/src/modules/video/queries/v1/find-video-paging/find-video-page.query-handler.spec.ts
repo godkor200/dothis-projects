@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-page.query-handler';
-import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
+import { IPagingRes } from '@Apps/modules/video/interfaces/find-many-video.interface';
 import { IFindVideoPageV1Dto } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
