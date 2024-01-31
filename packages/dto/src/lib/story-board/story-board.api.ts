@@ -13,6 +13,7 @@ import { responses } from '../response';
 import { zPaginatedSqlQueryParams } from '../common.model';
 
 export const storyBoardUrl = '/story-board';
+import type {} from 'zod';
 export const storyBoardApi = c.router({
   // 스토리보드 생성 API 라우터
   createStoryBoard: {
