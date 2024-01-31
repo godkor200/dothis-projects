@@ -3,6 +3,7 @@
 import { apiClient } from '@/utils/api/apiClient';
 
 const SSTTEST = () => {
+  console.log('test');
   const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
     queries: ['1', '2', '3', '4', '5'].map((clusterNumber) => {
       return {
