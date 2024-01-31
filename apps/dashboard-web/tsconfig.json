@@ -14,7 +14,8 @@
       }
     ],
     "strictNullChecks": true,
-    "allowJs": true
+    "allowJs": true,
+    "types": ["node"]
   },
   "include": [
     "./src/**/*",
