@@ -15,7 +15,7 @@ import {
 } from './find-video-paging.req.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IPagingRes } from '@Apps/modules/video/interface/find-many-video.interface';
+import { IPagingRes } from '@Apps/modules/video/interfaces/find-many-video.interface';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 const c = nestControllerContract(apiRouter.video);
