@@ -52,6 +52,7 @@
     "@ts-rest/nest": "^3.19.3",
     "@ts-rest/open-api": "^3.19.3",
     "@types/webpack-env": "^1.18.0",
+    "apache-ignite-client": "^1.0.0",
     "api": "^5.0.8",
     "athena-express": "^7.1.5",
     "aws-sdk": "^2.1360.0",
