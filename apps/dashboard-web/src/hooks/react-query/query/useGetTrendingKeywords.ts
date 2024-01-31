@@ -44,7 +44,7 @@ const useGetTrendingKeywords = (
      */
     ({ pageParam = 0 }) => ({
       query: {
-        limit: isSignedIn ? (lastIndex_ID ? 30 : 300) : 10,
+        limit: isSignedIn ? String(lastIndex_ID ? 30 : 300) : String(10),
         from: date,
         last: lastIndex_ID,
         order: order,
