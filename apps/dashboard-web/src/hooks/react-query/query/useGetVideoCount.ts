@@ -31,8 +31,8 @@ const useGetVideoCount = (
 
     {
       query: {
-        keyword: keyword!,
-        relationKeyword: relword!,
+        search: keyword!,
+        related: relword!,
         from: startDate,
         to: endDate,
       },
