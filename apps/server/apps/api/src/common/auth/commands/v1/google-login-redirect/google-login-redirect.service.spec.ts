@@ -1,9 +1,7 @@
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { mock } from 'jest-mock-extended';
-import {
-  GoogleLoginRedirectCommandHandler,
-  UserInfoCommandDto,
-} from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { GoogleLoginRedirectCommandHandler } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
@@ -32,7 +30,7 @@ describe('GoogleLoginRedirectCommandHandler 예외 처리', () => {
    */
   it('checkUser가 없을 경우 server err를 띄웁니다.', async () => {
     const arg: UserInfoCommandDto = {
-      id: '1234567890',
+      id: 1234567890,
       channelId: 'UCX6OQ3DkcsbYNE6H8uQQuVA',
       userEmail: 'godkor200@gmail.com',
       tokenRefresh: 'aaaaa',

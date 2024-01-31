@@ -1,7 +1,12 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { apiRouter } from '@dothis/dto';
-import { nestControllerContract } from '@ts-rest/nest';
+import {
+  nestControllerContract,
+  NestRequestShapes,
+  TsRest,
+  TsRestRequest,
+} from '@ts-rest/nest';
 import {
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -9,13 +14,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
-import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
-import { VideoRes, IRes } from '@Libs/commons/src/types/res.types';
+import { IFindManyVideoResult } from '@Apps/modules/video/interfaces/find-many-video.interface';
+import { VideoRes, IRes } from '@Libs/commons/src/interfaces/types/res.types';
 
 const c = nestControllerContract(apiRouter.video);
-const { pathParams, summary, responses, description } = c.getVideoPageV1;
+type RequestShapes = NestRequestShapes<typeof c>;
+const { getVideoTest } = c;
+const { summary, responses, description } = getVideoTest;
 
-@ApiTags('영상')
+@ApiTags('이그나이트')
 @Controller()
 export class FindVideoHttpController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -38,13 +45,15 @@ export class FindVideoHttpController {
     description: '연관어',
     example: '영화',
   })
+  @TsRest(getVideoTest)
   @ApiOkResponse({ type: VideoRes })
   @ApiNotFoundResponse()
   async execute(
-    @Query('search') search: string,
-    @Query('related') related: string,
+    @TsRestRequest()
+    { query: { search, related } }: RequestShapes['getVideoTest'],
   ): Promise<IRes<IFindManyVideoResult[]>> {
     const query = new FindVideoQuery({ search, related });
+    console.log(query);
     return await this.queryBus.execute(query);
   }
 }

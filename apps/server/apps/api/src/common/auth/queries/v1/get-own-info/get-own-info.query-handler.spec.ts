@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { GetOwnInfoQueryHandler } from '@Apps/common/auth/queries/v1/get-own-info/get-own-info.query-handler';
-import { GetOwnInfoQuery } from '@Apps/common/auth/interface/get-own-info.interface';
+import { GetOwnInfoQuery } from '@Apps/common/auth/interfaces/get-own-info.interface';
 
 const mockUserRepository = mock<UserRepositoryPort>();
 

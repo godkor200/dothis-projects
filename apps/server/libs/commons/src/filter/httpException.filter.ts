@@ -24,7 +24,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       // class-validator 발생 에러
       return response.status(status).json({
         success: false,
-        ...err.message,
+        message: err.message,
       });
     }
 

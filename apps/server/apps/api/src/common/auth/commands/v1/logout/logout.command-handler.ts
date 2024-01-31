@@ -5,7 +5,7 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { Err, Ok } from 'oxide.ts';
 
 export class LogoutDto implements ICommand {
-  public readonly id: string;
+  public readonly id: number;
 
   constructor(props: LogoutDto) {
     this.id = props.id;

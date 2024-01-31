@@ -2,7 +2,7 @@ import { IQuery, QueryBus } from '@nestjs/cqrs';
 import { Controller, NotFoundException } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter, TKeyword } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,

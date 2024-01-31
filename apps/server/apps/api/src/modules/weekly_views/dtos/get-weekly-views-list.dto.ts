@@ -21,4 +21,9 @@ export enum SortQueryEnum {
   VIDEO_COUNT = 'video_count',
   COMPETITIVE = 'competitive',
   MEGA_CHANNEL = 'mega_channel',
+  CHANEGES = 'changes',
+}
+
+export function isValidSortQuery(query: string): query is SortQueryEnum {
+  return Object.values(SortQueryEnum).includes(query as SortQueryEnum);
 }

@@ -7,8 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 enum PLAN {
   PRO = 'PRO',
   TRIAL = 'TRIAL',
@@ -93,6 +94,12 @@ export class User {
   @OneToMany((type) => ChannelEntity, (channel) => channel.user)
   @JoinColumn({ name: 'channel_id' })
   channel: ChannelEntity[];
+
+  @OneToMany(
+    () => StoryBoardEntity,
+    (RecentStoryboard) => RecentStoryboard.user,
+  )
+  recentStoryboards: StoryBoardEntity[];
 
   static create(user: UserInfoCommandDto) {
     const newUser = new User();

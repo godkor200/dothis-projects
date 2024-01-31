@@ -2,13 +2,13 @@ import { mock } from 'jest-mock-extended';
 import { FindDailyViewsQuery } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
-import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
+import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
 import { FindDailyViewsQueryOsV3Handler } from '@Apps/modules/daily_views/queries/v3/find-daily-views/find-daily-views.v3.query-handler';
 import { videoHistoryDummy } from '@Apps/modules/daily_views/queries/v3/find-daily-views/__dummy__/daily-view-dummy-data';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 import { VideoDataService } from '@Apps/modules/video/service/video-data.service';
 
-const mockFindVideoOsAdapter = mock<VideoOutboundPort>();
+const mockFindVideoOsAdapter = mock<VideoQueryHandlerOutboundPort>();
 const mockVideoAggregateService = mock<VideoAggregateService>();
 const mockVideoDataService = mock<VideoDataService>();
 

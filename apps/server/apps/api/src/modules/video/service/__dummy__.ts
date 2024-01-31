@@ -1,4 +1,4 @@
-import { IVideoHistory } from '@Apps/modules/video/interface/find-video.os.res';
+import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
 
 // 데이터 비교군
 export const oneToTen: IVideoHistory[] = [

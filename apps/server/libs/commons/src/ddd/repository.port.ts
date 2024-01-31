@@ -1,4 +1,9 @@
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import {
+  zOrderBy,
+  zPaginatedSqlQueryParams,
+} from '@dothis/dto/dist/lib/common.model';
+import { z } from 'zod';
 
 export class Paginated<T> {
   readonly count: number;
@@ -13,17 +18,12 @@ export class Paginated<T> {
     this.data = props.data;
   }
 }
-export type OrderBy = { field: string | true; param: 'asc' | 'desc' };
+export type OrderBy = z.TypeOf<typeof zOrderBy>;
 
-export type PaginatedQueryParams = {
-  limit: number;
-  page: number;
-  offset: number;
-  orderBy: OrderBy;
-};
+export type PaginatedQueryParams = z.TypeOf<typeof zPaginatedSqlQueryParams>;
 
 export type updateObject = {
-  id: string;
+  id: string | number;
   [key: string]: any;
 };
 

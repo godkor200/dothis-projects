@@ -1,4 +1,10 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 export abstract class DbBaseEntityAbstract<T = number> {
   abstract id: T;
 
@@ -19,4 +25,35 @@ export interface IdBaseEntityInterface<T = number> {
   id: T | undefined;
 
   crawlUpdateAt: Date;
+}
+
+export interface idBaseDateEntityInterface
+  extends Pick<IdBaseEntityInterface, 'id'> {
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  deletedAt?: Date;
+}
+
+export class IdBaseDateEntityAbstract implements idBaseDateEntityInterface {
+  @PrimaryGeneratedColumn('increment')
+  id: number;
+
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    comment: '생성된 날짜',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    comment: '수정된 날짜',
+  })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
 }
