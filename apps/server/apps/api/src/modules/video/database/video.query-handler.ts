@@ -9,7 +9,7 @@ import {
   IFindManyVideoResult,
   IPagingRes,
   IVideo,
-} from '@Apps/modules/video/interface/find-many-video.interface';
+} from '@Apps/modules/video/interfaces/find-many-video.interface';
 import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,

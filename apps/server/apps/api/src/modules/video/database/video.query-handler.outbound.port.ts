@@ -5,7 +5,7 @@ import {
   IFindManyVideoResult,
   IPagingRes,
   IVideo,
-} from '@Apps/modules/video/interface/find-many-video.interface';
+} from '@Apps/modules/video/interfaces/find-many-video.interface';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
