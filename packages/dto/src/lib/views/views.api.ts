@@ -6,6 +6,7 @@ import {
   zWeeklyKeywordsList,
 } from './views.model';
 import { findVideoBySearchKeyword } from '../video';
+import { zErrResBase } from '../error.response.zod';
 
 export const viewApiUrl = '/views';
 const dailyApiUrl = '/daily';
@@ -20,8 +21,7 @@ export const dailyViewApi = c.router({
     query: findVideoBySearchKeyword,
     responses: {
       200: zDailyViews,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '일일 조회수를 가져옵니다',
     description:
@@ -36,8 +36,7 @@ export const weeklyViewApi = c.router({
     query: zGetWeeklyViewsQuery,
     responses: {
       200: zWeeklyKeywordsList,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '주간 키워드 리스트를 가져옵니다',
     description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',

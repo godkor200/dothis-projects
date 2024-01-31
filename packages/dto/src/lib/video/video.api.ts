@@ -1,4 +1,4 @@
-import { number, z } from 'zod';
+import { z } from 'zod';
 import { c } from '../contract';
 import {
   findVideoBySearchKeyword,
@@ -8,10 +8,22 @@ import {
   zVideoDetails,
   zVideoResponse,
 } from './video.model';
+import { zErrResBase } from '../error.response.zod';
 
 export const videoBaseApiUrl = '/video';
 
 export const videoApi = c.router({
+  getVideoTest: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/test`,
+    query: findVideoPageQuery,
+    responses: {
+      200: zVideoResponse,
+      ...zErrResBase,
+    },
+    summary: '이그 나이트 태스트용',
+    description: '이그 나이트 태스트용',
+  },
   getVideoPageV1: {
     method: 'GET',
     path: `${videoBaseApiUrl}/:clusterNumber`,
@@ -19,8 +31,7 @@ export const videoApi = c.router({
     query: findVideoPageQuery,
     responses: {
       200: zVideoResponse,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
     description:
@@ -32,8 +43,7 @@ export const videoApi = c.router({
     query: zFindVideoPageWithClusterQuery,
     responses: {
       200: zVideoResponse,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다. v2',
     description:
@@ -42,11 +52,10 @@ export const videoApi = c.router({
   getIndividualVideo: {
     method: 'GET',
     path: `${videoBaseApiUrl}/:clusterNumber/:videoId`,
-    pathParams: { clusterNumber: z.number(), videoId: z.string() }, // 비디오 카테고리(cluster) 넘버, 비디오 아이디
+    pathParams: z.object({ clusterNumber: z.number(), videoId: z.string() }), // 비디오 카테고리(cluster) 넘버, 비디오 아이디
     responses: {
       200: zVideoDetails,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '비디오 id를 기준으로 비디오 정보를 가져 옵니다',
     description: '비디오 id를 기준으로 비디오 정보를 가져 옵니다 ',
@@ -57,8 +66,7 @@ export const videoApi = c.router({
     query: findVideoBySearchKeyword,
     responses: {
       200: zAccVideoModel,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 누적 영상수를 가져옵니다.',
     description:

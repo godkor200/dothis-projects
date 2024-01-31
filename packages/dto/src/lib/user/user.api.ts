@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { c } from '../contract';
 import { zKeywordModel, zUserModel } from './user.model';
+import { zSuccessBase } from '../success.response.zod';
+import { zErrResBase } from '../error.response.zod';
 
 export const userBaseApiUrl = '/user';
 
@@ -11,8 +13,7 @@ export const userApi = c.router({
     pathParams: z.object({ id: z.string() }),
     responses: {
       200: zUserModel,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '유저를 가져옵니다. (관리자 콘솔용) ',
     description: '유저 index로 유저를 찾아 옵니다.',
@@ -20,12 +21,10 @@ export const userApi = c.router({
   getUserChannelData: {
     method: 'POST',
     path: `${userBaseApiUrl}/get-channel-data`,
-    body: {},
+    body: z.object({}),
     responses: {
-      200: '성공적으로 채널데이터를 저장한다면 성공 여부를 리턴한다.',
-      401: '채널에 이미 저장된 데이터가 있다면 오류를 리턴한다.',
-      404: 'Not Found',
-      500: '구글 서버에 문제가 있거나 구글 auth 내용이 비정상적이라면 리턴한다.',
+      200: zSuccessBase,
+      ...zErrResBase,
     },
     summary: '유저 채널 데이터 저장하기',
     description:
@@ -36,8 +35,7 @@ export const userApi = c.router({
     path: `${userBaseApiUrl}/keyword`,
     responses: {
       200: zKeywordModel,
-      404: 'Not Found',
-      500: 'server error',
+      ...zErrResBase,
     },
     summary: '유저 채널 키워드 겟하기',
     description: '유저의 채널 키워드를 가져온다',
@@ -46,9 +44,8 @@ export const userApi = c.router({
     method: 'PUT',
     path: `${userBaseApiUrl}/personal-tag`,
     responses: {
-      200: '개인화 태그를 업데이트하면 성공 여부를 리턴한다.',
-      404: 'Not Found',
-      500: 'server error',
+      200: zSuccessBase,
+      ...zErrResBase,
     },
     body: z.object({ tag: z.array(z.string()) }),
     summary: '유저 개인화 태그 넣기',
@@ -59,9 +56,8 @@ export const userApi = c.router({
     method: 'PUT',
     path: `${userBaseApiUrl}/search-word`,
     responses: {
-      200: 'search-word를 업데이트하면 성공 여부를 리턴한다.',
-      404: 'Not Found',
-      500: 'server error',
+      200: zSuccessBase,
+      ...zErrResBase,
     },
     body: z.object({ searchWord: z.array(z.string()) }),
     summary: '유저 검색 태그 넣기',
@@ -71,9 +67,8 @@ export const userApi = c.router({
     method: 'PUT',
     path: `${userBaseApiUrl}/agree-promotion`,
     responses: {
-      200: '성공적으로 약관 동의를 하면 성공 여부를 리턴한다.',
-      404: 'Not Found',
-      500: 'server error',
+      200: zSuccessBase,
+      ...zErrResBase,
     },
     body: z.object({ isAgree: z.boolean() }),
     summary: '유저 약관 동의 여부',
@@ -83,9 +78,8 @@ export const userApi = c.router({
     method: 'PUT',
     path: `${userBaseApiUrl}/admin/env`,
     responses: {
-      200: '성공적으로 변경되면 성공 여부를 리턴한다.',
-      404: 'Not Found',
-      500: 'server error',
+      200: zSuccessBase,
+      ...zErrResBase,
     },
     body: z.object({ isEnvLocal: z.boolean() }),
     summary: '환경 개발/프로덕션 변경 (관리자 콘솔용)',
