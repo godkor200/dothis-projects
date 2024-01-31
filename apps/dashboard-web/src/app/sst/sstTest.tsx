@@ -11,8 +11,8 @@ const SSTTEST = () => {
           clusterNumber,
         },
         query: {
-          keyword: '먹방',
-          relationKeyword: '불닭',
+          search: '먹방',
+          related: '불닭',
           from: '2023-10-11',
           to: '2023-10-17',
         },
