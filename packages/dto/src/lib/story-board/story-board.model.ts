@@ -55,6 +55,8 @@ export {
   zStoryBoardOverviewSchema,
   zReferenceSchema,
   zMemoSchema,
+};
+export type {
   TRecentStoryBoardModel,
   TStoryBoardOverviewModel,
   TReferenceModel,
