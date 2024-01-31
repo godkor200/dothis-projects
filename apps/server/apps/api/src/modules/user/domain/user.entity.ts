@@ -9,7 +9,7 @@ import {
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
-import { StoryBoardEntity } from '@Apps/modules/story_board/domain/entities/story-board.entity';
+import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 enum PLAN {
   PRO = 'PRO',
   TRIAL = 'TRIAL',
