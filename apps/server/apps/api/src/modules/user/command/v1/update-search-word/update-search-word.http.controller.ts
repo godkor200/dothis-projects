@@ -2,17 +2,13 @@ import { CommandBus } from '@nestjs/cqrs';
 import {
   Body,
   Controller,
-  HttpStatus,
   InternalServerErrorException,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
   ApiHeaders,
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -47,13 +43,6 @@ export class UpdateSearchWordHttpController {
   })
   @ApiOkResponse({
     description: '성공여부를 리턴합니다.',
-  })
-  @ApiNotFoundResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
   })
   @ApiBearerAuth('Authorization')
   @ApiHeaders([

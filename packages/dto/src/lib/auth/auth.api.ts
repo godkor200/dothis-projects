@@ -1,7 +1,7 @@
-import { c, USER_AUTH } from '../contract';
+import { c } from '../contract';
 import { z } from 'zod';
-import { userBaseApiUrl, zUserModel } from '../user';
-import { zTokenExpired } from './auth.constant';
+import { zUserModel } from '../user';
+import { zErrResBase } from '../error.response.zod';
 
 export const authBaseApiUrl = '/auth';
 
@@ -10,10 +10,8 @@ export const authApi = c.router({
     method: 'GET',
     path: `${authBaseApiUrl}/google-login`,
     responses: {
-      //TODO: 모듈화 필요
-      200: 'Google Authentication',
-      401: 'Invalid Credential',
-      500: 'Internal Server Error',
+      200: c.type<any>(),
+      ...zErrResBase,
     },
     summary: '구글 로그인',
     description: '구글 로그인 후 /google-redirect로 리다이렉트한다.',
@@ -21,7 +19,7 @@ export const authApi = c.router({
   getGoogleRedirect: {
     method: 'GET',
     path: `${authBaseApiUrl}/google-redirect`,
-    responses: { 200: 'Dothis Authentication' },
+    responses: { 200: c.type<{ message: string }>(), ...zErrResBase },
     summary: '유저 로그인 후 토큰 리턴',
     description:
       '유저 관련 토큰 accessToken, refreshToken, isNewUser은 쿼리로 보내어진다.',
@@ -30,14 +28,8 @@ export const authApi = c.router({
     method: 'GET',
     path: `${authBaseApiUrl}/verify-token`,
     responses: {
-      //TODO: 모듈화 필요
       200: z.object({ success: z.boolean(), data: z.any() }),
-      400: z.object({
-        statusCode: z.number(),
-        message: z.string().default(USER_AUTH.NoTokenProvided),
-      }),
-      401: zTokenExpired,
-      500: 'Internal Server Error',
+      ...zErrResBase,
     },
     summary: '토큰 확인(accessToken, refreshToken) 후 갱신된 토큰 리턴',
     description:
@@ -48,9 +40,7 @@ export const authApi = c.router({
     path: `${authBaseApiUrl}/own-info`,
     responses: {
       200: zUserModel,
-      401: zTokenExpired,
-      404: 'Not Found',
-      500: 'Internal Server Error',
+      ...zErrResBase,
     },
     summary: '토큰 확인후 유저 정보 리턴',
     description: '유저 관련 토큰 accessToken으로 사용자의 정보를 불러온다.',
@@ -59,11 +49,10 @@ export const authApi = c.router({
     method: 'DELETE',
     path: `${authBaseApiUrl}/logout`,
     responses: {
-      200: '성공적으로 로그아웃되면 성공 여부를 리턴한다.',
-      404: 'Not Found',
-      500: 'server error',
+      200: c.type<{ message: string }>(),
+      ...zErrResBase,
     },
-    body: {},
+    body: z.object({}),
     summary: '유저 로그아웃',
     description: '유저 로그아웃(쿠키와 회원 정보 관련 destroy)',
   },

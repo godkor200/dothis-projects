@@ -34,12 +34,6 @@ export class FindRelHttpV2Controller {
     description: `엘라스틱 캐시에서 연관어를 보냅니다.`,
     type: RelWordsEntity,
   })
-  @ApiConflictResponse({
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   async execute(@Param() queryParams: FindRelRequestDto): Promise<string> {
     return await this.queryBus.execute(new FindRelV2Query(queryParams));
   }

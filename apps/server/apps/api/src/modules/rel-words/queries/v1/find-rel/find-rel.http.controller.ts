@@ -42,14 +42,8 @@ export class FindRelHttpController {
     description: `해당하는 데이터를 보냅니다.`,
     type: RelWordsEntity,
   })
-  @ApiConflictResponse({
-    description: responses[401],
-  })
   @ApiNotFoundResponse({
     description: RelwordsNotFoundError.message,
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
   })
   async execute(
     @Param() queryParams: FindRelRequestDto,

@@ -32,15 +32,6 @@ export class FindAutoCompleteHttpController {
   @ApiOkResponse({
     description: `데이터를 보냅니다.(예:애플페이, 애플 주식....)`,
   })
-  @ApiConflictResponse({
-    description: responses[401],
-  })
-  @ApiNotFoundResponse({
-    description: responses[404],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   async execute(
     @TsRestRequest() { params: { word } },
   ): Promise<IRes<string[]>> {

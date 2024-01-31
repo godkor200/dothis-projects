@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { c } from '../contract';
 import { zChannelHistoryModel, zExpectedViews } from './channel-history.model';
+import { zErrNotFound, zErrResBase } from '../error.response.zod';
 
 export const expectedViewsApiUrl = '/expected-views';
 export const channelHistoryApiUrl = '/channel-history';
@@ -17,8 +18,7 @@ export const expectedViewsApi = c.router({
     }),
     responses: {
       200: zExpectedViews,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '기대 조회수를 가져옵니다',
     description:
@@ -33,8 +33,7 @@ export const channelHistoryApi = c.router({
     pathParams: z.object({ channelId: z.string() }),
     responses: {
       200: zChannelHistoryModel,
-      401: 'Not Found',
-      500: '서버에 문제가 있으면 리턴한다.',
+      ...zErrResBase,
     },
     summary: '채널 히스토리 정보를 가져옵니다',
     description: '채널 히스토리 정보를 출력합니다.',

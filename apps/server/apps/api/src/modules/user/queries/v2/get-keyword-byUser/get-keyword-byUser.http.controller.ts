@@ -52,14 +52,7 @@ export class GetKeywordByUserHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
-  @ApiNotFoundResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: responses[404],
-  })
   @ApiUnauthorizedResponse({ description: 'Authentication failed' })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   @ApiBearerAuth('Authorization')
   async getKeywordTag(
     @User() userInfo: UserInfoCommandDto,

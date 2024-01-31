@@ -9,8 +9,11 @@ import {
   zStoryBoardDetails,
   zStoryBoardId,
 } from './story-board.zod';
-import { responses } from '../response';
+
 import { zPaginatedSqlQueryParams } from '../common.model';
+import { z } from 'zod';
+import { zErrResBase } from '../error.response.zod';
+import { zStoryBoardCreateRes, zSuccessBase } from '../success.response.zod';
 
 export const storyBoardUrl = '/story-board';
 import type {} from 'zod';
@@ -20,7 +23,7 @@ export const storyBoardApi = c.router({
     method: 'POST',
     path: `${storyBoardUrl}`,
     body: zPostStoryBoardBody,
-    responses,
+    responses: { 200: zStoryBoardCreateRes, ...zErrResBase },
     summary: '스토리 보드를 생성합니다',
     description: '스토리 보드의 제목 없음 스토리 보드를 생성합니다.',
   },
@@ -31,7 +34,7 @@ export const storyBoardApi = c.router({
     path: `${storyBoardUrl}/:storyBoardId/title`,
     body: zPostStoryBoardBody,
     pathParams: zPostStoryBoardMainParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드의 제목을 POST 합니다',
     description: '스토리 보드의 제목을 POST 합니다.',
   },
@@ -41,7 +44,7 @@ export const storyBoardApi = c.router({
     path: `${storyBoardUrl}/:storyBoardId/draft`,
     body: zPostStoryBoardBody,
     pathParams: zPostStoryBoardPathParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드의 자동 저장을 PUT 합니다',
     description: '스토리 보드의 자동 저장을 PUT 합니다.',
   },
@@ -51,7 +54,7 @@ export const storyBoardApi = c.router({
     path: `${storyBoardUrl}/overviews/:overviewsId`,
     body: zStoryBoardDetails,
     pathParams: zPostStoryBoardOverviewParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드 영상 개요를 추가합니다',
     description: '스토리 보드 영상 개요를 추가합니다.',
   },
@@ -62,7 +65,7 @@ export const storyBoardApi = c.router({
     path: `${storyBoardUrl}/:storyBoardId/references`,
     body: zPostStoryBoardBody,
     pathParams: zPostStoryBoardReferenceParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드 참조를 추가합니다',
     description: '스토리 보드 참조를 추가합니다.',
   },
@@ -73,7 +76,7 @@ export const storyBoardApi = c.router({
     path: `${storyBoardUrl}/:storyBoardId/memos`,
     body: zPostStoryBoardBody,
     pathParams: zPostStoryBoardMemoParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드 메모를 추가합니다',
     description: '스토리 보드 메모를 추가합니다.',
   },
@@ -82,7 +85,7 @@ export const storyBoardApi = c.router({
     method: 'GET',
     path: `${storyBoardUrl}`,
     query: zPaginatedSqlQueryParams,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '사용자의 스토리 보드 페이지네이션 조회합니다',
     description: '사용자의 스토리 보드 페이지네이션 조회합니다.',
   },
@@ -92,7 +95,7 @@ export const storyBoardApi = c.router({
     method: 'GET',
     path: `${storyBoardUrl}/:storyBoardId`,
     pathParams: zStoryBoardId,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드 하나를 조회합니다',
     description: '스토리 보드 하나를 조회합니다.',
   },
@@ -101,9 +104,9 @@ export const storyBoardApi = c.router({
   updateStoryBoard: {
     method: 'PUT',
     path: `${storyBoardUrl}/:storyBoardId`,
-    body: {},
+    body: z.object({}),
     pathParams: zStoryBoardId,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드를 수정합니다',
     description: '스토리 보드를 수정합니다.',
   },
@@ -112,9 +115,9 @@ export const storyBoardApi = c.router({
   deleteStoryBoard: {
     method: 'DELETE',
     path: `${storyBoardUrl}/:storyBoardId`,
-    body: {},
+    body: z.object({}),
     pathParams: zStoryBoardId,
-    responses,
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '스토리 보드를 삭제합니다',
     description: '스토리 보드를 삭제합니다.',
   },

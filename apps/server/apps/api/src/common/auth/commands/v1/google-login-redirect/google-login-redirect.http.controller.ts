@@ -1,11 +1,4 @@
-import {
-  Controller,
-  NotFoundException,
-  Redirect,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Req, Res, UseGuards } from '@nestjs/common';
 import { CookieOptions, Request, Response } from 'express';
 import { GoogleOAuthGuard, User } from '@Libs/commons/src';
 import { CommandBus } from '@nestjs/cqrs';
@@ -33,9 +26,6 @@ export class GoogleLoginRedirectHttpController {
   @TsRest(getGoogleRedirect)
   @UseGuards(GoogleOAuthGuard)
   @ApiOperation({ summary, description })
-  @ApiOkResponse({
-    description: responses[200],
-  })
   @ApiInternalServerErrorResponse({
     description: InternalServerErrorException.message,
   })

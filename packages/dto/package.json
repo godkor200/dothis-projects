@@ -11,7 +11,7 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@ts-rest/core": "^3.19.3",
+    "@ts-rest/core": "^3.33.0",
     "@ts-rest/open-api": "^3.33.0",
     "zod": "^3.22.4"
   },

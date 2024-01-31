@@ -14,9 +14,12 @@ export class SetDicTermHandler
   implements ICommandHandler<SetDicTermCommand, SetDicTermCommandOutput>
 {
   private readonly logger = new Logger(SetDicTermHandler.name);
-  @Inject(CACHE_SET_DIC_TERM) private readonly command: SetDicTermAdaptor;
+  constructor(
+    @Inject(CACHE_SET_DIC_TERM) private readonly command: SetDicTermAdaptor,
 
-  @Inject(CHANNEL_TERM) private readonly getDicTermArr: GetDicSearchTermAdapter;
+    @Inject(CHANNEL_TERM)
+    private readonly getDicTermArr: GetDicSearchTermAdapter,
+  ) {}
 
   async execute(command: SetDicTermCommand): Promise<SetDicTermCommandOutput> {
     const dicTermArray = await this.getDicTermArr.execute();

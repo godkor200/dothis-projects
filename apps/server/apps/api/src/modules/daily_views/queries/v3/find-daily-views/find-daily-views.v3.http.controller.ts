@@ -6,7 +6,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { TsRest, nestControllerContract } from '@ts-rest/nest';
+import {
+  TsRest,
+  nestControllerContract,
+  TsRestRequest,
+  NestRequestShapes,
+} from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import {
   ApiInternalServerErrorResponse,
@@ -30,6 +35,7 @@ import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 const c = nestControllerContract(apiRouter.dailyViews);
+type RequestShapes = NestRequestShapes<typeof c>;
 
 const { getDailyViews } = c;
 const { summary, description } = getDailyViews;
@@ -50,39 +56,14 @@ export class FindDailyViewsOsV3HttpController {
     description: '비디오 히스토리 데이터',
     type: IncreaseData,
   })
-  @ApiParam({
-    name: 'clusterNumber',
-    description: '클러스터 번호, 탐색어를 찾을때 클러스터 번호가 표기됩니다.',
-    example: 6,
-  })
-  @ApiQuery({
-    name: 'keyword',
-    description: '탐색어',
-    example: '먹방',
-  })
-  @ApiQuery({
-    name: 'relationKeyword',
-    description: '연관어',
-    example: '삼겹살',
-  })
-  @ApiQuery({
-    name: 'from',
-    description: '언제부터 날짜',
-    example: '2023-11-20',
-  })
-  @ApiQuery({
-    name: 'to',
-    description: '까지 날짜',
-    example: '2023-11-22',
-  })
   @ApiNotFoundResponse({ description: 'Not Found' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(
-    @Param('clusterNumber') clusterNumber: string,
-    @Query() query: FindDailyViewsV3Params,
+    @TsRestRequest()
+    { params, query }: RequestShapes['getDailyViews'],
   ): Promise<IRes<IIncreaseData[]>> {
     const arg = new FindDailyViewsV3Query({
-      clusterNumber,
+      clusterNumber: params,
       ...query,
     });
     const result: Result<IncreaseData[], NotFoundException> =

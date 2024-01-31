@@ -55,12 +55,9 @@ export class PutAgreePromotionHttpController {
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: responses[404],
   })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
+  @ApiInternalServerErrorResponse({})
   @ApiBearerAuth('Authorization')
   @TsRest(c.putAgreePromotion)
   async execute(

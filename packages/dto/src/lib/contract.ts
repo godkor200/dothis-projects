@@ -1,6 +1,11 @@
 import { initContract } from '@ts-rest/core';
 
-export const c = initContract();
+/**
+ * ref: https://github.com/ts-rest/ts-rest/issues/409
+ * 2024/01/31 타입 지정 필요 안하면 오류남........
+ */
+type ContractInstance = ReturnType<typeof initContract>;
+export const c: ContractInstance = initContract();
 
 export enum USER_AUTH {
   AccessTokenExpired = 'Access token has expired.',

@@ -42,13 +42,6 @@ export class GetUserHttpController {
     description: description,
     type: UserDto,
   })
-  @ApiNotFoundResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   async getUser(@Param('id') id: string): Promise<IRes<UserDto>> {
     const command = new FindUserCommand({
       userId: id,

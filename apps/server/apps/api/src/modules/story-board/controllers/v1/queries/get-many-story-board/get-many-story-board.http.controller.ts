@@ -73,16 +73,15 @@ export class GetManyStoryBoardHttpController {
   })
   @TsRest(getManyStoryBoard)
   @ApiNotFoundResponse({ description: StoryNotExistsError.message })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
+  // @ApiInternalServerErrorResponse({
+  //   description: responses['internalServerError'][500],
+  // })
   @UseGuards(JwtAccessGuard)
   async execute(
     @TsRestRequest()
     { query }: RequestShapes['getManyStoryBoard'],
     @User() userInfo: UserInfoCommandDto,
   ): Promise<IRes<StoryBoardEntity[]>> {
-    console.log(userInfo, query);
     const arg = new getManyStoryBoardDto({ ...query, userInfo });
     const result: TGetManyStoryBoardRes = await this.queryBus.execute(arg);
 
