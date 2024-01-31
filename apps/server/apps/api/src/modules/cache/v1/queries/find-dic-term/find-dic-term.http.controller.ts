@@ -20,8 +20,6 @@ const { description, summary, responses } = get;
 export class FindDicTermHttpController {
   constructor(private readonly queryBus: QueryBus) {}
   @ApiOkResponse({ description: responses[200] })
-  @ApiUnauthorizedResponse({ description: responses[401] })
-  @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiQuery({ name: 'key', examples: { key: { value: 'dic-term' } } })
   @ApiOperation({ summary, description })
   @TsRest(get)
