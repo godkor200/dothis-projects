@@ -19,10 +19,9 @@ import {
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
-  FindVideoV2,
   IFindAccumulateVideoRes,
   ISection,
-} from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';

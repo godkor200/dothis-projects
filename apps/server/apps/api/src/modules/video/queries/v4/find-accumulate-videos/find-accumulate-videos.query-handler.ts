@@ -5,14 +5,14 @@ import {
   IFindAccumulateVideoWithOutUserSection,
   ISection,
   SECTION_NUMBER,
-} from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
 import { Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { Inject } from '@nestjs/common';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
 import { FindVideosDao } from '@Apps/modules/video/database/video.dao';
 
