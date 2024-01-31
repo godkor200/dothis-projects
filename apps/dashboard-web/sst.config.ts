@@ -18,6 +18,7 @@ export default {
           hostedZone: 'dothis.kr',
         },
       });
+
       stack.addOutputs({
         ProdSiteUrl: prodSite.url,
       });
