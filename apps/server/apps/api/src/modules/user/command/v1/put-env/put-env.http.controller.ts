@@ -55,11 +55,8 @@ export class PutEnvHttpController {
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: responses[404],
   })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
+  @ApiInternalServerErrorResponse({})
   async execute(
     @User() user: UserInfoCommandDto,
     @Body('isEnvLocal') isEnvLocal: boolean,

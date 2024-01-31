@@ -36,7 +36,6 @@ export class VerifyTokenHttpController {
     description: `${USER_AUTH.RefreshTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
     type: TokenExpired,
   })
-  @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({
     summary,
     description,

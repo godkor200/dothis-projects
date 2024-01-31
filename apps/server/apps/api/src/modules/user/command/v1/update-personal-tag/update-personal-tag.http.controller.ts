@@ -50,10 +50,6 @@ export class UpdatePersonalTagHttpController {
   })
   @ApiNotFoundResponse({
     status: HttpStatus.NOT_FOUND,
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
   })
   async execute(@Req() req, @Body('tag') tag: string[]): Promise<IRes<void>> {
     const arg = new UpdatePersonalTagDto({ id: req.user.id, tag });

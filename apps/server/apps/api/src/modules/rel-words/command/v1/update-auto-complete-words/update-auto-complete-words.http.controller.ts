@@ -27,12 +27,6 @@ export class UpdateAutoCompleteWordsHttpController {
   @ApiOkResponse({
     description: '인스턴스에 redis에 자동완성 단어를 업데이트 합니다.',
   })
-  @ApiConflictResponse({
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   async execute(): Promise<IRes<void>> {
     const command = new UpdateAutoCompleteWordsCommandDto({});
     if (await this.commandBus.execute(command)) return { success: true };

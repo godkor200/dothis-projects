@@ -44,16 +44,6 @@ export class LogoutHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
-  @ApiOkResponse({
-    description: responses[200],
-  })
-  @ApiNotFoundResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: responses[404],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiBearerAuth('Authorization')
   @TsRest(logout)

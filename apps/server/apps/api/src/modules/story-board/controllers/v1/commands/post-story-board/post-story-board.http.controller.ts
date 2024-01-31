@@ -45,7 +45,6 @@ import {
   ReferNotExistsError,
   MemoNotExistsError,
 } from '@Apps/modules/story-board/domain/errors';
-import { responses } from '@dothis/dto/dist/lib/response';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const {
@@ -90,9 +89,6 @@ export class PostStoryBoardHttpV1Controller {
         "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
     },
   ])
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
   async createStoryBoard(
     @User() userInfo: UserInfoCommandDto,
   ): Promise<IRes<StoryBoardEntity>> {
@@ -128,10 +124,7 @@ export class PostStoryBoardHttpV1Controller {
     description: '생성된 스토리보드 id 값을 받습니다.',
     example: 1,
   })
-  @ApiBody({ type: PostStoryBoardBodyBoolean })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
+  // @ApiBody({ type: PostStoryBoardBodyBoolean })
   async toggleAutoSave(
     @TsRestRequest()
     { params, body }: RequestShapes['updateStoryBoardDraft'],
@@ -220,9 +213,6 @@ export class PostStoryBoardHttpV1Controller {
     description: addDetailDescription,
   })
   @ApiNotFoundResponse({ description: StoryNotExistsError.message })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
   @ApiBody({
     schema: {
       oneOf: [
@@ -270,9 +260,6 @@ export class PostStoryBoardHttpV1Controller {
     },
   })
   @ApiNotFoundResponse({ description: 'The detail does not exist' })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
   async addStoryBoardDetail(
     @TsRestRequest()
     { params, body }: RequestShapes['addStoryBoardDetail'],
@@ -403,9 +390,6 @@ export class PostStoryBoardHttpV1Controller {
     },
   })
   @ApiNotFoundResponse({ description: StoryNotExistsError.message })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
   async addStoryBoardMemo(
     @TsRestRequest() { params, body }: RequestShapes['addStoryBoardMemo'],
     @User() userInfo: UserInfoCommandDto,

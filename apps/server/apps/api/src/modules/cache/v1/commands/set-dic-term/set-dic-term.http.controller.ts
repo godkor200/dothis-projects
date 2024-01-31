@@ -20,8 +20,6 @@ export class SetDicTermHttpController {
   constructor(private readonly commonBus: CommandBus) {}
   @ApiTags(cacheBaseApiUrl)
   @ApiOkResponse({ description: responses[200] })
-  @ApiUnauthorizedResponse({ description: responses[401] })
-  @ApiInternalServerErrorResponse({ description: responses[500] })
   @ApiOperation({ summary, description })
   @TsRest(set)
   async handler(): Promise<SetDicTermCommandOutput> {
