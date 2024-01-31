@@ -5,7 +5,7 @@ export default async function RootPage() {
   return (
     <>
       <Landing />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

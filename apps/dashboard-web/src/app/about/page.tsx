@@ -7,18 +7,20 @@ import Page4_abtest from '@/components/Landing/page4/index_abtest';
 import Page5 from '@/components/Landing/page5';
 import Page6 from '@/components/Landing/page6';
 import { Layout } from '@/components/Landing/style';
+import Temp_page from '@/components/Landing/temp_page';
 import Toolbar from '@/components/Landing/toolbar';
 
 const Landing_test = () => {
   return (
     <Layout>
       <Toolbar />
-      <Page1_abtest />
+      <Temp_page />
+      {/* <Page1_abtest />
       <Page2 />
       <Page3_abtest />
       <Page4_abtest />
       <Page5 />
-      <Page6 />
+      <Page6 /> */}
     </Layout>
   );
 };
