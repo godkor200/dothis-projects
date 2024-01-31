@@ -47,16 +47,13 @@ export class GetOwnInfoHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
-  @ApiNotFoundResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: UserNotFoundError.message,
-  })
-  @ApiUnauthorizedResponse({
-    description: `${USER_AUTH.AccessTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
-  })
-  @ApiInternalServerErrorResponse({
-    description: getOwnInfo.responses[500],
-  })
+  // @ApiNotFoundResponse({
+  //   status: HttpStatus.NOT_FOUND,
+  //   description: UserNotFoundError.message,
+  // })
+  // @ApiUnauthorizedResponse({
+  //   description: `${USER_AUTH.AccessTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
+  // })
   @ApiBearerAuth('Authorization')
   async execute(@User() user: TDecodePayload): Promise<IRes<UserEntity>> {
     const query = new GetOwnInfoQuery({ index: user.id });

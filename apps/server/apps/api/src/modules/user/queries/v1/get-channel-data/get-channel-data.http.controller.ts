@@ -43,15 +43,7 @@ export class GetChannelDataHttpController {
       description: "구글 access-token(ex:'google_access_token=ya29.~~~~')",
     },
   ])
-  @ApiOkResponse({
-    description: responses[200],
-  })
-  @ApiConflictResponse({
-    description: responses[401],
-  })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
+  @ApiOkResponse({})
   async getChannelData(
     @Req() req: Request,
     @User() user: TDecodePayload,

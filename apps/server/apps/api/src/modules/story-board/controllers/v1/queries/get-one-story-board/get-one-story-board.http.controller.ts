@@ -79,9 +79,6 @@ export class GetOneStoryBoardHttpV1Controller {
     description,
   })
   @ApiNotFoundResponse({ description: StoryNotExistsError.message })
-  @ApiInternalServerErrorResponse({
-    description: responses['internalServerError'][500],
-  })
   @UseGuards(JwtAccessGuard)
   async execute(
     @TsRestRequest()

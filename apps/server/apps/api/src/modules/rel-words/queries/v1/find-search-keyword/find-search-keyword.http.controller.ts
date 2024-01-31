@@ -30,9 +30,7 @@ export class FindSearchKeywordHttpController {
   @ApiNotFoundResponse({
     description: KeywordsNotFoundError.message,
   })
-  @ApiInternalServerErrorResponse({
-    description: responses[500],
-  })
+  @ApiInternalServerErrorResponse({})
   async execute(): Promise<IRes<string[]>> {
     const arg = new KeywordQueryDto();
     const result = await this.queryBus.execute(arg);

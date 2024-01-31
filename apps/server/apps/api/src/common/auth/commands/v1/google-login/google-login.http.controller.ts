@@ -17,9 +17,6 @@ export class GoogleLoginHttpController {
   @TsRest(getGoogleLogin)
   @UseGuards(GoogleOAuthGuard)
   @ApiOperation({ summary, description })
-  @ApiOkResponse({ description: responses[200] })
-  @ApiInternalServerErrorResponse({ description: responses['500'] })
-  @ApiUnauthorizedResponse({ description: responses[401] })
   googleAuth() {
     return { message: 'Google Authentication' };
   }
