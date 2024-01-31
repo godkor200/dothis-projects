@@ -12,7 +12,10 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { RelWordsRankingRes, IRes } from '@Libs/commons/src/types/res.types';
+import {
+  RelWordsRankingRes,
+  IRes,
+} from '@Libs/commons/src/interfaces/types/res.types';
 const c = nestControllerContract(apiRouter.relwords);
 const { rankRel } = c;
 const { summary, description } = rankRel;

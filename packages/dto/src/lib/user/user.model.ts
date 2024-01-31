@@ -30,7 +30,7 @@ export const zUserModel = z.object({
   }),
 });
 
-export type TUserModel = z.TypeOf<typeof zUserModel>;
+export type TUserModel = z.TypeOf<typeof zUserModel.shape.data>;
 
 export const zKeywordModel = z.object({
   data: z.object({

@@ -17,6 +17,7 @@ async function bootstrap() {
   const logger = new Logger();
   app.use(cookieParser());
   app.useGlobalFilters(new HttpExceptionFilter());
+
   app.enableCors({
     origin: [
       'http://localhost:3666',

@@ -21,7 +21,10 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { AnalyzeChannelDto } from '@Apps/modules/channel/interface/analyze-channel.interface';
 import { match } from 'oxide.ts';
-import { ChannelAnalysisRes, IRes } from '@Libs/commons/src/types/res.types';
+import {
+  ChannelAnalysisRes,
+  IRes,
+} from '@Libs/commons/src/interfaces/types/res.types';
 
 const { analyzeChannel } = nestControllerContract(apiRouter.channel);
 

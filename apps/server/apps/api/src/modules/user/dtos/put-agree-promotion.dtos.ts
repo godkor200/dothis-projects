@@ -1,9 +1,8 @@
-export class PutAgreePromotionDtos {
+export class PutAgreePromotionDto {
   public readonly isAgree: boolean;
-  public readonly id: string;
+  public readonly id: number;
 
-  constructor(props: PutAgreePromotionDtos) {
-    this.isAgree = props.isAgree;
-    this.id = props.id;
+  constructor(props: PutAgreePromotionDto) {
+    Object.assign(this, props);
   }
 }

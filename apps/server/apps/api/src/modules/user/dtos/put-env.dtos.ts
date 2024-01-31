@@ -1,5 +1,5 @@
 export class PutEnvDtos {
-  public readonly id: string;
+  public readonly id: number;
   public readonly isEnvLocal: boolean;
 
   constructor(props: PutEnvDtos) {

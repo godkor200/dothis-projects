@@ -1,8 +1,8 @@
 import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { IFindManyVideoResult } from '@Apps/modules/video/interface/find-many-video.interface';
-import { VideoOutboundPort } from '@Apps/modules/video/database/video.outbound.port';
+import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { IFindManyVideoResult } from '@Apps/modules/video/interfaces/find-many-video.interface';
+import { VideoOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 
 export class FindVideoQuery implements IQuery {
   readonly search: string;
@@ -17,11 +17,11 @@ export class FindVideoHandler
   implements IQueryHandler<FindVideoQuery, IFindManyVideoResult[]>
 {
   constructor(
-    @Inject(VIDEO_OS_DI_TOKEN)
+    @Inject(VIDEO_IGNITE_DI_TOKEN)
     protected readonly videoRepo: VideoOutboundPort,
   ) {}
 
   async execute(query: FindVideoQuery): Promise<IFindManyVideoResult[]> {
-    return await this.videoRepo.findVideoByWords(query);
+    return await this.videoRepo.get();
   }
 }

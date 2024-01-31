@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelAdapter } from '../../../interface/find-rel.adapter';
 import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
-import { RelWordsEntity } from '@Libs/commons/src/types/res.types';
+import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
 

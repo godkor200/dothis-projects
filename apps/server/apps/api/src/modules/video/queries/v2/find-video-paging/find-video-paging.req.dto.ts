@@ -1,9 +1,24 @@
-import { z } from 'zod';
 import { IQuery } from '@nestjs/cqrs';
-import { TPageV2Query } from '@dothis/dto';
+import { zFindVideoPageWithClusterQuery } from '@dothis/dto';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { extendApi } from '@anatine/zod-openapi';
 
-export interface IFindVideoPageQuery extends TPageV2Query {}
-
+export class IFindVideoPageQuery extends createZodDto(
+  extendApi(zFindVideoPageWithClusterQuery),
+) {
+  constructor(props: IFindVideoPageQuery) {
+    super();
+    Object.assign(this, props);
+  }
+}
+export class FindVideoPageV2Dto extends IFindVideoPageQuery {
+  readonly clusterNumbers: number[];
+  constructor(props: IFindVideoPageQuery) {
+    super(props);
+    this.clusterNumbers = props.cluster.split(',').map((item) => Number(item));
+    Object.assign(this, props);
+  }
+}
 export class FindVideoPageV2Query implements IQuery {
   readonly clusterNumbers: number[];
   readonly limit: number;

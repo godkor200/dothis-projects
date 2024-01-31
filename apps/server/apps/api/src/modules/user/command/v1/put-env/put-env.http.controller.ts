@@ -10,7 +10,7 @@ import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { PutEnvDtos } from '@Apps/modules/user/dtos/put-env.dtos';
 import { match, Result } from 'oxide.ts';
 import {

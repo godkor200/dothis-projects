@@ -2,7 +2,7 @@ import {
   IChannelHistory,
   ISection,
   SECTION_NUMBER,
-} from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
 
 import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
@@ -68,7 +68,10 @@ export class ChannelHistoryAggregateService {
       for (let range of rangesWithCount) {
         //구독자 1000명 이하는 분석을 안해 구간을 사용하지 않음, 그러나 나중을 대비
         if (rangesWithCount[1].lte > subscribers) break;
-        if (subscribers >= range.gte && subscribers < range.lte) {
+        if (
+          subscribers >= range.gte &&
+          (range.lte === undefined || subscribers < range.lte)
+        ) {
           range.number += item.inner_hits.video_list.hits.total.value;
           break;
         }

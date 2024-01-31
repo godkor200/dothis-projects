@@ -18,7 +18,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { ExpectedViewsData, IRes } from '@Libs/commons/src/types/res.types';
+import {
+  ExpectedViewsData,
+  IRes,
+} from '@Libs/commons/src/interfaces/types/res.types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 const { summary, description } = getExpectedViews;
 

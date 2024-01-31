@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from 'apps/api/src/config/validationsSchema';
-import dbConfig from 'apps/api/src/config/database/config/db.env';
-import cacheConfig from 'apps/api/src/config/cache/config/cache.env';
-import appConfig from 'apps/api/src/config/app/config/app.env';
+import dbConfig from '@Apps/config/database/config/db.env';
+import cacheConfig from '@Apps/config/cache/config/cache.env';
+import appConfig from '@Apps/config/app/config/app.env';
 import awsConfig from '@Apps/config/aws/config/aws.env';
+import igniteConfig from '@Apps/config/ignite/config/ignite.env';
+
 import { TypeormModule } from 'apps/api/src/config/database/database.module';
 import { RequestContextModule } from 'nestjs-request-context';
 import { HeathApiController } from 'apps/api/src/health.controller';
 import { HealthService } from 'apps/api/src/health.service';
 import { ScheduleModule } from '@nestjs/schedule';
-
 import { BusinessModule } from '@Apps/modules/business.modules';
 import { CommonModule } from '@Apps/common/common.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -32,7 +33,7 @@ const interceptors = [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `${process.env.NODE_ENV}.env`,
-      load: [dbConfig, cacheConfig, appConfig, awsConfig],
+      load: [dbConfig, cacheConfig, appConfig, awsConfig, igniteConfig],
       validationSchema,
     }),
     RequestContextModule,

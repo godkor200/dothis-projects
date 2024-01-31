@@ -5,35 +5,11 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { JwtService } from '@nestjs/jwt';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@Apps/modules/user/domain/user.entity';
-import { GoogleLoginRedirectRes } from '@Apps/common/auth/interface/google-login-redirect.interface';
+import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-login-redirect.interface';
 import { Err, Ok, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
-export class UserInfoCommandDto {
-  @ApiProperty()
-  readonly id: string;
-  @ApiProperty()
-  readonly userEmail: string;
-  @ApiProperty()
-  readonly channelId: string;
-  @ApiProperty()
-  readonly tokenRefresh: string | null;
-  @ApiProperty()
-  readonly googleAccessToken: string;
-  @ApiProperty()
-  readonly googleRefreshToken: string;
-  @ApiProperty()
-  readonly dateSignIn: Date;
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 
-  constructor(props: UserInfoCommandDto) {
-    this.id = props.id;
-    this.userEmail = props.userEmail;
-    this.channelId = props.channelId;
-    this.tokenRefresh = props.tokenRefresh;
-    this.googleAccessToken = props.googleAccessToken;
-    this.googleRefreshToken = props.googleRefreshToken;
-    this.dateSignIn = props.dateSignIn;
-  }
-}
 @CommandHandler(UserInfoCommandDto)
 export class GoogleLoginRedirectCommandHandler
   implements ICommandHandler<UserInfoCommandDto>

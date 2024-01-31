@@ -1,12 +1,11 @@
 import {
-  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
 } from '@Libs/commons/src/ddd/repository.port';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected constructor(private dataSource: DataSource) {}
@@ -40,8 +39,8 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   async findAllPaginated(params: PaginatedQueryParams): Promise<any> {
     const res = this.repository
       .createQueryBuilder(this.tableName)
-      .limit(params.limit)
-      .offset(params.offset)
+      .limit(Number(params.limit))
+      .offset(Number(params.offset))
       .getCount();
     // return new Paginated({
     //   data: res,

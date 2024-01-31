@@ -13,7 +13,7 @@ import {
 } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { UpdatePersonalTagDto } from '@Apps/modules/user/dtos/update-personal-tag.dto';
 import { JwtAccessGuard } from '@Libs/commons/src';
 const c = nestControllerContract(apiRouter.user);

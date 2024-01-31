@@ -1,5 +1,5 @@
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { FindVideoV2 } from '@Apps/modules/video/interface/find-accumulate-videos.interface';
+import { FindVideoV2 } from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
 import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 

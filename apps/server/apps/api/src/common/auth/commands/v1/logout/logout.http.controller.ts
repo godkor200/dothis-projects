@@ -20,10 +20,10 @@ import {
 } from '@nestjs/swagger';
 import { match, Result } from 'oxide.ts';
 import { LogoutDto } from '@Apps/common/auth/commands/v1/logout/logout.command-handler';
-import { UserInfoCommandDto } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.service';
+import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/types/res.types';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { Response } from 'express';
 const c = nestControllerContract(apiRouter.auth);
 const { logout } = c;

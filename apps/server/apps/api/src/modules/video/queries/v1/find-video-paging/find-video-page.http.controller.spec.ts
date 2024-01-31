@@ -15,7 +15,7 @@ describe('예외 처리', () => {
     mockQueryBus.execute.mockResolvedValue(Err(new NotFoundException()));
     try {
       await controller.execute('6', {
-        limit: 5,
+        limit: '5',
         search: '고기',
         related: '영화평론',
       });
