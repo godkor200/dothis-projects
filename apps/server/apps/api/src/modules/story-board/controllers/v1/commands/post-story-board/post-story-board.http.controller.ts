@@ -124,7 +124,7 @@ export class PostStoryBoardHttpV1Controller {
     description: '생성된 스토리보드 id 값을 받습니다.',
     example: 1,
   })
-  // @ApiBody({ type: PostStoryBoardBodyBoolean })
+  @ApiBody({ type: PostStoryBoardBodyBoolean })
   async toggleAutoSave(
     @TsRestRequest()
     { params, body }: RequestShapes['updateStoryBoardDraft'],
