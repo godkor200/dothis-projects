@@ -9,7 +9,7 @@ import {
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+
 import {
   FindDailyViewsV3Dao,
   FindVideosDao,
