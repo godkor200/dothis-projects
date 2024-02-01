@@ -4,13 +4,11 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token'
 import {
   FindDailyViewsQuery,
   FindDailyViewsV3Dto,
-  FindDailyViewsV3Query,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
-import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
 import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/service/video.aggregate.service';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
@@ -21,7 +19,7 @@ export interface IIncreaseData {
   increase_likes: number;
   increase_comments: number;
 }
-@QueryHandler(FindDailyViewsV3Query)
+@QueryHandler(FindDailyViewsV3Dto)
 export class FindDailyViewsQueryOsV3Handler
   implements
     IQueryHandler<

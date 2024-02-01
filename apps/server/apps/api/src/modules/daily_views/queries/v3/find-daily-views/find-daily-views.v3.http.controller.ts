@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, NotFoundException } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   TsRest,
@@ -17,14 +11,11 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiParam,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import {
-  FindDailyViewsV3Params,
-  FindDailyViewsV3Query,
+  FindDailyViewsV3Dto,
   IIncreaseData,
 } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import {
@@ -62,10 +53,11 @@ export class FindDailyViewsOsV3HttpController {
     @TsRestRequest()
     { params, query }: RequestShapes['getDailyViews'],
   ): Promise<IRes<IIncreaseData[]>> {
-    const arg = new FindDailyViewsV3Query({
-      clusterNumber: params,
+    const arg = new FindDailyViewsV3Dto({
+      clusterNumber: params.clusterNumber,
       ...query,
     });
+
     const result: Result<IncreaseData[], NotFoundException> =
       await this.queryBus.execute(arg);
 
