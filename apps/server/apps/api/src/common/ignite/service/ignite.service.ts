@@ -16,25 +16,47 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     // Create a new Ignite client instance.
     this.client = new IgniteClient(this.onStateChanged.bind(this));
   }
+  /*
+   * ignite 재시도 로직
+   */
+  private async connectWithRetry(
+    retryDelay: number,
+    maxRetries: number,
+  ): Promise<void> {
+    let retries = 0;
+    const endpoint = this.configService.get<string>('ignite.IGNITE_ENDPOINT');
+    const username = this.configService.get<string>('ignite.IGNITE_USER_NAME');
+    const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
+    const igniteClientConfiguration = new IgniteClientConfiguration(endpoint)
+      .setUserName(username)
+      .setPassword(password);
 
+    const attemptConnection = async () => {
+      try {
+        await this.client.connect(igniteClientConfiguration);
+        this.logger.log('Successfully connected to Ignite server.');
+      } catch (err) {
+        this.logger.error(`Failed to connect to Ignite server: ${err.message}`);
+        if (retries < maxRetries) {
+          retries++;
+          this.logger.log(
+            `Attempting to reconnect... (${retries}/${maxRetries})`,
+          );
+          setTimeout(attemptConnection, retryDelay);
+        } else {
+          this.logger.error(
+            'Max retries reached. Ignite client failed to connect.',
+          );
+          throw err;
+        }
+      }
+    };
+
+    await attemptConnection();
+  }
   // NestJS hook that is called after the module is initialized.
   async onModuleInit(): Promise<void> {
-    try {
-      const endpoint = this.configService.get<string>('ignite.IGNITE_ENDPOINT');
-      const username = this.configService.get<string>(
-        'ignite.IGNITE_USER_NAME',
-      );
-      const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
-      const igniteClientConfiguration = new IgniteClientConfiguration(endpoint)
-        .setUserName(username)
-        .setPassword(password);
-      // Connect to Ignite server.
-      await this.client.connect(igniteClientConfiguration);
-      this.logger.log('Successfully connected to Ignite server.');
-    } catch (err) {
-      this.logger.error('Failed to connect to Ignite server:', err);
-      throw err; // Rethrow the error to handle it elsewhere if needed.
-    }
+    await this.connectWithRetry(5000, 5); // 5초 간격으로 최대 5번 재시도
   }
 
   // NestJS hook that is called before the module is destroyed.
@@ -66,6 +88,4 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
         break;
     }
   };
-
-  // Other service methods...
 }
