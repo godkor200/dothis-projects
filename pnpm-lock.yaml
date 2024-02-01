@@ -124,11 +124,11 @@ importers:
         specifier: ^4.29.6
         version: 4.29.6(@tanstack/react-query@4.29.5)(react-dom@18.2.0)(react@18.2.0)
       '@ts-rest/core':
-        specifier: ^3.19.3
-        version: 3.19.3(zod@3.21.4)
+        specifier: ^3.33.0
+        version: 3.33.0(zod@3.22.4)
       '@ts-rest/react-query':
         specifier: ^3.19.3
-        version: 3.19.3(@tanstack/react-query@4.29.5)(@ts-rest/core@3.19.3)(react@18.2.0)(zod@3.21.4)
+        version: 3.19.3(@tanstack/react-query@4.29.5)(@ts-rest/core@3.33.0)(react@18.2.0)(zod@3.22.4)
       '@types/js-cookie':
         specifier: ^3.0.4
         version: 3.0.4
@@ -226,11 +226,11 @@ importers:
         specifier: ^1.10.5
         version: 1.10.5(react@18.2.0)
       zod:
-        specifier: ^3.21.4
-        version: 3.21.4
+        specifier: ^3.22.4
+        version: 3.22.4
       zod-to-json-schema:
         specifier: ^3.20.4
-        version: 3.20.4(zod@3.21.4)
+        version: 3.20.4(zod@3.22.4)
       zustand:
         specifier: ^4.4.1
         version: 4.4.1(@types/react@18.2.14)(immer@9.0.21)(react@18.2.0)
@@ -297,7 +297,7 @@ importers:
         version: 8.3.2(postcss@8.4.23)
       sst:
         specifier: ^2.39.7
-        version: 2.39.7(@aws-sdk/credential-provider-node@3.502.0)(@types/react@18.2.14)
+        version: 2.39.7(@aws-sdk/credential-provider-node@3.503.1)(@types/react@18.2.14)
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2(ts-node@10.9.1)
@@ -12551,7 +12551,7 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@ts-rest/react-query@3.19.3(@tanstack/react-query@4.29.5)(@ts-rest/core@3.19.3)(react@18.2.0)(zod@3.21.4):
+  /@ts-rest/react-query@3.19.3(@tanstack/react-query@4.29.5)(@ts-rest/core@3.33.0)(react@18.2.0)(zod@3.22.4):
     resolution: {integrity: sha512-GeGbxFhCOc7qEgkN7ugPLlnMEeXoFdUJFZN+IZO4wQ2I73qgg2nUUcNiSIHJ8uGHOHepppeiHdY58++M0jAqDA==}
     peerDependencies:
       '@tanstack/react-query': ^4.0.0
@@ -12563,9 +12563,9 @@ packages:
         optional: true
     dependencies:
       '@tanstack/react-query': 4.29.5(react-dom@18.2.0)(react@18.2.0)
-      '@ts-rest/core': 3.19.3(zod@3.21.4)
+      '@ts-rest/core': 3.33.0(zod@3.22.4)
       react: 18.2.0
-      zod: 3.21.4
+      zod: 3.22.4
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -26973,7 +26973,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /sst@2.39.7(@aws-sdk/credential-provider-node@3.502.0)(@types/react@18.2.14):
+  /sst@2.39.7(@aws-sdk/credential-provider-node@3.503.1)(@types/react@18.2.14):
     resolution: {integrity: sha512-cJ/AbVXuWBC9Lawbk9WUobejjsrZknfKIKEvbnwQaiJ0vLJ4VjR/NMj1X5Oh1JJeeLnRLrRIL3Al2BKuzuIQbw==}
     hasBin: true
     peerDependencies:
@@ -26999,7 +26999,7 @@ packages:
       '@aws-sdk/client-rds-data': 3.502.0
       '@aws-sdk/client-s3': 3.502.0
       '@aws-sdk/client-ssm': 3.502.0
-      '@aws-sdk/client-sts': 3.502.0(@aws-sdk/credential-provider-node@3.502.0)
+      '@aws-sdk/client-sts': 3.502.0(@aws-sdk/credential-provider-node@3.503.1)
       '@aws-sdk/config-resolver': 3.374.0
       '@aws-sdk/credential-providers': 3.502.0
       '@aws-sdk/middleware-retry': 3.374.0
@@ -27050,7 +27050,7 @@ packages:
       uuid: 9.0.0
       ws: 8.13.0
       yargs: 17.7.2
-      zod: 3.21.4
+      zod: 3.22.4
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-node'
       - '@types/react'
@@ -29843,12 +29843,12 @@ packages:
       readable-stream: 3.6.2
     dev: true
 
-  /zod-to-json-schema@3.20.4(zod@3.21.4):
+  /zod-to-json-schema@3.20.4(zod@3.22.4):
     resolution: {integrity: sha512-Un9+kInJ2Zt63n6Z7mLqBifzzPcOyX+b+Exuzf7L1+xqck9Q2EPByyTRduV3kmSPaXaRer1JCsucubpgL1fipg==}
     peerDependencies:
       zod: ^3.20.0
     dependencies:
-      zod: 3.21.4
+      zod: 3.22.4
     dev: false
 
   /zod@3.21.4:
@@ -29856,7 +29856,6 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-    dev: false
 
   /zustand@4.4.1(@types/react@18.2.14)(immer@9.0.21)(react@18.2.0):
     resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
