@@ -18,7 +18,7 @@ import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Err } from 'oxide.ts';
 import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
-import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+
 import { SearchQueryBuilder } from '@Apps/modules/video/utils/search-query.builder';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { FindDailyViewsV3Dao, FindVideosDao } from './video.dao';
