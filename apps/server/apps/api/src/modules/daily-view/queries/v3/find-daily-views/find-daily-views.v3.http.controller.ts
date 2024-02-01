@@ -17,7 +17,7 @@ import {
 import {
   FindDailyViewsV3Dto,
   IIncreaseData,
-} from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+} from '@Apps/modules/daily-view/dtos/find-daily-views.dtos';
 import {
   IncreaseData,
   IRes,

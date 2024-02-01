@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
 import { IdBaseEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
 
-@Entity({ name: 'daily_views' })
+@Entity({ name: 'daily-view' })
 export class DailyViewsEntity extends IdBaseEntityAbstract {
   //1:N
   @Column({ name: 'channel_index' })

@@ -1,5 +1,5 @@
 import { FindAccumulateQuery } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
-import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
+import { FindDailyViewsV3Dto } from '@Apps/modules/daily-view/dtos/find-daily-views.dtos';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;

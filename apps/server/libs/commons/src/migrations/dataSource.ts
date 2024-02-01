@@ -2,7 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
-import { DailyViewsEntity } from 'apps/api/src/modules/daily_views/repository/entity/daily-views.entity';
+import { DailyViewsEntity } from '@Apps/modules/daily-view/repository/entity/daily-views.entity';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { ChannelEntity } from 'apps/api/src/modules/channel/repository/entity/channel.entity';
 import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
