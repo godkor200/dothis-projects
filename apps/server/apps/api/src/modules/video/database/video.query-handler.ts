@@ -21,7 +21,7 @@ import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-pa
 import { FindDailyViewsV3Dto } from '@Apps/modules/daily_views/dtos/find-daily-views.dtos';
 import { SearchQueryBuilder } from '@Apps/modules/video/utils/search-query.builder';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { FindVideosDao } from './video.dao';
+import { FindDailyViewsV3Dao, FindVideosDao } from './video.dao';
 
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
@@ -118,13 +118,13 @@ export class VideoQueryHandler
   }
 
   async findVideoIdFullScanAndVideos<T>(
-    query: FindDailyViewsV3Dto,
+    query: FindDailyViewsV3Dao,
   ): Promise<T[] | ScrollApiError> {
-    const { clusterNumber, keyword, relationKeyword, data, from, to } = query;
+    const { clusterNumber, search, related, data, from, to } = query;
     const searchQuery = SearchQueryBuilder.video(
       'video-' + clusterNumber,
-      keyword,
-      relationKeyword,
+      search,
+      related,
       data,
       from,
       to,
