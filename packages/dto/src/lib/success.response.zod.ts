@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zStoryBoardId, zStoryBoardSchema } from './story-board';
+import { zStoryBoardSchema } from './story-board';
 import { dataObject } from './common.model';
 
 // 기본 에러 스키마 정의
