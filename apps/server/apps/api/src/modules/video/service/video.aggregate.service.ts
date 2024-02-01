@@ -1,7 +1,4 @@
-import {
-  IFindVideoIdRes,
-  IVideoHistory,
-} from '@Apps/modules/video/interfaces/find-video.os.res';
+import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
 import { IIncreaseData } from '@Apps/modules/daily-view/dtos/find-daily-views.dtos';
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
