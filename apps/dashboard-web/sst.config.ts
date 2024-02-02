@@ -20,6 +20,9 @@ export default {
         environment: {
           OPENAI_API_KEY: String(process.env.OPENAI_API_KEY),
         },
+        experimental: {
+          streaming: true,
+        },
       });
 
       stack.addOutputs({
