@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindAccumulateVideosV1Dto } from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
+import { FindAccumulateVideosV1Dto } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { Inject } from '@nestjs/common';
 import {
   IFindAccumulateVideoWithOutUserSection,

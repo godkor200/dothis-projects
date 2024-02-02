@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
   FindAccumulateVideosDtos,
   FindAccumulateVideosV2Dtos,
-} from '@Apps/modules/video/dtos/find-accumulate-videos.dtos';
+} from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
