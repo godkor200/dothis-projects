@@ -50,6 +50,8 @@ const useGetDailyView = (
           relationKeyword: relword!,
           from: startDate,
           to: endDate,
+          search: keyword!,
+          related: relword!,
         },
         ...queryOptions,
         enabled: !!data && !!relword && !!startDate && !!endDate,
