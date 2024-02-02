@@ -2,10 +2,7 @@ import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 import type { DeepRequired } from 'react-hook-form';
 
-import {
-  AUTO_COMPLETEWORD_KEY,
-  RANK_RELATIONWORD_KEY,
-} from '@/constants/querykey';
+import { RANK_RELATIONWORD_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
 /**
