@@ -20,7 +20,7 @@ export default {
         environment: {
           OPENAI_API_KEY: String(process.env.OPENAI_API_KEY),
         },
-        timeout: '2 minute',
+        timeout: 60,
         experimental: {
           streaming: true,
         },
