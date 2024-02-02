@@ -11,6 +11,14 @@ export const videoKeys = {
   video: ['video'],
 };
 
+/**
+ * infinityQuery로써 무한 scroll 형식에 맞도록 생성된 hook
+ * 지정한 탐색어와 연관어들의 video를 가져오는 hook입니다.
+ * @param param 탐색어와 연관어를 파라미터로 받습니다
+ * @param lastIndex_ID infiniteScroll에서 다음 조회를 시작할 Index_Id입니다 (존재하지 않을경우 처음부터 조회)
+ * @param queryOptions
+ * @returns
+ */
 const useGetVideoDataInfinityQuery = (
   {
     keyword,
