@@ -1,6 +1,7 @@
 import { c } from '../contract';
 import { z } from 'zod';
 import { zErrResBase } from '../error.response.zod';
+import { zChannelResponse } from './channel.model';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
@@ -9,7 +10,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}`,
     pathParams: z.object({ channelId: z.string() }),
     responses: {
-      200: c.type<any>(),
+      200: zChannelResponse,
       ...zErrResBase,
     },
     summary: '내 채널 분석 정보(snb)를 가져옵니다',
