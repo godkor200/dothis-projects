@@ -1,6 +1,7 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { ClientInferResponseBody } from '@ts-rest/core';
 import { useMemo } from 'react';
+import type { DeepRequired } from 'react-hook-form';
 
 import type { ResponseType, VideoCount } from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
@@ -16,9 +17,8 @@ import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetExpectedView from '../react-query/query/useGetExpectedView';
 import useGetVideoCount from '../react-query/query/useGetVideoCount';
 
-type Post = ClientInferResponseBody<
-  typeof apiRouter.video.getAccVideo,
-  200
+type Post = DeepRequired<
+  ClientInferResponseBody<typeof apiRouter.video.getAccVideo, 200>
 >['data']['section'];
 
 export const useDailyViewChartDataForNivo = (

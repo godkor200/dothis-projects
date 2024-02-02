@@ -1,9 +1,10 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
 import useGetRelWords from './useGetRelWords';
 
 export const videoKeys = {
@@ -53,11 +54,13 @@ const useGetVideoData = (
     }),
   });
 
-  const isLoading = queryResults.some((result) => result.isLoading);
+  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
+
+  const isLoading = requiredQueryResult.some((result) => result.isLoading);
 
   return {
     isLoading,
-    data: queryResults.map((result) => result.data?.body.data),
+    data: requiredQueryResult.map((result) => result.data?.body.data),
   };
 };
 

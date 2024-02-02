@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { AUTO_COMPLETEWORD_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
@@ -16,9 +17,13 @@ const useGetAutoCompleteWord = (
     { enabled: !!word, ...queryOptions },
   );
 
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
+
   return {
     ...queryResult,
-    data: queryResult.data?.body.data,
+    data: requiredQueryResult?.body.data,
   };
 };
 

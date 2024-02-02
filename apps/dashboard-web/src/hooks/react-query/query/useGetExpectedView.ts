@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
@@ -42,9 +43,13 @@ const useGetExpectedView = (
     },
   );
 
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
+
   return {
     ...queryResult,
-    data: queryResult.data?.body.data,
+    data: requiredQueryResult?.body.data,
   };
 };
 

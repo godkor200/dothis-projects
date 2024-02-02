@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { USER_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
@@ -22,7 +23,11 @@ const useGetUserInfo = (
     queryOptions,
   );
 
-  return { ...queryResult, data: queryResult.data?.body.data };
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
+
+  return { ...queryResult, data: requiredQueryResult?.body.data };
 };
 
 export default useGetUserInfo;

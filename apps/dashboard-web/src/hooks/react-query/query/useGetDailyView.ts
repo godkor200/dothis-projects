@@ -1,10 +1,11 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { DAILYVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
 import useGetRelWords from './useGetRelWords';
 
 const useGetDailyView = (
@@ -56,12 +57,13 @@ const useGetDailyView = (
     }),
   });
 
+  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
   // const isLoading = queryResults.some((result) => result.isLoading);
-  const isLoading = queryResults.map((item) => item.isLoading);
+  const isLoading = requiredQueryResult.map((item) => item.isLoading);
 
   return {
     isLoading,
-    data: queryResults.map((result) => result.data?.body.data),
+    data: requiredQueryResult.map((result) => result.data?.body.data),
   };
 };
 

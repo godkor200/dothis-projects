@@ -1,5 +1,6 @@
 'use client';
 
+import type { DeepRequired } from '@/hooks/react-query/query/common';
 import { apiClient } from '@/utils/api/apiClient';
 
 const SSTTEST = () => {
@@ -22,10 +23,12 @@ const SSTTEST = () => {
     }),
   });
 
-  console.log(queryResults);
+  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
 
   return (
-    <>{queryResults.map((tt) => tt.data?.body.data.map((ot) => ot.date))}</>
+    <>
+      {requiredQueryResult.map((tt) => tt.data?.body.data.map((ot) => ot.date))}
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { RELATIONWORD_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
@@ -15,6 +16,7 @@ import useGetUserInfo from './useGetUserInfo';
  * 유저에게 최종적으로 현재 선택된 키워드가 없을 떄 guestKeyword가 필요하여, isLoading으로 enbled를 걸어줌.
  * 키워드를 해당 훅에 파라미터로 넣을 수 있도록 고민해보았지만, enbled loading 값이 필요하여 이런 형태로 작성하였습니다.
  */
+
 const useGetRelWords = (
   keyword: string | null,
   queryOptions?: UseQueryOptions<typeof apiRouter.relwords.getRelWords>,
@@ -30,10 +32,12 @@ const useGetRelWords = (
     },
     { ...queryOptions, enabled: !isLoading && !!keyword },
   );
-  queryResult.data;
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
   return {
     ...queryResult,
-    data: queryResult.data?.body.data,
+    data: requiredQueryResult?.body.data,
   };
 };
 export default useGetRelWords;

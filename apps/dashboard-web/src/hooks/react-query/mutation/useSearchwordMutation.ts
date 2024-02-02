@@ -1,4 +1,4 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ClientArgs } from '@ts-rest/core';
 import type { UseMutationOptions } from '@ts-rest/react-query';
