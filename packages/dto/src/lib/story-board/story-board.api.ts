@@ -1,3 +1,4 @@
+import type {} from 'zod';
 import { c } from '../contract';
 import {
   zPostStoryBoardBody,
@@ -6,17 +7,19 @@ import {
   zPostStoryBoardOverviewParams,
   zPostStoryBoardPathParams,
   zPostStoryBoardReferenceParams,
+  zStoryBoardCreateRes,
   zStoryBoardDetails,
   zStoryBoardId,
 } from './story-board.zod';
+import type {} from '@ts-rest/core';
 
 import { zPaginatedSqlQueryParams } from '../common.model';
 import { z } from 'zod';
 import { zErrResBase } from '../error.response.zod';
-import { zStoryBoardCreateRes, zSuccessBase } from '../success.response.zod';
+import { zSuccessBase } from '../success.response.zod';
 
 export const storyBoardUrl = '/story-board';
-import type {} from 'zod';
+
 export const storyBoardApi = c.router({
   // 스토리보드 생성 API 라우터
   createStoryBoard: {

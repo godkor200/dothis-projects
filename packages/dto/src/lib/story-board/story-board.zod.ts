@@ -1,4 +1,7 @@
 import { z } from 'zod';
+import { zSuccessBase } from '../success.response.zod';
+import { dataObject } from '../common.model';
+import { zStoryBoardSchema } from './story-board.model';
 
 export const zPostStoryBoardPathParams = z.object({
   storyBoardId: z.string().describe('스토리 보드의 고유 ID'),
@@ -43,3 +46,7 @@ export type TPostStoryBoardMainParams = z.TypeOf<
   typeof zPostStoryBoardMainParams
 >;
 export type TPostStoryBoardBody = z.TypeOf<typeof zPostStoryBoardBody>;
+
+export const zStoryBoardCreateRes = zSuccessBase.merge(
+  dataObject(zStoryBoardSchema),
+);
