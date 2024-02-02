@@ -1,4 +1,4 @@
-import { DailyViewsEntity } from '@Apps/modules/daily-view/domain/repository/entity/daily-views.entity';
+import { DailyViewsEntity } from '@Apps/modules/hits/domain/repository/entity/daily-views.entity';
 
 export interface FindDailyViewsAdapterPort {
   findDailyView: (

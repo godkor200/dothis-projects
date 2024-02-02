@@ -13,7 +13,7 @@ export class DailyViewsRepository
   @InjectRepository(DailyViewsEntity)
   protected repository: Repository<DailyViewsEntity>;
 
-  protected tableName = 'daily-view';
+  protected tableName = 'hits';
 
   protected schema: ZodObject<any> = zDailyViews;
 

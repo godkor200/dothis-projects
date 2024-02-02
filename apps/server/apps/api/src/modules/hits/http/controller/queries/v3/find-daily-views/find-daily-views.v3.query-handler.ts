@@ -4,7 +4,7 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token'
 import {
   FindDailyViewsQuery,
   FindDailyViewsV3Dto,
-} from '@Apps/modules/daily-view/application/dtos/find-daily-views.dtos';
+} from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
