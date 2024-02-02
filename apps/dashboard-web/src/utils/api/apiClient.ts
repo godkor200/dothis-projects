@@ -1,17 +1,12 @@
-
-import type { ApiFetcher, ApiFetcherArgs } from '@ts-rest/core';
-import { tsRestFetchApi } from '@ts-rest/core';
+import { apiRouter } from '@dothis/dto';
+import type { ApiFetcherArgs } from '@ts-rest/core';
 import { initQueryClient } from '@ts-rest/react-query';
 import type { AxiosError, AxiosResponseHeaders } from 'axios';
 import { type AxiosResponse, isAxiosError, type Method } from 'axios';
 
-
 import { serverApiBaseUrl } from '@/constants/dev';
 
 import { apiInstance } from './apiInstance';
-import { apiRouter } from '@dothis/dto';
-
-// export type ApiRouterResponse = AppRouteResponse<typeof apiRouter>;
 
 export const apiClient = (version: number) => {
   return initQueryClient(apiRouter, {
