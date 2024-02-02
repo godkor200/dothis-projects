@@ -41,5 +41,5 @@ export class FindVideoDateQuery implements IQuery {
   }
 }
 
-export interface FindDailyViewsDtos
+export interface FindDailyViewsDto
   extends Omit<FindVideoDateQuery, 'clusterNumber'> {}

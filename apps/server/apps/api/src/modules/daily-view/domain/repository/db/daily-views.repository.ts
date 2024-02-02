@@ -1,7 +1,7 @@
 import { DailyViewsEntity } from '../entity/daily-views.entity';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { DailyViewsRepositoryPort } from './daily-views.repository.port';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { DailyViewModel, zDailyViews } from '@dothis/dto';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';

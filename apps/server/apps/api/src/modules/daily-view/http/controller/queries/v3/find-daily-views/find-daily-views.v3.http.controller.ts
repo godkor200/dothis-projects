@@ -11,13 +11,14 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import {
   FindDailyViewsV3Dto,
   IIncreaseData,
-} from '@Apps/modules/daily-view/dtos/find-daily-views.dtos';
+} from '@Apps/modules/daily-view/application/dtos/find-daily-views.dtos';
 import {
   IncreaseData,
   IRes,

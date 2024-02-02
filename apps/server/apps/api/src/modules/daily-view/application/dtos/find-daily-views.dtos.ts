@@ -1,5 +1,5 @@
 import { IQuery } from '@nestjs/cqrs';
-import { VIDEO_DATA_KEY } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { findVideoBySearchKeyword } from '@dothis/dto';
@@ -44,7 +44,7 @@ export class FindDailyViewsQuery extends BaseQuery {
   }
 }
 
-export interface FindDailyViewsDtos
+export interface FindDailyViewsDto
   extends Omit<FindDailyViewsQuery, 'clusterNumber'> {}
 
 export class FindDailyViewsV3Query extends BaseQuery {
@@ -62,7 +62,16 @@ export class FindDailyViewsV3Dto extends createZodDto(
     Object.assign(this, props);
   }
 }
-export interface FindDailyViewsV3Params
+
+export class FindDailyViewsV1Dto
+  implements Omit<FindDailyViewsV3Dto, 'clusterNumber'>
+{
+  constructor(props: FindDailyViewsV1Dto) {
+    Object.assign(this, props);
+  }
+}
+
+export interface FindDailyViewsV3Param
   extends Omit<FindDailyViewsV3Query, 'clusterNumber'> {}
 
 export interface IIncreaseData {
