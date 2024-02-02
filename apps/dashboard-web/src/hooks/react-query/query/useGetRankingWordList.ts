@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import {
   AUTO_COMPLETEWORD_KEY,
@@ -40,12 +41,15 @@ const useGetRankingWordList = (
       };
     }),
   });
+  const requiredQueryResults = queryResults as DeepRequired<
+    typeof queryResults
+  >;
 
   const keywordArray = [...keyword];
 
   const removeKeywordList: string[] = [];
 
-  const filterArray = queryResults.filter((queryResult, index) => {
+  const filterArray = requiredQueryResults.filter((queryResult, index) => {
     if (queryResult.data === undefined) {
       removeKeywordList.push(keywordArray[index]);
     }
@@ -71,11 +75,11 @@ const useGetRankingWordList = (
     (a, b) => b.expectedViews - a.expectedViews,
   );
 
-  const isLoading = queryResults.some((query) => query.isLoading);
+  const isLoading = requiredQueryResults.some((query) => query.isLoading);
 
-  const isError = queryResults.every((query) => query.isError);
+  const isError = requiredQueryResults.every((query) => query.isError);
 
-  const isErrorKeyword = queryResults
+  const isErrorKeyword = requiredQueryResults
     .map((item, index) => (item.isError === true ? keywordArray[index] : null))
     .filter(Boolean);
 

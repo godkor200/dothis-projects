@@ -1,20 +1,19 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { ClientInferResponseBody } from '@ts-rest/core';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
+import type { DeepRequired } from '@/hooks/react-query/query/common';
 
 dayjs.extend(isSameOrBefore);
 
-type DailyView = ClientInferResponseBody<
-  typeof apiRouter.dailyViews.getDailyViews,
-  200
+type DailyView = DeepRequired<
+  ClientInferResponseBody<typeof apiRouter.dailyViews.getDailyViews, 200>
 >['data'][0];
 
-type ExpectedView = ClientInferResponseBody<
-  typeof apiRouter.expectViews.getExpectedViews,
-  200
+type ExpectedView = DeepRequired<
+  ClientInferResponseBody<typeof apiRouter.expectViews.getExpectedViews, 200>
 >['data'][0];
 
 /**

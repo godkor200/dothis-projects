@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
@@ -62,10 +63,14 @@ const useGetTrendingKeywords = (
     },
   );
 
+  const requiredQueryResult = queryResults.data as DeepRequired<
+    typeof queryResults.data
+  >;
+
   return {
     ...queryResults,
-    data: queryResults.data?.pages.flatMap((item) => item.body.data.data),
-    total: queryResults.data?.pages[0].body.data.total,
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
+    total: requiredQueryResult?.pages[0].body.data.total,
   };
 };
 

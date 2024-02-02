@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { VIDEO_COUNT_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
@@ -19,7 +20,7 @@ const useGetVideoCount = (
 
   const endDate = useEndDate();
 
-  const queryResults = apiClient(2).video.getAccVideo.useQuery(
+  const queryResult = apiClient(2).video.getAccVideo.useQuery(
     VIDEO_COUNT_KEY.list([
       {
         relword: relword,
@@ -43,9 +44,12 @@ const useGetVideoCount = (
     },
   );
 
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
   return {
-    ...queryResults,
-    data: [queryResults.data?.body.data],
+    ...queryResult,
+    data: [requiredQueryResult?.body.data],
   };
 };
 

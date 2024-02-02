@@ -1,9 +1,10 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
 import useGetRelWords from './useGetRelWords';
 
 export const videoKeys = {
@@ -52,7 +53,9 @@ const useGetVideoDataInfinityQuery = (
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.body.data.data.length < 10 || allPages.length > 4
+        return (lastPage.body.data?.data &&
+          lastPage.body?.data?.data.length < 10) ||
+          allPages.length > 4
           ? false
           : true;
       },
@@ -61,9 +64,12 @@ const useGetVideoDataInfinityQuery = (
     },
   );
 
+  const requiredQueryResult = queryResults.data as DeepRequired<
+    typeof queryResults.data
+  >;
   return {
     ...queryResults,
-    data: queryResults.data?.pages.flatMap((item) => item.body.data.data),
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
   };
 };
 
