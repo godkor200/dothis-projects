@@ -1,5 +1,5 @@
 .container {
-  width: 480px;
+  width: 300px;
   margin: 0 auto;
 
   --font-size-xlg: 2.5rem;
@@ -7,31 +7,24 @@
   --font-size-md: 1.5rem;
   --font-size-sm: 1rem;
 
+  @media (min-width: 480px) {
+    width: 360px;
+
+  }
+
   @media (min-width: 768px) {
     width: 600px;
 
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
   }
 
   @media (min-width: 1024px) {
-    width: 900px;
+    width: 720px;
 
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
   }
 
   @media (min-width: 1440px) {
-    width: 1320px;
+    width: 900px;
 
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
   }
 
   h1,
@@ -87,7 +80,7 @@
   }
 
   p {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -97,4 +90,5 @@ https://www.daleseo.com/css-responsive-typography/
 
 .contentDivision {
   margin-top: 5rem;
+  margin-bottom: 5rem;
 }

@@ -9,7 +9,7 @@ const blogObject: Record<string, JSX.Element> = {
 };
 
 const BlogDetailPage = ({ params }: { params: { index: string } }) => {
-  return <ul className="py-[160px]">{blogObject[params.index]}</ul>;
+  return <ul className="py-[60px]">{blogObject[params.index]}</ul>;
 };
 
 export default BlogDetailPage;
