@@ -13,8 +13,8 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domai
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { Inject } from '@nestjs/common';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
-import { FindVideosDao } from '@Apps/modules/video/database/video.dao';
+import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
+import { FindVideosDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 @QueryHandler(FindAccumulateVideosV4Dto)
 export class FindAccumulateVideosV4QueryHandler
