@@ -13,7 +13,7 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domai
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
+import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 
 @QueryHandler(FindAccumulateVideosV1Dto)
 export class FindAccumulateVideosV1QueryHandler
