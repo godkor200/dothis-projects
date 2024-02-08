@@ -2,9 +2,9 @@ import { from, lastValueFrom, map } from 'rxjs';
 import {
   IFindVideoPageDao,
   VideoQueryHandlerOutboundPort,
-} from './video.query-handler.outbound.port';
+} from '../../domain/ports/video.query-handler.outbound.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
-import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
+
 import {
   IFindManyVideoResult,
   IPagingRes,
@@ -13,15 +13,15 @@ import {
 import {
   FindVideoDateQuery,
   VIDEO_DATA_KEY,
-} from '@Apps/modules/video/dtos/find-videos.dtos';
+} from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Err } from 'oxide.ts';
-import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
-
-import { SearchQueryBuilder } from '@Apps/modules/video/utils/search-query.builder';
+import { SearchQueryBuilder } from '@Apps/modules/video/infrastructure/utils/search-query.builder';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { FindDailyViewsV3Dao, FindVideosDao } from './video.dao';
+import { FindDailyViewsV3Dao, FindVideosDao } from '../daos/video.dao';
+import { FindVideoPageV2Dto } from '@Apps/modules/video/http/v2/find-video-paging/find-video-paging.req.dto';
+import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
 
 export class VideoQueryHandler
   extends AwsOpenSearchConnectionService
@@ -74,7 +74,7 @@ export class VideoQueryHandler
     return await lastValueFrom(observable$);
   }
   async findVideoByWords(
-    words: FindVideoQuery,
+    words: SearchRelationVideoDao,
   ): Promise<IFindManyVideoResult[]> {
     let searchQuery = {
       index: 'new_video',

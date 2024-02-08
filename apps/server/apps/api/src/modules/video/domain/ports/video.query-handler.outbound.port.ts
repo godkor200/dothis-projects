@@ -1,19 +1,19 @@
-import { IFindVideoPageV1Dto } from '@Apps/modules/video/queries/v1/find-video-paging/find-video-paging.req.dto';
-import { FindVideoDateQuery } from '@Apps/modules/video/dtos/find-videos.dtos';
-import { FindVideoQuery } from '@Apps/modules/video/queries/v1/find-video/find-video.query-handler';
+import { IFindVideoPageV1Dto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
+import { FindVideoDateQuery } from '@Apps/modules/video/application/dtos/find-videos.dtos';
+
 import {
   IFindManyVideoResult,
   IPagingRes,
   IVideo,
 } from '@Apps/modules/video/interfaces/find-many-video.interface';
-import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
-import { FindVideoPageV2Dto } from '@Apps/modules/video/queries/v2/find-video-paging/find-video-paging.req.dto';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-
+import { FindVideoPageV2Dto } from '@Apps/modules/video/http/v2/find-video-paging/find-video-paging.req.dto';
 import {
   FindDailyViewsV3Dao,
   FindVideosDao,
-} from '@Apps/modules/video/database/video.dao';
+} from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
 
 export interface VideoQueryHandlerOutboundPort {
   findManyVideo(tag: string): Promise<string[]>;
@@ -22,7 +22,9 @@ export interface VideoQueryHandlerOutboundPort {
 
   findVideoMultiIndexPaging(arg: FindVideoPageV2Dto): Promise<IPagingRes>;
 
-  findVideoByWords(words: FindVideoQuery): Promise<IFindManyVideoResult[]>;
+  findVideoByWords(
+    words: SearchRelationVideoDao,
+  ): Promise<IFindManyVideoResult[]>;
 
   findVideoIdFullScanAndVideos<T>(
     query: FindDailyViewsV3Dao,

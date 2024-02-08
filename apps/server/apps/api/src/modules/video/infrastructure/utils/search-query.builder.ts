@@ -1,4 +1,4 @@
-import { VIDEO_DATA_KEY } from '@Apps/modules/video/dtos/find-videos.dtos';
+import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 
 export class SearchQueryBuilder {
   static video(
@@ -122,7 +122,6 @@ export class SearchQueryBuilder {
           },
         },
         _source: data || false,
-        sort: ['_id'],
       },
     };
 

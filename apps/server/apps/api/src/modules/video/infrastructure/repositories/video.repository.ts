@@ -1,8 +1,8 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { VideoRepositoryPort } from './video.repository.port';
+import { VideoRepositoryPort } from '../../domain/ports/video.repository.port';
 import { VideoModel, zVideoModel } from '@dothis/dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { VideoEntity } from '../domain/videos.entity';
+import { VideoEntity } from '../../domain/videos.entity';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 
