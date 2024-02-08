@@ -3,8 +3,8 @@ import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { TMemoModel, zMemoSchema } from '@dothis/dto';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PostReferenceDao } from 'apps/api/src/modules/story-board/domain/daos';
-import { PostMemoDao } from '@Apps/modules/story-board/domain/daos/memo.dao';
+import { PostReferenceDao } from 'apps/api/src/modules/story-board/infrastructure/daos';
+import { PostMemoDao } from '@Apps/modules/story-board/infrastructure/daos/memo.dao';
 import { MemoOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/memo.outbound';
 
 export class MemoAdapter

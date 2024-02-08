@@ -6,7 +6,7 @@ import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/reposi
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
-import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
+import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
 import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';

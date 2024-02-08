@@ -62,7 +62,6 @@ export class FindDailyViewsV3Dto extends createZodDto(
     Object.assign(this, props);
   }
 }
-
 export class FindDailyViewsV1Dto
   implements Omit<FindDailyViewsV3Dto, 'clusterNumber'>
 {
@@ -70,9 +69,6 @@ export class FindDailyViewsV1Dto
     Object.assign(this, props);
   }
 }
-
-export interface FindDailyViewsV3Param
-  extends Omit<FindDailyViewsV3Query, 'clusterNumber'> {}
 
 export interface IIncreaseData {
   date: string;

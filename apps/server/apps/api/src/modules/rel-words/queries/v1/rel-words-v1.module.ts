@@ -11,7 +11,7 @@ import { FindRelCache } from '@Apps/modules/rel-words/repository/cache/find-rel.
 import { RankRelHttpController } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.http.controller';
 import { RankRelQueryHandler } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.query-handler';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
-import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
+import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { FindSearchKeywordHttpController } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.http.controller';
 import { FindSearchKeywordQueryHandler } from '@Apps/modules/rel-words/queries/v1/find-search-keyword/find-search-keyword.query-handler';

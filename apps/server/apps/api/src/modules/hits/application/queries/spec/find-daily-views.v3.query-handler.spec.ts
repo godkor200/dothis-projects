@@ -2,7 +2,7 @@ import { mock } from 'jest-mock-extended';
 import { FindDailyViewsQuery } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/database/video.query-handler.outbound.port';
+import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 import { FindDailyViewsQueryOsV3Handler } from '@Apps/modules/hits/application/queries/find-daily-views.v3.query-handler';
 import { videoHistoryDummy } from './__dummy__/daily-view-dummy-data';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';

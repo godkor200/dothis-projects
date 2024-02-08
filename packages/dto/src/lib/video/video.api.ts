@@ -16,7 +16,7 @@ export const videoApi = c.router({
   getVideoTest: {
     method: 'GET',
     path: `${videoBaseApiUrl}/test`,
-    query: findVideoPageQuery,
+    query: findVideoBySearchKeyword,
     responses: {
       200: zVideoResponse,
       ...zErrResBase,

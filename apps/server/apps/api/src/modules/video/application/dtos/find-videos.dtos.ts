@@ -1,3 +1,4 @@
+import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
 import { IQuery } from '@nestjs/cqrs';
 
 export enum VIDEO_DATA_KEY {
@@ -43,3 +44,10 @@ export class FindVideoDateQuery implements IQuery {
 
 export interface FindDailyViewsDto
   extends Omit<FindVideoDateQuery, 'clusterNumber'> {}
+
+export class SearchRelationVideoDto extends SearchRelationVideoAndHistoryDao {
+  constructor(props: SearchRelationVideoDto) {
+    super(props);
+    Object.assign(this, props);
+  }
+}

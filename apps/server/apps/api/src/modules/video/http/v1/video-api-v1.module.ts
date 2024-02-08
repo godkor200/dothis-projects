@@ -3,7 +3,7 @@ import {
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_OS_DI_TOKEN,
 } from '@Apps/modules/video/constants/video.di-token';
-import { VideoQueryHandler } from '@Apps/modules/video/database/video.query-handler';
+import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { CqrsModule } from '@nestjs/cqrs';
 
