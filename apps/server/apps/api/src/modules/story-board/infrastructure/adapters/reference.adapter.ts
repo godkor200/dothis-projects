@@ -4,7 +4,7 @@ import { ReferenceOutboundPort } from '@Apps/modules/story-board/domain/ports/ou
 import { TReferenceModel, zReferenceSchema } from '@dothis/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PostReferenceDao } from 'apps/api/src/modules/story-board/domain/daos';
+import { PostReferenceDao } from 'apps/api/src/modules/story-board/infrastructure/daos';
 
 export class ReferenceAdapter
   extends SqlRepositoryBase<ReferenceEntity, TReferenceModel>
