@@ -6,6 +6,7 @@ import {
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { ConfigService } from '@nestjs/config';
 import {
+  RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/video.dao';
@@ -32,19 +33,22 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
   }
 
   async getRelatedVideoAndVideoHistory(
-    dao: SearchRelationVideoAndHistoryDao,
+    dao: RelatedVideoAndVideoHistoryDao,
   ): Promise<TRelatedVideoAndHistoryRes> {
-    const { search, related, from, to } = dao;
+    const { search, related, from, to, clusterNumber } = dao;
 
     try {
-      const cache = await this.client.getCache('dothis.VIDEO_HISTORY');
       const fromDate = VideosDateFormatter.getFormattedDate(from);
       const toDate = VideosDateFormatter.getFormattedDate(to);
-      const queryString = `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY FROM DOTHIS.VIDEO_HISTORY vh JOIN DOTHIS.VIDEO_DATA vd ON vd.video_id = vh.video_id
+      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
+      const cache = await this.client.getCache(tableName);
+      const queryString = `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY 
+       FROM ${tableName} vh JOIN DOTHIS.VIDEO_DATA vd 
+       ON vd.video_id = vh.video_id
        WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
        AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
-       AND ((vd.YEAR > ${fromDate.year} OR (vd.YEAR = ${fromDate.year} AND vd.MONTH > ${fromDate.month}) OR (vd.YEAR = ${fromDate.year} AND vd.MONTH = ${fromDate.month} AND vd.DAY >= ${fromDate.day}))
-       AND ((vd.YEAR < ${toDate.year} OR (vd.YEAR = ${toDate.year} AND vd.MONTH < ${toDate.month}) OR (vd.YEAR = ${toDate.year} AND vd.MONTH = ${toDate.month} AND vd.DAY <= ${toDate.day}))`;
+       AND ((vd.YEAR > ${fromDate.year} OR (vd.YEAR = ${fromDate.year} AND vd.MONTH > ${fromDate.month}) OR (vd.YEAR = ${fromDate.year} AND vd.MONTH = ${fromDate.month} AND vd.DAY >= ${fromDate.day})))
+       AND ((vd.YEAR < ${toDate.year} OR (vd.YEAR = ${toDate.year} AND vd.MONTH < ${toDate.month}) OR (vd.YEAR = ${toDate.year} AND vd.MONTH = ${toDate.month} AND vd.DAY <= ${toDate.day})))`;
       const query = new SqlFieldsQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
@@ -52,7 +56,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log(e);
+      console.log('!!', e);
     }
   }
 
