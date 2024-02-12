@@ -1,8 +1,8 @@
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import { TRelatedVideoAndHistoryRes } from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
 
 export interface VideoServiceInterface {
   getRelatedVideoAndHistory(
     props: FindDailyViewsV1Dto,
-  ): Promise<TRelatedVideoAndHistoryRes>;
+  ): Promise<TFindDailyView>;
 }

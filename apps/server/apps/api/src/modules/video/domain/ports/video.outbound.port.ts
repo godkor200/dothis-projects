@@ -1,4 +1,5 @@
 import {
+  RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/video.dao';
@@ -18,7 +19,7 @@ export type TRelatedVideos = Result<
 >;
 export interface VideoOutboundPort {
   getRelatedVideoAndVideoHistory(
-    props: SearchRelationVideoAndHistoryDao,
+    props: RelatedVideoAndVideoHistoryDao,
   ): Promise<TRelatedVideoAndHistoryRes>;
 
   getRelatedVideos(props: SearchRelationVideoDao): Promise<TRelatedVideos>;
