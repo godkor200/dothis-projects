@@ -2,7 +2,7 @@ import { mock } from 'jest-mock-extended';
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
 import { ConfigService } from '@nestjs/config';
-import { RelatedVideoAndVideoHistoryDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
+import { RelatedVideoAndVideoHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 const mockConfigService = mock<ConfigService>();
 const mockIgniteService = mock<IgniteService>();
 let handler: VideoAdapter;
