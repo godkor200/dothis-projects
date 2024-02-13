@@ -1,106 +1,32 @@
 import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
-const historyData = [
-  { videoId: '--1PiOMFMNc', videoViews: 78456, date: '2023-11-23' },
-  { videoId: '--uecr2C5ug', videoViews: 91892, date: '2023-11-23' },
-  { videoId: '-9Psojt_YeU', videoViews: 360216, date: '2023-11-23' },
-  { videoId: '-HGDi6NxqC4', videoViews: 6985, date: '2023-11-23' },
-  { videoId: '-Tn0ok7WrXc', videoViews: 0, date: '2023-11-23' },
-  { videoId: '-Y97zu05UPk', videoViews: 826710, date: '2023-11-23' },
-  { videoId: '-gtZ3Lnysh0', videoViews: 0, date: '2023-11-23' },
-  { videoId: '0CyODzN8RKw', videoViews: 620016, date: '2023-11-23' },
-  { videoId: '0DFuSzor5q0', videoViews: 270519, date: '2023-11-23' },
-  { videoId: '0DfyMVMfSLs', videoViews: 597, date: '2023-11-23' },
-  { videoId: '0GOnIdMT3a4', videoViews: 236368, date: '2023-11-23' },
-  { videoId: '0iE9FGbcA90', videoViews: 4042, date: '2023-11-23' },
-  { videoId: '0sPR5bs3E6s', videoViews: 2969, date: '2023-11-23' },
-  { videoId: '1-ogHLRmjn8', videoViews: 0, date: '2023-11-23' },
-  { videoId: '11ZxBAeMG0c', videoViews: 3577, date: '2023-11-23' },
-  { videoId: '13TqYS8OWFY', videoViews: 1702, date: '2023-11-23' },
-  { videoId: '1DdqHM5HNUo', videoViews: 3237, date: '2023-11-23' },
-  { videoId: '1FRZOmfycPw', videoViews: 27244, date: '2023-11-23' },
-  { videoId: '1QcstnIM_Ls', videoViews: 8048, date: '2023-11-23' },
-  { videoId: '1vS4Xo3pIbA', videoViews: 22676, date: '2023-11-23' },
-  { videoId: '1yup0AAoQ2w', videoViews: 175840, date: '2023-11-23' },
-  { videoId: '29MMeii6ifo', videoViews: 2414166, date: '2023-11-23' },
-  { videoId: '2Bm-lTIB714', videoViews: 500834, date: '2023-11-23' },
-  { videoId: '2FimD-jkZB4', videoViews: 236927, date: '2023-11-23' },
-  { videoId: '2YsNvV4UhqI', videoViews: 83895, date: '2023-11-23' },
-  { videoId: '2nN1A-NVs3o', videoViews: 132584, date: '2023-11-23' },
-  { videoId: '2vkD1KuG8NA', videoViews: 3349, date: '2023-11-23' },
-  { videoId: '2zxz9rTf-b4', videoViews: 13491, date: '2023-11-23' },
-  { videoId: '32nk8DsyBSM', videoViews: 1875, date: '2023-11-23' },
-  { videoId: '3AmW9g6DaOE', videoViews: 18097, date: '2023-11-23' },
-  { videoId: '3Aoyl2OCkjQ', videoViews: 117957, date: '2023-11-23' },
-  { videoId: '3WkG2ryyn8I', videoViews: 52231, date: '2023-11-23' },
-  { videoId: '3hXNlgICGQ0', videoViews: 94302, date: '2023-11-23' },
-  { videoId: '3xH02ITQceo', videoViews: 370469, date: '2023-11-23' },
-  { videoId: '41xWxc_rrWI', videoViews: 38258, date: '2023-11-23' },
-  { videoId: '48mTDULBZsc', videoViews: 138564, date: '2023-11-23' },
-  { videoId: '4GzFvjd3oVo', videoViews: 320, date: '2023-11-23' },
-  { videoId: '4RQCFTLu5k8', videoViews: 0, date: '2023-11-23' },
-  { videoId: '4aDUHgMGfbE', videoViews: 547738, date: '2023-11-23' },
-  { videoId: '4yxv2Ay2MsU', videoViews: 23923, date: '2023-11-23' },
-  { videoId: '5G82JR-FquA', videoViews: 104346, date: '2023-11-23' },
-  { videoId: '5Ls2t4CJEA0', videoViews: 16042, date: '2023-11-23' },
-  { videoId: '5OH5vYP6wM8', videoViews: 1132361, date: '2023-11-23' },
-  { videoId: '5RDsyQ5IZPA', videoViews: 197623, date: '2023-11-23' },
-  { videoId: '5Tbw-jdNXRI', videoViews: 1316, date: '2023-11-23' },
-  { videoId: '5c803uy7src', videoViews: 10374, date: '2023-11-23' },
-  { videoId: '5gBlnExqfUM', videoViews: 1386, date: '2023-11-23' },
-  { videoId: '68L6_rkz6CM', videoViews: 828, date: '2023-11-23' },
-  { videoId: '6QKf76Etgtc', videoViews: 3266, date: '2023-11-23' },
-  { videoId: '6S3emAn5Mfc', videoViews: 17128, date: '2023-11-23' },
-  { videoId: '6gS1jbCU7oE', videoViews: 0, date: '2023-11-23' },
-  { videoId: '6kLDt25_n-4', videoViews: 1589, date: '2023-11-23' },
-  { videoId: '6mEAXVpnZoc', videoViews: 1966, date: '2023-11-23' },
-  { videoId: '74gzvEeeeE4', videoViews: 58, date: '2023-11-23' },
-  { videoId: '75w9E1BZfjc', videoViews: 138183, date: '2023-11-23' },
-  { videoId: '79acy9pvOlM', videoViews: 339, date: '2023-11-23' },
-  { videoId: '7F_MvuyvJxk', videoViews: 37591, date: '2023-11-23' },
-  { videoId: '7FaBRUjq2Cw', videoViews: 5963, date: '2023-11-23' },
-  { videoId: '7Ki5_Ox1B-A', videoViews: 23999, date: '2023-11-23' },
-  { videoId: '7KyBuGiybNw', videoViews: 2492, date: '2023-11-23' },
-  { videoId: '7QoF5iHYwxk', videoViews: 0, date: '2023-11-23' },
-  { videoId: '7VdX3jsvVIc', videoViews: 13203, date: '2023-11-23' },
-  { videoId: '7d5fVegxyQ4', videoViews: 45255, date: '2023-11-23' },
-  { videoId: '7lMrlHdeRho', videoViews: 13324, date: '2023-11-23' },
-  { videoId: '7rahqDysRmE', videoViews: 51432, date: '2023-11-23' },
-  { videoId: '7wX1lKkWSVI', videoViews: 6239, date: '2023-11-23' },
-  { videoId: '7yM33PYoyeQ', videoViews: 60709, date: '2023-11-23' },
-  { videoId: '81pGHPUEasc', videoViews: 953458, date: '2023-11-23' },
-  { videoId: '8BHo1YW8BWQ', videoViews: 1888, date: '2023-11-23' },
-  { videoId: '8BiAW-VbA6o', videoViews: 26686, date: '2023-11-23' },
-  { videoId: '8EoyFC_dWS0', videoViews: 1610, date: '2023-11-23' },
-  { videoId: '8JWu-rv6f-8', videoViews: 28868, date: '2023-11-23' },
-  { videoId: '8Jrj_9iMcrk', videoViews: 14491, date: '2023-11-23' },
-  { videoId: '8ONDbBuUBGQ', videoViews: 0, date: '2023-11-23' },
-  { videoId: '8PhqArQWc6E', videoViews: 12152, date: '2023-11-23' },
-  { videoId: '8SKKpUoNcyc', videoViews: 16344, date: '2023-11-23' },
-  { videoId: '8gx2Nmxi_5U', videoViews: 346112, date: '2023-11-23' },
-  { videoId: '8ih4FWvTtVQ', videoViews: 268799, date: '2023-11-23' },
-  { videoId: '9NnIchIAXDo', videoViews: 11355, date: '2023-11-23' },
-  { videoId: '9VEqZqvaW0o', videoViews: 127154, date: '2023-11-23' },
-  { videoId: '9W-PFghnisc', videoViews: 180412, date: '2023-11-23' },
-  { videoId: '9WfubBXDf0M', videoViews: 890594, date: '2023-11-23' },
-  { videoId: '9XWmE9eUl9Y', videoViews: 0, date: '2023-11-23' },
-  { videoId: '9_2d7oaNEgA', videoViews: 1362, date: '2023-11-23' },
-  { videoId: '9benrj2J6ZM', videoViews: 2536449, date: '2023-11-23' },
-  { videoId: '9k49-ASRqL8', videoViews: 19826, date: '2023-11-23' },
-  { videoId: 'A3_VCPyReVo', videoViews: 1173, date: '2023-11-23' },
-  { videoId: 'ADx6--hsQj0', videoViews: 22938, date: '2023-11-23' },
-  { videoId: 'AJ4Ghkw6kEc', videoViews: 94244, date: '2023-11-23' },
-  { videoId: 'AQEGtQ6BC5Q', videoViews: 2596, date: '2023-11-23' },
-  { videoId: 'AUD4UV8gbkU', videoViews: 0, date: '2023-11-23' },
-  { videoId: 'Ab88hbdQeN0', videoViews: 3418, date: '2023-11-23' },
-  { videoId: 'AbyHazcOqgQ', videoViews: 49009, date: '2023-11-23' },
-  { videoId: 'Ael6oLWZvys', videoViews: 155342, date: '2023-11-23' },
-  { videoId: 'AiwMDVmKRAw', videoViews: 286732, date: '2023-11-23' },
-  { videoId: 'Ao8MI0dpw0I', videoViews: 3307, date: '2023-11-23' },
-  { videoId: 'AtbLyP4OrZg', videoViews: 231337, date: '2023-11-23' },
-  { videoId: 'Avuzra_c4Qw', videoViews: 228393, date: '2023-11-23' },
-  { videoId: 'B4ZPOUNhxu8', videoViews: 4838, date: '2023-11-23' },
-  { videoId: 'B6QZ2iSJ_ek', videoViews: 150749, date: '2023-11-23' },
-];
+import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+
+export function createDummyData(
+  numEntries: number,
+  numEntriesPerId: number,
+): GetRelatedVideoHistory[] {
+  let dummyData: GetRelatedVideoHistory[] = [];
+  let currentViews: number = 0;
+  for (let i = 0; i < numEntries; i++) {
+    // 일정 주기로 비디오 아이디를 변경합니다
+    let currentVideoId = `vid${Math.floor(i / numEntriesPerId) + 1}`;
+    // videoViews가 계속 증가하도록 조정
+    currentViews += Math.floor(i / numEntriesPerId) + 1;
+    // day는 한 videoId당 중복 없이 증가
+    let currentDay = (i % numEntriesPerId) + 1;
+    let data: GetRelatedVideoHistory = {
+      videoId: currentVideoId,
+      videoViews: currentViews,
+      year: 2024,
+      month: 1,
+      day: currentDay,
+    };
+    dummyData.push(data);
+  }
+
+  return dummyData;
+}
+
 // 데이터 비교군
 export const oneToTen: IVideoHistory[] = [
   {
