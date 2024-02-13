@@ -13,7 +13,7 @@ import {
   FindVideosDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
-import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
+import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 
 export interface VideoQueryHandlerOutboundPort {
   findManyVideo(tag: string): Promise<string[]>;
