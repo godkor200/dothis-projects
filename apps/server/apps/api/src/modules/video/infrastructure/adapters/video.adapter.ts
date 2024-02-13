@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import {
   RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoDao,
-} from '@Apps/modules/hits/infrastructure/daos/video.dao';
+} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Err, Ok } from 'oxide.ts';
 import {
   VideosResultTransformer,
