@@ -8,9 +8,11 @@ import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { Inject } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+const IgniteClient = require('apache-ignite-client');
+const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 export type TFindDailyView = Result<
   IRes<IIncreaseData[]>,
-  VideoNotFoundError | VideoHistoryNotFoundError
+  VideoNotFoundError | VideoHistoryNotFoundError | typeof IllegalStateError
 >;
 @QueryHandler(FindDailyViewsV1Query)
 export class FindDailyViewV1QueryHandler
@@ -22,9 +24,6 @@ export class FindDailyViewV1QueryHandler
   ) {}
   async execute(query: FindDailyViewsV1Query): Promise<TFindDailyView> {
     const { dto } = query;
-    const res = await this.videoService.getRelatedVideoAndHistory(dto);
-
-    console.log(res);
-    return;
+    return await this.videoService.calculateDailyHitsMetrics(dto);
   }
 }
