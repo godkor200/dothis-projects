@@ -13,4 +13,18 @@ export class FindDailyViewsV3Dao extends FindDailyViewsV3Dto {
     Object.assign(this, props);
   }
 }
-export class GetRelatedVideoAndVideoHistory {}
+export interface GetRelatedVideoAndVideoHistory {
+  videoId: string;
+  videoViews: number;
+  videoLikes: number;
+  videoComments: number;
+  videoPerformance: number;
+  year: number;
+  month: number;
+  day: number;
+}
+
+export type GetRelatedVideoHistory = Omit<
+  GetRelatedVideoAndVideoHistory,
+  'videoLikes' | 'videoComments' | 'videoPerformance'
+>;
