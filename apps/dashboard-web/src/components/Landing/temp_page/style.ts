@@ -122,8 +122,8 @@ export const ImgMock = styled.img`
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 20px;
-  margin: 20px 0px;
-  align-items: center;
+  margin-top: 20px;
+  align-items: start;
 
   @media (max-width: ${theme.breakpoints.mobile}) {
     gap: 16px;
@@ -248,7 +248,15 @@ export const Description = styled(DescriptionDefault)`
 `;
 export const SearchBarContainer = styled.div`
   width: 680px;
+  height: 52px;
+  @media (max-width: ${theme.breakpoints.desktop_s}) {
+    width: 480px;
+  }
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    width: 320px;
+  }
   @media (max-width: ${theme.breakpoints.mobile}) {
     width: 160px;
   }
+
 `;
