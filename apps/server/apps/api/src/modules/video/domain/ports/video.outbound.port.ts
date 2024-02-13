@@ -1,18 +1,19 @@
 import {
   RelatedVideoAndVideoHistoryDao,
-  SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
-} from '@Apps/modules/hits/infrastructure/daos/video.dao';
+} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
-import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
-export type TRelatedVideoAndHistoryRes = Result<
-  GetRelatedVideoAndVideoHistory[],
-  VideoNotFoundError | VideoHistoryNotFoundError
->;
+const IgniteClient = require('apache-ignite-client');
+const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
+export type TRelatedVideoAndHistoryRes = Result<
+  GetRelatedVideoHistory[],
+  VideoNotFoundError | VideoHistoryNotFoundError | typeof IllegalStateError
+>;
 export type TRelatedVideos = Result<
   IVideoSchema[],
   VideoNotFoundError | VideoHistoryNotFoundError
