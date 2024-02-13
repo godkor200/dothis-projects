@@ -1,15 +1,12 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { RevealList, RevealWrapper } from '@/components/Landing/Reveal';
 import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
 import { CONTENT, PRICING } from '@/constants/route';
 
-import { theme } from '../style';
 import {
   Background,
   Button,
@@ -31,6 +28,9 @@ import {
 export default function Temp_page() {
   const router = useRouter();
 
+  useEffect(() => {
+    router.prefetch(CONTENT);
+  }, []);
   return (
     <Background>
       <Main>
