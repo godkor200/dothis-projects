@@ -15,7 +15,10 @@ const weeklyApiUrl = '/weekly';
 export const dailyViewApi = c.router({
   getDailyViewsV1: {
     method: 'GET',
-    path: `${viewApiUrl}${dailyApiUrl}`,
+    path: `${viewApiUrl}${dailyApiUrl}/:clusterNumber`,
+    pathParams: z.object({
+      clusterNumber: z.string().default('6'),
+    }),
     query: findVideoBySearchKeyword,
     responses: {
       200: zSuccessBase.merge(zDailyViews),
