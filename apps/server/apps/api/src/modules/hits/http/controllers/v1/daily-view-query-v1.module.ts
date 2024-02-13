@@ -8,9 +8,11 @@ import {
   VIDEO_SERVICE_DI_TOKEN,
 } from '@Apps/modules/video/constants/video.di-token';
 import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 const commands: Provider[] = [];
 const queries: Provider[] = [
   FindDailyViewV1QueryHandler,
+  VideoAggregateService,
   { provide: VIDEO_SERVICE_DI_TOKEN, useClass: VideoService },
   { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoAdapter },
 ];
