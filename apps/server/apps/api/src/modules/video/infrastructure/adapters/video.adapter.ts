@@ -7,10 +7,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import {
   RelatedVideoAndVideoHistoryDao,
-  SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/video.dao';
-import { Ok } from 'oxide.ts';
+import { Err, Ok } from 'oxide.ts';
 import {
   VideosResultTransformer,
   VideosDateFormatter,
@@ -18,6 +17,7 @@ import {
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
 
 const IgniteClient = require('apache-ignite-client');
+
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoAdapter extends IgniteService implements VideoOutboundPort {
   constructor(configService: ConfigService) {
@@ -56,7 +56,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log('!!', e);
+      return Err(e);
     }
   }
 
@@ -85,7 +85,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
         ),
       );
     } catch (e) {
-      console.log(e);
+      return Err(e);
     }
   }
 }
