@@ -90,6 +90,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/cli": "9.0.0",
     "@nestjs/schematics": "9.0.1",
     "@nestjs/testing": "9.0.1",
