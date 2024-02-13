@@ -124,8 +124,14 @@ export const zVideoResponse = z.object({
 export const zClusterQueryParams = z.object({
   cluster: z.string(),
 });
+export const zClusterPathParams = z.object({
+  clusterNumber: z.string().describe('6'),
+});
 
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
+export const findVideoBySearchKeywordClusterNumber = zSearchKeyword
+  .merge(zDateQuery)
+  .merge(zClusterPathParams);
 
 export const findVideoPageQuery = zSearchKeyword.merge(zPaginatedQuery);
 export const zFindVideoPageWithClusterQuery = zSearchKeyword
