@@ -2,7 +2,7 @@ import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-da
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
 
 export interface VideoServiceInterface {
-  getRelatedVideoAndHistory(
+  calculateDailyHitsMetrics(
     props: FindDailyViewsV1Dto,
   ): Promise<TFindDailyView>;
 }
