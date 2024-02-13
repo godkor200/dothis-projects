@@ -3,7 +3,10 @@ import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface
 import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
-
+import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+interface IIncreaseHitsData extends Pick<IIncreaseData, 'date'> {
+  videoViews: number;
+}
 export class VideoAggregateService {
   /**
    * 평균값 구하는 함수, 소수점 내림
@@ -204,7 +207,52 @@ export class VideoAggregateService {
 
     return Object.values(result);
   }
+  calculateIncreaseByIgnite(
+    histories: GetRelatedVideoHistory[],
+  ): IIncreaseHitsData[] {
+    let result: {
+      [date: string]: IIncreaseHitsData;
+    } = {};
 
+    histories.sort(
+      (a, b) =>
+        new Date(a.year, a.month - 1, a.day).getTime() -
+        new Date(b.year, b.month - 1, b.day).getTime(),
+    );
+
+    let prevVideo: GetRelatedVideoHistory = null;
+    let sumViews = 0;
+
+    for (let [i, history] of histories.entries()) {
+      if (prevVideo) {
+        const date = new Date(history.year, history.month - 1, history.day)
+          .toISOString()
+          .split('T')[0]; // Extract only the date part
+
+        sumViews += history.videoViews;
+
+        let averageIncreaseViews = sumViews / (i + 1);
+
+        const increaseViews =
+          history.videoViews !== 0
+            ? history.videoViews - prevVideo.videoViews
+            : averageIncreaseViews;
+
+        if (!result[date]) {
+          result[date] = {
+            date,
+            videoViews: 0,
+          };
+        }
+
+        result[date].videoViews += increaseViews;
+      }
+
+      prevVideo = history;
+    }
+
+    return Object.values(result);
+  }
   /**
    * "영상 조회수 성장 예측" 기능은 다음과 같은 기획을 가집니다:
    *
