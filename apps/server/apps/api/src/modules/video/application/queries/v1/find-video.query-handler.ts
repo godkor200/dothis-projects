@@ -6,7 +6,7 @@ import {
   TRelatedVideos,
   VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
+import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 
 @QueryHandler(SearchRelationVideoAndHistoryDao)
 export class FindVideoHandler

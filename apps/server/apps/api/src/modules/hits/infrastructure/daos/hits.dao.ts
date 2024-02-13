@@ -1,7 +1,10 @@
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { findVideoBySearchKeyword } from '@dothis/dto';
+import {
+  findVideoBySearchKeyword,
+  findVideoBySearchKeywordClusterNumber,
+} from '@dothis/dto';
 
 export class SearchRelationVideoAndHistoryDao extends createZodDto(
   extendApi(findVideoBySearchKeyword),
@@ -18,3 +21,7 @@ export class SearchRelationVideoDao extends SearchRelationVideoAndHistoryDao {
     Object.assign(this, props);
   }
 }
+
+export class RelatedVideoAndVideoHistoryDao extends createZodDto(
+  extendApi(findVideoBySearchKeywordClusterNumber),
+) {}

@@ -1,4 +1,4 @@
-import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/video.dao';
+import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { IQuery } from '@nestjs/cqrs';
 
 export enum VIDEO_DATA_KEY {
