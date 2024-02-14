@@ -1,5 +1,6 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
@@ -11,6 +12,12 @@ export const videoKeys = {
   video: ['video'],
 };
 
+/**
+ * 해당 query는 수집한 키워드 및 연관어에 대한 정보 한눈에 쉽게 볼 수 있도록 순위별로 가져올 수 있는 hook입니다
+ * @param param 필터 및 정렬의 필요한 data들의 object파라미터입니다.
+ * @param queryOptions
+ * @returns
+ */
 const useGetTrendingKeywords = (
   {
     startDate,
@@ -44,7 +51,7 @@ const useGetTrendingKeywords = (
      */
     ({ pageParam = 0 }) => ({
       query: {
-        limit: isSignedIn ? (lastIndex_ID ? 30 : 300) : 10,
+        limit: isSignedIn ? String(lastIndex_ID ? 30 : 300) : String(10),
         from: date,
         last: lastIndex_ID,
         order: order,
@@ -62,10 +69,14 @@ const useGetTrendingKeywords = (
     },
   );
 
+  const requiredQueryResult = queryResults.data as DeepRequired<
+    typeof queryResults.data
+  >;
+
   return {
     ...queryResults,
-    data: queryResults.data?.pages.flatMap((item) => item.body.data.data),
-    total: queryResults.data?.pages[0].body.data.total,
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
+    total: requiredQueryResult?.pages[0].body.data.total,
   };
 };
 

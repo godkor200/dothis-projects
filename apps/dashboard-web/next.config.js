@@ -1,5 +1,8 @@
-const path = require('path');
+
 /** @type {import('next').NextConfig} */
+
+const path = require('path');
+
 const config = {
   reactStrictMode: false,
   swcMinify: true,
@@ -16,18 +19,26 @@ const config = {
     '@dothis/dto',
     '@dothis/theme',
   ],
+
+  // runtime:'edge',
   experimental: {
     // See https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
-    outputFileTracingExcludes: {
-      '**swc/core**': true,
-    },
-    appDir: true,
+    // outputFileTracingExcludes: {
+    //   '**swc/core**': true,
+    // },
+    
+    // appDir 제거 = appDir 디폴트 설정 13.4.6
+
     typedRoutes: true,
     esmExternals: 'loose',
     scrollRestoration: true,
     // scroll history역할로써 추가해줬지만, 동작하는지 안하는지 확인X.. (next 버전올려서 router scroll 이슈 해결하였습니다.)
     missingSuspenseWithCSRBailout: false,
+     // 빌드 에러로 인한 옵션 추가 [관련 링크](https://blog.maxam.dev/use-search-params-should-be-wrapped-in-a-suspense-boundary)
+     
   },
+
+  
 
   compiler: {
     styledComponents: true,

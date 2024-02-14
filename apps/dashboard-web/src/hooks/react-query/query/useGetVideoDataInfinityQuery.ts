@@ -1,15 +1,24 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
 import useGetRelWords from './useGetRelWords';
 
 export const videoKeys = {
   video: ['video'],
 };
 
+/**
+ * infinityQuery로써 무한 scroll 형식에 맞도록 생성된 hook
+ * 지정한 탐색어와 연관어들의 video를 가져오는 hook입니다.
+ * @param param 탐색어와 연관어를 파라미터로 받습니다
+ * @param lastIndex_ID infiniteScroll에서 다음 조회를 시작할 Index_Id입니다 (존재하지 않을경우 처음부터 조회)
+ * @param queryOptions
+ * @returns
+ */
 const useGetVideoDataInfinityQuery = (
   {
     keyword,
@@ -43,7 +52,7 @@ const useGetVideoDataInfinityQuery = (
     ({ pageParam = 0 }) => ({
       query: {
         last: lastIndex_ID ? lastIndex_ID : undefined,
-        limit: 10,
+        limit: String(10),
         related: relword!,
         search: keyword!,
         cluster: clusters.join(','),
@@ -52,7 +61,9 @@ const useGetVideoDataInfinityQuery = (
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.body.data.data.length < 10 || allPages.length > 4
+        return (lastPage.body.data?.data &&
+          lastPage.body?.data?.data.length < 10) ||
+          allPages.length > 4
           ? false
           : true;
       },
@@ -61,9 +72,12 @@ const useGetVideoDataInfinityQuery = (
     },
   );
 
+  const requiredQueryResult = queryResults.data as DeepRequired<
+    typeof queryResults.data
+  >;
   return {
     ...queryResults,
-    data: queryResults.data?.pages.flatMap((item) => item.body.data.data),
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
   };
 };
 

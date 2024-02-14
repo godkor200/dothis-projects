@@ -1,10 +1,17 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
+import type { DeepRequired } from 'react-hook-form';
 
 import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
+/**
+ * 지정한 탐색어와 연관어들의 기대비율을 가져오기 위한 hook입니다.
+ * @param param 탐색어와 연관어를 파라미터로 받습니다.
+ * @param queryOptions
+ * @returns
+ */
 const useGetExpectedView = (
   {
     keyword,
@@ -42,9 +49,13 @@ const useGetExpectedView = (
     },
   );
 
+  const requiredQueryResult = queryResult.data as DeepRequired<
+    typeof queryResult.data
+  >;
+
   return {
     ...queryResult,
-    data: queryResult.data?.body.data,
+    data: requiredQueryResult?.body.data,
   };
 };
 

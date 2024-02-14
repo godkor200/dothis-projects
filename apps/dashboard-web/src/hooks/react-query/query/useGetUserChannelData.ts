@@ -1,12 +1,13 @@
 import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
-import type { DeepRequired } from 'react-hook-form';
 
-import { USER_KEY } from '@/constants/querykey';
+import { USER_CHANNEL_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
+
 /**
- * getOwnInfo api -> 유저정보 api를 만들어놓은 커스텀 hook
+ * getUserchannel api -> 유저에 channel 정보를 가져오는 api를 만들어놓은 커스텀 hook
  * @param queryOptions useQuery options을 담을 수 있는 객체
  * @returns 기존 useQuery 리턴타입을 유지하면서 data는 queryResult.data?.body.data 형식으로 보낸다.
  * --- 특이사항
@@ -14,11 +15,11 @@ import { apiClient } from '@/utils/api/apiClient';
  * 저렇게 축약하니 UseQueryResult형식에 위배가 되어서 return타입에 넣어주지 못하였습니다.
  * 또한 data.body.status코드를 못쓰는 상황도 있지만 굳이 필요할까 싶어서 저렇게 작성하였습니다.
  */
-const useGetUserInfo = (
-  queryOptions?: UseQueryOptions<typeof apiRouter.auth.getOwnInfo>,
+const useGetUserChannelData = (
+  queryOptions?: UseQueryOptions<typeof apiRouter.channel.analyzeChannel>,
 ) => {
-  const queryResult = apiClient(1).auth.getOwnInfo.useQuery(
-    USER_KEY.all,
+  const queryResult = apiClient(1).channel.analyzeChannel.useQuery(
+    USER_CHANNEL_KEY.all,
     {},
     queryOptions,
   );
@@ -27,7 +28,7 @@ const useGetUserInfo = (
     typeof queryResult.data
   >;
 
-  return { ...queryResult, data: requiredQueryResult?.body.data };
+  return { ...queryResult, data: requiredQueryResult?.body };
 };
 
-export default useGetUserInfo;
+export default useGetUserChannelData;

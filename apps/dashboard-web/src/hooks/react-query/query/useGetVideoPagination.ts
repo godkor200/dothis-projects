@@ -1,9 +1,11 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+// import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
+import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
 
+import type { DeepRequired } from './common';
 import useGetRelWords from './useGetRelWords';
 
 export const videoKeys = {
@@ -41,7 +43,7 @@ const useGetVideoPagination = (
     {
       query: {
         last: lastIndex_ID ? lastIndex_ID : undefined,
-        limit: 10,
+        limit: String(10),
         related: relword!,
         search: keyword!,
         cluster: clusters.join(','),
@@ -50,9 +52,13 @@ const useGetVideoPagination = (
     { ...queryOptions, enabled: !!data && !!relword },
   );
 
+  const requiredQueryResult = queryResults.data as DeepRequired<
+    typeof queryResults.data
+  >;
+
   return {
     ...queryResults,
-    data: queryResults.data?.body,
+    data: requiredQueryResult?.body,
   };
 };
 

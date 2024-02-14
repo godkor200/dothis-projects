@@ -1,8 +1,10 @@
 'use client';
 
+import type { DeepRequired } from '@/hooks/react-query/query/common';
 import { apiClient } from '@/utils/api/apiClient';
 
 const SSTTEST = () => {
+  console.log('test');
   const queryResults = apiClient(2).dailyViews.getDailyViews.useQueries({
     queries: ['1', '2', '3', '4', '5'].map((clusterNumber) => {
       return {
@@ -11,8 +13,8 @@ const SSTTEST = () => {
           clusterNumber,
         },
         query: {
-          keyword: '먹방',
-          relationKeyword: '불닭',
+          search: '먹방',
+          related: '불닭',
           from: '2023-10-11',
           to: '2023-10-17',
         },
@@ -21,10 +23,12 @@ const SSTTEST = () => {
     }),
   });
 
-  console.log(queryResults);
+  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
 
   return (
-    <>{queryResults.map((tt) => tt.data?.body.data.map((ot) => ot.date))}</>
+    <>
+      {requiredQueryResult.map((tt) => tt.data?.body.data.map((ot) => ot.date))}
+    </>
   );
 };
 

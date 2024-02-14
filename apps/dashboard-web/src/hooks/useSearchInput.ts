@@ -1,5 +1,4 @@
-import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
-import type { UseMutateFunction } from '@tanstack/react-query';
+import type { apiRouter } from '@dothis/dto';
 import type { ClientArgs } from '@ts-rest/core';
 import type { UseMutationResult } from '@ts-rest/react-query';
 import { useCallback, useMemo } from 'react';

@@ -60,7 +60,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
     <>
       <KeywordSlide />
       <SearchBar />
-      <KeywordSearchResult />
+      {/* <KeywordSearchResult /> */}
 
       <ul className=" flex justify-center gap-[24px] text-[20px] font-bold">
         <li
