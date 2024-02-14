@@ -1,7 +1,7 @@
 import { CqrsModule } from '@nestjs/cqrs';
 import { Module, Provider } from '@nestjs/common';
 import { FindDailyViewV1QueryHandler } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
-import { FindDailyViewV1HttpController } from '@Apps/modules/hits/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
+import { FindDailyViewV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
 import { VideoService } from '@Apps/modules/video/application/service/video.service';
 import {
   VIDEO_IGNITE_DI_TOKEN,
