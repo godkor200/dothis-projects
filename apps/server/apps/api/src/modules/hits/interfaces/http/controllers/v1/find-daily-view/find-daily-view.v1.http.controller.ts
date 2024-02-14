@@ -5,14 +5,25 @@ import {
 } from '@ts-rest/nest';
 
 import { QueryBus } from '@nestjs/cqrs';
-import { Controller, Req } from '@nestjs/common';
+import { Controller, Param, Query } from '@nestjs/common';
 import { apiRouter } from '@dothis/dto';
-import { FindDailyViewsV1Query } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query';
+import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
 import { match } from 'oxide.ts';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import { ApiParam } from '@nestjs/swagger';
+import {
+  ClusterNumber,
+  FindDailyViewsV1Query,
+} from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiResponse,
+} from '@nestjs/swagger';
+import {
+  BadReq,
+  NotFound,
+  Ok,
+} from '@Apps/modules/hits/domain/event/errors/hits.errors';
 
 const c = nestControllerContract(apiRouter.dailyViews);
 
@@ -21,16 +32,20 @@ export class FindDailyViewV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @TsRestHandler(c.getDailyViewsV1)
-  @ApiParam({
-    name: 'clusterNumber',
-    description: '찾을 비디오의 클러스터 번호 값을 입력받습니다.',
-    example: '6',
+  @ApiResponse({
+    status: 200,
+    type: Ok,
   })
-  async execute() {
+  @ApiNotFoundResponse({ type: NotFound })
+  @ApiBadRequestResponse({ type: BadReq })
+  async execute(
+    @Query() query: FindDailyViewsV1Query,
+    @Param() param: ClusterNumber,
+  ) {
     return tsRestHandler(
       c.getDailyViewsV1,
       async ({ query: inputQuery, params }) => {
-        const query = new FindDailyViewsV1Query({
+        const query = new FindDailyViewsV1Dto({
           ...inputQuery,
           clusterNumber: params.clusterNumber,
         });

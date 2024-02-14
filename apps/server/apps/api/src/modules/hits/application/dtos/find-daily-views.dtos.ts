@@ -2,8 +2,9 @@ import { IQuery } from '@nestjs/cqrs';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { findVideoBySearchKeyword } from '@dothis/dto';
+import { findVideoBySearchKeyword, zClusterNumber } from '@dothis/dto';
 
+export class ClusterNumber extends createZodDto(extendApi(zClusterNumber)) {}
 export interface IPickDateFromLimitLast
   extends Pick<IDateRange, 'from'>,
     IPageQuery {}
@@ -47,9 +48,11 @@ export class FindDailyViewsQuery extends BaseQuery {
 export interface FindDailyViewsDto
   extends Omit<FindDailyViewsQuery, 'clusterNumber'> {}
 
-export class FindDailyViewsV3Query extends BaseQuery {
-  constructor(props: FindDailyViewsV3Query) {
-    super(props);
+export class FindDailyViewsV1Query extends createZodDto(
+  extendApi(findVideoBySearchKeyword),
+) {
+  constructor(props: FindDailyViewsV1Query) {
+    super();
   }
 }
 export class FindDailyViewsV3Dto extends createZodDto(

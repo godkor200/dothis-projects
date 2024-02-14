@@ -8,6 +8,7 @@ import {
 import { findVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
+import { zClusterNumber } from '../common.model';
 
 export const viewApiUrl = '/views';
 const dailyApiUrl = '/daily';
@@ -16,9 +17,7 @@ export const dailyViewApi = c.router({
   getDailyViewsV1: {
     method: 'GET',
     path: `${viewApiUrl}${dailyApiUrl}/:clusterNumber`,
-    pathParams: z.object({
-      clusterNumber: z.string().default('6'),
-    }),
+    pathParams: zClusterNumber,
     query: findVideoBySearchKeyword,
     responses: {
       200: zSuccessBase.merge(zDailyViews),
@@ -32,9 +31,7 @@ export const dailyViewApi = c.router({
   getDailyViews: {
     method: 'GET',
     path: `${viewApiUrl}${dailyApiUrl}/:clusterNumber`,
-    pathParams: z.object({
-      clusterNumber: z.string(),
-    }),
+    pathParams: zClusterNumber,
     query: findVideoBySearchKeyword,
     responses: {
       200: zDailyViews,

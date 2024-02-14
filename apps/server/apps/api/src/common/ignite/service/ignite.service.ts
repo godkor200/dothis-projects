@@ -47,7 +47,6 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
           this.logger.error(
             'Max retries reached. Ignite client failed to connect.',
           );
-          throw err;
         }
       }
     };
