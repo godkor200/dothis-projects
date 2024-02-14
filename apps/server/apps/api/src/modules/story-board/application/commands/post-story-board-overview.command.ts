@@ -4,7 +4,7 @@ import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { Ok, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors/story.error';
 import { StoryBoardDetailOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board-details.outbound';
-import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/constants/story-board-details.di-token.constant';
+import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/story-board-details.di-token.constant';
 
 @CommandHandler(PostStoryBoardDetailDto)
 export class PostStoryBoardOverviewCommand
