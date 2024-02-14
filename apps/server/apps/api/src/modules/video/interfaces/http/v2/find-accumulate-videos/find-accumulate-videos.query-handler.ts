@@ -10,7 +10,7 @@ import {
   IChannelHistory,
   IFindAccumulateVideoWithOutUserSection,
   ISection,
-} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+} from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { Err, Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';

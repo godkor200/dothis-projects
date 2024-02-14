@@ -1,5 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
-import { VIDEO_IGNITE_DI_TOKEN } from '../../constants/video.di-token';
+import { VIDEO_IGNITE_DI_TOKEN } from '../../video.di-token';
 import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
 
 import { CqrsModule } from '@nestjs/cqrs';

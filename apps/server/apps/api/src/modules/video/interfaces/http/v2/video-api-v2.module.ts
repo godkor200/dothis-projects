@@ -5,7 +5,7 @@ import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/const
 import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';

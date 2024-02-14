@@ -2,7 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import {
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_OS_DI_TOKEN,
-} from '@Apps/modules/video/constants/video.di-token';
+} from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { CqrsModule } from '@nestjs/cqrs';

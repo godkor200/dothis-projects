@@ -2,7 +2,7 @@ import {
   IChannelHistory,
   ISection,
   SECTION_NUMBER,
-} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+} from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 
 import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';

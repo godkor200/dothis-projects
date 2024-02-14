@@ -6,7 +6,7 @@ import { VideoService } from '@Apps/modules/video/application/service/video.serv
 import {
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_SERVICE_DI_TOKEN,
-} from '@Apps/modules/video/constants/video.di-token';
+} from '@Apps/modules/video/video.di-token';
 import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 const commands: Provider[] = [];

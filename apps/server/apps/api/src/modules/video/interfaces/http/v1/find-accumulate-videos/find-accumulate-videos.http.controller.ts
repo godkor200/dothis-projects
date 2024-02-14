@@ -1,9 +1,11 @@
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiParam,
   ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -12,14 +14,14 @@ import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   FindAccumulateQuery,
-  FindAccumulateVideosV4Dto,
+  FindAccumulateVideosV1Dto,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
   IFindAccumulateVideoRes,
   ISection,
-} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+} from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
@@ -30,9 +32,29 @@ const { summary, responses, description } = c.getAccVideo;
 
 @ApiTags('영상')
 @Controller()
-export class FindAccumulateVideosV4HttpController {
+export class FindAccumulateVideosV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @ApiQuery({
+    name: 'keyword',
+    description: '탐색어',
+    example: '페이커',
+  })
+  @ApiQuery({
+    name: 'relationKeyword',
+    description: '연관어, 연관어가 없다면 없어도됩니다.',
+    example: '롤드컵',
+  })
+  @ApiQuery({
+    name: 'from',
+    description: '언제부터 날짜',
+    example: '2023-11-23',
+  })
+  @ApiQuery({
+    name: 'to',
+    description: '까지 날짜',
+    example: '2023-11-30',
+  })
   @ApiOperation({
     summary,
     description,
@@ -56,7 +78,7 @@ export class FindAccumulateVideosV4HttpController {
   async execute(
     @Query() query: FindAccumulateQuery,
   ): Promise<IRes<ISection[]>> {
-    const arg = new FindAccumulateVideosV4Dto({
+    const arg = new FindAccumulateVideosV1Dto({
       ...query,
     });
 

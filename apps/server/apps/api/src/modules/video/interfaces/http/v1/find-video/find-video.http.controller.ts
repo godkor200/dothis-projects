@@ -14,7 +14,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { IFindManyVideoResult } from '@Apps/modules/video/interfaces/find-many-video.interface';
+import { IFindManyVideoResult } from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import { VideoRes, IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { SearchRelationVideoDto } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { match } from 'oxide.ts';

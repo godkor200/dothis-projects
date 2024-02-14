@@ -1,7 +1,7 @@
 import {
   IFindVideoIDAndChannelIdRes,
   IFindVideoIdRes,
-} from '@Apps/modules/video/interfaces/find-video.os.res';
+} from '@Apps/modules/video/application/dtos/find-video.os.res';
 
 export class VideoDataService {
   filterByDate(

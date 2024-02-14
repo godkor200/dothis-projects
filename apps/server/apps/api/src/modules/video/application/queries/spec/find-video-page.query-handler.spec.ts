@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
-import { IPagingRes } from '@Apps/modules/video/interfaces/find-many-video.interface';
+import { IPagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';

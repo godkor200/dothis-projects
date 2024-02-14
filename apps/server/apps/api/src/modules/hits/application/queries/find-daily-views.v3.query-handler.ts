@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import {
   FindDailyViewsQuery,
   FindDailyViewsV3Dto,
@@ -10,7 +10,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
-import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
+import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 

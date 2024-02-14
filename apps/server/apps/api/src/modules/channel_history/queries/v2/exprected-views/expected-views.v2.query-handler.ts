@@ -8,7 +8,7 @@ import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { IChannelHistory } from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+import { IChannelHistory } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
