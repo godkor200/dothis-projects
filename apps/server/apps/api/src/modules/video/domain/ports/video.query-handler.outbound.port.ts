@@ -7,7 +7,7 @@ import {
   IVideo,
 } from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { FindVideoPageV2Dto } from '@Apps/modules/video/http/v2/find-video-paging/find-video-paging.req.dto';
+import { FindVideoPageV2Dto } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-paging.req.dto';
 import {
   FindDailyViewsV3Dao,
   FindVideosDao,

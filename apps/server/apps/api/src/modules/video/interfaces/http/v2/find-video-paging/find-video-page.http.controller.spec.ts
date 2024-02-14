@@ -3,7 +3,7 @@ import { mock } from 'jest-mock-extended';
 import { QueryBus } from '@nestjs/cqrs';
 import { NotFoundException } from '@nestjs/common';
 import { Err } from 'oxide.ts';
-import { FindVideoPageHttpController } from '@Apps/modules/video/http/v1/find-video-paging/find-video-page.http.controller';
+import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http/v1/find-video-paging/find-video-page.http.controller';
 
 const mockQueryBus = mock<QueryBus>();
 

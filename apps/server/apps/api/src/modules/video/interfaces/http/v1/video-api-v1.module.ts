@@ -17,8 +17,8 @@ import { VideoAggregateService } from '@Apps/modules/video/application/service/v
 import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 import { FindIndividualVideoInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
-import { FindVideoPageHttpController } from '@Apps/modules/video/http/v1/find-video-paging/find-video-page.http.controller';
-import { FindIndividualVideoInfoHttpController } from '@Apps/modules/video/http/v1/find-individual-video-info/find-individual-video-info.http.controller';
+import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http/v1/find-video-paging/find-video-page.http.controller';
+import { FindIndividualVideoInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-individual-video-info/find-individual-video-info.http.controller';
 
 const commandHandlers: Provider[] = [];
 

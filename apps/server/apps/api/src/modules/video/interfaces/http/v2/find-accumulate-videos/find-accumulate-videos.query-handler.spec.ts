@@ -5,8 +5,8 @@ import { RequestContextService } from '@Libs/commons/src/application/context/App
 import { nanoid } from 'nanoid';
 
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
-import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
-import { channelHistory } from '@Apps/modules/video/http/v2/find-accumulate-videos/__dummy__/video.dummy';
+import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
+import { channelHistory } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/__dummy__/video.dummy';
 
 const mockChannelHistoryOutboundPort = mock<ChannelHistoryOutboundPort>();
 const mockChannelHistoryAggregateService =

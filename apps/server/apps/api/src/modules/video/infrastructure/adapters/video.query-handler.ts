@@ -19,8 +19,11 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error
 import { Err } from 'oxide.ts';
 import { SearchQueryBuilder } from '@Apps/modules/video/infrastructure/utils/search-query.builder';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { FindDailyViewsV3Dao, FindVideosDao } from '../daos/video.dao';
-import { FindVideoPageV2Dto } from '@Apps/modules/video/http/v2/find-video-paging/find-video-paging.req.dto';
+import {
+  FindDailyViewsV3Dao,
+  FindVideosDao,
+} from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { FindVideoPageV2Dto } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-paging.req.dto';
 import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 
 export class VideoQueryHandler

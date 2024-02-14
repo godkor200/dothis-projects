@@ -12,16 +12,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import {
-  IFindVideoPageQuery,
-  IFindVideoPageV1Dto,
-} from '../../../application/dtos/find-video-paging.req.dto';
+
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { IPagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import { VideoRes, IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import {
+  IFindVideoPageQuery,
+  IFindVideoPageV1Dto,
+} from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getVideoPageV1;
 

@@ -9,10 +9,10 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
 import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
-import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
-import { FindVideoPageV2QueryHandler } from '@Apps/modules/video/http/v2/find-video-paging/find-video-page.query-handler';
-import { FindAccumulateVideosV2HttpController } from '@Apps/modules/video/http/v2/find-accumulate-videos/find-accumulate-videos.http.controller';
-import { FindVideoPageV2HttpController } from '@Apps/modules/video/http/v2/find-video-paging/find-video-page.http.controller';
+import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
+import { FindVideoPageV2QueryHandler } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-page.query-handler';
+import { FindAccumulateVideosV2HttpController } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/find-accumulate-videos.http.controller';
+import { FindVideoPageV2HttpController } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-page.http.controller';
 
 const commandHandlers: Provider[] = [];
 
