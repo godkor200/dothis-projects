@@ -4,7 +4,7 @@ import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/stor
 import {
   FindOneStoryBoardDao,
   StoryBoardDao,
-} from '@Apps/modules/story-board/domain/daos/story-board.dao';
+} from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors';
 

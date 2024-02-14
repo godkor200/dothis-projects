@@ -3,12 +3,7 @@ import { z, ZodTypeAny } from 'zod';
 export const zSearchKeyword = z
   .object({
     search: z.string().describe('탐색어').default('먹방'),
-    related: z
-      .string()
-      .describe('연관어')
-      .default('돼지고기')
-      .optional()
-      .nullable(),
+    related: z.string().describe('연관어').default('돼지고기'),
   })
   .describe('기본 탐색어 연관어 쿼리 형태');
 

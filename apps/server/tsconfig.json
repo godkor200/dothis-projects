@@ -5,10 +5,11 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "types": ["webpack-env", "jest", "node"],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@Apps/*": ["./apps/api/src/*"],
-      "@Libs/*": ["./libs/*"]
+      "@Libs/*": ["./libs/*"],
+      "@ts-rest/core/src": ["../../packages/dto/node_modules/@ts-rest/core/src"]
     }
   },
   "ts-node": {

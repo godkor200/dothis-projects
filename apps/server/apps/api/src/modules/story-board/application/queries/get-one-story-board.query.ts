@@ -6,7 +6,7 @@ import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/
 import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board.outbound';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors/story.error';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
-import { FindOneStoryBoardDao } from '@Apps/modules/story-board/domain/daos/story-board.dao';
+import { FindOneStoryBoardDao } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 export type TGetOneStoryBoardRes = Result<
   StoryBoardEntity,
   StoryNotExistsError | InternalServerErrorException
