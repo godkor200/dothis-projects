@@ -92,3 +92,10 @@ export const zTotalData = z
 
 export const dataObject = <T extends ZodTypeAny>(data: T) =>
   z.object({ data }).describe('data object');
+
+export const zClusterNumber = z.object({
+  clusterNumber: z
+    .string()
+    .default('6')
+    .describe('찾을 대상의 클러스터 번호 값을 입력받습니다.'),
+});

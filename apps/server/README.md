@@ -41,10 +41,13 @@ $ npm run start:prod
 ├── infrastructure
 │   ├── repositories
 │   └── services
-├── interfaces
-│   ├── dtos
-│   └── middlewares
-└── controllers
+└── interfaces
+    ├── dtos
+    ├── http
+        ├── controllers
+        ├── commands
+        ├── interceptors
+    └── middlewares
 
 
 ```
@@ -55,7 +58,7 @@ $ npm run start:prod
 
 - `infrastructure`: 외부와의 연동을 담당하는 계층입니다. 데이터베이스, 메시지 큐, 메일 서비스 등 외부 시스템과의 통신을 담당합니다. 리포지토리 구현체, 인프라 서비스 등이 이 계층에서 다루어집니다.
 
-- `interfaces`: 사용자 인터페이스나 외부 시스템과의 통신을 담당하는 계층입니다. 사용자의 요청을 받아들이고 처리 결과를 반환하는 컨트롤러, 라우터, 미들웨어, 요청/응답 DTO 등이 이곳에 포함됩니다.
+- `interfaces/presentation`: 사용자 인터페이스나 외부 시스템과의 통신을 담당하는 계층입니다. 사용자의 요청을 받아들이고 처리 결과를 반환하는 컨트롤러, 커맨드, 인터셉터, 미들웨어, 요청/응답 DTO 등이 이곳에 포함됩니다.
 
 ### - Example folder structure
 
@@ -100,11 +103,15 @@ $ npm run start:prod
 4. **interfaces**: 인터페이스 계층은 사용자 인터페이스나 외부 시스템과의 통신을 담당합니다. 이 폴더에는 컨트롤러, 라우터, 미들웨어, 요청/응답 DTO 등이 들어갑니다.
 
 ```bash
-├── dtos
-│   ├── CreateUserRequestDto.ts
-│   └── CreateUserResponseDto.ts
-└── middlewares
-    └── AuthenticationMiddleware.ts
+  ├── dtos
+    │   ├── CreateUserRequestDto.ts
+    │   └── CreateUserResponseDto.ts
+    ├── http
+    │   ├── controllers
+    │   ├── commands
+    │   ├── interceptors
+    │   └── middlewares
+    │       └── AuthenticationMiddleware.ts
 ```
 
 각 계층은 그에 맞는 책임을 가지며, 계층 간 의존성은 아래쪽 계층에서 위쪽 계층으로 향합니다. 이렇게 함으로써 코드의 유지보수와 확장이 용이해집니다.

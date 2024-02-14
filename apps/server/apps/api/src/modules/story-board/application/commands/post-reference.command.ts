@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { PostStoryBoardReferenceDto } from 'apps/api/src/modules/story-board/application/dtos';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { Err, Ok, Result } from 'oxide.ts';
-import { REFERENCE_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/constants/reference.di-token.constant';
+import { REFERENCE_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/reference.di-token.constant';
 import { ReferenceOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/reference.outbound';
 import { ReferNotExistsError } from '@Apps/modules/story-board/domain/errors';
 import { ReferenceEntity } from '@Apps/modules/story-board/domain/entities/reference.entity';

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { VideoApiV1Module } from '@Apps/modules/video/http/v1/video-api-v1.module';
+import { VideoApiV1Module } from '@Apps/modules/video/interfaces/http/v1/video-api-v1.module';
 import { RouterModule } from '@nestjs/core';
-import { VideoApiV2Module } from '@Apps/modules/video/http/v2/video-api-v2.module';
-import { VideoApiV4Module } from '@Apps/modules/video/http/v4/video-api-v4.module';
-import { VideoApiTestModule } from '@Apps/modules/video/http/test/video-api-test.module';
+import { VideoApiV2Module } from '@Apps/modules/video/interfaces/http/v2/video-api-v2.module';
+import { VideoApiV4Module } from '@Apps/modules/video/interfaces/http/v4/video-api-v4.module';
+import { VideoApiTestModule } from '@Apps/modules/video/interfaces/http/test/video-api-test.module';
 
 @Module({
   imports: [

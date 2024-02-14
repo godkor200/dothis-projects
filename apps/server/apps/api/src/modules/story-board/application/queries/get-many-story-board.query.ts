@@ -5,7 +5,7 @@ import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/stor
 import { Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
-import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/constants/recent-story-board.di-token.constant';
+import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/recent-story-board.di-token.constant';
 import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board.outbound';
 import { StoryBoardDao } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 export type TGetManyStoryBoardRes = Result<

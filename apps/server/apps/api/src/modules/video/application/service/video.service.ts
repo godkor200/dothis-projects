@@ -1,9 +1,9 @@
 import { VideoOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import { VideoServiceInterface } from '@Apps/modules/video/interfaces/video.service.interface';
+import { VideoServiceInterface } from '@Apps/modules/video/domain/ports/video.service.interface';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Inject } from '@nestjs/common';
-import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
 
 import { Err, Ok } from 'oxide.ts';

@@ -1,4 +1,4 @@
-import { IVideoHistory } from '@Apps/modules/video/interfaces/find-video.os.res';
+import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 export function createDummyData(

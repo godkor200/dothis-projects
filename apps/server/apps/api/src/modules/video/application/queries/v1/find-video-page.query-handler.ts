@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { IPagingRes } from '@Apps/modules/video/interfaces/find-many-video.interface';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { IPagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
+import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { Inject } from '@nestjs/common';

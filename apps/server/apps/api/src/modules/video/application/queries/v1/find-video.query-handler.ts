@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/constants/video.di-token';
+import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 
 import {
   TRelatedVideos,

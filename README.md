@@ -18,17 +18,6 @@ Apps에서 쓰일 공통 ui, util, type, theme 같이 여러 앱에서 사용되
 
 ---
 
-#### 추후 만들어야하는 app
-
-**api**
-API 서버, 현재 prisma, trpc로 구성되어 있는 db, api 서버단을 분리.
-
-**app**
-두디스 모바일 애플리케이션 (`request-web`, `dashboard` 등을 포함)
-
-**dashboard**
-유튜브 분석을 통한 대시보드
-
 
 ## Techstack(공통)
 
@@ -40,8 +29,8 @@ API 서버, 현재 prisma, trpc로 구성되어 있는 db, api 서버단을 분�
 - [Prettier](https://prettier.io): code formatting
 - [dotenv](https://github.com/motdotla/dotenv): root workspace의 .env 환경변수 실행라인에 주입용
 
-### Apps
-server & client
+### Apps 
+client
 - [Trpc](https://trpc.io/): 서버 - 클라이언트간 type safety한 데이터 전송을 위한 방식.  
 - [Prisma](https://www.prisma.io/): ORM, DB generate, migration tool. typescript 타입 generate 해줌으로써 훨신 편하고 생산성 높은 데이터베이스 사용이 가능함.
 - [Next.js](https://nextjs.org/): React SSR, SSG, ISR Framework. 현재 request-web 앱에서 nextjs내에 백엔드, api 서버도 포함.
@@ -59,10 +48,25 @@ client
 - [fp-ts](https://gcanti.github.io/fp-ts/): typescript functional programming 유틸
 - [date-fns](https://date-fns.org/): date 관련 유틸
 
+server
+Back-End
+- [NestJS](https://nestjs.com/): Node.js 프레임워크.
+- [TypeORM](https://typeorm.io/): TypeScript ORM, DB generate, migration tool.
+- [Zod](https://zod.dev/): TypeScript schema, validation 라이브러리.
+- [nestjs-redis](https://github.com/liaoliaots/nestjs-redis): NestJS에서 Redis를 사용하기 위한 라이브러리.
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken): JWT(JSON Web Token) 생성 및 검증을 위한 라이브러리.
+- [axios](https://axios-http.com/): Promise 기반의 HTTP 클라이언트 라이브러리.
+- [ioredis](https://github.com/luin/ioredis): Node.js의 Redis 클라이언트.
+- [googleapis](https://github.com/googleapis/google-api-nodejs-client): Google APIs 클라이언트 라이브러리.
+- [Passport](http://www.passportjs.org/): 인증을 위한 미들웨어.
+- [nestjs-request-context](https://github.com/kkoomen/nestjs-request-context): NestJS의 요청 컨텍스트 관리 라이브러리.
+- [apache-ignite-client](https://ignite.apache.org/docs/latest/thin-clients/nodejs-thin-client): Apache Ignite 클라이언트 라이브러리, 인-메모리 데이터베이스 처리.
+
 
 ### 각 패키지, 앱별 README!
 ### [request-web](./apps/request-web/README.md)
 ### [share](./packages/share/README.md)
+### [api server](./apps/server/README.md)
 
 ## CLI
 서버를 실행하거나 빌드하기 전에 환경변수들이 정의되어 있는 .env 파일이 필요합니다. 
