@@ -38,7 +38,7 @@ import {
   PostStoryBoardReferenceDto,
   PostStoryBoardMemoDto,
   PostStoryBoardBodyBoolean,
-} from 'apps/api/src/modules/story-board/application/dtos';
+} from '@Apps/modules/story-board/application/dtos';
 
 import {
   StoryNotExistsError,

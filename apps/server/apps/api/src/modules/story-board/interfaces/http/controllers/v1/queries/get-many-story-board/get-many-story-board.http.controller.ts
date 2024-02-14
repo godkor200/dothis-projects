@@ -30,7 +30,7 @@ import {
 } from '@nestjs/common';
 import { TGetManyStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-many-story-board.query';
 import { apiRouter } from '@dothis/dto';
-import { getManyStoryBoardDto } from 'apps/api/src/modules/story-board/application/dtos';
+import { getManyStoryBoardDto } from '@Apps/modules/story-board/application/dtos';
 const c = nestControllerContract(apiRouter.storyBoard);
 const { getManyStoryBoard } = c;
 type RequestShapes = NestRequestShapes<typeof c>;

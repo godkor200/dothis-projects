@@ -1,5 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
-import { PostStoryBoardHttpV1Controller } from '@Apps/modules/story-board/controllers/v1/commands/post-story-board/post-story-board.http.controller';
+import { PostStoryBoardHttpV1Controller } from '@Apps/modules/story-board/interfaces/http/controllers/v1/commands/post-story-board/post-story-board.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/recent-story-board.di-token.constant';
 import { StoryBoardAdapter } from '@Apps/modules/story-board/infrastructure/adapters/story-board.adapter';
@@ -10,7 +10,7 @@ import { PostStoryBoardDraftCommand } from '@Apps/modules/story-board/applicatio
 import { PostStoryBoardOverviewCommand } from '@Apps/modules/story-board/application/commands/post-story-board-overview.command';
 import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/story-board-details.di-token.constant';
 import { StoryBoardOverviewAdapter } from '@Apps/modules/story-board/infrastructure/adapters/story-board-overview.adapter';
-import { GetOneStoryBoardHttpV1Controller } from '@Apps/modules/story-board/controllers/v1/queries/get-one-story-board/get-one-story-board.http.controller';
+import { GetOneStoryBoardHttpV1Controller } from '@Apps/modules/story-board/interfaces/http/controllers/v1/queries/get-one-story-board/get-one-story-board.http.controller';
 import { GetOneStoryBoardQuery } from '@Apps/modules/story-board/application/queries/get-one-story-board.query';
 import { PostReferenceCommand } from '@Apps/modules/story-board/application/commands/post-reference.command';
 import { REFERENCE_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/reference.di-token.constant';
@@ -18,7 +18,7 @@ import { ReferenceAdapter } from '@Apps/modules/story-board/infrastructure/adapt
 import { MemoAdapter } from '@Apps/modules/story-board/infrastructure/adapters/memo.adapter';
 import { MEMO_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/memo.di-token.constant';
 import { PostMemoCommand } from '@Apps/modules/story-board/application/commands/post-memo.command';
-import { GetManyStoryBoardHttpController } from '@Apps/modules/story-board/controllers/v1/queries/get-many-story-board/get-many-story-board.http.controller';
+import { GetManyStoryBoardHttpController } from '@Apps/modules/story-board/interfaces/http/controllers/v1/queries/get-many-story-board/get-many-story-board.http.controller';
 import { GetManyStoryBoardQuery } from '@Apps/modules/story-board/application/queries/get-many-story-board.query';
 const controllers = [
   PostStoryBoardHttpV1Controller,
