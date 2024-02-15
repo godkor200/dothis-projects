@@ -4,15 +4,15 @@ import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/recent-story-board.di-token.constant';
 import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board.outbound';
 import { Err, Ok, Result } from 'oxide.ts';
-import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors/story.error';
-
+import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors/story.error';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+export type TStoryBoardDraftRes = Result<
+  IRes<boolean>,
+  StoryNotExistsError | InternalServerErrorException
+>;
 @CommandHandler(PostStoryBoardMainDraftDto)
 export class PostStoryBoardDraftCommand
-  implements
-    ICommandHandler<
-      PostStoryBoardMainDraftDto,
-      Result<boolean, StoryNotExistsError | InternalServerErrorException>
-    >
+  implements ICommandHandler<PostStoryBoardMainDraftDto, TStoryBoardDraftRes>
 {
   constructor(
     @Inject(RECENT_STORY_BOARD_DI_TOKEN_CONSTANT)
@@ -21,14 +21,12 @@ export class PostStoryBoardDraftCommand
 
   async execute(
     command: PostStoryBoardMainDraftDto,
-  ): Promise<
-    Result<boolean, StoryNotExistsError | InternalServerErrorException>
-  > {
+  ): Promise<TStoryBoardDraftRes> {
     const res = await this.recentStoryBoard.updateOne({
       id: command.storyBoardId,
       isDraft: command.body.value,
     });
     if (!res.success) return Err(new StoryNotExistsError());
-    return Ok(res.success);
+    return Ok(res);
   }
 }
