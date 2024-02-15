@@ -1,29 +1,24 @@
 import {
-  ApiBearerAuth,
   ApiBody,
-  ApiHeaders,
+  ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
-  ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-
 import {
   Controller,
   InternalServerErrorException,
   NotFoundException,
   UseGuards,
+  Headers,
+  Param,
+  Body,
 } from '@nestjs/common';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import {
-  nestControllerContract,
-  NestRequestShapes,
-  TsRest,
-  TsRestRequest,
-} from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
+import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
+import { apiRouter, TPostStoryBoardBody } from '@dothis/dto';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { CommandBus } from '@nestjs/cqrs';
@@ -34,22 +29,39 @@ import {
   PostStoryBoardMainDraftDto,
   PostStoryBoardMainDto,
   RecentStoryBoardCreateDto,
-  PostStoryBoardDetailDto,
   PostStoryBoardReferenceDto,
   PostStoryBoardMemoDto,
-  PostStoryBoardBodyBoolean,
+  PostStoryBoardMainParams,
+  SuccessBase,
+  PostStoryBoardOverviewDto,
+  PostStoryBoardMemoParams,
 } from '@Apps/modules/story-board/application/dtos';
 
 import {
   StoryNotExistsError,
   ReferNotExistsError,
   MemoNotExistsError,
-} from '@Apps/modules/story-board/domain/errors';
+  NotFoundErr,
+} from '@Apps/modules/story-board/domain/events/errors';
+import { StoryBoardCreateRes } from '@Apps/modules/story-board/domain/events/response';
+import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
+
+import {
+  InternalServerErr,
+  UnauthorizedErr,
+} from '@Apps/common/auth/domain/event/auth.error';
+import { TStoryBoardDraftRes } from '@Apps/modules/story-board/application/commands/post-story-board-draft.command';
+import { TTsRestRes } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
+import { TPostStoryBoardTitleCommandRes } from '@Apps/modules/story-board/application/commands/post-story-board-title.command';
+import { OverviewParams } from '@Apps/modules/story-board/domain/events/request';
+import { TOverviewRes } from '@Apps/modules/story-board/application/commands/post-story-board-overview.command';
+import { TPostStoryBoardReferenceRes } from '@Apps/modules/story-board/application/commands/post-reference.command';
+import { TPostMemoCommand } from '@Apps/modules/story-board/application/commands/post-memo.command';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const {
   createStoryBoard,
-  addStoryBoardDetail,
+  addStoryBoardOverviews,
   updateStoryBoardTitle,
   addStoryBoardReference,
   addStoryBoardMemo,
@@ -59,7 +71,7 @@ const {
 const { summary: createSummary, description: createDescription } =
   createStoryBoard;
 const { summary: addDetailSummary, description: addDetailDescription } =
-  addStoryBoardDetail;
+  addStoryBoardOverviews;
 const { summary: updateTitleSummary, description: updateTitleDescription } =
   updateStoryBoardTitle;
 const { summary: addReferenceSummary, description: addReferenceDescription } =
@@ -69,7 +81,6 @@ const { summary: addMemoSummary, description: addMemoDescription } =
 const { summary: updateDraftSummary, description: updateDraftDescription } =
   updateStoryBoardDraft;
 
-type RequestShapes = NestRequestShapes<typeof c>;
 @Controller()
 @ApiTags('스토리 보드')
 export class PostStoryBoardHttpV1Controller {
@@ -81,16 +92,12 @@ export class PostStoryBoardHttpV1Controller {
     summary: createSummary,
     description: createDescription,
   })
-  @ApiBearerAuth('Authorization')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
+  @ApiCreatedResponse({ type: StoryBoardCreateRes })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async createStoryBoard(
     @User() userInfo: UserInfoCommandDto,
+    @Headers() headers: AuthToken,
   ): Promise<IRes<StoryBoardEntity>> {
     const arg = new RecentStoryBoardCreateDto(userInfo);
 
@@ -107,112 +114,87 @@ export class PostStoryBoardHttpV1Controller {
 
   @TsRest(updateStoryBoardDraft)
   @UseGuards(JwtAccessGuard)
-  @ApiBearerAuth('Authorization')
   @ApiOperation({
     summary: updateDraftSummary,
     description: updateDraftDescription,
   })
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
-  @ApiParam({
-    name: 'storyBoardId',
-    description: '생성된 스토리보드 id 값을 받습니다.',
-    example: 1,
-  })
-  @ApiBody({ type: PostStoryBoardBodyBoolean })
+  @ApiCreatedResponse({ type: SuccessBase })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async toggleAutoSave(
-    @TsRestRequest()
-    { params, body }: RequestShapes['updateStoryBoardDraft'],
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<IRes> {
-    const arg = new PostStoryBoardMainDraftDto({
-      ...params,
-      body,
-    });
+    @Param() params: PostStoryBoardMainParams,
+    @Body() body: TPostStoryBoardBody,
+    @Headers() headers: AuthToken,
+  ) {
+    return tsRestHandler(updateStoryBoardDraft, async ({ params, body }) => {
+      const command = new PostStoryBoardMainDraftDto({
+        ...params,
+        body,
+      });
 
-    const result: Result<
-      boolean,
-      StoryNotExistsError | InternalServerErrorException
-    > = await this.commandBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: result }),
-      Err: (err: Error) => {
-        if (err instanceof StoryNotExistsError) {
-          throw new NotFoundException(err.message);
-        }
-        throw new InternalServerErrorException(err.message);
-      },
+      const result: TStoryBoardDraftRes = await this.commandBus.execute(
+        command,
+      );
+      return match<TStoryBoardDraftRes, TTsRestRes<IRes<boolean>>>(result, {
+        Ok: (result) => ({
+          status: 201,
+          body: {
+            success: result.success,
+          },
+        }),
+        Err: (err: Error) => {
+          if (err instanceof StoryNotExistsError) {
+            throw new NotFoundException(err.message);
+          }
+          throw new InternalServerErrorException(err.message);
+        },
+      });
     });
   }
 
   @TsRest(updateStoryBoardTitle)
-  @ApiBearerAuth('Authorization')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
   @ApiOperation({
     summary: updateTitleSummary,
     description: updateTitleDescription,
   })
-  @ApiParam({
-    name: 'storyBoardId',
-    description: '생성된 스토리보드 id 값을 받습니다.',
-    example: 1,
-  })
-  @ApiBody({ type: PostStoryBoardBody })
+  @ApiCreatedResponse({ type: SuccessBase })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async updateStoryBoardTitle(
-    @TsRestRequest()
-    { params, body }: RequestShapes['updateStoryBoardTitle'],
-  ): Promise<IRes> {
-    const arg = new PostStoryBoardMainDto({
-      ...params,
-      body,
-    });
+    @Body() body: PostStoryBoardBody,
+    @Param() param: PostStoryBoardMainParams,
+    @Headers() headers: AuthToken,
+  ) {
+    return tsRestHandler(updateStoryBoardTitle, async ({ params, body }) => {
+      const arg = new PostStoryBoardMainDto({
+        ...params,
+        body,
+      });
 
-    const result: Result<
-      boolean,
-      StoryNotExistsError | InternalServerErrorException
-    > = await this.commandBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: result }),
-      Err: (err: Error) => {
-        if (err instanceof StoryNotExistsError) {
-          throw new NotFoundException(err.message);
-        }
-        throw new InternalServerErrorException(err.message);
-      },
+      const result: TPostStoryBoardTitleCommandRes =
+        await this.commandBus.execute(arg);
+      return match<TPostStoryBoardTitleCommandRes, TTsRestRes<IRes<boolean>>>(
+        result,
+        {
+          Ok: (result) => ({ status: 201, body: { success: result.success } }),
+          Err: (err: Error) => {
+            if (err instanceof StoryNotExistsError) {
+              throw new NotFoundException(err.message);
+            }
+            throw new InternalServerErrorException(err.message);
+          },
+        },
+      );
     });
   }
 
-  @TsRest(addStoryBoardDetail)
+  @TsRest(addStoryBoardOverviews)
   @UseGuards(JwtAccessGuard)
-  @ApiBearerAuth('Authorization')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
-  @ApiParam({
-    name: 'overviewId',
-    description: '생성된 overview id 값을 받습니다.',
-    example: 1,
-  })
   @ApiOperation({
     summary: addDetailSummary,
     description: addDetailDescription,
   })
-  @ApiNotFoundResponse({ description: StoryNotExistsError.message })
   @ApiBody({
     schema: {
       oneOf: [
@@ -247,165 +229,91 @@ export class PostStoryBoardHttpV1Controller {
       ],
     },
   })
-  @ApiOkResponse({
-    schema: {
-      type: 'object',
-      properties: {
-        success: {
-          type: 'boolean',
-          description: '성공여부',
-        },
-      },
-      required: ['success'],
-    },
-  })
-  @ApiNotFoundResponse({ description: 'The detail does not exist' })
-  async addStoryBoardDetail(
-    @TsRestRequest()
-    { params, body }: RequestShapes['addStoryBoardDetail'],
+  @ApiCreatedResponse({ type: SuccessBase })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
+  @ApiNotFoundResponse({ type: NotFoundErr })
+  async addStoryBoardOverviews(
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<IRes> {
-    const arg = new PostStoryBoardDetailDto({ ...params, body });
-    const result: Result<
-      boolean,
-      StoryNotExistsError | InternalServerErrorException
-    > = await this.commandBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: result }),
-      Err: (err: Error) => {
-        if (err instanceof StoryNotExistsError)
-          throw new NotFoundException(err.message);
-        throw new InternalServerErrorException(err.message);
-      },
+    @Headers() headers: AuthToken,
+    @Param() param: OverviewParams,
+  ) {
+    return tsRestHandler(addStoryBoardOverviews, async ({ params, body }) => {
+      const arg = new PostStoryBoardOverviewDto({ ...params, body });
+      const result: TOverviewRes = await this.commandBus.execute(arg);
+      return match<TOverviewRes, TTsRestRes<IRes<boolean>>>(result, {
+        Ok: (result) => ({ status: 201, body: { success: result.success } }),
+        Err: (err: Error) => {
+          if (err instanceof StoryNotExistsError)
+            throw new NotFoundException(err.message);
+          throw new InternalServerErrorException(err.message);
+        },
+      });
     });
   }
 
   @TsRest(addStoryBoardReference)
   @UseGuards(JwtAccessGuard)
-  @ApiBearerAuth('Authorization')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
-  @ApiParam({
-    name: 'storyBoardId',
-    description: '생성된 스토리보드 id 값을 받습니다.',
-    example: 1,
-  })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        value: {
-          type: 'string',
-          description:
-            '해당하는 객체의 value : 여기서는 s3에서 받은 url 에 해당합니다.',
-        },
-      },
-      required: ['value'],
-    },
-  })
   @ApiOperation({
     summary: addReferenceSummary,
     description: addReferenceDescription,
   })
-  @ApiOkResponse({
-    schema: {
-      type: 'object',
-      properties: {
-        success: {
-          type: 'boolean',
-          description: '성공여부',
-        },
-      },
-      required: ['success'],
-    },
-  })
-  @ApiNotFoundResponse({ description: StoryNotExistsError.message })
-  @ApiInternalServerErrorResponse({})
+  @ApiCreatedResponse({ type: SuccessBase })
+  @ApiNotFoundResponse({ type: NotFoundErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
   async addStoryBoardReference(
-    @TsRestRequest() { params, body }: RequestShapes['addStoryBoardReference'],
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<IRes> {
-    const arg = new PostStoryBoardReferenceDto({ ...params, body });
-    const result: Result<
-      boolean,
-      ReferNotExistsError | InternalServerErrorException
-    > = await this.commandBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: result }),
-      Err: (err: Error) => {
-        if (err instanceof ReferNotExistsError)
-          throw new NotFoundException(err.message);
-        throw new InternalServerErrorException(err.message);
-      },
+    @Param() params: PostStoryBoardMainParams,
+    @Body() body: PostStoryBoardBody,
+    @Headers() headers: AuthToken,
+  ) {
+    return tsRestHandler(addStoryBoardReference, async ({ params, body }) => {
+      const command = new PostStoryBoardReferenceDto({ ...params, body });
+      const result: TPostStoryBoardReferenceRes = await this.commandBus.execute(
+        command,
+      );
+      return match<TPostStoryBoardReferenceRes, TTsRestRes<IRes<boolean>>>(
+        result,
+        {
+          Ok: (result) => ({ status: 201, body: result }),
+          Err: (err: Error) => {
+            if (err instanceof ReferNotExistsError)
+              throw new NotFoundException(err.message);
+            throw new InternalServerErrorException(err.message);
+          },
+        },
+      );
     });
   }
 
   @TsRest(addStoryBoardMemo)
   @UseGuards(JwtAccessGuard)
-  @ApiBearerAuth('Authorization')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      description:
-        "우리 사이트 accessToken(ex:'Bearer ~~~~~~') 상단에 Authorize 눌러 토큰을 저장하고 사용하세요",
-    },
-  ])
-  @ApiParam({
-    name: 'storyBoardId',
-    description: '생성된 스토리보드 id 값을 받습니다.',
-    example: 1,
-  })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        value: {
-          type: 'string',
-          description:
-            '해당하는 객체의 value : 메모는 Description 에 해당합니다.',
-        },
-      },
-      required: ['value'],
-    },
-  })
   @ApiOperation({
     summary: addMemoSummary,
     description: addMemoDescription,
   })
-  @ApiOkResponse({
-    schema: {
-      type: 'object',
-      properties: {
-        success: {
-          type: 'boolean',
-          description: '성공여부',
-        },
-      },
-      required: ['success'],
-    },
-  })
-  @ApiNotFoundResponse({ description: StoryNotExistsError.message })
+  @ApiCreatedResponse({ type: SuccessBase })
+  @ApiNotFoundResponse({ type: NotFoundErr })
+  @ApiUnauthorizedResponse({ type: UnauthorizedErr })
+  @ApiInternalServerErrorResponse({ type: InternalServerErr })
   async addStoryBoardMemo(
-    @TsRestRequest() { params, body }: RequestShapes['addStoryBoardMemo'],
     @User() userInfo: UserInfoCommandDto,
-  ): Promise<IRes> {
-    const arg = new PostStoryBoardMemoDto({ ...params, body });
-    const result: Result<
-      boolean,
-      MemoNotExistsError | InternalServerErrorException
-    > = await this.commandBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: result }),
-      Err: (err: Error) => {
-        if (err instanceof MemoNotExistsError)
-          throw new NotFoundException(err.message);
-        throw new InternalServerErrorException(err.message);
-      },
+    @Headers() headers: AuthToken,
+    @Param() params: PostStoryBoardMemoParams,
+    @Body() body: TPostStoryBoardBody,
+  ) {
+    return tsRestHandler(addStoryBoardMemo, async ({ params, body }) => {
+      const arg = new PostStoryBoardMemoDto({ ...params, body });
+      const result: TPostMemoCommand = await this.commandBus.execute(arg);
+      return match<TPostMemoCommand, TTsRestRes<IRes<boolean>>>(result, {
+        Ok: (result) => ({ status: 201, body: { success: result } }),
+        Err: (err: Error) => {
+          if (err instanceof MemoNotExistsError)
+            throw new NotFoundException(err.message);
+          throw new InternalServerErrorException(err.message);
+        },
+      });
     });
   }
 }

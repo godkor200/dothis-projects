@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { c } from '../contract';
 import { zChannelHistoryModel, zExpectedViews } from './channel-history.model';
-import { zErrNotFound, zErrResBase } from '../error.response.zod';
+import { zErrResBase } from '../error.response.zod';
 
 export const expectedViewsApiUrl = '/expected-views';
 export const channelHistoryApiUrl = '/channel-history';

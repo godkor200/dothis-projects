@@ -1,4 +1,10 @@
 import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { extendApi } from '@anatine/zod-openapi';
+import {
+  zErrInternalServer,
+  zErrUnauthorized,
+} from '@dothis/dto/dist/lib/error.response.zod';
 
 export class UserNotFoundError extends ExceptionBase {
   static readonly message = 'The user could not be found.';
@@ -20,3 +26,10 @@ export class UnauthorizedExceptionError extends ExceptionBase {
     super(UnauthorizedExceptionError.message, undefined, metadata);
   }
 }
+
+export class InternalServerErr extends createZodDto(
+  extendApi(zErrInternalServer),
+) {}
+export class UnauthorizedErr extends createZodDto(
+  extendApi(zErrUnauthorized),
+) {}
