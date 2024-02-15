@@ -99,3 +99,9 @@ export const zClusterNumber = z.object({
     .default('6')
     .describe('찾을 대상의 클러스터 번호 값을 입력받습니다.'),
 });
+
+export const zAuth = z.object({
+  Authorization: z
+    .string()
+    .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')"),
+});
