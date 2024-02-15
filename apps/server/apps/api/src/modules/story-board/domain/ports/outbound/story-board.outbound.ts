@@ -5,8 +5,9 @@ import {
   FindOneStoryBoardDao,
   StoryBoardDao,
 } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { Result } from 'oxide.ts';
-import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors';
+
+import { TGetOneStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-one-story-board.query';
+import { TGetManyStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-many-story-board.query';
 
 export interface StoryBoardOutboundPort
   extends RepositoryPort<StoryBoardEntity> {
@@ -14,9 +15,9 @@ export interface StoryBoardOutboundPort
 
   findOneWithRelations(
     props: FindOneStoryBoardDao,
-  ): Promise<Result<StoryBoardEntity, StoryNotExistsError>>;
+  ): Promise<TGetOneStoryBoardRes>;
 
   findAllPaginatedWithCondition(
     props: StoryBoardDao,
-  ): Promise<Result<Paginated<StoryBoardEntity>, StoryNotExistsError>>;
+  ): Promise<TGetManyStoryBoardRes>;
 }
