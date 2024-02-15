@@ -10,7 +10,9 @@ import {
   StoryBoardDao,
 } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { Err, Ok, Result } from 'oxide.ts';
-import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors';
+import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors';
+import { TGetManyStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-many-story-board.query';
+import { TGetOneStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-one-story-board.query';
 
 export class StoryBoardAdapter
   extends SqlRepositoryBase<StoryBoardEntity, TRecentStoryBoardModel>
@@ -32,7 +34,7 @@ export class StoryBoardAdapter
 
   async findOneWithRelations(
     props: FindOneStoryBoardDao,
-  ): Promise<Result<StoryBoardEntity, StoryNotExistsError>> {
+  ): Promise<TGetOneStoryBoardRes> {
     const id = Number(props.storyId);
     const userId = Number(props.userInfo.id);
 
@@ -44,7 +46,7 @@ export class StoryBoardAdapter
         },
         relations: ['overview', 'overview.references', 'overview.memos'],
       });
-      return Ok(res);
+      return Ok({ success: !!res.userId, data: res });
     } catch (err) {
       return Err(new StoryNotExistsError());
     }
@@ -52,7 +54,7 @@ export class StoryBoardAdapter
 
   async findAllPaginatedWithCondition(
     props: StoryBoardDao,
-  ): Promise<Result<Paginated<StoryBoardEntity>, StoryNotExistsError>> {
+  ): Promise<TGetManyStoryBoardRes> {
     const { userInfo, limit, offset, field, param } = props;
 
     const userId = userInfo.id;
