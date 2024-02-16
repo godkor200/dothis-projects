@@ -23,3 +23,7 @@ export interface IVideoSchema {
   month: number;
   day: number;
 }
+export type CountByDayRes = {
+  day: number;
+  uniqueVideoCount: number;
+};

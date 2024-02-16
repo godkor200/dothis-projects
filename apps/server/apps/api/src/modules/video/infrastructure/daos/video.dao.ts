@@ -24,7 +24,10 @@ export interface GetRelatedVideoAndVideoHistory {
   day: number;
 }
 
-export type GetRelatedVideoHistory = Omit<
-  GetRelatedVideoAndVideoHistory,
-  'videoLikes' | 'videoComments' | 'videoPerformance'
->;
+export type GetRelatedVideoHistory = {
+  id: string;
+  views: number;
+  year: number;
+  month: number;
+  day: number;
+};
