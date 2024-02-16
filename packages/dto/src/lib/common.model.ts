@@ -2,15 +2,15 @@ import { z, ZodTypeAny } from 'zod';
 
 export const zSearchKeyword = z
   .object({
-    search: z.string().describe('탐색어').default('먹방'),
-    related: z.string().describe('연관어').default('돼지고기'),
+    search: z.string().describe('탐색어').default('서울'),
+    related: z.string().describe('연관어').default('정치'),
   })
   .describe('기본 탐색어 연관어 쿼리 형태');
 
 export const zDateQuery = z
   .object({
-    from: z.string().describe('언제부터 날짜').default('2023-11-23'),
-    to: z.string().describe('까지 날짜').default('2023-11-30'),
+    from: z.string().describe('언제부터 날짜').default('2024-01-01'),
+    to: z.string().describe('까지 날짜').default('2024-01-10'),
   })
   .describe('기본 날짜 쿼리');
 
@@ -96,7 +96,7 @@ export const dataObject = <T extends ZodTypeAny>(data: T) =>
 export const zClusterNumber = z.object({
   clusterNumber: z
     .string()
-    .default('6')
+    .default('0')
     .describe('찾을 대상의 클러스터 번호 값을 입력받습니다.'),
 });
 
