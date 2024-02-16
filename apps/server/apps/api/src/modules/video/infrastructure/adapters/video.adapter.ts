@@ -2,10 +2,12 @@ import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import {
   TRelatedVideoAndHistoryRes,
   TRelatedVideos,
+  TRelatedVideosCountByDay,
   VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { ConfigService } from '@nestjs/config';
 import {
+  RelatedVideoAndCountByDayDao,
   RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
@@ -15,6 +17,7 @@ import {
   VideosDateFormatter,
 } from '@Apps/modules/video/infrastructure/utils';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 
 const IgniteClient = require('apache-ignite-client');
 
@@ -41,17 +44,21 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
       const fromDate = VideosDateFormatter.getFormattedDate(from);
       const toDate = VideosDateFormatter.getFormattedDate(to);
       const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
+      const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumber}`;
+
       const cache = await this.client.getCache(tableName);
-      const queryString = `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY 
-       FROM ${tableName} vh JOIN DOTHIS.VIDEO_DATA vd 
+      const queryString = `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY
+       FROM ${tableName} vh JOIN ${joinTableName} vd 
        ON vd.video_id = vh.video_id
        WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
        AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
-       AND ((vd.YEAR > ${fromDate.year} OR (vd.YEAR = ${fromDate.year} AND vd.MONTH > ${fromDate.month}) OR (vd.YEAR = ${fromDate.year} AND vd.MONTH = ${fromDate.month} AND vd.DAY >= ${fromDate.day})))
-       AND ((vd.YEAR < ${toDate.year} OR (vd.YEAR = ${toDate.year} AND vd.MONTH < ${toDate.month}) OR (vd.YEAR = ${toDate.year} AND vd.MONTH = ${toDate.month} AND vd.DAY <= ${toDate.day})))`;
+       AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       const query = new SqlFieldsQuery(queryString);
+
       const result = await cache.query(query);
       const resArr = await result.getAll();
+      if (!resArr.length) return Err(new VideoHistoryNotFoundError());
+
       return Ok(
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
@@ -83,6 +90,38 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
           await result.getAll(),
           queryString,
         ),
+      );
+    } catch (e) {
+      return Err(e);
+    }
+  }
+
+  async getRelatedVideosCountByDay(
+    dao: RelatedVideoAndCountByDayDao,
+  ): Promise<TRelatedVideosCountByDay> {
+    const { search, related, from, to, clusterNumber } = dao;
+
+    try {
+      const fromDate = VideosDateFormatter.getFormattedDate(from);
+      const toDate = VideosDateFormatter.getFormattedDate(to);
+      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
+      const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumber}`;
+      const cache = await this.client.getCache(tableName);
+      const queryString = `SELECT vh.DAY, COUNT(DISTINCT vh.VIDEO_ID) AS unique_video_count
+       FROM ${tableName} vh JOIN ${joinTableName} vd 
+       ON vd.video_id = vh.video_id
+       WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
+       AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
+       AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
+       GROUP BY vh.DAY;
+`;
+      const query = new SqlFieldsQuery(queryString);
+
+      const result = await cache.query(query);
+      const resArr = await result.getAll();
+      if (!resArr.length) return Err(new VideoHistoryNotFoundError());
+      return Ok(
+        VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       return Err(e);
