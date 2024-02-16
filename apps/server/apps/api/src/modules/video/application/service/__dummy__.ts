@@ -15,8 +15,8 @@ export function createDummyData(
     // day는 한 videoId당 중복 없이 증가
     let currentDay = (i % numEntriesPerId) + 1;
     let data: GetRelatedVideoHistory = {
-      videoId: currentVideoId,
-      videoViews: currentViews,
+      id: currentVideoId,
+      views: currentViews,
       year: 2024,
       month: 1,
       day: currentDay,
