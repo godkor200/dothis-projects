@@ -6,6 +6,7 @@ import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-indi
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 export interface IIncreaseHitsData extends Pick<IIncreaseData, 'date'> {
   videoViews: number;
+  uniqueVideoCount: number;
 }
 export class VideoAggregateService {
   /**
@@ -229,19 +230,20 @@ export class VideoAggregateService {
           .toISOString()
           .split('T')[0]; // Extract only the date part
 
-        sumViews += history.videoViews;
+        sumViews += history.views;
 
         let averageIncreaseViews = sumViews / (i + 1);
 
         const increaseViews =
-          history.videoViews !== 0
-            ? history.videoViews - prevVideo.videoViews
+          history.views !== 0
+            ? history.views - prevVideo.views
             : averageIncreaseViews;
 
         if (!result[date]) {
           result[date] = {
             date,
             videoViews: 0,
+            uniqueVideoCount: undefined,
           };
         }
 
