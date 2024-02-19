@@ -16,7 +16,7 @@ export function createDummyData(
     let currentDay = (i % numEntriesPerId) + 1;
     let data: GetRelatedVideoHistory = {
       id: currentVideoId,
-      views: currentViews,
+      videoViews: currentViews,
       year: 2024,
       month: 1,
       day: currentDay,
