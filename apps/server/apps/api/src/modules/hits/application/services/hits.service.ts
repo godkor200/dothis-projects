@@ -29,6 +29,9 @@ export class HitsService implements HitsInboundPort {
       const counts = await this.videoAdapter.getRelatedVideosCountByDay(dao);
 
       const data = hitsData.map((viewData) => {
+        /**
+         * 날짜 매칭 해서 넣는 로직 start
+         */
         const date = new Date(viewData.date);
         const day = date.getDate();
 
@@ -36,13 +39,15 @@ export class HitsService implements HitsInboundPort {
           .unwrap()
           .find((countData) => countData.day === day);
         const uniqueVideoCount = match ? match.uniqueVideoCount : 0;
-
+        /**
+         * 날짜 매칭 해서 넣는 로직 end
+         */
         return {
           ...viewData,
           uniqueVideoCount,
         };
       });
-      console.log(data);
+
       return Ok({ success: true, data });
     }
     return Err(res);
