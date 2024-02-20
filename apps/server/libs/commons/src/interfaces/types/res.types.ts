@@ -52,3 +52,8 @@ export class ChannelAnalysisRes extends createZodDto(
 export class WeeklyKeywordsRes extends createZodDto(
   extendApi(zWeeklyKeywordsList),
 ) {}
+
+export interface TTsRestRes<T> {
+  status: any;
+  body: T;
+}

@@ -25,3 +25,6 @@ export class SearchRelationVideoDao extends SearchRelationVideoAndHistoryDao {
 export class RelatedVideoAndVideoHistoryDao extends createZodDto(
   extendApi(findVideoBySearchKeywordClusterNumber),
 ) {}
+export class RelatedVideoAndCountByDayDao extends createZodDto(
+  extendApi(findVideoBySearchKeywordClusterNumber),
+) {}

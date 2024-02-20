@@ -15,7 +15,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           : 's'
       }://${
         process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
-          ? 'localhost:8080'
+          ? 'localhost'
           : 'api.dothis.kr'
       }/v1/auth/google-redirect`,
       /**
@@ -50,7 +50,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       },
     );
 
-    const channelId = response.data.items[0].id;
+    const channelId = response.data.items ? response.data.items[0].id : null;
+
     const info = {
       id: Number(id),
       channelId,

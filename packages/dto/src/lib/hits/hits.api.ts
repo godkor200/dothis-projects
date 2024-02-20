@@ -4,13 +4,13 @@ import {
   zDailyViews,
   zGetWeeklyViewsQuery,
   zWeeklyKeywordsList,
-} from './views.model';
+} from './hits.model';
 import { findVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
 import { zClusterNumber } from '../common.model';
 
-export const viewApiUrl = '/views';
+export const viewApiUrl = '/hits';
 const dailyApiUrl = '/daily';
 const weeklyApiUrl = '/weekly';
 export const dailyViewApi = c.router({

@@ -7,9 +7,9 @@ import {
 import { QueryBus } from '@nestjs/cqrs';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { apiRouter } from '@dothis/dto';
-import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query';
+import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
-import { match } from 'oxide.ts';
+import { match, Result } from 'oxide.ts';
 import {
   ClusterNumber,
   FindDailyViewsV1Query,
@@ -28,17 +28,14 @@ import {
   NotFound,
   Ok,
 } from '@Apps/modules/hits/domain/event/errors/hits.errors';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-
+const IgniteClient = require('apache-ignite-client');
+const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 const c = nestControllerContract(apiRouter.dailyViews);
 const { summary, description } = c.getDailyViewsV1,
   g = c.getDailyViewsV1;
-export interface TTsRestRes<T> {
-  status: any;
-  body: T;
-}
 
 @ApiTags('조회수')
 @Controller()
@@ -76,11 +73,12 @@ export class FindDailyViewV1HttpController {
               status: 200,
               body: res,
             }),
-            Err: (err: Error) => {
+            Err: (err: Result<void, Error>) => {
               if (err instanceof VideoNotFoundError) {
                 throw new NotFoundException(err.message);
               }
-              throw err;
+
+              throw err.expectErr('s').message;
             },
           },
         );

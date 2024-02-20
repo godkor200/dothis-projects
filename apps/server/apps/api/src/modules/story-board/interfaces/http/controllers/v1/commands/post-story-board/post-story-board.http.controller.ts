@@ -19,7 +19,7 @@ import {
 import { JwtAccessGuard, User } from '@Libs/commons/src';
 import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
 import { apiRouter, TPostStoryBoardBody } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
@@ -51,7 +51,7 @@ import {
   UnauthorizedErr,
 } from '@Apps/common/auth/domain/event/auth.error';
 import { TStoryBoardDraftRes } from '@Apps/modules/story-board/application/commands/post-story-board-draft.command';
-import { TTsRestRes } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
+
 import { TPostStoryBoardTitleCommandRes } from '@Apps/modules/story-board/application/commands/post-story-board-title.command';
 import { OverviewParams } from '@Apps/modules/story-board/domain/events/request';
 import { TOverviewRes } from '@Apps/modules/story-board/application/commands/post-story-board-overview.command';

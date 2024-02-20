@@ -2,8 +2,8 @@ import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.
 import { zSortSqlQuery } from '@dothis/dto';
 import { z } from 'zod';
 import {
-  getManyStoryBoardDto,
-  getOneStoryBoardDto,
+  GetManyStoryBoardDto,
+  GetOneStoryBoardDto,
 } from '@Apps/modules/story-board/application/dtos';
 
 export type TSqlField = z.TypeOf<typeof zSortSqlQuery.shape.field>;
@@ -14,8 +14,8 @@ class BaseStoryBoardDao {
 
   constructor(
     props:
-      | Pick<getManyStoryBoardDto, 'userInfo'>
-      | Pick<getOneStoryBoardDto, 'userInfo'>,
+      | Pick<GetManyStoryBoardDto, 'userInfo'>
+      | Pick<GetOneStoryBoardDto, 'userInfo'>,
   ) {
     this.userInfo = props.userInfo;
   }
@@ -28,7 +28,7 @@ export class StoryBoardDao extends BaseStoryBoardDao {
   readonly field: TSqlField;
   readonly param: TSqlParam;
 
-  constructor(props: getManyStoryBoardDto) {
+  constructor(props: GetManyStoryBoardDto) {
     super(props);
     this.page = Number(props.page);
     this.limit = Number(props.limit);
@@ -41,7 +41,7 @@ export class StoryBoardDao extends BaseStoryBoardDao {
 export class FindOneStoryBoardDao extends BaseStoryBoardDao {
   readonly storyId: string;
 
-  constructor(props: getOneStoryBoardDto) {
+  constructor(props: GetOneStoryBoardDto) {
     super(props);
     this.storyId = props.storyBoardId;
   }

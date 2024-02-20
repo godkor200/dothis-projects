@@ -6,9 +6,12 @@ import { DailyViewQueryV1Module } from '@Apps/modules/hits/interfaces/http/contr
 @Module({
   imports: [
     DailyViewQueryV1Module,
-    DailyViewsQueryV3Module,
     RouterModule.register([{ path: 'v1', module: DailyViewQueryV1Module }]),
-    RouterModule.register([{ path: 'v3', module: DailyViewsQueryV3Module }]),
+    /**
+     * 레거시
+     */
+    // DailyViewsQueryV3Module,
+    // RouterModule.register([{ path: 'v3', module: DailyViewsQueryV3Module }]),
   ],
 })
 export class DailyViewsApiModule {}

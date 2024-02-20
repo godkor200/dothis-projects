@@ -66,7 +66,7 @@ export const zVideoModel = z.object({
 
   //   videoCoreKeyword: z.string(),
 
-  videoAverageViews: z.number().describe('Average number of views'),
+  videoAverageViews: z.number().describe('Average number of hits'),
 
   crawlUpdateAt: z.date().describe('Crawled time'),
 });

@@ -2,7 +2,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { Module, Provider } from '@nestjs/common';
 import { FindDailyViewV1QueryHandler } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
 import { FindDailyViewV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
-import { VideoService } from '@Apps/modules/video/application/service/video.service';
+import { HitsService } from '@Apps/modules/hits/application/services/hits.service';
 import {
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_SERVICE_DI_TOKEN,
@@ -13,7 +13,7 @@ const commands: Provider[] = [];
 const queries: Provider[] = [
   FindDailyViewV1QueryHandler,
   VideoAggregateService,
-  { provide: VIDEO_SERVICE_DI_TOKEN, useClass: VideoService },
+  { provide: VIDEO_SERVICE_DI_TOKEN, useClass: HitsService },
   { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoAdapter },
 ];
 const controllers = [FindDailyViewV1HttpController];
