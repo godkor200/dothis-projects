@@ -1,0 +1,7 @@
+.range-area-chart .apexcharts-xaxis-texts-g text:first-of-type {
+  transform: translateX(10px);
+}
+
+.range-area-chart .apexcharts-xaxis-texts-g text:last-of-type {
+  transform: translateX(-10px);
+}

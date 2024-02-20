@@ -152,7 +152,6 @@ const YouTube = () => {
   if (isLoading) {
     return (
       <div className="mt-10 flex gap-[1.25rem]">
-        <CurrentArticle.skeleton />
         <ArticleList.skeleton />
       </div>
     );
@@ -171,14 +170,6 @@ const YouTube = () => {
   return (
     <>
       <div className="mt-10 flex gap-[1.25rem]">
-        <CurrentArticle
-          title={returnData[contentIndex]?.title}
-          category={returnData[contentIndex]?.category}
-          provider={returnData[contentIndex]?.provider}
-          date={returnData[contentIndex]?.date}
-          image={returnData[contentIndex]?.image}
-          link={returnData[contentIndex]?.link}
-        />
         <div className="flex-1">
           <ArticleList
             articleListData={returnData}
@@ -187,7 +178,7 @@ const YouTube = () => {
           />
         </div>
       </div>
-      <SummaryCard title="영상 태그">
+      {/* <SummaryCard title="영상 태그">
         <div className="flex flex-wrap gap-[10px] ">
           {videoInfo &&
             JSON.parse(videoInfo?.videoTags.replace(/'/g, '"'))
@@ -248,7 +239,7 @@ const YouTube = () => {
             />
           ))}
         </ul>
-      </SummaryCard>
+      </SummaryCard> */}
     </>
   );
 };

@@ -184,16 +184,19 @@ const ExpectedViewChart = ({ expectedView }: Props) => {
         },
       ]}
       theme={{
-        fontFamily: 'Pretendard',
         legends: {
-          text: { fontSize: 12, fontWeight: 500 },
+          text: {
+            fontSize: 12,
+            fontFamily: 'Pretendard',
+            // fontWeight: 500
+          },
         },
         axis: {
           ticks: {
             text: {
               fill: '#71717A',
               fontSize: 12,
-              fontWeight: 500,
+              // fontWeight: 500,
             },
           },
         },

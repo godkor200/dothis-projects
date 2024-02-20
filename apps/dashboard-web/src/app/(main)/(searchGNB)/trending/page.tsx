@@ -141,7 +141,7 @@ const TrendingPage = () => {
           <div className=" mx-auto max-w-[1100px] ">
             <div className="flex items-center gap-[28px] py-[30px]">
               <p className="text-grey700 text-[20px] font-bold">
-                키워드 {total}개
+                키워드 {total || 0}개
               </p>
               <p className="text-grey500 font-bold">
                 {'2024-01-07 - 2024-01-14'}

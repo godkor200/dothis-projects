@@ -143,16 +143,14 @@ const RelationDailyViewChart = ({ dailyViewChartDataList }: Props) => {
       //     },
       //   ]}
       theme={{
-        fontFamily: 'Pretendard',
         legends: {
-          text: { fontSize: 12, fontWeight: 500 },
+          text: { fontSize: 12 },
         },
         axis: {
           ticks: {
             text: {
               fill: '#71717A',
               fontSize: 12,
-              fontWeight: 500,
             },
           },
         },

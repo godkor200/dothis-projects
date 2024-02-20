@@ -1,0 +1,10 @@
+.chart-label-x {
+  border-style: solid;
+  border: 5px solid red;
+  background: blue;
+  color: yellow;
+  fill: transparent;
+  stroke: red;
+
+  z-index: 9999 !important;
+}

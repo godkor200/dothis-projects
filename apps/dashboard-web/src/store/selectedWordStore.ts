@@ -5,8 +5,8 @@ interface SelectedWordAction {
     keyword,
     relword,
   }: {
-    keyword: string;
-    relword: string;
+    keyword: string | null;
+    relword: string | null;
   }) => void;
 }
 
@@ -21,8 +21,13 @@ interface SeletedWordState {
 export const selectedWordStore = create<SeletedWordState>((set) => ({
   selectedWord: { keyword: null, relword: null },
   actions: {
-    setRelWord: ({ keyword, relword }: { keyword: string; relword: string }) =>
-      set(() => ({ selectedWord: { keyword: keyword, relword: relword } })),
+    setRelWord: ({
+      keyword,
+      relword,
+    }: {
+      keyword: string | null;
+      relword: string | null;
+    }) => set(() => ({ selectedWord: { keyword: keyword, relword: relword } })),
   },
 }));
 
