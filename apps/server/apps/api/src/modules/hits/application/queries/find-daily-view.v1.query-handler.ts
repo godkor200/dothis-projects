@@ -21,10 +21,10 @@ export class FindDailyViewV1QueryHandler
 {
   constructor(
     @Inject(VIDEO_SERVICE_DI_TOKEN)
-    private readonly videoService: HitsInboundPort,
+    private readonly hitsService: HitsInboundPort,
   ) {}
   async execute(query: FindDailyViewsV1Dto): Promise<TFindDailyView> {
     const { dto } = query;
-    return await this.videoService.calculateDailyHitsMetrics(dto);
+    return await this.hitsService.calculateDailyHitsMetrics(dto);
   }
 }
