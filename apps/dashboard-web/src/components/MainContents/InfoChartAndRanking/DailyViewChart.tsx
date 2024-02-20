@@ -179,9 +179,8 @@ const DailyViewChart = ({ dailyView }: Props) => {
         },
       ]}
       theme={{
-        
         legends: {
-          text: { fontSize: 12 ,fontFamily: 'Pretendard',},
+          text: { fontSize: 12, fontFamily: 'Pretendard' },
         },
         axis: {
           ticks: {
