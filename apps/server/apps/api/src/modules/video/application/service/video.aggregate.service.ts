@@ -230,13 +230,13 @@ export class VideoAggregateService {
           .toISOString()
           .split('T')[0]; // Extract only the date part
 
-        sumViews += history.views;
+        sumViews += history.videoViews;
 
         let averageIncreaseViews = sumViews / (i + 1);
 
         const increaseViews =
-          history.views !== 0
-            ? history.views - prevVideo.views
+          history.videoViews !== 0
+            ? history.videoViews - prevVideo.videoViews
             : averageIncreaseViews;
 
         if (!result[date]) {
