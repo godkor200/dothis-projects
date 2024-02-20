@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
 import SvgComp from '@/components/common/SvgComp';
+import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
 import { GNB_MENUS } from '@/constants/SideMenus';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { useModalActions } from '@/store/modalStore';
@@ -50,7 +51,7 @@ const GNB = () => {
   };
 
   return (
-    <header className="border-grey300 relative box-border flex h-[5.5rem] w-full items-center justify-center border-b border-solid p-5">
+    <header className="border-grey300 relative  box-border  flex h-[5.5rem] w-full items-center border-b  border-solid p-5">
       {/* 이 부분은 Hover 디자인과 클릭 시 기능을 파악하고 추가 작업 */}
 
       <div className="desktop:gap-[0.75rem] absolute right-12 flex gap-[0.25rem]">
@@ -76,6 +77,12 @@ const GNB = () => {
           </Button>
         )}
       </div>
+
+      {pathName === '/contents' && (
+        <div className="w-[680px]">
+          <SearchBar />
+        </div>
+      )}
     </header>
   );
 };
