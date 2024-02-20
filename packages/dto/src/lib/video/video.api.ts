@@ -9,6 +9,11 @@ import {
   zVideoResponse,
 } from './video.model';
 import { zErrResBase } from '../error.response.zod';
+import {
+  zClusterNumber,
+  zClusterNumberMulti,
+  zPaginatedIgniteQueryParams,
+} from '../common.model';
 
 export const videoBaseApiUrl = '/video';
 
@@ -27,10 +32,8 @@ export const videoApi = c.router({
   getVideoPageV1: {
     method: 'GET',
     path: `${videoBaseApiUrl}/:clusterNumber`,
-    pathParams: z.object({
-      clusterNumber: z.string(),
-    }),
-    query: findVideoPageQuery,
+    pathParams: zClusterNumberMulti,
+    query: zPaginatedIgniteQueryParams,
     responses: {
       200: zVideoResponse,
       ...zErrResBase,
