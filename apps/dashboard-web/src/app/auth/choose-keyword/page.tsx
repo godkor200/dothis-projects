@@ -9,7 +9,7 @@ import { apiServer } from '@/utils/api/apiServer';
 const ChooseKeywordPage = () => {
   return (
     <>
-      {/* @ts-expect-error Server Component */}
+      {/* @ts-expect-error Async Server Component */}
       <PrefetchHydration
         queryKey={['keyword']}
         queryFn={() => apiServer(2).user.getUserKeyword()}

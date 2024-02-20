@@ -126,6 +126,15 @@ export default function Chat() {
       tooltipText: '',
     },
     {
+      title: hasGptOptions
+        ? `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${expectedPercentage}%`
+        : `집계 중`,
+      content: '요약',
+      hasTooltip: false,
+      tooltipText:
+        '경쟁 강도란, 검색된 키워드로 영상을 만들 시, 경쟁해야 하는 영상에 비해 시청자의 관심이 많은 주제인지에 대해 나타내는 지표입니다. \n 경쟁에 유리하면 "좋음", 불리하면 "나쁨"으로 표기됩니다.',
+    },
+    {
       title: handleOpenAIResponse(responsematchDescription),
 
       content: '상세 조언, 평가',
@@ -137,13 +146,12 @@ export default function Chat() {
 
   const openAIDataSecondary = [
     {
-      title: hasGptOptions
-        ? `일일 조회수 합계: ${totalDailyView} 회 \n 일일 조회수 추이: ${dailyViewTendency} % 증가 \n 발행된 영상 수: ${videoCount} \n 내 채널보다 구독자가 많은 채널 수: ${higherSubscribedChannelsCount} \n 채널의 평균 조회수 대비 영상 조회수 비율: ${expectedPercentage}%`
-        : `집계 중`,
-      content: '요약',
+      title: handleOpenAIResponse(responsematchDescription),
+
+      content: '상세 조언, 평가',
       hasTooltip: false,
       tooltipText:
-        '경쟁 강도란, 검색된 키워드로 영상을 만들 시, 경쟁해야 하는 영상에 비해 시청자의 관심이 많은 주제인지에 대해 나타내는 지표입니다. \n 경쟁에 유리하면 "좋음", 불리하면 "나쁨"으로 표기됩니다.',
+        '기대 조회수란, 검색된 영상들의 성과와 사용자 채널의 평균 조회수를 바탕으로 계산한 조회수 예측 값입니다. \n 검색된 키워드를 주제로 영상을 만들면 해당 조회수 만큼 얻을 것으로 예상됩니다.',
     },
     {
       title: handleOpenAIResponse(responseContentRecommendations),
@@ -241,7 +249,7 @@ export default function Chat() {
       </form>
 
       <div className="mt-4 flex  gap-[20px]">
-        <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
+        {/* <ul className="flex shrink-0 basis-3/5  flex-wrap items-start gap-[20px] [&>*:nth-child(3)]:min-h-[278px] [&>*:nth-child(3)]:basis-full">
           {openAIDataPrimary?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
               <AnalysisWidgetItem
@@ -255,6 +263,19 @@ export default function Chat() {
           )}
         </ul>
         <ul className="flex grow flex-wrap  gap-[20px] [&>*]:min-h-[160px]">
+          {openAIDataSecondary?.map(
+            ({ title, content, hasTooltip, tooltipText }, index) => (
+              <AnalysisWidgetItem
+                key={index}
+                title={title}
+                content={content}
+                hasTooltip={hasTooltip}
+                tooltipText={tooltipText}
+              />
+            ),
+          )}
+        </ul> */}
+        <ul className="flex grow flex-row-reverse  flex-wrap gap-[20px] [&>*:nth-child(1)]:basis-1/3 [&>*]:min-h-[160px]">
           {openAIDataSecondary?.map(
             ({ title, content, hasTooltip, tooltipText }, index) => (
               <AnalysisWidgetItem

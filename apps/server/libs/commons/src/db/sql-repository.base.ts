@@ -67,7 +67,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
 
   /**
    * start a global transaction to save
-   * results of all event handlers in one operation
+   * results of all events handlers in one operation
    */
   public async transaction<T>(handler: () => Promise<T>): Promise<T | void> {
     const queryRunner = this.dataSource.createQueryRunner();

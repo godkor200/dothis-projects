@@ -10,6 +10,7 @@ import {
   zPostStoryBoardBodyBoolean,
 } from '@dothis/dto';
 import { PaginatedSqlQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
+import { zSuccessBase } from '@dothis/dto/dist/lib/success.response.zod';
 
 /**
  * FIXME: 이렇게 다 정의 할 필요 없을텐데..
@@ -61,20 +62,22 @@ export class PostStoryBoardMainDraftDto extends PostStoryBoardMainParams {
   }
 }
 
-export class getOneStoryBoardDto extends createZodDto(
+export class GetOneStoryBoardDto extends createZodDto(
   extendApi(zStoryBoardId),
 ) {
   readonly userInfo: UserInfoCommandDto;
-  constructor(props: getOneStoryBoardDto) {
+  constructor(props: GetOneStoryBoardDto) {
     super();
     Object.assign(this, props);
   }
 }
 
-export class getManyStoryBoardDto extends PaginatedSqlQueryParams {
+export class GetManyStoryBoardDto extends PaginatedSqlQueryParams {
   readonly userInfo: UserInfoCommandDto;
-  constructor(props: getManyStoryBoardDto) {
+  constructor(props: GetManyStoryBoardDto) {
     super(props);
     Object.assign(this, props);
   }
 }
+
+export class SuccessBase extends createZodDto(extendApi(zSuccessBase)) {}

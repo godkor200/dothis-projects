@@ -187,11 +187,12 @@ const MonthlyViewData = ({ currentTab }: Props) => {
                   colors={{ scheme: 'nivo' }}
                   theme={{
                     legends: {
-                      text: { fontSize: 12, fontWeight: 700 },
+                      text: { fontSize: 12 },
                     },
                     labels: {
-                      text: { fontSize: 22, fontWeight: 900 },
+                      text: { fontSize: 22 },
                     },
+
                     textColor: '#999d3e',
                   }}
                   blendMode="multiply"

@@ -1,6 +1,6 @@
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
-import { CHANNEL_DATA } from '@Apps/modules/video/interfaces/find-video.os.res';
+import { CHANNEL_DATA } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
 import { ChannelInfoOs } from '@Apps/modules/channel/interface/analyze-channel.interface';
 import { ApiResponse } from '@opensearch-project/opensearch';

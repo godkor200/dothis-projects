@@ -5,7 +5,10 @@ import { zStoryBoardSchema } from './story-board.model';
 
 export const zPostStoryBoardPathParams = z.object({
   storyBoardId: z.string().describe('스토리 보드의 고유 ID'),
-  detailId: z.string().describe('스토리 보드 디테일 id'),
+  overviewId: z
+    .string()
+    .describe('스토리 보드 개요 id, 생성된 overview id 값을 받습니다.')
+    .default('1'),
   referenceId: z.string().describe('스토리 보드 레퍼런스 id'),
   memoId: z.string().describe('스토리 보드 메모 id'),
 });
@@ -33,6 +36,9 @@ export const zPostStoryBoardOverviewParams = z
   .required();
 export const zPostStoryBoardReferenceParams = zPostStoryBoardPathParams
   .pick({ storyBoardId: true })
+  .required();
+export const zOverviewParams = zPostStoryBoardPathParams
+  .pick({ overviewId: true })
   .required();
 export const zPostStoryBoardMemoParams = zPostStoryBoardReferenceParams;
 export const zStoryBoardDetails = z.union([

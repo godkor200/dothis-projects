@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 
+import YoutubeArticlesContainer from '@/components/MainContents/MediaArticles/YoutubeArticlesContainer';
 // import TabNavigation from '@/components/common/TabNavigation';
 // import Card from '@/components/MainContents/Card';
 // import CardHeader from '@/components/MainContents/CardHeader';
@@ -124,14 +125,13 @@ const MainContentPage = ({
     return (
       <div className=" mx-auto w-[1342px] ">
         <Card>
-          <CardHeader title="콘텐츠 소재">
-            <Chat />
-          </CardHeader>
+          <CardHeader title="콘텐츠 소재" />
           <div className="flex">
             <KeywordRankingList />
 
             <KeywordAnalyticsView />
           </div>
+          <Chat />
         </Card>
         <Card>
           <TabNavigation
@@ -141,14 +141,25 @@ const MainContentPage = ({
           />
           <MonthlyViewData currentTab={secondSection} />
         </Card>
-        <Card>
-          <TabNavigation
-            tabKey="snsTab"
-            selectedArticle={selectedArticle}
-            tabNavData={MEDIA_TABNAV_DATA}
-          />
-          <MediaArticlesContainer selectedArticle={selectedArticle} />
-        </Card>
+        <div className="flex justify-between [&>*]:flex-1">
+          <Card>
+            <TabNavigation
+              tabKey="youtube"
+              selectedArticle={'youtube'}
+              tabNavData={[{ title: '유튜브', category: 'youtube' }]}
+            />
+            <YoutubeArticlesContainer />
+          </Card>
+
+          <Card>
+            <TabNavigation
+              tabKey="snsTab"
+              selectedArticle={selectedArticle}
+              tabNavData={MEDIA_TABNAV_DATA}
+            />
+            <MediaArticlesContainer selectedArticle={selectedArticle} />
+          </Card>
+        </div>
       </div>
     );
   }

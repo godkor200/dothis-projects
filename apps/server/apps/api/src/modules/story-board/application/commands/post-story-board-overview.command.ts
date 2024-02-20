@@ -1,28 +1,24 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { PostStoryBoardDetailDto } from '@Apps/modules/story-board/application/dtos/story-board-overview.dto';
+import { PostStoryBoardOverviewDto } from '@Apps/modules/story-board/application/dtos/story-board-overview.dto';
 import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { Ok, Result } from 'oxide.ts';
-import { StoryNotExistsError } from '@Apps/modules/story-board/domain/errors/story.error';
+import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors/story.error';
 import { StoryBoardDetailOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board-details.outbound';
-import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/constants/story-board-details.di-token.constant';
-
-@CommandHandler(PostStoryBoardDetailDto)
+import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/story-board-details.di-token.constant';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+export type TOverviewRes = Result<
+  IRes<boolean>,
+  StoryNotExistsError | InternalServerErrorException
+>;
+@CommandHandler(PostStoryBoardOverviewDto)
 export class PostStoryBoardOverviewCommand
-  implements
-    ICommandHandler<
-      PostStoryBoardDetailDto,
-      Result<boolean, StoryNotExistsError | InternalServerErrorException>
-    >
+  implements ICommandHandler<PostStoryBoardOverviewDto, TOverviewRes>
 {
   constructor(
     @Inject(STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT)
     private readonly storyBoardDetail: StoryBoardDetailOutboundPort,
   ) {}
-  async execute(
-    command: PostStoryBoardDetailDto,
-  ): Promise<
-    Result<boolean, StoryNotExistsError | InternalServerErrorException>
-  > {
+  async execute(command: PostStoryBoardOverviewDto): Promise<TOverviewRes> {
     const { overviewId: id, body } = command;
     if (body.hasOwnProperty('uploadDate')) {
       body['uploadDate'] = new Date(body['uploadDate']);
@@ -31,6 +27,6 @@ export class PostStoryBoardOverviewCommand
       id,
       ...body,
     });
-    return Ok(res.success);
+    return Ok(res);
   }
 }

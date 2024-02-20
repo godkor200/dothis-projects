@@ -67,10 +67,6 @@ const MediaArticlesContainer = ({
         <>
           <News />
         </>
-      ) : selectedArticle === 'youtube' ? (
-        <>
-          <YouTube />
-        </>
       ) : (
         <div className="mt-10 flex flex-wrap gap-[1.25rem]">
           <p className="text-t2 flex h-60 w-full items-center justify-center text-center font-bold">

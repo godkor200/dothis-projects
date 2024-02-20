@@ -4,17 +4,17 @@ import { zPostStoryBoardOverviewParams, zStoryBoardDetails } from '@dothis/dto';
 export class StoryBoardDetails extends createZodDto(
   extendApi(zStoryBoardDetails),
 ) {}
-export class PostStoryBoardDetailParams extends createZodDto(
+export class PostStoryBoardOverviewParams extends createZodDto(
   extendApi(zPostStoryBoardOverviewParams),
 ) {
-  constructor(props: PostStoryBoardDetailParams) {
+  constructor(props: PostStoryBoardOverviewParams) {
     super();
   }
 }
 
-export class PostStoryBoardDetailDto extends PostStoryBoardDetailParams {
+export class PostStoryBoardOverviewDto extends PostStoryBoardOverviewParams {
   readonly body: StoryBoardDetails;
-  constructor(props: PostStoryBoardDetailDto) {
+  constructor(props: PostStoryBoardOverviewDto) {
     super(props);
     Object.assign(this, props);
   }

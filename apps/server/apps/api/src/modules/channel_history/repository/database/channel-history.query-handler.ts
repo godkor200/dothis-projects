@@ -6,7 +6,7 @@ import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-vi
 import { ConfigService } from '@nestjs/config';
 import { AwsCredentialsService } from '@Apps/config/aws/config/aws.config';
 import { Injectable } from '@nestjs/common';
-import { FindVideoV2 } from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+import { FindVideoV2 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
 import { Err } from 'oxide.ts';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';

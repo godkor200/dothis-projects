@@ -19,7 +19,7 @@ const ArticleInfo = ({
   return (
     <div
       className={cn('flex items-center gap-[0.5rem] ', {
-        'mb-[30px]': !isList,
+        // 'mb-[30px]': !isList,
       })}
     >
       {secondText && (
@@ -27,7 +27,7 @@ const ArticleInfo = ({
           className={cn(
             'text-grey500 font-semibold max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis',
             {
-              'text-[0.75rem]': isList,
+              'text-[10px]': isList,
             },
           )}
         >
@@ -36,17 +36,23 @@ const ArticleInfo = ({
       )}
       {secondText && <div className="bg-grey400 h-4 w-[1px]" />}
       <span
-        className={cn('text-grey600 font-semibold', {
-          'text-[0.75rem]': isList,
-        })}
+        className={cn(
+          'text-grey600 font-semibold  whitespace-nowrap overflow-hidden text-ellipsis',
+          {
+            'text-[10px]': isList,
+          },
+        )}
       >
         {thirdText}
       </span>
       <div className="bg-grey400 h-4 w-[1px]" />
       <span
-        className={cn('text-grey500 font-semibold', {
-          'text-[0.75rem]': isList,
-        })}
+        className={cn(
+          'text-grey500 font-semibold  whitespace-nowrap overflow-hidden text-ellipsis',
+          {
+            'text-[10px]': isList,
+          },
+        )}
       >
         {date}
       </span>

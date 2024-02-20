@@ -57,12 +57,12 @@ export async function middleware(request: NextRequest) {
   //   );
   // }
 
-  if (
-    request.headers.get('referer') === null &&
-    request.headers.get('sec-fetch-site') === 'none'
-  ) {
-    return NextResponse.redirect(new URL(`/about`, request.nextUrl));
-  }
+  // if (
+  //   request.headers.get('referer') === null &&
+  //   request.headers.get('sec-fetch-site') === 'none'
+  // ) {
+  //   return NextResponse.redirect(new URL(`/about`, request.nextUrl));
+  // }
 
   const response = NextResponse.next();
   return response;

@@ -20,7 +20,7 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
 const useGetNewsInfiniteQuery = (
   queryOptions?: UseInfiniteQueryResult<NewsResponse>,
 ): UseInfiniteQueryResult<NewsResponse> => {
-  const seletedWord = useSelectedWord();
+  const selectedWord = useSelectedWord();
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -29,7 +29,7 @@ const useGetNewsInfiniteQuery = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: seletedWord.relword,
+        query: { title: selectedWord.keyword },
 
         published_at: {
           from: startDate,
@@ -65,7 +65,7 @@ const useGetNewsInfiniteQuery = (
   };
 
   return useInfiniteQuery(
-    ['뉴스', seletedWord.relword, 1],
+    ['뉴스', selectedWord.keyword, 1],
     ({ pageParam = 0 }) => retrievePosts(pageParam),
     {
       ...queryOptions,
@@ -75,7 +75,7 @@ const useGetNewsInfiniteQuery = (
           ? false
           : allPages.length;
       },
-      enabled: !!seletedWord.relword && !!startDate && !!endDate,
+      enabled: !!selectedWord.keyword && !!startDate && !!endDate,
     },
   );
 };

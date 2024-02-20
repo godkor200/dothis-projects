@@ -2,7 +2,7 @@ import {
   IChannelHistoryInnerHits,
   ISource,
   VideoSource,
-} from '@Apps/modules/video/interfaces/find-accumulate-videos.interface';
+} from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
 
 interface ISourceWithoutChannelSubscribers

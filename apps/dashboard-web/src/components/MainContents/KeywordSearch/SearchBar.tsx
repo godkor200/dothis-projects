@@ -104,7 +104,7 @@ const SearchBar = () => {
 
   return (
     <div
-      className="relative  mx-auto mb-[84px] min-h-[52px] max-w-[680px]"
+      className="relative  mx-auto min-h-[52px] max-w-[680px]"
       onClick={() => setOpenInput(true)}
     >
       <div className=" rounded-8 bg-grey00 absolute z-20  box-border w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
