@@ -80,7 +80,7 @@ const CurrentArticleSkeleton = () => {
         className="bg-grey300 dark:bg-grey700 flex h-[180px] w-[320px]  animate-pulse items-center justify-center"
       >
         <svg
-          className="text-grey200 dark:text-grey600 size-10"
+          className="text-grey200 dark:text-grey600 h-10 w-10"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
