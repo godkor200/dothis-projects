@@ -193,9 +193,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
                       text: { fontSize: 22 },
                     },
 
-                    text: {
-                      fill: '#999d3e',
-                    },
+                    textColor: '#999d3e',
                   }}
                   blendMode="multiply"
                   motionConfig="wobbly"
