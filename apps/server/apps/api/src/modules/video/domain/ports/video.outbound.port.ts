@@ -6,7 +6,10 @@ import {
 import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
-import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import {
+  GetRelatedVideoHistory,
+  GetVideoDao,
+} from '@Apps/modules/video/infrastructure/daos/video.dao';
 import {
   CountByDayRes,
   IVideoSchema,
@@ -22,7 +25,7 @@ export type TRelatedVideos = Result<
   IVideoSchema[],
   VideoNotFoundError | VideoHistoryNotFoundError
 >;
-
+export type TRelatedEntireCount = Result<number, VideoNotFoundError>;
 export type TRelatedVideosCountByDay = Result<CountByDayRes[], any>;
 export interface VideoOutboundPort {
   getRelatedVideoAndVideoHistory(
@@ -34,4 +37,8 @@ export interface VideoOutboundPort {
   getRelatedVideosCountByDay(
     props: RelatedVideoAndCountByDayDao,
   ): Promise<TRelatedVideosCountByDay>;
+
+  getRelatedVideosEntireCount(dao: GetVideoDao): Promise<TRelatedEntireCount>;
+
+  getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos>;
 }
