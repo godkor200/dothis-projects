@@ -98,8 +98,9 @@ const KeywordRankingList = () => {
   const { setRelWord } = useSelectedWordActions();
 
   useEffect(() => {
-    rankRelWordList.length !== 0 &&
-      setRelWord(rankRelWordList[selectedRelatedWord - 1]);
+    rankRelWordList.length !== 0
+      ? setRelWord(rankRelWordList[selectedRelatedWord - 1])
+      : setRelWord({ keyword: hashKeywordList[0], relword: null });
   }, [selectedRelatedWord, rankRelWordList]);
 
   // false isError에서 하나라도 true면 보여야함  (맨처음 fetch되었지만error일 수도 있으니깐)
