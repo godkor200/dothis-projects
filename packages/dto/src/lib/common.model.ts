@@ -75,17 +75,18 @@ export const zOrderBy = z.object({
       "정렬 방식을 나타냅니다. 'asc'는 오름차순, 'desc'는 내림차순을 의미",
     ),
 });
-
-export const zPaginatedSqlQueryParams = z
-  .object({
-    limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
-    page: z.string().describe('현재 페이지 번호를 나타냅니다.'),
-    offset: z.string().describe('건너뛸 데이터의 수를 나타냅니다'),
-  })
+export const zPaginatedOffsetQuery = z.object({
+  limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
+  page: z.string().describe('현재 페이지 번호를 나타냅니다.'),
+  offset: z.string().describe('건너뛸 데이터의 수를 나타냅니다'),
+});
+export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
   .merge(zSortSqlQuery)
   .optional()
   .describe('페이지네이션 쿼리 파라미터');
-
+export const zPaginatedIgniteQueryParams = zSearchKeyword
+  .merge(zPaginatedOffsetQuery.describe('페이지네이션 쿼리 파라미터'))
+  .merge(zDateQuery);
 export const zTotalData = z
   .object({ total: z.number() })
   .describe('토탈 데이터 resp');
