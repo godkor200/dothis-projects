@@ -109,7 +109,7 @@ const MainContentPage = ({
 }) => {
   const selectedArticle =
     (searchParams?.snsTab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
-    'youtube';
+    'news';
 
   // const articleListData = await relatedContentApi[selectedArticle](
   //   '아시안게임',
@@ -141,8 +141,8 @@ const MainContentPage = ({
           />
           <MonthlyViewData currentTab={secondSection} />
         </Card>
-        <div className="flex justify-between [&>*]:flex-1">
-          <Card>
+        <div className="mx-[3rem] flex justify-between gap-[22px] [&>*]:flex-1">
+          <Card withoutMargin>
             <TabNavigation
               tabKey="youtube"
               selectedArticle={'youtube'}
@@ -151,7 +151,7 @@ const MainContentPage = ({
             <YoutubeArticlesContainer />
           </Card>
 
-          <Card>
+          <Card withoutMargin>
             <TabNavigation
               tabKey="snsTab"
               selectedArticle={selectedArticle}
