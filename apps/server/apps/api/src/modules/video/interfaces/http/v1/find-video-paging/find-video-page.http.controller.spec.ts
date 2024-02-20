@@ -15,11 +15,14 @@ describe('예외 처리', () => {
   it('해당 키워드에 비디오가 없을 경우 Not Found를 띄웁니다.', async () => {
     mockQueryBus.execute.mockResolvedValue(Err(new NotFoundException()));
     try {
-      await controller.execute('6', {
-        limit: '5',
-        search: '고기',
-        related: '영화평론',
-      });
+      await controller.execute(
+        { clusterNumber: '6' },
+        {
+          limit: '5',
+          search: '고기',
+          related: '영화평론',
+        },
+      );
     } catch (err) {
       expect(err.message).toBe('Not Found');
       expect(err.status).toBe(404);

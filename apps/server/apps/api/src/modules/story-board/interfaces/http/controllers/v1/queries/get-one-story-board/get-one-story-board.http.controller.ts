@@ -16,7 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
 import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { apiRouter } from '@dothis/dto';
 import {
   GetOneStoryBoardDto,
@@ -33,7 +33,7 @@ import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.
 
 import { TGetOneStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-one-story-board.query';
 import { InternalServerErr } from '@Apps/common/auth/domain/event/auth.error';
-import { TTsRestRes } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
+
 import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
 
 const c = nestControllerContract(apiRouter.storyBoard);

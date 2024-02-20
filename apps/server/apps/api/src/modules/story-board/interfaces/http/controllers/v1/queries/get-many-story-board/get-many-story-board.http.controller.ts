@@ -10,7 +10,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
 import { JwtAccessGuard, Paginated, User } from '@Libs/commons/src';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { match } from 'oxide.ts';
 import {
@@ -29,7 +29,7 @@ import { TGetManyStoryBoardRes } from '@Apps/modules/story-board/application/que
 import { apiRouter } from '@dothis/dto';
 import { GetManyStoryBoardDto } from '@Apps/modules/story-board/application/dtos';
 import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
-import { TTsRestRes } from '@Apps/modules/hits/interfaces/http/controllers/v1/find-daily-view/find-daily-view.v1.http.controller';
+
 import { InternalServerErr } from '@Apps/common/auth/domain/event/auth.error';
 const c = nestControllerContract(apiRouter.storyBoard);
 const { getManyStoryBoard } = c;

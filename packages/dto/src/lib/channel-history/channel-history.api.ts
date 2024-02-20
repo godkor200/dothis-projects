@@ -3,7 +3,7 @@ import { c } from '../contract';
 import { zChannelHistoryModel, zExpectedViews } from './channel-history.model';
 import { zErrResBase } from '../error.response.zod';
 
-export const expectedViewsApiUrl = '/expected-views';
+export const expectedViewsApiUrl = '/expected-hits';
 export const channelHistoryApiUrl = '/channel-history';
 
 export const expectedViewsApi = c.router({

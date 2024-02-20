@@ -37,7 +37,7 @@ export class WeeklyViewsQueryHandler
     arg: GetWeeklyViewsQuery,
   ): Promise<WeeklyKeywordsRes | WeeklyViewsError> {
     const { from: DateForm, limit, last, sort, order } = arg;
-    const alias = 'weekly-views-' + DateForm;
+    const alias = 'weekly-hits-' + DateForm;
     const indexList = await this.getIndices(alias);
     const index = indexList[0].index;
     if (!indexList && !index) {

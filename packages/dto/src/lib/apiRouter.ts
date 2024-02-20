@@ -4,7 +4,7 @@ import { userApi } from './user';
 import { authApi } from './auth';
 import { cacheApi } from './cache';
 import { relWordsApi } from './rel-words';
-import { dailyViewApi, weeklyViewApi } from './views';
+import { dailyViewApi, weeklyViewApi } from './hits';
 import { videoApi } from './video';
 import { channelHistoryApi, expectedViewsApi } from './channel-history';
 import { channelApi } from './channel';
