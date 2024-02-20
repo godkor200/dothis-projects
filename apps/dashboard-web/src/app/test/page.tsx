@@ -358,61 +358,61 @@ const TestPage = () => {
               //   speed: 500,
               // },
             },
-            // colors: ['#d4526e', '#d4526e'],
-            // dataLabels: {
-            //   enabled: false,
-            // },
-            // fill: {
-            //   opacity: [0.24, 1],
-            // },
-            // forecastDataPoints: {
-            //   count: 2,
-            // },
-            // stroke: {
-            //   curve: 'straight',
-            //   width: [1, 2],
-            // },
-            // legend: {
-            //   show: true,
-            //   customLegendItems: ['평균성과'],
-            //   inverseOrder: true,
-            // },
-            // title: {
-            //   text: '평균성과',
-            // },
-            // markers: {
-            //   hover: {
-            //     sizeOffset: 5,
-            //   },
-            // },
+            colors: ['#d4526e', '#d4526e'],
+            dataLabels: {
+              enabled: false,
+            },
+            fill: {
+              opacity: [0.24, 1],
+            },
+            forecastDataPoints: {
+              count: 2,
+            },
+            stroke: {
+              curve: 'straight',
+              width: [1, 2],
+            },
+            legend: {
+              show: true,
+              customLegendItems: ['평균성과'],
+              inverseOrder: true,
+            },
+            title: {
+              text: '평균성과',
+            },
+            markers: {
+              hover: {
+                sizeOffset: 5,
+              },
+            },
 
-            // grid: {
-            //   strokeDashArray: 4,
-            // },
-            // xaxis: {
-            //   type: 'datetime',
-            //   min: getDateObjTime(startDate), // 시작 날짜 설정
-            //   // max: getDateObjTime(endDate),
-            //   tooltip: {
-            //     enabled: false,
-            //   },
-            //   labels: {
-            //     // formatter(value, timestamp, opts) {
-            //     //   console.log(value);
-            //     //   console.log(dayjs(value).format('YYYY-MM-DD'));
-            //     //   return dayjs(value).format('YYYY-MM-DD');
-            //     // },
-            //     format: 'MM.dd',
-            //   },
-            // },
+            grid: {
+              strokeDashArray: 4,
+            },
+            xaxis: {
+              type: 'datetime',
+              min: getDateObjTime(startDate), // 시작 날짜 설정
+              // max: getDateObjTime(endDate),
+              tooltip: {
+                enabled: false,
+              },
+              labels: {
+                // formatter(value, timestamp, opts) {
+                //   console.log(value);
+                //   console.log(dayjs(value).format('YYYY-MM-DD'));
+                //   return dayjs(value).format('YYYY-MM-DD');
+                // },
+                format: 'MM.dd',
+              },
+            },
             /**
              * https://github.com/apexcharts/apexcharts.js/issues/1053
              * datetime 타입으로 지정시 last label이 보이지않는 버그가 존재
              */
-            xaxis: {
-              type: 'datetime',
-              // offsetX: 40,
-            },
+            // xaxis: {
+            //   type: 'datetime',
+            //   // offsetX: 40,
+            // },
 
             /**
              * https://github.com/apexcharts/apexcharts.js/issues/1053
@@ -443,8 +443,9 @@ const TestPage = () => {
                 },
               },
               {
-                seriesName: 'Income',
+                seriesName: '평균성과 기대치',
                 opposite: true,
+                // floating: true,
                 axisTicks: {
                   show: false,
                 },
@@ -468,16 +469,16 @@ const TestPage = () => {
             ],
           }}
           series={[
-            // {
-            //   type: 'rangeArea',
-            //   name: '평균성과 기대치',
-            //   data: rangeData.map((item, index) => ({
-            //     x: getDateObjTime(
-            //       dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-            //     ),
-            //     y: item,
-            //   })),
-            // },
+            {
+              type: 'rangeArea',
+              name: '평균성과 기대치',
+              data: rangeData.map((item, index) => ({
+                x: getDateObjTime(
+                  dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+                ),
+                y: item,
+              })),
+            },
 
             {
               type: 'line',
@@ -490,7 +491,7 @@ const TestPage = () => {
               })),
             },
           ]}
-          type="line"
+          type="rangeArea"
           height={280}
           width={630}
         />
