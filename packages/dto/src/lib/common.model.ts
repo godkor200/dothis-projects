@@ -101,6 +101,15 @@ export const zClusterNumber = z.object({
     .describe('찾을 대상의 클러스터 번호 값을 입력받습니다.'),
 });
 
+export const zClusterNumberMulti = z.object({
+  clusterNumber: z
+    .string()
+    .default('0')
+    .describe(
+      '클러스터 번호 하나 단독, 다수의 클러스터로 페이지네이션 합니다. ex) 1,2,3,4,5 ',
+    ),
+});
+
 export const zAuth = z.object({
   Authorization: z
     .string()
