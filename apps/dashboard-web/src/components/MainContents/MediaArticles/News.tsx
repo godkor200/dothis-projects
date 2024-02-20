@@ -75,7 +75,7 @@ const News = () => {
   if (isLoading) {
     return (
       <div className="mt-10 flex gap-[1.25rem]">
-        <CurrentArticle.skeleton />
+        {/* <CurrentArticle.skeleton /> */}
         <ArticleList.skeleton />
       </div>
     );
@@ -92,16 +92,8 @@ const News = () => {
   }
   return (
     <>
-      <div className="mt-10 flex gap-[1.25rem]">
-        <CurrentArticle
-          title={returnData[contentIndex]?.title}
-          category={returnData[contentIndex]?.category}
-          provider={returnData[contentIndex]?.provider}
-          date={returnData[contentIndex]?.date}
-          image={returnData[contentIndex]?.image}
-          link={returnData[contentIndex]?.link}
-        />
-        <div className="flex-1">
+      <div className="mt-10 flex  gap-[1.25rem] ">
+        <div className="flex-1 ">
           <ArticleList
             articleListData={returnData}
             handleSetContentIndex={handleSetContentIndex}
@@ -109,9 +101,9 @@ const News = () => {
           />
         </div>
       </div>
-      <SummaryCard title="뉴스 요약">
+      {/* <SummaryCard title="뉴스 요약">
         <ParserContent content={returnData[contentIndex]?.hilight} />
-      </SummaryCard>
+      </SummaryCard> */}
     </>
   );
 };
