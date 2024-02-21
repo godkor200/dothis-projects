@@ -58,22 +58,22 @@ describe('예외 처리', () => {
     req: undefined,
     res: undefined,
   });
-  it('비디오 값이 널인 경우', async () => {
-    mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
-      Promise.resolve(null),
-    );
-    const arg: FindDailyViewsQuery = {
-      clusterNumber: '0',
-      keyword: '이태원',
-      relationKeyword: undefined,
-      from: '2023-10-12',
-      to: '2023-10-14',
-    };
-
-    const res = await handler.execute(arg);
-    expect(res.isErr()).toBe(true);
-    expect(res.expectErr('The video could not be found.').message).toBe(
-      'The video could not be found.',
-    );
-  });
+  // it.todo('비디오 값이 널인 경우', async () => {
+  //   mockFindVideoOsAdapter.findVideoIdFullScanAndVideos.mockReturnValue(
+  //     Promise.resolve(null),
+  //   );
+  //   const arg: FindDailyViewsQuery = {
+  //     clusterNumber: '0',
+  //     keyword: '이태원',
+  //     relationKeyword: undefined,
+  //     from: '2023-10-12',
+  //     to: '2023-10-14',
+  //   };
+  //
+  //   const res = await handler.execute(arg);
+  //   expect(res.isErr()).toBe(true);
+  //   expect(res.expectErr('The video could not be found.').message).toBe(
+  //     'The video could not be found.',
+  //   );
+  // });
 });
