@@ -14,7 +14,7 @@ import {
   IRankingRelWords,
 } from '@Apps/modules/rel-words/interface/rank-rel.interface';
 import { RankRelAggregateService } from '@Apps/modules/rel-words/service/rank-rel.aggregate.service';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
 @QueryHandler(RankRelQueryDto)
