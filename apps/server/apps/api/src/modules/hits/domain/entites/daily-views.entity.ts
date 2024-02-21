@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
-import { VideoEntity } from '@Apps/modules/video/domain/videos.entity';
+import { VideoEntity } from '@Apps/modules/video/domain/entities/videos.entity';
 import { IdBaseEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
 
 @Entity({ name: 'hits' })
