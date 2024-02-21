@@ -5,7 +5,7 @@ import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 import { VideoDetailsModel } from '@dothis/dto';
 import { Err, Ok, Result } from 'oxide.ts';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
