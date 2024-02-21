@@ -4,7 +4,7 @@ import {
   SECTION_NUMBER,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 
-import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/rel-words/interface/rank-rel.interface';
+import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/related-word/interface/rank-rel.interface';
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
 interface IDailyPerformance {
   [date: string]: {
