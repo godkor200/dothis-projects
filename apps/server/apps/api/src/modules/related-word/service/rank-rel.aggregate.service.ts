@@ -1,5 +1,5 @@
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
-import { IRankingRelWords } from '@Apps/modules/rel-words/interface/rank-rel.interface';
+import { IRankingRelWords } from '@Apps/modules/related-word/interface/rank-rel.interface';
 import { TRankResData } from '@dothis/dto';
 import { Injectable } from '@nestjs/common';
 

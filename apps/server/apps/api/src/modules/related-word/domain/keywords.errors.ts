@@ -1,4 +1,3 @@
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
 
 export class KeywordsNotFoundError extends ExceptionBase {

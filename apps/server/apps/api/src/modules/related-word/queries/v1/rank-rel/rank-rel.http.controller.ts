@@ -10,7 +10,7 @@ import {
 import { Controller, NotFoundException, Param } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   RelWordsRankingRes,

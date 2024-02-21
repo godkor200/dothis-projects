@@ -1,19 +1,19 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TRankRes } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
-import { FindRelAdapter } from '@Apps/modules/rel-words/interface/find-rel.adapter';
-import { RankRelQueryDto } from '@Apps/modules/rel-words/queries/v1/rank-rel/rank-rel.http.controller';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
+import { FindRelAdapter } from '@Apps/modules/related-word/interface/find-rel.adapter';
+import { RankRelQueryDto } from '@Apps/modules/related-word/queries/v1/rank-rel/rank-rel.http.controller';
 import { Err, Ok, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
 import {
   IChannelHistoryWithoutChannelSubscribers,
   IRankingRelWords,
-} from '@Apps/modules/rel-words/interface/rank-rel.interface';
-import { RankRelAggregateService } from '@Apps/modules/rel-words/service/rank-rel.aggregate.service';
+} from '@Apps/modules/related-word/interface/rank-rel.interface';
+import { RankRelAggregateService } from '@Apps/modules/related-word/service/rank-rel.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 
