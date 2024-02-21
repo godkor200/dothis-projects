@@ -1,5 +1,5 @@
 import { RepositoryPort } from '@Libs/commons/src';
-import { DailyViewsEntity } from '@Apps/modules/hits/domain/entites/daily-views.entity';
+import { DailyViewsEntity } from '@Apps/modules/hits/domain/entities/daily-views.entity';
 
 export interface DailyViewsRepositoryPort
   extends RepositoryPort<DailyViewsEntity> {
