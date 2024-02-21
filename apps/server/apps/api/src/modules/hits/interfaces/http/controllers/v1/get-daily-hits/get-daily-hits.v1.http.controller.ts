@@ -33,13 +33,13 @@ import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
-const c = nestControllerContract(apiRouter.dailyViews);
+const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV1,
   g = c.getDailyViewsV1;
 
 @ApiTags('조회수')
 @Controller()
-export class GetDailyViewV1HttpController {
+export class GetDailyHitsV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @TsRestHandler(g)

@@ -1,11 +1,11 @@
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelAdapter } from '../../../interface/find-rel.adapter';
-import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
+import { FindRelV1Query } from '@Apps/modules/related-word/interface/dtos/find-rel.dto';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 
 @QueryHandler(FindRelV1Query)
 export class FindRelQueryHandler

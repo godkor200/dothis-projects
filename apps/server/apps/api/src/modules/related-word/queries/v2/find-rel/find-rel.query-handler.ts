@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindRelV2Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
+import { FindRelV2Query } from '@Apps/modules/related-word/interface/dtos/find-rel.dto';
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
-import { FindRelCachePort } from '@Apps/modules/rel-words/repository/cache/find-rel.cache.port';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
+import { FindRelCachePort } from '@Apps/modules/related-word/repository/cache/find-rel.cache.port';
 
 @QueryHandler(FindRelV2Query)
 export class FindRelQueryHandler

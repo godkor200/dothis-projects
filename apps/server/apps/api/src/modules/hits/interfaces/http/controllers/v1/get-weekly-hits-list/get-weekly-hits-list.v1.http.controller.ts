@@ -22,27 +22,20 @@ import {
 import { match, Result } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 
-const c = nestControllerContract(apiRouter.weeklyViews);
+const c = nestControllerContract(apiRouter.hits);
 const { getWeeklyKeywordListWithPaging } = c;
 
 const { summary, description } = getWeeklyKeywordListWithPaging;
 
 @ApiTags('조회수')
 @Controller()
-export class GetWeeklyViewsListV1HttpController {
+export class GetWeeklyHitsListV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @TsRest(getWeeklyKeywordListWithPaging)
-  @Get()
   @ApiOperation({
     summary,
     description,
-  })
-  @ApiResponse({
-    status: 200,
-    isArray: true,
-    description: summary,
-    type: WeeklyData,
   })
   @ApiQuery({
     name: 'from',

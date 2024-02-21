@@ -13,13 +13,13 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindRelV1Query } from '@Apps/modules/rel-words/interface/dtos/find-rel.dto';
+import { FindRelV1Query } from '@Apps/modules/related-word/interface/dtos/find-rel.dto';
 import {
   RelWordsEntity,
   IRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/rel-words/domain/relwords.errors';
+import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 const c = nestControllerContract(apiRouter.relwords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
