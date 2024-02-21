@@ -8,7 +8,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { apiRouter } from '@dothis/dto';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
-import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
+import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 import { match, Result } from 'oxide.ts';
 import {
   ClusterNumber,
@@ -39,7 +39,7 @@ const { summary, description } = c.getDailyViewsV1,
 
 @ApiTags('조회수')
 @Controller()
-export class FindDailyViewV1HttpController {
+export class GetDailyViewV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @TsRestHandler(g)

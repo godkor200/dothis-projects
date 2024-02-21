@@ -6,7 +6,7 @@ import { Inject } from '@nestjs/common';
 import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { Err, Ok } from 'oxide.ts';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
-import { TFindDailyView } from '@Apps/modules/hits/application/queries/find-daily-view.v1.query-handler';
+import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 
 export class HitsService implements HitsInboundPort {
   constructor(

@@ -16,7 +16,7 @@ export type TFindDailyView = Result<
   VideoNotFoundError | VideoHistoryNotFoundError | typeof IllegalStateError
 >;
 @QueryHandler(FindDailyViewsV1Dto)
-export class FindDailyViewV1QueryHandler
+export class GetDailyHitsV1QueryHandler
   implements IQueryHandler<FindDailyViewsV1Dto, TFindDailyView>
 {
   constructor(
