@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/rel-words/interface/dtos/auto-complete-words.dto';
+import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/interface/dtos/auto-complete-words.dto';
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/rel-words/constants/rel-words.enum.di-token.constant';
-import { RelatedWordsRepositoryPort } from '@Apps/modules/rel-words/repository/db/rel-words.repository.port';
-import { FindRelCachePort } from '@Apps/modules/rel-words/repository/cache/find-rel.cache.port';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/repository/db/rel-words.repository.port';
+import { FindRelCachePort } from '@Apps/modules/related-word/repository/cache/find-rel.cache.port';
 
 @CommandHandler(UpdateAutoCompleteWordsCommandDto)
 export class UpdateAutoCompleteWordsCommandHandler
