@@ -24,7 +24,7 @@ import {
   IRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 const c = nestControllerContract(apiRouter.dailyViews);
 type RequestShapes = NestRequestShapes<typeof c>;
