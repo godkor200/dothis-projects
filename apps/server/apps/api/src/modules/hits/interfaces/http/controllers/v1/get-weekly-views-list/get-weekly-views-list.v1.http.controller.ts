@@ -18,9 +18,9 @@ import {
 import {
   GetWeeklyViewsDto,
   GetWeeklyViewsQuery,
-} from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
+} from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { match, Result } from 'oxide.ts';
-import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
+import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 
 const c = nestControllerContract(apiRouter.weeklyViews);
 const { getWeeklyKeywordListWithPaging } = c;

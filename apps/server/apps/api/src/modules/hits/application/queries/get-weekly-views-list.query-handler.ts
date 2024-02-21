@@ -1,11 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetWeeklyViewsDto } from '@Apps/modules/weekly_views/dtos/get-weekly-views-list.dto';
+import { GetWeeklyViewsDto } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
-import { WEEKLY_VIEWS_REPOSITORY_BY_OS } from '@Apps/modules/weekly_views/constants/weekly_views.di-token.constants';
-import { WeeklyViewsOutboundPort } from '@Apps/modules/weekly_views/repository/database/weekly-views.outbound.port';
+import { WEEKLY_VIEWS_REPOSITORY_BY_OS } from '@Apps/modules/hits/hits.di-token.contants';
+import { WeeklyViewsOutboundPort } from '@Apps/modules/hits/domain/ports/weekly-views.outbound.port';
 import { WeeklyKeywordsRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { WeeklyViewsError } from '@Apps/modules/weekly_views/domain/event/weekly-views.error';
+import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 
 @QueryHandler(GetWeeklyViewsDto)
 export class GetWeeklyViewsListQueryHandler
