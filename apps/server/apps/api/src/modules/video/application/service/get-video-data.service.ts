@@ -21,9 +21,20 @@ export class GetVideoDataPageService implements VideoInboundPort {
       dao,
     );
     const data = await this.videoAdapter.getRelatedVideosPaginated(dao);
+
     if (data.isOk() && entireCount.isOk()) {
-      return Ok({ total: entireCount.unwrap(), data: data.unwrap() });
+      return Ok({
+        total: entireCount
+          .unwrap()
+          .reduce(
+            (acc, numberArray) =>
+              acc + Number(numberArray.map((count) => count)),
+            0,
+          ),
+        data: data.unwrap(),
+      });
+    } else {
+      return Err(entireCount.unwrapErr() || data.unwrapErr());
     }
-    return Err(entireCount.unwrapErr());
   }
 }
