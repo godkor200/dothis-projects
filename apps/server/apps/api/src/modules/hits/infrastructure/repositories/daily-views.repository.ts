@@ -1,4 +1,4 @@
-import { DailyViewsEntity } from '@Apps/modules/hits/domain/entites/daily-views.entity';
+import { DailyViewsEntity } from '@Apps/modules/hits/domain/entities/daily-views.entity';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { DailyViewsRepositoryPort } from '../../domain/ports/daily-views.repository.port';
 import { DataSource, Repository } from 'typeorm';
