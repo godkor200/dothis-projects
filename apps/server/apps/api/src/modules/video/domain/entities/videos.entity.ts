@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
-import { DailyViewsEntity } from '@Apps/modules/hits/domain/repository/entity/daily-views.entity';
+import { DailyViewsEntity } from '@Apps/modules/hits/domain/entities/daily-views.entity';
 @Entity({ name: 'video' })
 export class VideoEntity {
   @PrimaryGeneratedColumn({ name: 'video_id' })
