@@ -6,7 +6,7 @@ import {
   FindDailyViewsV3Dto,
   IIncreaseData,
 } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
