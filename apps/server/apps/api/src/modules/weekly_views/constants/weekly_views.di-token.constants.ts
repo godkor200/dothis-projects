@@ -1,3 +1,0 @@
-export const WEEKLY_VIEWS_REPOSITORY_BY_OS = Symbol(
-  'WEEKLY_VIEWS_REPOSITORY_BY_OS',
-);
