@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import { HitsInboundPort } from '@Apps/modules/hits/domain/ports/hits.inbound.port';
 import { VIDEO_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
