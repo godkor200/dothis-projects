@@ -83,4 +83,8 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       await queryRunner.release();
     }
   }
+
+  setTableName(tableName: string) {
+    this.tableName = tableName;
+  }
 }

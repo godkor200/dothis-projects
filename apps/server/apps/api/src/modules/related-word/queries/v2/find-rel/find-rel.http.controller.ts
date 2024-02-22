@@ -13,7 +13,7 @@ import { apiRouter } from '@dothis/dto';
 import { FindRelRequestDto } from '@Apps/modules/related-word/queries/v1/find-rel/find-rel.request.dto';
 import { FindRelV2Query } from '@Apps/modules/related-word/interface/dtos/find-rel.dto';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
 

@@ -11,7 +11,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { summary, responses, description } = c.updateAutoCompleteWords;
 
 @ApiTags('자동완성 단어')

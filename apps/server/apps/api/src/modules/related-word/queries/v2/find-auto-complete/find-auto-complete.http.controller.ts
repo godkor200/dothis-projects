@@ -14,7 +14,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { getAutoCompleteWords } = c;
 const { responses, description, summary } = getAutoCompleteWords;
 

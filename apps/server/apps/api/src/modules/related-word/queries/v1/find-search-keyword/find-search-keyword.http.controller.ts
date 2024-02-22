@@ -11,7 +11,7 @@ import {
 } from '@nestjs/swagger';
 import { match } from 'oxide.ts';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/keywords.errors';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { getKeyword } = c;
 const { summary, description, responses } = getKeyword;
 

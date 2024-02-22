@@ -4,12 +4,13 @@ import { SortOrderQuery as SORT_ENUM, zGetWeeklyViewsQuery } from '@dothis/dto';
 
 export class GetWeeklyViewsQuery extends createZodDto(
   extendApi(zGetWeeklyViewsQuery),
-) {}
-export class GetWeeklyViewsDto implements GetWeeklyViewsQuery {
-  constructor(props: GetWeeklyViewsDto) {
+) {
+  constructor(props: GetWeeklyViewsQuery) {
+    super();
     Object.assign(this, props);
   }
 }
+export class GetWeeklyViewsDto extends GetWeeklyViewsQuery {}
 
 /**
  * zod enum은 조드에서 typescript enum 직접적 변환이 어려움

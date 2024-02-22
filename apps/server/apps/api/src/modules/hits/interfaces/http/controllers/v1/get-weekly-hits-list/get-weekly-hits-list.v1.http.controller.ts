@@ -3,16 +3,18 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiQuery,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Controller, Get, NotFoundException, Query } from '@nestjs/common';
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
+import { Controller, NotFoundException, Query } from '@nestjs/common';
+import {
+  nestControllerContract,
+  TsRestHandler,
+  tsRestHandler,
+} from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import {
-  WeeklyData,
   IRes,
+  TTsRestRes,
   WeeklyKeywordsRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import {
@@ -21,6 +23,7 @@ import {
 } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { match, Result } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
+import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
 
 const c = nestControllerContract(apiRouter.hits);
 const { getWeeklyKeywordListWithPaging } = c;
@@ -32,45 +35,33 @@ const { summary, description } = getWeeklyKeywordListWithPaging;
 export class GetWeeklyHitsListV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @TsRest(getWeeklyKeywordListWithPaging)
+  @TsRestHandler(getWeeklyKeywordListWithPaging)
   @ApiOperation({
     summary,
     description,
   })
-  @ApiQuery({
-    name: 'from',
-    description: '위클리 날짜',
-    example: '2024-01-08',
-  })
-  @ApiQuery({
-    name: 'limit',
-    description: '한번에 나올 문서의 갯수',
-    example: '5',
-  })
-  @ApiQuery({
-    name: 'last',
-    description:
-      '페이지네이션을 하기 위해 마지막 나온 객체의 인덱스 _id에 해당',
-    required: false,
-  })
   @ApiNotFoundResponse({ description: WeeklyViewsError.message })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
-  async execute(
-    @Query() query: GetWeeklyViewsQuery,
-  ): Promise<IRes<WeeklyKeywordsRes[]>> {
-    const { from, limit, last, sort, order } = query;
-    const arg = new GetWeeklyViewsDto({ from, limit, last, sort, order });
-    const result: Result<WeeklyKeywordsRes[], WeeklyViewsError> =
-      await this.queryBus.execute(arg);
+  async execute(@Query() query: GetWeeklyViewsQuery) {
+    return tsRestHandler(getWeeklyKeywordListWithPaging, async ({ query }) => {
+      const dto = new GetWeeklyViewsDto(query);
+      const result: TGetWeeklyHitsRes = await this.queryBus.execute(dto);
 
-    return match(result, {
-      Ok: (result) => ({ success: true, data: result }),
-      Err: (err: Error) => {
-        if (err instanceof WeeklyViewsError) {
-          throw new NotFoundException(err.message);
-        }
-        throw err;
-      },
+      return match<TGetWeeklyHitsRes, TTsRestRes<IRes<WeeklyKeywordsRes[]>>>(
+        result,
+        {
+          Ok: (result) => ({
+            status: 200,
+            body: result,
+          }),
+          Err: (err: Error) => {
+            if (err instanceof WeeklyViewsError) {
+              throw new NotFoundException(err.message);
+            }
+            throw err;
+          },
+        },
+      );
     });
   }
 }

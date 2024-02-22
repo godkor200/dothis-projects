@@ -1,14 +1,11 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import {
-  zDailyViews,
-  zGetWeeklyViewsQuery,
-  zWeeklyKeywordsList,
-} from './hits.model';
+import { zDailyViews, zWeeklyKeywordsList } from './hits.model';
 import { findVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
 import { zClusterNumber } from '../common.model';
+import { zGetWeeklyViewsQuery } from './hits.zod';
 
 export const viewApiUrl = '/hits';
 const dailyApiUrl = '/daily';

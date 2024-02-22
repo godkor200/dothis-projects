@@ -20,7 +20,7 @@ import {
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
 

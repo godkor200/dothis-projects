@@ -16,7 +16,7 @@ import {
   RelWordsRankingRes,
   IRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
-const c = nestControllerContract(apiRouter.relwords);
+const c = nestControllerContract(apiRouter.relatedWords);
 const { rankRel } = c;
 const { summary, description } = rankRel;
 export class RankRelQueryDto {
