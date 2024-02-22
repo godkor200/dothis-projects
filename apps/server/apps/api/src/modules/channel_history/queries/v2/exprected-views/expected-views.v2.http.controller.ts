@@ -17,7 +17,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   ExpectedViewsData,
   IRes,

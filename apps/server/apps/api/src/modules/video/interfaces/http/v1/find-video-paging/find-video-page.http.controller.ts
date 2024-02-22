@@ -1,4 +1,5 @@
 import {
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -19,12 +20,15 @@ import {
   IRes,
   TTsRestRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { match } from 'oxide.ts';
 import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
-import { ClusterNumber } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { PaginatedIgniteQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
+import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getVideoPageV1;
 
@@ -39,8 +43,11 @@ export class FindVideoPageHttpController {
   })
   @ApiOkResponse({ type: VideoRes })
   @ApiNotFoundResponse({ description: VideoNotFoundError.message })
+  @ApiInternalServerErrorResponse({
+    type: InternalServerErr,
+  })
   async execute(
-    @Param() param: ClusterNumber,
+    @Param() param: ClusterNumberMulti,
     @Query() query: PaginatedIgniteQueryParams,
   ) {
     return tsRestHandler(c.getVideoPageV1, async ({ params, query }) => {
@@ -55,12 +62,14 @@ export class FindVideoPageHttpController {
           status: 200,
           body: {
             success: true,
-            data,
+            data: result,
           },
         }),
         Err: (err: Error) => {
           if (err instanceof VideoNotFoundError)
             throw new NotFoundException(err.message);
+          if (err instanceof TableNotFoundException)
+            throw new InternalServerErrorException(err.message);
           throw err;
         },
       });

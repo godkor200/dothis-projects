@@ -18,7 +18,7 @@ import {
 
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   VideoInfoRes,
   IRes,

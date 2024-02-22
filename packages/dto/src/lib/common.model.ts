@@ -46,7 +46,10 @@ export const zSortQuery = (enumElement: Array<string>) => {
           '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
         )
         .optional(),
-      order: z.enum(['asc', 'desc'] as const).optional(),
+      order: z
+        .enum(['asc', 'desc'] as const)
+        .default('asc')
+        .optional(),
     })
     .describe('소트 쿼리');
 };
@@ -76,8 +79,12 @@ export const zOrderBy = z.object({
     ),
 });
 export const zPaginatedOffsetQuery = z.object({
-  limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
-  page: z.string().describe('현재 페이지 번호를 나타냅니다.'),
+  limit: z
+    .string()
+    .describe('한 페이지에 표시할 데이터의 수')
+    .nullable()
+    .default('5'),
+  page: z.string().describe('현재 페이지 번호를 나타냅니다.').default('1'),
   offset: z.string().describe('건너뛸 데이터의 수를 나타냅니다'),
 });
 export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
@@ -85,7 +92,11 @@ export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
   .optional()
   .describe('페이지네이션 쿼리 파라미터');
 export const zPaginatedIgniteQueryParams = zSearchKeyword
-  .merge(zPaginatedOffsetQuery.describe('페이지네이션 쿼리 파라미터'))
+  .merge(
+    zPaginatedOffsetQuery
+      .omit({ offset: true })
+      .describe('페이지네이션 쿼리 파라미터'),
+  )
   .merge(zDateQuery);
 export const zTotalData = z
   .object({ total: z.number() })

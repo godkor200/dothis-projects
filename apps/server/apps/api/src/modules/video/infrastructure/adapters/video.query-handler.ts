@@ -15,7 +15,7 @@ import {
   VIDEO_DATA_KEY,
 } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { Err } from 'oxide.ts';
 import { SearchQueryBuilder } from '@Apps/modules/video/infrastructure/utils/search-query.builder';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';

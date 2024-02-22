@@ -1,19 +1,16 @@
 import { z } from 'zod';
 import { c } from '../contract';
-import {
-  zDailyViews,
-  zGetWeeklyViewsQuery,
-  zWeeklyKeywordsList,
-} from './hits.model';
+import { zDailyViews, zWeeklyKeywordsList } from './hits.model';
 import { findVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
 import { zClusterNumber } from '../common.model';
+import { zGetWeeklyViewsQuery } from './hits.zod';
 
 export const viewApiUrl = '/hits';
 const dailyApiUrl = '/daily';
 const weeklyApiUrl = '/weekly';
-export const dailyViewApi = c.router({
+export const hitsApi = c.router({
   getDailyViewsV1: {
     method: 'GET',
     path: `${viewApiUrl}${dailyApiUrl}/:clusterNumber`,
@@ -41,9 +38,6 @@ export const dailyViewApi = c.router({
     description:
       '클러스터 번호(clusterNumber), 탐색어(search), 연관어(related), 날짜(from, to)로 일일 조회수 를 출력합니다.',
   },
-});
-
-export const weeklyViewApi = c.router({
   getWeeklyKeywordListWithPaging: {
     method: 'GET',
     path: `${viewApiUrl}${weeklyApiUrl}-list`,
