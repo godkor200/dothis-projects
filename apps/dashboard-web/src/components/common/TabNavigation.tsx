@@ -63,7 +63,7 @@ const TabNavigation = <
             }
             replace
             scroll={false}
-            className={cn('cursor-pointer text-[28px] font-bold', {
+            className={cn('cursor-pointer text-[20px] font-bold', {
               'text-grey700': selectedArticle === item.category,
             })}
           >

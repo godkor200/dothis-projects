@@ -8,9 +8,9 @@ import {
 } from './rel-words.model';
 import { zErrResBase } from '../error.response.zod';
 
-export const relWordsApiUrl = '/rel-words';
+export const relWordsApiUrl = '/related-word';
 export const keywordApiUrl = '/key-words';
-export const relWordsApi = c.router({
+export const relatedWordsApi = c.router({
   getKeyword: {
     method: 'GET',
     path: `${keywordApiUrl}`,

@@ -6,6 +6,7 @@ import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-indi
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 export interface IIncreaseHitsData extends Pick<IIncreaseData, 'date'> {
   videoViews: number;
+  uniqueVideoCount: number;
 }
 export class VideoAggregateService {
   /**
@@ -242,6 +243,7 @@ export class VideoAggregateService {
           result[date] = {
             date,
             videoViews: 0,
+            uniqueVideoCount: undefined,
           };
         }
 

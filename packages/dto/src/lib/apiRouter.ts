@@ -3,8 +3,8 @@ import { c } from './contract';
 import { userApi } from './user';
 import { authApi } from './auth';
 import { cacheApi } from './cache';
-import { relWordsApi } from './rel-words';
-import { dailyViewApi, weeklyViewApi } from './views';
+import { relatedWordsApi } from './rel-words';
+import { hitsApi } from './hits';
 import { videoApi } from './video';
 import { channelHistoryApi, expectedViewsApi } from './channel-history';
 import { channelApi } from './channel';
@@ -14,12 +14,11 @@ export const apiRouter = c.router({
   auth: authApi,
   user: userApi,
   cache: cacheApi,
-  dailyViews: dailyViewApi,
-  weeklyViews: weeklyViewApi,
+  hits: hitsApi,
   channelHistory: channelHistoryApi,
   channel: channelApi,
   expectViews: expectedViewsApi,
-  relwords: relWordsApi,
+  relatedWords: relatedWordsApi,
   video: videoApi,
   storyBoard: storyBoardApi,
 });

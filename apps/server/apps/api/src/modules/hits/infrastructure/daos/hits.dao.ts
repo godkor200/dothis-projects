@@ -5,6 +5,7 @@ import {
   findVideoBySearchKeyword,
   findVideoBySearchKeywordClusterNumber,
 } from '@dothis/dto';
+import { GetWeeklyViewsDto } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 
 export class SearchRelationVideoAndHistoryDao extends createZodDto(
   extendApi(findVideoBySearchKeyword),
@@ -25,3 +26,8 @@ export class SearchRelationVideoDao extends SearchRelationVideoAndHistoryDao {
 export class RelatedVideoAndVideoHistoryDao extends createZodDto(
   extendApi(findVideoBySearchKeywordClusterNumber),
 ) {}
+export class RelatedVideoAndCountByDayDao extends createZodDto(
+  extendApi(findVideoBySearchKeywordClusterNumber),
+) {}
+
+export class GetWeeklyViewsDao extends GetWeeklyViewsDto {}

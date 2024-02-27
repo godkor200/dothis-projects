@@ -16,8 +16,6 @@ const MainArticleList = () => {
     isFetching,
   } = useGetNewsInfiniteQuery();
 
-  console.log(scrollData);
-
   const dataObj = scrollData?.pages.flatMap(
     (item) => item.return_object.documents,
   );
@@ -33,8 +31,6 @@ const MainArticleList = () => {
       hilight: item.hilight,
     };
   });
-
-  console.log(returnData);
 
   if (isLoading) {
     return (

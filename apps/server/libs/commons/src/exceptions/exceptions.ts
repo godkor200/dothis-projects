@@ -72,3 +72,18 @@ export class InternalServerErrorException extends ExceptionBase {
 
   readonly code = 'INTERNAL_SERVER_ERROR';
 }
+
+export class TableNotFoundException extends ExceptionBase {
+  public message: string;
+
+  public readonly code = 'TABLE.NOT_BE_FOUND';
+
+  constructor(message: string, metadata?: unknown) {
+    super(message, undefined, metadata);
+    this.message =
+      message
+        .split('SQL statement:')[0]
+        .replace(/VIDEO_HISTORY_|VIDEO_/g, '') ||
+      'The Table could not be found.';
+  }
+}
