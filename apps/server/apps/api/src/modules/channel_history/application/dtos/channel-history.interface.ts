@@ -1,4 +1,4 @@
-import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
 
 export class FindVideoChannelHistory {
   readonly keyword: string;
