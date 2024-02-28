@@ -2,13 +2,13 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
   CHANNEL_DATA_KEY,
   ExpectedViewsV2Query,
-} from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+} from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
-import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/constants/channel-history.di-token.constants';
+import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { IChannelHistory } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
+
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
@@ -55,24 +55,24 @@ export class ExpectedViewsV2QueryHandler
     /**
      * 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
      */
-    const channelHistory =
-      await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
-        arg,
-      );
-    if (channelHistory instanceof ScrollApiError)
-      return Err(new ScrollApiError());
-    if (!channelHistory.length) return Err(new ChannelNotFoundError());
+    // const channelHistory =
+    //   await this.channelHistory.findChannelHistoryByKeywordAndRelWordFullScan<IChannelHistory>(
+    //     arg,
+    //   );
+    // if (channelHistory instanceof ScrollApiError)
+    //   return Err(new ScrollApiError());
+    // if (!channelHistory.length) return Err(new ChannelNotFoundError());
+    //
+    // const dailyPerformance =
+    //   this.channelHistoryAggregateService.calculateDailyPerformance(
+    //     channelHistory,
+    //   );
 
-    const dailyPerformance =
-      this.channelHistoryAggregateService.calculateDailyPerformance(
-        channelHistory,
-      );
+    // const result =
+    //   this.channelHistoryAggregateService.calculateKeywordPerformance(
+    //     dailyPerformance,
+    //   );
 
-    const result =
-      this.channelHistoryAggregateService.calculateKeywordPerformance(
-        dailyPerformance,
-      );
-
-    return Ok(result);
+    return Ok([]);
   }
 }
