@@ -73,7 +73,6 @@ const useGetTrendingKeywords = (
     typeof queryResults.data
   >;
 
-  console.log(queryResults.data);
   return {
     ...queryResults,
     data: requiredQueryResult?.pages.flatMap((item) => item.body.data),
