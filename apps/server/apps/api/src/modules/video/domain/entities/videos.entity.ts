@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 import { DailyViewsEntity } from '@Apps/modules/hits/domain/entities/daily-views.entity';
 @Entity({ name: 'video' })
 export class VideoEntity {

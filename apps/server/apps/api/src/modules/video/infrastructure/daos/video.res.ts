@@ -1,10 +1,3 @@
-export interface IRelatedVideoAndVideoHistoryAdapterRes {
-  videoId: string;
-  videoViews: string;
-  date: string;
-}
-export class GetRelatedVideoAndVideoHistory {}
-
 export interface IVideoSchema {
   videoId: string;
   channelId: string;

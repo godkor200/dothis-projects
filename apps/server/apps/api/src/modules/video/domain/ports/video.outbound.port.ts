@@ -7,6 +7,7 @@ import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
 import {
+  FindIndividualVideoInfoV1Dao,
   GetRelatedVideoHistory,
   GetVideoDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
@@ -28,6 +29,11 @@ export type TRelatedVideos = Result<
 >;
 export type TRelatedEntireCount = Result<
   number[][],
+  VideoNotFoundError | TableNotFoundException
+>;
+
+export type TGetVideoWithChannelInfo = Result<
+  IVideoSchema,
   VideoNotFoundError | TableNotFoundException
 >;
 export type TRelatedVideosCountByDay = Result<CountByDayRes[], any>;

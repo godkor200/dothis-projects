@@ -1,9 +1,9 @@
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 import { mock } from 'jest-mock-extended';
 import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
 import { FindAccumulateVideosV2QueryHandler } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/find-accumulate-videos.query-handler';
 import { channelHistory } from '@Apps/modules/video/interfaces/http/v2/find-accumulate-videos/__dummy__/video.dummy';
 

@@ -12,7 +12,7 @@ export default new DataSource({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.DB_SCHEMA,
   logging: true,
-  entities: [__dirname + './**/**/repository/entity/*.entity.ts.'],
+  entities: [__dirname + './**/**/repositories/entities/*.entities.ts.'],
   migrationsRun: true,
   migrations: [__dirname + '/migrations/*.ts'],
 });

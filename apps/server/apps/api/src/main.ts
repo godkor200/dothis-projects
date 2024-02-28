@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'apps/api/src/app.module';
 import { SwaggerModule } from '@nestjs/swagger';
-import { config } from '@Libs/commons/src/util/swagger';
+import { config } from '@Libs/commons/src/utils/swagger';
 import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 import { ConfigService } from '@nestjs/config';

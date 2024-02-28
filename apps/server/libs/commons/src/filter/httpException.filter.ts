@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { MessageBuilder } from 'minimal-discord-webhook-node';
-import { sendWebhook } from '@Libs/commons/src/util/hooks';
+import { sendWebhook } from '@Libs/commons/src/utils/hooks';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 
 @Catch(HttpException)

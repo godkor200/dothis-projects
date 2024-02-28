@@ -10,9 +10,8 @@ import {
 
 export const zDailyViewData = z.object({
   date: z.string(),
-  increase_comments: z.number(),
-  increase_likes: z.number(),
-  increase_views: z.number(),
+  videoViews: z.number().describe('비디오 조회수'),
+  uniqueVideoCount: z.number().describe('해당하는 날짜의 산정 비디오수'),
 });
 
 export const zDailyViews = dataObject(z.array(zDailyViewData));

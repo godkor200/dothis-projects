@@ -1,11 +1,14 @@
 import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-
+export type TData = Pick<
+  GetRelatedVideoHistory,
+  'videoId' | 'videoLikes' | 'videoViews' | 'year' | 'month' | 'day'
+>;
 export function createDummyData(
   numEntries: number,
   numEntriesPerId: number,
-): GetRelatedVideoHistory[] {
-  let dummyData: GetRelatedVideoHistory[] = [];
+): TData[] {
+  let dummyData: TData[] = [];
   let currentViews: number = 0;
   for (let i = 0; i < numEntries; i++) {
     // 일정 주기로 비디오 아이디를 변경합니다
@@ -14,12 +17,13 @@ export function createDummyData(
     currentViews += Math.floor(i / numEntriesPerId) + 1;
     // day는 한 videoId당 중복 없이 증가
     let currentDay = (i % numEntriesPerId) + 1;
-    let data: GetRelatedVideoHistory = {
-      id: currentVideoId,
+    let data: TData = {
+      videoId: currentVideoId,
       videoViews: currentViews,
       year: 2024,
       month: 1,
       day: currentDay,
+      videoLikes: 0,
     };
     dummyData.push(data);
   }

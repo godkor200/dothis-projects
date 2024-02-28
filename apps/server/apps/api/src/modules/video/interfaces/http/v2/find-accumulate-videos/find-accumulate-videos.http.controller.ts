@@ -1,11 +1,9 @@
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
-  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -22,9 +20,10 @@ import {
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getAccVideo;
 

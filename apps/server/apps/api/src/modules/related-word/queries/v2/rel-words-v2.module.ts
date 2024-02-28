@@ -19,21 +19,7 @@ const repositories: Provider[] = [
   FindAutoCompleteQueryHandler,
 ];
 @Module({
-  imports: [
-    CqrsModule,
-    ConfigModule,
-    RedisModule.forRootAsync({
-      imports: [ConfigModule],
-      useClass: RedisConfigService,
-      inject: [ConfigService, 'DB_CONNECTION'],
-      extraProviders: [
-        {
-          provide: 'DB_CONNECTION',
-          useValue: 2,
-        },
-      ],
-    }),
-  ],
+  imports: [CqrsModule, ConfigModule],
   controllers,
   providers: [...repositories],
 })
