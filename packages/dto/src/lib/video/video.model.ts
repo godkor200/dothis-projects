@@ -1,10 +1,6 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zDateQuery,
-  zPaginatedQuery,
-  zSearchKeyword,
-} from '../common.model';
+import { dataObject } from '../common.model';
+import { zPredictedViews, zVideoDetails, zVideoPrediction } from './video.zod';
 
 export const zVideoSection = z.enum([
   '0~100',
@@ -120,70 +116,6 @@ export const zVideoResponse = z.object({
     total: z.object({ value: z.number(), relation: z.string() }),
   }),
 });
-
-export const zClusterQueryParams = z.object({
-  cluster: z.string(),
-});
-export const zClusterPathParams = z.object({
-  clusterNumber: z.string().describe('6'),
-});
-
-export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
-export const findVideoBySearchKeywordClusterNumber = zSearchKeyword
-  .merge(zDateQuery)
-  .merge(zClusterPathParams);
-
-export const findVideoPageQuery = zSearchKeyword.merge(zPaginatedQuery);
-export const zFindVideoPageWithClusterQuery = zSearchKeyword
-  .merge(zPaginatedQuery)
-  .merge(zClusterQueryParams);
-
-export type IKeyword = z.TypeOf<typeof zSearchKeyword>;
-export type IPageQuery = z.TypeOf<typeof zPaginatedQuery>;
-export type TPageWithClusterQueryQuery = z.TypeOf<
-  typeof zFindVideoPageWithClusterQuery
->;
-
-export type VideoModel = z.TypeOf<typeof zVideoModel>;
-
-/**
- * 개별 비디오
- * */
-
-export const zPredictionStatus = z.enum(['INSUFFICIENT_DATA', 'PREDICTING']);
-
-export const VideoPerformance = z.object({
-  expectedViews: z.number(),
-  participationRate: z.number(),
-});
-
-export const zPredictedViews = z.object({
-  date: z.string(),
-  predictedViews: z.number(),
-});
-
-export const zVideoPrediction = z.object({
-  status: zPredictionStatus,
-  dailyViews: z.array(zPredictedViews).nullable(),
-});
-
-export const ChannelPerformance = z.object({
-  subscribers: z.number(),
-  averageViews: z.number(),
-});
-
-export const zVideoDetails = z.object({
-  data: z.object({
-    videoTags: z.string(),
-    videoPerformance: VideoPerformance,
-    videoPrediction: zVideoPrediction,
-    channelPerformance: ChannelPerformance,
-  }),
-});
-/*
- * 연간 비디오수 v2
- */
-export const zFindAccumulateQuery = findVideoBySearchKeyword;
 
 export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails.shape.data>;
 export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;
