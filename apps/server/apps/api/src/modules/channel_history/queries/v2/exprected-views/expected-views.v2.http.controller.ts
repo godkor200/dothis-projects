@@ -3,7 +3,7 @@ import { Controller, NotFoundException, Query } from '@nestjs/common';
 import {
   ExpectedViewsV2Dto,
   ExpectedViewsV2Query,
-} from '@Apps/modules/channel_history/dtos/expected-views.dtos';
+} from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
 import { match, Result } from 'oxide.ts';
 import { apiRouter, TExpectedViewsArr, TExpectedViewsRes } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
