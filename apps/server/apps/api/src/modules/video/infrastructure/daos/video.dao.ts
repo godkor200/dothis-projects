@@ -4,6 +4,8 @@ import {
   GetVideoPaginatedPageDto,
   IFindVideoPageQuery,
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
+import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;
@@ -18,21 +20,12 @@ export class FindDailyViewsV3Dao extends FindDailyViewsV3Dto {
     Object.assign(this, props);
   }
 }
-export interface GetRelatedVideoAndVideoHistory {
-  videoId: string;
-  videoViews: number;
-  videoLikes: number;
-  videoComments: number;
-  videoPerformance: number;
-  year: number;
-  month: number;
-  day: number;
+
+export class FindIndividualVideoInfoV1Dao extends FindIndividualVideoInfoV1Dto {
+  constructor(props: FindIndividualVideoInfoV1Dto) {
+    super(props);
+    Object.assign(this, props);
+  }
 }
 
-export type GetRelatedVideoHistory = {
-  id: string;
-  videoViews: number;
-  year: number;
-  month: number;
-  day: number;
-};
+export type GetRelatedVideoHistory = GetRelatedVideoAndVideoHistory;
