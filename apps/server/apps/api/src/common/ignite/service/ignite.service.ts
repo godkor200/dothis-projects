@@ -24,10 +24,17 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     maxRetries: number,
   ): Promise<void> {
     let retries = 0;
-    const endpoint = this.configService.get<string>('ignite.IGNITE_ENDPOINT');
+    const endpoint1 = this.configService.get<string>('ignite.IGNITE_ENDPOINT1');
+    const endpoint2 = this.configService.get<string>('ignite.IGNITE_ENDPOINT2');
+    const endpoint3 = this.configService.get<string>('ignite.IGNITE_ENDPOINT3');
+
     const username = this.configService.get<string>('ignite.IGNITE_USER_NAME');
     const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
-    const igniteClientConfiguration = new IgniteClientConfiguration(endpoint)
+    const igniteClientConfiguration = new IgniteClientConfiguration(
+      endpoint1,
+      endpoint2,
+      endpoint3,
+    )
       .setUserName(username)
       .setPassword(password);
 

@@ -12,7 +12,7 @@ import { SetDicTermHandler } from 'apps/api/src/modules/cache/v1/commands/set-di
 import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_TERM,
-} from 'apps/api/src/modules/channel/constants/channel-data.di-token.constants';
+} from '@Apps/modules/channel/channel-data.di-token.constants';
 import { GetDicSearchTermCommandHandler } from 'apps/api/src/modules/channel/v1/commands/get-dic-search-term/get-dic-searth-term.service';
 import { ChannelDataRepository } from 'apps/api/src/modules/channel/repository/db/channel-data.repository';
 import { SetDicTermHttpController } from 'apps/api/src/modules/cache/v1/commands/set-dic-term/set-dic-term.http.controller';

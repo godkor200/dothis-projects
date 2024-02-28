@@ -82,7 +82,7 @@ export class FindDailyViewsV1Dto
 
 export interface IIncreaseData {
   date: string;
-  increase_views: number;
-  increase_likes: number;
-  increase_comments: number;
+  increaseViews: number;
+  increaseLikes: number;
+  increaseComments: number;
 }

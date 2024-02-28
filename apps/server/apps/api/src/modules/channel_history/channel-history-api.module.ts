@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
-import { ChannelHistoryV1Module } from '@Apps/modules/channel_history/queries/v1/channel-history-v1.module';
-import { ChannelHistoryV2Module } from '@Apps/modules/channel_history/queries/v2/channel-history-v2.module';
+import { ChannelHistoryV1Module } from '@Apps/modules/channel_history/interfaces/http/queries/v1/channel-history-v1.module';
+import { ChannelHistoryV2Module } from '@Apps/modules/channel_history/interfaces/http/queries/v2/channel-history-v2.module';
 
 @Module({
   imports: [

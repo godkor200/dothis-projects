@@ -6,7 +6,7 @@ import {
 import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { CACHE_SET_DIC_TERM } from 'apps/api/src/modules/cache/constants/cache.di-token';
 import { SetDicTermAdaptor } from 'apps/api/src/modules/cache/v1/commands/set-dic-term/set-dic-term.adaptor';
-import { CHANNEL_TERM } from 'apps/api/src/modules/channel/constants/channel-data.di-token.constants';
+import { CHANNEL_TERM } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { GetDicSearchTermAdapter } from 'apps/api/src/modules/channel/v1/commands/get-dic-search-term/get-dic-search-term.adapter';
 
 @CommandHandler(SetDicTermCommand)

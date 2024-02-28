@@ -1,19 +1,17 @@
-import { z } from 'zod';
 import { c } from '../contract';
-import {
-  findVideoBySearchKeyword,
-  findVideoPageQuery,
-  zAccVideoModel,
-  zFindVideoPageWithClusterQuery,
-  zVideoDetails,
-  zVideoResponse,
-} from './video.model';
+
+import { zAccVideoModel, zVideoResponse } from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
-  zClusterNumber,
   zClusterNumberMulti,
   zPaginatedIgniteQueryParams,
 } from '../common.model';
+import {
+  findVideoBySearchKeyword,
+  zFindIndividualVideoInfoParams,
+  zFindVideoPageWithClusterQuery,
+  zVideoDetails,
+} from './video.zod';
 
 export const videoBaseApiUrl = '/video';
 
@@ -57,7 +55,7 @@ export const videoApi = c.router({
   getIndividualVideo: {
     method: 'GET',
     path: `${videoBaseApiUrl}/:clusterNumber/:videoId`,
-    pathParams: z.object({ clusterNumber: z.number(), videoId: z.string() }), // 비디오 카테고리(cluster) 넘버, 비디오 아이디
+    pathParams: zFindIndividualVideoInfoParams, // 비디오 카테고리(cluster) 넘버, 비디오 아이디
     responses: {
       200: zVideoDetails,
       ...zErrResBase,
