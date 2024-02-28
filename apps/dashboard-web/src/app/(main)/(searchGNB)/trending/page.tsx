@@ -109,7 +109,7 @@ const TrendingPage = () => {
   };
 
   useEffect(() => {
-    setLastId(data?.at(-1)?._id);
+    setLastId(String(data?.at(-1)?.id));
   }, [JSON.stringify(data)]);
 
   return (
@@ -190,39 +190,39 @@ const TrendingPage = () => {
                   >
                     <div className=" items-center gap-[10px]">
                       <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                        {Number(item._id) + 1}
+                        {Number(item.id) + 1}
                       </div>
                     </div>
                     <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
-                      {item._source.keyword}
+                      {item.keyword}
                     </div>
                     <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
                       {
                         clustersCategories[
                           JSON.parse(
-                            item._source.category,
+                            item.category,
                           )[0] as keyof typeof clustersCategories
                         ]
                       }
                     </div>
                     <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {item._source.weekly_views?.toLocaleString('ko-kr')}
+                      {item.weekly_views?.toLocaleString('ko-kr')}
                     </div>
                     <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                      {item._source.video_count?.toLocaleString('ko-kr')}
+                      {item.video_count?.toLocaleString('ko-kr')}
                     </div>
                     <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
-                      {convertCompetitionScoreFormat(item._source.competitive)}
+                      {convertCompetitionScoreFormat(item.competitive)}
                     </div>
                     <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
-                      {item._source.mega_channel?.toLocaleString('ko-kr')}
+                      {item.mega_channel?.toLocaleString('ko-kr')}
                     </div>
                     <div className="invisible group-hover:visible">
                       <Dialog.Trigger
                         asChild
                         onClick={() =>
                           setModalContent(
-                            <TrendingModal keyword={item._source.keyword} />,
+                            <TrendingModal keyword={item.keyword} />,
                           )
                         }
                       >
