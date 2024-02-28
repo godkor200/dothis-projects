@@ -44,7 +44,7 @@ const MainArticleList = () => {
   }
 
   if (returnData?.length === 0 || !returnData) {
-    return <div>뉴스기사가 없습니다.</div>;
+    return null;
   }
 
   return (
@@ -61,22 +61,26 @@ const MainArticleList = () => {
           image={returnData[0]?.image}
           link={returnData[0]?.link}
         />
-        <CurrentArticle
-          title={returnData[1]?.title}
-          category={returnData[1]?.category}
-          provider={returnData[1]?.provider}
-          date={returnData[1]?.date}
-          image={returnData[1]?.image}
-          link={returnData[1]?.link}
-        />
-        <CurrentArticle
-          title={returnData[2]?.title}
-          category={returnData[2]?.category}
-          provider={returnData[2]?.provider}
-          date={returnData[2]?.date}
-          image={returnData[2]?.image}
-          link={returnData[2]?.link}
-        />
+        {returnData[1] && (
+          <CurrentArticle
+            title={returnData[1]?.title}
+            category={returnData[1]?.category}
+            provider={returnData[1]?.provider}
+            date={returnData[1]?.date}
+            image={returnData[1]?.image}
+            link={returnData[1]?.link}
+          />
+        )}
+        {returnData[2] && (
+          <CurrentArticle
+            title={returnData[2]?.title}
+            category={returnData[2]?.category}
+            provider={returnData[2]?.provider}
+            date={returnData[2]?.date}
+            image={returnData[2]?.image}
+            link={returnData[2]?.link}
+          />
+        )}
       </div>
       <p className="mb-[40px] text-center text-[20px] font-bold">
         "{selectedWord.keyword}" 키워드를 주제로 만든 영상들의 성과를 확인하고,
