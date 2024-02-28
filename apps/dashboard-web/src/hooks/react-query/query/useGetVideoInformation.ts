@@ -26,7 +26,7 @@ const useGetVideoInformation = (
     ]),
     {
       params: {
-        clusterNumber: clusterNumber,
+        clusterNumber: String(clusterNumber),
         videoId: videoId!,
       },
     },
