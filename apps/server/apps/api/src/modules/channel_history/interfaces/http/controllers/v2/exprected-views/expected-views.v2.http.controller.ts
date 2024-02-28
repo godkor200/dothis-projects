@@ -22,7 +22,7 @@ import {
   ExpectedViewsData,
   IRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 const { summary, description } = getExpectedViews;
 
 @ApiTags('기대 조회수')

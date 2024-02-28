@@ -10,6 +10,7 @@ import { VideoHistoryOutboundPort } from '@Apps/modules/video_history/domain/por
 import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 
 import { Err, Ok } from 'oxide.ts';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export class FindIndividualVideoInfoService
   implements FindIndividualVideoInboundPort
@@ -44,13 +45,25 @@ export class FindIndividualVideoInfoService
   async execute(
     dto: FindIndividualVideoInfoV1Dto,
   ): Promise<TVideoIndividualRes> {
-    const dao = new FindIndividualVideoInfoV1Dao(dto);
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더해줍니다.
+    const day = ('0' + date.getDate()).slice(-2);
 
+    const dao = new FindIndividualVideoInfoV1Dao(dto);
     const channelHistory = await this.channelHistory.getLatestDayTuple(dao);
     const videoHistoryRes = await this.videoHistory.getHistory({
       clusterNumber: dto.clusterNumber,
       videoId: dto.videoId,
+      from: '2024-01-01',
+      to: '2024-01-30',
     });
+
+    /**
+     * 원래 로직
+     *       from: DateUtil.getDaysAgo(7),
+     *       to: DateUtil.getDaysAgo(),
+     */
 
     if (channelHistory.isOk() && videoHistoryRes.isOk()) {
       const channelHistoryTagInfo = channelHistory.unwrap();

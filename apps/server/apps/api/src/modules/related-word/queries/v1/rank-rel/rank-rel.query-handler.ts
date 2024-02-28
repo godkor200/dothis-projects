@@ -7,7 +7,10 @@ import { RankRelQueryDto } from '@Apps/modules/related-word/queries/v1/rank-rel/
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
-import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
+import {
+  CHANNEL_HISTORY_IGNITE_DI_TOKEN,
+  CHANNEL_HISTORY_OS_DI_TOKEN,
+} from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import {
   IChannelHistoryWithoutChannelSubscribers,
   IRankingRelWords,
@@ -32,7 +35,7 @@ export class RankRelQueryHandler
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: FindRelAdapter,
 
-    @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
+    @Inject(CHANNEL_HISTORY_IGNITE_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
 
     private readonly rankRelAggregateService: RankRelAggregateService,

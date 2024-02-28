@@ -54,9 +54,15 @@ export const validationSchema = Joi.object({
   OPENSEARCH_NODE: Joi.string()
     .required()
     .description('OpenSearch 클러스터의 노드 주소입니다.'),
-  IGNITE_ENDPOINT: Joi.string()
+  IGNITE_ENDPOINT1: Joi.string()
     .required()
-    .description('Apache Ignite 서비스의 엔드포인트 주소입니다.'),
+    .description('Apache Ignite 서비스의 엔드포인트1 주소입니다.'),
+  IGNITE_ENDPOINT2: Joi.string()
+    .required()
+    .description('Apache Ignite 서비스의 엔드포인트2 주소입니다.'),
+  IGNITE_ENDPOINT3: Joi.string()
+    .required()
+    .description('Apache Ignite 서비스의 엔드포인트3 주소입니다.'),
   IGNITE_USER_NAME: Joi.string()
     .required()
     .description('Apache Ignite 서비스에 접속할 사용자 이름입니다.'),

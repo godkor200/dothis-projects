@@ -5,7 +5,7 @@ import { Err, Ok, Result } from 'oxide.ts';
 
 import { ChannelDataRepositoryPort } from '@Apps/modules/channel/domain/ports/channel-data.repository.port';
 import { ResultChannelKeywordTag } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 
 export class FindKeywordTagByUserCommand {
   public readonly userId: string;

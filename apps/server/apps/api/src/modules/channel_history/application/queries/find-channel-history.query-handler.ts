@@ -2,10 +2,11 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindChannelInfoDto } from '@Apps/modules/channel_history/application/dtos/find-channel-info.dto';
 import { ChannelHistoryModel } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
-import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
+import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 import { Err, Ok, Result } from 'oxide.ts';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
+import { FindChannelInfoDao } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
 
 @QueryHandler(FindChannelInfoDto)
 export class FindChannelHistoryQueryHandler
@@ -16,14 +17,15 @@ export class FindChannelHistoryQueryHandler
     >
 {
   constructor(
-    @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
+    @Inject(CHANNEL_HISTORY_IGNITE_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
   ) {}
   async execute(
     arg: FindChannelInfoDto,
   ): Promise<Result<ChannelHistoryModel, ChannelNotFoundError>> {
     const channelId = arg.channelId;
-    const channel = await this.channelHistory.findChannelHistoryInfo(channelId);
+    const dao = new FindChannelInfoDao(arg);
+    const channel = await this.channelHistory.findChannelHistoryInfo(dao);
     if (!channel) return Err(new ChannelNotFoundError());
     return Ok(channel);
   }
