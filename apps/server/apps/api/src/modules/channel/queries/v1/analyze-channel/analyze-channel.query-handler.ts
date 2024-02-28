@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { AnalyzeChannelDto } from '@Apps/modules/channel/interface/analyze-channel.interface';
+import { AnalyzeChannelDto } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { ChannelAnalysisRes } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
-import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 
 @QueryHandler(AnalyzeChannelDto)

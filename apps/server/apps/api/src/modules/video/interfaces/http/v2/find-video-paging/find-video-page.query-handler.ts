@@ -5,7 +5,7 @@ import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { Inject } from '@nestjs/common';
 import { Ok, Result, Err } from 'oxide.ts';
-import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
 import { FindVideoPageV2Dto } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-paging.req.dto';
 

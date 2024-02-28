@@ -9,9 +9,9 @@ import {
 } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import { VideoHistoryQueryHandler } from '@Apps/modules/video_history/database/video_history.query-handler';
 import { AwsModule } from '@Apps/common/aws/aws.module';
-import { FindChannelHistoryHttpController } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.http.controller';
-import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel_history/queries/v1/find-channel-history/find-channel-history.query-handler';
-import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
+import { FindChannelHistoryHttpController } from '@Apps/modules/channel_history/interfaces/http/queries/v1/find-channel-history/find-channel-history.http.controller';
+import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel_history/interfaces/http/queries/v1/find-channel-history/find-channel-history.query-handler';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
 import { ChannelHistoryAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.adapter';
 const controllers = [FindChannelHistoryHttpController];
 const repositories: Provider[] = [

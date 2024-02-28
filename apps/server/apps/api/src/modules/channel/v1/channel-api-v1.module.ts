@@ -4,12 +4,12 @@ import { GetDicSearchTermCommandHandler } from 'apps/api/src/modules/channel/v1/
 import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_OS_DI_TOKEN,
-} from 'apps/api/src/modules/channel/constants/channel-data.di-token.constants';
+} from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelDataRepository } from 'apps/api/src/modules/channel/repository/db/channel-data.repository';
 import { CHANNEL_REPOSITORY } from '@Apps/modules/channel/channel.di-token';
 import { ChannelRepository } from '@Apps/modules/channel/database/channel.repository';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/repository/database/channel-history.query-handler';
+import { ChannelHistoryQueryHandler } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.query-handler';
 import { AnalyzeChannelHttpController } from '@Apps/modules/channel/queries/v1/analyze-channel/analyze-channel.http.controller';
 import { AtStrategy } from '@Libs/commons/src';
 import { CqrsModule } from '@nestjs/cqrs';

@@ -1,5 +1,4 @@
 import { IQuery } from '@nestjs/cqrs';
-import { TDecodePayload } from '@Libs/commons/src';
 
 export class AnalyzeChannelDto implements IQuery {
   channelId: string;

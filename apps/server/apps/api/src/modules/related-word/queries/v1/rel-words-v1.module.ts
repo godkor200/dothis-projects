@@ -16,7 +16,7 @@ import { AwsModule } from '@Apps/common/aws/aws.module';
 import { FindSearchKeywordHttpController } from '@Apps/modules/related-word/queries/v1/find-search-keyword/find-search-keyword.http.controller';
 import { FindSearchKeywordQueryHandler } from '@Apps/modules/related-word/queries/v1/find-search-keyword/find-search-keyword.query-handler';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/service/channel-history.service.module';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
 import { RankRelAggregateService } from '@Apps/modules/related-word/service/rank-rel.aggregate.service';
 
 const controllers = [

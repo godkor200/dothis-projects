@@ -5,7 +5,7 @@ import { Inject } from '@nestjs/common';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
 import { VideoHistoryOutboundPort } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
 import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 

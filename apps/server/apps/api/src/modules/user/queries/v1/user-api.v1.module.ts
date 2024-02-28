@@ -9,7 +9,7 @@ import { GetChannelDataCommandHandler } from '@Apps/modules/user/queries/v1/get-
 import { GetChannelDataHttpController } from '@Apps/modules/user/queries/v1/get-channel-data/get-channel-data.http.controller';
 import { ChannelDataRepository } from '@Apps/modules/channel/repository/db/channel-data.repository';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelEntityModule } from '@Apps/modules/channel/repository/entity/channel.entity.module';
 import { UpdatePersonalTagHttpController } from '@Apps/modules/user/command/v1/update-personal-tag/update-personal-tag.http.controller';
 

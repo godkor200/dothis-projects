@@ -7,7 +7,7 @@ import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_DATA_REPOSITORY_BY_OS,
-} from '@Apps/modules/channel/constants/channel-data.di-token.constants';
+} from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelQueryHandler } from '@Apps/modules/channel/repository/repository/channel.query-handler';
 import { GetKeywordByUserHttpController } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.http.controller';
 import { GetUserV2CommandHandler } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
