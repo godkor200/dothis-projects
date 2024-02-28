@@ -1,22 +1,22 @@
-import { IChannelHistoryRes } from '@Apps/modules/channel_history/dtos/expected-views.res';
-import { FindVideoV2 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
-import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
-import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { IChannelHistoryRes } from '@Apps/modules/channel_history/application/dtos/expected-views.res';
+import {
+  TChannelHistoryLatestDayTupleRes,
+  TChannelHistoryTuplesRes,
+} from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
+import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 export interface ChannelHistoryOutboundPort {
-  findChannelHistoryInfo(channelIds: string): Promise<IChannelHistoryRes>;
-
   findChannelHistoryByLimit(
     channelIds: string[],
     size: number,
     order: 'desc' | 'asc',
   ): Promise<IChannelHistoryRes[]>;
 
-  findChannelHistoryByKeywordAndRelWordFullScan<T>(
-    props: FindVideoV2,
-  ): Promise<T[] | ScrollApiError>;
+  getLatestDayTuple(
+    dao: FindIndividualVideoInfoV1Dao,
+  ): Promise<TChannelHistoryLatestDayTupleRes>;
 
-  scanLatestChannelHistoryByKeywordAndRelWord<T>(
-    props: FindVideoChannelHistory,
-  ): Promise<T[] | ScrollApiError>;
+  getHistory(
+    dao: FindIndividualVideoInfoV1Dao,
+  ): Promise<TChannelHistoryTuplesRes>;
 }
