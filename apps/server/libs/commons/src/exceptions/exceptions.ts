@@ -42,7 +42,7 @@ export class ConflictException extends ExceptionBase {
 }
 
 /**
- * Used to indicate that entity is not found
+ * Used to indicate that entities is not found
  *
  * @class NotFoundException
  * @extends {ExceptionBase}

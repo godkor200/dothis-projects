@@ -19,4 +19,8 @@ export interface ChannelHistoryOutboundPort {
   getHistory(
     dao: FindIndividualVideoInfoV1Dao,
   ): Promise<TChannelHistoryTuplesRes>;
+
+  scanLatestChannelHistoryByKeywordAndRelWord<T>(dao: any): Promise<any>;
+
+  findChannelHistoryByKeywordAndRelWordFullScan<T>(dao: any): Promise<any>;
 }

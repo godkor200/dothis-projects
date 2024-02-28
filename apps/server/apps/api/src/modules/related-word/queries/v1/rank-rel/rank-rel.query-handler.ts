@@ -6,7 +6,6 @@ import { FindRelAdapter } from '@Apps/modules/related-word/interface/find-rel.ad
 import { RankRelQueryDto } from '@Apps/modules/related-word/queries/v1/rank-rel/rank-rel.http.controller';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/relwords.errors';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
 import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import {
@@ -16,6 +15,7 @@ import {
 import { RankRelAggregateService } from '@Apps/modules/related-word/service/rank-rel.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 
 @QueryHandler(RankRelQueryDto)
 export class RankRelQueryHandler

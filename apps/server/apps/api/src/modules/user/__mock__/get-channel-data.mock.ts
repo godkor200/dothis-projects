@@ -3,9 +3,9 @@ import {
   PaginatedQueryParams,
   updateObject,
 } from '@Libs/commons/src';
-import { ChannelDataRepositoryPort } from 'apps/api/src/modules/channel/repository/db/channel-data.repository.port';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/domain/ports/channel-data.repository.port';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { ChannelEntity } from 'apps/api/src/modules/channel/repository/entity/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 
 export class ChannelDataMock implements ChannelDataRepositoryPort {
   private readonly result: ChannelEntity;

@@ -12,7 +12,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     console.log(
       connectionName,
       '__dirname',
-      __dirname + './**/**/**/**/*.entity.ts',
+      __dirname + './**/**/**/**/*.entities.ts',
     );
     return {
       type: 'mysql',
@@ -22,7 +22,10 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: this.configService.get('db.MYSQL_PASSWORD'),
       database: this.configService.get('db.DB_SCHEMA'),
       logging: true,
-      entities: [__dirname + './**/**/**/**/**/*.entity.ts', WeeklyHitsEntity],
+      entities: [
+        __dirname + './**/**/**/**/**/*.entities.ts',
+        WeeklyHitsEntity,
+      ],
       autoLoadEntities: true,
       migrations: [__dirname + '../../migrations/*.ts'],
       synchronize: this.configService.get('app.NODE_ENV') === 'development',

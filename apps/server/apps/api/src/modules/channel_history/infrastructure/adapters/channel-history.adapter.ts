@@ -1,5 +1,5 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/application/dtos/expected-views.res';
 

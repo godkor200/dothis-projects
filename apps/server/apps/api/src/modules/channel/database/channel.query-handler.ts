@@ -1,4 +1,4 @@
-import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
+import { ChannelQueryHandlerPort } from '@Apps/modules/channel/domain/ports/channel.query-handler.port';
 import { AwsOpenSearchConnectionService } from '@Apps/common/aws/service/aws.opensearch.service';
 import { CHANNEL_DATA } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';

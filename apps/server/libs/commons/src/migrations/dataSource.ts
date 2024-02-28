@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { DailyViewsEntity } from '@Apps/modules/hits/domain/entities/daily-views.entity';
 import { User } from '@Apps/modules/user/domain/user.entity';
-import { ChannelEntity } from 'apps/api/src/modules/channel/repository/entity/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 import { VideoEntity } from '@Apps/modules/video/domain/entities/videos.entity';
 
 const configService = new ConfigService();

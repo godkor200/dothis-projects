@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 import { ChannelModel as TChannelModel, zChannelData } from '@dothis/dto';
-import { ChannelRepositoryPort } from '@Apps/modules/channel/database/channel.repository.port';
+import { ChannelRepositoryPort } from '@Apps/modules/channel/domain/ports/channel.repository.port';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 

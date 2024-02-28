@@ -1,4 +1,4 @@
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 import { mock } from 'jest-mock-extended';
 import { FindAccumulateVideosV2Dtos } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';

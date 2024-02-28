@@ -13,10 +13,10 @@ import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_TERM,
 } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { GetDicSearchTermCommandHandler } from 'apps/api/src/modules/channel/v1/commands/get-dic-search-term/get-dic-searth-term.service';
-import { ChannelDataRepository } from 'apps/api/src/modules/channel/repository/db/channel-data.repository';
+import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/application/service/get-dic-searth-term.service';
+import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
 import { SetDicTermHttpController } from 'apps/api/src/modules/cache/v1/commands/set-dic-term/set-dic-term.http.controller';
-import { ChannelEntityModule } from 'apps/api/src/modules/channel/repository/entity/channel.entity.module';
+import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
 
 const controllers = [FindDicTermHttpController, SetDicTermHttpController];
 
