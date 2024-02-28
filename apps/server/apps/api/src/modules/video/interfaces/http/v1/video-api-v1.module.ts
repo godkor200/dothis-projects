@@ -13,7 +13,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
-import { ChannelQueryHandler } from '@Apps/modules/channel/database/channel.query-handler';
+import { ChannelQueryHandler } from '@Apps/modules/channel/infrastucture/adapters/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
