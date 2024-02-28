@@ -5,10 +5,11 @@ import {
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { IGetVideoHistoryDao } from '@Apps/modules/video_history/infrastructure/daos/video-history.dao';
 import {
-  VideosDateFormatter,
+  DateFormatter,
   VideosResultTransformer,
 } from '@Apps/modules/video/infrastructure/utils';
 import { Ok } from 'oxide.ts';
+import { QueryGenerator } from '@Libs/commons/src/utils/query-generator';
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
@@ -34,14 +35,19 @@ export class VideoHistoryAdapter
    */
   async getHistory(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes> {
     const { videoId, from, to, clusterNumber } = dao;
-    const fromDate = VideosDateFormatter.getFormattedDate(from);
-    const toDate = VideosDateFormatter.getFormattedDate(to);
-    const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
-    const queryString = `SELECT ${this.keys.join(
-      ', ',
-    )} FROM ${tableName} vh WHERE vh.video_id = '${videoId}' AND (vh.DAY BETWEEN ${
-      fromDate.day
-    } AND ${toDate.day});`;
+    const fromDate = DateFormatter.getFormattedDate(from);
+    const toDate = DateFormatter.getFormattedDate(to);
+    const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER`;
+    const queryString = QueryGenerator.generateUnionQuery(
+      this.keys,
+      clusterNumber,
+      tableName,
+      videoId,
+      fromDate,
+      toDate,
+    );
+
+    console.log(queryString);
     const cache = await this.client.getCache(tableName);
 
     const query = new SqlFieldsQuery(queryString);

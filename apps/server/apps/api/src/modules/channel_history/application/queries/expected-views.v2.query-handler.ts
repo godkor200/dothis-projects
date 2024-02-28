@@ -5,12 +5,15 @@ import {
 } from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
-import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import {
+  CHANNEL_HISTORY_IGNITE_DI_TOKEN,
+  CHANNEL_HISTORY_OS_DI_TOKEN,
+} from '@Apps/modules/channel_history/channel-history.di-token.constants';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { TExpectedViewsArr } from '@dothis/dto';
 
@@ -26,7 +29,7 @@ export class ExpectedViewsV2QueryHandler
     >
 {
   constructor(
-    @Inject(CHANNEL_HISTORY_OS_DI_TOKEN)
+    @Inject(CHANNEL_HISTORY_IGNITE_DI_TOKEN)
     private readonly channelHistory: ChannelHistoryOutboundPort,
 
     private readonly channelHistoryAggregateService: ChannelHistoryAggregateService,

@@ -1,5 +1,5 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 
 import { IChannelHistoryRes } from '@Apps/modules/channel_history/application/dtos/expected-views.res';
 
@@ -7,18 +7,30 @@ import { Err, Ok } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import {
+  FindChannelInfoDao,
   TChannelHistoryLatestDayTupleRes,
   TChannelHistoryTuplesRes,
 } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
+
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
+
 export class ChannelHistoryAdapter
   extends IgniteService
   implements ChannelHistoryOutboundPort
 {
+  findChannelHistoryInfo(dao: FindChannelInfoDao): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  scanLatestChannelHistoryByKeywordAndRelWord<T>(dao: any): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  findChannelHistoryByKeywordAndRelWordFullScan<T>(dao: any): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
   private readonly keys: string[] = [
     'CHANNEL_ID',
     'CHANNEL_AVERAGE_VIEWS',
@@ -50,6 +62,7 @@ export class ChannelHistoryAdapter
       return Err(e);
     }
   }
+
   findChannelHistoryByLimit(
     channelIds: string[],
     size: number,

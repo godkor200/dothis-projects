@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ChannelEntityModule } from 'apps/api/src/modules/channel/repository/entity/channel.entity.module';
-import { ChannelApiV1Module } from './v1/channel-api-v1.module';
+import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
 
 import { RouterModule } from '@nestjs/core';
+import { ChannelApiV1Module } from '@Apps/modules/channel/channel.v1.module';
 
 @Module({
   imports: [

@@ -1,8 +1,8 @@
 import { GetChannelDataCommandHandler } from './get-channel-data.service';
-import { ChannelEntity } from '@Apps/modules/channel/repository/entity/channel.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 import { GetChannelDataCommandDto } from '@Apps/modules/user/queries/v1/get-channel-data/get-channel-data.command.dto';
 import { mock } from 'jest-mock-extended';
-import { ChannelDataRepositoryPort } from '@Apps/modules/channel/repository/db/channel-data.repository.port';
+import { ChannelDataRepositoryPort } from '@Apps/modules/channel/domain/ports/channel-data.repository.port';
 const mockChannelDataRepository = mock<ChannelDataRepositoryPort>();
 
 let handler: GetChannelDataCommandHandler;

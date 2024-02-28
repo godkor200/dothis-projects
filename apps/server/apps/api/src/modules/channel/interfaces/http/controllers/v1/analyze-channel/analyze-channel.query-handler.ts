@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { AnalyzeChannelDto } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { ChannelAnalysisRes } from '@dothis/dto';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repository/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { ChannelQueryHandlerPort } from '@Apps/modules/channel/database/channel.query-handler.port';
+import { ChannelQueryHandlerPort } from '@Apps/modules/channel/domain/ports/channel.query-handler.port';
+import { FindChannelInfoDao } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
 
 @QueryHandler(AnalyzeChannelDto)
 export class AnalyzeChannelQueryHandler
@@ -29,9 +30,10 @@ export class AnalyzeChannelQueryHandler
     query: AnalyzeChannelDto,
   ): Promise<Result<ChannelAnalysisRes, ChannelNotFoundError>> {
     const { channelId } = query;
+    const chDao = new FindChannelInfoDao({ channelId });
     const channel = await this.channelData.findChannelInfo(channelId);
     const channelHistory = await this.channelHistory.findChannelHistoryInfo(
-      channelId,
+      chDao,
     );
 
     if (!channel) return Err(new ChannelNotFoundError());
