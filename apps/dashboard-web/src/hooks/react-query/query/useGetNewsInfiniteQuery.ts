@@ -36,7 +36,7 @@ const useGetNewsInfiniteQuery = (
           until: endDate,
         },
         // provider: ['경향신문'],
-        // category: ['정치>정치일반', 'IT_과학'],
+        category: ['정치', '경제', '사회', '국제', '지역', '스포츠', 'IT_과학'],
         // category_incident: ['범죄', '교통사고', '재해>자연재해'],
         // byline: '',
 
