@@ -9,7 +9,7 @@ import type { DeepRequired } from '@/hooks/react-query/query/common';
 dayjs.extend(isSameOrBefore);
 
 type DailyView = DeepRequired<
-  ClientInferResponseBody<typeof apiRouter.dailyViews.getDailyViews, 200>
+  ClientInferResponseBody<typeof apiRouter.hits.getDailyViewsV1, 200>
 >['data'][0];
 
 type ExpectedView = DeepRequired<
@@ -49,7 +49,7 @@ export const sumViews = (
     if (item) {
       const date = item.date;
 
-      const views = item.increase_views;
+      const views = item.videoViews;
 
       if (result.hasOwnProperty(date)) {
         result[date] += views;

@@ -22,7 +22,7 @@ const useGetDailyView = (
     keyword: string | null;
     relword: string | null;
   },
-  queryOptions?: UseQueryOptions<typeof apiRouter.dailyViews.getDailyViews>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.hits.getDailyViewsV1>,
 ) => {
   const { data } = useGetRelWords(keyword);
 
@@ -36,7 +36,7 @@ const useGetDailyView = (
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(3).dailyViews.getDailyViews.useQueries({
+  const queryResults = apiClient(3).hits.getDailyViewsV1.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: DAILYVIEW_KEY.list([
