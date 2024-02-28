@@ -27,6 +27,24 @@ const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoAdapter extends IgniteService implements VideoOutboundPort {
+  private readonly videoColumns: string[] = [
+    'VIDEO_ID',
+    'CHANNEL_ID',
+    'VIDEO_TITLE',
+    'VIDEO_DESCRIPTION',
+    'VIDEO_TAGS',
+    'VIDEO_DURATION',
+    'VIDEO_PUBLISHED',
+    'VIDEO_CATEGORY',
+    'VIDEO_INFO_CARD',
+    'VIDEO_WITH_ADS',
+    'VIDEO_END_SCREEN',
+    'VIDEO_CLUSTER',
+    'CRAWLED_DATE',
+    'YEAR',
+    'MONTH',
+    'DAY',
+  ];
   constructor(configService: ConfigService) {
     super(configService);
   }
@@ -165,27 +183,9 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
 
   async getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
-    const columns = [
-      'VIDEO_ID',
-      'CHANNEL_ID',
-      'VIDEO_TITLE',
-      'VIDEO_DESCRIPTION',
-      'VIDEO_TAGS',
-      'VIDEO_DURATION',
-      'VIDEO_PUBLISHED',
-      'VIDEO_CATEGORY',
-      'VIDEO_INFO_CARD',
-      'VIDEO_WITH_ADS',
-      'VIDEO_END_SCREEN',
-      'VIDEO_CLUSTER',
-      'CRAWLED_DATE',
-      'YEAR',
-      'MONTH',
-      'DAY',
-    ];
 
     const queryString = this.getClusterQueryString(
-      columns.map((column) => `vd.${column}`),
+      this.videoColumns.map((column) => `vd.${column}`),
       search,
       related,
       from,
