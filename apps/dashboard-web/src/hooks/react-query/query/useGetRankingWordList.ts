@@ -21,13 +21,13 @@ import useGetUserInfo from './useGetUserInfo';
 
 const useGetRankingWordList = (
   keyword: string[],
-  queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.relatedWords.rankRel>,
 ) => {
   const { isLoading: userLoading } = useGetUserInfo();
 
   const isTokenRequired = useIsTokenRequired();
 
-  const queryResults = apiClient(1).relwords.rankRel.useQueries({
+  const queryResults = apiClient(1).relatedWords.rankRel.useQueries({
     queries: keyword.map((keyword) => {
       return {
         queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
