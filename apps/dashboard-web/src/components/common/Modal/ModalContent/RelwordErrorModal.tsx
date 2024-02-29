@@ -18,7 +18,8 @@ const RelwordErrorModal = ({
         <SvgComp icon="Close" size={24} />
       </div>
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
-        키워드에 대한 데이터가 부족합니다.
+        {/* 키워드에 대한 데이터가 부족합니다. */}
+        데이터베이스 이관 중입니다. <br /> 이용에 불편을 드려 죄송합니다
       </p>
       <div className="flex justify-center gap-[1.25rem]">
         <Button theme="outlined" size="L" onClick={() => dismissCallback()}>
