@@ -102,5 +102,6 @@
   },
   "peerDependencies": {
     "zod": "^3.21.4"
-  }
+  },
+  "proxy": "https://openapi.naver.com"
 }
