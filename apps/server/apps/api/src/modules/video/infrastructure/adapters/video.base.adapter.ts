@@ -26,7 +26,10 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
-export class VideoAdapter extends IgniteService implements VideoOutboundPort {
+export class VideoBaseAdapter
+  extends IgniteService
+  implements VideoOutboundPort
+{
   private readonly videoColumns: string[] = [
     'VIDEO_ID',
     'CHANNEL_ID',
@@ -49,6 +52,10 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     super(configService);
   }
 
+  getRelatedLastVideoAndVideoHistory(dao: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
   async onModuleInit(): Promise<void> {
     // 부모 클래스의 onModuleInit 호출
     await super.onModuleInit();
@@ -56,7 +63,7 @@ export class VideoAdapter extends IgniteService implements VideoOutboundPort {
     // 추가적인 초기화 로직을 여기에 작성합니다.
     this.logger.log('ChildIgniteConfigService has been initialized.');
   }
-  private getClusterQueryString(
+  public getClusterQueryString(
     columns: string[],
     search: string,
     related: string,

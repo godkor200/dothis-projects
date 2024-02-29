@@ -10,6 +10,8 @@ const IgniteClientConfiguration = IgniteClient.IgniteClientConfiguration;
 @Injectable()
 export class IgniteService implements OnModuleInit, OnModuleDestroy {
   readonly client: typeof IgniteClient;
+
+  public readonly SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
   protected readonly logger: Logger = new Logger(IgniteService.name);
 
   constructor(private configService: ConfigService) {

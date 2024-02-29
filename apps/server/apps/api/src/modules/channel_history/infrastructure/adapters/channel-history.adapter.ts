@@ -8,7 +8,7 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import {
   FindChannelInfoDao,
-  TChannelHistoryLatestDayTupleRes,
+  ScanLatestChannelHistoryDao,
   TChannelHistoryTuplesRes,
 } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
@@ -25,12 +25,7 @@ export class ChannelHistoryAdapter
   findChannelHistoryInfo(dao: FindChannelInfoDao): Promise<any> {
     throw new Error('Method not implemented.');
   }
-  scanLatestChannelHistoryByKeywordAndRelWord<T>(dao: any): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
-  findChannelHistoryByKeywordAndRelWordFullScan<T>(dao: any): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
+
   private readonly keys: string[] = [
     'CHANNEL_ID',
     'CHANNEL_AVERAGE_VIEWS',

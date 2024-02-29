@@ -5,11 +5,12 @@ import {
   zKeywords,
   zRankRel,
   zRelWords,
+  zSearch,
 } from './rel-words.model';
 import { zErrResBase } from '../error.response.zod';
 
 export const relWordsApiUrl = '/related-word';
-export const keywordApiUrl = '/key-words';
+export const keywordApiUrl = '/keyword';
 export const relatedWordsApi = c.router({
   getKeyword: {
     method: 'GET',
@@ -54,14 +55,14 @@ export const relatedWordsApi = c.router({
     description:
       '자동완성 단어를 가져옵니다. 뒤에 * 붙어있는 단어는 완전단어로 우리 디비에 탐색어로 등록되있는 단어를 뜻합니다.',
   },
-  rankRel: {
+  rankingRelatedWords: {
     method: 'GET',
-    path: `${relWordsApiUrl}/rank/:keyword`,
+    path: `${relWordsApiUrl}/:search/ranking`,
     responses: {
       200: zRankRel,
       ...zErrResBase,
     },
-    pathParams: z.object({ keyword: z.string() }),
+    //pathParams: zSearch,
     summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
     description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
   },

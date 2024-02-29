@@ -8,6 +8,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import {
   FindIndividualVideoInfoV1Dao,
+  GetRelatedLastVideoAndVideoHistory,
   GetRelatedVideoHistory,
   GetVideoDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
@@ -51,4 +52,16 @@ export interface VideoOutboundPort {
   getRelatedVideosEntireCount(dao: GetVideoDao): Promise<TRelatedEntireCount>;
 
   getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos>;
+
+  getRelatedLastVideoAndVideoHistory(
+    dao: GetRelatedLastVideoAndVideoHistory,
+  ): Promise<void>;
 }
+
+export interface IHistoryListOutboundPort
+  extends Pick<VideoOutboundPort, 'getRelatedVideoAndVideoHistory'> {}
+export interface IVideosCountByDay
+  extends Pick<VideoOutboundPort, 'getRelatedVideosCountByDay'> {}
+
+export interface IGetRelatedLastVideoHistory
+  extends Pick<VideoOutboundPort, 'getRelatedLastVideoAndVideoHistory'> {}

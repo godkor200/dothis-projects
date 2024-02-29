@@ -1,8 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VideoQueryHandler } from '@Apps/modules/video/infrastructure/adapters/video.query-handler';
-import { VIDEO_HISTORY_OS_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
 import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 
 import { AwsModule } from '@Apps/common/aws/aws.module';
@@ -12,10 +10,6 @@ import { ChannelHistoryAdapter } from '@Apps/modules/channel_history/infrastruct
 import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel_history/application/queries/find-channel-history.query-handler';
 const controllers = [FindChannelHistoryHttpController];
 const repositories: Provider[] = [
-  {
-    provide: VIDEO_OS_DI_TOKEN,
-    useClass: VideoQueryHandler,
-  },
   {
     provide: CHANNEL_HISTORY_IGNITE_DI_TOKEN,
     useClass: ChannelHistoryAdapter,

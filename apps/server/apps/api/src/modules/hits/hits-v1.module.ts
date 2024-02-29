@@ -4,10 +4,11 @@ import { GetDailyHitsV1QueryHandler } from '@Apps/modules/hits/application/queri
 import { GetDailyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-daily-hits/get-daily-hits.v1.http.controller';
 import { HitsService } from '@Apps/modules/hits/application/services/hits.service';
 import {
+  VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
+  VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_SERVICE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
-import { VideoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.adapter';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { GetWeeklyHitsListV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-hits-list/get-weekly-hits-list.v1.http.controller';
 import {
@@ -17,6 +18,8 @@ import {
 import { WeeklyHitsService } from '@Apps/modules/hits/application/services/weekly-hits.service';
 import { GetWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
 import { WeeklyHitsRepository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.repository';
+import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
+import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -34,7 +37,8 @@ const controllers = [
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
-  { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoAdapter },
+  { provide: VIDEO_COUNT_DAY_IGNITE_DI_TOKEN, useClass: VideoCountDayAdapter },
+  { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoBaseAdapter },
   { provide: WEEKLY_VIEWS_REPOSITORY_DI_TOKEN, useClass: WeeklyHitsRepository },
 ];
 

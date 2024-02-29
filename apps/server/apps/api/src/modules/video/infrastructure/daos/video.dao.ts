@@ -6,6 +6,7 @@ import {
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
+import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;
@@ -29,3 +30,12 @@ export class FindIndividualVideoInfoV1Dao extends FindIndividualVideoInfoV1Dto {
 }
 
 export type GetRelatedVideoHistory = GetRelatedVideoAndVideoHistory;
+
+export class GetRelatedLastVideoAndVideoHistory extends GetRankingRelatedWordsDto {
+  public readonly relatedWord: string;
+  public readonly relatedCluster: string[];
+  constructor(props: GetRelatedLastVideoAndVideoHistory) {
+    super(props);
+    Object.assign(this, props);
+  }
+}
