@@ -1,6 +1,7 @@
 import { Result } from 'oxide.ts';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import { IGetVideoHistoryDao } from '@Apps/modules/video_history/infrastructure/daos/video-history.dao';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 export interface GetRelatedVideoAndVideoHistory {
   videoId: string;
   videoViews: number;
@@ -13,7 +14,7 @@ export interface GetRelatedVideoAndVideoHistory {
 }
 export type TGetVideoHistoryRes = Result<
   GetRelatedVideoAndVideoHistory[],
-  VideoHistoryNotFoundError
+  VideoHistoryNotFoundError | TableNotFoundException
 >;
 
 export interface VideoHistoryOutboundPort {

@@ -18,7 +18,7 @@ import {
   DateFormatter,
 } from '@Apps/modules/video/infrastructure/utils';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import { GetVideoDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';

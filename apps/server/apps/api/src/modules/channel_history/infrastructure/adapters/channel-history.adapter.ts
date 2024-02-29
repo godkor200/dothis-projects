@@ -41,20 +41,22 @@ export class ChannelHistoryAdapter
     'MONTH',
     'DAY',
   ];
-  private async history(tableName: string, queryString: string) {
+
+  private async history(
+    tableName: string,
+    queryString: string,
+  ): Promise<Ok<any[]> | Err<any>> {
     try {
       const query = new SqlFieldsQuery(queryString).setDistributedJoins(true);
 
       const cache = await this.client.getCache(tableName);
 
       const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) {
+      const res = await result.getAll();
+      if (!res.length) {
         return Err(new ChannelHistoryNotFoundError());
       }
-      return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
-      );
+      return Ok(VideosResultTransformer.mapResultToObjects(res, queryString));
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
@@ -73,15 +75,14 @@ export class ChannelHistoryAdapter
 
   async getLatestDayTuple(
     dao: FindIndividualVideoInfoV1Dao,
-  ): Promise<TChannelHistoryLatestDayTupleRes> {
+  ): Promise<TChannelHistoryTuplesRes> {
     const { clusterNumber, videoId } = dao;
     const tableName = `dothis.CHANNEL_HISTORY`;
     const joinTableName = `dothis.video_data_cluster_${clusterNumber}`;
     const queryString = `SELECT ch.${this.keys.join(
       ', ch.',
     )}, vd.video_tags, vd.video_published FROM ${tableName} ch JOIN ${joinTableName} vd ON ch.channel_id = vd.channel_id WHERE vd.video_id = '${videoId}' ORDER BY ch.day DESC LIMIT 1`;
-
-    return await this.history(tableName, queryString)[0];
+    return await this.history(tableName, queryString);
   }
 
   async getHistory(

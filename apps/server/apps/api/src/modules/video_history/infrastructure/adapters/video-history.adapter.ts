@@ -8,8 +8,10 @@ import {
   DateFormatter,
   VideosResultTransformer,
 } from '@Apps/modules/video/infrastructure/utils';
-import { Ok } from 'oxide.ts';
+import { Err, Ok } from 'oxide.ts';
 import { QueryGenerator } from '@Libs/commons/src/utils/query-generator';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
@@ -38,6 +40,7 @@ export class VideoHistoryAdapter
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
     const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER`;
+
     const queryString = QueryGenerator.generateUnionQuery(
       this.keys,
       clusterNumber,
@@ -46,13 +49,24 @@ export class VideoHistoryAdapter
       fromDate,
       toDate,
     );
+    try {
+      const cache = await this.client.getCache(
+        tableName + `_${clusterNumber}_${fromDate.year}_${fromDate.month}`,
+      );
 
-    console.log(queryString);
-    const cache = await this.client.getCache(tableName);
+      const query = new SqlFieldsQuery(queryString);
+      const result = await cache.query(query);
+      const resArr = await result.getAll();
+      if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
-    const query = new SqlFieldsQuery(queryString);
-    const result = await cache.query(query);
-    const resArr = await result.getAll();
-    return Ok(VideosResultTransformer.mapResultToObjects(resArr, queryString));
+      return Ok(
+        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+      );
+    } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
+      return Err(e);
+    }
   }
 }

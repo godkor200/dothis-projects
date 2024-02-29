@@ -7,7 +7,7 @@ import { Inject } from '@nestjs/common';
 import { VIDEO_GET_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoInboundPort } from '@Apps/modules/video/domain/ports/video.inbound.port';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/event/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 export type TGetVideoPage = Result<
   IIgnitePagingRes,
   VideoNotFoundError | TableNotFoundException | VideoHistoryNotFoundError

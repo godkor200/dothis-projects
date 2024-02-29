@@ -45,11 +45,6 @@ export class FindIndividualVideoInfoService
   async execute(
     dto: FindIndividualVideoInfoV1Dto,
   ): Promise<TVideoIndividualRes> {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더해줍니다.
-    const day = ('0' + date.getDate()).slice(-2);
-
     const dao = new FindIndividualVideoInfoV1Dao(dto);
     const channelHistory = await this.channelHistory.getLatestDayTuple(dao);
     const videoHistoryRes = await this.videoHistory.getHistory({
@@ -60,13 +55,13 @@ export class FindIndividualVideoInfoService
     });
 
     /**
-     * 원래 로직
+     * 원래 로직 현재 데이터가 완전하지 않아 1월 1일부터 1월 30일까지 고정
      *       from: DateUtil.getDaysAgo(7),
      *       to: DateUtil.getDaysAgo(),
      */
 
     if (channelHistory.isOk() && videoHistoryRes.isOk()) {
-      const channelHistoryTagInfo = channelHistory.unwrap();
+      const channelHistoryTagInfo = channelHistory.unwrap()[0];
       const videoHistory = videoHistoryRes.unwrap();
       const videoTags = channelHistoryTagInfo.videoTags;
       const channelAverageViews = channelHistoryTagInfo.channelAverageViews;

@@ -22,9 +22,9 @@ export class QueryGenerator {
         year === fromDate.year && month === fromDate.month ? fromDate.day : 1;
       const endDay =
         year === toDate.year && month === toDate.month ? toDate.day : 31;
-      queryString += `SELECT ${keys.join(
-        ', ',
-      )} FROM ${tableName} vh WHERE vh.video_id = '${videoId}' AND vh.DAY BETWEEN ${startDay} AND ${endDay}`;
+      queryString += `SELECT ${
+        'vh.' + keys.join(', vh.')
+      } FROM ${tableName} vh WHERE vh.VIDEO_ID = '${videoId}' AND vh.DAY BETWEEN ${startDay} AND ${endDay};`;
 
       if (year === toDate.year && month === toDate.month) {
         break;

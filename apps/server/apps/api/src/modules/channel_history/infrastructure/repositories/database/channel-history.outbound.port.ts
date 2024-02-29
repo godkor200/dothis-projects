@@ -17,7 +17,7 @@ export interface ChannelHistoryOutboundPort {
 
   getLatestDayTuple(
     dao: FindIndividualVideoInfoV1Dao,
-  ): Promise<TChannelHistoryLatestDayTupleRes>;
+  ): Promise<TChannelHistoryTuplesRes>;
 
   getHistory(
     dao: FindIndividualVideoInfoV1Dao,
