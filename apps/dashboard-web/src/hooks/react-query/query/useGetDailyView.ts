@@ -36,7 +36,7 @@ const useGetDailyView = (
     clusters = JSON.parse(data.cluster);
   }
 
-  const queryResults = apiClient(3).hits.getDailyViewsV1.useQueries({
+  const queryResults = apiClient(1).hits.getDailyViewsV1.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: DAILYVIEW_KEY.list([
@@ -49,7 +49,7 @@ const useGetDailyView = (
           },
         ]),
         params: {
-          clusterNumber,
+          clusterNumber: String(clusterNumber),
         },
         query: {
           keyword: keyword!,

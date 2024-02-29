@@ -46,7 +46,7 @@ const TestPage = () => {
   const { setStartDate, setEndDate } = useDateActions();
   useEffect(() => {}, []);
 
-  const { data } = useGetDailyView({ keyword: '먹방', relword: '불닭' });
+  const { data } = useGetDailyView({ keyword: '서울', relword: '정치' });
 
   console.log(data);
 
