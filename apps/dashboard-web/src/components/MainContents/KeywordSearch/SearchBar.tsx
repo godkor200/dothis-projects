@@ -110,9 +110,15 @@ const SearchBar = () => {
     if (!checkIsSignedIn()) {
       return;
     }
-    if (data && data[0] === currentInput) {
-      if (event.key === 'Enter') {
+
+    if (event.key === 'Enter') {
+      if (
+        data &&
+        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+          currentInput
+      ) {
         // 엔터 키가 눌렸을 때 실행할 동작
+
         createSearchwordMutate(currentInput);
       }
     }
