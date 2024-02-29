@@ -57,8 +57,8 @@ const MainArticleList = () => {
       </h2>
       <div
         className={cn('mb-[40px]  flex justify-center gap-[120px]', {
-          'justify-between': returnData.length === 3,
           'justify-evenly': returnData.length === 2,
+          'justify-between': returnData.length === 3,
         })}
       >
         {returnData.map(({ title, category, provider, date, image, link }) => (
