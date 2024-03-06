@@ -4,6 +4,7 @@ import type { GridLabelProps } from '@nivo/radar';
 import { ResponsiveRadar } from '@nivo/radar';
 import { access } from 'fs';
 import { useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 import { clustersCategories } from '@/constants/clusterCategories';
 import type { CategoryTabNavDataCategoryType } from '@/constants/TabNav';
@@ -12,7 +13,8 @@ import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
 import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import getMaxValues from '@/utils/contents/getMaxValues';
+import { handleZeroDivision } from '@/utils/common';
+import { getMaxValues, getMaxValuesV2 } from '@/utils/contents/getMaxValues';
 
 import AnalysisWidgetItem from '../AnalysisWidgetItem';
 import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
@@ -78,6 +80,61 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     return result;
   });
 
+  const categoryView = viewData.map((item, idx) => {
+    const result = (item ?? []).reduce(
+      (acc, cur) => {
+        acc.y = ((acc.y as number) || 0) + cur.videoViews;
+        return acc;
+      },
+      {
+        y: 0,
+        x:
+          clusterData &&
+          clustersCategories[
+            clusterData[idx] as keyof typeof clustersCategories
+          ],
+      },
+    );
+
+    // result.views = result.views;
+    // result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+
+    return result;
+  });
+
+  const categoryVideo = videoData.map((item, idx) => {
+    return {
+      y: item?.total.value || 0,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
+  });
+
+  const {
+    maxViews: maxViewsV2,
+    maxVideoTotalCounts: maxVideoTotalCountsV2,
+    viewAndVideoMaxValue: viewAndVideoMaxValueV2,
+  } = getMaxValuesV2(categoryView, categoryVideo);
+
+  const convertedViews = categoryView.map(({ x, y }, idx) => {
+    return {
+      y: (y / maxViewsV2) * viewAndVideoMaxValueV2,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
+  });
+
+  const convertedVideoCounts = categoryVideo.map(({ x, y }, idx) => {
+    return {
+      y: (y / maxVideoTotalCountsV2) * viewAndVideoMaxValueV2,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
+  });
+
   const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
     getMaxValues(categoryViewData);
 
@@ -122,6 +179,34 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     }
   }
 
+  function getHighestCompetitiveCategory(
+    views: typeof convertedViews,
+    videoCounts: typeof convertedVideoCounts,
+  ) {
+    if (views.length !== videoCounts.length) {
+      return '두 배열의 길이가 일치하지 않습니다.';
+    }
+
+    let averages: { ratio: number; category: string } = {
+      ratio: 0,
+      category: '',
+    };
+
+    // 초기 for in문 순회로 되어있었지만, 배열의 프로토타입 체인에서 열거 가능한 속성 또한 순회하기 때문에 for문으로 수정
+    for (let index = 0; index < views.length; index++) {
+      const ratio = handleZeroDivision(views[index].y, videoCounts[index].y);
+
+      if (!averages.category || ratio > averages.ratio) {
+        averages = {
+          ratio,
+          category: views[index].x,
+        };
+      }
+    }
+
+    return averages.category;
+  }
+
   const onClickTitle = (type: TitleType) => {
     setSelectedType(type);
   };
@@ -148,7 +233,9 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     },
     {
       title: '경쟁강도가 가장 좋은 카테고리',
-      content: maxRatioElement?.category || '조회중',
+      content:
+        getHighestCompetitiveCategory(convertedViews, convertedVideoCounts) ||
+        '조회중',
       hasTooltip: false,
       tooltipText: '',
     },
@@ -173,7 +260,93 @@ const MonthlyViewData = ({ currentTab }: Props) => {
           <>
             <div className="flex flex-1 justify-center">
               <div className="h-[315px] w-[406px]  self-center  [&_svg]:overflow-visible">
-                <ResponsiveRadar
+                <ReactApexChart
+                  options={{
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'radar',
+                      dropShadow: {
+                        enabled: true,
+                        blur: 1,
+                        left: 1,
+                        top: 1,
+                      },
+                    },
+
+                    stroke: {
+                      width: 2,
+                    },
+                    fill: {
+                      opacity: 0.1,
+                    },
+
+                    xaxis: {
+                      categories: [
+                        '리그오브레전드',
+                        '음식',
+                        '먹방',
+                        '키워드',
+                        '유통',
+                        '물류',
+                      ],
+                    },
+                    yaxis: {
+                      axisTicks: {
+                        show: false,
+                      },
+
+                      axisBorder: {
+                        show: false,
+                        //   color: '#F0516D',
+                      },
+                      labels: {
+                        style: {
+                          fontSize: '0px',
+                          colors: '#F0516D',
+                        },
+                        show: false,
+                      },
+
+                      // tooltip: {
+                      //     enabled: true,
+                      // },
+                    },
+                    markers: {
+                      size: 1,
+                      colors: ['#038FFB', '#00E397', '#FEB11A'],
+
+                      strokeWidth: 3,
+                      strokeColors: ['#038FFB', '#00E397', '#FEB11A'],
+                    },
+
+                    tooltip: {
+                      // y: {
+                      //   formatter(val, opts) {
+                      //     return String(val);
+                      //   },
+                      // },
+                    },
+                    dataLabels: {
+                      // enabled: true,
+                    },
+                  }}
+                  series={[
+                    {
+                      name: '조회 수',
+                      data: convertedViews,
+                    },
+                    {
+                      name: '영상 수',
+                      data: convertedVideoCounts,
+                    },
+                  ]}
+                  type="radar"
+                  height={350}
+                />
+                {/* <ResponsiveRadar
                   data={convertedDatas}
                   keys={['views', 'videoTotalCounts']}
                   indexBy="category"
@@ -237,7 +410,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
                       {...toolTipProps}
                     />
                   )}
-                />
+                /> */}
               </div>
             </div>
             <ul className="flex flex-col gap-[20px]">
