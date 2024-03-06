@@ -47,8 +47,8 @@ export class GetRankingRelatedWordsHttpController {
     type: RelWordsRankingRes,
   })
   async execute(@Param() params: GetRankingRelatedWordsParams) {
-    const arg = new GetRankingRelatedWordsDto(params);
     return tsRestHandler(rankingRelatedWords, async ({ params }) => {
+      const arg = new GetRankingRelatedWordsDto(params);
       const result = await this.queryBus.execute(arg);
       return match<TGetRankingRelatedWordsRes, TTsRestRes<IRes<TRankRes>>>(
         result,
