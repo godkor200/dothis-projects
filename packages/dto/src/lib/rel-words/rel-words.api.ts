@@ -62,7 +62,7 @@ export const relatedWordsApi = c.router({
       200: zRankRel,
       ...zErrResBase,
     },
-    //pathParams: zSearch,
+    pathParams: zSearch,
     summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
     description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
   },

@@ -1,9 +1,6 @@
 import { FindAccumulateQuery } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 import { FindDailyViewsV3Dto } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import {
-  GetVideoPaginatedPageDto,
-  IFindVideoPageQuery,
-} from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
+import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
@@ -31,8 +28,16 @@ export class FindIndividualVideoInfoV1Dao extends FindIndividualVideoInfoV1Dto {
 
 export type GetRelatedVideoHistory = GetRelatedVideoAndVideoHistory;
 
-export class GetRelatedLastVideoAndVideoHistory extends GetRankingRelatedWordsDto {
+export class GetRelatedLastVideoAndVideoHistoryEach extends GetRankingRelatedWordsDto {
   public readonly relatedWord: string;
+  public readonly relatedCluster: string[];
+  constructor(props: GetRelatedLastVideoAndVideoHistoryEach) {
+    super(props);
+    Object.assign(this, props);
+  }
+}
+export class GetRelatedLastVideoAndVideoHistory extends GetRankingRelatedWordsDto {
+  public readonly relatedWords: string[];
   public readonly relatedCluster: string[];
   constructor(props: GetRelatedLastVideoAndVideoHistory) {
     super(props);

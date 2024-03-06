@@ -1,6 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import {
-  RELATED_WORD_GET_VIDEO_HISTORY,
+  RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
   RELWORDS_DI_TOKEN,
 } from '../../rel-words.enum.di-token.constant';
 import { RelatedWordsModule } from '@Apps/modules/related-word/repository/entity/related_words.entity.module';
@@ -19,12 +19,12 @@ import { FindSearchKeywordHttpController } from '@Apps/modules/related-word/quer
 import { FindSearchKeywordQueryHandler } from '@Apps/modules/related-word/queries/v1/find-search-keyword/find-search-keyword.query-handler';
 import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
-import { RankRelAggregateService } from '@Apps/modules/related-word/service/rank-rel.aggregate.service';
+import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/service/ranking-related-word.aggregate.service';
 import { ChannelHistoryAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.adapter';
 import { FindAutoCompleteHttpController } from '@Apps/modules/related-word/queries/v2/find-auto-complete/find-auto-complete.http.controller';
 import { FindAutoCompleteQueryHandler } from '@Apps/modules/related-word/queries/v2/find-auto-complete/find-auto-complete.query-handler';
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
-import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
+import { VideoHistoryMultipleAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
 
 const controllers = [
   FindRelHttpV1Controller,
@@ -51,11 +51,11 @@ const repositories: Provider[] = [
     useClass: ChannelHistoryAdapter,
   },
   {
-    provide: RELATED_WORD_GET_VIDEO_HISTORY,
-    useClass: VideoLastHistoryAdapter,
+    provide: RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
+    useClass: VideoHistoryMultipleAdapter,
   },
   FindAutoCompleteQueryHandler,
-  RankRelAggregateService,
+  RankingRelatedWordAggregateService,
 ];
 
 const handler = [
