@@ -1,7 +1,5 @@
 'use client';
 
-import type { GridLabelProps } from '@nivo/radar';
-import { ResponsiveRadar } from '@nivo/radar';
 import { access } from 'fs';
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -17,7 +15,6 @@ import { handleZeroDivision } from '@/utils/common';
 import { getMaxValues, getMaxValuesV2 } from '@/utils/contents/getMaxValues';
 
 import AnalysisWidgetItem from '../AnalysisWidgetItem';
-import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
 
 /**
  * 데이터 안정화 되면 custom hooks 주석 풀고 더미 데이터 제거 예정입니다.
@@ -346,71 +343,6 @@ const MonthlyViewData = ({ currentTab }: Props) => {
                   type="radar"
                   height={350}
                 />
-                {/* <ResponsiveRadar
-                  data={convertedDatas}
-                  keys={['views', 'videoTotalCounts']}
-                  indexBy="category"
-                  valueFormat=">-.2f"
-                  margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-                  borderColor={{ from: 'color' }}
-                  gridLabelOffset={36}
-                  // dotSize={10}
-                  dotColor={{ theme: 'background' }}
-                  // dotBorderWidth={2}
-                  colors={{ scheme: 'nivo' }}
-                  theme={{
-                    legends: {
-                      text: { fontSize: 12 },
-                    },
-                    labels: {
-                      text: { fontSize: 22 },
-                    },
-
-                    textColor: '#999d3e',
-                  }}
-                  blendMode="multiply"
-                  motionConfig="wobbly"
-                  animate={false}
-                  gridLabel={LabelComponent}
-                  legends={[
-                    {
-                      data: [
-                        {
-                          id: 'views',
-                          label: '일일 조회 수',
-                        },
-                        {
-                          id: 'videoTotalCounts',
-                          label: '누적 영상 수 ',
-                        },
-                      ],
-                      anchor: 'bottom-right',
-                      direction: 'column',
-                      translateX: -0,
-                      translateY: -80,
-                      itemWidth: 80,
-                      itemHeight: 20,
-                      itemTextColor: '#999',
-                      symbolSize: 12,
-                      symbolShape: 'circle',
-                      effects: [
-                        {
-                          on: 'hover',
-                          style: {
-                            itemTextColor: '#000',
-                          },
-                        },
-                      ],
-                    },
-                  ]}
-                  sliceTooltip={({ index, data }) => (
-                    <MonthlyDataGraphToolTip
-                      data={data}
-                      label={index}
-                      {...toolTipProps}
-                    />
-                  )}
-                /> */}
               </div>
             </div>
             <ul className="flex flex-col gap-[20px]">
@@ -438,29 +370,3 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 };
 
 export default MonthlyViewData;
-
-const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => {
-  return (
-    <g transform={`translate(${x}, ${y})`}>
-      <text
-        textAnchor={anchor}
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-        }}
-      >
-        {id}
-      </text>
-      {/* <text
-        y={24}
-        style={{
-          fontSize: 18,
-          fontWeight: 'bold',
-          fill: '#3a9896',
-        }}
-      >
-        +{Math.round(Math.random() * 100)}%
-      </text> */}
-    </g>
-  );
-};
