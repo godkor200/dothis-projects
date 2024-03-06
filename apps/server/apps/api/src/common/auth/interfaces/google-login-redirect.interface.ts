@@ -3,4 +3,6 @@ export interface GoogleLoginRedirectRes {
   refreshToken: string;
   isNewUser: boolean;
   isEnvLocal: boolean;
+  googleAccessToken: string;
+  googleRefreshToken: string;
 }

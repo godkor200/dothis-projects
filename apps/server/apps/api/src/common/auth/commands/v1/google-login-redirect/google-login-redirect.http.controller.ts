@@ -48,12 +48,20 @@ export class GoogleLoginRedirectHttpController {
 
         res.cookie('accessToken', 'Bearer ' + result.accessToken, options);
         res.cookie('refreshToken', result.refreshToken, options);
+        res.cookie(
+          'googleAccessToken',
+          'Bearer ' + result.googleAccessToken,
+          options,
+        );
+        res.cookie('googleRefreshToken', result.googleRefreshToken, options);
         res.redirect(
           `http${
             result.isEnvLocal ? '://localhost:3666/' : 's://dothis.kr/'
           }auth/redirect?isNewUser=${result.isNewUser}&accessToken=${
             result.accessToken
-          }&refreshToken=${result.refreshToken}`,
+          }&refreshToken=${result.refreshToken}&googleRefreshToken=${
+            result.googleRefreshToken
+          }&googleAccessToken=${result.googleAccessToken}`,
         );
       },
       Err: (err: Error) => {
