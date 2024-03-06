@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AuthApiV1Module } from './commands/v1/AuthApi-v1.module';
-import { JwtModule } from '@nestjs/jwt';
 import { RouterModule } from '@nestjs/core';
 import { AuthApiV1QueriesModule } from '@Apps/common/auth/queries/AuthApi-v1.queries.module';
 
