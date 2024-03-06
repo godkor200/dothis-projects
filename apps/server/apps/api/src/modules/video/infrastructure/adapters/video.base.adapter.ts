@@ -52,10 +52,6 @@ export class VideoBaseAdapter
     super(configService);
   }
 
-  getRelatedLastVideoAndVideoHistory(dao: any): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-
   async onModuleInit(): Promise<void> {
     // 부모 클래스의 onModuleInit 호출
     await super.onModuleInit();
