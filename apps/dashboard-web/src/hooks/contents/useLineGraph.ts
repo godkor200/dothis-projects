@@ -71,75 +71,75 @@ export const useExpectedViewChartDataForNivo = (
   );
 };
 
-export const useVideoCountViewChartData = ({
-  keyword,
-  relword,
-}: {
-  keyword: string | null;
-  relword: string | null;
-}) => {
-  const { data: videoCountData } = useGetVideoCount({ keyword, relword });
+// export const useVideoCountViewChartData = ({
+//   keyword,
+//   relword,
+// }: {
+//   keyword: string | null;
+//   relword: string | null;
+// }) => {
+//   const { data: videoCountData } = useGetVideoCount({ keyword, relword });
 
-  return useMemo(
-    () =>
-      videoCountData.reduce<{
-        totalCount: number;
-        videoCountViewChartData: ResponseType;
-      }>(
-        (acc, dataItem) => {
-          acc.totalCount += dataItem?.videoTotal || 0;
-          dataItem?.section.forEach((sectionItem) => {
-            const key = sectionItem.section;
+//   return useMemo(
+//     () =>
+//       videoCountData.reduce<{
+//         totalCount: number;
+//         videoCountViewChartData: ResponseType;
+//       }>(
+//         (acc, dataItem) => {
+//           acc.totalCount += dataItem?.videoTotal || 0;
+//           dataItem?.section.forEach((sectionItem) => {
+//             const key = sectionItem.section;
 
-            if (key in CONVERT_SUBSCRIBERANGE) {
-              const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
-              const existingItem =
-                acc.videoCountViewChartData[key as VideoCount];
+//             if (key in CONVERT_SUBSCRIBERANGE) {
+//               const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+//               const existingItem =
+//                 acc.videoCountViewChartData[key as VideoCount];
 
-              if (existingItem) {
-                existingItem.value += sectionItem.number;
-              } else {
-                acc.videoCountViewChartData[key as VideoCount] = {
-                  id: existingRange,
-                  label: existingRange,
-                  value: sectionItem.number,
-                };
-              }
-            }
-          });
+//               if (existingItem) {
+//                 existingItem.value += sectionItem.number;
+//               } else {
+//                 acc.videoCountViewChartData[key as VideoCount] = {
+//                   id: existingRange,
+//                   label: existingRange,
+//                   value: sectionItem.number,
+//                 };
+//               }
+//             }
+//           });
 
-          return acc;
-        },
-        {
-          totalCount: 0,
-          videoCountViewChartData: {},
-        } as {
-          totalCount: number;
-          videoCountViewChartData: ResponseType;
-        },
-      ),
-    [videoCountData],
-  );
-};
+//           return acc;
+//         },
+//         {
+//           totalCount: 0,
+//           videoCountViewChartData: {},
+//         } as {
+//           totalCount: number;
+//           videoCountViewChartData: ResponseType;
+//         },
+//       ),
+//     [videoCountData],
+//   );
+// };
 
-const updateVideoCountViewChartData = (
-  acc: { totalCount: number; videoCountViewChartData: ResponseType },
-  sectionItem: Post[0],
-) => {
-  const key = sectionItem.section;
+// const updateVideoCountViewChartData = (
+//   acc: { totalCount: number; videoCountViewChartData: ResponseType },
+//   sectionItem: Post[0],
+// ) => {
+//   const key = sectionItem.section;
 
-  if (key in CONVERT_SUBSCRIBERANGE) {
-    const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
-    const existingItem = acc.videoCountViewChartData[key as VideoCount];
+//   if (key in CONVERT_SUBSCRIBERANGE) {
+//     const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+//     const existingItem = acc.videoCountViewChartData[key as VideoCount];
 
-    if (existingItem) {
-      existingItem.value += sectionItem.number;
-    } else {
-      acc.videoCountViewChartData[key as VideoCount] = {
-        id: existingRange,
-        label: existingRange,
-        value: sectionItem.number,
-      };
-    }
-  }
-};
+//     if (existingItem) {
+//       existingItem.value += sectionItem.number;
+//     } else {
+//       acc.videoCountViewChartData[key as VideoCount] = {
+//         id: existingRange,
+//         label: existingRange,
+//         value: sectionItem.number,
+//       };
+//     }
+//   }
+// };
