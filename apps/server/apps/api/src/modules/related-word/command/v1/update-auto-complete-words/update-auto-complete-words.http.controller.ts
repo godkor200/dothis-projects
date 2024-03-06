@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/interface/dtos/auto-complete-words.dto';
+import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/application/dtos/auto-complete-words.dto';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';

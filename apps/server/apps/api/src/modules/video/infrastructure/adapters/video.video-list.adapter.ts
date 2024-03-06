@@ -1,0 +1,53 @@
+import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
+import {
+  RelatedVideoAndVideoHistoryDao,
+  SearchRelationVideoDao,
+} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
+import {
+  TRelatedVideoAndHistoryRes,
+  TRelatedVideos,
+  VideoOutboundPort,
+} from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
+import { Err, Ok } from 'oxide.ts';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
+import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
+
+export class VideoVideoListAdapter
+  extends VideoBaseAdapter
+  implements Pick<VideoOutboundPort, 'getRelatedVideos'>
+{
+  async getRelatedVideos(dao: SearchRelationVideoDao): Promise<TRelatedVideos> {
+    const { search, related, from, to } = dao;
+
+    try {
+      const cache = await this.client.getCache('dothis.VIDEO_DATA');
+      const fromDate = DateFormatter.getFormattedDate(from);
+      const toDate = DateFormatter.getFormattedDate(to);
+      const queryString = `SELECT vd.VIDEO_ID, vd.VIDEO_TITLE, vd.VIDEO_DESCRIPTION, vd.video_tags, vd.YEAR, vd.MONTH, vd.DAY FROM DOTHIS.VIDEO_DATA vd
+         WHERE (vd.video_title LIKE '%${search}%' AND vd.video_tags LIKE '%${related}%')
+         AND (vd.video_title LIKE '%${related}%' AND vd.video_tags LIKE '%${search}%')
+         AND (
+             (vd.YEAR > ${fromDate.year} OR (vd.YEAR = ${fromDate.year} AND vd.MONTH > ${fromDate.month}) OR (vd.YEAR = ${fromDate.year} AND vd.MONTH = ${fromDate.month} AND vd.DAY >= ${fromDate.day}))
+             AND 
+             (vd.YEAR < ${toDate.year} OR (vd.YEAR = ${toDate.year} AND vd.MONTH < ${toDate.month}) OR (vd.YEAR = ${toDate.year} AND vd.MONTH = ${toDate.month} AND vd.DAY <= ${toDate.day}))
+             )`;
+      const query = new this.SqlFieldsQuery(queryString);
+      const result = await cache.query(query);
+
+      return Ok(
+        VideosResultTransformer.mapResultToObjects<IVideoSchema>(
+          await result.getAll(),
+          queryString,
+        ),
+      );
+    } catch (e) {
+      if (e.message.includes('Table')) {
+        return Err(new TableNotFoundException(e.message));
+      }
+      return Err(e);
+    }
+  }
+}

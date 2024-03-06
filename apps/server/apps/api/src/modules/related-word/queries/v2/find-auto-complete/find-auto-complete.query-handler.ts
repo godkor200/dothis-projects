@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/interface/dtos/auto-complete-words.dto';
+import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/application/dtos/auto-complete-words.dto';
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
 import { FindRelCachePort } from '@Apps/modules/related-word/repository/cache/find-rel.cache.port';
 
 @QueryHandler(FindAutoCompleteWordsCommandDto)

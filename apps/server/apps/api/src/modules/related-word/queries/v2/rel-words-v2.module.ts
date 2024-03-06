@@ -1,6 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/constants/rel-words.enum.di-token.constant';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
 import { FindRelCache } from '@Apps/modules/related-word/repository/cache/find-rel.cache';
 import { FindRelQueryHandler } from '@Apps/modules/related-word/queries/v2/find-rel/find-rel.query-handler';
 import { ConfigModule, ConfigService } from '@nestjs/config';

@@ -87,3 +87,18 @@ export class TableNotFoundException extends ExceptionBase {
       'The Table could not be found.';
   }
 }
+
+export class CacheDoesNotFoundException extends ExceptionBase {
+  public message: string;
+
+  public readonly code = 'CACHE.NOT_BE_FOUND';
+
+  constructor(message: string, metadata?: unknown) {
+    super(message, undefined, metadata);
+    this.message =
+      message
+        .split('SQL statement:')[0]
+        .replace(/VIDEO_HISTORY_|VIDEO_/g, '') ||
+      'The Table could not be found.';
+  }
+}

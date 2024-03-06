@@ -10,7 +10,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { match } from 'oxide.ts';
-import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/keywords.errors';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { getKeyword } = c;
 const { summary, description, responses } = getKeyword;

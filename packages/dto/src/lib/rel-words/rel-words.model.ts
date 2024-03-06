@@ -1,5 +1,8 @@
-import { ZodObject, ZodRawShape, number, z } from 'zod';
+import { z } from 'zod';
 import { zodDeepPick } from './utils';
+import { zSearchKeyword } from '../common.model';
+
+export const zSearch = zSearchKeyword.pick({ search: true });
 
 export const zRelWords = z.object({
   data: z.object({

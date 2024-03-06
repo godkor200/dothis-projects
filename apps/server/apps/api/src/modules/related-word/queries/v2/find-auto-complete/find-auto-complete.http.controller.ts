@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { nestControllerContract, TsRest, TsRestRequest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/interface/dtos/auto-complete-words.dto';
+import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/application/dtos/auto-complete-words.dto';
 
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import {
@@ -18,7 +18,7 @@ const c = nestControllerContract(apiRouter.relatedWords);
 const { getAutoCompleteWords } = c;
 const { responses, description, summary } = getAutoCompleteWords;
 
-@ApiTags('연관어')
+@ApiTags('자동완성 단어')
 @Controller()
 export class FindAutoCompleteHttpController {
   constructor(private readonly queryBus: QueryBus) {}
