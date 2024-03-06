@@ -1,21 +1,14 @@
 import { QueryBus } from '@nestjs/cqrs';
-import {
-  apiRouter,
-  TRankRes,
-  zPaginatedIgniteQueryParams,
-  zSearch,
-} from '@dothis/dto';
+import { apiRouter, TRankRes } from '@dothis/dto';
 import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param } from '@nestjs/common';
 import {
   nestControllerContract,
-  TsRest,
   tsRestHandler,
   TsRestHandler,
 } from '@ts-rest/nest';
@@ -55,7 +48,6 @@ export class GetRankingRelatedWordsHttpController {
   })
   async execute(@Param() params: GetRankingRelatedWordsParams) {
     const arg = new GetRankingRelatedWordsDto(params);
-    console.log(arg, params);
     return tsRestHandler(rankingRelatedWords, async ({ params }) => {
       const result = await this.queryBus.execute(arg);
       return match<TGetRankingRelatedWordsRes, TTsRestRes<IRes<TRankRes>>>(
