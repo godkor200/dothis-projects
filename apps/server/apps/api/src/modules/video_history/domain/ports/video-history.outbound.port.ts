@@ -17,6 +17,15 @@ export type TGetVideoHistoryRes = Result<
   VideoHistoryNotFoundError | TableNotFoundException
 >;
 
+export interface IGetRelatedVideoAndVideoHistoryRes
+  extends Pick<
+    GetRelatedVideoAndVideoHistory,
+    'videoId' | 'videoViews' | 'day'
+  > {
+  videoTitle: string;
+  videoTags: string;
+}
+
 export interface VideoHistoryOutboundPort {
   getHistory(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes>;
 }
