@@ -76,7 +76,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
             'border-primary500   border-b-4 border-solid text-grey700':
               mainTab === 'all',
           })}
-          onClick={() => router.push('?main=all')}
+          // onClick={() => router.push('?main=all')}
         >
           연관 소재 비교
         </li>

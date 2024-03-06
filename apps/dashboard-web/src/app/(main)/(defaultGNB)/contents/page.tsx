@@ -121,48 +121,48 @@ const MainContentPage = ({
     (searchParams?.tab as (typeof CATEGORY_TABNAV_DATA)[number]['category']) ||
     'category';
 
-  if (selectedMainContent === 'recommend') {
-    return (
-      <div className=" mx-auto w-[1342px] ">
-        <Card>
-          <CardHeader title="콘텐츠 소재" />
-          <div className="flex">
-            <KeywordRankingList />
+  // if (selectedMainContent === 'recommend') {
+  return (
+    <div className=" mx-auto w-[1342px] ">
+      <Card>
+        <CardHeader title="콘텐츠 소재" />
+        <div className="flex">
+          <KeywordRankingList />
 
-            <KeywordAnalyticsView />
-          </div>
-          <Chat />
-        </Card>
-        <Card>
-          <TabNavigation
-            tabKey="tab"
-            selectedArticle={secondSection}
-            tabNavData={CATEGORY_TABNAV_DATA}
-          />
-          <MonthlyViewData currentTab={secondSection} />
-        </Card>
-        <div className="mx-[3rem] flex justify-between gap-[22px] [&>*]:flex-1">
-          <Card withoutMargin>
-            <TabNavigation
-              tabKey="youtube"
-              selectedArticle={'youtube'}
-              tabNavData={[{ title: '유튜브', category: 'youtube' }]}
-            />
-            <YoutubeArticlesContainer />
-          </Card>
-
-          <Card withoutMargin>
-            <TabNavigation
-              tabKey="snsTab"
-              selectedArticle={selectedArticle}
-              tabNavData={MEDIA_TABNAV_DATA}
-            />
-            <MediaArticlesContainer selectedArticle={selectedArticle} />
-          </Card>
+          <KeywordAnalyticsView />
         </div>
+        <Chat />
+      </Card>
+      <Card>
+        <TabNavigation
+          tabKey="tab"
+          selectedArticle={secondSection}
+          tabNavData={CATEGORY_TABNAV_DATA}
+        />
+        <MonthlyViewData currentTab={secondSection} />
+      </Card>
+      <div className="mx-[3rem] flex justify-between gap-[22px] [&>*]:flex-1">
+        <Card withoutMargin>
+          <TabNavigation
+            tabKey="youtube"
+            selectedArticle={'youtube'}
+            tabNavData={[{ title: '유튜브', category: 'youtube' }]}
+          />
+          <YoutubeArticlesContainer />
+        </Card>
+
+        <Card withoutMargin>
+          <TabNavigation
+            tabKey="snsTab"
+            selectedArticle={selectedArticle}
+            tabNavData={MEDIA_TABNAV_DATA}
+          />
+          <MediaArticlesContainer selectedArticle={selectedArticle} />
+        </Card>
       </div>
-    );
-  }
+    </div>
+  );
+  // }
   return (
     <>
       <div className="mx-[3rem] mb-[30px]">
