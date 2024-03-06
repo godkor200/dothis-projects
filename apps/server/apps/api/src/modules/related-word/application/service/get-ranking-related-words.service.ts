@@ -2,31 +2,24 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TRankRes } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
 import {
-  RELATED_WORD_GET_VIDEO_HISTORY,
   RELWORDS_DI_TOKEN,
+  RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
 } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
 import { FindRelAdapter } from '@Apps/modules/related-word/interface/find-rel.adapter';
-
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
-
-import { IRankingRelWords } from '@Apps/modules/related-word/interface/rank-rel.interface';
-import { RankRelAggregateService } from '@Apps/modules/related-word/service/rank-rel.aggregate.service';
+import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/service/ranking-related-word.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 
-import { VIDEO_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import {
-  IGetRelatedLastVideoHistory,
-  VideoOutboundPort,
-} from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
 
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { CacheDoesNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
-  RelwordsNotFoundError | VideoNotFoundError | ScrollApiError
+  RelwordsNotFoundError | VideoNotFoundError | CacheDoesNotFoundException
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
@@ -37,13 +30,10 @@ export class GetRankingRelatedWordsService
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: FindRelAdapter,
 
-    @Inject(VIDEO_IGNITE_DI_TOKEN)
-    private readonly video: VideoOutboundPort,
-
-    @Inject(RELATED_WORD_GET_VIDEO_HISTORY)
+    @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
     private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
 
-    private readonly rankRelAggregateService: RankRelAggregateService,
+    private readonly rankingRelatedWordAggregateService: RankingRelatedWordAggregateService,
   ) {}
 
   /**
@@ -56,48 +46,44 @@ export class GetRankingRelatedWordsService
   async execute(
     query: GetRankingRelatedWordsDto,
   ): Promise<TGetRankingRelatedWordsRes> {
-    console.log('!!!!', query);
-    const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
-      (query.search = '서울'),
-    );
-    console.log('!!!!relWordsEntity', relWordsEntity);
-
-    if (!relWordsEntity) return Err(new RelwordsNotFoundError());
-    const relatedWords = relWordsEntity.relWords.split(',');
-    const relatedCluster = JSON.parse(relWordsEntity.cluster);
-    const channelVideoData: IRankingRelWords[] = (
-      await Promise.all(
-        relatedWords.map(async (relatedWord) => {
-          const dao = new GetRelatedLastVideoAndVideoHistory({
-            search: '서울',
-            relatedWord,
-            relatedCluster,
-          });
-          const data =
-            await this.getRelatedVideoHistory.getRelatedLastVideoAndVideoHistory(
-              dao,
-            );
-
-          return {
-            data,
-            relatedWord,
-          };
-        }),
-      )
-    ).filter((item) => item !== null);
-
-    if (!channelVideoData.length) return Err(new VideoNotFoundError());
-    /**
-     * 연관어별 기대조회수와 정렬 수치를 계산하는 집계 함수
-     */
-    const res =
-      this.rankRelAggregateService.calculationExpectationNumberRelatedWord(
-        channelVideoData,
+    try {
+      const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
+        query.search,
       );
+      if (!relWordsEntity) return Err(new RelwordsNotFoundError());
+      const relatedWords = relWordsEntity.relWords.split(',');
+      const relatedCluster = JSON.parse(relWordsEntity.cluster);
 
-    return Ok({
-      keyword: query.search,
-      ranking: res,
-    });
+      const dao = new GetRelatedLastVideoAndVideoHistory({
+        search: query.search,
+        relatedWords,
+        relatedCluster,
+      });
+
+      const data =
+        await this.getRelatedVideoHistory.getRelatedLastVideoAndVideoHistory(
+          dao,
+        );
+
+      if (data.isOk()) {
+        const unwrapData = data.unwrap();
+        const res = this.rankingRelatedWordAggregateService.calculateWordStats(
+          relatedWords,
+          unwrapData,
+        );
+
+        return Ok({
+          keyword: query.search,
+          ranking: res.map((e) => ({
+            word: e.word,
+            sortFigure: 0,
+            expectedViews: e.avg,
+          })),
+        });
+      }
+      return Err(new VideoNotFoundError());
+    } catch (e) {
+      return Err(e);
+    }
   }
 }
