@@ -20,5 +20,6 @@ interface ResponseItem {
 }
 
 export type ResponseType = {
-  [key in VideoCount]: ResponseItem;
+  // [key in VideoCount]: ResponseItem;
+  [key in VideoCount]: number;
 };
