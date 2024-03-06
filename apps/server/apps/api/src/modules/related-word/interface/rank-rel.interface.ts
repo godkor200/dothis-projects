@@ -4,6 +4,7 @@ import {
   VideoSource,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
 
 interface ISourceWithoutChannelSubscribers
   extends Pick<ISource, 'channel_average_views'> {}
@@ -15,6 +16,6 @@ export interface IChannelHistoryWithoutChannelSubscribers
   > {}
 
 export interface IRankingRelWords {
-  data: IChannelHistoryWithoutChannelSubscribers[];
-  relWord: string;
+  data: GetRelatedVideoAndVideoHistory[];
+  relatedWord: string;
 }
