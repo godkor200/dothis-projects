@@ -16,9 +16,6 @@ import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { getDateObjTime } from '@/utils/contents/dateObject';
 
-import DailyViewChart from './DailyViewChart';
-import ExpectedViewChart from './ExpectedViewChart';
-
 const ViewChart = () => {
   const selectedWord = useSelectedWord();
 
@@ -560,10 +557,10 @@ const ViewChart = () => {
   return (
     <div className="mr-7 flex h-[460px] w-full flex-col">
       <div className="h-3/6 [&_svg]:overflow-visible">
-        <DailyViewChart dailyView={dailyViewChartData} />
+        {/* <DailyViewChart dailyView={dailyViewChartData} /> */}
       </div>
       <div className="h-3/6 [&_svg]:overflow-visible">
-        <ExpectedViewChart expectedView={expectedViewChartData} />
+        {/* <ExpectedViewChart expectedView={expectedViewChartData} /> */}
       </div>
     </div>
   );
