@@ -19,8 +19,13 @@ const AnalyticsSummaryList = ({
 
   return (
     <ul className="mt-10">
-      {summaryData.map(({ title, value, unit }) => (
-        <AnalyticsSummaryCard title={title} view={value} unit={unit} />
+      {summaryData.map(({ title, value, unit }, index) => (
+        <AnalyticsSummaryCard
+          title={title}
+          view={value}
+          unit={unit}
+          key={title + index}
+        />
       ))}
     </ul>
   );
