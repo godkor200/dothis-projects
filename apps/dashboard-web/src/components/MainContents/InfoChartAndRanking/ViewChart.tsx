@@ -345,7 +345,7 @@ const ViewChart = () => {
         </div>
         <div className="ml-[2px] flex h-3/6 justify-center [&_svg]:overflow-visible">
           <ReactApexChart
-            class="range-area-chart"
+            className="range-area-chart"
             options={{
               chart: {
                 zoom: {
