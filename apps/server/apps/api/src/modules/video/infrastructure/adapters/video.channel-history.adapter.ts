@@ -24,7 +24,7 @@ export class VideoChannelHistoryAdapter
    * 1. https://api.dothis.kr/docs#/%EC%A1%B0%ED%9A%8C%EC%88%98/ExpectedHitsV1HttpController_execute
    * @param dao
    */
-  async getVideoChannelHistory(
+  async execute(
     dao: GetRelatedVideoChannelHistoryDao,
   ): Promise<TGetRelatedVideoChannelHistoryRes> {
     /**
@@ -48,7 +48,7 @@ export class VideoChannelHistoryAdapter
         const month = Number(today.split('-')[1]);
         const day = Number(today.split('-')[2]);
         const yesterday = day - 1;
-        return `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.DAY, ch.channel_id, ch.channel_average_views
+        return `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, ch.channel_id, ch.channel_average_views, vh.YEAR, vh.MONTH, vh.DAY
       FROM ${tableName} vh
       JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
       JOIN (

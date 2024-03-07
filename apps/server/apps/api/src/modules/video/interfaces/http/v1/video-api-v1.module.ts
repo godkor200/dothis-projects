@@ -2,23 +2,19 @@ import { Module, Provider } from '@nestjs/common';
 import {
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
-  VIDEO_GET_SERVICE_DI_TOKEN,
+  VIDEO_GET_EXPECTATION_DI_TOKEN,
+  VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
   VIDEO_IGNITE_DI_TOKEN,
   VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN,
-  VIDEO_OS_DI_TOKEN,
-  VIDEO_SERVICE_DI_TOKEN,
+  VIDEO_PAGINATED_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
-
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { CqrsModule } from '@nestjs/cqrs';
-
 import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
 import { ChannelQueryHandler } from '@Apps/modules/channel/infrastucture/adapters/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
-
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
@@ -33,6 +29,14 @@ import { VideoHistoryAdapter } from '@Apps/modules/video_history/infrastructure/
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
 import { VideoEntireCountAdapter } from '@Apps/modules/video/infrastructure/adapters/video.entire-count.adapter';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
+import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
+import { ExpectedHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/expected-hits/expected-hits.v1.http.controller';
+import { VideoPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video.paginated.adapter';
+const controllers = [
+  FindVideoPageHttpController,
+  FindIndividualVideoInfoHttpController,
+  ExpectedHitsV1HttpController,
+];
 
 const commandHandlers: Provider[] = [];
 
@@ -48,11 +52,15 @@ const queryHandlers: Provider[] = [
     provide: VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
     useClass: VideoEntireCountAdapter,
   },
+  { provide: VIDEO_PAGINATED_IGNITE_DI_TOKEN, useClass: VideoPaginatedAdapter },
   {
     provide: VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
     useClass: VideoHistoryListAdapter,
   },
-  { provide: VIDEO_GET_SERVICE_DI_TOKEN, useClass: GetVideoDataPageService },
+  {
+    provide: VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
+    useClass: GetVideoDataPageService,
+  },
   {
     provide: CHANNEL_HISTORY_IGNITE_DI_TOKEN,
     useClass: ChannelHistoryAdapter,
@@ -60,6 +68,10 @@ const queryHandlers: Provider[] = [
   {
     provide: VIDEO_HISTORY_IGNITE_DI_TOKEN,
     useClass: VideoHistoryAdapter,
+  },
+  {
+    provide: VIDEO_GET_EXPECTATION_DI_TOKEN,
+    useClass: VideoChannelHistoryAdapter,
   },
   GetVideoDataPageService,
   FindVideoPageQueryHandler,
@@ -73,10 +85,7 @@ const service: Provider[] = [
 ];
 @Module({
   imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
-  controllers: [
-    FindVideoPageHttpController,
-    FindIndividualVideoInfoHttpController,
-  ],
+  controllers,
   providers: [
     ...queryHandlers,
     ...commandHandlers,

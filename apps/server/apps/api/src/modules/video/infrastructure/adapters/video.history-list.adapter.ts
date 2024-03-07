@@ -1,8 +1,7 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import {
-  IHistoryListOutboundPort,
+  IGetRelatedVideoAndVideoHistoryOutBoundPort,
   TRelatedVideoAndHistoryRes,
-  VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { RelatedVideoAndVideoHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
@@ -13,9 +12,9 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 
 export class VideoHistoryListAdapter
   extends VideoBaseAdapter
-  implements IHistoryListOutboundPort
+  implements IGetRelatedVideoAndVideoHistoryOutBoundPort
 {
-  async getRelatedVideoAndVideoHistory(
+  async execute(
     dao: RelatedVideoAndVideoHistoryDao,
   ): Promise<TRelatedVideoAndHistoryRes> {
     const { search, related, from, to, clusterNumber } = dao;

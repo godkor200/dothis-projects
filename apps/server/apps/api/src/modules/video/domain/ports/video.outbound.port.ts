@@ -9,6 +9,7 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/ev
 import {
   GetRelatedLastVideoAndVideoHistory,
   GetRelatedLastVideoAndVideoHistoryEach,
+  GetRelatedVideoChannelHistoryDao,
   GetRelatedVideoHistory,
   GetVideoDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
@@ -18,6 +19,10 @@ import {
 } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { TGetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
+import {
+  TGetRelatedVideoChannelHistoryRes,
+  VideoChannelHistoryAdapter,
+} from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -45,20 +50,21 @@ export interface VideoOutboundPort {
   ): Promise<TRelatedVideoAndHistoryRes>;
 
   getRelatedVideos(props: SearchRelationVideoDao): Promise<TRelatedVideos>;
-
-  getRelatedVideosCountByDay(
-    props: RelatedVideoAndCountByDayDao,
-  ): Promise<TRelatedVideosCountByDay>;
-
-  getRelatedVideosEntireCount(dao: GetVideoDao): Promise<TRelatedEntireCount>;
-
-  getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos>;
 }
-
-export interface IHistoryListOutboundPort
-  extends Pick<VideoOutboundPort, 'getRelatedVideoAndVideoHistory'> {}
-export interface IVideosCountByDay
-  extends Pick<VideoOutboundPort, 'getRelatedVideosCountByDay'> {}
+export interface IGetRelatedVideoAndVideoHistoryOutBoundPort {
+  execute(
+    props: RelatedVideoAndVideoHistoryDao,
+  ): Promise<TRelatedVideoAndHistoryRes>;
+}
+export interface IGetRelatedVideosCountByDayOutBoundPort {
+  execute(dao: RelatedVideoAndCountByDayDao): Promise<TRelatedVideosCountByDay>;
+}
+export interface IGetRelatedVideosPaginatedOutBoundPort {
+  execute(dao: GetVideoDao): Promise<TRelatedVideos>;
+}
+export interface IGetRelatedVideosEntireCountOutBoundPort {
+  execute(dao: GetVideoDao): Promise<TRelatedEntireCount>;
+}
 
 export interface IGetRelatedLastVideoHistoryEach {
   getRelatedLastVideoAndVideoHistoryEach(
@@ -69,4 +75,9 @@ export interface IGetRelatedLastVideoHistory {
   getRelatedLastVideoAndVideoHistory(
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedLastVideoAndVideoHistory>;
+}
+export interface IGetRelatedVideoChannelHistoryOutboundPort {
+  execute(
+    dao: GetRelatedVideoChannelHistoryDao,
+  ): Promise<TGetRelatedVideoChannelHistoryRes>;
 }

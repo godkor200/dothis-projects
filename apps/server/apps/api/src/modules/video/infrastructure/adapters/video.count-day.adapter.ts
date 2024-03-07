@@ -1,5 +1,6 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import {
+  IGetRelatedVideosCountByDayOutBoundPort,
   TRelatedVideosCountByDay,
   VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
@@ -14,9 +15,9 @@ const IgniteClient = require('apache-ignite-client');
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoCountDayAdapter
   extends VideoBaseAdapter
-  implements Pick<VideoOutboundPort, 'getRelatedVideosCountByDay'>
+  implements IGetRelatedVideosCountByDayOutBoundPort
 {
-  async getRelatedVideosCountByDay(
+  async execute(
     dao: RelatedVideoAndCountByDayDao,
   ): Promise<TRelatedVideosCountByDay> {
     const { search, related, from, to, clusterNumber } = dao;
@@ -35,7 +36,7 @@ export class VideoCountDayAdapter
        AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
        GROUP BY vh.DAY;
 `;
-      const query = new SqlFieldsQuery(queryString);
+      const query = this.createDistributedJoinQuery(queryString);
 
       const result = await cache.query(query);
       const resArr = await result.getAll();
