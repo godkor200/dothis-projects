@@ -262,11 +262,15 @@ const MonthlyViewData = ({ currentTab }: Props) => {
                   series={[
                     {
                       name: '조회 수',
-                      data: convertedViews,
+                      data: convertedViews.sort((a, b) =>
+                        a.x < b.x ? -1 : a.x > b.x ? 1 : 0,
+                      ),
                     },
                     {
                       name: '영상 수',
-                      data: convertedVideoCounts,
+                      data: convertedVideoCounts.sort((a, b) =>
+                        a.x < b.x ? -1 : a.x > b.x ? 1 : 0,
+                      ),
                     },
                   ]}
                 />
