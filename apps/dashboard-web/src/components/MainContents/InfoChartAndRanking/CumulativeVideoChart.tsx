@@ -32,7 +32,7 @@ const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
         <div className="absolute left-2/4 top-[65px] flex translate-x-[-50%] flex-col items-center justify-center">
           <div>영상 수</div>
           <div className="text-[20px]">
-            <span className="text-primary500">{totalCount}</span>개
+            <span className="text-primary500">{totalCount || 182}</span>개
           </div>
         </div>
         <ReactApexChart
