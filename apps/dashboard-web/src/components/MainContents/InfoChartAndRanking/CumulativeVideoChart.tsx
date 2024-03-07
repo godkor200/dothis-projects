@@ -7,10 +7,24 @@ import type { ResponseType, VideoCount } from '@/constants/convertText';
 
 interface Props {
   totalCount: number;
-  videoCountsBySection: ResponseType[VideoCount][];
+  videoCountsBySection: ResponseType;
 }
 
 const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
+  const getApexChartFormat = (videoCountViewChartData: ResponseType) => {
+    const labels: VideoCount[] = [];
+    const values: number[] = [];
+
+    for (const key in videoCountViewChartData) {
+      labels.push(key as VideoCount);
+      values.push(videoCountViewChartData[key as VideoCount]);
+    }
+
+    return { labels, values };
+  };
+
+  const { labels, values } = getApexChartFormat(videoCountsBySection);
+
   return (
     <div className="rounded-8 border-grey400 bg-grey00 text-grey600 flex h-[368px] flex-col border p-6 font-bold">
       <div>연간 영상 수</div>
@@ -40,7 +54,13 @@ const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
                 },
               },
             },
-            labels: ['1만이상', '2만이상', '3만이상', '4만이상', '5만이상'],
+            labels: labels || [
+              '1만이상',
+              '2만이상',
+              '3만이상',
+              '4만이상',
+              '5만이상',
+            ],
             colors: [
               colors.primary600,
               colors.primary400,
@@ -61,7 +81,7 @@ const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
               enabled: false,
             },
           }}
-          series={[44, 55, 41, 17, 15]}
+          series={values || [44, 55, 41, 17, 15]}
           type="donut"
           width={'100%'}
         />

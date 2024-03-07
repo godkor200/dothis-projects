@@ -19,8 +19,9 @@ import { handleZeroDivision } from '@/utils/common';
 import { getCompetitionScore } from '@/utils/contents/competitionScore';
 
 import AnalysisWidgetList from './AnalysisWidgetList';
+import AnalyticsSummaryCard from './AnalyticsSummaryCard';
+import AnalyticsSummaryList from './AnalyticsSummaryList';
 import CumulativeVideoChart from './CumulativeVideoChart';
-import DailyView from './DailyView';
 import ViewChart from './ViewChart';
 
 export const VIEWCHART_LABEL = {
@@ -74,13 +75,11 @@ const KeywordAnalyticsView = () => {
                 acc.videoCountViewChartData[key as VideoCount];
 
               if (existingItem) {
-                existingItem.value += sectionItem.number;
+                acc.videoCountViewChartData[key as VideoCount] +=
+                  sectionItem.number;
               } else {
-                acc.videoCountViewChartData[key as VideoCount] = {
-                  id: existingRange,
-                  label: existingRange,
-                  value: sectionItem.number,
-                };
+                acc.videoCountViewChartData[key as VideoCount] =
+                  sectionItem.number;
               }
             }
           });
@@ -92,6 +91,7 @@ const KeywordAnalyticsView = () => {
           videoCountViewChartData: {},
         } as {
           totalCount: number;
+          // videoCountViewChartData: ResponseType;
           videoCountViewChartData: ResponseType;
         },
       ),
@@ -179,12 +179,12 @@ const KeywordAnalyticsView = () => {
       if (range.includes('~')) {
         let [min, max] = range.split('~').map(Number);
         if (number < max) {
-          sum += videoCountViewChartData[range as VideoCount].value;
+          sum += videoCountViewChartData[range as VideoCount];
         }
       } else if (range.includes('이상')) {
         let min = parseInt(range);
         if (number < min) {
-          sum += videoCountViewChartData[range as VideoCount].value;
+          sum += videoCountViewChartData[range as VideoCount];
         }
       }
     }
@@ -201,12 +201,15 @@ const KeywordAnalyticsView = () => {
       <div className="flex h-[520px] w-full">
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
-          <DailyView view={totalDailyView || 0} />
+          <AnalyticsSummaryList
+            totalView={totalDailyView || 0}
+            viewCountChange={totalDailyView || 0}
+            searchVolumeChange={totalDailyView || 0}
+          />
+
           <CumulativeVideoChart
             totalCount={totalCount}
-            videoCountsBySection={Object.values(
-              videoCountViewChartData,
-            ).reverse()}
+            videoCountsBySection={videoCountViewChartData}
           />
         </div>
       </div>
