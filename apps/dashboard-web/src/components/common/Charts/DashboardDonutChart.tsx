@@ -27,13 +27,9 @@ const DashboardDonutChart = ({ labels, series }: Props) => {
             },
           },
         },
-        labels: labels || [
-          '1만이상',
-          '2만이상',
-          '3만이상',
-          '4만이상',
-          '5만이상',
-        ],
+        labels: labels.length
+          ? labels
+          : ['1만이상', '2만이상', '3만이상', '4만이상', '5만이상'],
         colors: [
           colors.primary600,
           colors.primary400,
@@ -54,7 +50,7 @@ const DashboardDonutChart = ({ labels, series }: Props) => {
           enabled: false,
         },
       }}
-      series={series || [44, 55, 41, 17, 15]}
+      series={series.length ? series : [44, 55, 41, 17, 15]}
       type="donut"
       width={'100%'}
     />
