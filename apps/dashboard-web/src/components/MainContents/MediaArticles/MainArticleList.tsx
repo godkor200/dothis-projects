@@ -61,16 +61,19 @@ const MainArticleList = () => {
           'justify-between': returnData.length === 3,
         })}
       >
-        {returnData.map(({ title, category, provider, date, image, link }) => (
-          <CurrentArticle
-            title={title}
-            category={category}
-            provider={provider}
-            date={date}
-            image={image}
-            link={link}
-          />
-        ))}
+        {returnData.map(
+          ({ title, category, provider, date, image, link }, index) => (
+            <CurrentArticle
+              key={title + index}
+              title={title}
+              category={category}
+              provider={provider}
+              date={date}
+              image={image}
+              link={link}
+            />
+          ),
+        )}
       </div>
       <p className="mb-[40px] text-center text-[20px] font-bold">
         "{selectedWord.keyword}" 키워드를 주제로 만든 영상들의 성과를 확인하고,

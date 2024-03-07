@@ -1,6 +1,10 @@
 import type { ViewData } from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 
-const getMaxValues = (data: ViewData[]) => {
+interface ApexRadar {
+  x: string;
+  y: number;
+}
+export const getMaxValues = (data: ViewData[]) => {
   let maxViews = 1;
   let maxVideoTotalCounts = 1;
 
@@ -14,4 +18,22 @@ const getMaxValues = (data: ViewData[]) => {
   return { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue };
 };
 
-export default getMaxValues;
+export const getMaxValuesV2 = (
+  views: ApexRadar[],
+  videoCounts: ApexRadar[],
+) => {
+  let maxViews = 1;
+  let maxVideoTotalCounts = 1;
+
+  views.forEach((item) => {
+    maxViews = Math.max(maxViews, item.y);
+  });
+
+  videoCounts.forEach((item) => {
+    maxVideoTotalCounts = Math.max(maxVideoTotalCounts, item.y);
+  });
+
+  const viewAndVideoMaxValue = Math.max(maxViews, maxVideoTotalCounts);
+
+  return { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue };
+};

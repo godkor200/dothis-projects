@@ -118,7 +118,6 @@ const RelationWord = ({
     keyword: keyword,
     relword: relword,
   });
-
   const { totalCount, videoCountViewChartData } = useMemo(
     () =>
       videoCountData.reduce<{
@@ -136,13 +135,11 @@ const RelationWord = ({
                 acc.videoCountViewChartData[key as VideoCount];
 
               if (existingItem) {
-                existingItem.value += sectionItem.number;
+                acc.videoCountViewChartData[key as VideoCount] +=
+                  sectionItem.number;
               } else {
-                acc.videoCountViewChartData[key as VideoCount] = {
-                  id: existingRange,
-                  label: existingRange,
-                  value: sectionItem.number,
-                };
+                acc.videoCountViewChartData[key as VideoCount] =
+                  sectionItem.number;
               }
             }
           });
@@ -154,10 +151,11 @@ const RelationWord = ({
           videoCountViewChartData: {},
         } as {
           totalCount: number;
+          // videoCountViewChartData: ResponseType;
           videoCountViewChartData: ResponseType;
         },
       ),
-    [videoCountData],
+    [JSON.stringify(videoCountData)],
   );
 
   const handleOnChangeCheckBox = (isChecked: boolean) => {
@@ -197,8 +195,8 @@ const RelationWord = ({
   );
 
   const subscribersVideoCount =
-    videoCountViewChartData['100000~499999']?.value ||
-    0 + videoCountViewChartData['500000이상']?.value ||
+    videoCountViewChartData['100000~499999'] ||
+    0 + videoCountViewChartData['500000이상'] ||
     0;
 
   return (

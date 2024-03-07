@@ -4,7 +4,7 @@ export const CONVERT_SUBSCRIBERANGE = {
   '50000~99999': '구독자 5만명 이상 10만명 미만의 채널',
   '100000~499999': '구독자 10만 이상 50만명 미만의 채널',
   '500000이상': '구독자 50만명 이상의 채널',
-};
+} as const;
 
 export type VideoCount =
   | '1000~9999'
@@ -20,5 +20,6 @@ interface ResponseItem {
 }
 
 export type ResponseType = {
-  [key in VideoCount]: ResponseItem;
+  // [key in VideoCount]: ResponseItem;
+  [key in VideoCount]: number;
 };
