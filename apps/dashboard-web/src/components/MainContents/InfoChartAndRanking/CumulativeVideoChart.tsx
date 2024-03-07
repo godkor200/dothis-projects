@@ -3,7 +3,11 @@
 import { colors } from '@dothis/theme/dashboard/colors';
 import ReactApexChart from 'react-apexcharts';
 
-import type { ResponseType, VideoCount } from '@/constants/convertText';
+import {
+  CONVERT_SUBSCRIBERANGE,
+  type ResponseType,
+  type VideoCount,
+} from '@/constants/convertText';
 
 interface Props {
   totalCount: number;
@@ -12,11 +16,13 @@ interface Props {
 
 const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
   const getApexChartFormat = (videoCountViewChartData: ResponseType) => {
-    const labels: VideoCount[] = [];
+    const labels: Array<
+      (typeof CONVERT_SUBSCRIBERANGE)[keyof typeof CONVERT_SUBSCRIBERANGE]
+    > = [];
     const values: number[] = [];
 
     for (const key in videoCountViewChartData) {
-      labels.push(key as VideoCount);
+      labels.push(CONVERT_SUBSCRIBERANGE[key as VideoCount]);
       values.push(videoCountViewChartData[key as VideoCount]);
     }
 
