@@ -30,14 +30,17 @@ const DashboardRadarChart = ({ series }: Props) => {
         },
 
         xaxis: {
-          categories: [
-            '리그오브레전드',
-            '음식',
-            '먹방',
-            '키워드',
-            '유통',
-            '물류',
-          ],
+          /**
+           * 해당 부분 주석처리한 이유 => series의 y 값이 xaxis categories 값의 매핑이 되는게 아니라, 그냥 array index에 매핑이 되는 형식이라서 제거해버림
+           */
+          //   categories: [
+          //     '리그오브레전드',
+          //     '음식',
+          //     '먹방',
+          //     '키워드',
+          //     '유통',
+          //     '물류',
+          //   ],
         },
         yaxis: {
           axisTicks: {
