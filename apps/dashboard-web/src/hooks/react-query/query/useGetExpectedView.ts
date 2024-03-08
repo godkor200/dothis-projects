@@ -6,6 +6,8 @@ import { EXPECTEDVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
+import useGetRelWords from './useGetRelWords';
+
 /**
  * 지정한 탐색어와 연관어들의 기대비율을 가져오기 위한 hook입니다.
  * @param param 탐색어와 연관어를 파라미터로 받습니다.
@@ -20,13 +22,21 @@ const useGetExpectedView = (
     keyword: string | null;
     relword: string | null;
   },
-  queryOptions?: UseQueryOptions<typeof apiRouter.expectViews.getExpectedViews>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.hits.getExpectedViews>,
 ) => {
   const startDate = useStartDate();
 
   const endDate = useEndDate();
 
-  const queryResult = apiClient(2).expectViews.getExpectedViews.useQuery(
+  const { data } = useGetRelWords(keyword);
+
+  let clusters: string[] = [];
+
+  if (data && data.cluster) {
+    clusters = JSON.parse(data.cluster);
+  }
+
+  const queryResult = apiClient(1).hits.getExpectedViews.useQuery(
     EXPECTEDVIEW_KEY.list([
       {
         relword,
@@ -35,10 +45,14 @@ const useGetExpectedView = (
         endDate,
       },
     ]),
+
     {
+      params: {
+        clusterNumber: clusters.join(','),
+      },
       query: {
-        keyword: keyword!,
-        relationKeyword: relword!,
+        search: keyword!,
+        related: relword!,
         from: startDate,
         to: endDate,
       },
