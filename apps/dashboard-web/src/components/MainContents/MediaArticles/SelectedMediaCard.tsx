@@ -1,7 +1,6 @@
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { MouseEvent } from 'react';
 
 import { handleImageError } from '@/utils/imagesUtil';
 
@@ -18,11 +17,6 @@ const SelectedMediaCard = ({
   image,
   link,
 }: Props) => {
-  const handleCopy = (e: MouseEvent<HTMLDivElement>, link: string) => {
-    e.preventDefault();
-
-    alert(`${link}가 복사`);
-  };
   return (
     <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
       <Link href={`${link}` as Route} target="_blank">
@@ -52,14 +46,6 @@ const SelectedMediaCard = ({
             element={element}
             uploadDate={uploadDate}
           />
-          {/* <div onClick={(e) => handleCopy(e, link)}>
-            <div className="bg-grey200 flex w-full items-center justify-center   rounded-lg py-4 text-center">
-              <button className="inline-flex items-center gap-[0.7rem]">
-                <SvgComp icon="Share" size={20} />
-                <p className="text-grey700 font-bold">공유하기</p>
-              </button>
-            </div>
-          </div> */}
         </div>
       </Link>
     </div>
@@ -99,11 +85,6 @@ const SelectedMediaCardSkeleton = () => {
 
           <span className="bg-grey300 h-[16px] w-[64px] rounded-full"></span>
         </div>
-        {/* <div>
-          <div className="bg-grey300 flex h-[58px] w-full items-center   justify-center rounded-lg py-4 text-center">
-            <button className="inline-flex items-center gap-[0.7rem]"></button>
-          </div>
-        </div> */}
       </div>
     </div>
   );
