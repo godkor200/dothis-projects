@@ -5,29 +5,24 @@ import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
+import type { MediaDigestData } from '.';
 import CurrentArticle from './CurrentArticle';
 
 const MainArticleList = () => {
   const selectedWord = useSelectedWord();
-  const {
-    data: scrollData,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetching,
-  } = useGetNewsInfiniteQuery();
+  const { data: newsData, isLoading } = useGetNewsInfiniteQuery();
 
-  const dataObj = scrollData?.pages.flatMap(
+  const flattenNewsData = newsData?.pages.flatMap(
     (item) => item.return_object.documents,
   );
 
-  const returnData = dataObj
+  const mediaDigestData: MediaDigestData[] | undefined = flattenNewsData
     ?.map((item) => {
       return {
         title: item.title,
-        category: item.category[0],
         provider: item.provider,
-        date: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
+        element: item.category[0],
+        uploadDate: dayjs(`${item.dateline}`).format('YYYY.MM.DD'),
         image: externaImageLoader(getMainImage(item.images)),
         link: item.provider_link_page,
         hilight: item.hilight,
@@ -46,7 +41,7 @@ const MainArticleList = () => {
     );
   }
 
-  if (returnData?.length === 0 || !returnData) {
+  if (mediaDigestData?.length === 0 || !mediaDigestData) {
     return null;
   }
 
@@ -57,18 +52,18 @@ const MainArticleList = () => {
       </h2>
       <div
         className={cn('mb-[40px]  flex justify-center gap-[120px]', {
-          'justify-evenly': returnData.length === 2,
-          'justify-between': returnData.length === 3,
+          'justify-evenly': mediaDigestData.length === 2,
+          'justify-between': mediaDigestData.length === 3,
         })}
       >
-        {returnData.map(
-          ({ title, category, provider, date, image, link }, index) => (
+        {mediaDigestData.map(
+          ({ title, element, provider, uploadDate, image, link }, index) => (
             <CurrentArticle
               key={title + index}
               title={title}
-              category={category}
               provider={provider}
-              date={date}
+              element={element}
+              uploadDate={uploadDate}
               image={image}
               link={link}
             />
