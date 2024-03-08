@@ -6,7 +6,7 @@ import {
   zRankRel,
   zRelWords,
   zSearch,
-} from './rel-words.model';
+} from './related-word.model';
 import { zErrResBase } from '../error.response.zod';
 
 export const relWordsApiUrl = '/related-word';

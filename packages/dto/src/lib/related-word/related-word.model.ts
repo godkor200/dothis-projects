@@ -41,7 +41,7 @@ export type TRankResData = z.TypeOf<typeof zRankingArray>;
 
 export type TRankRes = z.TypeOf<typeof zRankRes>;
 
-export type RelWordsModel = z.TypeOf<typeof zRelWords>;
+export type RelatedWordModel = z.TypeOf<typeof zRelWords>;
 
 export type TKeyword = z.TypeOf<typeof zKeywords>;
 export type TRankingArrayOmitWord = z.TypeOf<typeof zRankingArrayOmitWord>;
