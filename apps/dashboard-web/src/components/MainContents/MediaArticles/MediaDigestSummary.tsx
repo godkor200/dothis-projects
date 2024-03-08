@@ -1,10 +1,10 @@
 import { cn } from '@/utils/cn';
 
-interface Props {
+import type { MediaDigestData } from '.';
+
+interface Props
+  extends Pick<MediaDigestData, 'provider' | 'element' | 'uploadDate'> {
   profile?: string;
-  provider: string;
-  element: string;
-  uploadDate: string;
   isList?: boolean;
 }
 
