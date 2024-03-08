@@ -73,7 +73,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     );
 
     result.views = result.views;
-    result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+    result.videoTotalCounts = (videoData[idx]?.total as number) || 0;
 
     return result;
   });
@@ -102,7 +102,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 
   const categoryVideo = videoData.map((item, idx) => {
     return {
-      y: item?.total.value || 0,
+      y: item?.total || 0,
       x:
         clusterData &&
         clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
