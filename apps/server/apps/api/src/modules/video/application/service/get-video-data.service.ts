@@ -1,13 +1,11 @@
 import { Inject } from '@nestjs/common';
 import {
   VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
-  VIDEO_IGNITE_DI_TOKEN,
   VIDEO_PAGINATED_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import {
   IGetRelatedVideosEntireCountOutBoundPort,
   IGetRelatedVideosPaginatedOutBoundPort,
-  VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';

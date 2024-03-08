@@ -1,8 +1,5 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
-import {
-  IGetRelatedLastVideoHistory,
-  IGetRelatedLastVideoHistoryEach,
-} from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { IGetRelatedLastVideoHistoryEach } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { GetRelatedLastVideoAndVideoHistoryEach } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Err, Ok, Result } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
@@ -11,10 +8,7 @@ import {
   CacheDoesNotFoundException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
-import {
-  GetRelatedVideoAndVideoHistory,
-  IGetRelatedVideoAndVideoHistoryRes,
-} from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
+import { IGetRelatedVideoAndVideoHistoryRes } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
 export type TGetRelatedLastVideoAndVideoHistory = Result<
   IGetRelatedVideoAndVideoHistoryRes[],
   | VideoHistoryNotFoundError
@@ -32,7 +26,7 @@ export class VideoLastHistoryAdapter
    * 서브쿼리를 이용한 제일 최근 히스토리만 불러오기
    * @param dao
    */
-  async getRelatedLastVideoAndVideoHistoryEach(
+  async execute(
     dao: GetRelatedLastVideoAndVideoHistoryEach,
   ): Promise<TGetRelatedLastVideoAndVideoHistory> {
     const currentDate = new Date();

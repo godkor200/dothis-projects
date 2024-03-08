@@ -10,7 +10,7 @@ import {
 } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { FindRelRequestDto } from '@Apps/modules/related-word/queries/v1/find-rel/find-rel.request.dto';
+import { FindRelRequestDto } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-rel/find-rel.request.dto';
 import { FindRelV2Query } from '@Apps/modules/related-word/application/dtos/find-rel.dto';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 const c = nestControllerContract(apiRouter.relatedWords);

@@ -6,8 +6,6 @@ import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application
 import {
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
-  VIDEO_IGNITE_DI_TOKEN,
-  VIDEO_SERVICE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { GetWeeklyHitsListV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-hits-list/get-weekly-hits-list.v1.http.controller';
@@ -56,7 +54,6 @@ const repositories: Provider[] = [
     useClass: VideoHistoryListAdapter,
   },
   { provide: VIDEO_COUNT_DAY_IGNITE_DI_TOKEN, useClass: VideoCountDayAdapter },
-  { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoBaseAdapter },
   {
     provide: HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
     useClass: VideoChannelHistoryAdapter,

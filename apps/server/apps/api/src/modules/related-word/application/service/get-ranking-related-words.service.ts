@@ -5,10 +5,10 @@ import {
   RELWORDS_DI_TOKEN,
   RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
 } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
-import { FindRelAdapter } from '@Apps/modules/related-word/interface/find-rel.adapter';
+import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
-import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/service/ranking-related-word.aggregate.service';
+import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 
@@ -28,7 +28,7 @@ export class GetRankingRelatedWordsService
 {
   constructor(
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
-    private readonly relWordsRepository: FindRelAdapter,
+    private readonly relWordsRepository: FindRelatedWordOutboundPort,
 
     @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
     private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
@@ -60,10 +60,7 @@ export class GetRankingRelatedWordsService
         relatedCluster,
       });
 
-      const data =
-        await this.getRelatedVideoHistory.getRelatedLastVideoAndVideoHistory(
-          dao,
-        );
+      const data = await this.getRelatedVideoHistory.execute(dao);
 
       if (data.isOk()) {
         const unwrapData = data.unwrap();

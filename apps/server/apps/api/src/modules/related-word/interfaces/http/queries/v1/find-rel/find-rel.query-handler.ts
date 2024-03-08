@@ -1,7 +1,7 @@
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindRelAdapter } from '../../../interface/find-rel.adapter';
+import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { FindRelV1Query } from '@Apps/modules/related-word/application/dtos/find-rel.dto';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
@@ -16,7 +16,8 @@ export class FindRelQueryHandler
     >
 {
   constructor(
-    @Inject(RELWORDS_DI_TOKEN.FIND_ONE) private readonly query: FindRelAdapter,
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly query: FindRelatedWordOutboundPort,
   ) {}
   async execute(
     query: FindRelV1Query,

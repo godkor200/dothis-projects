@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelV2Query } from '@Apps/modules/related-word/application/dtos/find-rel.dto';
 import { Inject } from '@nestjs/common';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
-import { FindRelCachePort } from '@Apps/modules/related-word/repository/cache/find-rel.cache.port';
+import { FindRelCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache.port';
 
 @QueryHandler(FindRelV2Query)
 export class FindRelQueryHandler

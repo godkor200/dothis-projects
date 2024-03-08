@@ -32,7 +32,7 @@ export class VideoHistoryListAdapter
        WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
        AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
        AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
-      const query = new this.SqlFieldsQuery(queryString);
+      const query = this.createDistributedJoinQuery(queryString);
 
       const result = await cache.query(query);
       const resArr = await result.getAll();

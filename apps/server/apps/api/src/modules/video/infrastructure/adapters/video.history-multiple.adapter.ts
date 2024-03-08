@@ -10,7 +10,7 @@ export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
 {
-  async getRelatedLastVideoAndVideoHistory(
+  async execute(
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedLastVideoAndVideoHistory> {
     const { search, relatedCluster, relatedWords } = dao;
