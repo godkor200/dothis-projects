@@ -104,10 +104,6 @@ const MainContentPage = ({
     (searchParams?.snsTab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
     'news';
 
-  // const articleListData = await relatedContentApi[selectedArticle](
-  //   '아시안게임',
-  // );
-
   const selectedMainContent = searchParams?.main || 'recommend';
 
   const secondSection =
