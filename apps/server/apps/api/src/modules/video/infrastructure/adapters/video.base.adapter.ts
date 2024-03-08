@@ -30,7 +30,7 @@ export class VideoBaseAdapter
   extends IgniteService
   implements VideoOutboundPort
 {
-  private readonly videoColumns: string[] = [
+  readonly videoColumns: string[] = [
     'VIDEO_ID',
     'CHANNEL_ID',
     'VIDEO_TITLE',
@@ -59,6 +59,9 @@ export class VideoBaseAdapter
     // 추가적인 초기화 로직을 여기에 작성합니다.
     this.logger.log('ChildIgniteConfigService has been initialized.');
   }
+  public createDistributedJoinQuery(sqlQuery: string) {
+    return new SqlFieldsQuery(sqlQuery).setDistributedJoins(true);
+  }
   public getClusterQueryString(
     columns: string[],
     search: string,
@@ -77,7 +80,11 @@ export class VideoBaseAdapter
       .map((index) => {
         const tableName = `VIDEO_DATA_CLUSTER_${index}`;
         const joinTableName = `VIDEO_HISTORY_CLUSTER_${index}_${fromDate.year}_${fromDate.month}`;
-        return `SELECT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh ON vd.video_id = vh.video_id WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+        return `SELECT DISTINCT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh 
+  ON vd.video_id = vh.video_id 
+  WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
+  AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
+  AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       })
       .join(' UNION ');
   }
@@ -140,115 +147,6 @@ export class VideoBaseAdapter
           queryString,
         ),
       );
-    } catch (e) {
-      if (e.message.includes('Table')) {
-        return Err(new TableNotFoundException(e.message));
-      }
-      return Err(e);
-    }
-  }
-
-  async getRelatedVideosCountByDay(
-    dao: RelatedVideoAndCountByDayDao,
-  ): Promise<TRelatedVideosCountByDay> {
-    const { search, related, from, to, clusterNumber } = dao;
-
-    try {
-      const fromDate = DateFormatter.getFormattedDate(from);
-      const toDate = DateFormatter.getFormattedDate(to);
-      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber}_${fromDate.year}_${fromDate.month}`;
-      const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumber}`;
-      const cache = await this.client.getCache(tableName);
-      const queryString = `SELECT vh.DAY, COUNT(DISTINCT vh.VIDEO_ID) AS unique_video_count
-       FROM ${tableName} vh JOIN ${joinTableName} vd 
-       ON vd.video_id = vh.video_id
-       WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
-       AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
-       AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
-       GROUP BY vh.DAY;
-`;
-      const query = new SqlFieldsQuery(queryString);
-
-      const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) return Err(new VideoHistoryNotFoundError());
-
-      return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
-      );
-    } catch (e) {
-      if (e.message.includes('Table')) {
-        return Err(new TableNotFoundException(e.message));
-      }
-      return Err(e);
-    }
-  }
-
-  async getRelatedVideosPaginated(dao: GetVideoDao): Promise<TRelatedVideos> {
-    const { search, related, from, to, clusterNumber, limit, page } = dao;
-
-    const queryString = this.getClusterQueryString(
-      this.videoColumns.map((column) => `vd.${column}`),
-      search,
-      related,
-      from,
-      to,
-      clusterNumber,
-    );
-    const clusterNumberValue = Array.isArray(clusterNumber)
-      ? clusterNumber[0]
-      : clusterNumber;
-    const tableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumberValue}`;
-    const pageSize = Number(limit);
-    const currentPage = Number(page);
-    try {
-      const query = new SqlFieldsQuery(
-        '(' +
-          queryString +
-          `) LIMIT ${pageSize} OFFSET ${(currentPage - 1) * pageSize}`,
-      );
-
-      const cache = await this.client.getCache(tableName);
-      const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) return Err(new VideoNotFoundError());
-      return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
-      );
-    } catch (e) {
-      if (e.message.includes('Table')) {
-        return Err(new TableNotFoundException(e.message));
-      }
-      return Err(e);
-    }
-  }
-
-  async getRelatedVideosEntireCount(
-    dao: GetVideoDao,
-  ): Promise<TRelatedEntireCount> {
-    const { search, related, from, to, clusterNumber } = dao;
-
-    const queryString = this.getClusterQueryString(
-      [`count(*)`],
-      search,
-      related,
-      from,
-      to,
-      clusterNumber,
-    );
-
-    const clusterNumberValue = Array.isArray(clusterNumber)
-      ? clusterNumber[0]
-      : clusterNumber;
-    const tableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumberValue}`;
-    try {
-      const query = new SqlFieldsQuery(queryString);
-      const cache = await this.client.getCache(tableName);
-      const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) return Err(new VideoNotFoundError());
-
-      return Ok(resArr);
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));

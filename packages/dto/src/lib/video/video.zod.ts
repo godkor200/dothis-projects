@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { zDateQuery, zPaginatedQuery, zSearchKeyword } from '../common.model';
+import {
+  zClusterNumberMulti,
+  zDateQuery,
+  zPaginatedQuery,
+  zSearchKeyword,
+} from '../common.model';
 import { zVideoModel } from './video.model';
 
 export const zClusterQueryParams = z.object({
@@ -13,6 +18,9 @@ export const zClusterPathParams = z.object({
 });
 
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
+
+export const zFindVideoBySearchKeyword = findVideoBySearchKeyword;
+
 export const findVideoBySearchKeywordClusterNumber = zSearchKeyword
   .merge(zDateQuery)
   .merge(zClusterPathParams);

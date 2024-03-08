@@ -4,8 +4,9 @@ import {
   SECTION_NUMBER,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 
-import { IChannelHistoryWithoutChannelSubscribers } from '@Apps/modules/related-word/interface/rank-rel.interface';
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
+import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
+
 interface IDailyPerformance {
   [date: string]: {
     performanceTotal: number;
@@ -86,46 +87,44 @@ export class ChannelHistoryAggregateService {
    *
    *   성과 :  이 주제로 인해 영상 조회수가 채널의 평소 조회수보다 얼마나 많이 나왔는가를 뜻하는 수치
    *   계산식 :
-   *    영상의 조회수 / 채널의 평균 조회수
+   *    영상의 조회수 / 채널의 최근 평균 조회수
    *
    * @param channelHistories
    * @private
    */
   calculateDailyPerformance(
-    channelHistories:
-      | IChannelHistory[]
-      | IChannelHistoryWithoutChannelSubscribers[],
+    channelHistories: IGetVideoChannelHistoryRes[],
   ): IDailyPerformance {
     let dateViewRatios: IDailyPerformance = {};
     for (let channel of channelHistories) {
-      let channelAvgViews = channel._source.channel_average_views;
-      let videoList = channel.inner_hits.video_list.hits.hits;
-      for (let video of videoList) {
-        let videoViews = video._source.video_views;
-        if (channelAvgViews !== 0) {
-          // 성과
-          let performance = videoViews / channelAvgViews;
-          let videoDate = new Date(video._source.crawled_date);
-          let dateString = `${videoDate.getFullYear()}-${(
-            videoDate.getMonth() + 1
-          )
-            .toString()
-            .padStart(2, '0')}-${videoDate
-            .getDate()
-            .toString()
-            .padStart(2, '0')}`;
+      let channelAvgViews = channel.channelAverageViews;
 
-          if (!dateViewRatios[dateString]) {
-            dateViewRatios[dateString] = {
-              performanceTotal: 0,
-              videoViewsTotal: 0,
-              videoCount: 0,
-            };
-          }
-          dateViewRatios[dateString].performanceTotal += performance;
-          dateViewRatios[dateString].videoViewsTotal += videoViews;
-          dateViewRatios[dateString].videoCount += 1;
+      let videoViews = channel.videoViews;
+      if (channelAvgViews !== 0) {
+        // 성과
+        let performance = videoViews / channelAvgViews;
+        let videoDate = new Date(
+          `${channel.year}-${channel.month}-${channel.day}`,
+        );
+        let dateString = `${videoDate.getFullYear()}-${(
+          videoDate.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, '0')}-${videoDate
+          .getDate()
+          .toString()
+          .padStart(2, '0')}`;
+
+        if (!dateViewRatios[dateString]) {
+          dateViewRatios[dateString] = {
+            performanceTotal: 0,
+            videoViewsTotal: 0,
+            videoCount: 0,
+          };
         }
+        dateViewRatios[dateString].performanceTotal += performance;
+        dateViewRatios[dateString].videoViewsTotal += videoViews;
+        dateViewRatios[dateString].videoCount += 1;
       }
     }
     return dateViewRatios;
@@ -143,7 +142,7 @@ export class ChannelHistoryAggregateService {
 
       result.push({
         date: date,
-        expected_views: keywordPerformance,
+        expectedHits: keywordPerformance,
       });
     }
     return result;

@@ -5,7 +5,7 @@ import { FindChannelInfoDto } from '@Apps/modules/channel_history/application/dt
 import { createZodDto } from '@anatine/zod-nestjs';
 import { zSearchKeyword } from '@dothis/dto';
 import { extendApi } from '@anatine/zod-openapi';
-import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/application/dtos/expected-views.dtos';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
 
 /**
  * dao

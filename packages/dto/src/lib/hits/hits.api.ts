@@ -1,12 +1,13 @@
-import { z } from 'zod';
 import { c } from '../contract';
 import { zDailyViews, zWeeklyKeywordsList } from './hits.model';
-import { findVideoBySearchKeyword } from '../video';
+import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
-import { zClusterNumber } from '../common.model';
+import { zClusterNumber, zClusterNumberMulti } from '../common.model';
 import { zGetWeeklyViewsQuery } from './hits.zod';
+import { zExpectedViews } from '../channel-history';
 
+export const expectedHitsApiUrl = '/expectation';
 export const viewApiUrl = '/hits';
 const dailyApiUrl = '/daily';
 const weeklyApiUrl = '/weekly';
@@ -48,5 +49,18 @@ export const hitsApi = c.router({
     },
     summary: '주간 키워드 리스트를 가져옵니다',
     description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',
+  },
+  getExpectedViews: {
+    method: 'GET',
+    path: `${viewApiUrl}${expectedHitsApiUrl}/:clusterNumber`,
+    query: zFindVideoBySearchKeyword,
+    pathParams: zClusterNumberMulti,
+    responses: {
+      200: zExpectedViews,
+      ...zErrResBase,
+    },
+    summary: '기대 조회수를 가져옵니다',
+    description:
+      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다. v2는 v1에 비하면 개선된 버전입니다. 전체를 불러오기 때문에 한번만 호출하면 됩니다',
   },
 });

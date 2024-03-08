@@ -20,3 +20,12 @@ export type CountByDayRes = {
   day: number;
   uniqueVideoCount: number;
 };
+export interface IGetVideoChannelHistoryRes {
+  videoId: string;
+  videoViews: number;
+  channelId: string;
+  channelAverageViews: number;
+  year: number;
+  month: number;
+  day: number;
+}
