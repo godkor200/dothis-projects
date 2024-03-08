@@ -1,6 +1,6 @@
 import { c } from '../contract';
 
-import { zAccVideoModel, zVideoResponse } from './video.model';
+import { zAccVideoModel, zVideoModel, zVideoResponse } from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
   zClusterNumberMulti,
@@ -33,7 +33,7 @@ export const videoApi = c.router({
     pathParams: zClusterNumberMulti,
     query: zPaginatedIgniteQueryParams,
     responses: {
-      200: zVideoResponse,
+      200: zVideoModel,
       ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',

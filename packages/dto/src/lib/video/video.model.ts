@@ -28,44 +28,31 @@ export const zAccVideoModel = dataObject(
   }),
 );
 
-export const zVideoModel = z.object({
-  id: z.number().nullable().describe('The id of video'),
-  channelIndex: z.string().describe('The index of channel'),
-  videoTitle: z.string().describe('The title of video'),
-  videoUrl: z.string().describe('The url of video'),
-  videoDescription: z.string().describe('The Description of video'),
-  videoDuration: z.string().describe('The Duration of video'),
-
-  videoPublished: z.string().describe('The Published of video'),
-
-  videoViews: z.string().describe('Daily view count').default('0'),
-
-  videoLikes: z.number().describe('like count').default(0),
-
-  videoTags: z.string().describe('video tag').default('[]'),
-
-  videoCategory: z.string().describe('video category').default('[]'),
-
-  videoInfoCard: z.string().describe('video info card').default('0'),
-
-  videoWithAds: z
-    .string()
-    .describe(
-      'whether or not there is an advertisement and the number of advertisements',
-    ),
-
-  videoEndScreen: z
-    .string()
-    .describe(
-      `I think it's the next video recommendation on YouTube, but I'm not sure what it is`,
-    ),
-
-  //   videoCoreKeyword: z.string(),
-
-  videoAverageViews: z.number().describe('Average number of hits'),
-
-  crawlUpdateAt: z.date().describe('Crawled time'),
+export const zVideo = z.object({
+  channelId: z.string(),
+  videoId: z.string(),
+  videoTitle: z.string(),
+  videoDescription: z.string(),
+  videoTags: z.string(),
+  videoDuration: z.number(),
+  videoPublished: z.string(),
+  videoCategory: z.string(),
+  videoInfoCard: z.boolean(),
+  videoWithAds: z.boolean(),
+  videoEndScreen: z.boolean(),
+  videoCluster: z.number(),
+  crawledDate: z.string(),
+  year: z.number(),
+  month: z.number(),
+  day: z.number(),
 });
+
+export const zVideoModel = dataObject(
+  z.object({
+    total: z.number(),
+    data: z.array(zVideo),
+  }),
+);
 
 export const zVideoResponse = z.object({
   data: z.object({
@@ -120,3 +107,35 @@ export const zVideoResponse = z.object({
 export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails.shape.data>;
 export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;
 export type PredictedViews = z.TypeOf<typeof zPredictedViews>;
+
+/**
+ * 해당 dto는 존재해서 밑으로 옮겨두었습니다.
+ */
+export const isVideoModel = z.object({
+  id: z.number().nullable().describe('The id of video'),
+  channelIndex: z.string().describe('The index of channel'),
+  videoId: z.string(),
+  videoTitle: z.string().describe('The title of video'),
+  videoUrl: z.string().describe('The url of video'),
+  videoDescription: z.string().describe('The Description of video'),
+  videoDuration: z.string().describe('The Duration of video'),
+  videoPublished: z.string().describe('The Published of video'),
+  videoViews: z.string().describe('Daily view count').default('0'),
+  videoLikes: z.number().describe('like count').default(0),
+  videoTags: z.string().describe('video tag').default('[]'),
+  videoCategory: z.string().describe('video category').default('[]'),
+  videoInfoCard: z.string().describe('video info card').default('0'),
+  videoWithAds: z
+    .string()
+    .describe(
+      'whether or not there is an advertisement and the number of advertisements',
+    ),
+  videoEndScreen: z
+    .string()
+    .describe(
+      `I think it's the next video recommendation on YouTube, but I'm not sure what it is`,
+    ),
+  //   videoCoreKeyword: z.string(),
+  videoAverageViews: z.number().describe('Average number of hits'),
+  crawlUpdateAt: z.date().describe('Crawled time'),
+});
