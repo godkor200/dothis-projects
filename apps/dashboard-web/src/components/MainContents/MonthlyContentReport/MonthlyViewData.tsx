@@ -1,8 +1,6 @@
 'use client';
 
-import { access } from 'fs';
 import { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
 
 import DashboardRadarChart from '@/components/common/Charts/DashboardRadarChart';
 import { clustersCategories } from '@/constants/clusterCategories';
@@ -10,7 +8,6 @@ import type { CategoryTabNavDataCategoryType } from '@/constants/TabNav';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { handleZeroDivision } from '@/utils/common';
 import { getMaxValues, getMaxValuesV2 } from '@/utils/contents/getMaxValues';
