@@ -24,11 +24,11 @@ const useGetDailyView = (
   },
   queryOptions?: UseQueryOptions<typeof apiRouter.hits.getDailyViewsV1>,
 ) => {
-  const { data } = useGetRelWords(keyword);
-
   const startDate = useStartDate();
 
   const endDate = useEndDate();
+
+  const { data } = useGetRelWords(keyword);
 
   let clusters: string[] = [];
 
