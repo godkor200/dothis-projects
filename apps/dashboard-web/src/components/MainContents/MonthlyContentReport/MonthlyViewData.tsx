@@ -81,7 +81,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
   const categoryView = viewData.map((item, idx) => {
     const result = (item ?? []).reduce(
       (acc, cur) => {
-        acc.y = ((acc.y as number) || 0) + cur.videoViews;
+        acc.y = ((acc.y as number) || 0) + cur.videoViews || 0;
         return acc;
       },
       {
