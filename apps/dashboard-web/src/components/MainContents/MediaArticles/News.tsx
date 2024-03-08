@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
-import { useGptOptionAction } from '@/store/gptOptionStore';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import type { MediaDigestData } from '.';
@@ -29,8 +28,6 @@ const News = () => {
   const flattenNewsData = newsData?.pages.flatMap(
     (item) => item.return_object.documents,
   );
-
-  const { setRelatedNews, setRelatedVideo } = useGptOptionAction();
 
   /**
    * @mediaDigestData api로 받아온 youtubeVideoData의 필요한 프로퍼티만 가져와서 포맷팅을 수정하는 코드
