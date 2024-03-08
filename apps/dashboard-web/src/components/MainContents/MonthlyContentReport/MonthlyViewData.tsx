@@ -1,8 +1,6 @@
 'use client';
 
-import { access } from 'fs';
 import { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
 
 import DashboardRadarChart from '@/components/common/Charts/DashboardRadarChart';
 import { clustersCategories } from '@/constants/clusterCategories';
@@ -10,7 +8,6 @@ import type { CategoryTabNavDataCategoryType } from '@/constants/TabNav';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { handleZeroDivision } from '@/utils/common';
 import { getMaxValues, getMaxValuesV2 } from '@/utils/contents/getMaxValues';
@@ -73,7 +70,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     );
 
     result.views = result.views;
-    result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+    result.videoTotalCounts = (videoData[idx]?.total as number) || 0;
 
     return result;
   });
@@ -81,7 +78,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
   const categoryView = viewData.map((item, idx) => {
     const result = (item ?? []).reduce(
       (acc, cur) => {
-        acc.y = ((acc.y as number) || 0) + cur.videoViews;
+        acc.y = ((acc.y as number) || 0) + cur.videoViews || 0;
         return acc;
       },
       {
@@ -102,7 +99,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 
   const categoryVideo = videoData.map((item, idx) => {
     return {
-      y: item?.total.value || 0,
+      y: item?.total || 0,
       x:
         clusterData &&
         clustersCategories[clusterData[idx] as keyof typeof clustersCategories],

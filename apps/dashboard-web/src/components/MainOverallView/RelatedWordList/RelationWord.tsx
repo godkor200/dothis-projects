@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
 
 import CheckboxContainer from '@/components/common/Checkbox';
-import type { ResponseType, VideoCount } from '@/constants/convertText';
+import type {
+  SubscriberRange,
+  SubscriberRangeVideoCounts,
+} from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import {
   useDailyViewChartDataForNivo,
@@ -122,7 +125,7 @@ const RelationWord = ({
     () =>
       videoCountData.reduce<{
         totalCount: number;
-        videoCountViewChartData: ResponseType;
+        videoCountViewChartData: SubscriberRangeVideoCounts;
       }>(
         (acc, dataItem) => {
           dataItem?.section.forEach((sectionItem) => {
@@ -130,15 +133,16 @@ const RelationWord = ({
 
             if (key in CONVERT_SUBSCRIBERANGE) {
               acc.totalCount += sectionItem.number;
-              const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+              const existingRange =
+                CONVERT_SUBSCRIBERANGE[key as SubscriberRange];
               const existingItem =
-                acc.videoCountViewChartData[key as VideoCount];
+                acc.videoCountViewChartData[key as SubscriberRange];
 
               if (existingItem) {
-                acc.videoCountViewChartData[key as VideoCount] +=
+                acc.videoCountViewChartData[key as SubscriberRange] +=
                   sectionItem.number;
               } else {
-                acc.videoCountViewChartData[key as VideoCount] =
+                acc.videoCountViewChartData[key as SubscriberRange] =
                   sectionItem.number;
               }
             }
@@ -151,8 +155,8 @@ const RelationWord = ({
           videoCountViewChartData: {},
         } as {
           totalCount: number;
-          // videoCountViewChartData: ResponseType;
-          videoCountViewChartData: ResponseType;
+
+          videoCountViewChartData: SubscriberRangeVideoCounts;
         },
       ),
     [JSON.stringify(videoCountData)],

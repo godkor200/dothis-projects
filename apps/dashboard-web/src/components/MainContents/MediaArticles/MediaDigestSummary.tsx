@@ -1,28 +1,26 @@
-import type { HTMLAttributes } from 'react';
-
 import { cn } from '@/utils/cn';
 
-interface ArticleInfoProps {
+import type { MediaDigestData } from '.';
+
+interface Props
+  extends Pick<MediaDigestData, 'provider' | 'element' | 'uploadDate'> {
   profile?: string;
-  secondText: string;
-  thirdText: string;
-  date: string;
   isList?: boolean;
 }
 
-const ArticleInfo = ({
-  secondText,
-  thirdText,
-  date,
+const MediaDigestSummary = ({
+  provider,
+  element,
+  uploadDate,
   isList,
-}: ArticleInfoProps) => {
+}: Props) => {
   return (
     <div
       className={cn('flex items-center gap-[0.5rem] ', {
         // 'mb-[30px]': !isList,
       })}
     >
-      {secondText && (
+      {provider && (
         <span
           className={cn(
             'text-grey500 font-semibold max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',
@@ -31,10 +29,10 @@ const ArticleInfo = ({
             },
           )}
         >
-          {secondText}
+          {provider}
         </span>
       )}
-      {secondText && <div className="bg-grey400 h-4 w-[1px]" />}
+      {provider && <div className="bg-grey400 h-4 w-[1px]" />}
       <span
         className={cn(
           'text-grey600 font-semibold  whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',
@@ -43,7 +41,7 @@ const ArticleInfo = ({
           },
         )}
       >
-        {thirdText}
+        {element}
       </span>
       <div className="bg-grey400 h-4 w-[1px]" />
       <span
@@ -54,10 +52,10 @@ const ArticleInfo = ({
           },
         )}
       >
-        {date}
+        {uploadDate}
       </span>
     </div>
   );
 };
 
-export default ArticleInfo;
+export default MediaDigestSummary;

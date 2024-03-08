@@ -3,25 +3,27 @@
 import DashboardDonutChart from '@/components/common/Charts/DashboardDonutChart';
 import {
   CONVERT_SUBSCRIBERANGE,
-  type ResponseType,
-  type VideoCount,
+  type SubscriberRange,
+  type SubscriberRangeVideoCounts,
 } from '@/constants/convertText';
 
 interface Props {
   totalCount: number;
-  videoCountsBySection: ResponseType;
+  videoCountsBySection: SubscriberRangeVideoCounts;
 }
 
 const CumulativeVideoChart = ({ totalCount, videoCountsBySection }: Props) => {
-  const getApexChartFormat = (videoCountViewChartData: ResponseType) => {
+  const getApexChartFormat = (
+    videoCountViewChartData: SubscriberRangeVideoCounts,
+  ) => {
     const labels: Array<
       (typeof CONVERT_SUBSCRIBERANGE)[keyof typeof CONVERT_SUBSCRIBERANGE]
     > = [];
     const values: number[] = [];
 
     for (const key in videoCountViewChartData) {
-      labels.push(CONVERT_SUBSCRIBERANGE[key as VideoCount]);
-      values.push(videoCountViewChartData[key as VideoCount]);
+      labels.push(CONVERT_SUBSCRIBERANGE[key as SubscriberRange]);
+      values.push(videoCountViewChartData[key as SubscriberRange]);
     }
 
     return { labels, values };

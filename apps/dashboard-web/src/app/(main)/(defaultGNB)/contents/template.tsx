@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { type PropsWithChildren, useEffect } from 'react';
 
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
-import MainArticleList from '@/components/MainContents/MediaArticles/MainArticleList';
+import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
@@ -59,7 +59,7 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
       <KeywordSlide />
       {/* <SearchBar /> */}
       {/* <KeywordSearchResult /> */}
-      <MainArticleList />
+      <TopBannerMediaList />
 
       <ul className=" mx-auto  flex w-[1342px] gap-[24px]  pl-[48px] text-[20px] font-bold">
         <li
