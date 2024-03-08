@@ -20,7 +20,7 @@ const MediaDigestList = ({
     // hover:overflow-auto
     <div className="accodient-box h-[630px] cursor-pointer  overflow-auto pl-5 pr-3  pt-[0.375rem]">
       <InView onChange={handleFetchNextPage} threshold={0.5}>
-        {mediaDigestData.map((mediaData, index) => {
+        {mediaDigestData?.map((mediaData, index) => {
           return (
             <MediaDigestCard
               {...mediaData}
