@@ -1,13 +1,13 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 
-import YoutubeArticlesContainer from '@/components/MainContents/MediaArticles/YoutubeArticlesContainer';
+import SocialFeedContainer from '@/components/MainContents/MediaArticles/SocialFeedContainer';
+import YouTube from '@/components/MainContents/MediaArticles/Youtube';
 // import TabNavigation from '@/components/common/TabNavigation';
 // import Card from '@/components/MainContents/Card';
 // import CardHeader from '@/components/MainContents/CardHeader';
 // import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 // import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
-// import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 // import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 // import Container from '@/components/MainOverallView/RelatedWordList/Container';
 // import Chat from '@/components/OpenAI/Chat';
@@ -39,13 +39,6 @@ const KeywordAnalyticsView = dynamic(
 const KeywordRankingList = dynamic(
   () =>
     import('@/components/MainContents/InfoChartAndRanking/KeywordRankingList'),
-  {
-    ssr: false,
-  },
-);
-const MediaArticlesContainer = dynamic(
-  () =>
-    import('@/components/MainContents/MediaArticles/MediaArticlesContainer'),
   {
     ssr: false,
   },
@@ -148,7 +141,7 @@ const MainContentPage = ({
             selectedArticle={'youtube'}
             tabNavData={[{ title: '유튜브', category: 'youtube' }]}
           />
-          <YoutubeArticlesContainer />
+          <YouTube />
         </Card>
 
         <Card withoutMargin>
@@ -157,7 +150,7 @@ const MainContentPage = ({
             selectedArticle={selectedArticle}
             tabNavData={MEDIA_TABNAV_DATA}
           />
-          <MediaArticlesContainer selectedArticle={selectedArticle} />
+          <SocialFeedContainer selectedArticle={selectedArticle} />
         </Card>
       </div>
     </div>
