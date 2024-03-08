@@ -10,7 +10,7 @@ import MediaDigestSummary from './MediaDigestSummary';
 
 interface Props extends MediaDigestData {}
 
-const CurrentArticle = ({
+const SelectedMediaCard = ({
   title,
   provider,
   element,
@@ -66,7 +66,7 @@ const CurrentArticle = ({
   );
 };
 
-const CurrentArticleSkeleton = () => {
+const SelectedMediaCardSkeleton = () => {
   return (
     <div
       role="status"
@@ -109,6 +109,6 @@ const CurrentArticleSkeleton = () => {
   );
 };
 
-CurrentArticle.skeleton = CurrentArticleSkeleton;
+SelectedMediaCard.skeleton = SelectedMediaCardSkeleton;
 
-export default CurrentArticle;
+export default SelectedMediaCard;
