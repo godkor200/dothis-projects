@@ -9,20 +9,18 @@ import {
   FindIndividualVideoInfoParams,
   FindIndividualVideoInfoV1Dto,
 } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
-import { match, Result } from 'oxide.ts';
+import { match } from 'oxide.ts';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import {
   nestControllerContract,
-  TsRest,
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';

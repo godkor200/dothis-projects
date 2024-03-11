@@ -1,7 +1,6 @@
 import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.base.adapter';
 import {
   FindChannelHistoryRelatedVideoDao,
-  TChannelHistoryTuplesRes,
   TGetRelatedVideoRes,
 } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
 

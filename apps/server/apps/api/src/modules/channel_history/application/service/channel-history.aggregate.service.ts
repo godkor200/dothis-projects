@@ -1,5 +1,4 @@
 import {
-  IChannelHistory,
   ISection,
   SECTION_NUMBER,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
