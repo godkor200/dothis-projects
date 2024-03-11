@@ -8,17 +8,16 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import {
   FindChannelInfoDao,
-  ScanLatestChannelHistoryDao,
   TChannelHistoryTuplesRes,
 } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 const IgniteClient = require('apache-ignite-client');
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 
-export class ChannelHistoryAdapter
+export class ChannelHistoryBaseAdapter
   extends IgniteService
   implements ChannelHistoryOutboundPort
 {
@@ -26,7 +25,7 @@ export class ChannelHistoryAdapter
     throw new Error('Method not implemented.');
   }
 
-  private readonly keys: string[] = [
+  protected readonly keys: string[] = [
     'CHANNEL_ID',
     'CHANNEL_AVERAGE_VIEWS',
     'CHANNEL_SUBSCRIBERS',
@@ -37,7 +36,7 @@ export class ChannelHistoryAdapter
     'DAY',
   ];
 
-  private async history(
+  protected async history(
     tableName: string,
     queryString: string,
   ): Promise<Ok<any[]> | Err<any>> {
@@ -66,18 +65,6 @@ export class ChannelHistoryAdapter
     order: 'desc' | 'asc',
   ): Promise<IChannelHistoryRes[]> {
     return Promise.resolve([]);
-  }
-
-  async getLatestDayTuple(
-    dao: FindIndividualVideoInfoV1Dao,
-  ): Promise<TChannelHistoryTuplesRes> {
-    const { clusterNumber, videoId } = dao;
-    const tableName = `dothis.CHANNEL_HISTORY`;
-    const joinTableName = `dothis.video_data_cluster_${clusterNumber}`;
-    const queryString = `SELECT ch.${this.keys.join(
-      ', ch.',
-    )}, vd.video_tags, vd.video_published FROM ${tableName} ch JOIN ${joinTableName} vd ON ch.channel_id = vd.channel_id WHERE vd.video_id = '${videoId}' ORDER BY ch.day DESC LIMIT 1`;
-    return await this.history(tableName, queryString);
   }
 
   async getHistory(
