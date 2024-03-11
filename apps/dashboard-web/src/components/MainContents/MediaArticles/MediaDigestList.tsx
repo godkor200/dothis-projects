@@ -24,6 +24,7 @@ const MediaDigestList = ({
           return (
             <MediaDigestCard
               {...mediaData}
+              key={mediaData.title + index}
               index={index}
               handleSetSelectedMedia={handleSetSelectedMedia}
             />
