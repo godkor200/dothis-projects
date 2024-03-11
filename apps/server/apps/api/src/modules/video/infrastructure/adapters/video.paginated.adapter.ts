@@ -4,14 +4,11 @@ import {
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { GetVideoDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { undefined } from 'zod';
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-const IgniteClient = require('apache-ignite-client');
 
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosPaginatedOutBoundPort

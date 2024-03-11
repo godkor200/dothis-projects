@@ -52,7 +52,12 @@ export class VideoLastHistoryAdapter
       for (const cluster of [0, 1]) {
         // 테이블 이름을 생성합니다.
         // 쿼리를 생성합니다.
-        const query = `SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY FROM ${tableName} VH JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') AND (VD.VIDEO_TITLE LIKE '%${relatedWord}%' or VD.VIDEO_TAGS LIKE '%${relatedWord}%') AND VH.DAY = (SELECT MAX(VH2.DAY) FROM ${tableName} VH2 WHERE VH2.VIDEO_ID = VH.VIDEO_ID)`;
+        const query = `SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY 
+                              FROM ${tableName} VH 
+                              JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID 
+                              WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
+                              AND (VD.VIDEO_TITLE LIKE '%${relatedWord}%' or VD.VIDEO_TAGS LIKE '%${relatedWord}%') 
+                              AND VH.DAY = (SELECT MAX(VH2.DAY) FROM ${tableName} VH2 WHERE VH2.VIDEO_ID = VH.VIDEO_ID)`;
         queries.push(query);
       }
       const query = new SqlFieldsQuery(

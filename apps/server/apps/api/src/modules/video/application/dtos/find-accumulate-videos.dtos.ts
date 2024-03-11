@@ -5,7 +5,7 @@ import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 
-export class FindAccumulateVideosDtos implements IQuery {
+export class FindAccumulateVideosDto implements IQuery {
   readonly clusterNumber: string;
 
   readonly keyword: string;
@@ -17,7 +17,7 @@ export class FindAccumulateVideosDtos implements IQuery {
   readonly to: Date;
 
   readonly user: UserInfoCommandDto;
-  constructor(props: FindAccumulateVideosDtos) {
+  constructor(props: FindAccumulateVideosDto) {
     this.clusterNumber = props.clusterNumber;
     this.relationKeyword = props.relationKeyword;
     this.keyword = props.keyword;
@@ -28,9 +28,9 @@ export class FindAccumulateVideosDtos implements IQuery {
 }
 
 export interface FindAccumulateVideo
-  extends Omit<FindAccumulateVideosDtos, 'clusterNumber'> {}
+  extends Omit<FindAccumulateVideosDto, 'clusterNumber'> {}
 
-export class FindAccumulateVideosV2Dtos implements IQuery {
+export class FindAccumulateVideosV2Dto implements IQuery {
   readonly keyword: string;
 
   readonly relationKeyword: string;
@@ -39,7 +39,7 @@ export class FindAccumulateVideosV2Dtos implements IQuery {
 
   readonly to?: Date;
 
-  constructor(props: FindAccumulateVideosV2Dtos) {
+  constructor(props: FindAccumulateVideosV2Dto) {
     this.relationKeyword = props.relationKeyword;
     this.keyword = props.keyword;
     this.from = props.from;
@@ -57,12 +57,14 @@ export class FindAccumulateQuery extends createZodDto(
 }
 
 export class FindAccumulateVideosV1Dto extends FindAccumulateQuery {
+  readonly clusterNumber: string | string[];
+
   constructor(props: FindAccumulateVideosV1Dto) {
     super(props);
-  }
-}
-export class FindAccumulateVideosV4Dto extends FindAccumulateQuery {
-  constructor(props: FindAccumulateVideosV4Dto) {
-    super(props);
+    if (typeof props.clusterNumber === 'string') {
+      this.clusterNumber = props.clusterNumber.includes(',')
+        ? props.clusterNumber.split(',')
+        : props.clusterNumber;
+    }
   }
 }

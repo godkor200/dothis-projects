@@ -26,6 +26,7 @@ import { ExpectedViewsV1QueryHandler } from '@Apps/modules/hits/application/quer
 import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
+import { ExpectedHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/expected-hits/expected-hits.v1.http.controller';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -44,6 +45,7 @@ const service: Provider[] = [
   ChannelHistoryAggregateService,
 ];
 const controllers = [
+  ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
   GetWeeklyHitsListV1HttpController,
 ];

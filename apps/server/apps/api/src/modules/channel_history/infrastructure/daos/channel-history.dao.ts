@@ -64,7 +64,7 @@ export type TChannelHistoryTuplesRes = Result<
   ChannelHistoryLatestDayTupleRes[],
   ChannelHistoryNotFoundError | TableNotFoundException
 >;
-export class FindChannelHistoryRelateVideoDao extends FindAccumulateVideosV1Dto {
+export class FindChannelHistoryRelatedVideoDao extends FindAccumulateVideosV1Dto {
   public readonly relatedCluster: string[];
   constructor(props: FindAccumulateVideosV1Dto) {
     super(props);
