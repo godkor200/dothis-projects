@@ -5,7 +5,7 @@ export * from './lib/user-channel-data';
 export * from './lib/cache';
 export * from './lib/hits';
 export * from './lib/video';
-export * from './lib/rel-words';
+export * from './lib/related-word';
 export * from './lib/channel-history';
 export * from './lib/apiRouter';
 export * from './lib/contract';

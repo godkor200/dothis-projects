@@ -9,7 +9,6 @@ import { Inject } from '@nestjs/common';
 import {
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
-  VIDEO_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { Err, Ok } from 'oxide.ts';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';

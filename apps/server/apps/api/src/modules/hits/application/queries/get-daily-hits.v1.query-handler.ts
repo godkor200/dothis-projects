@@ -1,9 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import { ICalculateDailyHitsMetricsServiceInboundPort } from '@Apps/modules/hits/domain/ports/daily-hits-service.inbound.port';
-import { VIDEO_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { Inject } from '@nestjs/common';
 import { Result } from 'oxide.ts';

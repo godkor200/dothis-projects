@@ -5,7 +5,7 @@ import { VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN } from '@Apps/modules/video
 import { VideoDetailsModel } from '@dothis/dto';
 import { Result } from 'oxide.ts';
 
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { FindIndividualVideoInboundPort } from '@Apps/modules/video/domain/ports/find-individual-video.inbound.port';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';

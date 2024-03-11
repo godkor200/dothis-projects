@@ -8,6 +8,7 @@ import {
 } from '../common.model';
 import {
   findVideoBySearchKeyword,
+  zFindAccumulateQuery,
   zFindIndividualVideoInfoParams,
   zFindVideoPageWithClusterQuery,
   zVideoDetails,
@@ -54,7 +55,7 @@ export const videoApi = c.router({
   },
   getIndividualVideo: {
     method: 'GET',
-    path: `${videoBaseApiUrl}/:clusterNumber/:videoId`,
+    path: `${videoBaseApiUrl}/:videoId/info/:clusterNumber`,
     pathParams: zFindIndividualVideoInfoParams, // 비디오 카테고리(cluster) 넘버, 비디오 아이디
     responses: {
       200: zVideoDetails,
@@ -63,10 +64,11 @@ export const videoApi = c.router({
     summary: '비디오 id를 기준으로 비디오 정보를 가져 옵니다',
     description: '비디오 id를 기준으로 비디오 정보를 가져 옵니다 ',
   },
-  getAccVideo: {
+  getAccumulateVideo: {
     method: 'GET',
-    path: `${videoBaseApiUrl}/accumulate`,
-    query: findVideoBySearchKeyword,
+    path: `${videoBaseApiUrl}/:clusterNumber/accumulate`,
+    pathParams: zClusterNumberMulti,
+    query: zFindAccumulateQuery,
     responses: {
       200: zAccVideoModel,
       ...zErrResBase,

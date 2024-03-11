@@ -44,12 +44,8 @@ export type TGetVideoWithChannelInfo = Result<
   VideoNotFoundError | TableNotFoundException
 >;
 export type TRelatedVideosCountByDay = Result<CountByDayRes[], any>;
-export interface VideoOutboundPort {
-  getRelatedVideoAndVideoHistory(
-    props: RelatedVideoAndVideoHistoryDao,
-  ): Promise<TRelatedVideoAndHistoryRes>;
-
-  getRelatedVideos(props: SearchRelationVideoDao): Promise<TRelatedVideos>;
+export interface IGetRelatedVideoOutboundPort {
+  execute(props: SearchRelationVideoDao): Promise<TRelatedVideos>;
 }
 export interface IGetRelatedVideoAndVideoHistoryOutBoundPort {
   execute(
@@ -67,12 +63,12 @@ export interface IGetRelatedVideosEntireCountOutBoundPort {
 }
 
 export interface IGetRelatedLastVideoHistoryEach {
-  getRelatedLastVideoAndVideoHistoryEach(
+  execute(
     dao: GetRelatedLastVideoAndVideoHistoryEach,
   ): Promise<TGetRelatedLastVideoAndVideoHistory>;
 }
 export interface IGetRelatedLastVideoHistory {
-  getRelatedLastVideoAndVideoHistory(
+  execute(
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedLastVideoAndVideoHistory>;
 }

@@ -3,7 +3,7 @@ import { c } from './contract';
 import { userApi } from './user';
 import { authApi } from './auth';
 import { cacheApi } from './cache';
-import { relatedWordsApi } from './rel-words';
+import { relatedWordsApi } from './related-word';
 import { hitsApi } from './hits';
 import { videoApi } from './video';
 import { channelHistoryApi } from './channel-history';

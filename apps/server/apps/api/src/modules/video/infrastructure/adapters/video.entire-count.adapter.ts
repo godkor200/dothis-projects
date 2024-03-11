@@ -7,9 +7,7 @@ import {
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-const IgniteClient = require('apache-ignite-client');
 
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoEntireCountAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosEntireCountOutBoundPort

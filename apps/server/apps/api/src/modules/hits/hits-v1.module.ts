@@ -6,8 +6,6 @@ import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application
 import {
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
-  VIDEO_IGNITE_DI_TOKEN,
-  VIDEO_SERVICE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { GetWeeklyHitsListV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-hits-list/get-weekly-hits-list.v1.http.controller';
@@ -28,6 +26,7 @@ import { ExpectedViewsV1QueryHandler } from '@Apps/modules/hits/application/quer
 import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
+import { ExpectedHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/expected-hits/expected-hits.v1.http.controller';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -46,6 +45,7 @@ const service: Provider[] = [
   ChannelHistoryAggregateService,
 ];
 const controllers = [
+  ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
   GetWeeklyHitsListV1HttpController,
 ];
@@ -56,7 +56,6 @@ const repositories: Provider[] = [
     useClass: VideoHistoryListAdapter,
   },
   { provide: VIDEO_COUNT_DAY_IGNITE_DI_TOKEN, useClass: VideoCountDayAdapter },
-  { provide: VIDEO_IGNITE_DI_TOKEN, useClass: VideoBaseAdapter },
   {
     provide: HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
     useClass: VideoChannelHistoryAdapter,

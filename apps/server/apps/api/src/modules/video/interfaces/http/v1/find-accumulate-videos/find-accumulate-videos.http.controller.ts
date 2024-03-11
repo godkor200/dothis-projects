@@ -4,7 +4,6 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
-  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -14,50 +13,37 @@ import {
   FindAccumulateQuery,
   FindAccumulateVideosV1Dto,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
 import {
-  IFindAccumulateVideoRes,
+  IFindAccumulateVideoWithOutUserSection,
   ISection,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
+import {
+  nestControllerContract,
+  TsRest,
+  tsRestHandler,
+  TsRestHandler,
+} from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
+import { IFindAccumulateVideosV1Res } from '@Apps/modules/video/application/queries/v1/find-accumulate-videos.query-handler';
+import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 const c = nestControllerContract(apiRouter.video);
-const { summary, responses, description } = c.getAccVideo;
+const { summary, responses, description } = c.getAccumulateVideo;
 
 @ApiTags('영상')
 @Controller()
 export class FindAccumulateVideosV1HttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @ApiQuery({
-    name: 'keyword',
-    description: '탐색어',
-    example: '페이커',
-  })
-  @ApiQuery({
-    name: 'relationKeyword',
-    description: '연관어, 연관어가 없다면 없어도됩니다.',
-    example: '롤드컵',
-  })
-  @ApiQuery({
-    name: 'from',
-    description: '언제부터 날짜',
-    example: '2023-11-23',
-  })
-  @ApiQuery({
-    name: 'to',
-    description: '까지 날짜',
-    example: '2023-11-30',
-  })
+  @TsRestHandler(c.getAccumulateVideo)
   @ApiOperation({
     summary,
     description,
   })
-  @TsRest(c.getAccVideo)
   @ApiBearerAuth('Authorization')
   @ApiNotFoundResponse({
     description:
@@ -70,33 +56,41 @@ export class FindAccumulateVideosV1HttpController {
   @ApiInternalServerErrorResponse({
     description: 'The number of subscribers is not within the set range.',
   })
-  @ApiInternalServerErrorResponse()
   @ApiBadRequestResponse({ description: 'Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   async execute(
     @Query() query: FindAccumulateQuery,
-  ): Promise<IRes<ISection[]>> {
-    const arg = new FindAccumulateVideosV1Dto({
-      ...query,
-    });
+    @Param() param: ClusterNumberMulti,
+  ) {
+    return tsRestHandler(c.getAccumulateVideo, async ({ query, params }) => {
+      const arg = new FindAccumulateVideosV1Dto({
+        clusterNumber: param.clusterNumber,
+        ...query,
+      });
 
-    const result: Result<
-      IFindAccumulateVideoRes<ISection[]>,
-      ChannelNotFoundError | VideoNotFoundError | ChannelHistoryNotFoundError
-    > = await this.queryBus.execute(arg);
+      const result: IFindAccumulateVideosV1Res = await this.queryBus.execute(
+        arg,
+      );
 
-    return match(result, {
-      Ok: (result) => ({ success: true, data: result }),
-      Err: (err: Error) => {
-        if (
-          err instanceof ChannelNotFoundError ||
-          err instanceof VideoNotFoundError ||
-          err instanceof ChannelHistoryNotFoundError
-        ) {
-          throw new NotFoundException(err.message);
-        }
-        throw err;
-      },
+      return match<
+        IFindAccumulateVideosV1Res,
+        TTsRestRes<IRes<IFindAccumulateVideoWithOutUserSection<ISection[]>>>
+      >(result, {
+        Ok: (result) => ({
+          status: 200,
+          body: result,
+        }),
+        Err: (err: Error) => {
+          if (
+            err instanceof ChannelNotFoundError ||
+            err instanceof VideoNotFoundError ||
+            err instanceof ChannelHistoryNotFoundError
+          ) {
+            throw new NotFoundException(err.message);
+          }
+          throw err;
+        },
+      });
     });
   }
 }

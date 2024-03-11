@@ -1,25 +1,20 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
+import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import {
-  RelatedVideoAndVideoHistoryDao,
-  SearchRelationVideoDao,
-} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import {
-  TRelatedVideoAndHistoryRes,
+  IGetRelatedVideoOutboundPort,
   TRelatedVideos,
-  VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
 
-export class VideoVideoListAdapter
+export class VideoListAdapterEntireCluster
   extends VideoBaseAdapter
-  implements Pick<VideoOutboundPort, 'getRelatedVideos'>
+  implements IGetRelatedVideoOutboundPort
 {
-  async getRelatedVideos(dao: SearchRelationVideoDao): Promise<TRelatedVideos> {
+  async execute(dao: SearchRelationVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to } = dao;
 
     try {

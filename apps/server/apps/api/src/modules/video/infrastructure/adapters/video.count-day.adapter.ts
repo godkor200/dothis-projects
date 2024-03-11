@@ -2,7 +2,6 @@ import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/vi
 import {
   IGetRelatedVideosCountByDayOutBoundPort,
   TRelatedVideosCountByDay,
-  VideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { RelatedVideoAndCountByDayDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
@@ -10,9 +9,6 @@ import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-const IgniteClient = require('apache-ignite-client');
-
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoCountDayAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosCountByDayOutBoundPort

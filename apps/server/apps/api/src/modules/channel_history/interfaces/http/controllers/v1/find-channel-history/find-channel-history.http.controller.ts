@@ -13,7 +13,7 @@ import { Controller, NotFoundException, Param } from '@nestjs/common';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { FindChannelInfoDto } from '@Apps/modules/channel_history/application/dtos/find-channel-info.dto';
 import { match, Result } from 'oxide.ts';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
 const c = nestControllerContract(apiRouter.channelHistory);
 const { findChannelInfo } = c;
 const { summary, description } = findChannelInfo;
