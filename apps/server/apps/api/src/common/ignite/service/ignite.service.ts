@@ -7,6 +7,8 @@ import {
 import { ConfigService } from '@nestjs/config';
 const IgniteClient = require('apache-ignite-client');
 const IgniteClientConfiguration = IgniteClient.IgniteClientConfiguration;
+
+const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 @Injectable()
 export class IgniteService implements OnModuleInit, OnModuleDestroy {
   readonly client: typeof IgniteClient;
@@ -17,6 +19,9 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   constructor(private configService: ConfigService) {
     // Create a new Ignite client instance.
     this.client = new IgniteClient(this.onStateChanged.bind(this));
+  }
+  public createDistributedJoinQuery(sqlQuery: string) {
+    return new SqlFieldsQuery(sqlQuery).setDistributedJoins(true);
   }
   /*
    * ignite 재시도 로직
