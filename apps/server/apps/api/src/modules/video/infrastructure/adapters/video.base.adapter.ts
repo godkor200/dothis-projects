@@ -2,9 +2,6 @@ import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { ConfigService } from '@nestjs/config';
 import { DateFormatter } from '@Apps/modules/video/infrastructure/utils';
 
-const IgniteClient = require('apache-ignite-client');
-
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoBaseAdapter extends IgniteService {
   readonly videoColumns: string[] = [
     'VIDEO_ID',
@@ -28,9 +25,6 @@ export class VideoBaseAdapter extends IgniteService {
     super(configService);
   }
 
-  public createDistributedJoinQuery(sqlQuery: string) {
-    return new SqlFieldsQuery(sqlQuery).setDistributedJoins(true);
-  }
   public getClusterQueryString(
     columns: string[],
     search: string,
@@ -50,10 +44,10 @@ export class VideoBaseAdapter extends IgniteService {
         const tableName = `VIDEO_DATA_CLUSTER_${index}`;
         const joinTableName = `VIDEO_HISTORY_CLUSTER_${index}_${fromDate.year}_${fromDate.month}`;
         return `SELECT DISTINCT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh 
-  ON vd.video_id = vh.video_id 
-  WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
-  AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
-  AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+                ON vd.video_id = vh.video_id 
+                WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
+                AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
+                AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       })
       .join(' UNION ');
   }
