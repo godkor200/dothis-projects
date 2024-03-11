@@ -6,6 +6,8 @@ import {
 
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
 import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { IGetRelatedVideoRes } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
+import { IChannelHistoryByChannelIdRes } from '@Apps/modules/channel_history/domain/ports/channel-history.outbound.port';
 
 interface IDailyPerformance {
   [date: string]: {
@@ -59,27 +61,41 @@ export class ChannelHistoryAggregateService {
    * 비디오가 속한 채널을 확인해 구독자 구간에 카운팅
    * @param ChannelHistoryData 채널 히스토리 데이터
    */
-  countSubscribersByRange(ChannelHistoryData: IChannelHistory[]): ISection[] {
+  countSubscribersByRange(
+    historyData: IGetRelatedVideoRes[],
+    subscribersData: IChannelHistoryByChannelIdRes[],
+  ): ISection[] {
     const rangesWithCount = this.ranges.map((range) => ({
       ...range,
       number: 0,
     }));
-    for (let item of ChannelHistoryData) {
-      const subscribers = item._source.channel_subscribers;
+
+    for (let item of historyData) {
+      const channelData = subscribersData.find(
+        (data) => data.channelId === item.channelId,
+      );
+
+      // 구독자 수를 가져옵니다. channelData가 유효한지 체크 후 구독자 수를 할당합니다.
+      const subscribers = channelData ? channelData.channelSubscribers : 0;
+
       for (let range of rangesWithCount) {
-        //구독자 1000명 이하는 분석을 안해 구간을 사용하지 않음, 그러나 나중을 대비
-        if (rangesWithCount[1].lte > subscribers) break;
+        // 구독자 1000명 이하인 경우, 분석하지 않으므로 다음 구간으로 넘어갑니다.
+        if (subscribers <= 1000) continue;
+
+        // 구독자 수가 현재 구간에 해당하는지 체크합니다.
         if (
           subscribers >= range.gte &&
           (range.lte === undefined || subscribers < range.lte)
         ) {
-          range.number += item.inner_hits.video_list.hits.total.value;
-          break;
+          // 해당 구간의 number를 업데이트합니다.
+          range.number += 1;
+          break; // 현재 구간에 맞는 경우, 다음 아이템으로 넘어갑니다.
         }
       }
     }
     return rangesWithCount;
   }
+
   /**
    * 날짜별 성과 리턴
    *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수(성과) 계산
