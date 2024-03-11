@@ -5,11 +5,11 @@ export const KeywordTapContiner = styled.nav`
   display: flex;
   flex-wrap: nowrap;
   gap: 1.5rem;
-  justify-content: center;
+  justify-content: start;
 
   max-width: 658px;
 
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 1.5rem 30px;
 
   background-color: white;
   transition: all 0.5s ease;

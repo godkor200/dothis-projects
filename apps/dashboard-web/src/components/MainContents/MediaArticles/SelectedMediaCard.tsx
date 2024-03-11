@@ -1,39 +1,26 @@
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { MouseEvent } from 'react';
 
-import SvgComp from '@/components/common/SvgComp';
 import { handleImageError } from '@/utils/imagesUtil';
 
-import ArticleInfo from './ArticleInfo';
+import type { MediaDigestData } from '.';
+import MediaDigestSummary from './MediaDigestSummary';
 
-export interface CurrentArticleProps {
-  title: string;
-  category: string;
-  provider: string;
-  date: string;
-  image: string;
-  link: string;
-}
+interface Props extends MediaDigestData {}
 
-const CurrentArticle = ({
+const SelectedMediaCard = ({
   title,
-  category,
   provider,
-  date,
+  element,
+  uploadDate,
   image,
   link,
-}: CurrentArticleProps) => {
-  const handleCopy = (e: MouseEvent<HTMLDivElement>, link: string) => {
-    e.preventDefault();
-
-    alert(`${link}가 복사`);
-  };
+}: Props) => {
   return (
-    <div className="rounded-10 border-grey300 w-[640px] cursor-pointer overflow-hidden border border-solid">
+    <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
       <Link href={`${link}` as Route} target="_blank">
-        <div className="relative h-[360px] w-[640px] overflow-hidden bg-black">
+        <div className="relative h-[180px] w-[320px] overflow-hidden bg-black">
           <Image
             unoptimized
             src={image}
@@ -50,34 +37,30 @@ const CurrentArticle = ({
           />
         </div>
 
-        <div className="px-[30px] py-[40px]">
-          <h3 className="text-grey700 mb-5 line-clamp-2 min-h-[60px] text-[20px] font-bold">
+        <div className="px-[16px] py-[12px]">
+          <h3 className="text-grey700 mb-5 line-clamp-2 min-h-[42px] text-[16px] font-bold">
             {title}
           </h3>
-          <ArticleInfo secondText={provider} thirdText={category} date={date} />
-          <div onClick={(e) => handleCopy(e, link)}>
-            <div className="bg-grey200 flex w-full items-center justify-center   rounded-lg py-4 text-center">
-              <button className="inline-flex items-center gap-[0.7rem]">
-                <SvgComp icon="Share" size={20} />
-                <p className="text-grey700 font-bold">공유하기</p>
-              </button>
-            </div>
-          </div>
+          <MediaDigestSummary
+            provider={provider}
+            element={element}
+            uploadDate={uploadDate}
+          />
         </div>
       </Link>
     </div>
   );
 };
 
-const CurrentArticleSkeleton = () => {
+const SelectedMediaCardSkeleton = () => {
   return (
     <div
       role="status"
-      className=" dark:border-grey700 border-grey300 animate-pulse rounded border shadow "
+      className=" dark:border-grey700 border-grey300 w-[320px] animate-pulse rounded border shadow"
     >
       <div
         role="status"
-        className="bg-grey300 dark:bg-grey700 flex h-[360px] w-[640px] animate-pulse items-center justify-center"
+        className="bg-grey300 dark:bg-grey700 flex h-[180px] w-[320px]  animate-pulse items-center justify-center"
       >
         <svg
           className="text-grey200 dark:text-grey600 h-10 w-10"
@@ -102,16 +85,11 @@ const CurrentArticleSkeleton = () => {
 
           <span className="bg-grey300 h-[16px] w-[64px] rounded-full"></span>
         </div>
-        <div>
-          <div className="bg-grey300 flex h-[58px] w-full items-center   justify-center rounded-lg py-4 text-center">
-            <button className="inline-flex items-center gap-[0.7rem]"></button>
-          </div>
-        </div>
       </div>
     </div>
   );
 };
 
-CurrentArticle.skeleton = CurrentArticleSkeleton;
+SelectedMediaCard.skeleton = SelectedMediaCardSkeleton;
 
-export default CurrentArticle;
+export default SelectedMediaCard;

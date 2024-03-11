@@ -1,4 +1,3 @@
-import { ResponsiveLine } from '@nivo/line';
 import dayjs from 'dayjs';
 
 import CustomTooltip from '@/components/MainContents/InfoChartAndRanking/CustomTooltip';
@@ -67,105 +66,102 @@ const RelationDailyViewChart = ({ dailyViewChartDataList }: Props) => {
   if (dailyViewChartDataList[0].data.length === 0) {
     return null;
   }
-  return (
-    <ResponsiveLine
-      data={dailyViewChartDataList}
-      margin={{ left: 60 }}
-      lineWidth={2}
-      curve="linear"
-      colors={NIVO_CHART_COLOR}
-      xScale={{
-        format: '%Y-%m-%d',
-        precision: 'day',
-        type: 'time',
-        useUTC: false,
-      }}
-      yScale={{
-        type: 'linear',
-        min: Math.min(...yAxisRange()),
-        max: Math.max(...yAxisRange()),
-        stacked: false,
-        reverse: false,
-      }}
-      yFormat=">-.2f"
-      enableGridX={false}
-      enablePoints={false}
-      gridYValues={yAxisRange()}
-      axisTop={null}
-      axisRight={null}
-      axisBottom={null}
-      axisLeft={{
-        tickSize: 0,
-        tickPadding: 20,
-        tickRotation: 0,
-        tickValues: yAxisRange(),
-        legendOffset: -40,
-        legendPosition: 'middle',
-        format: (value: number) => unitFormat(value, Math.min(...yAxisRange())),
-      }}
-      useMesh={true}
-      tooltip={({ point }) => {
-        return (
-          <CustomTooltip
-            keyword={point.serieId as string}
-            label={VIEWCHART_LABEL.DAILYVIEW}
-            value={new Intl.NumberFormat('ko', {
-              notation: 'compact',
-            }).format(point.data.y as number)}
-            date={dayjs(point.data.x).format('YYYY-MM-DD')}
-          />
-        );
-      }}
-      //   legends={[
-      //     {
-      //       anchor: 'bottom',
-      //       direction: 'row',
-      //       justify: false,
-      //       translateX: -120,
-      //       translateY: 260,
-      //       itemsSpacing: 0,
-      //       itemDirection: 'left-to-right',
-      //       itemWidth: 130,
-      //       itemHeight: 20,
-      //       itemOpacity: 0.75,
-      //       symbolSize: 12,
-      //       symbolShape: 'square',
-      //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
-      //       effects: [
-      //         {
-      //           on: 'hover',
-      //           style: {
-      //             itemBackground: 'rgba(0, 0, 0, .03)',
-      //             itemOpacity: 1,
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   ]}
-      theme={{
-        fontFamily: 'Pretendard',
-        legends: {
-          text: { fontSize: 12, fontWeight: 500 },
-        },
-        axis: {
-          ticks: {
-            text: {
-              fill: '#71717A',
-              fontSize: 12,
-              fontWeight: 500,
-            },
-          },
-        },
-        grid: {
-          line: {
-            stroke: '#D4D4D8',
-            strokeWidth: 1,
-            strokeDasharray: '4 4',
-          },
-        },
-      }}
-    />
-  );
+  return null;
+  // <ResponsiveLine
+  //   data={dailyViewChartDataList}
+  //   margin={{ left: 60 }}
+  //   lineWidth={2}
+  //   curve="linear"
+  //   colors={NIVO_CHART_COLOR}
+  //   xScale={{
+  //     format: '%Y-%m-%d',
+  //     precision: 'day',
+  //     type: 'time',
+  //     useUTC: false,
+  //   }}
+  //   yScale={{
+  //     type: 'linear',
+  //     min: Math.min(...yAxisRange()),
+  //     max: Math.max(...yAxisRange()),
+  //     stacked: false,
+  //     reverse: false,
+  //   }}
+  //   yFormat=">-.2f"
+  //   enableGridX={false}
+  //   enablePoints={false}
+  //   gridYValues={yAxisRange()}
+  //   axisTop={null}
+  //   axisRight={null}
+  //   axisBottom={null}
+  //   axisLeft={{
+  //     tickSize: 0,
+  //     tickPadding: 20,
+  //     tickRotation: 0,
+  //     tickValues: yAxisRange(),
+  //     legendOffset: -40,
+  //     legendPosition: 'middle',
+  //     format: (value: number) => unitFormat(value, Math.min(...yAxisRange())),
+  //   }}
+  //   useMesh={true}
+  //   tooltip={({ point }) => {
+  //     return (
+  //       <CustomTooltip
+  //         keyword={point.serieId as string}
+  //         label={VIEWCHART_LABEL.DAILYVIEW}
+  //         value={new Intl.NumberFormat('ko', {
+  //           notation: 'compact',
+  //         }).format(point.data.y as number)}
+  //         date={dayjs(point.data.x).format('YYYY-MM-DD')}
+  //       />
+  //     );
+  //   }}
+  //   //   legends={[
+  //   //     {
+  //   //       anchor: 'bottom',
+  //   //       direction: 'row',
+  //   //       justify: false,
+  //   //       translateX: -120,
+  //   //       translateY: 260,
+  //   //       itemsSpacing: 0,
+  //   //       itemDirection: 'left-to-right',
+  //   //       itemWidth: 130,
+  //   //       itemHeight: 20,
+  //   //       itemOpacity: 0.75,
+  //   //       symbolSize: 12,
+  //   //       symbolShape: 'square',
+  //   //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
+  //   //       effects: [
+  //   //         {
+  //   //           on: 'hover',
+  //   //           style: {
+  //   //             itemBackground: 'rgba(0, 0, 0, .03)',
+  //   //             itemOpacity: 1,
+  //   //           },
+  //   //         },
+  //   //       ],
+  //   //     },
+  //   //   ]}
+  //   theme={{
+  //     legends: {
+  //       text: { fontSize: 12 },
+  //     },
+  //     axis: {
+  //       ticks: {
+  //         text: {
+  //           fill: '#71717A',
+  //           fontSize: 12,
+  //         },
+  //       },
+  //     },
+  //     grid: {
+  //       line: {
+  //         stroke: '#D4D4D8',
+  //         strokeWidth: 1,
+  //         strokeDasharray: '4 4',
+  //       },
+  //     },
+  //   }}
+  // />
 };
 
 export default RelationDailyViewChart;

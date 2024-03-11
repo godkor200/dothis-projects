@@ -1,4 +1,3 @@
-import { ResponsiveLine } from '@nivo/line';
 import dayjs from 'dayjs';
 
 import CustomTooltip from '@/components/MainContents/InfoChartAndRanking/CustomTooltip';
@@ -78,178 +77,175 @@ const RelationExpectedViewChart = ({ expectedViewChartDataList }: Props) => {
   if (expectedViewChartDataList[0]?.data.length === 0) {
     return null;
   }
-  return (
-    <ResponsiveLine
-      data={expectedViewChartDataList}
-      margin={{ left: 60, top: 40 }}
-      lineWidth={2}
-      colors={NIVO_CHART_COLOR}
-      curve="linear"
-      xScale={{
-        format: '%Y-%m-%d',
-        precision: 'day',
-        type: 'time',
-        useUTC: false,
-      }}
-      yScale={{
-        type: 'linear',
-        min: Math.min(...yAxisRange()),
-        max: Math.max(...yAxisRange()),
-        stacked: false,
-        reverse: false,
-      }}
-      yFormat=" >-.2f"
-      enableGridX={false}
-      enablePoints={false}
-      gridYValues={yAxisRange()}
-      // 배열로 값넣으면 그것 수치만큼 적용되고, number값으로 넣으면 그거에 맞는 line 갯수를 생성
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        format: '%m.%d',
-        legendOffset: -12,
-        tickValues: 7,
-      }}
-      axisLeft={{
-        tickSize: 0,
-        tickPadding: 20,
-        tickRotation: 0,
-        tickValues: yAxisRange(),
-        legendOffset: -40,
-        legendPosition: 'middle',
-        format: (value: number) => unitFormat(value, Math.max(...yAxisRange())),
-      }}
-      useMesh={true}
-      tooltip={({ point }) => (
-        <CustomTooltip
-          keyword={point.serieId as string}
-          label={VIEWCHART_LABEL.EXPECTEDVIEW}
-          value={new Intl.NumberFormat('ko', {
-            notation: 'compact',
-          }).format(point.data.y as number)}
-          date={dayjs(point.data.x).format('YYYY-MM-DD')}
-        />
-      )}
-      //   legends={[
-      //     {
-      //       anchor: 'bottom',
-      //       direction: 'row',
-      //       justify: false,
-      //       translateX: -120,
-      //       translateY: 260,
-      //       itemsSpacing: 0,
-      //       itemDirection: 'left-to-right',
-      //       itemWidth: 130,
-      //       itemHeight: 20,
-      //       itemOpacity: 0.75,
-      //       symbolSize: 12,
-      //       symbolShape: 'square',
-      //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
-      //       effects: [
-      //         {
-      //           on: 'hover',
-      //           style: {
-      //             itemBackground: 'rgba(0, 0, 0, .03)',
-      //             itemOpacity: 1,
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   ]}
+  return null;
+  // <ResponsiveLine
+  //   data={expectedViewChartDataList}
+  //   margin={{ left: 60, top: 40 }}
+  //   lineWidth={2}
+  //   colors={NIVO_CHART_COLOR}
+  //   curve="linear"
+  //   xScale={{
+  //     format: '%Y-%m-%d',
+  //     precision: 'day',
+  //     type: 'time',
+  //     useUTC: false,
+  //   }}
+  //   yScale={{
+  //     type: 'linear',
+  //     min: Math.min(...yAxisRange()),
+  //     max: Math.max(...yAxisRange()),
+  //     stacked: false,
+  //     reverse: false,
+  //   }}
+  //   yFormat=" >-.2f"
+  //   enableGridX={false}
+  //   enablePoints={false}
+  //   gridYValues={yAxisRange()}
+  //   // 배열로 값넣으면 그것 수치만큼 적용되고, number값으로 넣으면 그거에 맞는 line 갯수를 생성
+  //   axisTop={null}
+  //   axisRight={null}
+  //   axisBottom={{
+  //     format: '%m.%d',
+  //     legendOffset: -12,
+  //     tickValues: 7,
+  //   }}
+  //   axisLeft={{
+  //     tickSize: 0,
+  //     tickPadding: 20,
+  //     tickRotation: 0,
+  //     tickValues: yAxisRange(),
+  //     legendOffset: -40,
+  //     legendPosition: 'middle',
+  //     format: (value: number) => unitFormat(value, Math.max(...yAxisRange())),
+  //   }}
+  //   useMesh={true}
+  //   tooltip={({ point }) => (
+  //     <CustomTooltip
+  //       keyword={point.serieId as string}
+  //       label={VIEWCHART_LABEL.EXPECTEDVIEW}
+  //       value={new Intl.NumberFormat('ko', {
+  //         notation: 'compact',
+  //       }).format(point.data.y as number)}
+  //       date={dayjs(point.data.x).format('YYYY-MM-DD')}
+  //     />
+  //   )}
+  //   //   legends={[
+  //   //     {
+  //   //       anchor: 'bottom',
+  //   //       direction: 'row',
+  //   //       justify: false,
+  //   //       translateX: -120,
+  //   //       translateY: 260,
+  //   //       itemsSpacing: 0,
+  //   //       itemDirection: 'left-to-right',
+  //   //       itemWidth: 130,
+  //   //       itemHeight: 20,
+  //   //       itemOpacity: 0.75,
+  //   //       symbolSize: 12,
+  //   //       symbolShape: 'square',
+  //   //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
+  //   //       effects: [
+  //   //         {
+  //   //           on: 'hover',
+  //   //           style: {
+  //   //             itemBackground: 'rgba(0, 0, 0, .03)',
+  //   //             itemOpacity: 1,
+  //   //           },
+  //   //         },
+  //   //       ],
+  //   //     },
+  //   //   ]}
 
-      //   legends={[
-      //     {
-      //       anchor: 'bottom',
-      //       direction: 'row',
-      //       justify: false,
-      //       translateY: 80,
-      //       itemsSpacing: 0,
-      //       itemDirection: 'left-to-right',
-      //       itemWidth: 80,
-      //       itemHeight: 20,
-      //       itemOpacity: 0.75,
-      //       symbolSize: 12,
-      //       symbolShape: 'square',
-      //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
-      //       effects: [
-      //         {
-      //           on: 'hover',
-      //           style: {
-      //             itemBackground: 'rgba(0, 0, 0, .03)',
-      //             itemOpacity: 1,
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   ]}
-      legends={
-        expectedViewChartDataList && expectedViewChartDataList.length <= 6
-          ? [
-              {
-                ...legendProps,
-                translateY: 50,
-                symbolSize: 18,
-                itemsSpacing: 60,
-              },
-            ]
-          : [
-              {
-                ...legendProps,
-                symbolSize: 10,
-                itemsSpacing: 25,
-                translateY: 50,
-                data: expectedViewChartDataList
-                  .slice(0, Math.floor(expectedViewChartDataList.length / 2))
-                  .map((cur, index) => ({
-                    id: cur.id,
-                    label: cur.id,
-                    color: NIVO_CHART_COLOR.slice(
-                      0,
-                      Math.floor(expectedViewChartDataList.length / 2),
-                    )[index],
-                  })),
-              },
-              {
-                ...legendProps,
-                symbolSize: 10,
-                itemsSpacing: 25,
-                translateY: 70,
-                data: expectedViewChartDataList
-                  .slice(Math.floor(expectedViewChartDataList.length / 2))
-                  .map((cur, index) => ({
-                    id: cur.id,
-                    label: cur.id,
-                    color: NIVO_CHART_COLOR.slice(
-                      Math.floor(expectedViewChartDataList.length / 2),
-                    )[index],
-                  })),
-              },
-            ]
-      }
-      theme={{
-        fontFamily: 'Pretendard',
-        legends: {
-          text: { fontSize: 12, fontWeight: 500 },
-        },
-        axis: {
-          ticks: {
-            text: {
-              fill: '#71717A',
-              fontSize: 12,
-              fontWeight: 500,
-            },
-          },
-        },
-        grid: {
-          line: {
-            stroke: '#D4D4D8',
-            strokeWidth: 1,
-            strokeDasharray: '4 4',
-          },
-        },
-      }}
-    />
-  );
+  //   //   legends={[
+  //   //     {
+  //   //       anchor: 'bottom',
+  //   //       direction: 'row',
+  //   //       justify: false,
+  //   //       translateY: 80,
+  //   //       itemsSpacing: 0,
+  //   //       itemDirection: 'left-to-right',
+  //   //       itemWidth: 80,
+  //   //       itemHeight: 20,
+  //   //       itemOpacity: 0.75,
+  //   //       symbolSize: 12,
+  //   //       symbolShape: 'square',
+  //   //       symbolBorderColor: 'rgba(0, 0, 0, .5)',
+  //   //       effects: [
+  //   //         {
+  //   //           on: 'hover',
+  //   //           style: {
+  //   //             itemBackground: 'rgba(0, 0, 0, .03)',
+  //   //             itemOpacity: 1,
+  //   //           },
+  //   //         },
+  //   //       ],
+  //   //     },
+  //   //   ]}
+  //   legends={
+  //     expectedViewChartDataList && expectedViewChartDataList.length <= 6
+  //       ? [
+  //           {
+  //             ...legendProps,
+  //             translateY: 50,
+  //             symbolSize: 18,
+  //             itemsSpacing: 60,
+  //           },
+  //         ]
+  //       : [
+  //           {
+  //             ...legendProps,
+  //             symbolSize: 10,
+  //             itemsSpacing: 25,
+  //             translateY: 50,
+  //             data: expectedViewChartDataList
+  //               .slice(0, Math.floor(expectedViewChartDataList.length / 2))
+  //               .map((cur, index) => ({
+  //                 id: cur.id,
+  //                 label: cur.id,
+  //                 color: NIVO_CHART_COLOR.slice(
+  //                   0,
+  //                   Math.floor(expectedViewChartDataList.length / 2),
+  //                 )[index],
+  //               })),
+  //           },
+  //           {
+  //             ...legendProps,
+  //             symbolSize: 10,
+  //             itemsSpacing: 25,
+  //             translateY: 70,
+  //             data: expectedViewChartDataList
+  //               .slice(Math.floor(expectedViewChartDataList.length / 2))
+  //               .map((cur, index) => ({
+  //                 id: cur.id,
+  //                 label: cur.id,
+  //                 color: NIVO_CHART_COLOR.slice(
+  //                   Math.floor(expectedViewChartDataList.length / 2),
+  //                 )[index],
+  //               })),
+  //           },
+  //         ]
+  //   }
+  //   theme={{
+  //     legends: {
+  //       text: { fontSize: 12 },
+  //     },
+  //     axis: {
+  //       ticks: {
+  //         text: {
+  //           fill: '#71717A',
+  //           fontSize: 12,
+  //         },
+  //       },
+  //     },
+  //     grid: {
+  //       line: {
+  //         stroke: '#D4D4D8',
+  //         strokeWidth: 1,
+  //         strokeDasharray: '4 4',
+  //       },
+  //     },
+  //   }}
+  // />
 };
 
 export default RelationExpectedViewChart;

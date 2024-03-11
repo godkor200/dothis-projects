@@ -14,11 +14,13 @@ import { apiClient } from '@/utils/api/apiClient';
  */
 const useGetRankingRelWords = (
   keyword: string | null,
-  queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
+  queryOptions?: UseQueryOptions<
+    typeof apiRouter.relatedWords.rankingRelatedWords
+  >,
 ) => {
-  const queryResult = apiClient(1).relwords.rankRel.useQuery(
+  const queryResult = apiClient(1).relatedWords.rankingRelatedWords.useQuery(
     RANK_RELATIONWORD_KEY.list([{ keyword }]),
-    { params: { keyword: keyword! } },
+    { params: { search: keyword! } },
     { ...queryOptions, enabled: !!keyword, retry: 3 },
   );
 

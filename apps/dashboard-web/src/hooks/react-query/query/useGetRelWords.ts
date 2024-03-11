@@ -19,11 +19,11 @@ import useGetUserInfo from './useGetUserInfo';
 
 const useGetRelWords = (
   keyword: string | null,
-  queryOptions?: UseQueryOptions<typeof apiRouter.relwords.getRelWords>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.relatedWords.getRelWords>,
 ) => {
   const { isLoading } = useGetUserInfo();
 
-  const queryResult = apiClient(1).relwords.getRelWords.useQuery(
+  const queryResult = apiClient(1).relatedWords.getRelWords.useQuery(
     RELATIONWORD_KEY.list([{ keyword: keyword }]),
     {
       params: {

@@ -5,7 +5,7 @@ function App() {
     <div>
       dothis/dashboard-storybook
       <Button theme="contained" size="S">
-        안녕
+        안녕테스트
       </Button>
     </div>
   );

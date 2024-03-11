@@ -21,26 +21,31 @@ import useGetUserInfo from './useGetUserInfo';
 
 const useGetRankingWordList = (
   keyword: string[],
-  queryOptions?: UseQueryOptions<typeof apiRouter.relwords.rankRel>,
+  queryOptions?: UseQueryOptions<
+    typeof apiRouter.relatedWords.rankingRelatedWords
+  >,
 ) => {
   const { isLoading: userLoading } = useGetUserInfo();
 
   const isTokenRequired = useIsTokenRequired();
 
-  const queryResults = apiClient(1).relwords.rankRel.useQueries({
-    queries: keyword.map((keyword) => {
-      return {
-        queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
-        params: { keyword },
-        ...queryOptions,
-        enabled: isTokenRequired !== null && keyword.length > 0 && !userLoading,
-        retry: 3,
-        select(data) {
-          return data;
-        },
-      };
-    }),
-  });
+  const queryResults = apiClient(1).relatedWords.rankingRelatedWords.useQueries(
+    {
+      queries: keyword.map((keyword) => {
+        return {
+          queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
+          params: { search: keyword },
+          ...queryOptions,
+          enabled:
+            isTokenRequired !== null && keyword.length > 0 && !userLoading,
+          retry: 3,
+          select(data) {
+            return data;
+          },
+        };
+      }),
+    },
+  );
   const requiredQueryResults = queryResults as DeepRequired<
     typeof queryResults
   >;

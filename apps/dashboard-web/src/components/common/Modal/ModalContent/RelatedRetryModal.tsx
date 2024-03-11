@@ -10,7 +10,8 @@ const RelatedRetryModal = ({
   return (
     <div className=" rounded-8 bg-grey00 w-[500px] p-10">
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
-        많은 요청으로 인해 <br /> 데이터를 가져오는데 실패하였습니다
+        {/* 많은 요청으로 인해 <br /> 데이터를 가져오는데 실패하였습니다 */}
+        데이터베이스 이관 중입니다. <br /> 이용에 불편을 드려 죄송합니다
       </p>
       <div className="flex justify-center gap-[1.25rem]">
         <Button theme="outlined" size="L" onClick={dismissCallback}>

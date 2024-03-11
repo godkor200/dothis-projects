@@ -1,21 +1,18 @@
 'use client';
 
-import type { GridLabelProps } from '@nivo/radar';
-import { ResponsiveRadar } from '@nivo/radar';
-import { access } from 'fs';
 import { useState } from 'react';
 
+import DashboardRadarChart from '@/components/common/Charts/DashboardRadarChart';
 import { clustersCategories } from '@/constants/clusterCategories';
 import type { CategoryTabNavDataCategoryType } from '@/constants/TabNav';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
 import useGetVideoData from '@/hooks/react-query/query/useGetVideoData';
-import { DUMMY_VIEW_DATA } from '@/mocks/monthlyReport/monthlyViewDummyData';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import getMaxValues from '@/utils/contents/getMaxValues';
+import { handleZeroDivision } from '@/utils/common';
+import { getMaxValues, getMaxValuesV2 } from '@/utils/contents/getMaxValues';
 
 import AnalysisWidgetItem from '../AnalysisWidgetItem';
-import MonthlyDataGraphToolTip from './MonthlyDataGraphToolTip';
 
 /**
  * 데이터 안정화 되면 custom hooks 주석 풀고 더미 데이터 제거 예정입니다.
@@ -58,7 +55,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
   const categoryViewData = viewData.map((item, idx) => {
     const result = (item ?? []).reduce(
       (acc, cur) => {
-        acc.views = ((acc.views as number) || 0) + cur.increase_views;
+        acc.views = ((acc.views as number) || 0) + cur.videoViews;
         return acc;
       },
       {
@@ -73,9 +70,64 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     );
 
     result.views = result.views;
-    result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+    result.videoTotalCounts = (videoData[idx]?.total as number) || 0;
 
     return result;
+  });
+
+  const categoryView = viewData.map((item, idx) => {
+    const result = (item ?? []).reduce(
+      (acc, cur) => {
+        acc.y = ((acc.y as number) || 0) + cur.videoViews || 0;
+        return acc;
+      },
+      {
+        y: 0,
+        x:
+          clusterData &&
+          clustersCategories[
+            clusterData[idx] as keyof typeof clustersCategories
+          ],
+      },
+    );
+
+    // result.views = result.views;
+    // result.videoTotalCounts = (videoData[idx]?.total.value as number) || 0;
+
+    return result;
+  });
+
+  const categoryVideo = videoData.map((item, idx) => {
+    return {
+      y: item?.total || 0,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
+  });
+
+  const {
+    maxViews: maxViewsV2,
+    maxVideoTotalCounts: maxVideoTotalCountsV2,
+    viewAndVideoMaxValue: viewAndVideoMaxValueV2,
+  } = getMaxValuesV2(categoryView, categoryVideo);
+
+  const convertedViews = categoryView.map(({ x, y }, idx) => {
+    return {
+      y: (y / maxViewsV2) * viewAndVideoMaxValueV2,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
+  });
+
+  const convertedVideoCounts = categoryVideo.map(({ x, y }, idx) => {
+    return {
+      y: (y / maxVideoTotalCountsV2) * viewAndVideoMaxValueV2,
+      x:
+        clusterData &&
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+    };
   });
 
   const { maxViews, maxVideoTotalCounts, viewAndVideoMaxValue } =
@@ -122,6 +174,34 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     }
   }
 
+  function getHighestCompetitiveCategory(
+    views: typeof convertedViews,
+    videoCounts: typeof convertedVideoCounts,
+  ) {
+    if (views.length !== videoCounts.length) {
+      return '두 배열의 길이가 일치하지 않습니다.';
+    }
+
+    let averages: { ratio: number; category: string } = {
+      ratio: 0,
+      category: '',
+    };
+
+    // 초기 for in문 순회로 되어있었지만, 배열의 프로토타입 체인에서 열거 가능한 속성 또한 순회하기 때문에 for문으로 수정
+    for (let index = 0; index < views.length; index++) {
+      const ratio = handleZeroDivision(views[index].y, videoCounts[index].y);
+
+      if (!averages.category || ratio > averages.ratio) {
+        averages = {
+          ratio,
+          category: views[index].x,
+        };
+      }
+    }
+
+    return averages.category;
+  }
+
   const onClickTitle = (type: TitleType) => {
     setSelectedType(type);
   };
@@ -148,7 +228,9 @@ const MonthlyViewData = ({ currentTab }: Props) => {
     },
     {
       title: '경쟁강도가 가장 좋은 카테고리',
-      content: maxRatioElement?.category || '조회중',
+      content:
+        getHighestCompetitiveCategory(convertedViews, convertedVideoCounts) ||
+        '조회중',
       hasTooltip: false,
       tooltipText: '',
     },
@@ -173,69 +255,21 @@ const MonthlyViewData = ({ currentTab }: Props) => {
           <>
             <div className="flex flex-1 justify-center">
               <div className="h-[315px] w-[406px]  self-center  [&_svg]:overflow-visible">
-                <ResponsiveRadar
-                  data={convertedDatas}
-                  keys={['views', 'videoTotalCounts']}
-                  indexBy="category"
-                  valueFormat=">-.2f"
-                  margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-                  borderColor={{ from: 'color' }}
-                  gridLabelOffset={36}
-                  // dotSize={10}
-                  dotColor={{ theme: 'background' }}
-                  // dotBorderWidth={2}
-                  colors={{ scheme: 'nivo' }}
-                  theme={{
-                    legends: {
-                      text: { fontSize: 12, fontWeight: 700 },
-                    },
-                    labels: {
-                      text: { fontSize: 22, fontWeight: 900 },
-                    },
-                    textColor: '#999d3e',
-                  }}
-                  blendMode="multiply"
-                  motionConfig="wobbly"
-                  animate={false}
-                  gridLabel={LabelComponent}
-                  legends={[
+                <DashboardRadarChart
+                  series={[
                     {
-                      data: [
-                        {
-                          id: 'views',
-                          label: '일일 조회 수',
-                        },
-                        {
-                          id: 'videoTotalCounts',
-                          label: '누적 영상 수 ',
-                        },
-                      ],
-                      anchor: 'bottom-right',
-                      direction: 'column',
-                      translateX: -0,
-                      translateY: -80,
-                      itemWidth: 80,
-                      itemHeight: 20,
-                      itemTextColor: '#999',
-                      symbolSize: 12,
-                      symbolShape: 'circle',
-                      effects: [
-                        {
-                          on: 'hover',
-                          style: {
-                            itemTextColor: '#000',
-                          },
-                        },
-                      ],
+                      name: '조회 수',
+                      data: convertedViews.sort((a, b) =>
+                        a.x < b.x ? -1 : a.x > b.x ? 1 : 0,
+                      ),
+                    },
+                    {
+                      name: '영상 수',
+                      data: convertedVideoCounts.sort((a, b) =>
+                        a.x < b.x ? -1 : a.x > b.x ? 1 : 0,
+                      ),
                     },
                   ]}
-                  sliceTooltip={({ index, data }) => (
-                    <MonthlyDataGraphToolTip
-                      data={data}
-                      label={index}
-                      {...toolTipProps}
-                    />
-                  )}
                 />
               </div>
             </div>
@@ -264,29 +298,3 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 };
 
 export default MonthlyViewData;
-
-const LabelComponent = ({ id, x, y, anchor }: GridLabelProps) => {
-  return (
-    <g transform={`translate(${x}, ${y})`}>
-      <text
-        textAnchor={anchor}
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-        }}
-      >
-        {id}
-      </text>
-      {/* <text
-        y={24}
-        style={{
-          fontSize: 18,
-          fontWeight: 'bold',
-          fill: '#3a9896',
-        }}
-      >
-        +{Math.round(Math.random() * 100)}%
-      </text> */}
-    </g>
-  );
-};

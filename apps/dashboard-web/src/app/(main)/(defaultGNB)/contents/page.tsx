@@ -1,12 +1,13 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 
+import SocialFeedContainer from '@/components/MainContents/MediaArticles/SocialFeedContainer';
+import YouTube from '@/components/MainContents/MediaArticles/Youtube';
 // import TabNavigation from '@/components/common/TabNavigation';
 // import Card from '@/components/MainContents/Card';
 // import CardHeader from '@/components/MainContents/CardHeader';
 // import KeywordAnalyticsView from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
 // import KeywordRankingList from '@/components/MainContents/InfoChartAndRanking/KeywordRankingList';
-// import MediaArticlesContainer from '@/components/MainContents/MediaArticles/MediaArticlesContainer';
 // import MonthlyViewData from '@/components/MainContents/MonthlyContentReport/MonthlyViewData';
 // import Container from '@/components/MainOverallView/RelatedWordList/Container';
 // import Chat from '@/components/OpenAI/Chat';
@@ -38,13 +39,6 @@ const KeywordAnalyticsView = dynamic(
 const KeywordRankingList = dynamic(
   () =>
     import('@/components/MainContents/InfoChartAndRanking/KeywordRankingList'),
-  {
-    ssr: false,
-  },
-);
-const MediaArticlesContainer = dynamic(
-  () =>
-    import('@/components/MainContents/MediaArticles/MediaArticlesContainer'),
   {
     ssr: false,
   },
@@ -108,11 +102,7 @@ const MainContentPage = ({
 }) => {
   const selectedArticle =
     (searchParams?.snsTab as (typeof MEDIA_TABNAV_DATA)[number]['category']) ||
-    'youtube';
-
-  // const articleListData = await relatedContentApi[selectedArticle](
-  //   '아시안게임',
-  // );
+    'news';
 
   const selectedMainContent = searchParams?.main || 'recommend';
 
@@ -120,38 +110,48 @@ const MainContentPage = ({
     (searchParams?.tab as (typeof CATEGORY_TABNAV_DATA)[number]['category']) ||
     'category';
 
-  if (selectedMainContent === 'recommend') {
-    return (
-      <div className=" mx-auto w-[1342px] ">
-        <Card>
-          <CardHeader title="콘텐츠 소재">
-            <Chat />
-          </CardHeader>
-          <div className="flex">
-            <KeywordRankingList />
+  // if (selectedMainContent === 'recommend') {
+  return (
+    <div className=" mx-auto w-[1342px] ">
+      <Card>
+        <CardHeader title="콘텐츠 소재" />
+        <div className="flex">
+          <KeywordRankingList />
 
-            <KeywordAnalyticsView />
-          </div>
-        </Card>
-        <Card>
+          <KeywordAnalyticsView />
+        </div>
+        <Chat />
+      </Card>
+      <Card>
+        <TabNavigation
+          tabKey="tab"
+          selectedArticle={secondSection}
+          tabNavData={CATEGORY_TABNAV_DATA}
+        />
+        <MonthlyViewData currentTab={secondSection} />
+      </Card>
+      <div className="mx-[3rem] flex justify-between gap-[22px] [&>*]:flex-1">
+        <Card withoutMargin>
           <TabNavigation
-            tabKey="tab"
-            selectedArticle={secondSection}
-            tabNavData={CATEGORY_TABNAV_DATA}
+            tabKey="youtube"
+            selectedArticle={'youtube'}
+            tabNavData={[{ title: '유튜브', category: 'youtube' }]}
           />
-          <MonthlyViewData currentTab={secondSection} />
+          <YouTube />
         </Card>
-        <Card>
+
+        <Card withoutMargin>
           <TabNavigation
             tabKey="snsTab"
             selectedArticle={selectedArticle}
             tabNavData={MEDIA_TABNAV_DATA}
           />
-          <MediaArticlesContainer selectedArticle={selectedArticle} />
+          <SocialFeedContainer selectedArticle={selectedArticle} />
         </Card>
       </div>
-    );
-  }
+    </div>
+  );
+  // }
   return (
     <>
       <div className="mx-[3rem] mb-[30px]">

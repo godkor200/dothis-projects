@@ -9,11 +9,11 @@ import type { DeepRequired } from '@/hooks/react-query/query/common';
 dayjs.extend(isSameOrBefore);
 
 type DailyView = DeepRequired<
-  ClientInferResponseBody<typeof apiRouter.dailyViews.getDailyViews, 200>
+  ClientInferResponseBody<typeof apiRouter.hits.getDailyViewsV1, 200>
 >['data'][0];
 
 type ExpectedView = DeepRequired<
-  ClientInferResponseBody<typeof apiRouter.expectViews.getExpectedViews, 200>
+  ClientInferResponseBody<typeof apiRouter.hits.getExpectedViews, 200>
 >['data'][0];
 
 /**
@@ -49,7 +49,7 @@ export const sumViews = (
     if (item) {
       const date = item.date;
 
-      const views = item.increase_views;
+      const views = item.videoViews;
 
       if (result.hasOwnProperty(date)) {
         result[date] += views;
@@ -75,7 +75,7 @@ export const averageViews = (
   data?.forEach((item) => {
     if (item) {
       const date = item.date;
-      const views = item.expected_views;
+      const views = item.expectedHits;
 
       if (result.hasOwnProperty(date)) {
         result[date] += views;
@@ -138,7 +138,7 @@ export const expectedViews = (
     if (item) {
       const date = item.date;
       // 소수점을 지우기 위해 round
-      const views = Math.round(item.expected_views * GUEST_AVERAGEVIEW);
+      const views = Math.round(item.expectedHits * GUEST_AVERAGEVIEW);
 
       if (result.hasOwnProperty(date)) {
         result[date] += views;

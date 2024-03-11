@@ -35,7 +35,8 @@ const TrendingQueryContextProvider = ({
     {
       selectOptions: [],
       keywordList: [],
-      startDate: dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
+      // startDate: dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
+      startDate: dayjs('2024-01-17'),
     },
   );
 

@@ -1,16 +1,14 @@
 'use client';
 
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-import type { ChangeEvent } from 'react';
 import { type PropsWithChildren, useEffect } from 'react';
 
-import KeywordSearchResult from '@/components/MainContents/KeywordSearch/KeywordSearchResult';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
-import SearchBar from '@/components/MainContents/KeywordSearch/SearchBar';
+import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
@@ -59,10 +57,11 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   return (
     <>
       <KeywordSlide />
-      <SearchBar />
+      {/* <SearchBar /> */}
       {/* <KeywordSearchResult /> */}
+      <TopBannerMediaList />
 
-      <ul className=" flex justify-center gap-[24px] text-[20px] font-bold">
+      <ul className=" mx-auto  flex w-[1342px] gap-[24px]  pl-[48px] text-[20px] font-bold">
         <li
           className={cn('  cursor-pointer text-grey500', {
             'border-primary500   border-b-4 border-solid text-grey700':
@@ -70,16 +69,16 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
           })}
           onClick={() => router.push('?main=recommend')}
         >
-          추천
+          키워드 분석
         </li>
         <li
           className={cn('  cursor-pointer text-grey500', {
             'border-primary500   border-b-4 border-solid text-grey700':
               mainTab === 'all',
           })}
-          onClick={() => router.push('?main=all')}
+          // onClick={() => router.push('?main=all')}
         >
-          전체
+          연관 소재 비교
         </li>
       </ul>
       <div className="bg-grey100 pb-[200px] pt-[5rem]">{children}</div>

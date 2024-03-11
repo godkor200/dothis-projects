@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import type { KeyboardEvent } from 'react';
 import { useCallback, useState, useTransition } from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
@@ -102,9 +103,30 @@ const SearchBar = () => {
     return false;
   };
 
+  const handleKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>,
+    currentInput: string,
+  ) => {
+    if (!checkIsSignedIn()) {
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (
+        data &&
+        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+          currentInput
+      ) {
+        // 엔터 키가 눌렸을 때 실행할 동작
+
+        createSearchwordMutate(currentInput);
+      }
+    }
+  };
+
   return (
     <div
-      className="relative  mx-auto mb-[84px] min-h-[52px] max-w-[680px]"
+      className="relative  mx-auto min-h-[52px] max-w-[680px]"
       onClick={() => setOpenInput(true)}
     >
       <div className=" rounded-8 bg-grey00 absolute z-20  box-border w-full pt-[10px] shadow-[0_0_0_2px_rgb(228,228,231)]">
@@ -123,7 +145,9 @@ const SearchBar = () => {
                 startTransition(() => handleInput(e.currentTarget.value));
               }}
               // ref={searchInputRef}
-              // onKeyDown={handleSubmit}
+              onKeyDown={(e) => {
+                handleKeyDown(e, e.currentTarget.value);
+              }}
             />
             <div className="cursor-pointer">
               <SvgComp icon="HeaderPlus" size="32px" />

@@ -20,7 +20,7 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
 const useGetNewsInfiniteQuery = (
   queryOptions?: UseInfiniteQueryResult<NewsResponse>,
 ): UseInfiniteQueryResult<NewsResponse> => {
-  const seletedWord = useSelectedWord();
+  const selectedWord = useSelectedWord();
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -29,14 +29,14 @@ const useGetNewsInfiniteQuery = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: seletedWord.relword,
+        query: { title: selectedWord.keyword },
 
         published_at: {
           from: startDate,
           until: endDate,
         },
         // provider: ['경향신문'],
-        // category: ['정치>정치일반', 'IT_과학'],
+        category: ['정치', '경제', '사회', '국제', '지역', '스포츠', 'IT_과학'],
         // category_incident: ['범죄', '교통사고', '재해>자연재해'],
         // byline: '',
 
@@ -56,7 +56,7 @@ const useGetNewsInfiniteQuery = (
       },
     };
 
-    const response = await axios.post(
+    const response = await axios.post<NewsResponse>(
       'https://tools.kinds.or.kr/search/news?access_key=eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       JSON.stringify(obj),
     );
@@ -65,7 +65,7 @@ const useGetNewsInfiniteQuery = (
   };
 
   return useInfiniteQuery(
-    ['뉴스', seletedWord.relword, 1],
+    ['뉴스', selectedWord.keyword, 1],
     ({ pageParam = 0 }) => retrievePosts(pageParam),
     {
       ...queryOptions,
@@ -75,7 +75,24 @@ const useGetNewsInfiniteQuery = (
           ? false
           : allPages.length;
       },
-      enabled: !!seletedWord.relword && !!startDate && !!endDate,
+      select: (data) => {
+        // console.log(data);
+        return {
+          pageParams: data.pageParams,
+          pages: data.pages.map((page) => {
+            return {
+              result: page.result,
+              return_object: {
+                total_hits: page.return_object.total_hits,
+                documents: page.return_object.documents.filter(
+                  (item) => item.images !== '',
+                ),
+              },
+            };
+          }),
+        };
+      },
+      enabled: !!selectedWord.keyword && !!startDate && !!endDate,
     },
   );
 };
