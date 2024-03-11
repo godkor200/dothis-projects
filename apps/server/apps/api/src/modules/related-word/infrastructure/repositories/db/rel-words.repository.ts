@@ -1,5 +1,5 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { RelWordsModel, zRelWords } from '@dothis/dto';
+import { RelatedWordModel, zRelWords } from '@dothis/dto';
 import { RelatedWordsRepositoryPort } from './rel-words.repository.port';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
@@ -7,7 +7,7 @@ import { ZodObject } from 'zod';
 import { RelatedWordsEntity } from '../entity/related_words.entity';
 
 export class RelatedWordsRepository
-  extends SqlRepositoryBase<RelatedWordsEntity, RelWordsModel>
+  extends SqlRepositoryBase<RelatedWordsEntity, RelatedWordModel>
   implements RelatedWordsRepositoryPort
 {
   @InjectRepository(RelatedWordsEntity)
