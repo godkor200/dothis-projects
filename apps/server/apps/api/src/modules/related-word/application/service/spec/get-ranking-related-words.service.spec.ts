@@ -5,7 +5,7 @@ import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/vi
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { Ok } from 'oxide.ts';
 import { history } from '@Apps/modules/related-word/application/service/spec/__dummy__/video_history.dummy';
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
 
 const mockFindRelAdapter = mock<FindRelatedWordOutboundPort>();
 const mockIGetRelatedLastVideoHistory = mock<IGetRelatedLastVideoHistory>();
