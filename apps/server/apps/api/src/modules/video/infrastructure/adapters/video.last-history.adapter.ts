@@ -8,9 +8,9 @@ import {
   CacheDoesNotFoundException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
-import { IGetRelatedVideoAndVideoHistoryRes } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export type TGetRelatedLastVideoAndVideoHistory = Result<
-  IGetRelatedVideoAndVideoHistoryRes[],
+  GetRelatedVideoAndVideoHistory[],
   | VideoHistoryNotFoundError
   | TableNotFoundException
   | CacheDoesNotFoundException

@@ -1,12 +1,22 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { TGetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
-import { Err, Ok } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import * as cluster from 'cluster';
 
+import { Err, Ok, Result } from 'oxide.ts';
+import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+import {
+  CacheDoesNotFoundException,
+  TableNotFoundException,
+} from '@Libs/commons/src/exceptions/exceptions';
+
+import { IRelatedVideoAnalyticsData } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
+export type TGetRelatedVideoAnalyticsData = Result<
+  IRelatedVideoAnalyticsData[],
+  | VideoHistoryNotFoundError
+  | TableNotFoundException
+  | CacheDoesNotFoundException
+>;
 export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
@@ -17,7 +27,7 @@ export class VideoHistoryMultipleAdapter
    */
   async execute(
     dao: GetRelatedLastVideoAndVideoHistory,
-  ): Promise<TGetRelatedLastVideoAndVideoHistory> {
+  ): Promise<TGetRelatedVideoAnalyticsData> {
     const { search, relatedCluster, relatedWords } = dao;
     const tempCluster = [0, 1];
     let queryString = '';
@@ -30,7 +40,7 @@ export class VideoHistoryMultipleAdapter
         .join(' OR ');
 
       const subQuery = `
-        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY , VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
+        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
         FROM DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_2024_1 VH 
         JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID
         JOIN DOTHIS.CHANNEL_HISTORY CH ON CH.CHANNEL_ID = VD.channel_id 
