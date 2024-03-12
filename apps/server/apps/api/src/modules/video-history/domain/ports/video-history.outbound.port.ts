@@ -31,3 +31,8 @@ export interface IRelatedVideoAnalyticsData
 export interface VideoHistoryOutboundPort {
   getHistory(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes>;
 }
+export interface IGetRelatedVideoAndVideoHistoryRes
+  extends Pick<
+    GetRelatedVideoAndVideoHistory,
+    'videoId' | 'videoViews' | 'day'
+  > {}
