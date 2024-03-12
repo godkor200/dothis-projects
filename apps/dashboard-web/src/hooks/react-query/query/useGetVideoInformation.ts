@@ -15,7 +15,10 @@ const useGetVideoInformation = (
   {
     videoId,
     clusterNumber,
-  }: { videoId: string | undefined; clusterNumber: number | undefined },
+  }: {
+    videoId: string | undefined;
+    clusterNumber: string | number | undefined;
+  },
   queryOptions?: UseQueryOptions<typeof apiRouter.video.getIndividualVideo>,
 ) => {
   const queryResult = apiClient(1).video.getIndividualVideo.useQuery(
@@ -32,7 +35,7 @@ const useGetVideoInformation = (
     },
     {
       ...queryOptions,
-      enabled: !!videoId && !!clusterNumber,
+      enabled: !!videoId && (!!clusterNumber || clusterNumber === 0),
     },
   );
   const requiredQueryResult = queryResult.data as DeepRequired<
