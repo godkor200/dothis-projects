@@ -197,13 +197,14 @@ const TrendingPage = () => {
                       {item.keyword}
                     </div>
                     <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {
+                      {/* {
                         clustersCategories[
                           JSON.parse(
                             item.category,
                           )[0] as keyof typeof clustersCategories
                         ]
-                      }
+                      } */}
+                      {item.category}
                     </div>
                     <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
                       {item.weekly_views?.toLocaleString('ko-kr')}

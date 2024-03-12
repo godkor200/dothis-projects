@@ -5,10 +5,13 @@ const path = require('path');
 const config = {
   reactStrictMode: false,
   swcMinify: true,
-  i18n: {
-    locales: ['ko'],
-    defaultLocale: 'ko',
-  },
+
+  // 해당 부분 intercepting route 랑 문제가 있어서 임시 주석처리 (next 아직도 안고쳤다.)
+  // i18n: {
+  //   locales: ['ko'],
+  //   defaultLocale: 'ko',
+  // },
+
   images: {
     domains: ['bigkinds.or.kr', 'img.youtube.com'],
   },
