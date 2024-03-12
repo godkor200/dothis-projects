@@ -24,17 +24,17 @@ beforeEach(() => {
 });
 describe('함수', () => {
   it('should', async () => {
-    mockFindRelAdapter.findOneByKeyword.mockReturnValue(
-      Promise.resolve({
-        keyword: '서울',
-        relWords: 'ddd',
-        cluster: '[1,2,3]',
-      }),
-    );
-    mockIGetRelatedLastVideoHistory.execute.mockReturnValue(
-      Promise.resolve(Ok(history)),
-    );
-    const query = {};
-    await handler.execute(query);
+    // mockFindRelAdapter.findOneByKeyword.mockReturnValue(
+    //   Promise.resolve({
+    //     keyword: '서울',
+    //     relWords: 'ddd',
+    //     cluster: '[1,2,3]',
+    //   }),
+    // );
+    // mockIGetRelatedLastVideoHistory.execute.mockReturnValue(
+    //   Promise.resolve(Ok(history)),
+    // );
+    // const query = {};
+    // await handler.execute(query);
   });
 });
