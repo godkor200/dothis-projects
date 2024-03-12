@@ -1,5 +1,5 @@
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/application/service/find-video-history.service';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 
 /**
  * os 타입

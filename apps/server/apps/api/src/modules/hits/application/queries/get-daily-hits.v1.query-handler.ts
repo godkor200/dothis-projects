@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { ICalculateDailyHitsMetricsServiceInboundPort } from '@Apps/modules/hits/domain/ports/daily-hits-service.inbound.port';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { Inject } from '@nestjs/common';

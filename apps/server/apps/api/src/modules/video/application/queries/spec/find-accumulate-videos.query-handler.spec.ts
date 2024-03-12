@@ -1,7 +1,7 @@
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { mock } from 'jest-mock-extended';
 
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
 
 const mockChannelHistoryOutboundPort = mock<ChannelHistoryOutboundPort>();
 const mockChannelHistoryAggregateService =

@@ -1,5 +1,5 @@
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/application/service/find-video-history.service';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 export interface IFindVideoIdResOnlyChannelId
   extends Pick<IFindVideoIDAndChannelIdRes, 'channel_id'> {}
 export interface IFindVideoIDAndChannelIdRes {

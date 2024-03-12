@@ -4,11 +4,11 @@ import { ChannelAnalysisRes } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
-import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
+import { CHANNEL_HISTORY_OS_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
+import { ChannelHistoryOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelQueryHandlerPort } from '@Apps/modules/channel/domain/ports/channel.query-handler.port';
-import { FindChannelInfoDao } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
+import { FindChannelInfoDao } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
 
 @QueryHandler(AnalyzeChannelDto)
 export class AnalyzeChannelQueryHandler

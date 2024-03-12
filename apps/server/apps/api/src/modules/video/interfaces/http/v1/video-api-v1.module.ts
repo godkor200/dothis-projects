@@ -17,8 +17,8 @@ import {
   CHANNEL_HISTORY_GET_RELATE_VIDEO_IGNITE_DI_TOKEN,
   CHANNEL_HISTORY_IGNITE_DI_TOKEN,
   CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN,
-} from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { ChannelHistoryServiceModule } from '@Apps/modules/channel_history/application/service/channel-history.service.module';
+} from '@Apps/modules/channel-history/channel-history.di-token.constants';
+import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/application/service/channel-history.service.module';
 import { ChannelQueryHandler } from '@Apps/modules/channel/infrastucture/adapters/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
@@ -28,9 +28,9 @@ import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http
 import { FindIndividualVideoInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-individual-video-info/find-individual-video-info.http.controller';
 import { GetVideoDataPageService } from '@Apps/modules/video/application/service/get-video-data.service';
 import { FindIndividualVideoInfoService } from '@Apps/modules/video/application/service/find-individual-video-info.service';
-import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.base.adapter';
-import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
-import { VideoHistoryAdapter } from '@Apps/modules/video_history/infrastructure/adapters/video-history.adapter';
+import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.base.adapter';
+import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
+import { VideoHistoryAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.adapter';
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
 import { VideoEntireCountAdapter } from '@Apps/modules/video/infrastructure/adapters/video.entire-count.adapter';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
@@ -40,9 +40,9 @@ import { VideoListAdapterEntireCluster } from '@Apps/modules/video/infrastructur
 import { FindAccumulateVideosV1HttpController } from '@Apps/modules/video/interfaces/http/v1/find-accumulate-videos/find-accumulate-videos.http.controller';
 import { FindAccumulateVideoService } from '@Apps/modules/video/application/service/find-accumulate-video.service';
 import { FindAccumulateVideosV1QueryHandler } from '@Apps/modules/video/application/queries/v1/find-accumulate-videos.query-handler';
-import { FindLatestChannelHistoryByVideoAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.latest-tuple.adapter';
-import { ChannelHistoryRelatedVideoAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.related-video.adapter';
-import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel_history/infrastructure/adapters/channel-history.by-channel-id.adapter';
+import { FindLatestChannelHistoryByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.latest-tuple.adapter';
+import { ChannelHistoryRelatedVideoAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.related-video.adapter';
+import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.by-channel-id.adapter';
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,

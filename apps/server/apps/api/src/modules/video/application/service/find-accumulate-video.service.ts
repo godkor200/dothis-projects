@@ -5,13 +5,13 @@ import { Inject } from '@nestjs/common';
 import {
   CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
   CHANNEL_HISTORY_GET_RELATE_VIDEO_IGNITE_DI_TOKEN,
-} from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { IGetChannelHistoryRelateVideoOutboundPort } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
-import { FindChannelHistoryRelatedVideoDao } from '@Apps/modules/channel_history/infrastructure/daos/channel-history.dao';
-import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel_history/domain/ports/channel-history.outbound.port';
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/application/service/channel-history.aggregate.service';
+} from '@Apps/modules/channel-history/channel-history.di-token.constants';
+import { IGetChannelHistoryRelateVideoOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
+import { FindChannelHistoryRelatedVideoDao } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
+import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
 import { Err, Ok } from 'oxide.ts';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 export class FindAccumulateVideoService

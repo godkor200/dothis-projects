@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 
 import {
+  ApiBearerAuth,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -15,7 +16,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
-import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
+import {
+  nestControllerContract,
+  TsRestHandler,
+  tsRestHandler,
+} from '@ts-rest/nest';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { apiRouter } from '@dothis/dto';
 import {
@@ -35,6 +40,7 @@ import { TGetOneStoryBoardRes } from '@Apps/modules/story-board/application/quer
 import { InternalServerErr } from '@Apps/common/auth/domain/event/auth.error';
 
 import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
+import { StoryBoardCreateRes } from '@Apps/modules/story-board/domain/events/response';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const { getOneStoryBoard } = c;
@@ -45,23 +51,8 @@ const { summary, description } = getOneStoryBoard;
 export class GetOneStoryBoardHttpV1Controller {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @TsRest(getOneStoryBoard)
-  @ApiOkResponse({
-    schema: {
-      type: 'object',
-      properties: {
-        success: {
-          type: 'boolean',
-          description: '성공여부',
-        },
-        data: {
-          type: 'array',
-          description: '불러온 데이터',
-        },
-      },
-      required: ['success', 'data'],
-    },
-  })
+  @TsRestHandler(getOneStoryBoard)
+  @ApiOkResponse({ type: StoryBoardCreateRes })
   @ApiOperation({
     summary,
     description,
@@ -70,6 +61,7 @@ export class GetOneStoryBoardHttpV1Controller {
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
   })
+  @ApiBearerAuth('Authorization')
   @UseGuards(JwtAccessGuard)
   async execute(
     @Headers() headers: AuthToken,

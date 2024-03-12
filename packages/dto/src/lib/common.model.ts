@@ -79,17 +79,12 @@ export const zOrderBy = z.object({
     ),
 });
 export const zPaginatedOffsetQuery = z.object({
-  limit: z
-    .string()
-    .describe('한 페이지에 표시할 데이터의 수')
-    .nullable()
-    .default('5'),
+  limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
   page: z.string().describe('현재 페이지 번호를 나타냅니다.').default('1'),
-  offset: z.string().describe('건너뛸 데이터의 수를 나타냅니다'),
+  offset: z.string().default('5').describe('건너뛸 데이터의 수를 나타냅니다'),
 });
 export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
   .merge(zSortSqlQuery)
-  .optional()
   .describe('페이지네이션 쿼리 파라미터');
 export const zPaginatedIgniteQueryParams = zSearchKeyword
   .merge(
@@ -124,5 +119,6 @@ export const zClusterNumberMulti = z.object({
 export const zAuth = z.object({
   Authorization: z
     .string()
-    .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')"),
+    .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')")
+    .optional(),
 });

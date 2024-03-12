@@ -13,7 +13,7 @@ export const config = new DocumentBuilder()
       scheme: 'bearer',
       bearerFormat: 'JWT',
       name: 'JWT',
-      description: '토큰을 넣어주세요',
+      description: 'bearer 제외한 엑세스 토큰을 넣어주세요',
       in: 'header',
     },
     'Authorization',

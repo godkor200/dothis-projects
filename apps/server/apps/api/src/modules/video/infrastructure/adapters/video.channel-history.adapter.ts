@@ -4,7 +4,7 @@ import { GetRelatedVideoChannelHistoryDao } from '@Apps/modules/video/infrastruc
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok, Result } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 const IgniteClient = require('apache-ignite-client');

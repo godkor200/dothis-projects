@@ -1,4 +1,4 @@
-import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 
 export interface IRankingRelWords {
   data: GetRelatedVideoAndVideoHistory[];

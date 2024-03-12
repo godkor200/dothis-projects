@@ -8,7 +8,7 @@ import {
 import { Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';

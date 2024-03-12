@@ -4,10 +4,10 @@ import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/
 import { Inject } from '@nestjs/common';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel_history/channel-history.di-token.constants';
-import { IGetChannelHistoryLatestTuple } from '@Apps/modules/channel_history/infrastructure/repositories/database/channel-history.outbound.port';
-import { VideoHistoryOutboundPort } from '@Apps/modules/video_history/domain/ports/video-history.outbound.port';
-import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video_history/video_history.di-token';
+import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
+import { IGetChannelHistoryLatestTuple } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
+import { VideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
 
 import { Err, Ok } from 'oxide.ts';
 
