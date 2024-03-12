@@ -56,3 +56,6 @@ export type TPostStoryBoardBody = z.TypeOf<typeof zPostStoryBoardBody>;
 export const zStoryBoardCreateRes = zSuccessBase.merge(
   dataObject(zStoryBoardSchema),
 );
+export const zStoryBoardCreateArrayRes = zSuccessBase.merge(
+  dataObject(zStoryBoardSchema.array()),
+);

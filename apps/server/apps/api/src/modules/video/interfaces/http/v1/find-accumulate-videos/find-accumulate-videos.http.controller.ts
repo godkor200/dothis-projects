@@ -28,7 +28,7 @@ import {
 import { apiRouter } from '@dothis/dto';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { IFindAccumulateVideosV1Res } from '@Apps/modules/video/application/queries/v1/find-accumulate-videos.query-handler';
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 const c = nestControllerContract(apiRouter.video);

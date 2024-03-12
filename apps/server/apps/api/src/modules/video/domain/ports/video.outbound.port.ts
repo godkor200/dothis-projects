@@ -5,7 +5,7 @@ import {
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video_history/domain/events/video_history.err';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import {
   GetRelatedLastVideoAndVideoHistory,
   GetRelatedLastVideoAndVideoHistoryEach,

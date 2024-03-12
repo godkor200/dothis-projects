@@ -5,23 +5,22 @@ import { TGetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrast
 import { Err, Ok } from 'oxide.ts';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import * as cluster from 'cluster';
 
 export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
 {
+  /**
+   * 현재는 최신데이터가 1월로 한정되어 있어서 1월로 한정
+   * 클러스터도 0,1로 한정
+   */
   async execute(
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedLastVideoAndVideoHistory> {
     const { search, relatedCluster, relatedWords } = dao;
-    /**
-     * 클러스터도 0,1로 한정
-     */
     const tempCluster = [0, 1];
     let queryString = '';
-    /**
-     * 현재는 최신데이터가 1월로 한정되어 있어서 1월로 한정
-     */
     tempCluster.forEach((cluster, index) => {
       let wordQuery = relatedWords
         .map(
@@ -31,25 +30,28 @@ export class VideoHistoryMultipleAdapter
         .join(' OR ');
 
       const subQuery = `
-        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY , VD.video_title, VD.video_tags
+        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY , VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
         FROM DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_2024_1 VH 
-        JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID 
+        JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID
+        JOIN DOTHIS.CHANNEL_HISTORY CH ON CH.CHANNEL_ID = VD.channel_id 
         WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
         AND (${wordQuery})
-        AND VH.DAY = (
-            SELECT MAX(VH2.DAY) 
-            FROM DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_2024_1 VH2 
-            WHERE VH2.VIDEO_ID = VH.VIDEO_ID
-        ))
+        AND VH.DAY = 31
+        AND (
+    (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 26)
+    OR 
+    (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 25 AND NOT EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE YEAR = 2024 AND MONTH = 2 AND DAY = 26))
+            )
+        ) 
       `;
 
       queryString += index === 0 ? subQuery : ' UNION ' + subQuery;
     });
     try {
-      const query = new this.SqlFieldsQuery(queryString);
+      const query = this.createDistributedJoinQuery(queryString);
 
       const cache = await this.client.getCache(
-        'DOTHIS.VIDEO_HISTORY_CLUSTER_0_2024_1',
+        `DOTHIS.VIDEO_HISTORY_CLUSTER_${tempCluster[0]}_2024_1`,
       );
       const result = await cache.query(query);
       const resArr = await result.getAll();

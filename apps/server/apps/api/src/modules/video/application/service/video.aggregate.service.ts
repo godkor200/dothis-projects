@@ -4,7 +4,7 @@ import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-vi
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/application/service/find-video-history.service';
+import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }

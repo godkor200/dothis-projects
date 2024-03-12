@@ -9,20 +9,18 @@ import {
   FindIndividualVideoInfoParams,
   FindIndividualVideoInfoV1Dto,
 } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
-import { match, Result } from 'oxide.ts';
+import { match } from 'oxide.ts';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
 import {
   nestControllerContract,
-  TsRest,
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
@@ -32,7 +30,7 @@ import {
   IRes,
   TTsRestRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/events/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;

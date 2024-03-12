@@ -43,10 +43,10 @@ export class PutEnvHttpController {
       description: "우리 사이트 accessToken(ex:'Bearer ~~~~~~')",
     },
   ])
+  @ApiBearerAuth('Authorization')
   @ApiOkResponse({
     description: '성공여부를 리턴합니다.',
   })
-  @ApiBearerAuth('Authorization')
   @ApiBody({
     isArray: false,
     type: Boolean,

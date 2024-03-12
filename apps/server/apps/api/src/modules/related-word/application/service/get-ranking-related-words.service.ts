@@ -62,23 +62,23 @@ export class GetRankingRelatedWordsService
 
       const data = await this.getRelatedVideoHistory.execute(dao);
 
-      if (data.isOk()) {
-        const unwrapData = data.unwrap();
-        const res = this.rankingRelatedWordAggregateService.calculateWordStats(
-          relatedWords,
-          unwrapData,
-        );
-
-        return Ok({
-          keyword: query.search,
-          ranking: res.map((e) => ({
-            word: e.word,
-            sortFigure: 0,
-            expectedViews: e.avg,
-          })),
-        });
+      if (!data.isOk()) {
+        return Err(new VideoNotFoundError());
       }
-      return Err(new VideoNotFoundError());
+      const unwrapData = data.unwrap();
+
+      const res = this.rankingRelatedWordAggregateService.calculateWordStats(
+        relatedWords,
+        unwrapData,
+      );
+      return Ok({
+        keyword: query.search,
+        ranking: res.map((e) => ({
+          word: e.word,
+          sortFigure: e.sortFigures,
+          expectedViews: e.expectedViews,
+        })),
+      });
     } catch (e) {
       return Err(e);
     }
