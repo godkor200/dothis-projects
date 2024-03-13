@@ -101,4 +101,11 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
         break;
     }
   };
+  public currentDate = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDay();
+    return { currentDate, currentYear, currentMonth, currentDay };
+  };
 }

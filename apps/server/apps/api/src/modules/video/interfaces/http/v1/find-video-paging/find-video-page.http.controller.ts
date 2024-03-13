@@ -50,7 +50,6 @@ export class FindVideoPageHttpController {
     @Param() param: ClusterNumberMulti,
     @Query() query: PaginatedIgniteQueryParams,
   ) {
-    console.log('sss하이');
     return tsRestHandler(c.getVideoPageV1, async ({ params, query }) => {
       const arg = new GetVideoPaginatedPageDto({
         clusterNumber: params.clusterNumber,

@@ -6,3 +6,14 @@ export interface IGetVideoHistoryDao
   from?: string;
   to?: string;
 }
+export interface IGetLastVideoHistoryDao extends IGetVideoHistoryDao {}
+export class IGetVideoHistoryGetMultipleByIdDao {
+  readonly videoIds: string[];
+
+  readonly clusterNumber: string | string[];
+
+  constructor(props: IGetVideoHistoryGetMultipleByIdDao) {
+    this.clusterNumber = props.clusterNumber;
+    this.videoIds = props.videoIds;
+  }
+}

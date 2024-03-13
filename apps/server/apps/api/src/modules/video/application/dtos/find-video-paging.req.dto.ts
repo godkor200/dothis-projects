@@ -37,7 +37,7 @@ export class IFindVideoPageV1Dto extends IFindVideoPage {
 export class GetVideoPaginatedPageDto extends createZodDto(
   extendApi(zPaginatedIgniteQueryParams),
 ) {
-  readonly clusterNumber: string | string[];
+  clusterNumber: string | string[];
 
   constructor(props: GetVideoPaginatedPageDto) {
     super();

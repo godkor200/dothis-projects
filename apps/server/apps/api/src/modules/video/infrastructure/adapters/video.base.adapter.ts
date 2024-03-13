@@ -43,7 +43,8 @@ export class VideoBaseAdapter extends IgniteService {
       .map((index) => {
         const tableName = `VIDEO_DATA_CLUSTER_${index}`;
         const joinTableName = `VIDEO_HISTORY_CLUSTER_${index}_${fromDate.year}_${fromDate.month}`;
-        return `SELECT DISTINCT ${columns} FROM DOTHIS.${tableName} vd JOIN DOTHIS.${joinTableName} vh 
+        return `SELECT DISTINCT ${columns} FROM DOTHIS.${tableName} vd 
+                JOIN DOTHIS.${joinTableName} vh 
                 ON vd.video_id = vh.video_id 
                 WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
                 AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
