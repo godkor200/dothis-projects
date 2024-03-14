@@ -13,6 +13,8 @@ interface IDailyPerformance {
     performanceTotal: number;
     videoViewsTotal: number;
     videoCount: number;
+    maxPerformance: number;
+    minPerformance: number;
   };
 }
 export class ChannelHistoryAggregateService {
@@ -111,11 +113,12 @@ export class ChannelHistoryAggregateService {
     channelHistories: IGetVideoChannelHistoryRes[],
   ): IDailyPerformance {
     let dateViewRatios: IDailyPerformance = {};
+
     for (let channel of channelHistories) {
       let channelAvgViews = channel.channelAverageViews;
 
       let videoViews = channel.videoViews;
-      if (channelAvgViews !== 0) {
+      if (channelAvgViews !== 0 && videoViews !== 0) {
         // 성과
         let performance = videoViews / channelAvgViews;
         let videoDate = new Date(
@@ -135,13 +138,24 @@ export class ChannelHistoryAggregateService {
             performanceTotal: 0,
             videoViewsTotal: 0,
             videoCount: 0,
+            maxPerformance: performance,
+            minPerformance: performance,
           };
         }
+
         dateViewRatios[dateString].performanceTotal += performance;
         dateViewRatios[dateString].videoViewsTotal += videoViews;
         dateViewRatios[dateString].videoCount += 1;
+        // 최대 성과와 최소 성과 업데이트
+        if (performance > dateViewRatios[dateString].maxPerformance) {
+          dateViewRatios[dateString].maxPerformance = performance;
+        }
+        if (performance < dateViewRatios[dateString].minPerformance) {
+          dateViewRatios[dateString].minPerformance = performance;
+        }
       }
     }
+
     return dateViewRatios;
   }
   /**
@@ -154,10 +168,12 @@ export class ChannelHistoryAggregateService {
     for (let date in dateViewRatios) {
       let keywordPerformance =
         dateViewRatios[date].performanceTotal / dateViewRatios[date].videoCount;
-
+      dateViewRatios[date].maxPerformance;
       result.push({
         date: date,
         expectedHits: keywordPerformance,
+        maxPerformance: dateViewRatios[date].maxPerformance,
+        minPerformance: dateViewRatios[date].minPerformance,
       });
     }
     return result;
