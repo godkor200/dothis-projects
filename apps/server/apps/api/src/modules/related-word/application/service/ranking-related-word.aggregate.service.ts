@@ -62,13 +62,15 @@ export class RankingRelatedWordAggregateService {
       const basicSubscribers = 1000;
       const videoPerformanceAvg = count > 0 ? totalPerformance / count : 0;
       const sortFigures = (videoPerformanceAvg * totalViews) / count;
+      const expectedViews = (totalPerformance / count) * basicSubscribers;
       return {
         word,
         count,
         totalViews,
         relatedKeywordPerformance: totalPerformance / count,
         sortFigures: sortFigures > 0 ? sortFigures : 0,
-        expectedViews: (totalPerformance / count) * basicSubscribers,
+        expectedViews:
+          expectedViews > 0 ? (totalPerformance / count) * basicSubscribers : 0,
       };
     });
   }

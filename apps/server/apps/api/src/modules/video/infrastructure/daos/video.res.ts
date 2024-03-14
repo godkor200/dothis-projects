@@ -12,6 +12,8 @@ export interface IVideoSchema {
   videoEndScreen: boolean;
   videoCluster: number;
   crawledDate: Date;
+  videoViews?: number;
+  channelName?: string;
   year: number;
   month: number;
   day: number;

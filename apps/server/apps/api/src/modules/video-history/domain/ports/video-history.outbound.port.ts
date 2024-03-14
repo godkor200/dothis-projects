@@ -1,7 +1,12 @@
 import { Result } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { IGetVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
+import {
+  IGetLastVideoHistoryDao,
+  IGetVideoHistoryDao,
+  IGetVideoHistoryGetMultipleByIdDao,
+} from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+
 export interface GetRelatedVideoAndVideoHistory {
   videoId: string;
   videoViews: number;
@@ -28,6 +33,14 @@ export interface IRelatedVideoAnalyticsData
   videoTags: string;
 }
 
-export interface VideoHistoryOutboundPort {
-  getHistory(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes>;
+export interface IGetVideoHistoryOutboundPort {
+  execute(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes>;
+}
+export interface IGetLastVideoHistoryOutboundPort {
+  execute(dao: IGetLastVideoHistoryDao): Promise<TGetVideoHistoryRes>;
+}
+export interface IGetVideoHistoryGetMultipleByIdOutboundPort {
+  execute(
+    dao: IGetVideoHistoryGetMultipleByIdDao,
+  ): Promise<TGetVideoHistoryRes>;
 }

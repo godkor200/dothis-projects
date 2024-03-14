@@ -12,7 +12,15 @@ export class FindVideosDao extends FindAccumulateQuery {
     super(props);
   }
 }
-export class GetVideoDao extends GetVideoPaginatedPageDto {}
+export class GetVideoDao extends GetVideoPaginatedPageDto {
+  constructor(props: GetVideoDao) {
+    super(props);
+    const propsClusterNumber = !Array.isArray(props.clusterNumber)
+      ? [props.clusterNumber]
+      : props.clusterNumber;
+    this.clusterNumber = propsClusterNumber;
+  }
+}
 export class FindDailyViewsV3Dao extends FindDailyViewsV3Dto {
   constructor(props: FindDailyViewsV3Dao) {
     super(props);

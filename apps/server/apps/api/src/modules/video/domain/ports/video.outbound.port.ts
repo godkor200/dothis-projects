@@ -23,6 +23,7 @@ import {
   TGetRelatedVideoChannelHistoryRes,
   VideoChannelHistoryAdapter,
 } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
+import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -70,7 +71,7 @@ export interface IGetRelatedLastVideoHistoryEach {
 export interface IGetRelatedLastVideoHistory {
   execute(
     dao: GetRelatedLastVideoAndVideoHistory,
-  ): Promise<TGetRelatedLastVideoAndVideoHistory>;
+  ): Promise<TGetRelatedVideoAnalyticsData>;
 }
 export interface IGetRelatedVideoChannelHistoryOutboundPort {
   execute(
