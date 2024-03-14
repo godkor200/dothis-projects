@@ -113,10 +113,8 @@ export class ChannelHistoryAggregateService {
     channelHistories: IGetVideoChannelHistoryRes[],
   ): IDailyPerformance {
     let dateViewRatios: IDailyPerformance = {};
-
     for (let channel of channelHistories) {
       let channelAvgViews = channel.channelAverageViews;
-
       let videoViews = channel.videoViews;
       if (channelAvgViews !== 0 && videoViews !== 0) {
         // 성과
