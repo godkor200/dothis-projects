@@ -1,7 +1,7 @@
 import { ExpectedViewsV1Dto } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
 import { ExpectedHitsInboundPort } from '@Apps/modules/hits/domain/ports/expected-hits.inbound.port';
 import { TExpectedViewsV1QueryHandlerRes } from '@Apps/modules/hits/application/queries/expected-views.v1.query-handler';
-import { Ok } from 'oxide.ts';
+import { Err, Ok } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { IGetRelatedVideoChannelHistoryOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
@@ -29,17 +29,23 @@ export class ExpectedHitsService implements ExpectedHitsInboundPort {
     /**
      * 비디오의 조회수를 알기 위해 비디오 히스토리를 가져옴
      */
-    const dao = new GetRelatedVideoChannelHistoryDao(dto);
-    const joinData = await this.getRelatedVideoChannelHistory.execute(dao);
-    if (joinData.isOk()) {
-      const data = joinData.unwrap();
-      const dailyPerformance =
-        this.channelHistoryAggregateService.calculateDailyPerformance(data);
-      const result =
-        this.channelHistoryAggregateService.calculateKeywordPerformance(
-          dailyPerformance,
-        );
-      return Ok(result);
+    try {
+      const dao = new GetRelatedVideoChannelHistoryDao(dto);
+      const joinData = await this.getRelatedVideoChannelHistory.execute(dao);
+      if (joinData.isOk()) {
+        const data = joinData.unwrap();
+
+        const dailyPerformance =
+          this.channelHistoryAggregateService.calculateDailyPerformance(data);
+
+        const result =
+          this.channelHistoryAggregateService.calculateKeywordPerformance(
+            dailyPerformance,
+          );
+        return Ok(result);
+      }
+    } catch (e) {
+      return Err(e);
     }
   }
 }

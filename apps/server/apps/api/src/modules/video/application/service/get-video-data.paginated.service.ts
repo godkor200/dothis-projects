@@ -14,7 +14,13 @@ import { GetVideoDataPageServiceInboundPort } from '@Apps/modules/video/domain/p
 import { Err, Ok } from 'oxide.ts';
 import { IGetVideoHistoryGetMultipleByIdOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { VIDEO_HISTORY_GET_HISTORY_MULTIPLE_HIT_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-
+interface ILatestData {
+  [videoId: string]: {
+    videoId: string;
+    day: number;
+    videoViews: number;
+  };
+}
 export class GetVideoDataPageService
   implements GetVideoDataPageServiceInboundPort
 {
@@ -31,24 +37,25 @@ export class GetVideoDataPageService
 
   async execute(dto: GetVideoPaginatedPageDto): Promise<TGetVideoPage> {
     const dao = new GetVideoDao(dto);
-    const entireCount = await this.getRelatedVideosEntireCount.execute(dao);
-    const data = await this.getRelatedVideosPaginated.execute(dao);
+    try {
+      // 비동기 작업 병렬 처리
+      const [paginatedResult, entireCountResult] = await Promise.all([
+        this.getRelatedVideosPaginated.execute(dao),
+        this.getRelatedVideosEntireCount.execute(dao),
+      ]);
 
-    if (data.isOk() && entireCount.isOk()) {
-      const total = entireCount
-        .unwrap()
-        .reduce(
-          (acc, numberArray) => acc + Number(numberArray.map((count) => count)),
-          0,
-        );
-
-      const videoIds = data.unwrap().map((d) => d.videoId);
+      const entireCountResultUnwrap = entireCountResult.unwrap();
+      const paginatedResultUnwrap = paginatedResult.unwrap();
+      const total = entireCountResultUnwrap.reduce(
+        (acc, count) => acc + Number(count),
+        0,
+      );
+      const videoIds = paginatedResultUnwrap.map((d) => d.videoId);
       const res = await this.getRelatedVideoHit.execute({
         videoIds,
         clusterNumber: dto.clusterNumber,
       });
-
-      let latestData = {};
+      let latestData: ILatestData = {};
       if (res.isOk()) {
         res.unwrap().forEach((data) => {
           if (
@@ -59,8 +66,7 @@ export class GetVideoDataPageService
           }
         });
       }
-      // data.unwrap() 배열을 업데이트하기 위해 map 함수를 사용합니다.
-      const updatedData = data.unwrap().map((videoData) => {
+      const updatedData = paginatedResultUnwrap.map((videoData) => {
         // latestData 객체에서 현재 videoId에 해당하는 조회 데이터를 찾습니다.
         const hitData = latestData[videoData.videoId];
         // 조회 데이터가 존재한다면, videoViews를 해당 조회수로 업데이트합니다.
@@ -76,8 +82,8 @@ export class GetVideoDataPageService
         total,
         data: updatedData, // 업데이트된 데이터를 반환합니다.
       });
-    } else {
-      return Err(entireCount.unwrapErr() || data.unwrapErr());
+    } catch (e) {
+      return Err(e);
     }
   }
 }
