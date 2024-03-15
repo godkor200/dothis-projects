@@ -15,7 +15,7 @@ interface Props {
   setType: (value: string) => void;
   setOpenDrop: Dispatch<SetStateAction<boolean>>;
   trigger?: JSX.Element;
-  isInvalidate?: (date: string) => boolean;
+  isInvalidate?: (date: Dayjs) => boolean;
 }
 
 const Calendar = ({
@@ -81,8 +81,7 @@ const Calendar = ({
         return (
           <Style.Week key={week[0].format('YYYY-MM-DD')}>
             {week.map((date, i) => {
-              const isInvalid =
-                isInvalidate && isInvalidate(date.format('YYYY-MM-DD'));
+              const isInvalid = isInvalidate && isInvalidate(date);
 
               return (
                 <Style.Day
