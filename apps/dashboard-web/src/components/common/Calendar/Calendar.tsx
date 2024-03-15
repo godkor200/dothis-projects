@@ -10,7 +10,7 @@ import createCalendar from '@/utils/createCalendar';
 import SvgComp from '../SvgComp';
 import * as Style from './styles';
 
-interface MiniCalendarProps {
+interface Props {
   type: string;
   setType: (value: string) => void;
   setOpenDrop: Dispatch<SetStateAction<boolean>>;
@@ -18,13 +18,13 @@ interface MiniCalendarProps {
   isInvalidate?: (date: string) => boolean;
 }
 
-const MiniCalendar: FC<MiniCalendarProps> = ({
+const Calendar = ({
   type,
   setType,
   setOpenDrop,
   trigger,
   isInvalidate,
-}) => {
+}: Props) => {
   const [baseDate, setBaseDate] = useState(dayjs(type));
   const [tempDate, setTempDate] = useState(dayjs(type).format('YYYY-MM-DD'));
   const calendarArray = createCalendar(baseDate);
@@ -83,9 +83,11 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
             {week.map((date, i) => {
               const isInvalid =
                 isInvalidate && isInvalidate(date.format('YYYY-MM-DD'));
+
               return (
                 <Style.Day
                   isOtherMonth={date.month() !== baseDate.month()}
+                  // isToday={date.isSame(dayjs(),'day')}
                   isSelected={tempDate === date.format('YYYY-MM-DD')}
                   isSunday={i === 0}
                   isInvalid={isInvalid}
@@ -111,4 +113,4 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
   );
 };
 
-export default MiniCalendar;
+export default Calendar;
