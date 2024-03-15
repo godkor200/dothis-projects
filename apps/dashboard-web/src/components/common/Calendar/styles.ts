@@ -56,15 +56,16 @@ export const Day = styled.div<{
 
   color: ${({ theme, isSunday, isOtherMonth, isInvalid }) =>
     isInvalid
-      ? '#e3e4e5'
+      ? '#f00'
       : isOtherMonth
       ? '#bdbdbd'
       : isSunday
       ? '#cc4419'
       : '#2d2d2d'};
   &:hover {
-    background-color: ${({ theme, isInvalid }) => !isInvalid && '#d7d8d9'};
+    background-color: ${({ theme, isInvalid }) => !isInvalid && '#f1f2f3'};
   }
+
   cursor: ${({ theme, isInvalid }) => !isInvalid && 'pointer'};
 `;
 
