@@ -25,13 +25,6 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
   trigger,
   isInvalidate,
 }) => {
-  /**
-   * Safari에서는 date에 '.'이 들어가면 오류가 발생한다.
-   * ex) 2021.09.01 : x
-   * ex) 2021-09-01 : o
-   *  */
-  //   const convertedType = isSafari ? type.replaceAll(/\./g, '-') : type;
-
   const [baseDate, setBaseDate] = useState(dayjs(type));
   const [tempDate, setTempDate] = useState(dayjs(type).format('YYYY-MM-DD'));
   const calendarArray = createCalendar(baseDate);
