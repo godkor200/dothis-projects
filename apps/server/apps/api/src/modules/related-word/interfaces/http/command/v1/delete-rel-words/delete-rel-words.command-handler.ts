@@ -44,9 +44,9 @@ export class DeleteRelWordsCommandHandler
       }
 
       const relWordsArray = findResult.relWords.split(',');
-      const isExistWords = relWordsArray.every((relword) => {
-        deleteRelWords.includes(relword);
-      });
+      const isExistWords = deleteRelWords.every((relword) =>
+        relWordsArray.includes(relword),
+      );
       if (!isExistWords) {
         return Err(new RelwordsNotFoundError());
       }
