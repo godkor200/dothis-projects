@@ -8,6 +8,7 @@ import {
   zSearch,
 } from './related-word.model';
 import { zErrResBase } from '../error.response.zod';
+import { zSuccessBase } from '../success.response.zod';
 
 export const relWordsApiUrl = '/related-word';
 export const keywordApiUrl = '/keyword';
@@ -63,6 +64,17 @@ export const relatedWordsApi = c.router({
       ...zErrResBase,
     },
     pathParams: zSearch,
+    summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
+    description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
+  },
+
+  deleteRelatedWords: {
+    method: 'DELETE',
+    path: `${relWordsApiUrl}/:id`,
+    body: z.object({
+      deleteRelWords: z.array(z.string()),
+    }),
+    responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
     description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
   },
