@@ -1,5 +1,5 @@
 import { FindRelCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache.port';
-import { RedisClientService } from '@Apps/modules/cache/infra/redis.client.service';
+import { RedisClientService } from '@Apps/modules/related-word/infrastructure/adapters/redis.client.service';
 import { NotFoundException } from '@nestjs/common';
 
 export class FindRelCache

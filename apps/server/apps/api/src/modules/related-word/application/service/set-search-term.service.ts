@@ -2,12 +2,13 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   SetDicTermCommand,
   SetDicTermCommandOutput,
-} from 'apps/api/src/modules/cache/v1/commands/set-dic-term/set-dic-term.command';
+} from '@Apps/modules/related-word/application/dtos/set-dic-term.command';
 import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
-import { CACHE_SET_DIC_TERM } from 'apps/api/src/modules/cache/constants/cache.di-token';
-import { SetDicTermAdaptor } from 'apps/api/src/modules/cache/v1/commands/set-dic-term/set-dic-term.adaptor';
+
+import { SetSearchTermOutboundPort } from '@Apps/modules/related-word/domain/ports/set-search-term.outbound.port';
 import { CHANNEL_TERM } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { GetDicSearchTermAdapter } from '@Apps/modules/channel/domain/ports/get-dic-search-term.adapter';
+import { CACHE_SET_DIC_TERM } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 
 @CommandHandler(SetDicTermCommand)
 export class SetDicTermHandler
@@ -15,7 +16,8 @@ export class SetDicTermHandler
 {
   private readonly logger = new Logger(SetDicTermHandler.name);
   constructor(
-    @Inject(CACHE_SET_DIC_TERM) private readonly command: SetDicTermAdaptor,
+    @Inject(CACHE_SET_DIC_TERM)
+    private readonly command: SetSearchTermOutboundPort,
 
     @Inject(CHANNEL_TERM)
     private readonly getDicTermArr: GetDicSearchTermAdapter,

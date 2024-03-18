@@ -22,4 +22,4 @@ import { RedisConfigService } from '@Apps/config/cache/config/cache.config';
     RouterModule.register([{ path: 'v1', module: RelWordsApiV1Modules }]),
   ],
 })
-export class RelWordsApiModules {}
+export class RelatedWordsApiModule {}
