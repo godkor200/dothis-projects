@@ -15,7 +15,7 @@ import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetExpectedView from '../react-query/query/useGetExpectedView';
 
 type Post = DeepRequired<
-  ClientInferResponseBody<typeof apiRouter.video.getAccVideo, 200>
+  ClientInferResponseBody<typeof apiRouter.video.getAccumulateVideo, 200>
 >['data']['section'];
 
 export const useDailyViewChartDataForNivo = (
