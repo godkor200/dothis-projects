@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Button Style Type (primary, outlined,taxted )
    */
-  theme: 'primary' | 'outlined' | 'contained';
+  theme: 'primary' | 'outlined' | 'outlined-grey' | 'contained';
   /**
    * Button 비활성화 유무
    */
