@@ -35,22 +35,12 @@ const CalendarTest = ({
   );
   const calendarArray = createCalendar(baseDate);
 
-  //   console.log(calendarArray);
-
   const DAY_LIST = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handleDate = (date: Dayjs) => {
     setSelectedDate(date.format('YYYY-MM-DD'));
-    // if (!trigger) {
-    //   setSelectedDate(date.format('YYYY-MM-DD'));
-    //   setOpenDrop(false);
-    //   return;
-    // }
-    // setTempDate(date.format('YYYY-MM-DD'));
-  };
 
-  const handleSubmit = () => {
-    setSelectedDate(tempDate);
+    // setTempDate(date.format('YYYY-MM-DD'));
   };
 
   const decreaseMonth = () => {
