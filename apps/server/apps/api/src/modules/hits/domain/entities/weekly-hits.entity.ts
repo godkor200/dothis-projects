@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
 
-@Entity('weekly_views_202401')
+@Entity({ name: 'weekly_views' })
 export class WeeklyHitsEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,12 +29,12 @@ export class WeeklyHitsEntity {
   @Column({ name: 'changes', type: 'int', nullable: true })
   changes: number;
 
-  @Column({ name: 'YEAR', type: 'int', nullable: true })
+  @PrimaryColumn({ name: 'YEAR', type: 'int' })
   year: number;
 
-  @Column({ name: 'MONTH', type: 'int', nullable: true })
+  @PrimaryColumn({ name: 'MONTH', type: 'int' })
   month: number;
 
-  @Column({ name: 'DAY', type: 'int', nullable: true })
+  @Column({ name: 'DAY', type: 'int' })
   day: number;
 }

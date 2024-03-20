@@ -3,6 +3,9 @@ import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application
 export const WEEKLY_VIEWS_SERVICE_DI_TOKEN = Symbol(
   'WEEKLY_VIEWS_SERVICE_DI_TOKEN',
 );
+export const WEEKLY_VIEWS_SERVICE_V2_DI_TOKEN = Symbol(
+  'WEEKLY_VIEWS_SERVICE_V2_DI_TOKEN',
+);
 
 export const WEEKLY_VIEWS_REPOSITORY_DI_TOKEN = Symbol(
   'WEEKLY_VIEWS_REPOSITORY_DI_TOKEN',
@@ -18,4 +21,7 @@ export const HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN = Symbol(
 
 export const DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN = Symbol(
   'DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN',
+);
+export const WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN = Symbol(
+  'WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN',
 );

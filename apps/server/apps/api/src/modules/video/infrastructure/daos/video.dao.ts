@@ -5,6 +5,8 @@ import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dt
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { ExpectedViewsV1Dto } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
+import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
+import { FindAdsInfoDto } from '@Apps/modules/video/application/dtos/find-ads-info.dtos';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;
@@ -74,6 +76,17 @@ export class GetRelatedVideoChannelHistoryDao
     this.related = props.related;
     this.from = props.from;
     this.to = props.to;
+    this.relatedCluster = propsClusterNumber;
+  }
+}
+export class GetAdsInfoResDao extends FindAdsInfoDto {
+  public readonly relatedCluster: string[];
+
+  constructor(props: FindAdsInfoDto) {
+    super(props);
+    const propsClusterNumber = !Array.isArray(props.clusterNumber)
+      ? [props.clusterNumber]
+      : props.clusterNumber;
     this.relatedCluster = propsClusterNumber;
   }
 }

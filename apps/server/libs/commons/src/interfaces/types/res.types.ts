@@ -4,6 +4,8 @@ import {
   zChannelAnalysis,
   zDailyViewData,
   zExpectedViewsData,
+  zFindVideoBySearchKeyword,
+  zGetVideoAdsInfoRes,
   zKeywords,
   zRanking,
   zResWordsPickData,
@@ -56,6 +58,10 @@ export class WeeklyKeywordsRes extends createZodDto(
 ) {}
 export class WeeklyKeywordsListSchema extends createZodDto(
   extendApi(zWeeklyKeywordsListSourceSchema),
+) {}
+
+export class FindAdsInfoRes extends createZodDto(
+  extendApi(zGetVideoAdsInfoRes),
 ) {}
 export interface TTsRestRes<T> {
   status: any;

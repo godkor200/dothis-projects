@@ -14,19 +14,21 @@ import {
   EXPECTED_HITS_SERVICE_DI_TOKEN,
   HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_DI_TOKEN,
+  WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
   WEEKLY_VIEWS_SERVICE_DI_TOKEN,
 } from '@Apps/modules/hits/hits.di-token.contants';
 import { WeeklyHitsService } from '@Apps/modules/hits/application/services/weekly-hits.service';
 import { GetWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
 import { WeeklyHitsRepository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.repository';
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
-import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { ExpectedHitsService } from '@Apps/modules/hits/application/services/expected-hits.v1.service';
 import { ExpectedViewsV1QueryHandler } from '@Apps/modules/hits/application/queries/expected-views.v1.query-handler';
 import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
 import { ExpectedHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/expected-hits/expected-hits.v1.http.controller';
+import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v2.repository';
+import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -61,10 +63,14 @@ const repositories: Provider[] = [
     useClass: VideoChannelHistoryAdapter,
   },
   { provide: WEEKLY_VIEWS_REPOSITORY_DI_TOKEN, useClass: WeeklyHitsRepository },
+  {
+    provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
+    useClass: WeeklyHitsV2Repository,
+  },
 ];
 
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, WeeklyHitsEntityModule],
   controllers,
   providers: [...commands, ...queries, ...repositories, ...service],
 })

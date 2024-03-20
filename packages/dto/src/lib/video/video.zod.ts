@@ -1,10 +1,5 @@
 import { z } from 'zod';
-import {
-  zClusterNumberMulti,
-  zDateQuery,
-  zPaginatedQuery,
-  zSearchKeyword,
-} from '../common.model';
+import { zDateQuery, zPaginatedQuery, zSearchKeyword } from '../common.model';
 import { zVideoModel } from './video.model';
 
 export const zClusterQueryParams = z.object({
@@ -84,3 +79,19 @@ export const zFindIndividualVideoInfoParams = zClusterPathParams.merge(
       .describe('찾을 비디오의 id 값을 입력받습니다.'),
   }),
 );
+/**
+ * getVideoAdsInfo
+ */
+
+export const zGetVideoAdsInfoRes = z.object({
+  numberOfAdVideos: z
+    .number()
+    .describe('The number of videos that contain advertisements.'),
+  averageViewCount: z
+    .number()
+    .describe('The average number of views across all videos.'),
+  totalVideos: z
+    .number()
+    .describe('The total number of videos in the dataset.'),
+});
+export type GetVideoAdsInfoRes = z.TypeOf<typeof zGetVideoAdsInfoRes>;

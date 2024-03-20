@@ -7,6 +7,7 @@ import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import {
+  GetAdsInfoResDao,
   GetRelatedLastVideoAndVideoHistory,
   GetRelatedLastVideoAndVideoHistoryEach,
   GetRelatedVideoChannelHistoryDao,
@@ -24,6 +25,7 @@ import {
   VideoChannelHistoryAdapter,
 } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
+import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -77,4 +79,7 @@ export interface IGetRelatedVideoChannelHistoryOutboundPort {
   execute(
     dao: GetRelatedVideoChannelHistoryDao,
   ): Promise<TGetRelatedVideoChannelHistoryRes>;
+}
+export interface IGetVideoAdsInfoAdapterOutboundPort {
+  execute(dao: GetAdsInfoResDao): Promise<TFindAdsInfoRes>;
 }

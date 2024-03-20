@@ -1,9 +1,11 @@
 import { Module, Provider } from '@nestjs/common';
 import {
+  VIDEO_ADS_INFO_IGNITE_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_ENTIRE_CLUSTER_IGNITE_DI_TOKEN,
   VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
   VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN,
+  VIDEO_GET_ADS_INFO_DI_TOKEN,
   VIDEO_GET_EXPECTATION_DI_TOKEN,
   VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
@@ -51,10 +53,15 @@ import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/
 import { VideoHistoryGetOneAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-one.adapter';
 import { VideoHistoryLastOneAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.last-one.adapter';
 import { VideoHistoryGetMultipleByIdAdapter } from '@Apps/modules/video-history/infrastructure/adapters';
+import { FindAdsInfoService } from '@Apps/modules/video/application/service/find-ads-info.service';
+import { VideoAdsInfoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.ads-info.adapter';
+import { FindAdsInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-info/find-ads-info.http.controller';
+import { FindAdsInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
   FindAccumulateVideosV1HttpController,
+  FindAdsInfoHttpController,
 ];
 
 const commandHandlers: Provider[] = [];
@@ -68,8 +75,10 @@ const queryHandlers: Provider[] = [
   FindVideoPageQueryHandler,
   FindAccumulateVideosV1QueryHandler,
   FindIndividualVideoInfoQueryHandler,
+  FindAdsInfoQueryHandler,
 ];
 const service: Provider[] = [
+  { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
   {
     provide: VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
     useClass: GetVideoDataPageService,
@@ -85,6 +94,10 @@ const service: Provider[] = [
 ];
 
 const adapters: Provider[] = [
+  {
+    provide: VIDEO_GET_ADS_INFO_DI_TOKEN,
+    useClass: VideoAdsInfoAdapter,
+  },
   {
     provide: VIDEO_HISTORY_GET_HISTORY_MULTIPLE_HIT_IGNITE_DI_TOKEN,
     useClass: VideoHistoryGetMultipleByIdAdapter,
