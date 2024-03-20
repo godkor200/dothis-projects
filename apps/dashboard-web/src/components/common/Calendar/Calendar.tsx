@@ -3,46 +3,44 @@
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import type { Dispatch, FC, SetStateAction } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import createCalendar from '@/utils/createCalendar';
 
 import SvgComp from '../SvgComp';
 import * as Style from './styles';
+import ToggleProvider from './ToggleProvider';
 
 interface Props {
-  type: string;
-  setType: (value: string) => void;
-  setOpenDrop: Dispatch<SetStateAction<boolean>>;
-  trigger?: JSX.Element;
+  calendarbaseDate: string;
+  selectedDate: string | null;
+  setSelectedDate: (value: string) => void;
   isInvalidate?: (date: Dayjs) => boolean;
 }
 
-const Calendar = ({
-  type,
-  setType,
-  setOpenDrop,
-  trigger,
+const CalendarTest = ({
+  calendarbaseDate,
+  selectedDate,
+  setSelectedDate,
   isInvalidate,
 }: Props) => {
-  const [baseDate, setBaseDate] = useState(dayjs(type));
-  const [tempDate, setTempDate] = useState(dayjs(type).format('YYYY-MM-DD'));
+  const [baseDate, setBaseDate] = useState(dayjs(calendarbaseDate));
+
+  useEffect(() => {
+    setBaseDate(dayjs(calendarbaseDate));
+  }, [calendarbaseDate]);
+
+  const [tempDate, setTempDate] = useState(
+    dayjs(selectedDate).format('YYYY-MM-DD'),
+  );
   const calendarArray = createCalendar(baseDate);
 
   const DAY_LIST = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handleDate = (date: Dayjs) => {
-    if (!trigger) {
-      setType(date.format('YYYY-MM-DD'));
-      setOpenDrop(false);
-      return;
-    }
-    setTempDate(date.format('YYYY-MM-DD'));
-  };
+    setSelectedDate(date.format('YYYY-MM-DD'));
 
-  const handleSubmit = () => {
-    setType(tempDate);
-    setOpenDrop(false);
+    // setTempDate(date.format('YYYY-MM-DD'));
   };
 
   const decreaseMonth = () => {
@@ -84,32 +82,29 @@ const Calendar = ({
               const isInvalid = isInvalidate && isInvalidate(date);
 
               return (
-                <Style.Day
-                  isOtherMonth={date.month() !== baseDate.month()}
-                  // isToday={date.isSame(dayjs(),'day')}
-                  isSelected={tempDate === date.format('YYYY-MM-DD')}
-                  isSunday={i === 0}
-                  isInvalid={isInvalid}
-                  onClick={() => {
-                    if (isInvalid) return;
-                    handleDate(date);
-                  }}
-                  key={date.format('YYYY-MM-DD')}
-                >
-                  {date.date()}
-                </Style.Day>
+                <ToggleProvider.Close>
+                  <Style.Day
+                    isOtherMonth={date.month() !== baseDate.month()}
+                    isToday={date.isSame(dayjs(), 'day')}
+                    isSelected={selectedDate === date.format('YYYY-MM-DD')}
+                    isSunday={i === 0}
+                    isInvalid={isInvalid}
+                    onClick={() => {
+                      if (isInvalid) return;
+                      handleDate(date);
+                    }}
+                    key={date.format('YYYY-MM-DD')}
+                  >
+                    {date.date()}
+                  </Style.Day>
+                </ToggleProvider.Close>
               );
             })}
           </Style.Week>
         );
       })}
-      {trigger && (
-        <Style.Trigger>
-          <span onClick={handleSubmit}>{trigger}</span>
-        </Style.Trigger>
-      )}
     </Style.Calendar>
   );
 };
 
-export default Calendar;
+export default CalendarTest;
