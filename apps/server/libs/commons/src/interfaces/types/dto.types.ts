@@ -18,5 +18,3 @@ export class PaginatedIgniteQueryParams extends createZodDto(
   }
 }
 export class UserDto extends createZodDto(extendApi(zUserModel)) {}
-
-export type OrderEnum = 'asc' | 'desc';
