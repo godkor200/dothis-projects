@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { zodDeepPick } from './utils';
 import { zSearchKeyword } from '../common.model';
+import { zSuccessBase } from '../success.response.zod';
 
 export const zSearch = zSearchKeyword.pick({ search: true });
 
@@ -48,4 +49,7 @@ export type TRankingArrayOmitWord = z.TypeOf<typeof zRankingArrayOmitWord>;
 
 export const zAutoCompleteWords = z.object({
   data: z.array(z.string()),
+});
+export const zDeleteRelWords = z.object({
+  deleteRelWords: z.array(z.string()).describe('사자'),
 });

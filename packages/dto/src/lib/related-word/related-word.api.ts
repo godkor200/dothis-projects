@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { c } from '../contract';
 import {
   zAutoCompleteWords,
+  zDeleteRelWords,
   zKeywords,
   zRankRel,
   zRelWords,
@@ -71,11 +72,10 @@ export const relatedWordsApi = c.router({
   deleteRelatedWords: {
     method: 'DELETE',
     path: `${relWordsApiUrl}/:id`,
-    body: z.object({
-      deleteRelWords: z.array(z.string()),
-    }),
+    body: zDeleteRelWords,
+    pathParams: z.object({ id: z.string() }),
     responses: { 200: zSuccessBase, ...zErrResBase },
-    summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
-    description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
+    summary: '입력으로 들어온 연관어를 삭제합니다.',
+    description: '입력으로 들어온 연관어를 삭제합니다.',
   },
 });
