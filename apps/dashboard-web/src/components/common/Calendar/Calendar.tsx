@@ -64,9 +64,6 @@ const CalendarTest = ({
         <Style.ArrowIcon onClick={increaseMonth}>
           <SvgComp icon="KeywordRightArrow" size={18} />
         </Style.ArrowIcon>
-
-        {/* <Style.ArrowBlock>
-        </Style.ArrowBlock> */}
       </Style.DateTitle>
       <Style.DayTitle>
         {DAY_LIST.map((day, i) => (
