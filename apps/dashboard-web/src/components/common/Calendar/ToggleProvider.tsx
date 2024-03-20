@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import type { ReactElement } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 interface ToggleState {
   isOpen: boolean;
@@ -44,7 +45,11 @@ export default ToggleProvider;
 const ToggleTrigger = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleTrigger');
 
-  return <div onClick={() => setIsOpen((prev) => !prev)}>{children}</div>;
+  if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
+
+  return React.cloneElement(children as ReactElement, {
+    onClick: () => setIsOpen((prev) => !prev),
+  });
 };
 
 const ToggleContent = ({ children }: { children: React.ReactNode }) => {
@@ -56,7 +61,26 @@ const ToggleContent = ({ children }: { children: React.ReactNode }) => {
 const ToggleClose = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleClose');
 
-  return <div onClick={() => setIsOpen(false)}>{children}</div>;
+  if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
+
+  const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
+    // 기존 onClick 핸들러 실행
+    if (
+      React.isValidElement(children) &&
+      typeof children.props.onClick === 'function'
+    ) {
+      children.props.onClick(event);
+    }
+    // 새로운 onClick 핸들러 실행
+    setIsOpen((prev) => !prev);
+  };
+
+  // children이 React 엘리먼트인 경우에만 onClick 이벤트를 추가하고, 그렇지 않은 경우에는 아무 작업도 하지 않음
+  if (!React.isValidElement(children)) return null;
+
+  return React.cloneElement(children as ReactElement, {
+    onClick: handleOnClick,
+  });
 };
 
 ToggleProvider.Trigger = ToggleTrigger;
