@@ -41,7 +41,7 @@ export class ChannelHistoryBaseAdapter
     queryString: string,
   ): Promise<Ok<any[]> | Err<any>> {
     try {
-      const query = new SqlFieldsQuery(queryString).setDistributedJoins(true);
+      const query = this.createDistributedJoinQuery(queryString);
 
       const cache = await this.client.getCache(tableName);
 
