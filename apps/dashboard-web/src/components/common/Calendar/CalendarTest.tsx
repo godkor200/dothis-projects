@@ -9,34 +9,27 @@ import createCalendar from '@/utils/createCalendar';
 
 import SvgComp from '../SvgComp';
 import * as Style from './styles';
+import ToggleProvider from './ToggleProvider';
 
 interface Props {
   calendarbaseDate: string;
   selectedDate: string | null;
-
   setSelectedDate: (value: string) => void;
-  setOpenDrop: Dispatch<SetStateAction<boolean>>;
-  trigger?: JSX.Element;
   isInvalidate?: (date: Dayjs) => boolean;
-  test: Dayjs;
 }
 
 const CalendarTest = ({
   calendarbaseDate,
   selectedDate,
   setSelectedDate,
-  setOpenDrop,
-  trigger,
   isInvalidate,
-  test,
 }: Props) => {
-  console.log(calendarbaseDate, 'calendarbaseDate');
   const [baseDate, setBaseDate] = useState(dayjs(calendarbaseDate));
 
   useEffect(() => {
     setBaseDate(dayjs(calendarbaseDate));
   }, [calendarbaseDate]);
-  console.log(baseDate.format('YYYY-MM-DD'), 'based');
+
   const [tempDate, setTempDate] = useState(
     dayjs(selectedDate).format('YYYY-MM-DD'),
   );
@@ -58,7 +51,6 @@ const CalendarTest = ({
 
   const handleSubmit = () => {
     setSelectedDate(tempDate);
-    setOpenDrop(false);
   };
 
   const decreaseMonth = () => {
@@ -100,30 +92,27 @@ const CalendarTest = ({
               const isInvalid = isInvalidate && isInvalidate(date);
 
               return (
-                <Style.Day
-                  isOtherMonth={date.month() !== baseDate.month()}
-                  // isToday={date.isSame(dayjs(),'day')}
-                  isSelected={tempDate === date.format('YYYY-MM-DD')}
-                  isSunday={i === 0}
-                  isInvalid={isInvalid}
-                  onClick={() => {
-                    if (isInvalid) return;
-                    handleDate(date);
-                  }}
-                  key={date.format('YYYY-MM-DD')}
-                >
-                  {date.date()}
-                </Style.Day>
+                <ToggleProvider.Close>
+                  <Style.Day
+                    isOtherMonth={date.month() !== baseDate.month()}
+                    isToday={date.isSame(dayjs(), 'day')}
+                    isSelected={selectedDate === date.format('YYYY-MM-DD')}
+                    isSunday={i === 0}
+                    isInvalid={isInvalid}
+                    onClick={() => {
+                      if (isInvalid) return;
+                      handleDate(date);
+                    }}
+                    key={date.format('YYYY-MM-DD')}
+                  >
+                    {date.date()}
+                  </Style.Day>
+                </ToggleProvider.Close>
               );
             })}
           </Style.Week>
         );
       })}
-      {trigger && (
-        <Style.Trigger>
-          <span onClick={handleSubmit}>{trigger}</span>
-        </Style.Trigger>
-      )}
     </Style.Calendar>
   );
 };
