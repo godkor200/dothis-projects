@@ -1,74 +1,64 @@
 'use client';
+
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import Calendar from './Calendar';
-import CalendarTest from './CalendarTest';
+import ToggleProvider from './ToggleProvider';
 
 const CalendarContainer = () => {
-  const [createdDate, setCreatedDate] = useState<Dayjs>(dayjs());
+  const [selectedUploadDate, setSelectedUploadDate] = useState(dayjs());
 
-  const [uploadDate, setUploadDate] = useState<Dayjs | null>(null);
+  const [selectedExpectedDate, setSelectedExpectedDate] =
+    useState<Dayjs | null>(null);
 
-  const handleSetCreatedDate = (date: string) => {
-    setCreatedDate(dayjs(date));
+  const handleSetSelectedUploadDate = (date: string) => {
+    setSelectedUploadDate(dayjs(date));
   };
 
-  const handleSetUploadDate = (date: string) => {
-    setUploadDate(dayjs(date));
+  const handleSetSelectedExpectedDate = (date: string) => {
+    setSelectedExpectedDate(dayjs(date));
   };
 
-  const isInvalidStartDate = (date: Dayjs) => date.isAfter(uploadDate, 'day');
+  const isInvalidStartDate = (date: Dayjs) =>
+    date.isAfter(selectedExpectedDate, 'day');
 
-  const isInvalidEndDate = (date: Dayjs) => date.isBefore(createdDate, 'day');
+  const isInvalidEndDate = (date: Dayjs) =>
+    date.isBefore(selectedUploadDate, 'day');
 
-  const [selectedDate1, setSelectedDate1] = useState(dayjs());
-
-  const [selectedDate2, setSelectedDate2] = useState<Dayjs | null>(null);
-
-  const handleSelected1 = (date: string) => {
-    setSelectedDate1(dayjs(date));
-  };
-
-  const handleSelected2 = (date: string) => {
-    setSelectedDate2(dayjs(date));
-  };
-
-  // console.log(selectedDate1);
   return (
-    <div>
-      테스트를 위한 캘린더 컨테이너
-      {/* <Calendar
-        type={createdDate.format('YYYY-MM-DD')}
-        setType={handleSetCreatedDate}
-        setOpenDrop={() => {}}
-        isInvalidate={isInvalidStartDate}
-      />
-      <Calendar
-        type={uploadDate?.format('YYYY-MM-DD') || '0'}
-        setType={handleSetUploadDate}
-        setOpenDrop={() => {}}
-        isInvalidate={isInvalidEndDate}
-      /> */}
-      <CalendarTest
-        calendarbaseDate={dayjs().format('YYYY-MM-DD')}
-        selectedDate={selectedDate1.format('YYYY-MM-DD')}
-        setSelectedDate={handleSelected1}
-        setOpenDrop={() => {}}
-        isInvalidate={isInvalidEndDate}
-        test={selectedDate1}
-      />
-      <CalendarTest
-        calendarbaseDate={selectedDate1.format('YYYY-MM-DD')}
-        selectedDate={
-          selectedDate2 ? selectedDate2.format('YYYY-MM-DD') : selectedDate2
-        }
-        setSelectedDate={handleSelected2}
-        setOpenDrop={() => {}}
-        isInvalidate={isInvalidEndDate}
-        test={selectedDate1}
-      />
+    <div className="flex flex-col">
+      <ToggleProvider>
+        <ToggleProvider.Trigger>
+          <button>여기 클릭해주세요</button>
+        </ToggleProvider.Trigger>
+        <ToggleProvider.Content>
+          <Calendar
+            calendarbaseDate={dayjs().format('YYYY-MM-DD')}
+            selectedDate={selectedUploadDate.format('YYYY-MM-DD')}
+            setSelectedDate={handleSetSelectedUploadDate}
+            isInvalidate={isInvalidStartDate}
+          />
+        </ToggleProvider.Content>
+      </ToggleProvider>
+      <ToggleProvider>
+        <ToggleProvider.Trigger>
+          <button>여기 클릭해주세요</button>
+        </ToggleProvider.Trigger>
+        <ToggleProvider.Content>
+          <Calendar
+            calendarbaseDate={selectedUploadDate.format('YYYY-MM-DD')}
+            selectedDate={
+              selectedExpectedDate
+                ? selectedExpectedDate.format('YYYY-MM-DD')
+                : selectedExpectedDate
+            }
+            setSelectedDate={handleSetSelectedExpectedDate}
+            isInvalidate={isInvalidEndDate}
+          />
+        </ToggleProvider.Content>
+      </ToggleProvider>
     </div>
   );
 };
