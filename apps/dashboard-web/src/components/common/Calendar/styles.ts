@@ -39,6 +39,7 @@ export const DayTitle = styled(FlexGap)``;
 
 export const Day = styled.div<{
   isSunday: boolean;
+  isToday?: boolean;
   isSelected?: boolean;
   isOtherMonth?: boolean;
   isInvalid?: boolean;
@@ -50,20 +51,25 @@ export const Day = styled.div<{
   align-items: center;
   justify-content: center;
 
-  border: ${({ theme, isSelected, isInvalid }) =>
-    isSelected && !isInvalid && '2px solid rgba(255,100,125,0.5)'};
+  border: ${({ theme, isToday, isInvalid }) =>
+    isToday && !isInvalid && '2px solid rgba(255,100,125,0.5)'};
   border-radius: 6px;
 
-  color: ${({ theme, isSunday, isOtherMonth, isInvalid }) =>
+  background-color: ${({ isSelected }) => isSelected && '#FF647D'};
+
+  color: ${({ theme, isSunday, isOtherMonth, isInvalid, isSelected }) =>
     isInvalid
-      ? '#f00'
+      ? '#bdbdbd'
+      : isSelected
+      ? '#fff'
       : isOtherMonth
       ? '#bdbdbd'
       : isSunday
       ? '#cc4419'
       : '#2d2d2d'};
   &:hover {
-    background-color: ${({ theme, isInvalid }) => !isInvalid && '#f1f2f3'};
+    background-color: ${({ theme, isInvalid, isSelected }) =>
+      !isSelected && !isInvalid && '#f1f2f3'};
   }
 
   cursor: ${({ theme, isInvalid }) => !isInvalid && 'pointer'};
