@@ -50,6 +50,18 @@ export const hitsApi = c.router({
     summary: '주간 키워드 리스트를 가져옵니다',
     description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',
   },
+  getWeeklyKeywordListWithPagingV2: {
+    method: 'GET',
+    path: `${viewApiUrl}${weeklyApiUrl}-list`,
+    query: zGetWeeklyViewsQuery,
+    responses: {
+      200: zWeeklyKeywordsList,
+      ...zErrResBase,
+    },
+    summary:
+      '주간 키워드 리스트를 가져옵니다. 파티셔닝 된 테이블에서 가져옵니다.',
+    description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',
+  },
   getExpectedViews: {
     method: 'GET',
     path: `${viewApiUrl}${expectedHitsApiUrl}/:clusterNumber`,
