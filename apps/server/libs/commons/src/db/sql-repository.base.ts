@@ -1,4 +1,5 @@
 import {
+  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
@@ -35,17 +36,26 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   async findAll(): Promise<E[]> {
     return await this.repository.find();
   }
-  //TODO: 오프셋 필요할시 구현 Promise<Paginated<E>>
-  async findAllPaginated(params: PaginatedQueryParams): Promise<any> {
-    const res = this.repository
+
+  async findAllPaginated(
+    params: PaginatedQueryParams,
+    where: any,
+    sort: string,
+    order: 'ASC' | 'DESC',
+  ): Promise<Paginated<E>> {
+    const [data, total] = await this.repository
       .createQueryBuilder(this.tableName)
+      .where({ ...where })
       .limit(Number(params.limit))
       .offset(Number(params.offset))
-      .getCount();
-    // return new Paginated({
-    //   data: res,
-    //   count: res,
-    // });
+      .orderBy(sort, order)
+      .getManyAndCount();
+    return new Paginated({
+      count: total,
+      limit: Number(params.limit),
+      page: Number(params.offset) - 1,
+      data,
+    });
   }
 
   async findOneById(id: string): Promise<E> {
@@ -82,9 +92,5 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     } finally {
       await queryRunner.release();
     }
-  }
-
-  setTableName(tableName: string) {
-    this.tableName = tableName;
   }
 }
