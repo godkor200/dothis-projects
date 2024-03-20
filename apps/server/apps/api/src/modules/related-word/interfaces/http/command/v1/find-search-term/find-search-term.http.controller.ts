@@ -13,7 +13,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 const { get } = nestControllerContract(apiRouter.cache);
 const { description, summary, responses } = get;
 
-@ApiTags('탐색어 관련')
+@ApiTags('탐색어')
 @Controller()
 export class FindSearchTermHttpController {
   constructor(private readonly queryBus: QueryBus) {}
