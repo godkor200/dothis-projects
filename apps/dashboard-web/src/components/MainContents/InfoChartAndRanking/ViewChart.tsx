@@ -203,7 +203,7 @@ const ViewChart = () => {
               name: '검색량',
               type: 'line',
               color: '#818CF8',
-              data: [23, 31, 33, 14, 15, 12, 18, 62, 55].map((item, index) => {
+              data: [23, 31, 33, 14, 15, 12, 18].map((item, index) => {
                 return {
                   y: item,
                   x: getDateObjTime(
@@ -216,7 +216,7 @@ const ViewChart = () => {
               name: '영상 수',
               type: 'column',
               color: '#34D399',
-              data: [20, 29, 37, 36, 44, 45, 75, 62, 55].map((item, index) => [
+              data: [20, 29, 37, 36, 44, 45, 75].map((item, index) => [
                 getDateObjTime(
                   dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
                 ),
