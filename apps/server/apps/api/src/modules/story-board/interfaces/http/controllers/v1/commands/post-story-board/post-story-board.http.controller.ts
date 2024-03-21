@@ -62,6 +62,7 @@ import { OverviewParams } from '@Apps/modules/story-board/domain/events/request'
 import { TOverviewRes } from '@Apps/modules/story-board/application/commands/post-story-board-overview.command';
 import { TPostStoryBoardReferenceRes } from '@Apps/modules/story-board/application/commands/post-reference.command';
 import { TPostMemoCommand } from '@Apps/modules/story-board/application/commands/post-memo.command';
+import { TCreateStoryBoardCommandRes } from '@Apps/modules/story-board/application/commands/create-story-board.command';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const {
@@ -104,17 +105,21 @@ export class PostStoryBoardHttpV1Controller {
   async createStoryBoard(
     @User() userInfo: UserInfoCommandDto,
     @Headers() headers: AuthToken,
-  ): Promise<IRes<StoryBoardEntity>> {
+  ) {
     const arg = new RecentStoryBoardCreateDto(userInfo);
-
-    const result: Result<StoryBoardEntity, InternalServerErrorException> =
-      await this.commandBus.execute(arg);
-
-    return match(result, {
-      Ok: (result) => ({ success: true, data: result }),
-      Err: (err: Error) => {
-        throw new InternalServerErrorException(err.message);
-      },
+    return tsRestHandler(createStoryBoard, async () => {
+      const result: TCreateStoryBoardCommandRes = await this.commandBus.execute(
+        arg,
+      );
+      return match<
+        TCreateStoryBoardCommandRes,
+        TTsRestRes<IRes<StoryBoardEntity>>
+      >(result, {
+        Ok: (result) => ({ status: 201, body: result }),
+        Err: (err: Error) => {
+          throw new InternalServerErrorException(err.message);
+        },
+      });
     });
   }
 

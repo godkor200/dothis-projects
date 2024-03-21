@@ -18,3 +18,7 @@ export class PaginatedIgniteQueryParams extends createZodDto(
   }
 }
 export class UserDto extends createZodDto(extendApi(zUserModel)) {}
+
+export interface IGetVideoClusterInterface {
+  readonly clusterNumber: string | string[];
+}
