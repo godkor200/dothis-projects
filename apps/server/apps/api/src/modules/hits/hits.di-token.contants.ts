@@ -1,5 +1,3 @@
-import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application/services/calculate-daily-hits.service';
-
 export const WEEKLY_VIEWS_SERVICE_DI_TOKEN = Symbol(
   'WEEKLY_VIEWS_SERVICE_DI_TOKEN',
 );
