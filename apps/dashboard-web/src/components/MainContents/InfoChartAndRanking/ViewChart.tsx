@@ -191,12 +191,14 @@ const ViewChart = () => {
               type: 'line',
               color: '#F0516D',
               data: [60000, 56000, 70000, 73000, 70000, 64500, 67000].map(
-                (item, index) => [
-                  getDateObjTime(
-                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-                  ),
-                  item,
-                ],
+                (item, index) => {
+                  return {
+                    x: getDateObjTime(
+                      dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+                    ),
+                    y: item,
+                  };
+                },
               ),
             },
             {
@@ -216,12 +218,14 @@ const ViewChart = () => {
               name: '영상 수',
               type: 'column',
               color: '#34D399',
-              data: [20, 29, 37, 36, 44, 45, 75].map((item, index) => [
-                getDateObjTime(
-                  dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-                ),
-                item,
-              ]),
+              data: [20, 29, 37, 36, 44, 45, 75].map((item, index) => {
+                return {
+                  x: getDateObjTime(
+                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+                  ),
+                  y: item,
+                };
+              }),
             },
             // 이거는 주석풀면 apex 에러가 발생한다 (series의 포맷팅은 동일해야함)
           ]}
