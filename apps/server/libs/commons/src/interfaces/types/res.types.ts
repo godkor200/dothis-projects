@@ -4,7 +4,7 @@ import {
   zChannelAnalysis,
   zDailyViewData,
   zExpectedViewsData,
-  zFindVideoBySearchKeyword,
+  zGetAdsRelatedTopHitsRes,
   zGetVideoAdsInfoRes,
   zKeywords,
   zRanking,
@@ -17,9 +17,6 @@ import {
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
-import { zPostStoryBoardPathParams } from '@dothis/dto';
-import { PickType } from '@nestjs/swagger';
-import { extend } from 'joi';
 
 export interface IRes<T = undefined> {
   success: boolean;
@@ -62,6 +59,10 @@ export class WeeklyKeywordsListSchema extends createZodDto(
 
 export class FindAdsInfoRes extends createZodDto(
   extendApi(zGetVideoAdsInfoRes),
+) {}
+
+export class FindAdsRelatedTopHitsRes extends createZodDto(
+  extendApi(zGetAdsRelatedTopHitsRes),
 ) {}
 export interface TTsRestRes<T> {
   status: any;
