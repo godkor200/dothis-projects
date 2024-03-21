@@ -44,7 +44,6 @@ const KeywordAnalyticsView = () => {
 
   const totalDailyView = (dailyViewData as SeriesDetail[])?.reduce<number>(
     (sum, item) => {
-      console.log(item);
       if (item === null) {
         return sum;
       }
@@ -56,7 +55,6 @@ const KeywordAnalyticsView = () => {
     0,
   );
 
-  console.log(totalDailyView);
   const { isLoading: expectedViewIsLoading } =
     useGetPerformanceData(selectedWord);
 

@@ -98,8 +98,6 @@ export const useScopePerformanceFormatter = ({
     relword,
   });
 
-  // console.log(performanceData);
-
   const startDate = useStartDate();
   const endDate = useEndDate();
 

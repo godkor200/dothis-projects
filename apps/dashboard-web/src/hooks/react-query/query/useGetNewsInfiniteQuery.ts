@@ -76,7 +76,6 @@ const useGetNewsInfiniteQuery = (
           : allPages.length;
       },
       select: (data) => {
-        // console.log(data);
         return {
           pageParams: data.pageParams,
           pages: data.pages.map((page) => {
