@@ -41,6 +41,8 @@ export const zVideo = z.object({
   videoWithAds: z.boolean(),
   videoEndScreen: z.boolean(),
   videoCluster: z.number(),
+  channelName: z.string(),
+  videoViews: z.number(),
   crawledDate: z.string(),
   year: z.number(),
   month: z.number(),

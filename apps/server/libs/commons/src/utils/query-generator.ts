@@ -15,9 +15,6 @@ export class QueryGenerator {
 
     while (true) {
       const tableName = `${tableNameInput}_${clusterNumber}_${year}_${month}`;
-      if (queryString.length > 0) {
-        queryString += ' UNION ';
-      }
       const startDay =
         year === fromDate.year && month === fromDate.month ? fromDate.day : 1;
       const endDay =

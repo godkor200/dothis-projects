@@ -6,7 +6,7 @@ import { VideoAggregateService } from '@Apps/modules/video/application/service/v
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { IGetChannelHistoryLatestTuple } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
-import { VideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { IGetVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
 
 import { Err, Ok } from 'oxide.ts';
@@ -19,7 +19,7 @@ export class FindIndividualVideoInfoService
     private readonly getChannelHistoryLatestTuple: IGetChannelHistoryLatestTuple,
 
     @Inject(VIDEO_HISTORY_IGNITE_DI_TOKEN)
-    private readonly videoHistory: VideoHistoryOutboundPort,
+    private readonly videoHistory: IGetVideoHistoryOutboundPort,
 
     private readonly videoAggregateService: VideoAggregateService,
   ) {}
@@ -46,7 +46,7 @@ export class FindIndividualVideoInfoService
   ): Promise<TVideoIndividualRes> {
     const dao = new FindIndividualVideoInfoV1Dao(dto);
     const channelHistory = await this.getChannelHistoryLatestTuple.execute(dao);
-    const videoHistoryRes = await this.videoHistory.getHistory({
+    const videoHistoryRes = await this.videoHistory.execute({
       clusterNumber: dto.clusterNumber,
       videoId: dto.videoId,
       from: '2024-01-01',

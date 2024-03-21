@@ -8,16 +8,14 @@ import {
   CacheDoesNotFoundException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
-import { IGetRelatedVideoAndVideoHistoryRes } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export type TGetRelatedLastVideoAndVideoHistory = Result<
-  IGetRelatedVideoAndVideoHistoryRes[],
+  GetRelatedVideoAndVideoHistory[],
   | VideoHistoryNotFoundError
   | TableNotFoundException
   | CacheDoesNotFoundException
 >;
-const IgniteClient = require('apache-ignite-client');
 
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 export class VideoLastHistoryAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistoryEach
@@ -60,9 +58,9 @@ export class VideoLastHistoryAdapter
                               AND VH.DAY = (SELECT MAX(VH2.DAY) FROM ${tableName} VH2 WHERE VH2.VIDEO_ID = VH.VIDEO_ID)`;
         queries.push(query);
       }
-      const query = new SqlFieldsQuery(
-        queries.join(' UNION '),
-      ).setDistributedJoins(true);
+
+      const queryString = queries.join(' UNION ');
+      const query = this.createDistributedJoinQuery(queryString);
 
       const result = await cache.query(query);
 
@@ -71,10 +69,7 @@ export class VideoLastHistoryAdapter
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(
-          resArr,
-          queries.join(' UNION '),
-        ),
+        VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {
@@ -83,7 +78,7 @@ export class VideoLastHistoryAdapter
       if (e.message.includes('Cache')) {
         return Err(new CacheDoesNotFoundException(e.message));
       }
-      console.log('catch', e);
+
       return Err(e);
     }
   }

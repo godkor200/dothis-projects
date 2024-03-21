@@ -4,7 +4,6 @@ import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordLi
 import useKeyword from '@/hooks/user/useKeyword';
 
 import type { NivoLineChart } from './Container';
-import RelationWord from './RelationWord';
 
 interface Props {
   dailyViewChartDataList: NivoLineChart;
@@ -73,7 +72,7 @@ const RelationTable = ({
       </div>
       <ul>
         {/* props드릴링이 생기는 것보다는 각기 다르게 호출해주자. */}
-        {rank?.slice(0, 10).map((item, index, arr) => (
+        {/* {rank?.slice(0, 10).map((item, index, arr) => (
           <RelationWord
             key={index + item.relword}
             arr={arr}
@@ -87,7 +86,7 @@ const RelationTable = ({
 
             // setExpectedViewChartDataList={setExpectedViewChartDataList}
           />
-        ))}
+        ))} */}
       </ul>
     </div>
   );

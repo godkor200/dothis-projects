@@ -77,7 +77,7 @@ const useGetRankingWordList = (
   });
 
   const sortArray = [...flattenArray].sort(
-    (a, b) => b.expectedViews - a.expectedViews,
+    (a, b) => b.sortFigure - a.sortFigure,
   );
 
   const isLoading = requiredQueryResults.some((query) => query.isLoading);
