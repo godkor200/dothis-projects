@@ -36,8 +36,6 @@ const useGetVideoCount = (
     clusters = JSON.parse(data.cluster);
   }
 
-  console.log(clusters);
-
   const queryResult = apiClient(1).video.getAccumulateVideo.useQuery(
     VIDEO_COUNT_KEY.list([
       {
