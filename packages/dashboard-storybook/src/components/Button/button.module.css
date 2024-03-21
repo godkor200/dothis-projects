@@ -14,6 +14,10 @@
   @apply bg-grey00 border-[1px] border-solid border-primary500 text-primary500;
 }
 
+.outlined-grey {
+  @apply bg-grey00 border-[1px] border-solid border-grey500 text-grey500;
+}
+
 .primary {
   @apply text-primary500;
 }
@@ -25,7 +29,11 @@
 }
 
 .outlined {
-  @apply hover:bg-primary100  hover:border-primary300 hover:text-primary300;
+  @apply hover:border-primary300 hover:text-primary300;
+}
+
+.outlined-grey {
+  @apply hover:bg-grey100  hover:border-grey300 hover:text-grey300;
 }
 
 .primary {
@@ -40,6 +48,10 @@
 
 .outlined {
   @apply active:bg-primary200  active:border-primary500 active:text-primary500;
+}
+
+.outlined-grey {
+  @apply active:bg-primary200  active:border-grey500 active:text-grey500;
 }
 
 .primary {
