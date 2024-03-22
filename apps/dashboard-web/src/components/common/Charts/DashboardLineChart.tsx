@@ -98,7 +98,7 @@ const DashboardLineChart = ({ series }: Props) => {
           },
 
           {
-            seriesName: series[1].name,
+            // seriesName: series[1].name,
             opposite: true,
             axisTicks: {
               show: false,

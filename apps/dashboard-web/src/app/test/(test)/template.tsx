@@ -5,7 +5,6 @@ const Template = ({
   children: React.ReactNode;
   storyboard: React.ReactNode;
 }) => {
-  console.log(storyboard);
   if (storyboard) {
     return <>{children}</>;
   }

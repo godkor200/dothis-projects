@@ -14,7 +14,7 @@ import useGetRelWords from './useGetRelWords';
  * @param queryOptions
  * @returns
  */
-const useGetExpectedView = (
+const useGetPerformanceData = (
   {
     keyword,
     relword,
@@ -73,4 +73,4 @@ const useGetExpectedView = (
   };
 };
 
-export default useGetExpectedView;
+export default useGetPerformanceData;

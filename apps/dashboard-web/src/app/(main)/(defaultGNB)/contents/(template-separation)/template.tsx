@@ -7,10 +7,12 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { type PropsWithChildren, useEffect } from 'react';
 
+import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import { useModalActions } from '@/store/modalStore';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
 import { cn } from '@/utils/cn';
 
@@ -53,6 +55,13 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     // router.replace('/contents');
   }, [router]);
+
+  const { setModalOpen, setModalContent, initializeModal } = useModalActions();
+
+  useEffect(() => {
+    setModalContent(<RelwordErrorModal dismissCallback={initializeModal} />);
+    setModalOpen(true);
+  }, []);
 
   return (
     <>

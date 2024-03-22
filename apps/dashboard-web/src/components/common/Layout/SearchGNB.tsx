@@ -4,6 +4,7 @@ import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import type { Route } from 'next';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -91,9 +92,11 @@ const SearchGNB = () => {
             </div>
           ))
         ) : (
-          <Button size="M" theme="contained" onClick={checkIsSignedIn}>
-            로그인
-          </Button>
+          <Link href={'/auth'}>
+            <Button size="M" theme="contained">
+              로그인
+            </Button>
+          </Link>
         )}
       </div>
 

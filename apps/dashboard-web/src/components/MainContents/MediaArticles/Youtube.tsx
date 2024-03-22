@@ -58,8 +58,8 @@ const YouTube = () => {
       });
       return {
         title: item.videoTitle,
-        provider: item.videoTitle,
-        element: `조회수 ${compactNumber.format(item.videoCluster)}`,
+        provider: item.channelName,
+        element: `조회수 ${compactNumber.format(item.videoViews)}`,
         uploadDate: dayjs(item.videoPublished).format('YYYY-MM-DD'),
         image: externalYouTubeImageLoader(item.videoId),
         link: item.channelId,
