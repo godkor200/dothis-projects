@@ -1,6 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { zFindVideoBySearchKeyword } from '@dothis/dto';
+import { IGetVideoClusterInterface } from '@Libs/commons/src/interfaces/types/dto.types';
 
 export class FindAdsInfoQuery extends createZodDto(
   extendApi(zFindVideoBySearchKeyword),
@@ -10,7 +11,10 @@ export class FindAdsInfoQuery extends createZodDto(
     Object.assign(this, props);
   }
 }
-export class FindAdsInfoDto extends FindAdsInfoQuery {
+export class FindAdsInfoDto
+  extends FindAdsInfoQuery
+  implements IGetVideoClusterInterface
+{
   readonly clusterNumber: string | string[];
 
   constructor(props: FindAdsInfoDto) {

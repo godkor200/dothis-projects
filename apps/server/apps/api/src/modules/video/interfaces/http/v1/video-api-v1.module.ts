@@ -6,6 +6,8 @@ import {
   VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
   VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN,
   VIDEO_GET_ADS_INFO_DI_TOKEN,
+  VIDEO_GET_ADS_TOP_HITS_IGNITE_DI_TOKEN,
+  VIDEO_GET_ADS_TOP_HITS_SERVICE_DI_TOKEN,
   VIDEO_GET_EXPECTATION_DI_TOKEN,
   VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
@@ -57,11 +59,16 @@ import { FindAdsInfoService } from '@Apps/modules/video/application/service/find
 import { VideoAdsInfoAdapter } from '@Apps/modules/video/infrastructure/adapters/video.ads-info.adapter';
 import { FindAdsInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-info/find-ads-info.http.controller';
 import { FindAdsInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
+import { FindAdsTopHitsQueryHandler } from '@Apps/modules/video/application/queries/v1/find-ads-top-hits.query-handler';
+import { FindAdsTopHitsService } from '@Apps/modules/video/application/service/find-ads-top-hits.service';
+import { VideoAdsTopHitsAdapter } from '@Apps/modules/video/infrastructure/adapters/video.ads.top-hits.adapter';
+import { FindAdsTopHitsHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-top-hits/find-ads-top-hits.http.controller';
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
   FindAccumulateVideosV1HttpController,
   FindAdsInfoHttpController,
+  FindAdsTopHitsHttpController,
 ];
 
 const commandHandlers: Provider[] = [];
@@ -76,6 +83,7 @@ const queryHandlers: Provider[] = [
   FindAccumulateVideosV1QueryHandler,
   FindIndividualVideoInfoQueryHandler,
   FindAdsInfoQueryHandler,
+  FindAdsTopHitsQueryHandler,
 ];
 const service: Provider[] = [
   { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
@@ -91,9 +99,17 @@ const service: Provider[] = [
     provide: VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN,
     useClass: FindAccumulateVideoService,
   },
+  {
+    provide: VIDEO_GET_ADS_TOP_HITS_SERVICE_DI_TOKEN,
+    useClass: FindAdsTopHitsService,
+  },
 ];
 
 const adapters: Provider[] = [
+  {
+    provide: VIDEO_GET_ADS_TOP_HITS_IGNITE_DI_TOKEN,
+    useClass: VideoAdsTopHitsAdapter,
+  },
   {
     provide: VIDEO_GET_ADS_INFO_DI_TOKEN,
     useClass: VideoAdsInfoAdapter,

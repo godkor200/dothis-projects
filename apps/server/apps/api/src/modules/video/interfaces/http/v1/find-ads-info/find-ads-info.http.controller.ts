@@ -24,11 +24,9 @@ import {
   FindAdsInfoRes,
   IRes,
   TTsRestRes,
-  VideoRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
@@ -49,7 +47,7 @@ export class FindAdsInfoHttpController {
   @ApiNotFoundResponse({ description: VideoNotFoundError.message })
   @ApiNotFoundResponse({ description: VideoHistoryNotFoundError.message })
   @ApiInternalServerErrorResponse({
-    type: InternalServerErr,
+    type: InternalServerErrorException,
   })
   async execute(
     @Query() query: FindAdsInfoQuery,

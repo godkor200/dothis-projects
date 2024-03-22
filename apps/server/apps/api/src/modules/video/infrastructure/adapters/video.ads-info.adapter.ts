@@ -36,7 +36,7 @@ export class VideoAdsInfoAdapter
     const { search, related, from, to, relatedCluster } = dao;
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
-    let queryString: string[] = relatedCluster.map((cluster) =>
+    const queryString: string[] = relatedCluster.map((cluster) =>
       this.queryString(
         cluster,
         search,
@@ -45,14 +45,12 @@ export class VideoAdsInfoAdapter
         toDate.day.toString(),
       ),
     );
-    let combinedQueryString;
-    if (relatedCluster.length === 1) {
-      // 하나의 클러스터만 있는 경우, 배열에서 첫 번째 쿼리 문자열을 사용합니다.
-      combinedQueryString = queryString[0];
-    } else {
-      // 여러 클러스터가 있는 경우, 모든 쿼리 문자열을 'UNION'로 결합합니다.
-      combinedQueryString = queryString.join(' UNION ');
-    }
+    const combinedQueryString: string =
+      relatedCluster.length === 1
+        ? // 하나의 클러스터만 있는 경우, 배열에서 첫 번째 쿼리 문자열을 사용합니다.
+          queryString[0]
+        : // 여러 클러스터가 있는 경우, 모든 쿼리 문자열을 'UNION'로 결합합니다.
+          queryString.join(' UNION ');
 
     const tableName = `DOTHIS.VIDEO_DATA_CLUSTER_${relatedCluster[0]}`;
     try {

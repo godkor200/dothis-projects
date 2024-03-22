@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zDateQuery, zPaginatedQuery, zSearchKeyword } from '../common.model';
-import { zVideoModel } from './video.model';
+import { zVideo, zVideoModel } from './video.model';
 
 export const zClusterQueryParams = z.object({
   cluster: z.string(),
@@ -94,4 +94,16 @@ export const zGetVideoAdsInfoRes = z.object({
     .number()
     .describe('The total number of videos in the dataset.'),
 });
+export const zGetAdsRelatedTopHits = zFindVideoBySearchKeyword
+  .omit({ related: true })
+  .merge(zPaginatedQuery.pick({ limit: true }))
+  .merge(z.object({ related: z.string().describe('연관어').default('여행') }));
+
+export const zGetAdsRelatedTopHitsRes = zVideo.pick({
+  videoPublished: true,
+  videoTitle: true,
+  videoViews: true,
+});
+
 export type GetVideoAdsInfoRes = z.TypeOf<typeof zGetVideoAdsInfoRes>;
+export type GetAdsRelatedTopHitsRes = z.TypeOf<typeof zGetAdsRelatedTopHitsRes>;

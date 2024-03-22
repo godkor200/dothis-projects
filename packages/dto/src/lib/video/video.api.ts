@@ -17,6 +17,8 @@ import {
   zFindIndividualVideoInfoParams,
   zFindVideoBySearchKeyword,
   zFindVideoPageWithClusterQuery,
+  zGetAdsRelatedTopHits,
+  zGetAdsRelatedTopHitsRes,
   zGetVideoAdsInfoRes,
   zVideoDetails,
 } from './video.zod';
@@ -70,6 +72,19 @@ export const videoApi = c.router({
     },
     summary: '관련어와 탐색어를 기준으로 광고 정보를 가져옵니다',
     description: '관련어와 탐색어를 기준으로 광고 정보를 가져옵니다.',
+  },
+  getAdvertisingRelatedVideo: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/:clusterNumber/ads/top-hits`,
+    pathParams: zClusterNumberMulti,
+    query: zGetAdsRelatedTopHits,
+    responses: {
+      200: zGetAdsRelatedTopHitsRes,
+      ...zErrResBase,
+    },
+    summary: '관련어와 탐색어를 기준으로 광고 조회수 큰것부터 불러옵니다.',
+    description:
+      '관련어와 탐색어를 기준으로 광고 조회수 큰것부터 불러옵니다. limit 쿼리로 불러오는 갯수를 지정할수 있습니다.',
   },
   getIndividualVideo: {
     method: 'GET',

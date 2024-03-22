@@ -6,7 +6,6 @@ import {
   zPostStoryBoardMainParams,
   zPostStoryBoardMemoParams,
   zPostStoryBoardOverviewParams,
-  zPostStoryBoardPathParams,
   zPostStoryBoardReferenceParams,
   zStoryBoardCreateArrayRes,
   zStoryBoardCreateRes,
