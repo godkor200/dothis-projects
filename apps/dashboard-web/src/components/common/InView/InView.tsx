@@ -32,9 +32,9 @@ export default function InView({
   });
 
   return (
-    <div>
+    <React.Fragment>
       {children}
       <div className="h-[1px]" ref={ref} />
-    </div>
+    </React.Fragment>
   );
 }
