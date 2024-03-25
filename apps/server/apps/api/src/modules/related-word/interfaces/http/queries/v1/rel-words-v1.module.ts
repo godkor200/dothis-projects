@@ -38,6 +38,7 @@ import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repos
 import { FindSearchTermService } from '@Apps/modules/related-word/application/service/find-search-term.service';
 import { SetDicTermHandler } from '@Apps/modules/related-word/application/service/set-search-term.service';
 import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
+import { DeleteRelWordsHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/delete-rel-words/delete-rel-words.http.controller';
 
 const controllers = [
   FindRelHttpV1Controller,
@@ -46,6 +47,7 @@ const controllers = [
   FindSearchKeywordHttpController,
   FindAutoCompleteHttpController,
   FindSearchTermHttpController,
+  DeleteRelWordsHttpController,
 ];
 const repositories: Provider[] = [
   {
