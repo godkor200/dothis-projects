@@ -7,6 +7,7 @@ import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/applicatio
 import { ExpectedViewsV1Dto } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
 import { FindAdsInfoDto } from '@Apps/modules/video/application/dtos/find-ads-info.dtos';
 import { FindAdsTopHitsDto } from '@Apps/modules/video/application/dtos/find-ads-top-hits.dto';
+import { GetProbabilitySuccessDto } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;
@@ -99,5 +100,10 @@ export class GetVideoAdsTopHitsDao extends FindAdsTopHitsDto {
       ? [props.clusterNumber]
       : props.clusterNumber;
     this.relatedCluster = propsClusterNumber;
+  }
+}
+export class GetVideoAndChannelViewsByDateAndKeywordsDao extends GetVideoAdsTopHitsDao {
+  constructor(props: GetVideoAndChannelViewsByDateAndKeywordsDao) {
+    super(props);
   }
 }

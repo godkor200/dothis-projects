@@ -31,3 +31,13 @@ export interface IGetVideoChannelHistoryRes {
   month: number;
   day: number;
 }
+export interface GetVideoAndChannelViewsByDateAndKeywordsRes
+  extends Pick<
+    IGetVideoChannelHistoryRes,
+    'channelAverageViews' | 'videoViews' | 'videoId' | 'channelId'
+  > {}
+export interface GetVideoViewsMatchingSearchOnSpecificDateRes
+  extends Pick<
+    IGetVideoChannelHistoryRes,
+    'videoViews' | 'videoId' | 'channelId'
+  > {}
