@@ -16,13 +16,72 @@ export const useCreateStoryBoardMutation = (
 
   const mutationResult = apiClient(1).storyBoard.createStoryBoard.useMutation({
     ...mutationOptions,
-    onSuccess: (res) => {
-      console.log(res.body);
+    onSuccess: () => {
       queryClient.invalidateQueries(STORYBOARD_KEY.lists());
     },
   });
 
   return {
     ...mutationResult,
+  };
+};
+
+export const useUpdateStoryBoardTitleMutation = (
+  storyBoardId: string,
+  title: string,
+  mutationOptions?: UseMutationOptions<
+    typeof apiRouter.storyBoard.updateStoryBoardTitle,
+    ClientArgs
+  >,
+) => {
+  const queryClient = useQueryClient();
+
+  const mutationResult = apiClient(
+    1,
+  ).storyBoard.updateStoryBoardTitle.useMutation({
+    ...mutationOptions,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        STORYBOARD_KEY.detail([{ id: storyBoardId }]),
+      );
+    },
+  });
+
+  return {
+    ...mutationResult,
+    mutate: (item: string) =>
+      mutationResult.mutate({
+        body: {
+          value: title,
+        },
+      }),
+  };
+};
+
+export const useUpdateStoryBoardOverviewMutation = (
+  // storyBoardId: string,
+  description: string,
+  mutationOptions?: UseMutationOptions<
+    typeof apiRouter.storyBoard.addStoryBoardOverviews,
+    ClientArgs
+  >,
+) => {
+  const queryClient = useQueryClient();
+
+  const mutationResult = apiClient(1).storyBoard.updateStoryBoard.useMutation({
+    ...mutationOptions,
+    onSuccess: () => {
+      queryClient.invalidateQueries(STORYBOARD_KEY.all);
+    },
+  });
+
+  return {
+    ...mutationResult,
+    mutate: (item: string) =>
+      mutationResult.mutate({
+        body: {
+          description: description,
+        },
+      }),
   };
 };
