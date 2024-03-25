@@ -5,6 +5,7 @@ import {
   zDailyViewData,
   zExpectedViewsData,
   zGetAdsRelatedTopHitsRes,
+  zGetProbabilityRes,
   zGetVideoAdsInfoRes,
   zKeywords,
   zRanking,
@@ -63,6 +64,9 @@ export class FindAdsInfoRes extends createZodDto(
 
 export class FindAdsRelatedTopHitsRes extends createZodDto(
   extendApi(zGetAdsRelatedTopHitsRes),
+) {}
+export class GetProbabilityResultType extends createZodDto(
+  extendApi(zGetProbabilityRes),
 ) {}
 export interface TTsRestRes<T> {
   status: any;
