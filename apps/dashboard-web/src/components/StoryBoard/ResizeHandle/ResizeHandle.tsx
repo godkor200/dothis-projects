@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface ResizeHandleProps {
   sidebarWidth: number;
@@ -15,30 +15,46 @@ const ResizeHandle = ({
   style,
 }: ResizeHandleProps) => {
   const [isResizing, setIsResizing] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [startWidth, setStartWidth] = useState(0);
+  const isResizingRef = useRef(false);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsResizing(true);
-    setStartX(e.clientX);
-    setStartWidth(sidebarWidth);
-  };
+  const startX = useRef<number>(0);
+  const startWidth = useRef<number>(0);
+
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      isResizingRef.current = true;
+      setIsResizing(true);
+
+      startX.current = e.clientX;
+
+      startWidth.current = sidebarWidth;
+    },
+    [sidebarWidth],
+  );
+
+  const handleMouseUp = useCallback(() => {
+    isResizingRef.current = false;
+    setIsResizing(false);
+
+    time.current = { test: time.current.test + 4 };
+  }, []);
+
+  const time = useRef({ test: 1 });
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    // text selection과 같은 onDrag 이벤트 중지
+    e.preventDefault();
+    // 최대/최소 너비를 지정
+    const widthChange = Math.min(
+      startWidth.current + startX.current - e.clientX,
+      1460,
+    );
+
+    setSidebarWidth(Math.max(320, widthChange));
+  }, []);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // text selection과 같은 onDrag 이벤트 중지
-      e.preventDefault();
-      // 최대/최소 너비를 지정
-      const widthChange = Math.min(startWidth + startX - e.clientX, 1460);
-      setSidebarWidth(Math.max(320, widthChange));
-    };
-
-    const handleMouseUp = () => {
-      console.log('handleMouseUp');
-      setIsResizing(false);
-    };
-
-    if (isResizing) {
+    if (isResizingRef.current) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
     }
@@ -47,7 +63,7 @@ const ResizeHandle = ({
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, sidebarWidth, startWidth, startX]);
+  }, [isResizing]);
 
   return (
     <div
@@ -61,3 +77,16 @@ const ResizeHandle = ({
 };
 
 export default ResizeHandle;
+
+function debounceFunction<Params extends any[]>(
+  func: (...args: Params) => any,
+  timeout: number,
+): (...args: Params) => void {
+  let timer: NodeJS.Timeout;
+  return (...args: Params) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func(...args);
+    }, timeout);
+  };
+}
