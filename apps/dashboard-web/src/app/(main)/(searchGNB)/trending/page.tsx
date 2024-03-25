@@ -28,12 +28,12 @@ export type SortingQuery = {
 };
 
 const TrendingPage = () => {
-  const { trendingQueryOption, setTrendingQueryOption } =
-    useTrendingQueryContext('trendingPage');
+  const {
+    trendingQuery: { categoryList, keywordList, startDate },
+    trendingQueryActions: { setCategoryList, setKeywordList, setStartDate },
+  } = useTrendingQueryContext('TrendingPage');
 
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
-
-  const [lastId, setLastId] = useState<string | undefined>('');
 
   const { setModalOpen, setModalContent } = useModalActions();
 
@@ -41,16 +41,6 @@ const TrendingPage = () => {
     sort: 'weekly_views',
     order: 'desc',
   });
-
-  const [selectOptions, setSelectOptions] = useState<
-    { value: number; label: string }[]
-  >([]);
-
-  const [keywordList, setKeywordList] = useState<string[]>([]);
-
-  const [startDate, setStartDate] = useState(
-    dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
-  );
 
   const isSignedIn = useIsSignedIn();
 
@@ -60,12 +50,11 @@ const TrendingPage = () => {
 
   const { data, total, fetchNextPage, hasNextPage, isLoading, isFetching } =
     useGetTrendingKeywords({
-      selectOptions: trendingQueryOption.selectOptions,
-      keywordList: trendingQueryOption.keywordList,
-      startDate: trendingQueryOption.startDate,
+      categoryList,
+      keywordList,
+      startDate,
       order: sortingParams.order,
       sort: sortingParams.sort,
-      lastIndex_ID: lastId,
     });
 
   const handleFetchNextPage = () => {
@@ -108,18 +97,14 @@ const TrendingPage = () => {
     });
   };
 
-  useEffect(() => {
-    setLastId(String(data?.at(-1)?.id));
-  }, [JSON.stringify(data)]);
-
   return (
     <>
       <div className="relative">
         <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
           <h3 className="text-grey600 font-bold">검색 키워드</h3>
           <ul className="flex items-center gap-[10px]">
-            {trendingQueryOption.keywordList.map((item) => (
-              <li>
+            {keywordList.map((item) => (
+              <li key={item}>
                 <Button key={item} $active={true}>
                   {item.replace('#', '').replace('*', '')}
 
@@ -144,7 +129,9 @@ const TrendingPage = () => {
                 키워드 {total || 0}개
               </p>
               <p className="text-grey500 font-bold">
-                {'2024-01-07 - 2024-01-14'}
+                {`${startDate.format('YYYY-MM-DD')} ~ ${startDate
+                  .add(6, 'day')
+                  .format('YYYY-MM-DD')}`}
               </p>
               <button className="text-primary500 bg-primary100 rounded-8 ml-auto px-4 py-2 text-[14px]">
                 엑셀 데이터로 다운로드 받기
@@ -177,63 +164,63 @@ const TrendingPage = () => {
                 ))}
               </div>
               <ul>
-                {data?.map((item, index, arr) => (
-                  <li
-                    key={index}
-                    className={cn(
-                      'grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] pl-[18px] items-center gap-[12px] group',
-                      {
-                        'shadow-[inset_0_-2px_0_0_#f4f4f5]':
-                          index !== arr.length - 1 || hasNextPage,
-                      },
-                    )}
-                  >
-                    <div className=" items-center gap-[10px]">
-                      <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                        {Number(item.id) + 1}
+                {data &&
+                  data?.map((item, index, arr) => (
+                    <li
+                      key={index}
+                      className={cn(
+                        'grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] pl-[18px] items-center gap-[12px] group',
+                        {
+                          'shadow-[inset_0_-2px_0_0_#f4f4f5]':
+                            index !== arr.length - 1 || hasNextPage,
+                        },
+                      )}
+                    >
+                      <div className=" items-center gap-[10px]">
+                        <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
+                          {Number(item.ranking) + 1}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
-                      {item.keyword}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {/* {
-                        clustersCategories[
-                          JSON.parse(
-                            item.category,
-                          )[0] as keyof typeof clustersCategories
-                        ]
-                      } */}
-                      {item.category}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {item.weekly_views?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                      {item.video_count?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
-                      {convertCompetitionScoreFormat(item.competitive)}
-                    </div>
-                    <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
-                      {item.mega_channel?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="invisible group-hover:visible">
-                      <Dialog.Trigger
-                        asChild
-                        onClick={() =>
-                          setModalContent(
-                            <TrendingModal keyword={item.keyword} />,
-                          )
+                      <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
+                        {item.keyword}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                        {
+                          clustersCategories[
+                            JSON.parse(
+                              item.category,
+                            )[0] as keyof typeof clustersCategories
+                          ]
                         }
-                      >
-                        <DesignButton theme="outlined" size="S">
-                          자세히
-                        </DesignButton>
-                      </Dialog.Trigger>
-                    </div>
-                  </li>
-                ))}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                        {Number(item.weeklyViews)?.toLocaleString('en-US')}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
+                        {Number(item.videoCount)?.toLocaleString('ko-kr')}
+                      </div>
+                      <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
+                        {convertCompetitionScoreFormat(item.competitive)}
+                      </div>
+                      <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
+                        {item.megaChannel?.toLocaleString('ko-kr')}
+                      </div>
+                      <div className="invisible group-hover:visible">
+                        <Dialog.Trigger
+                          asChild
+                          onClick={() =>
+                            setModalContent(
+                              <TrendingModal keyword={item.keyword} />,
+                            )
+                          }
+                        >
+                          <DesignButton theme="outlined" size="S">
+                            자세히
+                          </DesignButton>
+                        </Dialog.Trigger>
+                      </div>
+                    </li>
+                  ))}
                 <div className="flex justify-center py-[42px]">
                   <DesignButton
                     theme="outlined"
@@ -246,18 +233,7 @@ const TrendingPage = () => {
               </ul>
             </div>
 
-            {openFilter && (
-              <TrendingFilter
-                selectOptions={selectOptions}
-                setSelectOptions={setSelectOptions}
-                keywordList={keywordList}
-                setKeywordList={setKeywordList}
-                startDate={startDate}
-                setStartDate={setStartDate}
-                setTrendingQueryOption={setTrendingQueryOption}
-                setOpenFilter={setOpenFilter}
-              />
-            )}
+            {openFilter && <TrendingFilter />}
           </div>
         </div>
       </div>

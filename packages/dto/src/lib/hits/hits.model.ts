@@ -6,6 +6,7 @@ import {
   zPaginatedQuery,
   zSortQuery,
   zPaginatedOffsetQuery,
+  zWeeklyKeywordData,
 } from '../common.model';
 
 export const zDailyViewData = z.object({
@@ -42,15 +43,34 @@ const createWeeklyKeywordsListSourceSchema = {
   MONTH: z.number().nullable().describe('조회수 레코드의 월'),
   DAY: z.number().nullable().describe('조회수 레코드의 일'),
 };
-export const SortOrderQuery = Object.keys(createWeeklyKeywordsListSourceSchema);
+
+const createWeeklyKeywordsListSourceSchema_V2 = {
+  id: z.number().describe('조회수의 고유 식별자'),
+  ranking: z.number().nullable().describe('조회수의 순위'),
+  keyword: z.string().describe('탐색어'),
+  category: z.string().describe('연관어'),
+  weeklyViews: z.number().describe('주간 조회수'),
+  videoCount: z.number().describe('비디오 수'),
+  competitive: z.number().describe('경쟁강도'),
+  megaChannel: z.number().describe('10만이상 구독자 채널 수'),
+  changes: z.number().describe('순위 변동'),
+  yarn: z.number().nullable().describe('조회수 레코드의 연도'),
+  month: z.number().nullable().describe('조회수 레코드의 월'),
+  day: z.number().nullable().describe('조회수 레코드의 일'),
+};
+export const SortOrderQuery = Object.keys(
+  createWeeklyKeywordsListSourceSchema_V2,
+);
 
 export const zWeeklyKeywordsListSourceSchema = z.object(
-  createWeeklyKeywordsListSourceSchema,
+  createWeeklyKeywordsListSourceSchema_V2,
 );
 
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
-);
+export const zWeeklyKeywordsList = z.object({
+  body: zWeeklyKeywordData.merge(
+    dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
+  ),
+});
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
   video_id: z.string(),

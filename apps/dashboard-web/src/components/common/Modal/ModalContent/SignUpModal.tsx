@@ -13,7 +13,7 @@ const SignUpModal = () => {
 
   return (
     <div className=" rounded-8 bg-grey00 w-[500px]  p-10">
-      <div className="flex justify-end" onClick={() => router.back()}>
+      <div className="flex justify-end" onClick={initializeModal}>
         <SvgComp icon="Close" size={24} />
       </div>
       <p className="text-t3 text-grey700 mb-5 text-center font-bold">
