@@ -74,6 +74,12 @@ export const zTotalData = z
   .object({ total: z.number() })
   .describe('토탈 데이터 resp');
 
+export const zWeeklyKeywordData = z.object({
+  count: z.number(),
+  limit: z.number(),
+  page: z.number(),
+});
+
 export const dataObject = <T extends ZodTypeAny>(data: T) =>
   z.object({ data }).describe('data object');
 

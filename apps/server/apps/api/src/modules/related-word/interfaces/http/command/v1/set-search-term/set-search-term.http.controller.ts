@@ -6,16 +6,17 @@ import {
 } from '@Apps/modules/related-word/application/dtos/set-dic-term.command';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { apiRouter, cacheBaseApiUrl } from '@dothis/dto';
-const { set } = nestControllerContract(apiRouter.cache);
-const { description, summary, responses } = set;
+import { apiRouter } from '@dothis/dto';
+const { setDicTerm } = nestControllerContract(apiRouter.relatedWords);
+const { description, summary, responses } = setDicTerm;
 @Controller()
+@ApiTags('탐색어')
 export class SetSearchTermHttpController {
   constructor(private readonly commonBus: CommandBus) {}
-  @ApiTags(cacheBaseApiUrl)
+
   @ApiOkResponse({ description: responses[200] })
   @ApiOperation({ summary, description })
-  @TsRest(set)
+  @TsRest(setDicTerm)
   async handler(): Promise<SetDicTermCommandOutput> {
     const setDicTermCommandInput = new SetDicTermCommand();
     return await this.commonBus.execute(setDicTermCommandInput);

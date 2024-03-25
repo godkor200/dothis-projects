@@ -10,8 +10,8 @@ import {
 } from '@nestjs/swagger';
 import { apiRouter } from '@dothis/dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
-const { get } = nestControllerContract(apiRouter.cache);
-const { description, summary, responses } = get;
+const { getDicTerm } = nestControllerContract(apiRouter.relatedWords);
+const { description, summary, responses } = getDicTerm;
 
 @ApiTags('탐색어')
 @Controller()
@@ -20,7 +20,7 @@ export class FindSearchTermHttpController {
   @ApiOkResponse({ description: responses[200] })
   @ApiQuery({ name: 'key', examples: { key: { value: 'dic-term' } } })
   @ApiOperation({ summary, description })
-  @TsRest(get)
+  @TsRest(getDicTerm)
   async handler(
     @Query() queryParams: FindDicTermQuery,
   ): Promise<FindSearchTermRes> {
