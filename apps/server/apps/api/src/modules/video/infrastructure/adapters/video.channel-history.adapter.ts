@@ -13,6 +13,10 @@ export type TGetRelatedVideoChannelHistoryRes = Result<
   TableNotFoundException | VideoHistoryNotFoundError
 >;
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
+
+/**
+ * 날짜 지정 해서 히스토리 가져오는 레포지토리
+ */
 export class VideoChannelHistoryAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideoChannelHistoryOutboundPort
@@ -23,6 +27,7 @@ export class VideoChannelHistoryAdapter
    * 연관 api:
    * 1. https://api.dothis.kr/docs#/%EC%A1%B0%ED%9A%8C%EC%88%98/ExpectedHitsV1HttpController_execute
    * @param dao
+   * 채널 히스토리도 스플릿이 되면 속도가 더 빨라질 여지가 있음
    */
   async execute(
     dao: GetRelatedVideoChannelHistoryDao,
@@ -51,7 +56,7 @@ export class VideoChannelHistoryAdapter
         return `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, ch.channel_id, ch.channel_average_views, vh.YEAR, vh.MONTH, vh.DAY
       FROM ${tableName} vh
       JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
-      JOIN (
+      JOIN ( 
         SELECT channel_id, channel_average_views
         FROM ${channelIdTableName}
         WHERE (year, month, day) = (
@@ -68,7 +73,7 @@ export class VideoChannelHistoryAdapter
       });
 
       const queryString = queries.join(' UNION ');
-      const query = new SqlFieldsQuery(queryString);
+      const query = this.createDistributedJoinQuery(queryString);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
