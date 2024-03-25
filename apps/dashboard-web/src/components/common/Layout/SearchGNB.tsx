@@ -24,8 +24,10 @@ import SignUpModal from '../Modal/ModalContent/SignUpModal';
 // Header 반응형 디자인이나 기획이 나오면 반응형 대응 예정
 
 const SearchGNB = () => {
-  const { trendingQueryOption, setTrendingQueryOption } =
-    useTrendingQueryContext('SearchGNB');
+  const {
+    trendingQuery,
+    trendingQueryActions: { setKeywordList },
+  } = useTrendingQueryContext('SearchGNB');
 
   const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
 
@@ -63,10 +65,8 @@ const SearchGNB = () => {
   };
 
   const handleKeywordList = (keyword: string) => {
-    setTrendingQueryOption((prev) =>
-      prev.keywordList.indexOf(keyword) !== -1
-        ? prev
-        : { ...prev, keywordList: [...prev.keywordList, keyword] },
+    setKeywordList((prev) =>
+      prev.indexOf(keyword) !== -1 ? prev : [...prev, keyword],
     );
   };
 

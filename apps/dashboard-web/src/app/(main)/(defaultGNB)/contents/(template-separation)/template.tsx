@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { type PropsWithChildren, useEffect } from 'react';
 
-import AlertModal from '@/components/common/Modal/ModalContent/AlertModal';
 import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';

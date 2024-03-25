@@ -23,6 +23,8 @@ import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel-history/infrast
 import { FindAutoCompleteHttpController } from '@Apps/modules/related-word/interfaces/http/queries/v2/find-auto-complete/find-auto-complete.http.controller';
 import { FindAutoCompleteQueryHandler } from '@Apps/modules/related-word/interfaces/http/queries/v2/find-auto-complete/find-auto-complete.query-handler';
 import { VideoHistoryMultipleAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
+import { DeleteRelWordsHttpController } from '../../command/v1/delete-rel-words/delete-rel-words.http.controller';
+import { DeleteRelWordsCommandHandler } from '../../command/v1/delete-rel-words/delete-rel-words.command-handler';
 
 const controllers = [
   FindRelHttpV1Controller,
@@ -30,10 +32,15 @@ const controllers = [
   GetRankingRelatedWordsHttpController,
   FindSearchKeywordHttpController,
   FindAutoCompleteHttpController,
+  DeleteRelWordsHttpController,
 ];
 const repositories: Provider[] = [
   {
     provide: RELWORDS_DI_TOKEN.FIND_ONE,
+    useClass: RelatedWordsRepository,
+  },
+  {
+    provide: RELWORDS_DI_TOKEN.UPDATE_RELWORDS,
     useClass: RelatedWordsRepository,
   },
   {
@@ -57,6 +64,7 @@ const handler = [
   UpdateAutoCompleteWordsCommandHandler,
   GetRankingRelatedWordsService,
   FindSearchKeywordQueryHandler,
+  DeleteRelWordsCommandHandler,
 ];
 @Module({
   imports: [
