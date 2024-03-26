@@ -25,15 +25,6 @@ export const zPaginatedQuery = z
  * @param enumElement
  */
 
-const storyBoardSchemaKey = [
-  'id',
-  'userId',
-  'title',
-  'isDraft',
-  'createdAt',
-  'updatedAt',
-] as const;
-
 export const zSortQuery = (enumElement: Array<string>) => {
   // if (!enumElement.length) {
   //   return z.object(undefined);
@@ -54,18 +45,6 @@ export const zSortQuery = (enumElement: Array<string>) => {
     .describe('소트 쿼리');
 };
 
-export const zSortSqlQuery = z
-  .object({
-    field: z
-      .enum(storyBoardSchemaKey)
-      .describe(
-        '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
-      )
-      .optional(),
-    param: z.enum(['asc', 'desc'] as const).optional(),
-  })
-  .describe('소트 쿼리');
-
 export const zOrderBy = z.object({
   field: z
     .string()
@@ -83,9 +62,7 @@ export const zPaginatedOffsetQuery = z.object({
   page: z.string().describe('현재 페이지 번호를 나타냅니다.').default('1'),
   offset: z.string().default('5').describe('건너뛸 데이터의 수를 나타냅니다'),
 });
-export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
-  .merge(zSortSqlQuery)
-  .describe('페이지네이션 쿼리 파라미터');
+
 export const zPaginatedIgniteQueryParams = zSearchKeyword
   .merge(
     zPaginatedOffsetQuery
@@ -128,3 +105,6 @@ export const zAuth = z.object({
     .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')")
     .optional(),
 });
+
+export const zSearchKeywordAndClusterNumberMulti =
+  zClusterNumberMulti.merge(zClusterNumberMulti);

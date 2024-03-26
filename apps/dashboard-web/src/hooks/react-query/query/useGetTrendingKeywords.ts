@@ -1,13 +1,9 @@
 import type { apiRouter } from '@dothis/dto';
-import { useQueryClient } from '@tanstack/react-query';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 import type { DeepRequired } from 'react-hook-form';
 
 import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
-import {
-  type TrendingQuery,
-  useTrendingQueryContext,
-} from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
+import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
 import { useIsSignedIn } from '@/store/authStore';
 import { apiClient } from '@/utils/api/apiClient';
@@ -26,26 +22,20 @@ const useGetTrendingKeywords = (
   {
     startDate,
     keywordList,
-    categoryList,
+    selectOptions,
     sort,
     order,
-  }: SortingQuery & TrendingQuery,
+    lastIndex_ID,
+  }: SortingQuery & TrendingQuery & { lastIndex_ID?: string },
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,
 ) => {
-  let date = startDate.format('YYYY-MM-DD');
-
-  const queryClient = useQueryClient();
-
-  const {
-    trendingQuery,
-    trendingQueryActions: { setStartDate },
-  } = useTrendingQueryContext('useGetTrendingKeywords');
+  const date = startDate.format('YYYY-MM-DD');
 
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
-    2,
+    1,
   ).hits.getWeeklyKeywordListWithPaging.useInfiniteQuery(
     TRENDING_KEYWORD_KEY.list([
       {
@@ -59,50 +49,22 @@ const useGetTrendingKeywords = (
     /**
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
-    (query) => {
-      return {
-        query: {
-          // pageParam이 boolean이면 첫페이지니깐 300
-          limit: isSignedIn ? String(!query.pageParam ? 300 : 30) : String(10),
-          // 첫페이지 limit가 300이여서 10개를 추가한 형태
-          page: query.pageParam ? query.pageParam + 10 : 1,
-          from: date,
-          order: order,
-          sort: sort === 'rank' ? 'keyword' : sort,
-        },
-      };
-    },
+    ({ pageParam = 0 }) => ({
+      query: {
+        limit: isSignedIn ? String(lastIndex_ID ? 30 : 300) : String(10),
+        from: date,
+        last: lastIndex_ID,
+        order: order,
+        sort: sort === 'rank' ? 'keyword' : sort,
+      },
+    }),
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.body.body?.count
-          ? lastPage.body.body.count >
-            allPages.flatMap((item) => item.body.body?.data).length
-            ? allPages.length
-            : false
-          : false;
-      },
-
-      onError: (err) => {
-        const hasData = queryClient.getQueryData(
-          TRENDING_KEYWORD_KEY.list([
-            {
-              date: date,
-              isSignedIn,
-              sort,
-              order,
-            },
-          ]),
-        );
-
-        if (
-          !hasData &&
-          !startDate.subtract(1, 'week').isBefore('2024-01-01', 'day')
-        ) {
-          setStartDate((prev) => prev.subtract(1, 'week'));
-        } else {
-          console.log('더 이상 데이터가 없다 정도');
-        }
+        // return lastPage.body.data.length < 10 || allPages.length > 4
+        //   ? false
+        //   : true;
+        return true;
       },
     },
   );
@@ -113,8 +75,8 @@ const useGetTrendingKeywords = (
 
   return {
     ...queryResults,
-    data: requiredQueryResult?.pages.flatMap((item) => item.body.body.data),
-    total: requiredQueryResult?.pages[0].body.body.count,
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data),
+    total: requiredQueryResult?.pages[0].body.total,
   };
 };
 

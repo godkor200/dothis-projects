@@ -101,7 +101,6 @@ const SearchBar = ({ setKeywordList }: Props) => {
                   .slice(0, 5)
                   .map((item) => (
                     <span
-                      key={item}
                       className="text-grey700 cursor-pointer text-[18px]"
                       onClick={() => {
                         if (!checkIsSignedIn()) {

@@ -11,6 +11,7 @@ export class GetWeeklyViewsQuery extends createZodDto(
   }
 }
 export class GetWeeklyViewsDto extends GetWeeklyViewsQuery {}
+export class GetWeeklyViewsDtoV2 extends GetWeeklyViewsQuery {}
 
 /**
  * zod enum은 조드에서 typescript enum 직접적 변환이 어려움

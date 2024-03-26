@@ -31,8 +31,7 @@ import {
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-const IgniteClient = require('apache-ignite-client');
-const IllegalStateError = IgniteClient.Errors.IllegalStateError;
+
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV1,
   g = c.getDailyViewsV1;

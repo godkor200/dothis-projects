@@ -14,17 +14,7 @@ interface Props {
 
 const WeekDateSlider = ({ startDate, setStartDate }: Props) => {
   const handleIncreaseDate = () => {
-    if (
-      startDate
-        .add(1, 'week')
-        .endOf('week')
-        .isSameOrAfter(
-          dayjs().day() === 0
-            ? dayjs().subtract(1, 'day')
-            : dayjs().startOf('week').add(1, 'day'),
-          'day',
-        )
-    ) {
+    if (startDate.add(1, 'week').isSameOrAfter(dayjs(), 'day')) {
       return;
     }
     setStartDate((prev) => prev.add(1, 'week'));

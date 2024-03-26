@@ -19,7 +19,7 @@ export class ChannelHistoryByChannelIdAdapter
    */
   async execute(ids: string[]): Promise<TChannelHistoryByChannelIdRes> {
     const tableName = `dothis.CHANNEL_HISTORY`;
-    const queryString = `SELECT DISTINCT ch.channel_id, ch.CHANNEL_SUBSCRIBERS, ch.YEAR, ch.MONTH, ch.DAY
+    const queryString = `SELECT DISTINCT ch.channel_id, ch.CHANNEL_SUBSCRIBERS, ch.CHANNEL_AVERAGE_VIEWS,ch.YEAR, ch.MONTH, ch.DAY
     FROM ${tableName} ch WHERE ch.channel_id IN ('${ids.join(`', '`)}') AND (
     (YEAR = 2024 AND MONTH = 2 AND DAY = 26)
     OR 

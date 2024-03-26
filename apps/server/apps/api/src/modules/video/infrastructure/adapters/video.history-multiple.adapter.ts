@@ -29,9 +29,9 @@ export class VideoHistoryMultipleAdapter
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedVideoAnalyticsData> {
     const { search, relatedCluster, relatedWords } = dao;
-    const tempCluster = [0, 1];
+
     let queryString = '';
-    tempCluster.forEach((cluster, index) => {
+    relatedCluster.forEach((cluster, index) => {
       let wordQuery = relatedWords
         .map(
           (word) =>
@@ -48,9 +48,9 @@ export class VideoHistoryMultipleAdapter
         AND (${wordQuery})
         AND VH.DAY = 31
         AND (
-    (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 26)
-    OR 
-    (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 25 AND NOT EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE YEAR = 2024 AND MONTH = 2 AND DAY = 26))
+              (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 26)
+              OR 
+              (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 25 AND NOT EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE YEAR = 2024 AND MONTH = 2 AND DAY = 26))
             )
         ) 
       `;
@@ -61,7 +61,7 @@ export class VideoHistoryMultipleAdapter
       const query = this.createDistributedJoinQuery(queryString);
 
       const cache = await this.client.getCache(
-        `DOTHIS.VIDEO_HISTORY_CLUSTER_${tempCluster[0]}_2024_1`,
+        `DOTHIS.VIDEO_HISTORY_CLUSTER_${relatedCluster[0]}_2024_1`,
       );
       const result = await cache.query(query);
       const resArr = await result.getAll();

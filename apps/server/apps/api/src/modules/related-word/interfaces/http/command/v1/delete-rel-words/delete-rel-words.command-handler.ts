@@ -2,13 +2,13 @@ import { DeleteRelWordsCommandDto } from '@Apps/modules/related-word/application
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/rel-words.enum.di-token.constant';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { RelatedWordModel } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Err, Ok, Result } from 'oxide.ts';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 
 export type TDeleteRelWordsCommandHandlerRes = Result<
   RelatedWordModel,

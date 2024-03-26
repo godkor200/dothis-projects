@@ -29,7 +29,7 @@ import { TGetRankingRelatedWordsRes } from '@Apps/modules/related-word/applicati
 const c = nestControllerContract(apiRouter.relatedWords);
 const { rankingRelatedWords } = c;
 const { summary, description } = rankingRelatedWords;
-@ApiTags('관련어')
+@ApiTags('연관어')
 @Controller()
 export class GetRankingRelatedWordsHttpController {
   constructor(private readonly queryBus: QueryBus) {}

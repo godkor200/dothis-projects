@@ -5,6 +5,9 @@ import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dt
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { ExpectedViewsV1Dto } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
+import { FindAdsInfoDto } from '@Apps/modules/video/application/dtos/find-ads-info.dtos';
+import { FindAdsTopHitsDto } from '@Apps/modules/video/application/dtos/find-ads-top-hits.dto';
+import { GetProbabilitySuccessDto } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
 
 export class FindVideosDao extends FindAccumulateQuery {
   readonly cluster: string;
@@ -75,5 +78,32 @@ export class GetRelatedVideoChannelHistoryDao
     this.from = props.from;
     this.to = props.to;
     this.relatedCluster = propsClusterNumber;
+  }
+}
+export class GetAdsInfoResDao extends FindAdsInfoDto {
+  public readonly relatedCluster: string[];
+
+  constructor(props: FindAdsInfoDto) {
+    super(props);
+    const propsClusterNumber = !Array.isArray(props.clusterNumber)
+      ? [props.clusterNumber]
+      : props.clusterNumber;
+    this.relatedCluster = propsClusterNumber;
+  }
+}
+export class GetVideoAdsTopHitsDao extends FindAdsTopHitsDto {
+  public readonly relatedCluster: string[];
+
+  constructor(props: FindAdsTopHitsDto) {
+    super(props);
+    const propsClusterNumber = !Array.isArray(props.clusterNumber)
+      ? [props.clusterNumber]
+      : props.clusterNumber;
+    this.relatedCluster = propsClusterNumber;
+  }
+}
+export class GetVideoAndChannelViewsByDateAndKeywordsDao extends GetVideoAdsTopHitsDao {
+  constructor(props: GetVideoAndChannelViewsByDateAndKeywordsDao) {
+    super(props);
   }
 }

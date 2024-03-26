@@ -1,4 +1,5 @@
 import {
+  GetVideoViewsMatchingSearchOnSpecificDateDao,
   RelatedVideoAndCountByDayDao,
   RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoDao,
@@ -7,23 +8,31 @@ import { Result } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import {
+  GetAdsInfoResDao,
   GetRelatedLastVideoAndVideoHistory,
   GetRelatedLastVideoAndVideoHistoryEach,
   GetRelatedVideoChannelHistoryDao,
   GetRelatedVideoHistory,
+  GetVideoAdsTopHitsDao,
+  GetVideoAndChannelViewsByDateAndKeywordsDao,
   GetVideoDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import {
   CountByDayRes,
+  GetVideoAndChannelViewsByDateAndKeywordsRes,
+  GetVideoViewsMatchingSearchOnSpecificDateRes,
   IVideoSchema,
 } from '@Apps/modules/video/infrastructure/daos/video.res';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { TGetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
 import {
-  TGetRelatedVideoChannelHistoryRes,
-  VideoChannelHistoryAdapter,
-} from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
+  CacheDoesNotFoundException,
+  TableNotFoundException,
+} from '@Libs/commons/src/exceptions/exceptions';
+
+import { TGetRelatedVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
+import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
+import { GetAdsRelatedTopHitsRes } from '@dothis/dto';
+import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -39,12 +48,29 @@ export type TRelatedEntireCount = Result<
   number[][],
   VideoNotFoundError | TableNotFoundException
 >;
-
+export type TGetRelatedLastVideoAndVideoHistory = Result<
+  GetRelatedVideoAndVideoHistory[],
+  | VideoHistoryNotFoundError
+  | TableNotFoundException
+  | CacheDoesNotFoundException
+>;
 export type TGetVideoWithChannelInfo = Result<
   IVideoSchema,
   VideoNotFoundError | TableNotFoundException
 >;
 export type TRelatedVideosCountByDay = Result<CountByDayRes[], any>;
+export type TFindAdsTopHitsRepoRes = Result<
+  GetAdsRelatedTopHitsRes[],
+  VideoNotFoundError | TableNotFoundException
+>;
+export type TGetVideoAndChannelViewsByDateAndKeywordsRes = Result<
+  GetVideoAndChannelViewsByDateAndKeywordsRes[],
+  TableNotFoundException | VideoNotFoundError
+>;
+export type TGetVideoViewsMatchingSearchOnSpecificDateRes = Result<
+  GetVideoViewsMatchingSearchOnSpecificDateRes[],
+  VideoNotFoundError | TableNotFoundException | CacheDoesNotFoundException
+>;
 export interface IGetRelatedVideoOutboundPort {
   execute(props: SearchRelationVideoDao): Promise<TRelatedVideos>;
 }
@@ -77,4 +103,20 @@ export interface IGetRelatedVideoChannelHistoryOutboundPort {
   execute(
     dao: GetRelatedVideoChannelHistoryDao,
   ): Promise<TGetRelatedVideoChannelHistoryRes>;
+}
+export interface IGetVideoAdsInfoAdapterOutboundPort {
+  execute(dao: GetAdsInfoResDao): Promise<TFindAdsInfoRes>;
+}
+export interface IGetVideoAdsTopHitsAdapterOutboundPort {
+  execute(dao: GetVideoAdsTopHitsDao): Promise<TFindAdsTopHitsRepoRes>;
+}
+export interface IGetVideoAndChannelViewsByDateAndKeywordsOutboundPort {
+  execute(
+    dao: GetVideoAndChannelViewsByDateAndKeywordsDao,
+  ): Promise<TGetVideoAndChannelViewsByDateAndKeywordsRes>;
+}
+export interface IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort {
+  execute(
+    dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
+  ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes>;
 }

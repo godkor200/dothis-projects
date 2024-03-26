@@ -1,11 +1,11 @@
 import type {} from 'zod';
 import { c } from '../contract';
 import {
+  zPaginatedSqlQueryParams,
   zPostStoryBoardBody,
   zPostStoryBoardMainParams,
   zPostStoryBoardMemoParams,
   zPostStoryBoardOverviewParams,
-  zPostStoryBoardPathParams,
   zPostStoryBoardReferenceParams,
   zStoryBoardCreateArrayRes,
   zStoryBoardCreateRes,
@@ -14,7 +14,7 @@ import {
 } from './story-board.zod';
 import type {} from '@ts-rest/core';
 
-import { zAuth, zPaginatedSqlQueryParams } from '../common.model';
+import { zAuth } from '../common.model';
 import { z } from 'zod';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';

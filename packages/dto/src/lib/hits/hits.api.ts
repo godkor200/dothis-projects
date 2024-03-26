@@ -50,6 +50,18 @@ export const hitsApi = c.router({
     summary: '주간 키워드 리스트를 가져옵니다',
     description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',
   },
+  getWeeklyKeywordListWithPagingV2: {
+    method: 'GET',
+    path: `${viewApiUrl}${weeklyApiUrl}-list`,
+    query: zGetWeeklyViewsQuery,
+    responses: {
+      200: zWeeklyKeywordsList,
+      ...zErrResBase,
+    },
+    summary:
+      '주간 키워드 리스트를 가져옵니다. 파티셔닝 된 테이블에서 가져옵니다.',
+    description: '날짜(from)로 주간 키워드 리스트를 출력합니다.',
+  },
   getExpectedViews: {
     method: 'GET',
     path: `${viewApiUrl}${expectedHitsApiUrl}/:clusterNumber`,
@@ -62,5 +74,18 @@ export const hitsApi = c.router({
     summary: '기대 조회수를 가져옵니다',
     description:
       '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다. v2는 v1에 비하면 개선된 버전입니다. 전체를 불러오기 때문에 한번만 호출하면 됩니다',
+  },
+  getProbabilitySuccess: {
+    method: 'GET',
+    path: `${viewApiUrl}/:clusterNumber/success-rate`,
+    query: zFindVideoBySearchKeyword,
+    pathParams: zClusterNumberMulti,
+    responses: {
+      200: zExpectedViews,
+      ...zErrResBase,
+    },
+    summary: '관련어, 연관어 영상들의 성공확률을 가져옵니다',
+    description:
+      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 성공 확률을 가져옵니다.',
   },
 });

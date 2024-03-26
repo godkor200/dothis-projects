@@ -11,17 +11,19 @@ const IgniteClientConfiguration = IgniteClient.IgniteClientConfiguration;
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 @Injectable()
 export class IgniteService implements OnModuleInit, OnModuleDestroy {
-  readonly client: typeof IgniteClient;
+  public readonly client: typeof IgniteClient;
 
   public readonly SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
-  protected readonly logger: Logger = new Logger(IgniteService.name);
+  private readonly logger: Logger = new Logger(IgniteService.name);
 
   constructor(private configService: ConfigService) {
     // Create a new Ignite client instance.
     this.client = new IgniteClient(this.onStateChanged.bind(this));
   }
   public createDistributedJoinQuery(sqlQuery: string) {
-    return new SqlFieldsQuery(sqlQuery).setDistributedJoins(true);
+    return new SqlFieldsQuery(sqlQuery)
+      .setDistributedJoins(true)
+      .setLazy(false);
   }
   /*
    * ignite 재시도 로직
@@ -85,7 +87,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  private onStateChanged = (state: number, reason?: string): void => {
+  private onStateChanged(state: number, reason?: string): void {
     switch (state) {
       case IgniteClient.STATE.CONNECTED:
         this.logger.log('Client is started');
@@ -100,12 +102,17 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
         }
         break;
     }
-  };
-  public currentDate = () => {
+  }
+  public currentDate(): {
+    currentDate: Date;
+    currentYear: number;
+    currentMonth: number;
+    currentDay: number;
+  } {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
     const currentDay = currentDate.getDay();
     return { currentDate, currentYear, currentMonth, currentDay };
-  };
+  }
 }

@@ -6,7 +6,6 @@ import {
   zPaginatedQuery,
   zSortQuery,
   zPaginatedOffsetQuery,
-  zWeeklyKeywordData,
 } from '../common.model';
 
 export const zDailyViewData = z.object({
@@ -29,48 +28,61 @@ const OsCommonSchema = z.object({
   _score: z.number(),
 });
 
-const createWeeklyKeywordsListSourceSchema = {
-  id: z.number().describe('조회수의 고유 식별자'),
-  ranking: z.number().nullable().describe('조회수의 순위'),
-  keyword: z.string().describe('탐색어'),
-  category: z.string().describe('연관어'),
-  weekly_views: z.number().describe('주간 조회수'),
-  video_count: z.number().describe('비디오 수'),
-  competitive: z.number().describe('경쟁강도'),
-  mega_channel: z.number().describe('10만이상 구독자 채널 수'),
-  changes: z.number().describe('순위 변동'),
-  YEAR: z.number().nullable().describe('조회수 레코드의 연도'),
-  MONTH: z.number().nullable().describe('조회수 레코드의 월'),
-  DAY: z.number().nullable().describe('조회수 레코드의 일'),
-};
-
-const createWeeklyKeywordsListSourceSchema_V2 = {
-  id: z.number().describe('조회수의 고유 식별자'),
-  ranking: z.number().nullable().describe('조회수의 순위'),
-  keyword: z.string().describe('탐색어'),
-  category: z.string().describe('연관어'),
-  weeklyViews: z.number().describe('주간 조회수'),
-  videoCount: z.number().describe('비디오 수'),
-  competitive: z.number().describe('경쟁강도'),
-  megaChannel: z.number().describe('10만이상 구독자 채널 수'),
-  changes: z.number().describe('순위 변동'),
-  yarn: z.number().nullable().describe('조회수 레코드의 연도'),
-  month: z.number().nullable().describe('조회수 레코드의 월'),
-  day: z.number().nullable().describe('조회수 레코드의 일'),
-};
+/**
+ * weekly-view models
+ */
+export const zCreateWeeklyKeywordsListSourceSchema = z
+  .object({
+    id: z.number().int().positive().describe('조회수의 고유 식별자'),
+    ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
+    keyword: z.string().max(30).describe('탐색어'),
+    category: z.string().max(30).describe('연관어'),
+    weekly_views: z.number().int().positive().describe('주간 조회수'),
+    video_count: z.number().int().positive().describe('비디오 수'),
+    competitive: z.number().int().describe('경쟁강도'),
+    mega_channel: z
+      .number()
+      .int()
+      .positive()
+      .describe('10만이상 구독자 채널 수'),
+    changes: z.number().int().describe('순위 변동'),
+    YEAR: z
+      .number()
+      .int()
+      .positive()
+      .nullable()
+      .describe('조회수 레코드의 연도'),
+    MONTH: z
+      .number()
+      .int()
+      .positive()
+      .min(1)
+      .max(12)
+      .nullable()
+      .describe('조회수 레코드의 월'),
+    DAY: z
+      .number()
+      .int()
+      .positive()
+      .min(1)
+      .max(31)
+      .nullable()
+      .describe('조회수 레코드의 일'),
+  })
+  .strict();
 export const SortOrderQuery = Object.keys(
-  createWeeklyKeywordsListSourceSchema_V2,
+  zCreateWeeklyKeywordsListSourceSchema.shape,
 );
 
-export const zWeeklyKeywordsListSourceSchema = z.object(
-  createWeeklyKeywordsListSourceSchema_V2,
-);
+export const zWeeklyKeywordsListSourceSchema =
+  zCreateWeeklyKeywordsListSourceSchema;
 
-export const zWeeklyKeywordsList = z.object({
-  body: zWeeklyKeywordData.merge(
-    dataObject(z.array(zWeeklyKeywordsListSourceSchema)),
-  ),
-});
+export const zWeeklyKeywordsListArray = z.array(
+  zCreateWeeklyKeywordsListSourceSchema,
+);
+export const zWeeklyKeywordsList = zTotalData.merge(
+  dataObject(zWeeklyKeywordsListArray),
+);
 
 const VideoHistorySourceSchema = OsCommonSchema.extend({
   video_id: z.string(),
@@ -88,3 +100,4 @@ export const zVideoHistory = OsCommonSchema.extend({
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
 export const zSortWeeklyViews = zSortQuery(SortOrderQuery);
+export type WeeklyHitsModel = z.TypeOf<typeof zWeeklyKeywordsListSourceSchema>;

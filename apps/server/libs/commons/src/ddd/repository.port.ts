@@ -1,9 +1,7 @@
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
-import {
-  zOrderBy,
-  zPaginatedSqlQueryParams,
-} from '@dothis/dto/dist/lib/common.model';
+import { zOrderBy } from '@dothis/dto/dist/lib/common.model';
 import { z } from 'zod';
+import { zPaginatedSqlQueryParams } from '@dothis/dto';
 
 export class Paginated<T> {
   readonly count: number;
@@ -32,7 +30,12 @@ export interface RepositoryPort<Entity> {
   updateOne(option: updateObject): Promise<IRes<void>>;
   findOneById(id: string): Promise<Entity>;
   findAll(): Promise<Entity[]>;
-  findAllPaginated(params: PaginatedQueryParams): Promise<Paginated<Entity>>;
+  findAllPaginated(
+    params: PaginatedQueryParams,
+    where: any,
+    sort: string,
+    order: 'ASC' | 'DESC',
+  ): Promise<Paginated<Entity>>;
   delete(id: string): Promise<boolean>;
   transaction<T>(handler: () => Promise<T>): Promise<T | void>;
 }
