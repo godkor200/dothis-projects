@@ -39,11 +39,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
 
     const username = this.configService.get<string>('ignite.IGNITE_USER_NAME');
     const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
-    const igniteClientConfiguration = new IgniteClientConfiguration(
-      endpoint1,
-      endpoint2,
-      endpoint3,
-    )
+    const igniteClientConfiguration = new IgniteClientConfiguration(endpoint1)
       .setUserName(username)
       .setPassword(password);
 
