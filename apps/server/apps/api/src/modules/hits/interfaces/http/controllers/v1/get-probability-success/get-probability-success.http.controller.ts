@@ -4,6 +4,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
@@ -14,7 +15,7 @@ import {
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { match } from 'oxide.ts';
-import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+
 import {
   GetProbabilitySuccessDto,
   GetProbabilitySuccessQuery,
@@ -31,9 +32,12 @@ import {
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
+import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 const c = nestControllerContract(apiRouter.hits);
 const { getProbabilitySuccess } = c;
 const { summary, description } = getProbabilitySuccess;
+
 @ApiTags('조회수')
 @Controller()
 export class GetProbabilitySuccessHttpController {
@@ -50,13 +54,20 @@ export class GetProbabilitySuccessHttpController {
   @ApiOkResponse({
     type: GetProbabilityResultType,
   })
+  @ApiParam({
+    name: 'clusterNumber',
+    type: String,
+    required: true,
+    description: '클러스터 번호 단일, 멀티 둘다 가능',
+    example: '0, 1',
+  })
   async execute(
-    @Param() param: ClusterNumberMulti,
+    @Param(ParseArrayPipe) param: IParamsInterface,
     @Query() query: GetProbabilitySuccessQuery,
   ) {
     return tsRestHandler(getProbabilitySuccess, async ({ params, query }) => {
       const dto = new GetProbabilitySuccessDto({
-        clusterNumber: params.clusterNumber,
+        clusterNumber: param.clusterNumber,
         ...query,
       });
       const result: TGetProbabilityRes = await this.queryBus.execute(dto);
