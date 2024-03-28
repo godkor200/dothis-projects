@@ -12,7 +12,7 @@ import {
 } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { z } from 'zod';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { GetProbabilitySuccessDto } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
+import { GetProbabilitySuccessQuery } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
 export type TWeeklyhitsSqlField = z.TypeOf<
   typeof zGetWeeklyViewsQuery.shape.sort
 >;
@@ -56,14 +56,13 @@ export class GetWeeklyViewsDaoV2 {
     this.order = props.order;
   }
 }
-export class GetVideoViewsMatchingSearchOnSpecificDateDao extends GetProbabilitySuccessDto {
+export class GetVideoViewsMatchingSearchOnSpecificDateDao extends GetProbabilitySuccessQuery {
   public readonly relatedCluster: string[];
 
-  constructor(props: GetProbabilitySuccessDto) {
-    super(props);
-    const propsClusterNumber = !Array.isArray(props.clusterNumber)
-      ? [props.clusterNumber]
-      : props.clusterNumber;
-    this.relatedCluster = propsClusterNumber;
+  public readonly columns?: string[];
+
+  constructor(props: GetVideoViewsMatchingSearchOnSpecificDateDao) {
+    super();
+    Object.assign(this, props);
   }
 }
