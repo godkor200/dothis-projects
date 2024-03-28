@@ -67,8 +67,8 @@ export type TGetVideoAndChannelViewsByDateAndKeywordsRes = Result<
   GetVideoAndChannelViewsByDateAndKeywordsRes[],
   TableNotFoundException | VideoNotFoundError
 >;
-export type TGetVideoViewsMatchingSearchOnSpecificDateRes = Result<
-  GetVideoViewsMatchingSearchOnSpecificDateRes[],
+export type TGetVideoViewsMatchingSearchOnSpecificDateRes<T> = Result<
+  T[],
   VideoNotFoundError | TableNotFoundException | CacheDoesNotFoundException
 >;
 export interface IGetRelatedVideoOutboundPort {
@@ -116,7 +116,7 @@ export interface IGetVideoAndChannelViewsByDateAndKeywordsOutboundPort {
   ): Promise<TGetVideoAndChannelViewsByDateAndKeywordsRes>;
 }
 export interface IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort {
-  execute(
+  execute<T>(
     dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
-  ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes>;
+  ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes<T>>;
 }

@@ -110,4 +110,18 @@ export const videoApi = c.router({
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 누적 영상수를 가져옵니다 .기존에꺼 대비해서 한번만 호출하면 됩니다.',
   },
+  getPerformanceByVideoLength: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/:clusterNumber/performance/duration`,
+    pathParams: zClusterNumberMulti,
+    query: zFindAccumulateQuery,
+    responses: {
+      200: zAccVideoModel,
+      ...zErrResBase,
+    },
+    summary:
+      '관련어와 탐색어를 기준으로 영상 길이별 조회수/성과 분포를 가져옵니다.',
+    description:
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 영상 길이별 조회수/성과 분포를 가져옵니다.',
+  },
 });
