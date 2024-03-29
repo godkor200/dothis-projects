@@ -14,10 +14,12 @@ export const metadata: Metadata = {
 
 const ViewsCount = () => {
   return (
-    <li className={styles.container}>
+    <div className={styles.container}>
       <h1>{'유튜브 조회수 카운팅 기준은?'}</h1>
       <p className={styles.date}>{'2023.09.08. 11:57'}</p>
       <div className={styles.contentDivision}>
+        <img src={'/images/blog/blog-1-thumbnail.png'} alt="1-1" />
+        <br />
         <p>
           안녕하세요! 영상 기획 어시스턴트 두디스입니다. 오늘은 유튜브 영상
           조회수와 노출수, 카운팅 기준에 대해 알려드리려고 합니다.
@@ -222,7 +224,7 @@ const ViewsCount = () => {
         유튜브 영상 기획 서비스, 두디스(DOTHIS) 출시가 되었습니다! 지금 접속해서
         무료로 체험하세요.
       </a>
-    </li>
+    </div>
   );
 };
 

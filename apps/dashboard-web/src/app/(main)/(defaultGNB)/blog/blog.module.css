@@ -1,37 +1,19 @@
 .container {
-  width: 480px;
+  width: 360px;
   margin: 0 auto;
 
-  --font-size-xlg: 2.5rem;
-  --font-size-lg: 2rem;
-  --font-size-md: 1.5rem;
-  --font-size-sm: 1rem;
-
-  @media (min-width: 768px) {
-    width: 600px;
-
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
-  }
+  --font-size-xlg: 1.75rem;
+  --font-size-lg: 1.375rem;
+  --font-size-md: 1.125rem;
+  --font-size-sm: 1.0rem;
 
   @media (min-width: 1024px) {
-    width: 900px;
+    width: 800px;
 
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
-  }
-
-  @media (min-width: 1440px) {
-    width: 1320px;
-
-    --font-size-xlg: 3.0rem;
-    --font-size-lg: 2.0rem;
-    --font-size-md: 1.5rem;
-    --font-size-sm: 1.25rem;
+    --font-size-xlg: 2.25rem;
+    --font-size-lg: 1.5rem;
+    --font-size-md: 1.25rem;
+    --font-size-sm: 1.125rem;
   }
 
   h1,
@@ -83,7 +65,7 @@
   }
 
   .date {
-    color: #adb5bd;
+    color: #71717A;
   }
 
   p {

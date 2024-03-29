@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const YoutubeStudio = () => {
   return (
-    <li className={styles.container}>
+    <div className={styles.container}>
       <h1>{'유튜브 스튜디오 데이터 뜯어보기 (1): 트래픽 소스 분석'}</h1>
       <p className={styles.date}>{'2023.07.27. 17:37'}</p>
       <div className={styles.contentDivision}>
@@ -176,7 +176,7 @@ const YoutubeStudio = () => {
         <br />
         <a href="https://dothis.kr/">https://dothis.kr/</a>
       </p>
-    </li>
+    </div>
   );
 };
 
