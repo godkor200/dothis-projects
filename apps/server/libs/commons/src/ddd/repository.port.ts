@@ -1,5 +1,4 @@
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { zOrderBy } from '@dothis/dto/dist/lib/common.model';
 import { z } from 'zod';
 import { zPaginatedSqlQueryParams } from '@dothis/dto';
 
@@ -16,7 +15,6 @@ export class Paginated<T> {
     this.data = props.data;
   }
 }
-export type OrderBy = z.TypeOf<typeof zOrderBy>;
 
 export type PaginatedQueryParams = z.TypeOf<typeof zPaginatedSqlQueryParams>;
 

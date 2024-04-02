@@ -47,13 +47,13 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .createQueryBuilder(this.tableName)
       .where({ ...where })
       .limit(Number(params.limit))
-      .offset(Number(params.offset))
+      .offset(Number(params.limit) * Number(params.page))
       .orderBy(sort, order)
       .getManyAndCount();
     return new Paginated({
       count: total,
       limit: Number(params.limit),
-      page: Number(params.offset) - 1,
+      page: Number(params.page),
       data,
     });
   }
