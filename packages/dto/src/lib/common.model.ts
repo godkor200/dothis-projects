@@ -24,15 +24,23 @@ export const zPaginatedQuery = z
  * 정렬 쿼리
  * @param enumElement
  */
+// 카멜케이스를 스네이크 케이스로 변환하는 함수
+const camelToSnakeCase = (str: string) =>
+  // 대문자로만 구성된 단어는 변환하지 않음
+  /^[A-Z]+$/.test(str)
+    ? str
+    : // 카멜케이스를 스네이크 케이스로 변환
+      str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 
 export const zSortQuery = (enumElement: Array<string>) => {
   // if (!enumElement.length) {
   //   return z.object(undefined);
   // }
+  const snakeCaseEnumElement = enumElement.map(camelToSnakeCase);
   return z
     .object({
       sort: z
-        .enum([enumElement[0], ...enumElement.slice(1)])
+        .enum([snakeCaseEnumElement[0], ...snakeCaseEnumElement.slice(1)])
         .describe(
           '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
         )

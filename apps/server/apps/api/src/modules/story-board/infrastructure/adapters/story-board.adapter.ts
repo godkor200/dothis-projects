@@ -18,7 +18,7 @@ export class StoryBoardAdapter
   extends SqlRepositoryBase<StoryBoardEntity, TRecentStoryBoardModel>
   implements StoryBoardOutboundPort
 {
-  protected tableName = 'story-board';
+  protected tableName = 'story_board';
   protected schema = zStoryBoardSchema;
 
   @InjectRepository(StoryBoardEntity)
