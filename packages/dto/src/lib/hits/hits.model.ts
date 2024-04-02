@@ -1,12 +1,5 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zTotalData,
-  zDateQuery,
-  zPaginatedQuery,
-  zSortQuery,
-  zPaginatedOffsetQuery,
-} from '../common.model';
+import { dataObject, zTotalData, zSortQuery } from '../common.model';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -37,10 +30,10 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
     ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
-    weekly_views: z.number().int().positive().describe('주간 조회수'),
-    video_count: z.number().int().positive().describe('비디오 수'),
+    weeklyViews: z.number().int().positive().describe('주간 조회수'),
+    videoCount: z.number().int().positive().describe('비디오 수'),
     competitive: z.number().int().describe('경쟁강도'),
-    mega_channel: z
+    megaChannel: z
       .number()
       .int()
       .positive()

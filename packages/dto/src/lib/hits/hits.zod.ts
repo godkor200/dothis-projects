@@ -2,7 +2,6 @@ import { zDateQuery, zPaginatedOffsetQuery } from '../common.model';
 import { zSortWeeklyViews } from './hits.model';
 import { z } from 'zod';
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
-  .omit({ offset: true })
   .merge(zDateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews);
 
