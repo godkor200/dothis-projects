@@ -34,32 +34,33 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   ): Promise<void> {
     let retries = 0;
     const endpoint1 = this.configService.get<string>('ignite.IGNITE_ENDPOINT1');
-    const endpoint2 = this.configService.get<string>('ignite.IGNITE_ENDPOINT2');
-    const endpoint3 = this.configService.get<string>('ignite.IGNITE_ENDPOINT3');
-
     const username = this.configService.get<string>('ignite.IGNITE_USER_NAME');
     const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
     const igniteClientConfiguration = new IgniteClientConfiguration(endpoint1)
       .setUserName(username)
       .setPassword(password);
 
-    const attemptConnection = async () => {
+    const attemptConnection = async (): Promise<void> => {
+      if (retries >= maxRetries) {
+        this.logger.error(
+          'Max retries reached. Ignite client failed to connect.',
+        );
+      }
+
       try {
-        await this.client.connect(igniteClientConfiguration);
+        const resAttemptConnection = await this.client.connect(
+          igniteClientConfiguration,
+        );
+
         this.logger.log('Successfully connected to Ignite server.');
       } catch (err) {
         this.logger.error(`Failed to connect to Ignite server: ${err.message}`);
-        if (retries < maxRetries) {
-          retries++;
-          this.logger.log(
-            `Attempting to reconnect... (${retries}/${maxRetries})`,
-          );
-          setTimeout(attemptConnection, retryDelay);
-        } else {
-          this.logger.error(
-            'Max retries reached. Ignite client failed to connect.',
-          );
-        }
+        retries++;
+        this.logger.log(
+          `Attempting to reconnect... (${retries}/${maxRetries})`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, retryDelay));
+        await attemptConnection();
       }
     };
 
