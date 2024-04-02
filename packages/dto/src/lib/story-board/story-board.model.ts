@@ -8,6 +8,7 @@ const zStoryBoardSchema = z
     isDraft: z.boolean().describe('임시 저장 여부'),
     createdAt: z.date().describe('생성 날짜'),
     updatedAt: z.date().describe('최근 수정 날짜'),
+    author: z.string().describe('작성자'),
   })
   .describe('스토리 보드의 기본 정보를 나타내는 스키마');
 
@@ -21,6 +22,7 @@ const zStoryBoardOverviewSchema = z
     createdAt: z.date().describe('생성 날짜'),
     updatedAt: z.date().describe('최근 수정 날짜'),
     boardId: z.number().describe('스토리 보드의 ID'),
+    createDate: z.date().describe('작성 일자'),
   })
   .describe('스토리 보드의 세부 정보를 나타내는 스키마');
 
