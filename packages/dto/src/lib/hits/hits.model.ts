@@ -15,12 +15,6 @@ export const zDailyViewData = z.object({
 
 export const zDailyViews = dataObject(z.array(zDailyViewData));
 
-const OsCommonSchema = z.object({
-  _index: z.string(),
-  _id: z.string(),
-  _score: z.number(),
-});
-
 /**
  * weekly-view models
  */
@@ -76,19 +70,6 @@ export const zWeeklyKeywordsListArray = z.array(
 export const zWeeklyKeywordsList = zTotalData.merge(
   dataObject(zWeeklyKeywordsListArray),
 );
-
-const VideoHistorySourceSchema = OsCommonSchema.extend({
-  video_id: z.string(),
-  video_views: z.number(),
-  video_likes: z.number(),
-  video_comments: z.number(),
-  crawled_date: z.string(),
-  performance: z.number(),
-});
-
-export const zVideoHistory = OsCommonSchema.extend({
-  _source: VideoHistorySourceSchema,
-});
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 

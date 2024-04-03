@@ -9,6 +9,7 @@ export class ParseArrayPipe
     metadata: ArgumentMetadata,
   ): Record<string, unknown> {
     // 객체의 각 속성을 순회하며 처리
+    console.log(value);
     Object.keys(value).forEach((key) => {
       const val = value[key];
       if (typeof val === 'string') {

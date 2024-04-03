@@ -5,6 +5,10 @@ export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
   .merge(zDateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews);
 
+export const zGetWeeklyViewsBySomeQuery = zDateQuery
+  .pick({ from: true })
+  .merge(zSortWeeklyViews);
+
 export const zGetProbabilityRes = z.object({
   totalVideoCount: z
     .number()

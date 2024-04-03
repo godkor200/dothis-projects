@@ -13,7 +13,18 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract tableName: string;
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
-
+  public parseFrom(from: string): {
+    year: number;
+    month: number;
+    day: number;
+  } {
+    const dateParts = from.split('-').map((part) => parseInt(part, 10));
+    return {
+      year: dateParts[0],
+      month: dateParts[1],
+      day: dateParts[2],
+    };
+  }
   async updateOne(params: updateObject): Promise<IRes<void>> {
     const res = await this.repository
       .createQueryBuilder()

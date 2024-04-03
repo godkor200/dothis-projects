@@ -91,7 +91,12 @@ export const zClusterNumberMulti = z.object({
       '클러스터 번호 하나 단독, 다수의 클러스터로 페이지네이션 합니다. ex) 1,2,3,4,5 ',
     ),
 });
-
+export const zKeywordsMulti = z.object({
+  keywords: z
+    .string()
+    .default('0')
+    .describe('키워드 하나 단독, 다수로 필터링합니다. ex) 캠핑,캠퍼,설악산'),
+});
 export const zAuth = z.object({
   Authorization: z
     .string()
