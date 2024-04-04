@@ -1,9 +1,10 @@
-import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
+import { Controller, NotFoundException, Query } from '@nestjs/common';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
-  ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
@@ -16,13 +17,13 @@ import { apiRouter } from '@dothis/dto';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 import {
   GetSomeWeeklyHitsDto,
-  GetSomeWeeklyHitsQuery,
+  GetSomeWeeklyHitsQueryInterface,
 } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';
 import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsKeywordInterface } from '@Libs/commons/src/abstract/applications.abstract';
 import { TGetSomeWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-some-weekly-hits.v1.query-handler';
 import { match } from 'oxide.ts';
 import {
+  GetWeeklyKeywordsListResType,
   IRes,
   TTsRestRes,
   WeeklyKeywordsRes,
@@ -41,24 +42,74 @@ export class GetSomeWeeklyHitsV1HttpController {
     summary,
     description,
   })
+  @ApiOkResponse({ type: GetWeeklyKeywordsListResType })
   @ApiNotFoundResponse({ description: WeeklyViewsError.message })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
-  @ApiParam({
-    name: 'keywords',
+  @ApiQuery({
+    name: 'from',
     type: String,
     required: true,
-    description: 'keyword 단일, 멀티 둘다 가능',
+    description: '언제부터 날짜',
+    example: '2024-01-01',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: String,
+    required: true,
+    description: '한 페이지에 표시할 데이터의 수',
+    example: '5',
+  })
+  @ApiQuery({
+    name: 'page',
+    type: String,
+    required: true,
+    description: '현재 페이지 번호를 나타냅니다.',
+    example: '1',
+  })
+  @ApiQuery({
+    name: 'sort',
+    type: String,
+    required: false,
+    description: '정렬에 사용될 필드 이름을 나타냅니다.',
+    enum: [
+      'id',
+      'ranking',
+      'keyword',
+      'category',
+      'weekly_views',
+      'video_count',
+      'competitive',
+      'mega_channel',
+      'changes',
+      'YEAR',
+      'MONTH',
+      'DAY',
+    ],
+  })
+  @ApiQuery({
+    name: 'order',
+    type: String,
+    required: false,
+    description: '정렬 순서를 나타냅니다. 기본은 asc 입니다.',
+    enum: ['asc', 'desc'],
+  })
+  @ApiQuery({
+    name: 'keywords',
+    type: String,
+    required: false,
+    description: '검색 키워드',
     example: '캠핑, 캠퍼, 설악산',
   })
-  async execute(
-    @Query() query: GetSomeWeeklyHitsQuery,
-    @Param(ParseArrayPipe) param: IParamsKeywordInterface,
-  ) {
-    return tsRestHandler(getWeeklyKeywordSome, async ({ query, params }) => {
-      const dto = new GetSomeWeeklyHitsDto({
-        keywords: param.keywords,
-        ...query,
-      });
+  @ApiQuery({
+    name: 'categoryNumbers',
+    type: String,
+    required: false,
+    description: '카테고리 번호',
+    example: '32, 42, 11',
+  })
+  async execute(@Query(ParseArrayPipe) query: GetSomeWeeklyHitsQueryInterface) {
+    return tsRestHandler(getWeeklyKeywordSome, async () => {
+      const dto = new GetSomeWeeklyHitsDto(query);
       const result: TGetSomeWeeklyHitsRes = await this.queryBus.execute(dto);
 
       return match<

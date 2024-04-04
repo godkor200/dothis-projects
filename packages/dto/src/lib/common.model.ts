@@ -97,12 +97,18 @@ export const zKeywordsMulti = z.object({
     .default('0')
     .describe('키워드 하나 단독, 다수로 필터링합니다. ex) 캠핑,캠퍼,설악산'),
 });
+
+export const zCategoryNumberMulti = z.object({
+  categoryNumbers: z
+    .string()
+    .default('0')
+    .describe(
+      '카테고리 번호 하나 단독, 다수의 카테고리로 페이지네이션 합니다. ex) 1, 2, 3, 4, 5 ',
+    ),
+});
 export const zAuth = z.object({
   Authorization: z
     .string()
     .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')")
     .optional(),
 });
-
-export const zSearchKeywordAndClusterNumberMulti =
-  zClusterNumberMulti.merge(zClusterNumberMulti);

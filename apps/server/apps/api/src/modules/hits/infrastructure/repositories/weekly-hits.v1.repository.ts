@@ -11,6 +11,7 @@ import { GetSomeWeeklyViewsDao } from '@Apps/modules/hits/infrastructure/daos/hi
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
+import { Paginated } from '@Libs/commons/src';
 
 export class WeeklyHitsV1Repository
   extends SqlRepositoryBase<WeeklyHitsEntity, WeeklyHitsModel>
@@ -29,31 +30,88 @@ export class WeeklyHitsV1Repository
   async filterWeeklyKeywordHits(
     dao: GetSomeWeeklyViewsDao,
   ): Promise<TFilteredWeeklyHitsRes> {
-    const { keywords, from, sort = 'ranking', order = 'asc' } = dao;
+    const {
+      keywords,
+      category,
+      from,
+      limit,
+      page,
+      sort = 'ranking',
+      order = 'asc',
+    } = dao;
     const { year, month, day } = this.parseFrom(from);
 
     try {
       const queryBuilder = this.repository
         .createQueryBuilder(this.tableName)
-        .where(`${this.tableName}.YEAR = :year`, { year: Number(year) })
-        .andWhere(`${this.tableName}.MONTH = :month`, { month: Number(month) })
-        .andWhere(`${this.tableName}.DAY = :day`, { day: Number(day) });
+        .where(`${this.tableName}.YEAR = :year`, { year })
+        .andWhere(`${this.tableName}.MONTH = :month`, { month })
+        .andWhere(`${this.tableName}.DAY = :day`, { day })
+        .limit(limit)
+        .offset((page - 1) * limit);
+      // 키워드와 카테고리 조건을 함께 추가할 배열입니다.
+      let combinedConditions = [];
+      let parameters = {};
 
-      // keywords 배열에 있는 각 키워드를 검색 조건에 포함
+      // 키워드 조건
       if (keywords && keywords.length > 0) {
-        queryBuilder.andWhere(`${this.tableName}.keyword IN (:...keywords)`, {
-          keywords,
+        const keywordConditions = keywords.map((keyword, index) => {
+          const key = `keyword${index}`;
+          parameters[key] = `%${keyword}%`;
+          return `(${this.tableName}.keyword LIKE :${key})`;
         });
+        combinedConditions = combinedConditions.concat(keywordConditions);
       }
+
+      // 카테고리 조건
+      if (category && category.length > 0) {
+        const categoryConditions = category.map((number) => {
+          const keyExact = `categoryExact${number}`;
+          const keyStart = `categoryStart${number}`;
+          const keyEnd = `categoryEnd${number}`;
+          const keyMiddle = `categoryMiddle${number}`;
+          if (number.toString().length === 1) {
+            parameters[keyExact] = `${number}`;
+            parameters[keyStart] = `${number}, %`;
+            parameters[keyEnd] = `%, ${number}`;
+            parameters[keyMiddle] = `%, ${number}, %`;
+            return `(${this.tableName}.category LIKE :${keyExact} OR 
+              ${this.tableName}.category LIKE :${keyStart} OR 
+              ${this.tableName}.category LIKE :${keyEnd} OR 
+              ${this.tableName}.category LIKE :${keyMiddle})`;
+          } else {
+            const keyLike = `categoryLike${number}`;
+            parameters[keyLike] = `%${number}%`;
+            return `(${this.tableName}.category LIKE :${keyLike})`;
+          }
+        });
+        combinedConditions = combinedConditions.concat(categoryConditions);
+      }
+
+      // 키워드와 카테고리 조건을 OR로 결합하여 쿼리 빌더에 추가합니다.
+      if (combinedConditions.length > 0) {
+        queryBuilder.andWhere(
+          `(${combinedConditions.join(' OR ')})`,
+          parameters,
+        );
+      }
+
       // 정렬
       queryBuilder.orderBy(
         `${this.tableName}.${sort}`,
         order.toUpperCase() as 'ASC' | 'DESC',
       );
-      const data = await queryBuilder.getMany();
+      const [data, count] = await queryBuilder.getManyAndCount();
 
       if (!data.length) return Err(new WeeklyViewsError());
-      return Ok(data);
+      return Ok(
+        new Paginated<WeeklyHitsEntity>({
+          count,
+          data,
+          limit,
+          page,
+        }),
+      );
     } catch (e) {
       return Err(e);
     }

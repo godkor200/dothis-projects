@@ -16,6 +16,9 @@ export class SomeWeeklyHitsService implements WeeklyHitsSomeInboundPort {
     try {
       const dao = new GetSomeWeeklyViewsDao({
         keywords: dto.keywords,
+        category: dto.category,
+        limit: dto.limit,
+        page: dto.page,
         from: dto.from,
         order: dto.order,
         sort: dto.sort,

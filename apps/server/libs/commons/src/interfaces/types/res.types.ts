@@ -66,6 +66,10 @@ export class FindAdsRelatedTopHitsRes extends createZodDto(
 export class GetProbabilityResultType extends createZodDto(
   extendApi(zGetProbabilityRes),
 ) {}
+export class GetWeeklyKeywordsListResType extends createZodDto(
+  extendApi(zWeeklyKeywordsList),
+) {}
+
 export interface TTsRestRes<T> {
   status: any;
   body: T;

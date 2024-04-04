@@ -78,12 +78,25 @@ type SomeWeeklyViewsProps = Pick<
 >;
 export class GetSomeWeeklyViewsDao {
   public keywords: string[];
+  public category: string[];
   public from: string;
+  readonly limit: number;
+  readonly page: number;
   public order: TSqlParam;
   public sort: TWeeklyhitsSqlField;
-  constructor(props: SomeWeeklyViewsProps & { keywords: string[] }) {
+  constructor(
+    props: SomeWeeklyViewsProps & {
+      keywords: string[];
+      category: string[];
+      page: string;
+      limit: string;
+    },
+  ) {
     this.keywords = props.keywords;
+    this.category = props.category;
     this.from = props.from;
+    this.page = Number(props.page);
+    this.limit = Number(props.limit);
     this.order = props.order;
     this.sort = props.sort;
   }

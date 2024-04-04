@@ -94,8 +94,7 @@ export const hitsApi = c.router({
   },
   getWeeklyKeywordSome: {
     method: 'GET',
-    path: `${viewApiUrl}${weeklyApiUrl}-list/search/:keywords`,
-    pathParams: zKeywordsMulti,
+    path: `${viewApiUrl}${weeklyApiUrl}-list/search`,
     query: zGetWeeklyViewsBySomeQuery,
     responses: {
       200: zWeeklyKeywordsList,

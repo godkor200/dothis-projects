@@ -2,6 +2,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -13,6 +14,7 @@ import {
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import {
+  GetWeeklyKeywordsListResType,
   IRes,
   TTsRestRes,
   WeeklyKeywordsRes,
@@ -40,6 +42,7 @@ export class GetWeeklyHitsListV1HttpController {
     summary,
     description,
   })
+  @ApiOkResponse({ type: GetWeeklyKeywordsListResType })
   @ApiNotFoundResponse({ description: WeeklyViewsError.message })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async execute(@Query() query: GetWeeklyViewsQuery) {
