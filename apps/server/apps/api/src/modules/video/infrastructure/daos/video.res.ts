@@ -41,3 +41,8 @@ export interface GetVideoViewsMatchingSearchOnSpecificDateRes
     IGetVideoChannelHistoryRes,
     'videoViews' | 'videoId' | 'channelId'
   > {}
+export interface GetVideoViewsPerformanceMatchingSearchOnSpecificDate
+  extends Pick<IGetVideoChannelHistoryRes, 'videoViews' | 'videoId'> {
+  videoPerformance: number;
+  videoDuration: number;
+}

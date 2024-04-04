@@ -11,6 +11,7 @@ import { GetVideoViewsMatchingSearchOnSpecificDateDao } from '@Apps/modules/hits
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { Err, Ok } from 'oxide.ts';
+import { GetVideoViewsMatchingSearchOnSpecificDateRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 
 export class GetProbabilitySuccessService
   implements GetProbabilitySuccessInboundPort
@@ -30,11 +31,12 @@ export class GetProbabilitySuccessService
   async execute(dto: GetProbabilitySuccessDto): Promise<TGetProbabilityRes> {
     try {
       const videoDataDao = new GetVideoViewsMatchingSearchOnSpecificDateDao({
+        relatedCluster: dto.clusterNumber,
         ...dto,
       });
 
       const videoDataResult =
-        await this.getVideoViewsMatchingSearchOnSpecificDate.execute(
+        await this.getVideoViewsMatchingSearchOnSpecificDate.execute<GetVideoViewsMatchingSearchOnSpecificDateRes>(
           videoDataDao,
         );
 

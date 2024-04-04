@@ -1,10 +1,21 @@
-import { zDateQuery, zPaginatedOffsetQuery } from '../common.model';
+import {
+  zCategoryNumberMulti,
+  zDateQuery,
+  zKeywordsMulti,
+  zPaginatedOffsetQuery,
+} from '../common.model';
 import { zSortWeeklyViews } from './hits.model';
 import { z } from 'zod';
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
-  .omit({ offset: true })
   .merge(zDateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews);
+
+export const zWeeklyHitsPathQuery = zKeywordsMulti.merge(zCategoryNumberMulti);
+export const zGetWeeklyViewsBySomeQuery = zDateQuery
+  .pick({ from: true })
+  .merge(zPaginatedOffsetQuery)
+  .merge(zSortWeeklyViews)
+  .merge(zWeeklyHitsPathQuery);
 
 export const zGetProbabilityRes = z.object({
   totalVideoCount: z

@@ -1,11 +1,10 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import {
-  IGetRelatedLastVideoHistoryEach,
   IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort,
   TGetVideoViewsMatchingSearchOnSpecificDateRes,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 
-import { Err, Ok, Result } from 'oxide.ts';
+import { Err, Ok } from 'oxide.ts';
 
 import {
   DateFormatter,
@@ -27,10 +26,18 @@ export class VideoLastHistoryAdapter
    * 서브쿼리를 이용한 제일 최근 히스토리만 불러오기
    * @param dao
    */
-  async execute(
+  async execute<T>(
     dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
-  ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes> {
-    const { search, relatedCluster, related, from, to } = dao;
+  ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes<T>> {
+    const {
+      search,
+      relatedCluster,
+      related,
+      from,
+      to,
+      columns = ['VH.VIDEO_ID', 'VH.VIDEO_VIEWS', 'VD.CHANNEL_ID', 'VH.DAY'],
+    } = dao;
+
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
     const currentDate = new Date();
@@ -49,7 +56,7 @@ export class VideoLastHistoryAdapter
       for (const cluster of relatedCluster) {
         const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_${currentYear}_${1}`;
 
-        const query = `(SELECT DISTINCT VH.VIDEO_ID, VH.VIDEO_VIEWS, VD.CHANNEL_ID ,VH.DAY 
+        const query = `(SELECT DISTINCT ${columns.join(', ')} 
                               FROM ${tableName} VH 
                               JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID 
                               WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
@@ -57,7 +64,9 @@ export class VideoLastHistoryAdapter
                               AND VH.DAY = (SELECT MAX(VH2.DAY)
                                             FROM ${tableName} VH2
                                             WHERE VH2.VIDEO_ID = VH.VIDEO_ID
-                                            AND (VH2.DAY BETWEEN ${fromDate.day} AND ${toDate.day}))
+                                            AND (VH2.DAY BETWEEN ${
+                                              fromDate.day
+                                            } AND ${toDate.day}))
                               )`;
         queries.push(query);
       }

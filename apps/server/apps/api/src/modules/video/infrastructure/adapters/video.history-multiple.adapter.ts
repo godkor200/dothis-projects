@@ -31,7 +31,7 @@ export class VideoHistoryMultipleAdapter
     const { search, relatedCluster, relatedWords } = dao;
 
     let queryString = '';
-    relatedCluster.forEach((cluster, index) => {
+    [0, 1].forEach((cluster, index) => {
       let wordQuery = relatedWords
         .map(
           (word) =>

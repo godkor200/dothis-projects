@@ -1,8 +1,6 @@
 import { Controller, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
-  ApiConflictResponse,
-  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
@@ -15,7 +13,7 @@ import { FindRelV2Query } from '@Apps/modules/related-word/application/dtos/find
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { getRelWords } = c;
-const { responses, description, summary } = getRelWords;
+const { description, summary } = getRelWords;
 
 @ApiTags('연관어')
 @Controller()

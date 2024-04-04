@@ -3,8 +3,12 @@ import { zDailyViews, zWeeklyKeywordsList } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
-import { zClusterNumber, zClusterNumberMulti } from '../common.model';
-import { zGetWeeklyViewsQuery } from './hits.zod';
+import {
+  zClusterNumber,
+  zClusterNumberMulti,
+  zKeywordsMulti,
+} from '../common.model';
+import { zGetWeeklyViewsBySomeQuery, zGetWeeklyViewsQuery } from './hits.zod';
 import { zExpectedViews } from '../channel-history';
 
 export const expectedHitsApiUrl = '/expectation';
@@ -87,5 +91,16 @@ export const hitsApi = c.router({
     summary: '관련어, 연관어 영상들의 성공확률을 가져옵니다',
     description:
       '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 성공 확률을 가져옵니다.',
+  },
+  getWeeklyKeywordSome: {
+    method: 'GET',
+    path: `${viewApiUrl}${weeklyApiUrl}-list/search`,
+    query: zGetWeeklyViewsBySomeQuery,
+    responses: {
+      200: zWeeklyKeywordsList,
+      ...zErrResBase,
+    },
+    summary: '주간 키워드를 필터링해서 가져옵니다.',
+    description: '날짜(from, to)로 주간 키워드 리스트를 출력합니다.',
   },
 });

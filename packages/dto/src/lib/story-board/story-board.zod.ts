@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zSuccessBase } from '../success.response.zod';
-import { dataObject, zPaginatedOffsetQuery } from '../common.model';
+import { dataObject, zPaginatedOffsetQuery, zSortQuery } from '../common.model';
 import { zStoryBoardSchema } from './story-board.model';
 
 export const zPostStoryBoardPathParams = z.object({
@@ -59,26 +59,9 @@ export const zStoryBoardCreateRes = zSuccessBase.merge(
 export const zStoryBoardCreateArrayRes = zSuccessBase.merge(
   dataObject(zStoryBoardSchema.array()),
 );
-const storyBoardSchemaKey = [
-  'id',
-  'userId',
-  'title',
-  'isDraft',
-  'createdAt',
-  'updatedAt',
-] as const;
+const storyBoardSortQuery = zSortQuery(Object.keys(zStoryBoardSchema.shape));
 
-export const zSortSqlQuery = z
-  .object({
-    field: z
-      .enum(storyBoardSchemaKey)
-      .describe(
-        '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
-      )
-      .optional(),
-    param: z.enum(['asc', 'desc'] as const).optional(),
-  })
-  .describe('소트 쿼리');
+export const zSortSqlQuery = storyBoardSortQuery;
 export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
   .merge(zSortSqlQuery)
   .describe('페이지네이션 쿼리 파라미터');

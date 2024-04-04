@@ -6,8 +6,8 @@ import {
   GetOneStoryBoardDto,
 } from '@Apps/modules/story-board/application/dtos';
 
-export type TSqlField = z.TypeOf<typeof zSortSqlQuery.shape.field>;
-export type TSqlParam = z.TypeOf<typeof zSortSqlQuery.shape.param>;
+export type TSqlField = z.TypeOf<typeof zSortSqlQuery.shape.sort>;
+export type TSqlParam = z.TypeOf<typeof zSortSqlQuery.shape.order>;
 
 class BaseStoryBoardDao {
   readonly userInfo: UserInfoCommandDto;
@@ -25,16 +25,15 @@ export class StoryBoardDao extends BaseStoryBoardDao {
   readonly page: number;
   readonly limit: number;
   readonly offset: number;
-  readonly field: TSqlField;
-  readonly param: TSqlParam;
+  readonly sort: TSqlField;
+  readonly order: TSqlParam;
 
   constructor(props: GetManyStoryBoardDto) {
     super(props);
     this.page = Number(props.page);
     this.limit = Number(props.limit);
-    this.offset = Number(props.offset);
-    this.field = props.field;
-    this.param = props.param;
+    this.sort = props.sort;
+    this.order = props.order;
   }
 }
 

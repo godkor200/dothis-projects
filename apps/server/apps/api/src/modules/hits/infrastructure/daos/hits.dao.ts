@@ -12,10 +12,12 @@ import {
 } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { z } from 'zod';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { GetProbabilitySuccessDto } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
+import { GetProbabilitySuccessQuery } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
+import { PickType } from '@nestjs/swagger';
 export type TWeeklyhitsSqlField = z.TypeOf<
   typeof zGetWeeklyViewsQuery.shape.sort
 >;
+
 export class SearchRelationVideoAndHistoryDao extends createZodDto(
   extendApi(findVideoBySearchKeyword),
 ) {
@@ -38,32 +40,74 @@ export class RelatedVideoAndVideoHistoryDao extends createZodDto(
 export class RelatedVideoAndCountByDayDao extends createZodDto(
   extendApi(findVideoBySearchKeywordClusterNumber),
 ) {}
-
+interface BaseWeeklyViewsDaoInterface {
+  from: string;
+  page: number;
+  limit: number;
+  offset: number;
+  sort: TWeeklyhitsSqlField;
+  order: TSqlParam;
+}
 export class GetWeeklyViewsDao extends GetWeeklyViewsDto {}
-export class GetWeeklyViewsDaoV2 {
+class BaseWeeklyViewsDao implements BaseWeeklyViewsDaoInterface {
   readonly from: string;
   readonly page: number;
   readonly limit: number;
   readonly offset: number;
-  readonly field: TWeeklyhitsSqlField;
+  readonly sort: TWeeklyhitsSqlField;
   readonly order: TSqlParam;
 
-  constructor(props: GetWeeklyViewsDtoV2) {
+  constructor(props: any) {
     this.from = props.from;
     this.page = Number(props.page);
     this.limit = Number(props.limit);
-    this.field = props.sort;
+    this.sort = props.sort;
     this.order = props.order;
   }
 }
-export class GetVideoViewsMatchingSearchOnSpecificDateDao extends GetProbabilitySuccessDto {
+
+export class GetWeeklyViewsDaoV2 extends BaseWeeklyViewsDao {
+  constructor(props: GetWeeklyViewsDtoV2) {
+    super(props);
+  }
+}
+// Pick 유틸리티를 사용하여 특정 속성 선택
+type SomeWeeklyViewsProps = Pick<
+  BaseWeeklyViewsDaoInterface,
+  'from' | 'order' | 'sort'
+>;
+export class GetSomeWeeklyViewsDao {
+  public keywords: string[];
+  public category: string[];
+  public from: string;
+  readonly limit: number;
+  readonly page: number;
+  public order: TSqlParam;
+  public sort: TWeeklyhitsSqlField;
+  constructor(
+    props: SomeWeeklyViewsProps & {
+      keywords: string[];
+      category: string[];
+      page: string;
+      limit: string;
+    },
+  ) {
+    this.keywords = props.keywords;
+    this.category = props.category;
+    this.from = props.from;
+    this.page = Number(props.page);
+    this.limit = Number(props.limit);
+    this.order = props.order;
+    this.sort = props.sort;
+  }
+}
+export class GetVideoViewsMatchingSearchOnSpecificDateDao extends GetProbabilitySuccessQuery {
   public readonly relatedCluster: string[];
 
-  constructor(props: GetProbabilitySuccessDto) {
-    super(props);
-    const propsClusterNumber = !Array.isArray(props.clusterNumber)
-      ? [props.clusterNumber]
-      : props.clusterNumber;
-    this.relatedCluster = propsClusterNumber;
+  public readonly columns?: string[];
+
+  constructor(props: GetVideoViewsMatchingSearchOnSpecificDateDao) {
+    super();
+    Object.assign(this, props);
   }
 }

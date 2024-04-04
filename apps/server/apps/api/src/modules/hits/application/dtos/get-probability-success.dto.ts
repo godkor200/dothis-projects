@@ -7,15 +7,9 @@ export class GetProbabilitySuccessQuery extends createZodDto(
 ) {}
 
 export class GetProbabilitySuccessDto extends GetProbabilitySuccessQuery {
-  readonly clusterNumber: string | string[];
+  readonly clusterNumber: string[];
   constructor(props: GetProbabilitySuccessDto) {
     super();
     Object.assign(this, props);
-
-    if (typeof props.clusterNumber === 'string') {
-      this.clusterNumber = props.clusterNumber.includes(',')
-        ? props.clusterNumber.split(',')
-        : props.clusterNumber;
-    }
   }
 }

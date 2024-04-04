@@ -24,6 +24,14 @@ export class StoryBoardOverviewEntity extends IdBaseDateEntityAbstract {
   uploadDate: Date;
 
   @Column({
+    name: 'create_date',
+    type: 'timestamp',
+    comment: '작성일자',
+    nullable: true,
+  })
+  createDate: Date;
+
+  @Column({
     name: 'description',
     type: 'text',
     comment: '설명',

@@ -17,8 +17,10 @@ import {
   VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
   VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_DI_TOKEN,
+  WEEKLY_VIEWS_REPOSITORY_V1_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
   WEEKLY_VIEWS_SERVICE_DI_TOKEN,
+  WEEKLY_VIEWS_SOME_SERVICE_DI_TOKEN,
 } from '@Apps/modules/hits/hits.di-token.contants';
 import { WeeklyHitsService } from '@Apps/modules/hits/application/services/weekly-hits.service';
 import { GetWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
@@ -39,6 +41,10 @@ import { VideoChannelAverageViewsAdapter } from '@Apps/modules/video/infrastruct
 import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.by-channel-id.adapter';
+import { GetSomeWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-some-weekly-hits.v1.query-handler';
+import { SomeWeeklyHitsService } from '@Apps/modules/hits/application/services/some-weekly-hits.service';
+import { WeeklyHitsV1Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v1.repository';
+import { GetSomeWeeklyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-some-weekly-hits/get-some-weekly-hits.v1.http.controller';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -47,6 +53,7 @@ const queries: Provider[] = [
   VideoAggregateService,
   ExpectedViewsV1QueryHandler,
   GetProbabilitySuccessQueryHandler,
+  GetSomeWeeklyHitsV1QueryHandler,
 ];
 const service: Provider[] = [
   {
@@ -59,6 +66,10 @@ const service: Provider[] = [
     provide: PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
     useClass: GetProbabilitySuccessService,
   },
+  {
+    provide: WEEKLY_VIEWS_SOME_SERVICE_DI_TOKEN,
+    useClass: SomeWeeklyHitsService,
+  },
   ChannelHistoryAggregateService,
 ];
 const controllers = [
@@ -66,6 +77,7 @@ const controllers = [
   GetDailyHitsV1HttpController,
   GetWeeklyHitsListV1HttpController,
   GetProbabilitySuccessHttpController,
+  GetSomeWeeklyHitsV1HttpController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
@@ -82,6 +94,10 @@ const repositories: Provider[] = [
   {
     provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
     useClass: WeeklyHitsV2Repository,
+  },
+  {
+    provide: WEEKLY_VIEWS_REPOSITORY_V1_DI_TOKEN,
+    useClass: WeeklyHitsV1Repository,
   },
   {
     provide: VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,

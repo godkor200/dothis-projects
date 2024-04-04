@@ -27,23 +27,12 @@ export class WeeklyHitsV2Repository
   constructor(dataSource: DataSource) {
     super(dataSource);
   }
-  private parseFrom(from: string): {
-    year: number;
-    month: number;
-    day: number;
-  } {
-    const dateParts = from.split('-').map((part) => parseInt(part, 10));
-    return {
-      year: dateParts[0],
-      month: dateParts[1],
-      day: dateParts[2],
-    };
-  }
+
   async getPaginatedWeeklyHitsByKeywordAndCount(
     dao: GetWeeklyViewsDaoV2,
   ): Promise<TPaginatedWeeklyHitsV2Res> {
     try {
-      const { from, limit, page, field = 'ranking', order = 'asc' } = dao;
+      const { from, limit, page, sort = 'ranking', order = 'asc' } = dao;
       const { year, month, day } = this.parseFrom(from);
 
       const queryBuilder = this.repository
@@ -55,8 +44,8 @@ export class WeeklyHitsV2Repository
         .offset((Number(page) - 1) * Number(limit));
 
       // orderBy 적용
-      if (field && order) {
-        const fieldValue = typeof field === 'boolean' ? 'id' : field; // `true`일 경우 'id'로 대체
+      if (sort && order) {
+        const fieldValue = typeof sort === 'boolean' ? 'id' : sort; // `true`일 경우 'id'로 대체
         queryBuilder.orderBy(fieldValue, order.toUpperCase() as 'ASC' | 'DESC');
       }
       const [data, count] = await queryBuilder.getManyAndCount();

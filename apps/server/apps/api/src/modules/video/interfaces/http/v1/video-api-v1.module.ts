@@ -13,6 +13,7 @@ import {
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
   VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN,
   VIDEO_PAGINATED_IGNITE_DI_TOKEN,
+  VIDEO_PERFORMANCE_LENGTH_GET_VIDEO_SERVICE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -63,12 +64,18 @@ import { FindAdsTopHitsQueryHandler } from '@Apps/modules/video/application/quer
 import { FindAdsTopHitsService } from '@Apps/modules/video/application/service/find-ads-top-hits.service';
 import { VideoAdsTopHitsAdapter } from '@Apps/modules/video/infrastructure/adapters/video.ads.top-hits.adapter';
 import { FindAdsTopHitsHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-top-hits/find-ads-top-hits.http.controller';
+import { FindPerformanceLengthHttpController } from '@Apps/modules/video/interfaces/http/v1/find-performance-length/find-performance-length.http.controller';
+import { FindPerformanceLengthService } from '@Apps/modules/video/application/service/find-performance-length.service';
+import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
+import { FindPerformanceLengthQueryHandler } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
   FindAccumulateVideosV1HttpController,
   FindAdsInfoHttpController,
   FindAdsTopHitsHttpController,
+  FindPerformanceLengthHttpController,
 ];
 
 const commandHandlers: Provider[] = [];
@@ -84,6 +91,7 @@ const queryHandlers: Provider[] = [
   FindIndividualVideoInfoQueryHandler,
   FindAdsInfoQueryHandler,
   FindAdsTopHitsQueryHandler,
+  FindPerformanceLengthQueryHandler,
 ];
 const service: Provider[] = [
   { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
@@ -102,6 +110,10 @@ const service: Provider[] = [
   {
     provide: VIDEO_GET_ADS_TOP_HITS_SERVICE_DI_TOKEN,
     useClass: FindAdsTopHitsService,
+  },
+  {
+    provide: VIDEO_PERFORMANCE_LENGTH_GET_VIDEO_SERVICE_DI_TOKEN,
+    useClass: FindPerformanceLengthService,
   },
 ];
 
@@ -163,6 +175,10 @@ const adapters: Provider[] = [
   {
     provide: DATE_SPECIFIC_HISTORY_REPOSITORY_DI_TOKEN,
     useClass: VideoChannelHistoryAdapter,
+  },
+  {
+    provide: VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
+    useClass: VideoLastHistoryAdapter,
   },
 ];
 @Module({

@@ -1,12 +1,5 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zTotalData,
-  zDateQuery,
-  zPaginatedQuery,
-  zSortQuery,
-  zPaginatedOffsetQuery,
-} from '../common.model';
+import { dataObject, zTotalData, zSortQuery } from '../common.model';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -22,12 +15,6 @@ export const zDailyViewData = z.object({
 
 export const zDailyViews = dataObject(z.array(zDailyViewData));
 
-const OsCommonSchema = z.object({
-  _index: z.string(),
-  _id: z.string(),
-  _score: z.number(),
-});
-
 /**
  * weekly-view models
  */
@@ -37,10 +24,10 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
     ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
-    weekly_views: z.number().int().positive().describe('주간 조회수'),
-    video_count: z.number().int().positive().describe('비디오 수'),
+    weeklyViews: z.number().int().positive().describe('주간 조회수'),
+    videoCount: z.number().int().positive().describe('비디오 수'),
     competitive: z.number().int().describe('경쟁강도'),
-    mega_channel: z
+    megaChannel: z
       .number()
       .int()
       .positive()
@@ -83,19 +70,6 @@ export const zWeeklyKeywordsListArray = z.array(
 export const zWeeklyKeywordsList = zTotalData.merge(
   dataObject(zWeeklyKeywordsListArray),
 );
-
-const VideoHistorySourceSchema = OsCommonSchema.extend({
-  video_id: z.string(),
-  video_views: z.number(),
-  video_likes: z.number(),
-  video_comments: z.number(),
-  crawled_date: z.string(),
-  performance: z.number(),
-});
-
-export const zVideoHistory = OsCommonSchema.extend({
-  _source: VideoHistorySourceSchema,
-});
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
