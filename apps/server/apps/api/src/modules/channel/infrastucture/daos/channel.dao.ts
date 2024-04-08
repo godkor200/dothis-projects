@@ -15,5 +15,6 @@ export class ChannelProfileDao extends FindInfluentialListDto {
   constructor(props: FindInfluentialListDto) {
     super(props);
     this.relatedCluster = props.clusterNumber;
+    this.order = props.order;
   }
 }

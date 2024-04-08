@@ -33,7 +33,7 @@ import {
   CHANNEL_DATA_REPOSITORY,
   CHANNEL_TERM,
 } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { GetDicSearchTermCommandHandler } from '@Apps/modules/channel/application/service/get-dic-searth-term.service';
+import { GetDicSearchTermCommandHandler } from '@Apps/modules/related-word/application/service/get-dic-search-term.service';
 import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
 import { FindSearchTermService } from '@Apps/modules/related-word/application/service/find-search-term.service';
 import { SetDicTermHandler } from '@Apps/modules/related-word/application/service/set-search-term.service';
