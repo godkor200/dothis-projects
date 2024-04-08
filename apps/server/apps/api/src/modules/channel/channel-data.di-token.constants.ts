@@ -1,3 +1,5 @@
+import { HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+
 export const CHANNEL_DATA_REPOSITORY = Symbol('CHANNEL_DATA_REPOSITORY');
 
 export const CHANNEL_TERM = Symbol('CHANNEL_TERM');
@@ -7,3 +9,10 @@ export const CHANNEL_DATA_REPOSITORY_BY_OS = Symbol(
 );
 
 export const CHANNEL_OS_DI_TOKEN = Symbol('CHANNEL_OS_DI_TOKEN');
+
+export const FIND_INFLUENTIAL_LIST_SERVICE_DI_TOKEN = Symbol(
+  'FIND_INFLUENTIAL_LIST_SERVICE_DI_TOKEN',
+);
+export const FIND_CHANNEL_PROFILE_IGNITE_DI_TOKEN = Symbol(
+  'FIND_CHANNEL_PROFILE_IGNITE_DI_TOKEN',
+);
