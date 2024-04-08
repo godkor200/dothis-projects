@@ -56,9 +56,18 @@ export type TPostStoryBoardBody = z.TypeOf<typeof zPostStoryBoardBody>;
 export const zStoryBoardCreateRes = zSuccessBase.merge(
   dataObject(zStoryBoardSchema),
 );
+
+export const zStoryBoardArray = z.object({
+  count: z.number(),
+  limit: z.number(),
+  page: z.number(),
+  data: zStoryBoardSchema.array(),
+});
 export const zStoryBoardCreateArrayRes = zSuccessBase.merge(
-  dataObject(zStoryBoardSchema.array()),
+  // dataObject(zStoryBoardSchema.array()),
+  dataObject(zStoryBoardArray),
 );
+
 const storyBoardSortQuery = zSortQuery(Object.keys(zStoryBoardSchema.shape));
 
 export const zSortSqlQuery = storyBoardSortQuery;
