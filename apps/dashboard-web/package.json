@@ -18,6 +18,7 @@
     "@dothis/share": "workspace:*",
     "@dothis/theme": "workspace:*",
     "@effect/data": "^0.12.8",
+    "@floating-ui/react-dom": "^2.0.8",
     "@hookform/resolvers": "^3.1.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-popper": "^1.1.3",

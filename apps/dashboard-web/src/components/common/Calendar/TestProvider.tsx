@@ -2,17 +2,15 @@ import type { ReactElement } from 'react';
 import React, { createContext, useContext, useState } from 'react';
 import ReactDom from 'react-dom';
 
-import { PopperArrow, usePopperContext } from './PopperProvider';
-
-interface ToggleState {
+interface TestState {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ToggleContext = createContext<ToggleState | null>(null);
+const TestContext = createContext<TestState | null>(null);
 
-export const useToggleContext = (componentName: string) => {
-  const context = useContext(ToggleContext);
+export const useTestContext = (componentName: string) => {
+  const context = useContext(TestContext);
 
   if (context === null) {
     throw new Error(
@@ -22,7 +20,7 @@ export const useToggleContext = (componentName: string) => {
   return context;
 };
 
-const ToggleProvider = ({
+const TestProvider = ({
   children,
   initialOpen = false,
 }: {
@@ -32,54 +30,45 @@ const ToggleProvider = ({
   const [isOpen, setIsOpen] = useState<boolean>(initialOpen);
 
   return (
-    <ToggleContext.Provider
+    <TestContext.Provider
       value={{
         isOpen,
         setIsOpen,
       }}
     >
       {children}
-    </ToggleContext.Provider>
+    </TestContext.Provider>
   );
 };
 
-export default ToggleProvider;
+export default TestProvider;
 
-const ToggleTrigger = ({ children }: { children: React.ReactNode }) => {
-  const { isOpen, setIsOpen } = useToggleContext('ToggleTrigger');
-
-  const { setReference } = usePopperContext('ToggleTrigger');
+const TestTrigger = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, setIsOpen } = useTestContext('ToggleTrigger');
 
   if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
 
   return React.cloneElement(children as ReactElement, {
     onClick: () => setIsOpen((prev) => !prev),
-    ref: setReference,
   });
 };
 
-const ToggleContent = ({ children }: { children: React.ReactNode }) => {
-  const { isOpen, setIsOpen } = useToggleContext('ToggleContent');
+const TestContent = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, setIsOpen } = useTestContext('ToggleContent');
 
-  const { setFloating, floatingStyles, arrowRef, arrowProps } =
-    usePopperContext('ToggleContent');
-
-  return (
-    // children의 ref가 필요로 할 수도 있어서 제일 만만한 span태그에 주입을 시켰습니다.
-    <span ref={setFloating} style={{ ...floatingStyles }}>
-      <PopperArrow ref={arrowRef} {...arrowProps} />
-      {isOpen && children}
-    </span>
-  );
+  return <> {isOpen && children}</>;
 };
 
-const TogglePortal = ({ children }: { children: React.ReactNode }) => {
-  const { isOpen, setIsOpen } = useToggleContext('ToggleContent');
+const TestPortal = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, setIsOpen } = useTestContext('ToggleContent');
 
   return (
     isOpen &&
     ReactDom.createPortal(
-      <div onClick={() => setIsOpen(false)} className="absolute inset-0">
+      <div
+        onClick={() => setIsOpen(false)}
+        className="absolute h-screen w-screen"
+      >
         {children}
       </div>,
       globalThis.document?.body,
@@ -87,8 +76,8 @@ const TogglePortal = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const ToggleClose = ({ children }: { children: React.ReactNode }) => {
-  const { isOpen, setIsOpen } = useToggleContext('ToggleClose');
+const TestClose = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, setIsOpen } = useTestContext('ToggleClose');
 
   if (!children) return null; // children이 없는 경우 null을 반환하여 렌더링하지 않음
 
@@ -112,10 +101,10 @@ const ToggleClose = ({ children }: { children: React.ReactNode }) => {
   });
 };
 
-ToggleProvider.Trigger = ToggleTrigger;
+TestProvider.Trigger = TestTrigger;
 
-ToggleProvider.Content = ToggleContent;
+TestProvider.Content = TestContent;
 
-ToggleProvider.Close = ToggleClose;
+TestProvider.Close = TestClose;
 
-ToggleProvider.Portal = TogglePortal;
+TestProvider.Portal = TestPortal;
