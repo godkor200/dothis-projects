@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
-import { nestControllerContract, TsRest, TsRestHandler } from '@ts-rest/nest';
+import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { AnalyzeChannelDto } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { match } from 'oxide.ts';
