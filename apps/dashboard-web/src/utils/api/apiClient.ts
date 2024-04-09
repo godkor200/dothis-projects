@@ -8,6 +8,11 @@ import { serverApiBaseUrl } from '@/constants/dev';
 
 import { apiInstance } from './apiInstance';
 
+/**
+ * @error Typescript: "The inferred type of this node exceeds the maximum length the compiler will serialize. An explicit type annotation is needed."
+ * https://stackoverflow.com/questions/68463963/typescript-the-inferred-type-of-this-node-exceeds-the-maximum-length-the-compi
+ * 해당 부분 tsconfig 에서 d.ts 를 생성하는 조건으로 핫픽스하였지만, apiClient 를 분리하거나 다른 방식으로 고안해봐야합니다.
+ */
 export const apiClient = (version: number) => {
   return initQueryClient(apiRouter, {
     baseUrl: serverApiBaseUrl[version],
