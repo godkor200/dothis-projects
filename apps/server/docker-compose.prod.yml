@@ -17,9 +17,9 @@ services:
     networks:
       - dothis-network
   dev-server:
-    image: node:21-alpine,keymetrics/pm2:latest-alpine
+    image: node:21-alpine
     container_name: dev-api-server
-    command: sh -c "npm install -g pnpm pm2 && cd ./app && pnpm config set store-dir ./.pnpm-store && pnpm install --frozen-lockfile && pnpm prod:back-end"
+    command: sh -c "npm install -g pnpm pm2 && cd ./app && pnpm config set store-dir ./.pnpm-store && pnpm install --prefer-offline --ignore-scripts --frozen-lockfile && pnpm build && pm2-runtime start ./apps/server/apps/api/ecosystem.config.js"
     env_file:
       - production.env
     volumes:
