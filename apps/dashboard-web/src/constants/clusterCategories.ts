@@ -1,4 +1,4 @@
-export const clustersCategories = {
+export const clustersCategories: Record<string, string> = {
   0: '뉴스',
   1: '제작/DIY',
   2: '드라마',

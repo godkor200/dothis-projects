@@ -38,9 +38,11 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 
   const seletedWord = useSelectedWord();
 
-  const { data, isLoading: isWordLoading } = useGetRelWords(
-    seletedWord.keyword,
-  );
+  const {
+    data,
+    getRelatedClusterArray,
+    isLoading: isWordLoading,
+  } = useGetRelWords(seletedWord.keyword);
 
   const { data: viewData, isLoading: isViewLoading } =
     useGetDailyView(seletedWord);
@@ -50,7 +52,7 @@ const MonthlyViewData = ({ currentTab }: Props) => {
 
   // const isLoading = isViewLoading || isVideoLoading || isWordLoading;
 
-  const clusterData: number[] = data && JSON.parse(data.cluster);
+  const clusterData = getRelatedClusterArray();
 
   const categoryViewData = viewData.map((item, idx) => {
     const result = (item ?? []).reduce(
@@ -117,7 +119,11 @@ const MonthlyViewData = ({ currentTab }: Props) => {
       y: (y / maxViewsV2) * viewAndVideoMaxValueV2,
       x:
         clusterData &&
-        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories]
+          ? clustersCategories[
+              clusterData[idx] as keyof typeof clustersCategories
+            ]
+          : '카테고리없음',
     };
   });
 
@@ -126,7 +132,11 @@ const MonthlyViewData = ({ currentTab }: Props) => {
       y: (y / maxVideoTotalCountsV2) * viewAndVideoMaxValueV2,
       x:
         clusterData &&
-        clustersCategories[clusterData[idx] as keyof typeof clustersCategories],
+        clustersCategories[clusterData[idx] as keyof typeof clustersCategories]
+          ? clustersCategories[
+              clusterData[idx] as keyof typeof clustersCategories
+            ]
+          : '카테고리없음',
     };
   });
 
@@ -146,7 +156,11 @@ const MonthlyViewData = ({ currentTab }: Props) => {
           clusterData &&
           clustersCategories[
             clusterData[idx] as keyof typeof clustersCategories
-          ],
+          ]
+            ? clustersCategories[
+                clusterData[idx] as keyof typeof clustersCategories
+              ]
+            : '카테고리없음',
       };
     },
   );

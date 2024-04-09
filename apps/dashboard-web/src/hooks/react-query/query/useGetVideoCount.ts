@@ -28,13 +28,9 @@ const useGetVideoCount = (
 
   const endDate = useEndDate();
 
-  const { data } = useGetRelWords(keyword);
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
-  }
+  const clusters = getRelatedClusterArray();
 
   const queryResult = apiClient(1).video.getAccumulateVideo.useQuery(
     VIDEO_COUNT_KEY.list([

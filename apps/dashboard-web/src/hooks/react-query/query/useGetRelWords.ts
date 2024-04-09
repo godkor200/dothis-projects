@@ -35,9 +35,21 @@ const useGetRelWords = (
   const requiredQueryResult = queryResult.data as DeepRequired<
     typeof queryResult.data
   >;
+
+  const data = requiredQueryResult?.body.data;
+
   return {
     ...queryResult,
-    data: requiredQueryResult?.body.data,
+    data,
+    getRelatedClusterArray: () => {
+      let clusters: string[] = [];
+
+      if (data && data.cluster) {
+        clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
+      }
+
+      return clusters.slice(0, 5);
+    },
   };
 };
 export default useGetRelWords;
