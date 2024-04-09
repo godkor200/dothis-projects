@@ -24,10 +24,10 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
     ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
-    weeklyViews: z.number().int().positive().describe('주간 조회수'),
-    videoCount: z.number().int().positive().describe('비디오 수'),
+    weekly_views: z.number().int().positive().describe('주간 조회수'),
+    video_count: z.number().int().positive().describe('비디오 수'),
     competitive: z.number().int().describe('경쟁강도'),
-    megaChannel: z
+    mega_channel: z
       .number()
       .int()
       .positive()
@@ -67,8 +67,8 @@ export const zWeeklyKeywordsListSourceSchema =
 export const zWeeklyKeywordsListArray = z.array(
   zCreateWeeklyKeywordsListSourceSchema,
 );
-export const zWeeklyKeywordsList = zTotalData.merge(
-  dataObject(zWeeklyKeywordsListArray),
+export const zWeeklyKeywordsList = dataObject(
+  zTotalData.merge(dataObject(zWeeklyKeywordsListArray)),
 );
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;

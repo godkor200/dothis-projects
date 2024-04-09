@@ -75,8 +75,8 @@ const useGetTrendingKeywords = (
 
   return {
     ...queryResults,
-    data: requiredQueryResult?.pages.flatMap((item) => item.body.data),
-    total: requiredQueryResult?.pages[0].body.total,
+    data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),
+    total: requiredQueryResult?.pages[0].body.data.total,
   };
 };
 

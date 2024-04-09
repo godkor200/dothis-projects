@@ -76,15 +76,14 @@ const ToggleContent = ({ children }: { children: React.ReactNode }) => {
 const TogglePortal = ({ children }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useToggleContext('ToggleContent');
 
-  return (
-    isOpen &&
-    ReactDom.createPortal(
-      <div onClick={() => setIsOpen(false)} className="absolute inset-0">
-        {children}
-      </div>,
-      globalThis.document?.body,
-    )
-  );
+  return isOpen
+    ? ReactDom.createPortal(
+        <div onClick={() => setIsOpen(false)} className="absolute inset-0">
+          {children}
+        </div>,
+        globalThis.document?.body,
+      )
+    : null;
 };
 
 const ToggleClose = ({ children }: { children: React.ReactNode }) => {

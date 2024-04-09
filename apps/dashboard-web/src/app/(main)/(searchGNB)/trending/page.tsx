@@ -177,63 +177,66 @@ const TrendingPage = () => {
                 ))}
               </div>
               <ul>
-                {data?.map((item, index, arr) => (
-                  <li
-                    key={index}
-                    className={cn(
-                      'grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] pl-[18px] items-center gap-[12px] group',
-                      {
-                        'shadow-[inset_0_-2px_0_0_#f4f4f5]':
-                          index !== arr.length - 1 || hasNextPage,
-                      },
-                    )}
-                  >
-                    <div className=" items-center gap-[10px]">
-                      <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                        {Number(item.id) + 1}
+                {data?.map((item, index, arr) => {
+                  return (
+                    <li
+                      key={index}
+                      className={cn(
+                        'grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] pl-[18px] items-center gap-[12px] group',
+                        {
+                          'shadow-[inset_0_-2px_0_0_#f4f4f5]':
+                            index !== arr.length - 1 || hasNextPage,
+                        },
+                      )}
+                    >
+                      <div className=" items-center gap-[10px]">
+                        <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
+                          {Number(item.ranking) + 1}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
-                      {item.keyword}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {/* {
-                        clustersCategories[
-                          JSON.parse(
-                            item.category,
-                          )[0] as keyof typeof clustersCategories
-                        ]
-                      } */}
-                      {item.category}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
-                      {item.weekly_views?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                      {item.video_count?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
-                      {convertCompetitionScoreFormat(item.competitive)}
-                    </div>
-                    <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
-                      {item.mega_channel?.toLocaleString('ko-kr')}
-                    </div>
-                    <div className="invisible group-hover:visible">
-                      <Dialog.Trigger
-                        asChild
-                        onClick={() =>
-                          setModalContent(
-                            <TrendingModal keyword={item.keyword} />,
-                          )
+                      <div className="text-grey700 py-[26px]text-[14px] text-center font-bold ">
+                        {item.keyword}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                        {
+                          clustersCategories[
+                            JSON.parse(
+                              item.category,
+                            )[0] as keyof typeof clustersCategories
+                          ]
                         }
-                      >
-                        <DesignButton theme="outlined" size="S">
-                          자세히
-                        </DesignButton>
-                      </Dialog.Trigger>
-                    </div>
-                  </li>
-                ))}
+                        {/* clustersCategories 갱신필요 */}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                        {item.weekly_views?.toLocaleString('ko-kr')}
+                      </div>
+                      <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
+                        {item.video_count?.toLocaleString('ko-kr')}
+                      </div>
+                      <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
+                        {convertCompetitionScoreFormat(item.competitive)}
+                      </div>
+                      <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
+                        {item.mega_channel?.toLocaleString('ko-kr')}
+                      </div>
+                      <div className="invisible group-hover:visible">
+                        <Dialog.Trigger
+                          asChild
+                          onClick={() =>
+                            setModalContent(
+                              <TrendingModal keyword={item.keyword} />,
+                            )
+                          }
+                        >
+                          <DesignButton theme="outlined" size="S">
+                            자세히
+                          </DesignButton>
+                        </Dialog.Trigger>
+                      </div>
+                    </li>
+                  );
+                })}
+
                 <div className="flex justify-center py-[42px]">
                   <DesignButton
                     theme="outlined"
