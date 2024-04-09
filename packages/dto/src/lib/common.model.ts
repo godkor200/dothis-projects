@@ -46,8 +46,8 @@ export const zSortQuery = (enumElement: Array<string>) => {
         )
         .optional(),
       order: z
-        .enum(['asc', 'desc'] as const)
-        .default('asc')
+        .enum(['ASC', 'DESC'] as const)
+        .default('ASC')
         .optional(),
     })
     .describe('소트 쿼리');

@@ -12,7 +12,6 @@ import {
   Controller,
   HttpStatus,
   NotFoundException,
-  Param,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';

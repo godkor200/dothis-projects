@@ -9,7 +9,7 @@ services:
       - ./nginx/docker-entrypoint.production.sh:/docker-entrypoint.production.sh
     command: /bin/bash -c "chmod +x /docker-entrypoint.production.sh && /docker-entrypoint.production.sh"
     ports:
-      - "80:80"
+      - "85:80"
     depends_on:
       - dev-server
     links:
@@ -17,9 +17,9 @@ services:
     networks:
       - dothis-network
   dev-server:
-    image: node:20.9.0
+    image: node:21-alpine,keymetrics/pm2:latest-alpine
     container_name: dev-api-server
-    command: sh -c "npm install -g pnpm && cd ./app && pnpm config set store-dir ./.pnpm-store && pnpm install --frozen-lockfile && pnpm dev:back-end"
+    command: sh -c "npm install -g pnpm pm2 && cd ./app && pnpm config set store-dir ./.pnpm-store && pnpm install --frozen-lockfile && pnpm prod:back-end"
     env_file:
       - production.env
     volumes:
