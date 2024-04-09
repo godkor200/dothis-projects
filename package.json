@@ -34,6 +34,7 @@
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e ./apps/server/development.env -- turbo run start:dev-api",
+    "prod:back-end": "pm2-runtime start ./apps/server/apps/api/ecosystem.config.js",
     "dev:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-api",
     "build:back-end": "dotenv -e ./apps/server/development.env -- turbo run build:api --filter=server",
     "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=server",

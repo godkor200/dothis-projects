@@ -74,8 +74,8 @@ export class FindInfluentialListHttpController {
     name: 'order',
     type: String,
     required: false,
-    description: '정렬 순서 default: desc',
-    enum: ['asc', 'desc'],
+    description: '정렬 순서 default: DESC',
+    enum: ['ASC', 'DESC'],
   })
   @TsRestHandler(getInfluentialList)
   async execute(@Query(ParseArrayPipe) query: IFindInfluentialListQuery) {
