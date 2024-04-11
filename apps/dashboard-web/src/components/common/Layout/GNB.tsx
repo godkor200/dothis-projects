@@ -81,7 +81,7 @@ const GNB = () => {
         )}
       </div>
 
-      {pathName === '/contents' && (
+      {(pathName === '/contents' || pathName === '/api-test') && (
         <div className="w-[680px]">
           <SearchBar />
         </div>
