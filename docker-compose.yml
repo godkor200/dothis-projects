@@ -4,9 +4,9 @@ services:
     image: nginx:latest
     container_name: dev-nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/wait-for-it.sh:/wait-for-it.sh
-      - ./nginx/docker-entrypoint.production.sh:/docker-entrypoint.production.sh
+      - ./apps/server/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./apps/server/nginx/wait-for-it.sh:/wait-for-it.sh
+      - ./apps/server/nginx/docker-entrypoint.production.sh:/docker-entrypoint.production.sh
     command: /bin/bash -c "chmod +x /docker-entrypoint.production.sh && /docker-entrypoint.production.sh"
     ports:
       - "80:80"
@@ -15,28 +15,19 @@ services:
     links:
       - dev-server
     networks:
-      - dothis-network
+      - dev-dothis-network
   dev-server:
-    image: node:20.9.0
-    container_name: dev-api-server
-    command: sh -c "npm install -g pnpm && cd ./app && pnpm config set store-dir ./.pnpm-store && pnpm install --frozen-lockfile && pnpm dev:back-end"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-server
     env_file:
-      - development.env
-    volumes:
-      - ../../package.json:/app/package.json
-      - ../../turbo.json:/app/turbo.json
-      - ../../pnpm-workspace.yaml:/app/pnpm-workspace.yaml
-      - ../../pnpm-lock.yaml:/app/pnpm-lock.yaml
-      - ../../.npmrc:/app/.npmrc
-      - ../server/package.json:/app/apps/server/package.json
-      - ../server:/app/apps/server
-      - ../../config:/app/config
-      - ../../packages:/app/packages
+      - apps/server/development.env
     ports:
       - "8080"
     restart: always
     networks:
-      - dothis-network
+      - dev-dothis-network
   db-mysql:
     container_name: dothis-mysql
     image: mysql:latest
@@ -53,12 +44,12 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./db/data/mysql:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./apps/server/db/data/mysql:/var/lib/mysql
+      - ./apps/server/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 3306:3306
     networks:
-      - dothis-network
+      - dev-dothis-network
   cache-redis:
     container_name: dothis-redis
     image: redis:latest
@@ -70,13 +61,13 @@ services:
       - TZ=Asia/Seoul
     command: redis-server /usr/local/conf/redis.conf
     volumes:
-      - ./db/redis/data:/data
-      - ./db/redis/conf/redis.conf:/usr/local/conf/redis.conf
+      - ./apps/server/db/redis/data:/data
+      - ./apps/server/db/redis/conf/redis.conf:/usr/local/conf/redis.conf
     ports:
       - 6379:6379
     networks:
-      - dothis-network
+      - dev-dothis-network
 
 networks:
-  dothis-network:
+  dev-dothis-network:
 
