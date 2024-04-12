@@ -4,12 +4,12 @@ export const validationSchema = Joi.object({
   JWT_SECRET: Joi.string()
     .required()
     .description('JWT를 위한 비밀 키, 안전한 통신을 위해 사용됩니다.'),
-  MYSQL_ROOT_USER: Joi.string()
-    .required()
-    .description('MySQL 데이터베이스의 루트 사용자 이름입니다.'),
-  MYSQL_ROOT_PASSWORD: Joi.string()
-    .required()
-    .description('MySQL 데이터베이스의 루트 사용자 비밀번호입니다.'),
+  MYSQL_ROOT_USER: Joi.string().description(
+    'MySQL 데이터베이스의 루트 사용자 이름입니다.',
+  ),
+  MYSQL_ROOT_PASSWORD: Joi.string().description(
+    'MySQL 데이터베이스의 루트 사용자 비밀번호입니다.',
+  ),
   MYSQL_USER: Joi.string()
     .required()
     .description('MySQL 데이터베이스에 접속할 사용자의 이름입니다.'),

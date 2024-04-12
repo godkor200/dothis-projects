@@ -4,7 +4,7 @@ module.exports = {
   apps: [
     {
       name: 'dothis',
-      script: '../../dist/apps/api/main.js',
+      script: 'apps/server/dist/apps/api/main.js',
       instances: 2,
       exec_mode: 'cluster',
       autorestart: true,

@@ -4,6 +4,11 @@
   "private": true,
   "main": "./prisma/client.ts",
   "packageManager": "pnpm@8.4.0",
+  "workspaces": [
+    "config/*",
+  "apps/*",
+  "packages/*"
+  ],
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
@@ -42,7 +47,8 @@
     "typeorm-create": "dotenv -e ./apps/server/development.env -- turbo run typeorm-create --filter=server",
     "typeorm-run": "dotenv -e ./apps/server/development.env turbo typeorm-run --filter=server",
     "typeorm-generate": "dotenv -e ./apps/server/development.env turbo typeorm-generate --filter=server",
-    "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server"
+    "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server",
+    "dockerization:server": "turbo prune server --docker"
   },
   "devDependencies": {
     "@dothis/theme": "workspace:*",

@@ -1,0 +1,26 @@
+{
+  "name": "@dothis/tsconfig",
+  "version": "1.0.0",
+  "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "require": "./dist/*"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules",
+    "build": "tsc --build tsconfig-base.json",
+    "build:watch": "tsc --build tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "rimraf": "^4.3.1",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
