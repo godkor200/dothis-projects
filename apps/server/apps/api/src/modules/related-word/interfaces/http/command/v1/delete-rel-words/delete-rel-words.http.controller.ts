@@ -28,12 +28,13 @@ import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/
 import { TDeleteRelWordsCommandHandlerRes } from './delete-rel-words.command-handler';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 import { JwtAccessGuard } from '@Libs/commons/src';
+import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
 
 @ApiTags('연관어')
 @Controller()
 export class DeleteRelWordsHttpController {
   constructor(private readonly commandBus: CommandBus) {}
-  @UseGuards(JwtAccessGuard)
+  @UseGuards(JwtAccessGuard, IsAdminGuard)
   @ApiOperation({
     summary: relatedWordsApi.deleteRelatedWords.summary,
     description: relatedWordsApi.deleteRelatedWords.description,

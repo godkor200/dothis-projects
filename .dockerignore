@@ -1,2 +1,11 @@
 **/node_modules
 node_modules
+.git
+.gitignore
+Dockerfile
+.dockerignore
+npm-debug.log
+*.env
+*.md
+LICENSE
+*.yml

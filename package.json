@@ -51,7 +51,6 @@
     "dockerization:server": "turbo prune server --docker"
   },
   "devDependencies": {
-    "@dothis/theme": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "dotenv-cli": "^7.2.1",
