@@ -109,4 +109,13 @@ export const relatedWordsApi = c.router({
     summary: '탐색어를 redis에서 불러옵니다.',
     description: '탐색어를 redis에서 불러옵니다.',
   },
+  deleteKeyWord: {
+    method: 'DELETE',
+    path: `${keywordApiUrl}/:id`,
+    body: z.object({}),
+    pathParams: z.object({ id: z.string() }),
+    responses: { 200: zSuccessBase, ...zErrResBase },
+    summary: '탐색어 삭제',
+    description: 'related_words 테이블 id에 맞는 행 한줄 삭제',
+  },
 });
