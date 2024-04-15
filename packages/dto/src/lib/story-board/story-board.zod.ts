@@ -53,6 +53,26 @@ export type TPostStoryBoardMainParams = z.TypeOf<
 >;
 export type TPostStoryBoardBody = z.TypeOf<typeof zPostStoryBoardBody>;
 
+export const zStoryBoard = z.object({
+  id: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  // deletedAt: null,
+  userId: z.number(), // author 필요
+  title: z.string(),
+  // isDraft: z.boolean(),
+  overview: z.object({
+    // createDate: z.string(),
+    uploadDate: z.string(),
+    description: z.string(),
+    actors: z.string(),
+    location: z.string(),
+    references: z.string().array(),
+  }),
+});
+
+export const zStoryBoardDetailRes = zSuccessBase.merge(dataObject(zStoryBoard));
+
 export const zStoryBoardCreateRes = zSuccessBase.merge(
   dataObject(zStoryBoardSchema),
 );

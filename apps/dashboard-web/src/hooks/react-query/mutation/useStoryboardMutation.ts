@@ -26,14 +26,18 @@ export const useCreateStoryBoardMutation = (
   };
 };
 
-export const useUpdateStoryBoardTitleMutation = (
-  storyBoardId: string,
-  title: string,
+interface UpdateStoryBoardProps {
+  storyBoardId: string;
   mutationOptions?: UseMutationOptions<
     typeof apiRouter.storyBoard.updateStoryBoardTitle,
     ClientArgs
-  >,
-) => {
+  >;
+}
+
+export const useUpdateStoryBoardTitleMutation = ({
+  storyBoardId,
+  mutationOptions,
+}: UpdateStoryBoardProps) => {
   const queryClient = useQueryClient();
 
   const mutationResult = apiClient(
@@ -49,10 +53,13 @@ export const useUpdateStoryBoardTitleMutation = (
 
   return {
     ...mutationResult,
-    mutate: (item: string) =>
+    mutate: (
+      value: string, // TODO:
+    ) =>
       mutationResult.mutate({
+        pathParams: { storyBoardId: storyBoardId },
         body: {
-          value: title,
+          value: value,
         },
       }),
   };

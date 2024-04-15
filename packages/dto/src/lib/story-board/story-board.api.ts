@@ -9,6 +9,7 @@ import {
   zPostStoryBoardReferenceParams,
   zStoryBoardCreateArrayRes,
   zStoryBoardCreateRes,
+  zStoryBoardDetailRes,
   zStoryBoardDetails,
   zStoryBoardId,
 } from './story-board.zod';
@@ -105,7 +106,7 @@ export const storyBoardApi = c.router(
       method: 'GET',
       path: `${storyBoardUrl}/:storyBoardId`,
       pathParams: zStoryBoardId,
-      responses: { 200: zStoryBoardCreateRes, ...zErrResBase },
+      responses: { 200: zStoryBoardDetailRes, ...zErrResBase },
       summary: '스토리 보드 하나를 조회합니다',
       description: '스토리 보드 하나를 조회합니다.',
     },
