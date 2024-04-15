@@ -17,7 +17,7 @@ RUN turbo prune server --docker
 FROM base AS installer
 WORKDIR /app
 RUN apk add --no-cache g++ make gcc cmake
-COPY .gitignore .gitignore
+
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml /app/pnpm-lock.yaml
 RUN pnpm install
