@@ -29,6 +29,7 @@ services:
     networks:
       - dev-dothis-network
   db-mysql:
+    platform: linux/arm64/v8
     container_name: dothis-mysql
     image: mysql:latest
     restart: always
@@ -51,6 +52,7 @@ services:
     networks:
       - dev-dothis-network
   cache-redis:
+    platform: linux/arm64/v8
     container_name: dothis-redis
     image: redis:latest
     restart: always
