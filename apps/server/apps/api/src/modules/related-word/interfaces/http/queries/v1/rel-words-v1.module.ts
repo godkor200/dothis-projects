@@ -40,6 +40,9 @@ import { SetDicTermHandler } from '@Apps/modules/related-word/application/servic
 import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
 import { DeleteRelWordsHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/delete-rel-words/delete-rel-words.http.controller';
 
+import { DeleteRelWordsCommandHandler } from '../../command/v1/delete-rel-words/delete-rel-words.command-handler';
+import { DeleteKeyWordHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/delete-keyword/delete-keyword.http.controller';
+import { DeleteKeyWordCommandHandler } from '@Apps/modules/related-word/application/command/delete-keyword.command-handler';
 const controllers = [
   FindRelHttpV1Controller,
   UpdateAutoCompleteWordsHttpController,
@@ -48,6 +51,7 @@ const controllers = [
   FindAutoCompleteHttpController,
   FindSearchTermHttpController,
   DeleteRelWordsHttpController,
+  DeleteKeyWordHttpController,
 ];
 const repositories: Provider[] = [
   {
@@ -93,6 +97,8 @@ const handler = [
   UpdateAutoCompleteWordsCommandHandler,
   GetRankingRelatedWordsService,
   FindSearchKeywordQueryHandler,
+  DeleteRelWordsCommandHandler,
+  DeleteKeyWordCommandHandler,
 ];
 @Module({
   imports: [
