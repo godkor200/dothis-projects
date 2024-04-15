@@ -20,7 +20,7 @@ export class DeleteRelWordsCommandHandler
   implements ICommandHandler<DeleteRelWordsCommandDto>
 {
   constructor(
-    @Inject(RELWORDS_DI_TOKEN.UPDATE_RELWORDS)
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
   ) {}
 
