@@ -43,7 +43,6 @@ export class GetVideoDataPageService
         this.getRelatedVideosPaginated.execute(dao),
         this.getRelatedVideosEntireCount.execute(dao),
       ]);
-
       const entireCountResultUnwrap = entireCountResult.unwrap();
       const paginatedResultUnwrap = paginatedResult.unwrap();
       const total = entireCountResultUnwrap.reduce(

@@ -12,7 +12,8 @@ const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 @Injectable()
 export class IgniteService implements OnModuleInit, OnModuleDestroy {
   public readonly client: typeof IgniteClient;
-
+  private connectionState: 'connected' | 'disconnected' | 'error' =
+    'disconnected';
   public readonly SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
   private readonly logger: Logger = new Logger(IgniteService.name);
 
@@ -87,18 +88,29 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   private onStateChanged(state: number, reason?: string): void {
     switch (state) {
       case IgniteClient.STATE.CONNECTED:
+        this.connectionState = 'connected';
         this.logger.log('Client is started');
         break;
       case IgniteClient.STATE.CONNECTING:
         this.logger.log('Client is connecting');
         break;
       case IgniteClient.STATE.DISCONNECTED:
+        this.connectionState = 'disconnected';
         this.logger.log('Client is stopped');
         if (reason) {
           this.logger.log(reason);
         }
         break;
+      default:
+        this.connectionState = 'error';
     }
+  }
+  /**
+   * Returns the database connection status.
+   * @returns A string representing the connection status: 'Connected', 'Connecting', 'Disconnected', or 'Unknown'
+   */
+  public getDatabaseConnectionStatus(): string {
+    return this.connectionState;
   }
   public currentDate(): {
     currentDate: Date;

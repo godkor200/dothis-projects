@@ -1,6 +1,7 @@
 version: '3'
 services:
   nginx:
+    platform: linux/arm64/v8
     image: nginx:latest
     container_name: dev-nginx
     volumes:
@@ -17,18 +18,29 @@ services:
     networks:
       - dev-dothis-network
   dev-server:
+    container_name: api-server
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: api-server
+      dockerfile: Dockerfile.development
     env_file:
       - apps/server/development.env
+    volumes:
+      - ./package.json:/app/package.json
+      - ./turbo.json:/app/turbo.json
+      - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./.npmrc:/app/.npmrc
+      - ./apps/server/package.json:/app/apps/server/package.json
+      - ./apps/server:/app/apps/server
+      - ./config:/app/config
+      - ./packages:/app/packages
     ports:
       - "8080"
     restart: always
     networks:
       - dev-dothis-network
   db-mysql:
+    platform: linux/arm64/v8
     container_name: dothis-mysql
     image: mysql:latest
     restart: always
@@ -51,6 +63,7 @@ services:
     networks:
       - dev-dothis-network
   cache-redis:
+    platform: linux/arm64/v8
     container_name: dothis-redis
     image: redis:latest
     restart: always

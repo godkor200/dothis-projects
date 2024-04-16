@@ -15,9 +15,6 @@ importers:
 
   .:
     devDependencies:
-      '@dothis/theme':
-        specifier: workspace:*
-        version: link:config/theme
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.62.0
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.1.6)
@@ -319,6 +316,9 @@ importers:
       '@dothis/dto':
         specifier: workspace:*
         version: link:../../packages/dto
+      '@dothis/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
       '@googleapis/youtube':
         specifier: ^8.0.2
         version: 8.0.2

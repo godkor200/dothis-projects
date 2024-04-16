@@ -2,7 +2,7 @@ import {
   DeleteKeyWordCommandDto,
   DeleteKeyWordParams,
   DeleteKeyWordSuccessBase,
-} from '@Apps/modules/related-word/application/dtos/delete-key-word.dto';
+} from '@Apps/modules/related-word/application/dtos/delete-keyword.dto';
 import { InternalServerErr } from '@Apps/modules/related-word/application/dtos/delete-rel-words.dto';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 import { JwtAccessGuard } from '@Libs/commons/src';
@@ -25,8 +25,9 @@ import {
 } from '@nestjs/swagger';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
-import { TDeleteKeyWordCommandHandlerRes } from './delete-key-word.command-handler';
+
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { TDeleteKeyWordCommandHandlerRes } from '@Apps/modules/related-word/application/command/delete-keyword.command-handler';
 
 @ApiTags('탐색어')
 @Controller()
