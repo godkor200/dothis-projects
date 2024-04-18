@@ -19,3 +19,7 @@ export const apiRouter = c.router({
   video: videoApi,
   storyBoard: storyBoardApi,
 });
+
+export const apiRouter_Auth = c.router({
+  auth: authApi,
+});
