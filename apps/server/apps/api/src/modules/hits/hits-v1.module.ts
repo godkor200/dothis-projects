@@ -75,7 +75,7 @@ const service: Provider[] = [
 const controllers = [
   ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
-  GetWeeklyHitsListV1HttpController,
+  // GetWeeklyHitsListV1HttpController,
   GetProbabilitySuccessHttpController,
   GetSomeWeeklyHitsV1HttpController,
 ];

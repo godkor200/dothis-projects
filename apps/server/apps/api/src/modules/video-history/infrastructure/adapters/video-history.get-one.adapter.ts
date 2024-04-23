@@ -10,6 +10,7 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 
 export class VideoHistoryGetOneAdapter
   extends VideoHistoryBaseAdapter
@@ -19,7 +20,11 @@ export class VideoHistoryGetOneAdapter
     const { videoId, from, to, clusterNumber } = dao;
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
-    const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER`;
+    const tableName = CacheNameMapper.getVideoHistoryCacheName(
+      clusterNumber,
+      fromDate.year.toString(),
+      fromDate.month.toString(),
+    );
 
     const queryString = QueryGenerator.generateUnionQuery(
       this.keys,
@@ -30,9 +35,7 @@ export class VideoHistoryGetOneAdapter
       toDate,
     );
     try {
-      const cache = await this.client.getCache(
-        tableName + `_${clusterNumber}_${fromDate.year}_${fromDate.month}`,
-      );
+      const cache = await this.client.getCache(tableName);
 
       const query = this.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);

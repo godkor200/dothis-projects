@@ -66,7 +66,7 @@ SELECT
   AVG(vh.video_views) AS averageViewCount,
   COUNT(vd.VIDEO_ID) AS totalVideos
 FROM
-  ${CacheNameMapper.getVideoDataCacheName(cluster)}vd
+  ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
   JOIN ${CacheNameMapper.getVideoHistoryCacheName(
     cluster,
     fromDate.year.toString(),

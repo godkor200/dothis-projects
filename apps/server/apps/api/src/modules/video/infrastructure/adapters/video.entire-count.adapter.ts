@@ -7,6 +7,7 @@ import {
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 
 /**
  *
@@ -31,7 +32,7 @@ export class VideoEntireCountAdapter
     const clusterNumberValue = Array.isArray(clusterNumber)
       ? clusterNumber[0]
       : clusterNumber;
-    const tableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumberValue}`;
+    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumberValue);
     try {
       const query = this.createDistributedJoinQuery(
         `SELECT COUNT(*) FROM (` + queryString + `) AS subquery`,
@@ -42,6 +43,7 @@ export class VideoEntireCountAdapter
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(resArr);
     } catch (e) {
+      console.error('VideoEntireCountAdapter', e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }
