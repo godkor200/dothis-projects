@@ -29,6 +29,7 @@ export class CalculateDailyHitsMetricsService
 
   async execute(props: FindDailyViewsV1Dto): Promise<TFindDailyView> {
     const dao = new SearchRelationVideoAndHistoryDao(props);
+
     try {
       const res = await this.getRelatedVideoAndVideoHistory.execute(dao);
 
@@ -48,6 +49,7 @@ export class CalculateDailyHitsMetricsService
           const match = counts
             .unwrap()
             .find((countData) => countData.day === day);
+
           const uniqueVideoCount = match ? match.uniqueVideoCount : 0;
           /**
            * 날짜 매칭 해서 넣는 로직 end
@@ -60,7 +62,7 @@ export class CalculateDailyHitsMetricsService
 
         return Ok({ success: true, data });
       }
-      return Err(res);
+      return Err(res.unwrapErr());
     } catch (e) {
       return Err(e);
     }

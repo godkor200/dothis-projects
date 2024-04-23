@@ -44,6 +44,7 @@ export class ExpectedHitsService implements ExpectedHitsInboundPort {
           );
         return Ok(result);
       }
+      return Err(joinData.unwrapErr());
     } catch (e) {
       return Err(e);
     }

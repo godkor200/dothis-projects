@@ -65,7 +65,7 @@ export class FindVideoHttpController {
     @TsRestRequest()
     { query }: RequestShapes['getVideoTest'],
   ): Promise<IRes<IFindManyVideoResult[]>> {
-    const dto = new SearchRelationVideoDto({ ...query });
+    const dto = new SearchRelationVideoDto(query);
     const res = await this.queryBus.execute(dto);
 
     return match(res, { Ok: (res) => ({ success: true, data: res }) });

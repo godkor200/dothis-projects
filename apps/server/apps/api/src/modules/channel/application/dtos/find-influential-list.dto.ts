@@ -3,7 +3,7 @@ import { extendApi } from '@anatine/zod-openapi';
 import {
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
   zSortChannelInfo,
-} from '@dothis/dto/dist/lib/channel/channel.zod';
+} from '@dothis/dto';
 import { z } from 'zod';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 

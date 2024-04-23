@@ -1,5 +1,5 @@
-import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { IGetRelatedVideoChannelHistoryOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { GetRelatedVideoChannelHistoryDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok, Result } from 'oxide.ts';
@@ -7,69 +7,160 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
-const IgniteClient = require('apache-ignite-client');
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 export type TGetRelatedVideoChannelHistoryRes = Result<
   IGetVideoChannelHistoryRes[],
   TableNotFoundException | VideoHistoryNotFoundError
 >;
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 
 /**
- * 날짜 지정 해서 히스토리 가져오는 레포지토리
+ * 날짜 범위를 지정하여 관련 비디오 채널 히스토리를 가져오는 어댑터 클래스
  */
 export class VideoChannelHistoryAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideoChannelHistoryOutboundPort
 {
   /**
-   * 설명:
-   * - 1.
+   * 지정된 날짜 범위(fromDate ~ toDate) 내에서 관련 비디오 채널 히스토리를 가져옵니다.
+   * @param dao - 비디오 채널 히스토리 조회에 필요한 DAO 객체
+   * @returns 관련 비디오 채널 히스토리 데이터 또는 오류
    * 연관 api:
    * 1. https://api.dothis.kr/docs#/%EC%A1%B0%ED%9A%8C%EC%88%98/ExpectedHitsV1HttpController_execute
-   * @param dao
    * 채널 히스토리도 스플릿이 되면 속도가 더 빨라질 여지가 있음
+   * 4/22 채널히스토리가 안 쌓여있음
    */
   async execute(
     dao: GetRelatedVideoChannelHistoryDao,
   ): Promise<TGetRelatedVideoChannelHistoryRes> {
-    /**
-     *  일단 데이터 클러스터가 완전하지 않아 0-1 클러스터로 제한
-     */
     const { search, related, relatedCluster, from, to } = dao;
 
     try {
       const fromDate = DateFormatter.getFormattedDate(from);
       const toDate = DateFormatter.getFormattedDate(to);
-      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${relatedCluster[0]}_${fromDate.year}_${fromDate.month}`;
-      const channelIdTableName = `DOTHIS.CHANNEL_HISTORY`;
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        relatedCluster[0],
+        fromDate.year.toString(),
+        fromDate.month.toString(),
+      );
       const queries = relatedCluster.map((cluster) => {
-        const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_${fromDate.year}_${fromDate.month}`;
-        const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${cluster}`;
-        const today = new Date().toISOString().split('T')[0];
-        /**
-         * 하기 날짜로 최신데이터를 불러오게끔 해야되나 지금 데이터가 완전하지 않음
-         */
-        const year = Number(today.split('-')[0]);
-        const month = Number(today.split('-')[1]);
-        const day = Number(today.split('-')[2]);
-        const yesterday = day - 1;
-        return `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, ch.channel_id, ch.channel_average_views, vh.YEAR, vh.MONTH, vh.DAY
-      FROM ${tableName} vh
-      JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
-      JOIN ( 
-        SELECT channel_id, channel_average_views
-        FROM ${channelIdTableName}
-        WHERE (year, month, day) = (
-            CASE 
-                WHEN EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE year = 2024 AND month = 2 AND day = 26)
-                THEN (2024, 2, 26)
-                ELSE (2024, 2, 25)
-            END
-                                    )
-            ) ch ON ch.channel_id = vd.channel_id
-      WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
-      AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%')
-      AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+        const tableName = CacheNameMapper.getVideoHistoryCacheName(
+          cluster,
+          fromDate.year.toString(),
+          fromDate.month.toString(),
+        );
+
+        const joinTableName = CacheNameMapper.getVideoDataCacheName(cluster);
+
+        const channelIdTableName = CacheNameMapper.getChannelHistoryCacheName(
+          toDate.year.toString(),
+          toDate.month.toString(),
+        );
+        if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
+          return `SELECT
+  vh.VIDEO_ID,
+  vh.VIDEO_VIEWS,
+  ch.channel_id,
+  ch.channel_average_views,
+  vh.YEAR,
+  vh.MONTH,
+  vh.DAY
+FROM
+  ${tableName} vh
+  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+  JOIN (
+    SELECT
+      channel_id,
+      channel_average_views
+    FROM
+      ${channelIdTableName}
+    WHERE
+      day = (SELECT MAX(day) FROM ${channelIdTableName})
+  ) ch ON ch.channel_id = vd.channel_id
+WHERE
+  (
+    vd.video_title LIKE '%${search}%'
+    OR vd.video_tags LIKE '%${search}%'
+  )
+  AND (
+    vd.video_title LIKE '%${related}%'
+    OR vd.video_tags LIKE '%${related}%'
+  )
+  AND (
+    vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day}
+  )
+`;
+        } else {
+          const tableSecName = CacheNameMapper.getVideoHistoryCacheName(
+            cluster,
+            toDate.year.toString(),
+            toDate.month.toString(),
+          );
+          return `(SELECT
+  vh.VIDEO_ID,
+  vh.VIDEO_VIEWS,
+  ch.channel_id,
+  ch.channel_average_views,
+  vh.YEAR,
+  vh.MONTH,
+  vh.DAY
+FROM
+  ${tableName} vh
+  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+  JOIN (
+    SELECT
+      channel_id,
+      channel_average_views
+    FROM
+      ${channelIdTableName}
+    WHERE
+      day = (SELECT MAX(day) FROM ${channelIdTableName})
+  ) ch ON ch.channel_id = vd.channel_id
+WHERE
+  (
+    vd.video_title LIKE '%${search}%'
+    OR vd.video_tags LIKE '%${search}%'
+  )
+  AND (
+    vd.video_title LIKE '%${related}%'
+    OR vd.video_tags LIKE '%${related}%'
+  )
+  AND (
+    vh.DAY >= ${fromDate.day}
+  )) UNION (
+SELECT
+  vh.VIDEO_ID,
+  vh.VIDEO_VIEWS,
+  ch.channel_id,
+  ch.channel_average_views,
+  vh.YEAR,
+  vh.MONTH,
+  vh.DAY
+FROM
+  ${tableSecName} vh
+  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+  JOIN (
+    SELECT
+      channel_id,
+      channel_average_views
+    FROM
+      ${channelIdTableName}
+    WHERE
+      day = (SELECT MAX(day) FROM ${channelIdTableName})
+  ) ch ON ch.channel_id = vd.channel_id
+WHERE
+  (
+    vd.video_title LIKE '%${search}%'
+    OR vd.video_tags LIKE '%${search}%'
+  )
+  AND (
+    vd.video_title LIKE '%${related}%'
+    OR vd.video_tags LIKE '%${related}%'
+  )
+  AND (
+    vh.DAY <= ${toDate.day}
+  ))
+`;
+        }
       });
 
       const queryString = queries.join(' UNION ');

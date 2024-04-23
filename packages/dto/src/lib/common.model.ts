@@ -3,14 +3,14 @@ import { z, ZodTypeAny } from 'zod';
 export const zSearchKeyword = z
   .object({
     search: z.string().describe('탐색어').default('서울'),
-    related: z.string().describe('연관어').default('정치'),
+    related: z.string().describe('연관어').default('대구'),
   })
   .describe('기본 탐색어 연관어 쿼리 형태');
 
 export const zDateQuery = z
   .object({
-    from: z.string().describe('언제부터 날짜').default('2024-01-01'),
-    to: z.string().describe('까지 날짜').default('2024-01-10'),
+    from: z.string().describe('언제부터 날짜').default('2024-04-01'),
+    to: z.string().describe('까지 날짜').default('2024-04-10'),
   })
   .describe('기본 날짜 쿼리');
 

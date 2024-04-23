@@ -112,16 +112,4 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   public getDatabaseConnectionStatus(): string {
     return this.connectionState;
   }
-  public currentDate(): {
-    currentDate: Date;
-    currentYear: number;
-    currentMonth: number;
-    currentDay: number;
-  } {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentDay = currentDate.getDay();
-    return { currentDate, currentYear, currentMonth, currentDay };
-  }
 }

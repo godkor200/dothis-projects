@@ -59,7 +59,7 @@ export class GetProbabilitySuccessHttpController {
     type: String,
     required: true,
     description: '클러스터 번호 단일, 멀티 둘다 가능',
-    example: '0, 1',
+    example: '24, 33, 22, 23, 8',
   })
   async execute(
     @Param(ParseArrayPipe) param: IParamsInterface,

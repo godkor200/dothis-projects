@@ -12,6 +12,8 @@ import {
 } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 
 const IgniteClient = require('apache-ignite-client');
 
@@ -67,12 +69,18 @@ export class ChannelHistoryBaseAdapter
     return Promise.resolve([]);
   }
 
+  /**
+   * 히스토리 전부를 가져오는 어뎁터
+   * FIXME: 모듈화 필요
+   * @param dao
+   */
   async getHistory(
     dao: FindIndividualVideoInfoV1Dao,
   ): Promise<TChannelHistoryTuplesRes> {
     const { clusterNumber, videoId } = dao;
-    const tableName = `dothis.CHANNEL_HISTORY`;
-    const joinTableName = `dothis.video_data_cluster_${clusterNumber}`;
+    const { year, month } = DateUtil.currentDate();
+    const tableName = CacheNameMapper.getChannelHistoryCacheName(year, month);
+    const joinTableName = CacheNameMapper.getVideoDataCacheName(clusterNumber);
     const queryString = `SELECT ch.${this.keys.join(
       ', ch.',
     )}, vd.video_tags FROM ${tableName} ch JOIN ${joinTableName} vd ON ch.channel_id = vd.channel_id WHERE vd.video_id = '${videoId}'`;

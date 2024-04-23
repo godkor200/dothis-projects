@@ -17,14 +17,21 @@ import {
 
 import { GetVideoViewsMatchingSearchOnSpecificDateDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 
 export class VideoLastHistoryAdapter
   extends VideoBaseAdapter
   implements IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort
 {
   /**
-   * 서브쿼리를 이용한 제일 최근 히스토리만 불러오기
-   * @param dao
+   * 이 메소드는 특정 날짜에 대한 검색어와 일치하는 비디오 조회수를 반환합니다.
+   * 관련 클러스터, 검색어, 관련 검색어, 시작 및 종료 날짜를 기반으로 가장 최근의 비디오 히스토리 정보를 조회합니다.
+   * 결과는 주어진 칼럼 목록에 따라 변환되며, 캐시 또는 테이블을 찾을 수 없는 경우 적절한 예외를 반환합니다.
+   *
+   * @param dao GetVideoViewsMatchingSearchOnSpecificDateDao 인스턴스로, 비디오 조회수 조회에 필요한 매개변수를 포함합니다.
+   * @returns TGetVideoViewsMatchingSearchOnSpecificDateRes<T> 프로미스로, 조회 성공 시 비디오 조회수 데이터를, 실패 시 에러를 반환합니다.
+   *
    */
   async execute<T>(
     dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
@@ -40,25 +47,27 @@ export class VideoLastHistoryAdapter
 
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    /**
-     * 현재 데이터가 완전하게 들어가있지 않아 클러스터를 1월로 제한한다.
-     *
-     **/
+    const { year, month, day } = DateUtil.currentDate();
 
     try {
       let queries = [];
 
-      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${0}_${currentYear}_${1}`;
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        relatedCluster[0],
+        year,
+        month,
+      );
       const cache = await this.client.getCache(tableName);
       for (const cluster of relatedCluster) {
-        const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_${currentYear}_${1}`;
-
+        const tableName = CacheNameMapper.getVideoHistoryCacheName(
+          cluster,
+          year,
+          month,
+        );
+        const joinTableName = CacheNameMapper.getVideoDataCacheName(cluster);
         const query = `(SELECT DISTINCT ${columns.join(', ')} 
                               FROM ${tableName} VH 
-                              JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID 
+                              JOIN ${joinTableName} VD ON VH.VIDEO_ID = VD.VIDEO_ID 
                               WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
                               AND (VD.VIDEO_TITLE LIKE '%${related}%' or VD.VIDEO_TAGS LIKE '%${related}%') 
                               AND VH.DAY = (SELECT MAX(VH2.DAY)

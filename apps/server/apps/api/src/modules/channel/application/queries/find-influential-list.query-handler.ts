@@ -6,7 +6,7 @@ import { Inject, NotFoundException } from '@nestjs/common';
 import { FIND_INFLUENTIAL_LIST_SERVICE_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { FindInfluentialListInboundPort } from '@Apps/modules/channel/domain/ports/find-influential-list.inbound.port';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { TInfluentialChannelRes } from '@dothis/dto/dist/lib/channel/channel.zod';
+import { TInfluentialChannelRes } from '@dothis/dto';
 export type TFindInfluentialListRes = Result<
   IRes<TInfluentialChannelRes[]>,
   TableNotFoundException | NotFoundException

@@ -7,27 +7,44 @@ import { IGetVideoHistoryGetMultipleByIdDao } from '@Apps/modules/video-history/
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export class VideoHistoryGetMultipleByIdAdapter
   extends VideoHistoryBaseAdapter
   implements IGetVideoHistoryGetMultipleByIdOutboundPort
 {
+  /**
+   * 비디오 아이디를 여러개 받아서 여러 비디오의 히스토리를 리턴
+   * @param dao
+   */
   async execute(
     dao: IGetVideoHistoryGetMultipleByIdDao,
   ): Promise<TGetVideoHistoryRes> {
     const { videoIds, clusterNumber } = dao;
+
     /**
      * 데이터 최신화가 되면 쓰여질것
      */
 
-    const current = this.currentDate();
-
-    const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${clusterNumber[0]}_2024_1`;
+    const { year, month } = DateUtil.currentDate();
+    const tableName = CacheNameMapper.getVideoHistoryCacheName(
+      clusterNumber[0],
+      year,
+      month,
+    );
+    /**
+     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
+     */
     const cluster = Array.isArray(clusterNumber)
       ? clusterNumber
       : [clusterNumber];
     const queryUnion = cluster.map((cluster) => {
-      const tableName = `DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_2024_1`;
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        cluster,
+        year,
+        month,
+      );
 
       return `SELECT vh.video_id, vh.video_views, vh.DAY FROM ${tableName} vh WHERE vh.video_id in (${
         "'" + videoIds.join(`', '`) + "'"
