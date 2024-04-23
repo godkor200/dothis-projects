@@ -2,7 +2,7 @@ import { FindInfluentialListInboundPort } from '@Apps/modules/channel/domain/por
 import { FindInfluentialListDto } from '@Apps/modules/channel/application/dtos/find-influential-list.dto';
 import { TFindInfluentialListRes } from '@Apps/modules/channel/application/queries/find-influential-list.query-handler';
 import { FIND_CHANNEL_PROFILE_IGNITE_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { ChannelProfileOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
+import { InfluentialChannelProfileOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
 import { ChannelProfileDao } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
 import { Inject } from '@nestjs/common';
 import { Err, Ok } from 'oxide.ts';
@@ -28,12 +28,12 @@ export class FindInfluentialListService
    */
   constructor(
     @Inject(FIND_CHANNEL_PROFILE_IGNITE_DI_TOKEN)
-    private readonly channelProfileAdapter: ChannelProfileOutboundPort,
+    private readonly influentialChannelProfileAdapter: InfluentialChannelProfileOutboundPort,
   ) {}
   async execute(dto: FindInfluentialListDto): Promise<TFindInfluentialListRes> {
     const dao = new ChannelProfileDao(dto);
     try {
-      const res = await this.channelProfileAdapter.execute(dao);
+      const res = await this.influentialChannelProfileAdapter.execute(dao);
       if (res.isOk()) {
         return Ok({ success: true, data: res.unwrap() });
       }

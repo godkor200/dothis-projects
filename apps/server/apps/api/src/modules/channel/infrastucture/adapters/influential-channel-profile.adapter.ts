@@ -1,5 +1,5 @@
 import { ChannelBaseAdapter } from '@Apps/modules/channel/infrastucture/adapters/channel.base.adapter';
-import { ChannelProfileOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
+import { InfluentialChannelProfileOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
 import {
   ChannelProfileDao,
   TChannelProfileRes,
@@ -12,13 +12,23 @@ import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 /**
- * 동영상 관련된 영향력있는 채널들을 불러오는 어뎁터 5개
+ * 동영상 관련된 현재 날짜에 영향력있는 채널들을 불러오는 어뎁터
+ * 채널 정보 조회: 검색어, 관련 검색어, 클러스터 번호, 날짜 범위 등의 조건을 사용하여 채널 정보를 조회합니다.
+ * 쿼리 생성: 각 클러스터별로 쿼리를 생성하고, 이를 UNION으로 결합하여 최종 쿼리를 만듭니다.
+ * 정렬 및 LIMIT 적용: 정렬 기준과 LIMIT 5를 적용하여 상위 5개의 채널 정보를 반환합니다.
+ * 예외 처리: 테이블을 찾을 수 없는 경우 TableNotFoundException을, 결과가 없는 경우 NotFoundException을 반환합니다.
  * ref: 없음
  */
-export class ChannelProfileAdapter
+export class InfluentialChannelProfileAdapter
   extends ChannelBaseAdapter
-  implements ChannelProfileOutboundPort
+  implements InfluentialChannelProfileOutboundPort
 {
+  /**
+   * execute 메서드는 ChannelProfileDao 객체를 입력받아 해당 조건에 맞는 채널 정보를 반환합니다.
+   *
+   * @param dao - ChannelProfileDao 객체. 검색어, 관련 검색어, 클러스터 번호, 날짜 범위, 정렬 기준 등의 정보를 포함합니다.
+   * @returns Promise<TChannelProfileRes> - 채널 정보를 담은 객체. 조회에 실패할 경우 에러를 반환합니다.
+   */
   async execute(dao: ChannelProfileDao): Promise<TChannelProfileRes> {
     const {
       search,
@@ -30,8 +40,11 @@ export class ChannelProfileAdapter
       order = 'DESC',
     } = dao;
     const current = DateUtil.currentDate();
-    const tableName = `dothis.channel_data`;
-    const channelIdTableName = `dothis.channel_history_${current.year}${current.month}`;
+    const tableName = CacheNameMapper.getChannelDataCacheName();
+    const channelIdTableName = CacheNameMapper.getChannelHistoryCacheName(
+      current.year,
+      current.month,
+    );
     const queries = relatedCluster.map((cluster) => {
       return `(
                 SELECT 
@@ -56,19 +69,21 @@ export class ChannelProfileAdapter
                   (
                     SELECT 
                       channel_id, 
-                      channel_subscribers, 
-                      channel_average_views
+                      MAX(channel_subscribers) AS channel_subscribers, 
+                      MAX(channel_average_views) AS channel_average_views
                     FROM 
                       ${channelIdTableName}
                     WHERE 
-                     DAY = ${current.day}
+                      DAY = (SELECT MAX(DAY) FROM ${channelIdTableName})
+                    GROUP BY 
+                      channel_id
                   ) ch ON cd.channel_id = ch.channel_id
               )`;
     });
     try {
       let queryString = queries.join(' UNION ');
       queryString =
-        '(' + queryString + `) ORDER BY \n  ${sort} ${order}\nLIMIT 5`;
+        '(' + queryString + `) ORDER BY \n  ${sort} ${order}\n LIMIT 5`;
       const query = this.createDistributedJoinQuery(queryString);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
