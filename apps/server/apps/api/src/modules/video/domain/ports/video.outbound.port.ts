@@ -2,6 +2,7 @@ import {
   GetVideoViewsMatchingSearchOnSpecificDateDao,
   RelatedVideoAndCountByDayDao,
   RelatedVideoAndVideoHistoryDao,
+  SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Result } from 'oxide.ts';
@@ -76,11 +77,13 @@ export interface IGetRelatedVideoOutboundPort {
 }
 export interface IGetRelatedVideoAndVideoHistoryOutBoundPort {
   execute(
-    props: RelatedVideoAndVideoHistoryDao,
+    props: SearchRelationVideoAndHistoryDao,
   ): Promise<TRelatedVideoAndHistoryRes>;
 }
 export interface IGetRelatedVideosCountByDayOutBoundPort {
-  execute(dao: RelatedVideoAndCountByDayDao): Promise<TRelatedVideosCountByDay>;
+  execute(
+    dao: SearchRelationVideoAndHistoryDao,
+  ): Promise<TRelatedVideosCountByDay>;
 }
 export interface IGetRelatedVideosPaginatedOutBoundPort {
   execute(dao: GetVideoDao): Promise<TRelatedVideos>;

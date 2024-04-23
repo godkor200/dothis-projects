@@ -7,6 +7,7 @@ import {
   zClusterNumber,
   zClusterNumberMulti,
 } from '@dothis/dto';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 
 export class ClusterNumberMulti extends createZodDto(
   extendApi(zClusterNumberMulti),
@@ -65,7 +66,7 @@ export class FindDailyViewsV1Query extends createZodDto(
 export class FindDailyViewsV3Dto extends createZodDto(
   extendApi(findVideoBySearchKeyword),
 ) {
-  readonly clusterNumber: string;
+  readonly clusterNumber: string[];
   readonly data?: VIDEO_DATA_KEY[];
   constructor(props: FindDailyViewsV3Dto) {
     super();
@@ -73,9 +74,13 @@ export class FindDailyViewsV3Dto extends createZodDto(
   }
 }
 export class FindDailyViewsV1Dto
-  implements Omit<FindDailyViewsV3Dto, 'clusterNumber'>
+  extends FindDailyViewsV1Query
+  implements IParamsInterface
 {
+  readonly clusterNumber: string[];
+
   constructor(props: FindDailyViewsV1Dto) {
+    super(props);
     Object.assign(this, props);
   }
 }

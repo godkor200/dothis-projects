@@ -7,33 +7,42 @@ import {
 import { Err, Ok } from 'oxide.ts';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export class ChannelHistoryByChannelIdAdapter
   extends ChannelHistoryBaseAdapter
   implements ChannelHistoryByChannelIdOutboundPort
 {
   /**
-   * 채널 아이디로 CHANNEL_SUBSCRIBERS 불러오는 레포지토리,
-   * 현재 데이터에 따라서 최신날짜를 2월 26일로 임시수정
-   * @param ids
+   * 채널 아이디로 CHANNEL_SUBSCRIBERS 불러오는 어뎁터,
+   * @param ids 채널 아이디
    */
   async execute(ids: string[]): Promise<TChannelHistoryByChannelIdRes> {
-    const tableName = `dothis.CHANNEL_HISTORY`;
-    const queryString = `SELECT DISTINCT ch.channel_id, ch.CHANNEL_SUBSCRIBERS, ch.CHANNEL_AVERAGE_VIEWS,ch.YEAR, ch.MONTH, ch.DAY
-    FROM ${tableName} ch WHERE ch.channel_id IN ('${ids.join(`', '`)}') AND (
-    (YEAR = 2024 AND MONTH = 2 AND DAY = 26)
+    const { year, month, day } = DateUtil.currentDate();
+    const cacheName = CacheNameMapper.getChannelHistoryCacheName(year, month);
+    const queryString = `
+    SELECT DISTINCT ch.channel_id, ch.CHANNEL_SUBSCRIBERS, ch.CHANNEL_AVERAGE_VIEWS,ch.YEAR, ch.MONTH, ch.DAY
+    FROM ${cacheName} ch 
+    WHERE ch.channel_id IN ('${ids.join(`', '`)}') 
+    AND (
+    (DAY = ${day})
     OR 
-    (YEAR = 2024 AND MONTH = 2 AND DAY = 25 AND NOT EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE YEAR = 2024 AND MONTH = 2 AND DAY = 26))
+    (DAY = ${
+      Number(day) - 1
+    } AND NOT EXISTS (SELECT 1 FROM ${cacheName} WHERE DAY = ${day}))
     );`;
     try {
       const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.client.getCache(cacheName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
+
       return Ok(
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
+      console.log(e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

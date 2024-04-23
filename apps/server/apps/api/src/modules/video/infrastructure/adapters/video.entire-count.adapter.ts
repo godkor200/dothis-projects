@@ -8,6 +8,9 @@ import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 
+/**
+ *
+ */
 export class VideoEntireCountAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosEntireCountOutBoundPort
@@ -22,7 +25,9 @@ export class VideoEntireCountAdapter
       to,
       clusterNumber,
     );
-
+    /**
+     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
+     */
     const clusterNumberValue = Array.isArray(clusterNumber)
       ? clusterNumber[0]
       : clusterNumber;

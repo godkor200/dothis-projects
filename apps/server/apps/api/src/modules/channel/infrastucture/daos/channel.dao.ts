@@ -1,6 +1,6 @@
 import { Result } from 'oxide.ts';
 import { FindInfluentialListDto } from '@Apps/modules/channel/application/dtos/find-influential-list.dto';
-import { TInfluentialChannelRes } from '@dothis/dto/dist/lib/channel/channel.zod';
+import { TInfluentialChannelRes } from '@dothis/dto';
 import { NotFoundException } from '@nestjs/common';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 

@@ -8,9 +8,11 @@ import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
 import { TExpectedViewsArr } from '@dothis/dto';
 import { EXPECTED_HITS_SERVICE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { ExpectedHitsInboundPort } from '@Apps/modules/hits/domain/ports/expected-hits.inbound.port';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 export type TExpectedViewsV1QueryHandlerRes = Result<
   TExpectedViewsArr,
-  VideoNotFoundError | ChannelNotFoundError | ScrollApiError
+  VideoHistoryNotFoundError | TableNotFoundException
 >;
 @QueryHandler(ExpectedViewsV1Dto)
 export class ExpectedViewsV1QueryHandler

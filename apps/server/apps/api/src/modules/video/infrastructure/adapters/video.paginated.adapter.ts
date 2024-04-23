@@ -11,37 +11,51 @@ import {
   VideosResultTransformer,
 } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosPaginatedOutBoundPort
 {
+  /*
+   * FIXME: 페이지 네이션 이월 구현
+   **/
+
   async execute(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
-
+    /**
+     * FIXME: 밑에 배열화 시키는거 수정할필요가 있음
+     */
     const clusterNumbers = Array.isArray(clusterNumber)
       ? clusterNumber
       : [clusterNumber];
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
+    const { year, month } = DateUtil.currentDate();
     const queryString = clusterNumbers
-      .map((index) => {
-        const tableName = `VIDEO_DATA_CLUSTER_${index}`;
-        const joinTableName = `VIDEO_HISTORY_CLUSTER_${index}_${fromDate.year}_${fromDate.month}`;
+      .map((cluster) => {
+        const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
+        const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
+          cluster,
+          year,
+          month,
+        );
+        const joinSecTableName = CacheNameMapper.getChannelDataCacheName();
         return `SELECT DISTINCT ${
           this.videoColumns.map((column) => `vd.${column}`) +
           ', ch.channel_name'
-        } FROM DOTHIS.${tableName} vd 
-                JOIN DOTHIS.${joinTableName} vh 
+        } FROM ${tableName} vd 
+                JOIN ${joinTableName} vh 
                 ON vd.video_id = vh.video_id 
-                JOIN DOTHIS.CHANNEL_DATA ch
+                JOIN ${joinSecTableName} ch
                 ON vd.channel_id = ch.channel_id
-                WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
-                AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
-                AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+          WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
+          AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
+          AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       })
       .join(' UNION ');
-    const tableName = `DOTHIS.VIDEO_DATA_CLUSTER_${clusterNumbers[0]}`;
+    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumbers[0]);
     const pageSize = Number(limit);
     const currentPage = Number(page);
     try {

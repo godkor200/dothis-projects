@@ -86,7 +86,7 @@ export class GetAdsInfoResDao extends FindAdsInfoDto {
   constructor(props: FindAdsInfoDto) {
     super(props);
     const propsClusterNumber = !Array.isArray(props.clusterNumber)
-      ? [props.clusterNumber]
+      ? props.clusterNumber.split(',')
       : props.clusterNumber;
     this.relatedCluster = propsClusterNumber;
   }

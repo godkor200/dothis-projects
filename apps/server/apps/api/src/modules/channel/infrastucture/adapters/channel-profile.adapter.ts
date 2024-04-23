@@ -4,17 +4,16 @@ import {
   ChannelProfileDao,
   TChannelProfileRes,
 } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
-import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { NotFoundException } from '@nestjs/common';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 /**
  * 동영상 관련된 영향력있는 채널들을 불러오는 어뎁터 5개
- * ref: 지금 2월 26일자 데이터가 최신이기 때문에 하드코딩
- * 원래는 toDate를 활용 해서 최신데이터를 불러와야됨
- *
+ * ref: 없음
  */
 export class ChannelProfileAdapter
   extends ChannelBaseAdapter
@@ -30,46 +29,41 @@ export class ChannelProfileAdapter
       sort = 'channel_subscribers',
       order = 'DESC',
     } = dao;
-    const fromDate = DateFormatter.getFormattedDate(from);
-    const toDate = DateFormatter.getFormattedDate(to);
-    const tableName = `dothis.CHANNEL_DATA`;
-    const channelIdTableName = `dothis.CHANNEL_HISTORY`;
+    const current = DateUtil.currentDate();
+    const tableName = `dothis.channel_data`;
+    const channelIdTableName = `dothis.channel_history_${current.year}${current.month}`;
     const queries = relatedCluster.map((cluster) => {
-      const joinTableName = `DOTHIS.VIDEO_DATA_CLUSTER_${cluster}`; // 정렬 방향을 설정합니다.
-
       return `(
-SELECT 
-  cd.channel_name, 
-  cd.channel_cluster, 
-  cd.mainly_used_keywords, 
-  ch.channel_subscribers, 
-  ch.channel_average_views
-FROM 
-  (
-    SELECT DISTINCT
-      channel_id
-    FROM 
-      ${joinTableName} vd
-    WHERE 
-      (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
-  AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
-  ) AS filtered_videos
-JOIN 
-  ${tableName} cd ON filtered_videos.channel_id = cd.channel_id
-JOIN 
-  (
-    SELECT 
-      channel_id, 
-      channel_subscribers, 
-      channel_average_views
-    FROM 
-      ${channelIdTableName}
-    WHERE 
-     YEAR = 2024 
-     AND MONTH = 02
-     AND DAY = 26
-  ) ch ON cd.channel_id = ch.channel_id
-)`;
+                SELECT 
+                  cd.channel_name, 
+                  cd.channel_cluster, 
+                  cd.mainly_used_keywords, 
+                  ch.channel_subscribers, 
+                  ch.channel_average_views
+                FROM 
+                  (
+                    SELECT DISTINCT
+                      channel_id
+                    FROM 
+                      ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
+                    WHERE 
+                      (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
+                  AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
+                  ) AS filtered_videos
+                JOIN 
+                  ${tableName} cd ON filtered_videos.channel_id = cd.channel_id
+                JOIN 
+                  (
+                    SELECT 
+                      channel_id, 
+                      channel_subscribers, 
+                      channel_average_views
+                    FROM 
+                      ${channelIdTableName}
+                    WHERE 
+                     DAY = ${current.day}
+                  ) ch ON cd.channel_id = ch.channel_id
+              )`;
     });
     try {
       let queryString = queries.join(' UNION ');
