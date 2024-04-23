@@ -14,7 +14,7 @@ export class QueryGenerator {
     let month = fromDate.month;
 
     while (true) {
-      const tableName = `${tableNameInput}_${clusterNumber}_${year}_${month}`;
+      const tableName = `${tableNameInput}`;
       const startDay =
         year === fromDate.year && month === fromDate.month ? fromDate.day : 1;
       const endDay =

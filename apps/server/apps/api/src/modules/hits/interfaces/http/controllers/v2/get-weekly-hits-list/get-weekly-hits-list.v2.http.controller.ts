@@ -3,6 +3,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Query } from '@nestjs/common';
@@ -42,6 +43,13 @@ export class GetWeeklyHitsListV2HttpController {
   })
   @ApiNotFoundResponse({ description: WeeklyViewsError.message })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
+  @ApiQuery({
+    name: 'from',
+    type: String,
+    required: true,
+    description: '날짜',
+    example: '2024-01-15',
+  })
   async execute(@Query() query: GetWeeklyViewsQuery) {
     return tsRestHandler(
       getWeeklyKeywordListWithPagingV2,
