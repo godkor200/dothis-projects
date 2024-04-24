@@ -1,9 +1,8 @@
 {
   "extends": "./tsconfig-build.json",
-  "include": ["**/*"],
-  "exclude": ["node_modules","dist"],
+
   "compilerOptions": {
     "noUnusedLocals": false,
     "noEmit": true
-  },
+  }
 }
