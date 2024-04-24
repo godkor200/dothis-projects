@@ -2,5 +2,5 @@
   "compilerOptions": {
     "jsx": "react"
   },
-  "extends": "@dothis/tsconfig/tsconfig-base.json"
+  "extends": "./config/tsconfig/tsconfig-base.json"
 }
