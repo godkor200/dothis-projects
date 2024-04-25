@@ -60,8 +60,13 @@ export class GetRankingRelatedWordsService
         query.search,
       );
 
-      const relatedWords = relWordsEntity.relWords.split(',');
-      const relatedCluster = JSON.parse(relWordsEntity.cluster);
+      const relatedWords = relWordsEntity.relWords
+        .split(',')
+        .map((item) => item.trim());
+      const relatedCluster = relWordsEntity.cluster
+        .split(',')
+        .map((item) => item.trim())
+        .slice(0, 5);
 
       const dao = new GetRelatedLastVideoAndVideoHistory({
         search: query.search,
