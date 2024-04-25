@@ -36,35 +36,30 @@ export class VideoHistoryMultipleAdapter
             `(VD.video_title LIKE '%${word}%' OR VD.video_tags LIKE '%${word}%')`,
         )
         .join(' OR ');
-
-      const subQuery = `
-        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
-        FROM ${CacheNameMapper.getVideoHistoryCacheName(
-          cluster,
-          year,
-          month,
-        )} VH 
-        JOIN ${CacheNameMapper.getVideoDataCacheName(
-          cluster,
-        )} VD ON VH.VIDEO_ID = VD.VIDEO_ID
-        JOIN ${CacheNameMapper.getChannelHistoryCacheName(
-          year,
-          month,
-        )} CH ON CH.CHANNEL_ID = VD.channel_id 
-        WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
-        AND (${wordQuery})
-        AND VH.DAY = ${day}
-        AND (
-              (CH.DAY = ${day})
-              OR 
-              (CH.DAY = ${(
-                Number(day) - 1
-              ).toString()} AND NOT EXISTS (SELECT 1 FROM ${CacheNameMapper.getChannelHistoryCacheName(
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        cluster,
         year,
         month,
-      )} WHERE DAY = ${day}))
-            )
-        ) 
+      );
+      const joinTableName = CacheNameMapper.getVideoDataCacheName(cluster);
+      const joinThirdTableName = CacheNameMapper.getChannelHistoryCacheName(
+        year,
+        month,
+      );
+
+      const subQuery = `
+        (
+        SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published
+        FROM ${tableName} VH 
+        JOIN ${joinTableName} VD ON VH.VIDEO_ID = VD.VIDEO_ID
+        JOIN ${joinThirdTableName} CH ON CH.CHANNEL_ID = VD.channel_id 
+        WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
+        AND (${wordQuery})
+        AND VH.DAY = (SELECT MAX(day) FROM ${tableName})
+        AND VH.VIDEO_VIEWS > 1000
+        AND CH.DAY = (SELECT MAX(day) FROM ${joinThirdTableName})
+        AND VD.video_published >= DATEADD(month, -6, CURRENT_TIMESTAMP)
+        )
       `;
 
       queryString += index === 0 ? subQuery : ' UNION ' + subQuery;
