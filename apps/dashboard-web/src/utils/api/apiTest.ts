@@ -1,7 +1,3 @@
-import { mock } from 'node:test';
-
-import { apiRouter } from '@dothis/dto';
-import { apiRouter as apiRouterDirect } from '@dothis/dto/src/lib/apiRouter';
 import type {
   ApiFetcherArgs,
   ClientArgs,
