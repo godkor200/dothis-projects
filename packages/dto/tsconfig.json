@@ -1,7 +1,6 @@
 {
   "extends": "../../config/tsconfig/tsconfig-base.json",
-
-  "include": ["src"],
+  "include": ["src/*.ts", "src/lib/**/*.ts", "src/*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "strict": true,
