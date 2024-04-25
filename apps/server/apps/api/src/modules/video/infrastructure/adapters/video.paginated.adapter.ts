@@ -114,7 +114,6 @@ export class VideoPaginatedAdapter
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log('VideoPaginatedAdapter', e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

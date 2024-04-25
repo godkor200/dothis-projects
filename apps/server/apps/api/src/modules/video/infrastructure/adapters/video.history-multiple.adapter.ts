@@ -36,35 +36,27 @@ export class VideoHistoryMultipleAdapter
             `(VD.video_title LIKE '%${word}%' OR VD.video_tags LIKE '%${word}%')`,
         )
         .join(' OR ');
-
-      const subQuery = `
-        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
-        FROM ${CacheNameMapper.getVideoHistoryCacheName(
-          cluster,
-          year,
-          month,
-        )} VH 
-        JOIN ${CacheNameMapper.getVideoDataCacheName(
-          cluster,
-        )} VD ON VH.VIDEO_ID = VD.VIDEO_ID
-        JOIN ${CacheNameMapper.getChannelHistoryCacheName(
-          year,
-          month,
-        )} CH ON CH.CHANNEL_ID = VD.channel_id 
-        WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
-        AND (${wordQuery})
-        AND VH.DAY = ${day}
-        AND (
-              (CH.DAY = ${day})
-              OR 
-              (CH.DAY = ${(
-                Number(day) - 1
-              ).toString()} AND NOT EXISTS (SELECT 1 FROM ${CacheNameMapper.getChannelHistoryCacheName(
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        cluster,
         year,
         month,
-      )} WHERE DAY = ${day}))
-            )
-        ) 
+      );
+      const joinTableName = CacheNameMapper.getVideoDataCacheName(cluster);
+      const joinThirdTableName = CacheNameMapper.getChannelHistoryCacheName(
+        year,
+        month,
+      );
+      const subQuery = `
+        (
+        SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
+        FROM ${tableName} VH 
+        JOIN ${joinTableName} VD ON VH.VIDEO_ID = VD.VIDEO_ID
+        JOIN ${joinThirdTableName} CH ON CH.CHANNEL_ID = VD.channel_id 
+        WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
+        AND (${wordQuery})
+        AND VH.DAY = (SELECT MAX(day) FROM ${tableName})
+        AND CH.DAY = (SELECT MAX(day) FROM ${joinThirdTableName})
+        )
       `;
 
       queryString += index === 0 ? subQuery : ' UNION ' + subQuery;
@@ -96,3 +88,19 @@ export class VideoHistoryMultipleAdapter
     }
   }
 }
+
+/**
+ * (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
+ *    FROM dothis.video_history_08_202404 VH
+ *    JOIN dothis.video_data_08 VD ON VH.VIDEO_ID = VD.VIDEO_ID
+ *    JOIN dothis.channel_history_202404 CH ON CH.CHANNEL_ID = VD.channel_id
+ *    WHERE (VD.video_title LIKE '%서울%' or VD.video_tags LIKE '%서울%')
+ *    AND ((VD.video_title LIKE '%충청%' OR VD.video_tags LIKE '%충청%') OR (VD.video_title LIKE '%강원%' OR VD.video_tags LIKE '%강원%') OR (VD.video_title LIKE '%기스크%' OR VD.video_tags LIKE '%기스크%') OR (VD.video_title LIKE '%경주%' OR VD.video_tags LIKE '%경주%') OR (VD.video_title LIKE '%성동갑%' OR VD.video_tags LIKE '%성동갑%') OR (VD.video_title LIKE '%동북권%' OR VD.video_tags LIKE '%동북권%') OR (VD.video_title LIKE '%빠따보소%' OR VD.video_tags LIKE '%빠따보소%') OR (VD.video_title LIKE '%정송갤러리%' OR VD.video_tags LIKE '%정송갤러리%') OR (VD.video_title LIKE '%기수%' OR VD.video_tags LIKE '%기수%') OR (VD.video_title LIKE '%수도권%' OR VD.video_tags LIKE '%수도권%') OR (VD.video_title LIKE '%대설주의보%' OR VD.video_tags LIKE '%대설주의보%') OR (VD.video_title LIKE '%경마방송%' OR VD.video_tags LIKE '%경마방송%') OR (VD.video_title LIKE '%레이스%' OR VD.video_tags LIKE '%레이스%') OR (VD.video_title LIKE '%인천%' OR VD.video_tags LIKE '%인천%') OR (VD.video_title LIKE '%직캠%' OR VD.video_tags LIKE '%직캠%') OR (VD.video_title LIKE '%방송%' OR VD.video_tags LIKE '%방송%') OR (VD.video_title LIKE '%과천%' OR VD.video_tags LIKE '%과천%') OR (VD.video_title LIKE '%미세먼지 비상저감조치%' OR VD.video_tags LIKE '%미세먼지 비상저감조치%') OR (VD.video_title LIKE '%부산%' OR VD.video_tags LIKE '%부산%') OR (VD.video_title LIKE '%광주%' OR VD.video_tags LIKE '%광주%') OR (VD.video_title LIKE '%해맞이%' OR VD.video_tags LIKE '%해맞이%') OR (VD.video_title LIKE '%대구%' OR VD.video_tags LIKE '%대구%') OR (VD.video_title LIKE '%경주마%' OR VD.video_tags LIKE '%경주마%'))
+ *    AND VH.DAY = 25
+ *    AND (
+ *          (CH.DAY = 25)
+ *          OR
+ *          (CH.DAY = 24 AND NOT EXISTS (SELECT 1 FROM dothis.channel_history_202404 WHERE DAY = 25))
+ *        )
+ *    )
+ */
