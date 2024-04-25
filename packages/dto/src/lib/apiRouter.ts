@@ -21,35 +21,3 @@ export const apiRouter = c.router({
   video: videoApi,
   storyBoard: storyBoardApi,
 });
-
-export const apiRouter_Auth = c.router({
-  auth: authApi,
-});
-
-export const apiRouter_User = c.router({
-  user: userApi,
-});
-
-export const apiRouter_Hits = c.router({
-  hits: hitsApi,
-});
-
-export const apiRouter_ChannelHistory = c.router({
-  channelHistory: channelHistoryApi,
-});
-
-export const apiRouter_Channel = c.router({
-  chnnel: channelApi,
-});
-
-export const apiRouter_RelatedWords = c.router({
-  relatedWord: relatedWordsApi,
-});
-
-export const apiRouter_Video = c.router({
-  video: videoApi,
-});
-
-export const apiRouter_Storyboard = c.router({
-  storyboard: storyBoardApi,
-});
