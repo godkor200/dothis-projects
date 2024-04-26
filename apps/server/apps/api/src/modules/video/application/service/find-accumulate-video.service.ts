@@ -35,8 +35,9 @@ export class FindAccumulateVideoService
     dto: FindAccumulateVideosV1Dto,
   ): Promise<IFindAccumulateVideosV1Res> {
     const dao = new FindChannelHistoryRelatedVideoDao(dto);
-    const videoData = await this.getChannelHistoryRelateVideo.execute(dao);
     try {
+      const videoData = await this.getChannelHistoryRelateVideo.execute(dao);
+      console.log(videoData);
       if (!videoData.isOk()) {
         return Err(new VideoNotFoundError());
       }

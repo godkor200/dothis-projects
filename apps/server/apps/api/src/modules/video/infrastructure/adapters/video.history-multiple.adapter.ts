@@ -11,6 +11,8 @@ import {
 
 import { IRelatedVideoAnalyticsData } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
+import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 export type TGetRelatedVideoAnalyticsData = Result<
   IRelatedVideoAnalyticsData[],
   | VideoHistoryNotFoundError
@@ -21,38 +23,43 @@ export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
 {
-  /**
-   * 현재는 최신데이터가 1월로 한정되어 있어서 1월로 한정
-   * 클러스터도 0,1로 한정
-   */
   async execute(
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedVideoAnalyticsData> {
     const { search, relatedCluster, relatedWords } = dao;
-
+    let { day, month, year } = DateUtil.currentDate();
     let queryString = '';
-    [0, 1].forEach((cluster, index) => {
+    relatedCluster.forEach((cluster, index) => {
       let wordQuery = relatedWords
         .map(
           (word) =>
             `(VD.video_title LIKE '%${word}%' OR VD.video_tags LIKE '%${word}%')`,
         )
         .join(' OR ');
+      const tableName = CacheNameMapper.getVideoHistoryCacheName(
+        cluster,
+        year,
+        month,
+      );
+      const joinTableName = CacheNameMapper.getVideoDataCacheName(cluster);
+      const joinThirdTableName = CacheNameMapper.getChannelHistoryCacheName(
+        year,
+        month,
+      );
 
       const subQuery = `
-        (SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags
-        FROM DOTHIS.VIDEO_HISTORY_CLUSTER_${cluster}_2024_1 VH 
-        JOIN DOTHIS.VIDEO_DATA_CLUSTER_${cluster} VD ON VH.VIDEO_ID = VD.VIDEO_ID
-        JOIN DOTHIS.CHANNEL_HISTORY CH ON CH.CHANNEL_ID = VD.channel_id 
+        (
+        SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published
+        FROM ${tableName} VH 
+        JOIN ${joinTableName} VD ON VH.VIDEO_ID = VD.VIDEO_ID
+        JOIN ${joinThirdTableName} CH ON CH.CHANNEL_ID = VD.channel_id 
         WHERE (VD.video_title LIKE '%${search}%' or VD.video_tags LIKE '%${search}%') 
         AND (${wordQuery})
-        AND VH.DAY = 31
-        AND (
-              (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 26)
-              OR 
-              (CH.YEAR = 2024 AND CH.MONTH = 2 AND CH.DAY = 25 AND NOT EXISTS (SELECT 1 FROM DOTHIS.CHANNEL_HISTORY WHERE YEAR = 2024 AND MONTH = 2 AND DAY = 26))
-            )
-        ) 
+        AND VH.DAY = (SELECT MAX(day) FROM ${tableName})
+        AND VH.VIDEO_VIEWS > 1000
+        AND CH.DAY = (SELECT MAX(day) FROM ${joinThirdTableName})
+        AND VD.video_published >= DATEADD(month, -6, CURRENT_TIMESTAMP)
+        )
       `;
 
       queryString += index === 0 ? subQuery : ' UNION ' + subQuery;
@@ -61,16 +68,24 @@ export class VideoHistoryMultipleAdapter
       const query = this.createDistributedJoinQuery(queryString);
 
       const cache = await this.client.getCache(
-        `DOTHIS.VIDEO_HISTORY_CLUSTER_${relatedCluster[0]}_2024_1`,
+        CacheNameMapper.getVideoHistoryCacheName(
+          relatedCluster[0],
+          year,
+          month,
+        ),
       );
       const result = await cache.query(query);
       const resArr = await result.getAll();
+
       return Ok(
         VideosResultTransformer.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
+      }
+      if (e.message.includes('Cache')) {
+        return Err(new CacheDoesNotFoundException(e.message));
       }
       return Err(e);
     }

@@ -3,6 +3,6 @@ import {
   TChannelProfileRes,
 } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
 
-export interface ChannelProfileOutboundPort {
+export interface InfluentialChannelProfileOutboundPort {
   execute(dao: ChannelProfileDao): Promise<TChannelProfileRes>;
 }

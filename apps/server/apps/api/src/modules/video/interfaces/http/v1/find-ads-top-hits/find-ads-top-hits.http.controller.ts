@@ -10,6 +10,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
@@ -29,6 +30,8 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
+import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getAdvertisingRelatedVideo;
 
@@ -47,15 +50,22 @@ export class FindAdsTopHitsHttpController {
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
   })
+  @ApiParam({
+    name: 'clusterNumber',
+    type: String,
+    required: true,
+    description: '클러스터 번호 단일, 멀티 둘다 가능',
+    example: '24, 33, 22, 23, 8',
+  })
   async execute(
-    @Param() param: ClusterNumberMulti,
+    @Param(ParseArrayPipe) param: IParamsInterface,
     @Query() query: FindAdsTopHitsQuery,
   ) {
     return tsRestHandler(
       c.getAdvertisingRelatedVideo,
       async ({ query, params }) => {
         const arg = new FindAdsTopHitsDto({
-          clusterNumber: params.clusterNumber,
+          clusterNumber: param.clusterNumber,
           ...query,
         });
         const result = await this.queryBus.execute(arg);

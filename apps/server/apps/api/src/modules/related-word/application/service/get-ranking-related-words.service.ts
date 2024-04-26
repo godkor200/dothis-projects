@@ -15,11 +15,17 @@ import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/applicatio
 import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
 
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { CacheDoesNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import {
+  CacheDoesNotFoundException,
+  TableNotFoundException,
+} from '@Libs/commons/src/exceptions/exceptions';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
-  RelwordsNotFoundError | VideoNotFoundError | CacheDoesNotFoundException
+  | TableNotFoundException
+  | CacheDoesNotFoundException
+  | VideoHistoryNotFoundError
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
@@ -47,12 +53,20 @@ export class GetRankingRelatedWordsService
     query: GetRankingRelatedWordsDto,
   ): Promise<TGetRankingRelatedWordsRes> {
     try {
+      /**
+       * FIXME: relWordsEntity 없을 경우 예외처리
+       */
       const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
         query.search,
       );
-      if (!relWordsEntity) return Err(new RelwordsNotFoundError());
-      const relatedWords = relWordsEntity.relWords.split(',');
-      const relatedCluster = JSON.parse(relWordsEntity.cluster);
+
+      const relatedWords = relWordsEntity.relWords
+        .split(',')
+        .map((item) => item.trim());
+      const relatedCluster = relWordsEntity.cluster
+        .split(',')
+        .map((item) => item.trim())
+        .slice(0, 5);
 
       const dao = new GetRelatedLastVideoAndVideoHistory({
         search: query.search,
@@ -62,23 +76,23 @@ export class GetRankingRelatedWordsService
 
       const data = await this.getRelatedVideoHistory.execute(dao);
 
-      if (!data.isOk()) {
-        return Err(new VideoNotFoundError());
-      }
-      const unwrapData = data.unwrap();
+      if (data.isOk()) {
+        const unwrapData = data.unwrap();
 
-      const res = this.rankingRelatedWordAggregateService.calculateWordStats(
-        relatedWords,
-        unwrapData,
-      );
-      return Ok({
-        keyword: query.search,
-        ranking: res.map((e) => ({
-          word: e.word,
-          sortFigure: e.sortFigures,
-          expectedViews: e.expectedViews,
-        })),
-      });
+        const res = this.rankingRelatedWordAggregateService.calculateWordStats(
+          relatedWords,
+          unwrapData,
+        );
+        return Ok({
+          keyword: query.search,
+          ranking: res.map((e) => ({
+            word: e.word,
+            sortFigure: e.sortFigures,
+            expectedViews: e.expectedViews,
+          })),
+        });
+      }
+      return Err(data.unwrapErr());
     } catch (e) {
       return Err(e);
     }

@@ -43,44 +43,53 @@ export class GetVideoDataPageService
         this.getRelatedVideosPaginated.execute(dao),
         this.getRelatedVideosEntireCount.execute(dao),
       ]);
-      const entireCountResultUnwrap = entireCountResult.unwrap();
-      const paginatedResultUnwrap = paginatedResult.unwrap();
-      const total = entireCountResultUnwrap.reduce(
-        (acc, count) => acc + Number(count),
-        0,
-      );
-      const videoIds = paginatedResultUnwrap.map((d) => d.videoId);
-      const res = await this.getRelatedVideoHit.execute({
-        videoIds,
-        clusterNumber: dto.clusterNumber,
-      });
-      let latestData: ILatestData = {};
-      if (res.isOk()) {
-        res.unwrap().forEach((data) => {
-          if (
-            !latestData[data.videoId] ||
-            latestData[data.videoId].day < data.day
-          ) {
-            latestData[data.videoId] = data;
-          }
-        });
+      if (paginatedResult.isErr()) {
+        return Err(paginatedResult.unwrapErr());
       }
-      const updatedData = paginatedResultUnwrap.map((videoData) => {
-        // latestData 객체에서 현재 videoId에 해당하는 조회 데이터를 찾습니다.
-        const hitData = latestData[videoData.videoId];
-        // 조회 데이터가 존재한다면, videoViews를 해당 조회수로 업데이트합니다.
+      if (entireCountResult.isErr()) {
+        return Err(entireCountResult.unwrapErr());
+      }
+      if (paginatedResult.isOk() && entireCountResult.isOk()) {
+        const entireCountResultUnwrap = entireCountResult.unwrap();
+        const paginatedResultUnwrap = paginatedResult.unwrap();
+        const total = entireCountResultUnwrap.reduce(
+          (acc, count) => acc + Number(count),
+          0,
+        );
+        const videoIds = paginatedResultUnwrap.map((d) => d.videoId);
+        const res = await this.getRelatedVideoHit.execute({
+          videoIds,
+          clusterNumber: dto.clusterNumber,
+        });
+        let latestData: ILatestData = {};
+        if (res.isOk()) {
+          res.unwrap().forEach((data) => {
+            if (
+              !latestData[data.videoId] ||
+              latestData[data.videoId].day < data.day
+            ) {
+              latestData[data.videoId] = data;
+            }
+          });
+          const updatedData = paginatedResultUnwrap.map((videoData) => {
+            // latestData 객체에서 현재 videoId에 해당하는 조회 데이터를 찾습니다.
+            const hitData = latestData[videoData.videoId];
+            // 조회 데이터가 존재한다면, videoViews를 해당 조회수로 업데이트합니다.
 
-        if (hitData) {
-          return { ...videoData, videoViews: hitData.videoViews }; // hitData.views는 예시입니다. 실제 속성명에 맞게 조정해야 합니다.
+            if (hitData) {
+              return { ...videoData, videoViews: hitData.videoViews }; // hitData.views는 예시입니다. 실제 속성명에 맞게 조정해야 합니다.
+            }
+            // 조회 데이터가 없다면, 기존 비디오 데이터를 그대로 반환합니다.
+            return videoData;
+          });
+
+          return Ok({
+            total,
+            data: updatedData, // 업데이트된 데이터를 반환합니다.
+          });
         }
-        // 조회 데이터가 없다면, 기존 비디오 데이터를 그대로 반환합니다.
-        return videoData;
-      });
-
-      return Ok({
-        total,
-        data: updatedData, // 업데이트된 데이터를 반환합니다.
-      });
+        return Err(res.unwrapErr());
+      }
     } catch (e) {
       return Err(e);
     }

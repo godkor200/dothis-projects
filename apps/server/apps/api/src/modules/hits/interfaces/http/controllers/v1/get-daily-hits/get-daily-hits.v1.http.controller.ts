@@ -12,6 +12,7 @@ import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily
 import { match, Result } from 'oxide.ts';
 import {
   ClusterNumber,
+  ClusterNumberMulti,
   FindDailyViewsV1Query,
 } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import {
@@ -20,6 +21,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import {
@@ -31,6 +33,8 @@ import {
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
+import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
 
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV1,
@@ -52,17 +56,25 @@ export class GetDailyHitsV1HttpController {
     summary,
     description,
   })
+  @ApiParam({
+    name: 'clusterNumber',
+    type: String,
+    required: true,
+    description: '클러스터 번호 단일, 멀티 둘다 가능',
+    example: '24, 33, 22, 23, 8',
+  })
   async execute(
     @Query() query: FindDailyViewsV1Query,
-    @Param() param: ClusterNumber,
+    @Param(ParseArrayPipe) param: IParamsInterface,
   ) {
     return tsRestHandler(
       c.getDailyViewsV1,
       async ({ query: inputQuery, params }) => {
         const query = new FindDailyViewsV1Dto({
           ...inputQuery,
-          clusterNumber: params.clusterNumber,
+          clusterNumber: param.clusterNumber,
         });
+
         const res: TFindDailyView = await this.queryBus.execute(query);
 
         return match<TFindDailyView, TTsRestRes<IRes<IIncreaseHitsData[]>>>(
@@ -72,12 +84,11 @@ export class GetDailyHitsV1HttpController {
               status: 200,
               body: res,
             }),
-            Err: (err: Result<void, Error>) => {
+            Err: (err: Error) => {
               if (err instanceof VideoNotFoundError) {
                 throw new NotFoundException(err.message);
               }
-
-              throw err.expectErr('s').message;
+              throw err;
             },
           },
         );

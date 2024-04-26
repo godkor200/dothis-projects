@@ -80,7 +80,6 @@ export class FindInfluentialListHttpController {
   @TsRestHandler(getInfluentialList)
   async execute(@Query(ParseArrayPipe) query: IFindInfluentialListQuery) {
     const outerQuery = query;
-    console.log('1');
     return tsRestHandler(getInfluentialList, async ({ query: innerQuery }) => {
       const dto = new FindInfluentialListDto(outerQuery);
       const result: TFindInfluentialListRes = await this.queryBus.execute(dto);

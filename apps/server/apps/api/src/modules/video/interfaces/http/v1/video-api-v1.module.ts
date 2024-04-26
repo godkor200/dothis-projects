@@ -170,7 +170,7 @@ const adapters: Provider[] = [
   },
   {
     provide: VIDEO_HISTORY_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryBaseAdapter,
+    useClass: VideoHistoryGetOneAdapter,
   },
   {
     provide: DATE_SPECIFIC_HISTORY_REPOSITORY_DI_TOKEN,

@@ -18,12 +18,15 @@ export type TWeeklyhitsSqlField = z.TypeOf<
   typeof zGetWeeklyViewsQuery.shape.sort
 >;
 
-export class SearchRelationVideoAndHistoryDao extends createZodDto(
-  extendApi(findVideoBySearchKeyword),
-) {
-  constructor(props: SearchRelationVideoAndHistoryDao) {
-    super();
+export class SearchRelationVideoAndHistoryDao {
+  public from: string;
+  public related: string;
+  public search: string;
+  public to: string;
+  public relatedCluster: string[];
+  constructor(props: FindDailyViewsV1Dto) {
     Object.assign(this, props);
+    this.relatedCluster = props.clusterNumber;
   }
 }
 

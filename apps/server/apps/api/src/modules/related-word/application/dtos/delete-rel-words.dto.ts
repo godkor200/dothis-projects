@@ -1,8 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { relatedWordsApi } from '@dothis/dto';
-import { zSuccessBase } from '@dothis/dto/dist/lib/success.response.zod';
-import { zErrInternalServer } from '@dothis/dto/dist/lib/error.response.zod';
+import { relatedWordsApi, zSuccessBase, zErrInternalServer } from '@dothis/dto';
 
 export class DeleteRelWordsBody extends createZodDto(
   extendApi(relatedWordsApi.deleteRelatedWords.body),

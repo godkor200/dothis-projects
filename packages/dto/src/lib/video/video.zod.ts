@@ -97,7 +97,7 @@ export const zGetVideoAdsInfoRes = z.object({
 export const zGetAdsRelatedTopHits = zFindVideoBySearchKeyword
   .omit({ related: true })
   .merge(zPaginatedQuery.pick({ limit: true }))
-  .merge(z.object({ related: z.string().describe('연관어').default('여행') }));
+  .merge(z.object({ related: z.string().describe('연관어').default('강원') }));
 
 export const zGetAdsRelatedTopHitsRes = zVideo.pick({
   videoPublished: true,
