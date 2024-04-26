@@ -1,4 +1,3 @@
-// import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
