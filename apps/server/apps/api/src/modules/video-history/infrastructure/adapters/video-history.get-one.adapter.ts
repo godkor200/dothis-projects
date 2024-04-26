@@ -1,5 +1,5 @@
 import {
-  IGetVideoHistoryOutboundPort,
+  IGetOneVideoHistoryOutboundPort,
   TGetVideoHistoryRes,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { IGetVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
@@ -15,7 +15,7 @@ import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoHistoryGetOneAdapter
   extends VideoHistoryBaseAdapter
-  implements IGetVideoHistoryOutboundPort
+  implements IGetOneVideoHistoryOutboundPort
 {
   async execute(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes> {
     const { videoId, from, to, clusterNumber } = dao;

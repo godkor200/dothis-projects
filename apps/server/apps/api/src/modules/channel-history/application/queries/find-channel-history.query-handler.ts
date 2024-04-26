@@ -6,7 +6,8 @@ import { CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/c
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { Err, Ok, Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
-import { FindChannelInfoDao } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
+import { FindChannelInfoDao } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
+import { ChannelAndExtendHistoryOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
 
 @QueryHandler(FindChannelInfoDto)
 export class FindChannelHistoryQueryHandler
@@ -18,15 +19,14 @@ export class FindChannelHistoryQueryHandler
 {
   constructor(
     @Inject(CHANNEL_HISTORY_IGNITE_DI_TOKEN)
-    private readonly channelHistory: ChannelHistoryOutboundPort,
+    private readonly channelHistory: ChannelAndExtendHistoryOutboundPort,
   ) {}
   async execute(
     arg: FindChannelInfoDto,
   ): Promise<Result<ChannelHistoryModel, ChannelNotFoundError>> {
-    const channelId = arg.channelId;
     const dao = new FindChannelInfoDao(arg);
-    const channel = await this.channelHistory.findChannelHistoryInfo(dao);
-    if (!channel) return Err(new ChannelNotFoundError());
-    return Ok(channel);
+    const channel = await this.channelHistory.execute(dao);
+    if (!channel.isErr()) return Err(channel.unwrapErr());
+    return Ok(channel.unwrap());
   }
 }

@@ -4,15 +4,16 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
+
 import { GetRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/find-related-words.request.dto';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 @QueryHandler(GetRelatedWordsDto)
 export class FindRelatedWordsQueryHandler
   implements
     IQueryHandler<
       GetRelatedWordsDto,
-      Result<RelWordsEntity, RelwordsNotFoundError>
+      Result<RelWordsEntity, RelatedWordsNotFoundError>
     >
 {
   constructor(
@@ -21,9 +22,9 @@ export class FindRelatedWordsQueryHandler
   ) {}
   async execute(
     query: GetRelatedWordsDto,
-  ): Promise<Result<RelWordsEntity, RelwordsNotFoundError>> {
+  ): Promise<Result<RelWordsEntity, RelatedWordsNotFoundError>> {
     const res = await this.query.findOneByKeyword(query.search);
-    if (!res) return Err(new RelwordsNotFoundError());
+    if (!res) return Err(new RelatedWordsNotFoundError());
     return Ok(res);
   }
 }

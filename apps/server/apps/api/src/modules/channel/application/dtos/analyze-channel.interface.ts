@@ -1,9 +1,11 @@
 import { IQuery } from '@nestjs/cqrs';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { extendApi } from '@anatine/zod-openapi';
+import { zChannelId } from '@dothis/dto/dist/src';
 
-export class AnalyzeChannelDto implements IQuery {
-  channelId: string;
-  constructor(props: AnalyzeChannelDto) {
-    Object.assign(this, props);
+export class ChannelIdDto extends createZodDto(extendApi(zChannelId)) {
+  constructor(props: ChannelIdDto) {
+    super();
   }
 }
 

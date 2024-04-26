@@ -1,33 +1,18 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { ChannelHistoryOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
-
-import { IChannelHistoryRes } from '@Apps/modules/channel-history/application/dtos/expected-views.res';
-
 import { Err, Ok } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-
-import {
-  FindChannelInfoDao,
-  TChannelHistoryTuplesRes,
-} from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
+import { TChannelHistoryTuplesRes } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
-const IgniteClient = require('apache-ignite-client');
-
-const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
-
 export class ChannelHistoryBaseAdapter
   extends IgniteService
   implements ChannelHistoryOutboundPort
 {
-  findChannelHistoryInfo(dao: FindChannelInfoDao): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
-
   protected readonly keys: string[] = [
     'CHANNEL_ID',
     'CHANNEL_AVERAGE_VIEWS',
@@ -62,14 +47,6 @@ export class ChannelHistoryBaseAdapter
       }
       return Err(e);
     }
-  }
-
-  findChannelHistoryByLimit(
-    channelIds: string[],
-    size: number,
-    order: 'desc' | 'asc',
-  ): Promise<IChannelHistoryRes[]> {
-    return Promise.resolve([]);
   }
 
   /**

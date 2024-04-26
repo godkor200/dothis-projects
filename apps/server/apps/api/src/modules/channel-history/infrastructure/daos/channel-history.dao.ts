@@ -9,27 +9,6 @@ import { CHANNEL_DATA_KEY } from '@Apps/modules/hits/application/dtos/expected-h
 import { FindAccumulateVideosV1Dto } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 
 /**
- * dao
- */
-export class ScanLatestChannelHistoryDao extends createZodDto(
-  extendApi(zSearchKeyword),
-) {
-  public data: [CHANNEL_DATA_KEY];
-  public relatedCluster: string[];
-  constructor(props: ScanLatestChannelHistoryDao) {
-    super();
-    Object.assign(this, props);
-  }
-}
-
-export class FindChannelInfoDao extends FindChannelInfoDto {
-  constructor(props: FindChannelInfoDao) {
-    super(props);
-    Object.assign(this, props);
-  }
-}
-
-/**
  * res
  */
 export interface ChannelHistoryLatestDayTupleRes {

@@ -1,6 +1,6 @@
 import { DeleteRelWordsCommandDto } from '@Apps/modules/related-word/application/dtos/delete-rel-words.dto';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
+
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
@@ -9,10 +9,13 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 export type TDeleteRelWordsCommandHandlerRes = Result<
   RelatedWordModel,
-  RelwordsNotFoundError | KeywordsNotFoundError | InternalServerErrorException
+  | RelatedWordsNotFoundError
+  | KeywordsNotFoundError
+  | InternalServerErrorException
 >;
 
 @CommandHandler(DeleteRelWordsCommandDto)
@@ -29,7 +32,7 @@ export class DeleteRelWordsCommandHandler
   ): Promise<
     Result<
       IRes<void>,
-      | RelwordsNotFoundError
+      | RelatedWordsNotFoundError
       | KeywordsNotFoundError
       | InternalServerErrorException
     >
@@ -48,7 +51,7 @@ export class DeleteRelWordsCommandHandler
         relWordsArray.includes(relword),
       );
       if (!isExistWords) {
-        return Err(new RelwordsNotFoundError());
+        return Err(new RelatedWordsNotFoundError());
       }
 
       const newRelWordsArray = relWordsArray.filter(

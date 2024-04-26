@@ -7,6 +7,8 @@ export interface IGetVideoHistoryDao
   to?: string;
 }
 export interface IGetLastVideoHistoryDao extends IGetVideoHistoryDao {}
+export interface IGetListVideoHistoryDao extends IGetVideoHistoryDao {}
+
 export class IGetVideoHistoryGetMultipleByIdDao {
   readonly videoIds: string[];
 

@@ -13,7 +13,6 @@ import {
   TsRestHandler,
 } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   IRes,
@@ -25,6 +24,7 @@ import {
   GetRankingRelatedWordsParams,
 } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { TGetRankingRelatedWordsRes } from '@Apps/modules/related-word/application/service/get-ranking-related-words.service';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 const c = nestControllerContract(apiRouter.relatedWords);
 const { rankingRelatedWords } = c;
@@ -41,7 +41,7 @@ export class GetRankingRelatedWordsHttpController {
   })
   @ApiNotFoundResponse({
     description:
-      RelwordsNotFoundError.message + ' or ' + VideoNotFoundError.message,
+      RelatedWordsNotFoundError.message + ' or ' + VideoNotFoundError.message,
   })
   @ApiOkResponse({
     type: RelWordsRankingRes,
@@ -62,7 +62,7 @@ export class GetRankingRelatedWordsHttpController {
           }),
           Err: (err: Error) => {
             if (
-              err instanceof RelwordsNotFoundError ||
+              err instanceof RelatedWordsNotFoundError ||
               err instanceof VideoNotFoundError
             )
               throw new NotFoundException(err.message);

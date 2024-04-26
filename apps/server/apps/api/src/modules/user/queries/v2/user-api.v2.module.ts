@@ -16,7 +16,6 @@ import { PutAgreePromotionHttpController } from '@Apps/modules/user/command/v1/p
 import { PutAgreePromotionCommandHandler } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.command-handler';
 import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
 import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
-import { ChannelQueryHandler } from '@Apps/modules/channel/infrastucture/adapters/channel.query-handler';
 
 const httpControllers = [
   GetKeywordByUserHttpController,
@@ -26,7 +25,6 @@ const httpControllers = [
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
   { provide: CHANNEL_DATA_REPOSITORY, useClass: ChannelDataRepository },
-  { provide: CHANNEL_DATA_REPOSITORY_BY_OS, useClass: ChannelQueryHandler },
 ];
 
 const commandHandlers: Provider[] = [

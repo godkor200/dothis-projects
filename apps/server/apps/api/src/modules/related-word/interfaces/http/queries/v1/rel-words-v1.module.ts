@@ -9,7 +9,7 @@ import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/re
 import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
 import { FindRelatedWordsHttpController as FindRelHttpV1Controller } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-related-words/find-related-words.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { FindRelatedWordsQueryHandler } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-related-words/find-related-words.query-handler';
+import { FindRelatedWordsQueryHandler } from '@Apps/modules/related-word/application/queries/find-related-words.query-handler';
 import { UpdateAutoCompleteWordsHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/update-auto-complete-words/update-auto-complete-words.http.controller';
 import { UpdateAutoCompleteWordsCommandHandler } from '@Apps/modules/related-word/interfaces/http/command/v1/update-auto-complete-words/update-auto-complete-words.command-handler';
 import { FindRelCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache';
