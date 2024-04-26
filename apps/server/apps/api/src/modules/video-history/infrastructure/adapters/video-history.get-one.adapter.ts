@@ -7,10 +7,11 @@ import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { QueryGenerator } from '@Libs/commons/src/utils/query-generator';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoHistoryGetOneAdapter
   extends VideoHistoryBaseAdapter
@@ -43,7 +44,7 @@ export class VideoHistoryGetOneAdapter
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

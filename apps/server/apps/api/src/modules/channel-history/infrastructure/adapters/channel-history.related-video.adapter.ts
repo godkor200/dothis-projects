@@ -6,11 +6,12 @@ import {
 
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { IGetChannelHistoryRelateVideoOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class ChannelHistoryRelatedVideoAdapter
   extends ChannelHistoryBaseAdapter
@@ -61,7 +62,6 @@ export class ChannelHistoryRelatedVideoAdapter
     try {
       const queryString = queries.join(' UNION ');
       const query = this.createDistributedJoinQuery(queryString);
-      console.log(query);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
@@ -69,7 +69,7 @@ export class ChannelHistoryRelatedVideoAdapter
       if (!resArr.length) return Err(new ChannelHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       console.log(e);

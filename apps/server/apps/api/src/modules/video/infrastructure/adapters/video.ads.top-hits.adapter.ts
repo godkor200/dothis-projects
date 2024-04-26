@@ -9,8 +9,9 @@ import { Err, Ok } from 'oxide.ts';
 
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoAdsTopHitsAdapter
   extends VideoBaseAdapter
@@ -137,7 +138,7 @@ export class VideoAdsTopHitsAdapter
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

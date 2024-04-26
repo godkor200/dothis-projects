@@ -5,7 +5,7 @@ import { IChannelHistoryRes } from '@Apps/modules/channel-history/application/dt
 
 import { Err, Ok } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import {
   FindChannelInfoDao,
   TChannelHistoryTuplesRes,
@@ -14,6 +14,7 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domai
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 const IgniteClient = require('apache-ignite-client');
 
@@ -52,7 +53,9 @@ export class ChannelHistoryBaseAdapter
       if (!res.length) {
         return Err(new ChannelHistoryNotFoundError());
       }
-      return Ok(VideosResultTransformer.mapResultToObjects(res, queryString));
+      return Ok(
+        IgniteResultToObjectMapper.mapResultToObjects(res, queryString),
+      );
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));

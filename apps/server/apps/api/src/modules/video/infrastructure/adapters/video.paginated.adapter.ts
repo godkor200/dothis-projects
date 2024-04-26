@@ -6,12 +6,13 @@ import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/vi
 import { GetVideoDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import {
-  DateFormatter,
-  VideosResultTransformer,
-} from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import {
+  DateFormatter,
+  IgniteResultToObjectMapper,
+} from '@Apps/common/ignite/mapper';
 
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
@@ -111,7 +112,7 @@ export class VideoPaginatedAdapter
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

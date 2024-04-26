@@ -43,7 +43,6 @@ export class VideoEntireCountAdapter
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(resArr);
     } catch (e) {
-      console.error('VideoEntireCountAdapter', e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

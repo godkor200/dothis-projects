@@ -4,13 +4,12 @@ import {
   TGetVideoHistoryRes,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { IGetLastVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { QueryGenerator } from '@Libs/commons/src/utils/query-generator';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoHistoryLastOneAdapter
   extends VideoHistoryBaseAdapter
@@ -43,7 +42,7 @@ export class VideoHistoryLastOneAdapter
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       console.log(e);

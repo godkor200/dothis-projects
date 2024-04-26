@@ -3,17 +3,14 @@ import {
   IGetRelatedVideosCountByDayOutBoundPort,
   TRelatedVideosCountByDay,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import {
-  RelatedVideoAndCountByDayDao,
-  SearchRelationVideoAndHistoryDao,
-} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
+import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { CountByDayRes } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 /**
  * 비디오 총갯수를 받아오는 어뎁터
@@ -49,7 +46,7 @@ export class VideoCountDayAdapter
       const resArr = await result.getAll();
 
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
-      const resultLast = VideosResultTransformer.mapResultToObjects(
+      const resultLast = IgniteResultToObjectMapper.mapResultToObjects(
         resArr,
         clusterQueryString,
       );
