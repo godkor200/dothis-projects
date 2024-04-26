@@ -14,7 +14,7 @@ const StoryBoardAdder = () => {
       className="border-1 border-grey500 flex w-[274px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded"
       onClick={() => {
         createStoryBoard.mutate(
-          {},
+          { body: {} },
           {
             onSuccess: (res) => {
               router.push(`/storyboard/${res.body.data?.id}`);

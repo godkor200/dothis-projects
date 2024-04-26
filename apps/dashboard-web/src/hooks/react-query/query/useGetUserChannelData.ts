@@ -20,7 +20,12 @@ const useGetUserChannelData = (
 ) => {
   const queryResult = apiClient(1).channel.analyzeChannel.useQuery(
     USER_CHANNEL_KEY.all,
-    {},
+    {
+      params: {
+        channelId: '',
+        // 현재 channelData에 대한 api를 확인을 한번 해야해서 임시로 타입만 맞춰두었습니다.
+      },
+    },
     queryOptions,
   );
 

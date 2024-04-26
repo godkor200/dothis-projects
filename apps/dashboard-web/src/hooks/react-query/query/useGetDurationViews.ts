@@ -37,9 +37,6 @@ const useGetDurationViews = (
     ]),
 
     {
-      params: {
-        clusterNumber: clusters.join(','),
-      },
       query: {
         search: keyword!,
         related: relword!,

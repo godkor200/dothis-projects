@@ -24,7 +24,7 @@ import { useTrendingQueryContext } from './TrendingQueryContext';
 
 export type SortingQuery = {
   sort: (typeof trendingTableHeaders)[number]['key'];
-  order: 'asc' | 'desc';
+  order: 'ASC' | 'DESC';
 };
 
 const TrendingPage = () => {
@@ -39,7 +39,7 @@ const TrendingPage = () => {
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
-    order: 'desc',
+    order: 'DESC',
   });
 
   const [selectOptions, setSelectOptions] = useState<
@@ -102,7 +102,7 @@ const TrendingPage = () => {
     }
     setSortingParams((prev) => {
       if (prev.sort === key) {
-        return { ...prev, order: prev.order === 'asc' ? 'desc' : 'asc' };
+        return { ...prev, order: prev.order === 'ASC' ? 'DESC' : 'ASC' };
       }
       return { ...prev, sort: key };
     });
@@ -162,10 +162,10 @@ const TrendingPage = () => {
                           key !== 'rank' && key !== 'category',
                         'before:border-b-[#000]':
                           sortingParams.sort === key &&
-                          sortingParams.order === 'asc',
+                          sortingParams.order === 'ASC',
                         'after:border-t-[#000]':
                           sortingParams.sort === key &&
-                          sortingParams.order === 'desc',
+                          sortingParams.order === 'DESC',
                       },
                     )}
                     onClick={() => {

@@ -33,7 +33,7 @@ const useGetStoryBoardInfiniteQuery = ({
     ({ pageParam = 1 }) => ({
       // ({ pageParam = { page: 1, offset: offset, limit: perPage } }) => ({
       query: {
-        limit: perPage,
+        limit: String(perPage),
         page: pageParam,
         offset: offset,
         // limit: pageParam.limit,

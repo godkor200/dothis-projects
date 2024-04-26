@@ -57,7 +57,7 @@ export const useUpdateStoryBoardTitleMutation = ({
       value: string, // TODO:
     ) =>
       mutationResult.mutate({
-        pathParams: { storyBoardId: storyBoardId },
+        params: { storyBoardId: storyBoardId },
         body: {
           value: value,
         },
@@ -66,10 +66,10 @@ export const useUpdateStoryBoardTitleMutation = ({
 };
 
 export const useUpdateStoryBoardOverviewMutation = (
-  // storyBoardId: string,
+  storyBoardId: string,
   description: string,
   mutationOptions?: UseMutationOptions<
-    typeof apiRouter.storyBoard.addStoryBoardOverviews,
+    typeof apiRouter.storyBoard.updateStoryBoard,
     ClientArgs
   >,
 ) => {
@@ -86,8 +86,11 @@ export const useUpdateStoryBoardOverviewMutation = (
     ...mutationResult,
     mutate: (item: string) =>
       mutationResult.mutate({
+        params: {
+          storyBoardId,
+        },
         body: {
-          description: description,
+          description,
         },
       }),
   };
