@@ -11,7 +11,6 @@ export const channelApi = c.router({
   analyzeChannel: {
     method: 'GET',
     path: `${channelApiUrl}`,
-    pathParams: zChannelId,
     responses: {
       200: zChannelResponse,
       ...zErrResBase,
