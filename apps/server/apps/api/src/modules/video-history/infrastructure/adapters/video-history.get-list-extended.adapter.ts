@@ -1,6 +1,4 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
-import { TRelatedVideoAndHistoryRes } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
