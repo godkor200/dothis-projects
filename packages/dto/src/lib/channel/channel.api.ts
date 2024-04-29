@@ -1,10 +1,7 @@
 import { c } from '../contract';
 import { zErrResBase } from '../error.response.zod';
 import { zChannelResponse } from './channel.model';
-import {
-  zChannelId,
-  zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
-} from './channel.zod';
+import { zFindVideoBySearchKeywordFindChannelClusterNumberMulti } from './channel.zod';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
