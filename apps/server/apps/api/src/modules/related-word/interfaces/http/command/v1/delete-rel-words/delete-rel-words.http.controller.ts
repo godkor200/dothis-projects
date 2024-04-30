@@ -24,11 +24,12 @@ import {
   InternalServerErr,
 } from '@Apps/modules/related-word/application/dtos/delete-rel-words.dto';
 import { match } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
+
 import { TDeleteRelWordsCommandHandlerRes } from './delete-rel-words.command-handler';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 import { JwtAccessGuard } from '@Libs/commons/src';
 import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 @ApiTags('연관어')
 @Controller()
@@ -43,7 +44,7 @@ export class DeleteRelWordsHttpController {
     type: DeleteRelWordsSuccessBase,
   })
   @ApiNotFoundResponse({
-    description: '없는 id들어왔거나, 없는 연관어 삭제시에',
+    description: '없는 id 들어왔거나, 없는 연관어 삭제시에',
   })
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
@@ -76,7 +77,7 @@ export class DeleteRelWordsHttpController {
           }),
           Err: (err: Error) => {
             if (
-              err instanceof RelwordsNotFoundError ||
+              err instanceof RelatedWordsNotFoundError ||
               err instanceof KeywordsNotFoundError
             ) {
               throw new NotFoundException(err.message);

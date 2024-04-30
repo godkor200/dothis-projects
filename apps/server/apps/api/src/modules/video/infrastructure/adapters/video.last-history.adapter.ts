@@ -7,10 +7,6 @@ import {
 import { Err, Ok } from 'oxide.ts';
 
 import {
-  DateFormatter,
-  VideosResultTransformer,
-} from '@Apps/modules/video/infrastructure/utils';
-import {
   CacheDoesNotFoundException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
@@ -19,6 +15,10 @@ import { GetVideoViewsMatchingSearchOnSpecificDateDao } from '@Apps/modules/hits
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import {
+  DateFormatter,
+  IgniteResultToObjectMapper,
+} from '@Apps/common/ignite/mapper';
 
 export class VideoLastHistoryAdapter
   extends VideoBaseAdapter
@@ -90,7 +90,7 @@ export class VideoLastHistoryAdapter
       if (!resArr.length) return Err(new VideoNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

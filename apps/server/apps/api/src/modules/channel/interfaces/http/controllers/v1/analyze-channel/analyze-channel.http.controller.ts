@@ -18,7 +18,7 @@ import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { AnalyzeChannelDto } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
+import { GetAnalyzeMyChannel } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { match } from 'oxide.ts';
 import {
   ChannelAnalysisRes,
@@ -54,7 +54,7 @@ export class AnalyzeChannelHttpController {
   async execute(
     @User() user: TDecodePayload,
   ): Promise<IRes<ChannelAnalysisRes>> {
-    const arg = new AnalyzeChannelDto({ channelId: user.channelId });
+    const arg = new GetAnalyzeMyChannel({ channelId: user.channelId });
 
     const result = await this.queryBus.execute(arg);
 

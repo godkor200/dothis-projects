@@ -5,9 +5,10 @@ import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoAdsInfoAdapter
   extends VideoBaseAdapter
@@ -115,7 +116,10 @@ WHERE
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString).reduce(
+        IgniteResultToObjectMapper.mapResultToObjects(
+          resArr,
+          queryString,
+        ).reduce(
           (accumulator, current) => {
             accumulator.numberOfAdVideos += current.numberofadvideos;
             accumulator.averageViewCount += current.averageviewcount;

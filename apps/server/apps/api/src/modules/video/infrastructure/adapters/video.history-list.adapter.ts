@@ -3,16 +3,14 @@ import {
   IGetRelatedVideoAndVideoHistoryOutBoundPort,
   TRelatedVideoAndHistoryRes,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import {
-  RelatedVideoAndVideoHistoryDao,
-  SearchRelationVideoAndHistoryDao,
-} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
+import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoHistoryListAdapter
   extends VideoBaseAdapter
@@ -82,7 +80,9 @@ export class VideoHistoryListAdapter
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
-      return Ok(VideosResultTransformer.mapResultToObjects(resArr, queryRes));
+      return Ok(
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryRes),
+      );
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));

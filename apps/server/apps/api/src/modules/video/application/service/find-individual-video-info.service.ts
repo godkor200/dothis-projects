@@ -5,22 +5,21 @@ import { Inject } from '@nestjs/common';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
-import { IGetChannelHistoryLatestTuple } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
-import { IGetVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { IGetChannelHistoryLatestTupleByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-
 import { Err, Ok } from 'oxide.ts';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { IGetOneVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 
 export class FindIndividualVideoInfoService
   implements FindIndividualVideoInboundPort
 {
   constructor(
     @Inject(CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN)
-    private readonly getChannelHistoryLatestTuple: IGetChannelHistoryLatestTuple,
+    private readonly channelHistoryPort: IGetChannelHistoryLatestTupleByVideoAdapter,
 
     @Inject(VIDEO_HISTORY_IGNITE_DI_TOKEN)
-    private readonly videoHistory: IGetVideoHistoryOutboundPort,
+    private readonly videoHistoryPort: IGetOneVideoHistoryOutboundPort,
 
     private readonly videoAggregateService: VideoAggregateService,
   ) {}
@@ -46,56 +45,68 @@ export class FindIndividualVideoInfoService
     dto: FindIndividualVideoInfoV1Dto,
   ): Promise<TVideoIndividualRes> {
     const dao = new FindIndividualVideoInfoV1Dao(dto);
-    const channelHistory = await this.getChannelHistoryLatestTuple.execute(dao);
-    const videoHistoryRes = await this.videoHistory.execute({
+    const channelHistoryResult = await this.channelHistoryPort.execute(dao);
+    const videoHistoryResult = await this.videoHistoryPort.execute({
       clusterNumber: dto.clusterNumber,
       videoId: dto.videoId,
       from: DateUtil.getDaysAgo(7),
       to: DateUtil.getDaysAgo(),
     });
 
-    if (channelHistory.isErr() || videoHistoryRes.isOk()) {
-      return Err(channelHistory.unwrapErr());
-    }
-    if (channelHistory.isOk() && videoHistoryRes.isOk()) {
-      const channelHistoryTagInfo = channelHistory.unwrap()[0];
-      const videoHistory = videoHistoryRes.unwrap();
-      const videoTags = channelHistoryTagInfo.videoTags;
-      const channelAverageViews = channelHistoryTagInfo.channelAverageViews;
-      const lastHistory = videoHistory[videoHistory.length - 1];
-      const lastViews = lastHistory.videoViews;
-      const lastComments = lastHistory.videoComments;
-      const lastLikes = lastHistory.videoLikes;
+    if (channelHistoryResult.isErr())
+      return Err(channelHistoryResult.unwrapErr());
+    if (videoHistoryResult.isErr()) return Err(videoHistoryResult.unwrapErr());
 
-      /**
-       * 기대조회수 expectedViews
-       */
-      const expectedViews = lastViews / channelAverageViews;
-      /**
-       * 참여도 participationRate
-       * */
-      const participationRate = (lastComments + lastLikes) / lastViews;
-      const dailyViewAggregate =
-        this.videoAggregateService.calculateIncreaseByIgnite(videoHistory);
-      const videoPublishedDate = channelHistoryTagInfo.videoPublished;
-      const videoPrediction = this.videoAggregateService.getVideoPrediction(
-        videoPublishedDate,
-        dailyViewAggregate,
-      );
-      const subscribers = channelHistoryTagInfo.channelSubscribers;
+    const {
+      videoTags,
+      channelAverageViews,
+      channelSubscribers,
+      videoPublished,
+    } = channelHistoryResult.unwrap()[0];
+    const videoHistory = videoHistoryResult.unwrap();
+    const lastHistory = videoHistory[videoHistory.length - 1];
+    const expectedViews = calculateExpectedViews(
+      lastHistory.videoViews,
+      channelAverageViews,
+    );
+    const participationRate = calculateParticipationRate(
+      lastHistory.videoViews,
+      lastHistory.videoComments,
+      lastHistory.videoLikes,
+    );
+    const dailyViewIncrease =
+      this.videoAggregateService.calculateIncreaseByIgnite(videoHistory);
+    const estimatedTotalViews = this.videoAggregateService.getVideoPrediction(
+      videoPublished,
+      dailyViewIncrease,
+    );
 
-      return Ok({
-        success: true,
-        data: {
-          videoTags,
-          videoPerformance: { expectedViews, participationRate },
-          videoPrediction,
-          channelPerformance: {
-            subscribers,
-            averageViews: channelAverageViews,
-          },
+    return Ok({
+      success: true,
+      data: {
+        videoTags,
+        videoPerformance: { expectedViews, participationRate },
+        videoPrediction: estimatedTotalViews,
+        channelPerformance: {
+          subscribers: channelSubscribers,
+          averageViews: channelAverageViews,
         },
-      });
-    }
+      },
+    });
   }
+}
+
+function calculateExpectedViews(
+  lastViews: number,
+  channelAverageViews: number,
+): number {
+  return lastViews / channelAverageViews;
+}
+
+function calculateParticipationRate(
+  lastViews: number,
+  lastComments: number,
+  lastLikes: number,
+): number {
+  return (lastComments + lastLikes) / lastViews;
 }

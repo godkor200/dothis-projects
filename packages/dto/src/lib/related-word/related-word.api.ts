@@ -27,7 +27,7 @@ export const relatedWordsApi = c.router({
   },
   getRelWords: {
     method: 'GET',
-    path: `${relWordsApiUrl}/:keyword`,
+    path: `${relWordsApiUrl}/:search`,
     responses: {
       200: zRelWords,
       ...zErrResBase,

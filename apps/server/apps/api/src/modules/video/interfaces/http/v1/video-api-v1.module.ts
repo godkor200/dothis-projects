@@ -24,7 +24,6 @@ import {
   CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN,
 } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/application/service/channel-history.service.module';
-import { ChannelQueryHandler } from '@Apps/modules/channel/infrastucture/adapters/channel.query-handler';
 import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
@@ -38,6 +37,7 @@ import {
   VIDEO_HISTORY_GET_HISTORY_HIT_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_GET_HISTORY_MULTIPLE_HIT_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_GET_LAST_HISTORY_HIT_IGNITE_DI_TOKEN,
+  VIDEO_HISTORY_GET_LIST_VIDEO_HISTORY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video-history/video_history.di-token';
 import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
@@ -69,6 +69,7 @@ import { FindPerformanceLengthService } from '@Apps/modules/video/application/se
 import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
 import { FindPerformanceLengthQueryHandler } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
+import { ExtendedVideoHistoryListAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-list-extended.adapter';
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
@@ -81,10 +82,6 @@ const controllers = [
 const commandHandlers: Provider[] = [];
 
 const queryHandlers: Provider[] = [
-  {
-    provide: CHANNEL_OS_DI_TOKEN,
-    useClass: ChannelQueryHandler,
-  },
   GetVideoDataPageService,
   FindVideoPageQueryHandler,
   FindAccumulateVideosV1QueryHandler,
@@ -179,6 +176,10 @@ const adapters: Provider[] = [
   {
     provide: VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
     useClass: VideoLastHistoryAdapter,
+  },
+  {
+    provide: VIDEO_HISTORY_GET_LIST_VIDEO_HISTORY_IGNITE_DI_TOKEN,
+    useClass: ExtendedVideoHistoryListAdapter,
   },
 ];
 @Module({

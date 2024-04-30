@@ -5,10 +5,11 @@ import {
 } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 
 import { Err, Ok } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class ChannelHistoryByChannelIdAdapter
   extends ChannelHistoryBaseAdapter
@@ -39,10 +40,9 @@ export class ChannelHistoryByChannelIdAdapter
       const resArr = await result.getAll();
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log(e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

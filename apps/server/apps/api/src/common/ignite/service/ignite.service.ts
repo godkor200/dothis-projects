@@ -24,7 +24,8 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   public createDistributedJoinQuery(sqlQuery: string) {
     return new SqlFieldsQuery(sqlQuery)
       .setDistributedJoins(true)
-      .setLazy(false);
+      .setLazy(false)
+      .setTimeout(0);
   }
   /*
    * ignite 재시도 로직

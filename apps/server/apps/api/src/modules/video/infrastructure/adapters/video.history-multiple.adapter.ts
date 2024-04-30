@@ -3,7 +3,7 @@ import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/vi
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 import { Err, Ok, Result } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import {
   CacheDoesNotFoundException,
   TableNotFoundException,
@@ -13,6 +13,7 @@ import { IRelatedVideoAnalyticsData } from '@Apps/modules/video-history/domain/p
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 export type TGetRelatedVideoAnalyticsData = Result<
   IRelatedVideoAnalyticsData[],
   | VideoHistoryNotFoundError
@@ -78,7 +79,7 @@ export class VideoHistoryMultipleAdapter
       const resArr = await result.getAll();
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

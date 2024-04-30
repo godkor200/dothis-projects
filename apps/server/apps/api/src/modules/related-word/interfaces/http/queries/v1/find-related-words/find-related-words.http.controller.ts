@@ -1,25 +1,24 @@
 import { Controller, NotFoundException, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { FindRelRequestDto } from './find-rel.request.dto';
 import { apiRouter } from '@dothis/dto';
 import { TsRest, nestControllerContract } from '@ts-rest/nest';
 import {
-  ApiConflictResponse,
   ApiCookieAuth,
-  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { FindRelV1Query } from '@Apps/modules/related-word/application/dtos/find-rel.dto';
 import {
   RelWordsEntity,
   IRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { match, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
+import {
+  GetRelatedWordsDto,
+  GetRelatedWordsParams,
+} from '@Apps/modules/related-word/application/dtos/find-related-words.request.dto';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { getRelWords } = c;
 const { responses, description, summary } = getRelWords;
@@ -27,34 +26,32 @@ const { responses, description, summary } = getRelWords;
 @ApiTags('연관어')
 @ApiCookieAuth()
 @Controller()
-export class FindRelHttpController {
+export class FindRelatedWordsHttpController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @TsRest(getRelWords)
   @ApiOperation({
     summary,
     description,
-  })
-  @ApiParam({
-    name: 'keyword',
+    responses,
   })
   @ApiOkResponse({
     description: `해당하는 데이터를 보냅니다.`,
     type: RelWordsEntity,
   })
   @ApiNotFoundResponse({
-    description: RelwordsNotFoundError.message,
+    description: RelatedWordsNotFoundError.message,
   })
   async execute(
-    @Param() queryParams: FindRelRequestDto,
+    @Param() queryParams: GetRelatedWordsParams,
   ): Promise<IRes<RelWordsEntity>> {
-    const result: Result<RelWordsEntity, RelwordsNotFoundError> =
-      await this.queryBus.execute(new FindRelV1Query(queryParams));
+    const result: Result<RelWordsEntity, RelatedWordsNotFoundError> =
+      await this.queryBus.execute(new GetRelatedWordsDto(queryParams));
 
     return match(result, {
       Ok: (result) => ({ success: true, data: result }),
       Err: (err) => {
-        if (err instanceof RelwordsNotFoundError)
+        if (err instanceof RelatedWordsNotFoundError)
           throw new NotFoundException(err.message);
         throw err;
       },

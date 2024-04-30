@@ -7,9 +7,9 @@ import {
 } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
 import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
-import { FindRelHttpController as FindRelHttpV1Controller } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-rel/find-rel.http.controller';
+import { FindRelatedWordsHttpController as FindRelHttpV1Controller } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-related-words/find-related-words.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { FindRelQueryHandler } from '@Apps/modules/related-word/interfaces/http/queries/v1/find-rel/find-rel.query-handler';
+import { FindRelatedWordsQueryHandler } from '@Apps/modules/related-word/application/queries/find-related-words.query-handler';
 import { UpdateAutoCompleteWordsHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/update-auto-complete-words/update-auto-complete-words.http.controller';
 import { UpdateAutoCompleteWordsCommandHandler } from '@Apps/modules/related-word/interfaces/http/command/v1/update-auto-complete-words/update-auto-complete-words.command-handler';
 import { FindRelCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache';
@@ -93,7 +93,7 @@ const repositories: Provider[] = [
 ];
 
 const handler = [
-  FindRelQueryHandler,
+  FindRelatedWordsQueryHandler,
   UpdateAutoCompleteWordsCommandHandler,
   GetRankingRelatedWordsService,
   FindSearchKeywordQueryHandler,

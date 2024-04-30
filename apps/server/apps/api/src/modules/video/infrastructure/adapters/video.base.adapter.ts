@@ -1,7 +1,7 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { ConfigService } from '@nestjs/config';
-import { DateFormatter } from '@Apps/modules/video/infrastructure/utils';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 /**
  * VideoBaseAdapter 클래스는 비디오 데이터에 대한 접근 및 쿼리를 관리합니다.
  * 이 클래스는 IgniteService를 상속받아 Ignite 캐시에 저장된 비디오 관련 데이터를

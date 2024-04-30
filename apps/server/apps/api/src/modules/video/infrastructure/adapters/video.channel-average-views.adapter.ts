@@ -6,12 +6,11 @@ import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/vi
 import { GetVideoAndChannelViewsByDateAndKeywordsDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 import { Err, Ok } from 'oxide.ts';
-import {
-  DateFormatter,
-  VideosResultTransformer,
-} from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 /**
  * 두번 조인 쿼리는 어떻게 하든 느림.... 그러나 스플릿이 완성되면 다를수도 있음
@@ -73,7 +72,7 @@ export class VideoChannelAverageViewsAdapter
       if (!resArr.length) return Err(new VideoNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

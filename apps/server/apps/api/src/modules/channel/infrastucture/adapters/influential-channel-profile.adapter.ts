@@ -5,11 +5,12 @@ import {
   TChannelProfileRes,
 } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
 import { Err, Ok } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { NotFoundException } from '@nestjs/common';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 /**
  * 동영상 관련된 현재 날짜에 영향력있는 채널들을 불러오는 어뎁터
@@ -90,7 +91,7 @@ export class InfluentialChannelProfileAdapter
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new NotFoundException());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {
