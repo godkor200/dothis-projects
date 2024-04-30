@@ -72,7 +72,6 @@ export class ChannelHistoryRelatedVideoAdapter
         IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log(e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }
