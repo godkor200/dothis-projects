@@ -11,6 +11,7 @@ import type {
   MEDIA_TABNAV_DATA,
   MYPAGE_TABNAV_DATA,
 } from '@/constants/TabNav';
+import useQueryString from '@/hooks/useQueryString';
 import { cn } from '@/utils/cn';
 
 interface MediaArticlesTabNavProps<
@@ -35,18 +36,9 @@ const TabNavigation = <
   selectedArticle,
 }: MediaArticlesTabNavProps<T>) => {
   const pathName = usePathname();
-  const searchParams = useSearchParams();
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
+  const { createUrlWithQueryString } = useQueryString();
 
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
   return (
     <header
       id={tabKey}
@@ -56,11 +48,11 @@ const TabNavigation = <
         <div key={index} className=" flex gap-[0.75rem]">
           <Link
             key={index}
-            href={
-              (pathName +
-                '?' +
-                createQueryString(tabKey, item.category)) as Route
-            }
+            href={createUrlWithQueryString({
+              route: pathName as Route,
+              name: tabKey,
+              value: item.category,
+            })}
             replace
             scroll={false}
             className={cn('cursor-pointer text-[20px] font-bold', {
