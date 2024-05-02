@@ -55,32 +55,26 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
 
   const { hashKeywordList } = useKeyword();
 
-  const {
-    data: rankRelWordList,
-    isLoading,
-    isError,
-    isErrorKeyword,
-  } = useGetRankingWordList(hashKeywordList);
+  const { isLoading, isError } = useGetRankingWordList(hashKeywordList);
 
   // 새로고침 trigger (게스트 키워드를 랜덤으로 middleware에서 넣어주기위해 추가된 코드)
   useEffect(() => {
     // router.replace('/contents');
   }, [router]);
 
-  const { setIsModalOpen, setModalContent, initializeModal } =
-    useModalActions();
+  const { setIsLoadingModalOpen, setModalContent } = useModalActions();
 
   useEffect(() => {
     if (isLoading) {
       setModalContent(<LoginLoadingComponent />);
-      setIsModalOpen(true);
+      setIsLoadingModalOpen(true);
       return;
     }
     if (!isError) {
       setModalContent(null);
-      setIsModalOpen(false);
+      setIsLoadingModalOpen(false);
     }
-  }, []);
+  }, [isLoading, isError]);
 
   return (
     <>

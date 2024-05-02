@@ -25,7 +25,11 @@ export const modalStore = create<modalState>((set) => ({
     setModalContent: (value: React.ReactNode) =>
       set(() => ({ modalContent: value })),
     initializeModal: () =>
-      set(() => ({ modalOpen: false, modalContent: null })),
+      set(() => ({
+        isModalOpen: false,
+        modalContent: null,
+        isLoadingModalOpen: false,
+      })),
   },
 }));
 

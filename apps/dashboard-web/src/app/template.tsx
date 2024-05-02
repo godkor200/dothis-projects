@@ -4,6 +4,7 @@ import './styles.css';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSearchParams } from 'next/navigation';
+import React from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import AuthProvider from '@/components/common/Provider/AuthProvider';
@@ -16,40 +17,44 @@ import {
 } from '@/store/modalStore';
 
 const RootTemplate = ({ children }: StrictPropsWithChildren) => {
-  const isOpenSignUpModal = useIsOpenSignUpModal();
-  const searchParams = useSearchParams();
-
-  const ModalDialog = Dialog;
+  const BasicDialog = Dialog;
   const LoadingDialog = Dialog;
 
-  const isModal = useIsModalOpen();
+  const isModalOpen = useIsModalOpen();
   const isLoadingModal = useIsLoadingModalOpen();
 
   const content = useModalContent();
-  const { setIsModalOpen } = useModalActions();
+  const { initializeModal } = useModalActions();
 
   return (
     <AuthProvider>
-      <LoadingDialog.Root open={isLoadingModal}>
-        <ModalDialog.Root open={isModal} onOpenChange={setIsModalOpen}>
-          {children}
+      {children}
 
-          <ModalDialog.Portal>
-            <ModalDialog.Overlay className="DialogOverlay outline-0">
-              <ModalDialog.Content className="DialogContent outline-0">
-                {content}
-              </ModalDialog.Content>
-            </ModalDialog.Overlay>
-          </ModalDialog.Portal>
+      <BasicDialog.Root
+        open={React.useMemo(() => isModalOpen, [isModalOpen])}
+        onOpenChange={initializeModal}
+        key={'BasicDialog'}
+      >
+        <BasicDialog.Portal>
+          <BasicDialog.Overlay className="DialogOverlay outline-0">
+            <BasicDialog.Content className="DialogContent outline-0">
+              {content}
+            </BasicDialog.Content>
+          </BasicDialog.Overlay>
+        </BasicDialog.Portal>
+      </BasicDialog.Root>
 
-          <LoadingDialog.Portal>
-            <LoadingDialog.Overlay className="DialogOverlay outline-0">
-              <LoadingDialog.Content className="DialogContent outline-0">
-                {content}
-              </LoadingDialog.Content>
-            </LoadingDialog.Overlay>
-          </LoadingDialog.Portal>
-        </ModalDialog.Root>
+      <LoadingDialog.Root
+        open={React.useMemo(() => isLoadingModal, [isLoadingModal])}
+        key={'LoadingDialog'}
+      >
+        <LoadingDialog.Portal>
+          <LoadingDialog.Overlay className="DialogOverlay outline-0">
+            <LoadingDialog.Content className="DialogContent outline-0">
+              {content}
+            </LoadingDialog.Content>
+          </LoadingDialog.Overlay>
+        </LoadingDialog.Portal>
       </LoadingDialog.Root>
     </AuthProvider>
   );
