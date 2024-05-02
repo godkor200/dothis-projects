@@ -50,13 +50,9 @@ const useGetDurationViews = (
     },
   );
 
-  const requiredQueryResult = queryResult.data as DeepRequired<
-    typeof queryResult.data
-  >;
-
   return {
     ...queryResult,
-    data: requiredQueryResult?.body.data,
+    data: queryResult.data?.body.data,
   };
 };
 

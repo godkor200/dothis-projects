@@ -43,20 +43,24 @@ const KeywordItem = <T extends HTMLButtonElement>({
   };
 
   return (
-    <Style.Button
-      ref={targetRef}
-      $active={$active}
-      onClick={() => handleRemoveKeyword(keyValue)}
-    >
-      {label}
-      {isSearchWord && (
-        <SvgComp
-          icon="KeywordDelete"
-          size={10}
-          onClick={(event) => deleteKeyword(event, keyValue)}
-        />
+    <>
+      {label && (
+        <Style.Button
+          ref={targetRef}
+          $active={$active}
+          onClick={() => handleRemoveKeyword(keyValue)}
+        >
+          {label}
+          {isSearchWord && (
+            <SvgComp
+              icon="KeywordDelete"
+              size={10}
+              onClick={(event) => deleteKeyword(event, keyValue)}
+            />
+          )}
+        </Style.Button>
       )}
-    </Style.Button>
+    </>
   );
 };
 

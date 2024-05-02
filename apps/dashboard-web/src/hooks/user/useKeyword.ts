@@ -2,12 +2,12 @@ import { getCookie } from 'cookies-next';
 import { random } from 'lodash';
 import { cookies } from 'next/headers';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { isServer } from '@/constants/dev';
 import { GUEST_KEYWORD } from '@/constants/guest';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
-import { useIsSignedIn } from '@/store/authStore';
+import { useIsSignedIn, useIsTokenRequired } from '@/store/authStore';
 import { useRandomIndex } from '@/store/randomIndexStore';
 import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
 
@@ -16,12 +16,14 @@ import { convertKeywordsToArray, getHashKeyword } from '@/utils/keyword';
  * @returns
  */
 const useKeyword = () => {
-  const { data } = useGetUserInfo();
+  const { data, isLoading } = useGetUserInfo();
 
   // 다른 mutate도 추가할 생각
   const isSignedIn = useIsSignedIn();
 
   const isNotSetTags = !data?.personalizationTag;
+
+  const isTokenRequired = useIsTokenRequired();
 
   // client에서 랜덤인덱스를 추가하기 위해 zustand로 넣고 있습니다.
   const randomIndex = useRandomIndex();
@@ -29,17 +31,25 @@ const useKeyword = () => {
   const searchParams = useSearchParams();
   const searchKeyword = searchParams?.get('keyword');
 
-  // 지금은 store 에서 임의로 useEffect상에서 접근했지만, 나중에는 미들웨어단 임의 키워드로 searchparams로 임의로 넣어주자
-  // 난수는 hydrate 때문에 안됨,  cookie로 인덱스로 지정해서 시도해보았지만 불가능하였다.
-
-  return {
-    hashKeywordList: searchKeyword
+  const selectKeyword = useMemo(() => {
+    console.log(isTokenRequired);
+    if (isTokenRequired === null) return [''];
+    return searchKeyword
       ? [searchKeyword]
       : !isNotSetTags && isSignedIn
       ? getHashKeyword(
           convertKeywordsToArray(data?.personalizationTag, data?.searchWord),
         )
-      : [GUEST_KEYWORD[randomIndex]],
+      : [GUEST_KEYWORD[randomIndex]];
+  }, [isSignedIn, data?.personalizationTag]);
+
+  console.log(selectKeyword);
+  // console.log(test);
+  // 지금은 store 에서 임의로 useEffect상에서 접근했지만, 나중에는 미들웨어단 임의 키워드로 searchparams로 임의로 넣어주자
+  // 난수는 hydrate 때문에 안됨,  cookie로 인덱스로 지정해서 시도해보았지만 불가능하였다.
+
+  return {
+    hashKeywordList: selectKeyword,
 
     isGuest: !(isSignedIn || !isNotSetTags),
     // GUEST_KEYWORD에 랜덤요소로 하나만 설정되게끔 하고 싶었는데,  server와 client 랜덤이 다르게 들어가서 Hydration 에러가 발생.

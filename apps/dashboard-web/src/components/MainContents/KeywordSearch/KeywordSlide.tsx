@@ -24,6 +24,12 @@ import * as Style from './style';
 const KeywordSlide = () => {
   const { hashKeywordList, isGuest } = useKeyword();
 
+  const isEmptyKeyword = (keywordList: string[]) => {
+    const filteredArr = keywordList.filter((item) => item !== '');
+
+    return filteredArr.length;
+  };
+
   const isSignedIn = useIsSignedIn();
 
   const { data: userData } = useGetUserInfo();
@@ -57,6 +63,7 @@ const KeywordSlide = () => {
 
   return (
     <Style.KeywordTapContiner>
+      {/* {isEmptyKeyword(hashKeywordList) !== 0 && ( */}
       <Style.ButtonContainer ref={containerRef}>
         {keyword &&
           hashKeywordList.map((keyword) => (
@@ -117,6 +124,7 @@ const KeywordSlide = () => {
             />
           ))}
       </Style.ButtonContainer>
+      {/* )} */}
 
       {/* 좌우 슬라이드 화살표 비활성화 */}
       {/* <Style.ArrowLeftButton onClick={handleLeftScroll}>
