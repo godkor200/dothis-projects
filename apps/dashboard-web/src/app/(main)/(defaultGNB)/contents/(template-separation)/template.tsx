@@ -59,8 +59,8 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { setModalOpen, setModalContent, initializeModal } = useModalActions();
 
   useEffect(() => {
-    setModalContent(<RelwordErrorModal dismissCallback={initializeModal} />);
-    setModalOpen(true);
+    // setModalContent(<RelwordErrorModal dismissCallback={initializeModal} />);
+    // setModalOpen(true);
   }, []);
 
   return (
