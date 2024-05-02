@@ -32,7 +32,7 @@ const LoginTerms = () => {
     },
   });
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   const {
     register,
@@ -65,7 +65,7 @@ const LoginTerms = () => {
           errorMessage={errors.service?.message || errors.privacy?.message}
         />,
       );
-      setModalOpen(true);
+      setIsModalOpen(true);
       return;
     }
   }, [errors]);

@@ -2,6 +2,9 @@
 
 const path = require('path');
 
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
 const config = {
   reactStrictMode: false,
   swcMinify: true,
@@ -66,4 +69,4 @@ const config = {
     return config;
   },
 };
-module.exports = config;
+module.exports = withVanillaExtract(config);

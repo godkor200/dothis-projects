@@ -1,22 +1,27 @@
 import { create } from 'zustand';
 
 interface modalState {
-  modalOpen: boolean;
+  isModalOpen: boolean;
+  isLoadingModalOpen: boolean;
   modalContent: React.ReactNode | null;
   actions: modalAction;
 }
 
 interface modalAction {
-  setModalOpen: (value: boolean) => void;
+  setIsModalOpen: (value: boolean) => void;
+  setIsLoadingModalOpen: (value: boolean) => void;
   setModalContent: (value: React.ReactNode) => void;
   initializeModal: () => void; // 추가: 초기화 함수
 }
 
 export const modalStore = create<modalState>((set) => ({
-  modalOpen: false,
+  isModalOpen: false,
+  isLoadingModalOpen: false,
   modalContent: null,
   actions: {
-    setModalOpen: (value: boolean) => set(() => ({ modalOpen: value })),
+    setIsModalOpen: (value: boolean) => set(() => ({ isModalOpen: value })),
+    setIsLoadingModalOpen: (value: boolean) =>
+      set(() => ({ isLoadingModalOpen: value })),
     setModalContent: (value: React.ReactNode) =>
       set(() => ({ modalContent: value })),
     initializeModal: () =>
@@ -25,7 +30,10 @@ export const modalStore = create<modalState>((set) => ({
 }));
 
 // State
-export const useModalOpen = () => modalStore((state) => state.modalOpen);
+export const useIsModalOpen = () => modalStore((state) => state.isModalOpen);
+export const useIsLoadingModalOpen = () =>
+  modalStore((state) => state.isLoadingModalOpen);
+
 export const useModalContent = () => modalStore((state) => state.modalContent);
 
 // Actions

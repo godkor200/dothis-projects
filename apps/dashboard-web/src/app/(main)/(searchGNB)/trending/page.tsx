@@ -35,7 +35,7 @@ const TrendingPage = () => {
 
   const [lastId, setLastId] = useState<string | undefined>('');
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   const [sortingParams, setSortingParams] = useState<SortingQuery>({
     sort: 'weekly_views',
@@ -73,7 +73,7 @@ const TrendingPage = () => {
       setIsOpenSignUpModal(true);
 
       setModalContent(<SignUpModal />);
-      setModalOpen(true);
+      setIsModalOpen(true);
       return;
     }
 

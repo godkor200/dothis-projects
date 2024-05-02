@@ -67,17 +67,18 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
     // router.replace('/contents');
   }, [router]);
 
-  const { setModalOpen, setModalContent, initializeModal } = useModalActions();
+  const { setIsModalOpen, setModalContent, initializeModal } =
+    useModalActions();
 
   useEffect(() => {
     if (isLoading) {
       setModalContent(<LoginLoadingComponent />);
-      setModalOpen(true);
+      setIsModalOpen(true);
       return;
     }
     if (!isError) {
       setModalContent(null);
-      setModalOpen(false);
+      setIsModalOpen(false);
     }
   }, []);
 

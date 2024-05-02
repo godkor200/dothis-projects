@@ -12,7 +12,7 @@ const SceneControls = ({
   toggleEdit,
   getCheckedSceneIds,
 }: SceneControlsProps) => {
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   // 씬 순서 변경
   const addScene = () => {
@@ -35,7 +35,7 @@ const SceneControls = ({
         callback={() => console.log('confirmed! mutate~')}
       />,
     );
-    setModalOpen(true);
+    setIsModalOpen(true);
   };
 
   return (
