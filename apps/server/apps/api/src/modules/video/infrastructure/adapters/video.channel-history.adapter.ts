@@ -27,8 +27,6 @@ export class VideoChannelHistoryAdapter
    * @returns 관련 비디오 채널 히스토리 데이터 또는 오류
    * 연관 api:
    * 1. https://api.dothis.kr/docs#/%EC%A1%B0%ED%9A%8C%EC%88%98/ExpectedHitsV1HttpController_execute
-   * 채널 히스토리도 스플릿이 되면 속도가 더 빨라질 여지가 있음
-   * 4/22 채널히스토리가 안 쌓여있음
    */
   async execute(
     dao: GetRelatedVideoChannelHistoryDao,
@@ -56,6 +54,13 @@ export class VideoChannelHistoryAdapter
           toDate.year.toString(),
           toDate.month.toString(),
         );
+        let relatedCondition = '';
+        if (related) {
+          relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+        }
         if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
           return `SELECT
   vh.VIDEO_ID,
@@ -82,10 +87,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+ ${relatedCondition}
   AND (
     vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day}
   )
@@ -121,10 +123,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+ ${relatedCondition}
   AND (
     vh.DAY >= ${fromDate.day}
   )) UNION (
@@ -153,10 +152,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+  ${relatedCondition}
   AND (
     vh.DAY <= ${toDate.day}
   ))
@@ -166,6 +162,7 @@ WHERE
 
       const queryString = queries.join(' UNION ');
       const query = this.createDistributedJoinQuery(queryString);
+      console.log(query);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();

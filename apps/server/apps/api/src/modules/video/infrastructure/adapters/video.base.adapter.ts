@@ -59,10 +59,10 @@ export class VideoBaseAdapter extends IgniteService {
   public getClusterQueryString(
     columns: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
     clusterNumber: string | string[],
+    related?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
@@ -73,7 +73,13 @@ export class VideoBaseAdapter extends IgniteService {
     const clusterNumbers = Array.isArray(clusterNumber)
       ? clusterNumber
       : [clusterNumber];
-
+    let relatedCondition = '';
+    if (related) {
+      relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+    }
     const queryParts = clusterNumbers.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
       const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
@@ -87,7 +93,7 @@ export class VideoBaseAdapter extends IgniteService {
               JOIN ${joinTableName} vh 
               ON vd.video_id = vh.video_id 
               WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%') 
-              AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%') 
+              ${relatedCondition}
               AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       }
 
@@ -102,14 +108,14 @@ export class VideoBaseAdapter extends IgniteService {
         FROM ${tableName} vd
         JOIN ${joinTableName} vh ON vd.video_id = vh.video_id
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
-        AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY >= ${fromDate.day}
       ) UNION (
         SELECT DISTINCT ${columns.join(', ')}
         FROM ${tableName} vd
         JOIN ${joinSecCacheName} vh ON vd.video_id = vh.video_id
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
-        AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY <= ${toDate.day}
       )`;
     });

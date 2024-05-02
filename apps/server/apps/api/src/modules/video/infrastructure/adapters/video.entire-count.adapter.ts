@@ -21,10 +21,10 @@ export class VideoEntireCountAdapter
     const queryString = this.getClusterQueryString(
       [`vd.*`],
       search,
-      related,
       from,
       to,
       clusterNumber,
+      related,
     );
     /**
      * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기

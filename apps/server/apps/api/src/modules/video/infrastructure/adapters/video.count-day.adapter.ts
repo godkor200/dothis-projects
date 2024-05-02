@@ -35,10 +35,10 @@ export class VideoCountDayAdapter
       const clusterQueryString = this.getClusterQueryString(
         ['vh.DAY', 'COUNT(DISTINCT vh.VIDEO_ID) AS unique_video_count'],
         search,
-        related,
         from,
         to,
         relatedCluster,
+        related,
       );
 
       const query = this.createDistributedJoinQuery(clusterQueryString);
