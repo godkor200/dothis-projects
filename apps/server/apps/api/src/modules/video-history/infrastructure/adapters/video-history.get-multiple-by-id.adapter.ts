@@ -6,10 +6,10 @@ import {
 import { IGetVideoHistoryGetMultipleByIdDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
-
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 export class VideoHistoryGetMultipleByIdAdapter
   extends VideoHistoryBaseAdapter
   implements IGetVideoHistoryGetMultipleByIdOutboundPort
@@ -23,11 +23,8 @@ export class VideoHistoryGetMultipleByIdAdapter
   ): Promise<TGetVideoHistoryRes> {
     const { videoIds, clusterNumber } = dao;
 
-    /**
-     * 데이터 최신화가 되면 쓰여질것
-     */
-
     const { year, month } = DateUtil.currentDate();
+    console.log(year, month);
     const tableName = CacheNameMapper.getVideoHistoryCacheName(
       clusterNumber[0],
       year,
@@ -64,10 +61,9 @@ export class VideoHistoryGetMultipleByIdAdapter
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.error('VideoHistoryGetMultipleByIdAdapter execute error:', e);
       return Err(e); // 호출자에게 에러 정보 반환
     }
   }

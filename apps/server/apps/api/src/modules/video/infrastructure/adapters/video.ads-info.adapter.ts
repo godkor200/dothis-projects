@@ -5,9 +5,10 @@ import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoAdsInfoAdapter
   extends VideoBaseAdapter
@@ -31,12 +32,19 @@ export class VideoAdsInfoAdapter
   private queryString(
     clusterNumbers: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
+    related?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
+    let relatedCondition = '';
+    if (related) {
+      relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+    }
     const queryParts = clusterNumbers.map((cluster) => {
       if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
         return `(
@@ -54,8 +62,7 @@ FROM
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
   OR vd.VIDEO_TAGS LIKE '%${search}%'
-  AND vd.VIDEO_TITLE LIKE '%${related}%'
-  OR vd.VIDEO_TAGS LIKE '%${related}%'
+  ${relatedCondition}
   AND vh.DAY BETWEEN ${from} AND ${to}
   AND vd.VIDEO_WITH_ADS = TRUE
 )`;
@@ -80,8 +87,7 @@ FROM
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
   OR vd.VIDEO_TAGS LIKE '%${search}%'
-  AND vd.VIDEO_TITLE LIKE '%${related}%'
-  OR vd.VIDEO_TAGS LIKE '%${related}%'
+  ${relatedCondition}
   AND vh2.DAY <= ${toDate.day} AND vh1.DAY >= ${fromDate.day}
   AND vd.VIDEO_WITH_ADS = TRUE
 )`;
@@ -115,7 +121,10 @@ WHERE
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString).reduce(
+        IgniteResultToObjectMapper.mapResultToObjects(
+          resArr,
+          queryString,
+        ).reduce(
           (accumulator, current) => {
             accumulator.numberOfAdVideos += current.numberofadvideos;
             accumulator.averageViewCount += current.averageviewcount;

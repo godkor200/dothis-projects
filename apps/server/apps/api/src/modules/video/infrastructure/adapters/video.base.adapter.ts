@@ -1,7 +1,7 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { ConfigService } from '@nestjs/config';
-import { DateFormatter } from '@Apps/modules/video/infrastructure/utils';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 /**
  * VideoBaseAdapter 클래스는 비디오 데이터에 대한 접근 및 쿼리를 관리합니다.
  * 이 클래스는 IgniteService를 상속받아 Ignite 캐시에 저장된 비디오 관련 데이터를
@@ -59,10 +59,10 @@ export class VideoBaseAdapter extends IgniteService {
   public getClusterQueryString(
     columns: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
     clusterNumber: string | string[],
+    related?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
@@ -73,7 +73,13 @@ export class VideoBaseAdapter extends IgniteService {
     const clusterNumbers = Array.isArray(clusterNumber)
       ? clusterNumber
       : [clusterNumber];
-
+    let relatedCondition = '';
+    if (related) {
+      relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+    }
     const queryParts = clusterNumbers.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
       const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
@@ -87,7 +93,7 @@ export class VideoBaseAdapter extends IgniteService {
               JOIN ${joinTableName} vh 
               ON vd.video_id = vh.video_id 
               WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%') 
-              AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%') 
+              ${relatedCondition}
               AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       }
 
@@ -102,14 +108,14 @@ export class VideoBaseAdapter extends IgniteService {
         FROM ${tableName} vd
         JOIN ${joinTableName} vh ON vd.video_id = vh.video_id
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
-        AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY >= ${fromDate.day}
       ) UNION (
         SELECT DISTINCT ${columns.join(', ')}
         FROM ${tableName} vd
         JOIN ${joinSecCacheName} vh ON vd.video_id = vh.video_id
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
-        AND (vd.video_title LIKE '%${related}%' OR vd.video_tags LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY <= ${toDate.day}
       )`;
     });

@@ -24,3 +24,10 @@ export const zFindVideoBySearchKeywordFindChannelClusterNumberMulti =
     .merge(zSortChannelInfo);
 
 export type TInfluentialChannelRes = z.TypeOf<typeof zInfluentialChannelRes>;
+
+const zAnalyzeMyChannelChannelRes = zInfluentialChannelRes.merge(
+  z.object({ channelTotalVideos: z.number(), channelLink: z.string() }),
+);
+export type TAnalyzeMyChannelChannelRes = z.TypeOf<
+  typeof zAnalyzeMyChannelChannelRes
+>;

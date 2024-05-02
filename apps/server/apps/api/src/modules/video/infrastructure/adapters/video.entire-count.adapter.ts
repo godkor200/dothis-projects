@@ -21,10 +21,10 @@ export class VideoEntireCountAdapter
     const queryString = this.getClusterQueryString(
       [`vd.*`],
       search,
-      related,
       from,
       to,
       clusterNumber,
+      related,
     );
     /**
      * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
@@ -43,7 +43,6 @@ export class VideoEntireCountAdapter
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(resArr);
     } catch (e) {
-      console.error('VideoEntireCountAdapter', e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

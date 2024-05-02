@@ -5,9 +5,10 @@ import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok, Result } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 export type TGetRelatedVideoChannelHistoryRes = Result<
   IGetVideoChannelHistoryRes[],
   TableNotFoundException | VideoHistoryNotFoundError
@@ -26,8 +27,6 @@ export class VideoChannelHistoryAdapter
    * @returns 관련 비디오 채널 히스토리 데이터 또는 오류
    * 연관 api:
    * 1. https://api.dothis.kr/docs#/%EC%A1%B0%ED%9A%8C%EC%88%98/ExpectedHitsV1HttpController_execute
-   * 채널 히스토리도 스플릿이 되면 속도가 더 빨라질 여지가 있음
-   * 4/22 채널히스토리가 안 쌓여있음
    */
   async execute(
     dao: GetRelatedVideoChannelHistoryDao,
@@ -55,6 +54,13 @@ export class VideoChannelHistoryAdapter
           toDate.year.toString(),
           toDate.month.toString(),
         );
+        let relatedCondition = '';
+        if (related) {
+          relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+        }
         if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
           return `SELECT
   vh.VIDEO_ID,
@@ -81,10 +87,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+ ${relatedCondition}
   AND (
     vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day}
   )
@@ -120,10 +123,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+ ${relatedCondition}
   AND (
     vh.DAY >= ${fromDate.day}
   )) UNION (
@@ -152,10 +152,7 @@ WHERE
     vd.video_title LIKE '%${search}%'
     OR vd.video_tags LIKE '%${search}%'
   )
-  AND (
-    vd.video_title LIKE '%${related}%'
-    OR vd.video_tags LIKE '%${related}%'
-  )
+  ${relatedCondition}
   AND (
     vh.DAY <= ${toDate.day}
   ))
@@ -165,13 +162,14 @@ WHERE
 
       const queryString = queries.join(' UNION ');
       const query = this.createDistributedJoinQuery(queryString);
+      console.log(query);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

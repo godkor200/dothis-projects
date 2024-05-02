@@ -2,17 +2,18 @@ import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
-import { FindRelV1Query } from '@Apps/modules/related-word/application/dtos/find-rel.dto';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
-import { RelwordsNotFoundError } from '@Apps/modules/related-word/domain/errors/relwords.errors';
 
-@QueryHandler(FindRelV1Query)
-export class FindRelQueryHandler
+import { GetRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/find-related-words.request.dto';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+
+@QueryHandler(GetRelatedWordsDto)
+export class FindRelatedWordsQueryHandler
   implements
     IQueryHandler<
-      FindRelV1Query,
-      Result<RelWordsEntity, RelwordsNotFoundError>
+      GetRelatedWordsDto,
+      Result<RelWordsEntity, RelatedWordsNotFoundError>
     >
 {
   constructor(
@@ -20,10 +21,10 @@ export class FindRelQueryHandler
     private readonly query: FindRelatedWordOutboundPort,
   ) {}
   async execute(
-    query: FindRelV1Query,
-  ): Promise<Result<RelWordsEntity, RelwordsNotFoundError>> {
-    const res = await this.query.findOneByKeyword(query.keyword);
-    if (!res) return Err(new RelwordsNotFoundError());
+    query: GetRelatedWordsDto,
+  ): Promise<Result<RelWordsEntity, RelatedWordsNotFoundError>> {
+    const res = await this.query.findOneByKeyword(query.search);
+    if (!res) return Err(new RelatedWordsNotFoundError());
     return Ok(res);
   }
 }

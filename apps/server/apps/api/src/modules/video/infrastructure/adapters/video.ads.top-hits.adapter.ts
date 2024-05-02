@@ -9,8 +9,9 @@ import { Err, Ok } from 'oxide.ts';
 
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 export class VideoAdsTopHitsAdapter
   extends VideoBaseAdapter
@@ -44,10 +45,10 @@ export class VideoAdsTopHitsAdapter
   private queryString(
     clusterNumbers: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
     limit: string,
+    related?: string,
   ) {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
@@ -60,13 +61,20 @@ export class VideoAdsTopHitsAdapter
         fromDate.year.toString(),
         fromDate.month.toString(),
       );
+      let relatedCondition = '';
+      if (related) {
+        relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+      }
       if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
         return `(SELECT VD.VIDEO_TITLE, VD.VIDEO_PUBLISHED, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
     FROM ${tableName} VD 
     JOIN ${joinTableName} CD ON VD.CHANNEL_ID = CD.CHANNEL_ID 
     JOIN ${joinSecCacheName} VH ON VD.VIDEO_ID = VH.VIDEO_ID 
     WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
-    AND (VD.VIDEO_TITLE LIKE '%${related}%' or VD.VIDEO_TAGS LIKE '%${related}%') 
+    ${relatedCondition} 
     AND (VH.DAY BETWEEN ${fromDate.day} AND ${toDate.day}) 
     AND VD.VIDEO_WITH_ADS = TRUE 
     GROUP BY VD.VIDEO_ID 
@@ -86,7 +94,7 @@ export class VideoAdsTopHitsAdapter
         JOIN ${joinSecCacheName} vh ON VD.VIDEO_ID = VH.VIDEO_ID
       WHERE
         (vd.VIDEO_TITLE LIKE '%${search}%' OR vd.VIDEO_TAGS LIKE '%${search}%')
-        AND (vd.VIDEO_TITLE LIKE '%${related}%' OR vd.VIDEO_TAGS LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY >= '${fromDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
       GROUP BY VD.VIDEO_ID 
@@ -102,7 +110,7 @@ export class VideoAdsTopHitsAdapter
         JOIN ${joinThirdCacheName} VH ON VD.VIDEO_ID = VH.VIDEO_ID
       WHERE
         (vd.VIDEO_TITLE LIKE '%${search}%' OR vd.VIDEO_TAGS LIKE '%${search}%')
-        AND (vd.VIDEO_TITLE LIKE '%${related}%' OR vd.VIDEO_TAGS LIKE '%${related}%')
+        ${relatedCondition}
         AND vh.DAY <= '${toDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
       GROUP BY VD.VIDEO_ID 
@@ -137,7 +145,7 @@ export class VideoAdsTopHitsAdapter
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());
       return Ok(
-        VideosResultTransformer.mapResultToObjects(resArr, queryString),
+        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
       if (e.message.includes('Table')) {

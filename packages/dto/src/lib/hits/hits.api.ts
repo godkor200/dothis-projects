@@ -77,7 +77,7 @@ export const hitsApi = c.router({
     },
     summary: '기대 조회수를 가져옵니다',
     description:
-      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다. v2는 v1에 비하면 개선된 버전입니다. 전체를 불러오기 때문에 한번만 호출하면 됩니다',
+      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다.',
   },
   getProbabilitySuccess: {
     method: 'GET',

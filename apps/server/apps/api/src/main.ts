@@ -7,10 +7,6 @@ import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filt
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 
-/**
- * 데이터 임시 저장 변수
- */
-export const tempCluster = [0, 1];
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);

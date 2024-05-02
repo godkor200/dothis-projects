@@ -6,11 +6,16 @@ import {
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
-import { VideosResultTransformer } from '@Apps/modules/video/infrastructure/utils';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
+import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
+/**
+ * 비디오 데이터 클러스터에서 비디오를 받아 옵니다.
+ * 이 메소드는 특정 클러스터 번호들, 검색어, 관련 검색어, 날짜 범위를 기반으로 정보를 검색합니다.
+ */
 export class VideoListAdapterEntireCluster
   extends VideoBaseAdapter
   implements IGetRelatedVideoOutboundPort
@@ -36,7 +41,7 @@ export class VideoListAdapterEntireCluster
       const result = await cache.query(query);
 
       return Ok(
-        VideosResultTransformer.mapResultToObjects<IVideoSchema>(
+        IgniteResultToObjectMapper.mapResultToObjects<IVideoSchema>(
           await result.getAll(),
           queryString,
         ),

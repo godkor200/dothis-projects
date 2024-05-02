@@ -80,7 +80,32 @@ services:
       - 6379:6379
     networks:
       - dev-dothis-network
-
+#  perf-test:
+#    build: .
+#    image: artilleryio/artillery:latest
+#    platform: linux/arm64/v8
+#    environment:
+#      REDIS_PORT: dev-server:80
+#      MAX_LATENCY: 1000
+#      MIN_RPS: 200
+#      TEST_CONFIG: |-
+#        config:
+#          target: "{{ $processEnvironment.TARGET_URL }}"
+#          phases:
+#            - duration: 1
+#              arrivalRate: 1
+#          defaults:
+#            headers:
+#              accept: application/json
+#
+#        scenarios:
+#          - flow:
+#              - get:
+#                  url: "/v1/hits/daily/24%2C%2033%2C%2022%2C%2023%2C%208?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
+#              - get:
+#                  url: "v1/hits/expectation/0%2C1%2C2%2C3%2C4?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
+#              - get:
+#                  url: "v1/related-word/%EC%84%9C%EC%9A%B8/ranking"
 networks:
   dev-dothis-network:
 
