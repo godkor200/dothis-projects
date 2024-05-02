@@ -28,8 +28,10 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
         {children}
 
         <Dialog.Portal>
-          <Dialog.Overlay className="DialogOverlay">
-            <Dialog.Content className="DialogContent">{content}</Dialog.Content>
+          <Dialog.Overlay className="DialogOverlay outline-0">
+            <Dialog.Content className="DialogContent outline-0">
+              {content}
+            </Dialog.Content>
           </Dialog.Overlay>
         </Dialog.Portal>
       </Dialog.Root>
