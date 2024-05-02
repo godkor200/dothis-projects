@@ -75,7 +75,7 @@ export const zFindIndividualVideoInfoParams = zClusterPathParams.merge(
   z.object({
     videoId: z
       .string()
-      .default('Mm-8O8iFmao')
+      .default('-Argyz-lS-8')
       .describe('찾을 비디오의 id 값을 입력받습니다.'),
   }),
 );
