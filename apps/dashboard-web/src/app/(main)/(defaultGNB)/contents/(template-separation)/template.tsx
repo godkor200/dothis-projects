@@ -7,11 +7,13 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { type PropsWithChildren, useEffect } from 'react';
 
-import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
+import LoginLoadingComponent from '@/components/Auth/LoginLoading';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 import { GUEST_KEYWORD } from '@/constants/guest';
+import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
+import useKeyword from '@/hooks/user/useKeyword';
 import { useModalActions } from '@/store/modalStore';
 import { useRandomIndexActions } from '@/store/randomIndexStore';
 import { cn } from '@/utils/cn';
@@ -51,6 +53,15 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
     router.replace(`${pathname}${query}` as Route);
   };
 
+  const { hashKeywordList } = useKeyword();
+
+  const {
+    data: rankRelWordList,
+    isLoading,
+    isError,
+    isErrorKeyword,
+  } = useGetRankingWordList(hashKeywordList);
+
   // 새로고침 trigger (게스트 키워드를 랜덤으로 middleware에서 넣어주기위해 추가된 코드)
   useEffect(() => {
     // router.replace('/contents');
@@ -59,8 +70,15 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { setModalOpen, setModalContent, initializeModal } = useModalActions();
 
   useEffect(() => {
-    setModalContent(<RelwordErrorModal dismissCallback={initializeModal} />);
-    setModalOpen(true);
+    if (isLoading) {
+      setModalContent(<LoginLoadingComponent />);
+      setModalOpen(true);
+      return;
+    }
+    if (!isError) {
+      setModalContent(null);
+      setModalOpen(false);
+    }
   }, []);
 
   return (
