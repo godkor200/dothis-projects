@@ -71,16 +71,6 @@ const MainContentTemplate = ({ children }: PropsWithChildren) => {
   const { setModalOpen, setModalContent, initializeModal } = useModalActions();
 
   useEffect(() => {
-    // setModalContent(<RelwordErrorModal dismissCallback={initializeModal} />);
-    // setModalOpen(true);
-  }, []);
-
-  const handleModal = () => {
-    setModalContent(<LoginLoadingComponent />);
-    setModalOpen(true);
-  };
-
-  useEffect(() => {
     if (isLoading) {
       setModalContent(<LoginLoadingComponent />);
       setModalOpen(true);
