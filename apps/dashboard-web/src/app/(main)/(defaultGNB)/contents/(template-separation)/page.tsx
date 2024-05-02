@@ -14,8 +14,6 @@ import YouTube from '@/components/MainContents/MediaArticles/Youtube';
 import { CATEGORY_TABNAV_DATA } from '@/constants/TabNav';
 import { MEDIA_TABNAV_DATA } from '@/constants/TabNav';
 
-import Test from './Test';
-
 const TabNavigation = dynamic(
   () => import('@/components/common/TabNavigation'),
   { ssr: false },
@@ -115,7 +113,6 @@ const MainContentPage = ({
   // if (selectedMainContent === 'recommend') {
   return (
     <div className=" mx-auto w-[1342px] ">
-      <Test />
       <Card>
         <CardHeader title="콘텐츠 소재" />
         <div className="flex">
