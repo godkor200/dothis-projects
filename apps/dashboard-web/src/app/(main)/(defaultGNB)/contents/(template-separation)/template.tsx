@@ -8,7 +8,6 @@ import { useSearchParams } from 'next/navigation';
 import { type PropsWithChildren, useEffect } from 'react';
 
 import LoginLoadingComponent from '@/components/Auth/LoginLoading';
-import RelwordErrorModal from '@/components/common/Modal/ModalContent/RelwordErrorModal';
 import KeywordSlide from '@/components/MainContents/KeywordSearch/KeywordSlide';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 import { GUEST_KEYWORD } from '@/constants/guest';
