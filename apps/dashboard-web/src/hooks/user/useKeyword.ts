@@ -40,7 +40,7 @@ const useKeyword = () => {
           convertKeywordsToArray(data?.personalizationTag, data?.searchWord),
         )
       : [GUEST_KEYWORD[randomIndex]];
-  }, [isSignedIn, data?.personalizationTag]);
+  }, [isSignedIn, data?.personalizationTag, isTokenRequired]);
 
   // console.log(test);
   // 지금은 store 에서 임의로 useEffect상에서 접근했지만, 나중에는 미들웨어단 임의 키워드로 searchparams로 임의로 넣어주자
