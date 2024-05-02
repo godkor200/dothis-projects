@@ -3,7 +3,7 @@ import { z, ZodTypeAny } from 'zod';
 export const zSearchKeyword = z
   .object({
     search: z.string().describe('탐색어').default('서울'),
-    related: z.string().describe('연관어').default('대구'),
+    related: z.string().describe('연관어 optional').default('대구').optional(),
   })
   .describe('기본 탐색어 연관어 쿼리 형태');
 
@@ -79,31 +79,31 @@ export const dataObject = <T extends ZodTypeAny>(data: T) =>
 export const zClusterNumber = z.object({
   clusterNumber: z
     .string()
-    .default('0')
+    .default('4, 93, 14, 13, 57, 5, 43, 1, 10, 45')
     .describe('찾을 대상의 클러스터 번호 값을 입력받습니다.'),
 });
 
 export const zClusterNumberMulti = z.object({
   clusterNumber: z
     .string()
-    .default('0')
+    .default('4, 93, 14, 13, 57, 5, 43, 1, 10, 45')
     .describe(
-      '클러스터 번호 하나 단독, 다수의 클러스터로 페이지네이션 합니다. ex) 1,2,3,4,5 ',
+      '클러스터 번호 하나 단독, 다수의 클러스터로 페이지네이션 합니다. ex) 4, 93, 14, 13, 57, 5, 43, 1, 10, 45 ',
     ),
 });
 export const zKeywordsMulti = z.object({
   keywords: z
     .string()
-    .default('0')
+    .default('캠핑,캠퍼,설악산')
     .describe('키워드 하나 단독, 다수로 필터링합니다. ex) 캠핑,캠퍼,설악산'),
 });
 
 export const zCategoryNumberMulti = z.object({
   categoryNumbers: z
     .string()
-    .default('0')
+    .default('4, 93, 14, 13, 57, 5, 43, 1, 10, 45')
     .describe(
-      '카테고리 번호 하나 단독, 다수의 카테고리로 페이지네이션 합니다. ex) 1, 2, 3, 4, 5 ',
+      '카테고리 번호 하나 단독, 다수의 카테고리로 페이지네이션 합니다. ex) 4, 93, 14, 13, 57, 5, 43, 1, 10, 45 ',
     ),
 });
 export const zAuth = z.object({
