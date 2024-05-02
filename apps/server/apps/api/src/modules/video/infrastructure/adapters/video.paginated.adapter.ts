@@ -14,6 +14,9 @@ import {
   IgniteResultToObjectMapper,
 } from '@Apps/common/ignite/mapper';
 
+/**
+ * 대량의 비디오를 페이지네이션 방식으로 리턴합니다.
+ */
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosPaginatedOutBoundPort
@@ -31,18 +34,25 @@ export class VideoPaginatedAdapter
   private queryString(
     clusterNumbers: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
+    related?: string,
   ): string {
+    let relatedCondition = '';
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
+    if (related) {
+      relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+    }
     const queryParts = clusterNumbers.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
       const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
-        fromDate.year.toString(),
-        fromDate.month.toString(),
+        fromDate.year,
+        fromDate.month,
       );
       const joinSecTableName = CacheNameMapper.getChannelDataCacheName();
       if (fromDate.year === toDate.year && toDate.month === toDate.month) {
@@ -55,13 +65,13 @@ export class VideoPaginatedAdapter
                 JOIN ${joinSecTableName} ch
                 ON vd.channel_id = ch.channel_id
           WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
-          AND (vd.video_title LIKE '%${related}%' or vd.video_tags LIKE '%${related}%') 
+          ${relatedCondition} 
           AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
       }
       const joinThirdTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
-        toDate.year.toString(),
-        toDate.month.toString(),
+        toDate.year,
+        toDate.month,
       );
       return `SELECT DISTINCT ${
         this.videoColumns.map((column) => `vd.${column}`) + ', ch.channel_name'
@@ -70,12 +80,10 @@ export class VideoPaginatedAdapter
         ${tableName} vd
       JOIN ${joinTableName} vh1 ON vd.VIDEO_ID = vh.VIDEO_ID
       JOIN ${joinThirdTableName} vh2 ON vd.VIDEO_ID = vh.VIDEO_ID
-      WHERE
-        vd.VIDEO_TITLE LIKE '%${search}%'
-        OR vd.VIDEO_TAGS LIKE '%${search}%'
-        AND vd.VIDEO_TITLE LIKE '%${related}%'
-        OR vd.VIDEO_TAGS LIKE '%${related}%'
-        AND vh2.DAY <= ${toDate.day} AND vh1.DAY >= ${fromDate.day}
+      WHERE (vd.VIDEO_TITLE LIKE '%${search}%' OR vd.VIDEO_TAGS LIKE '%${search}%')
+        ${relatedCondition}
+        AND vh2.DAY <= ${toDate.day} 
+        AND vh1.DAY >= ${fromDate.day}
       `;
     });
 
@@ -83,6 +91,7 @@ export class VideoPaginatedAdapter
   }
   async execute(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
+
     /**
      * FIXME: 밑에 배열화 시키는거 수정할필요가 있음
      */
@@ -93,10 +102,11 @@ export class VideoPaginatedAdapter
     const queryString = this.queryString(
       clusterNumbers,
       search,
-      related,
       from,
       to,
+      related,
     );
+
     const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumbers[0]);
     const pageSize = Number(limit);
     const currentPage = Number(page);

@@ -32,12 +32,19 @@ export class VideoAdsInfoAdapter
   private queryString(
     clusterNumbers: string[],
     search: string,
-    related: string,
     from: string,
     to: string,
+    related?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
+    let relatedCondition = '';
+    if (related) {
+      relatedCondition = `AND (
+        vd.video_title LIKE '%${related}%'
+        OR vd.video_tags LIKE '%${related}%'
+      )`;
+    }
     const queryParts = clusterNumbers.map((cluster) => {
       if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
         return `(
@@ -55,8 +62,7 @@ FROM
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
   OR vd.VIDEO_TAGS LIKE '%${search}%'
-  AND vd.VIDEO_TITLE LIKE '%${related}%'
-  OR vd.VIDEO_TAGS LIKE '%${related}%'
+  ${relatedCondition}
   AND vh.DAY BETWEEN ${from} AND ${to}
   AND vd.VIDEO_WITH_ADS = TRUE
 )`;
@@ -81,8 +87,7 @@ FROM
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
   OR vd.VIDEO_TAGS LIKE '%${search}%'
-  AND vd.VIDEO_TITLE LIKE '%${related}%'
-  OR vd.VIDEO_TAGS LIKE '%${related}%'
+  ${relatedCondition}
   AND vh2.DAY <= ${toDate.day} AND vh1.DAY >= ${fromDate.day}
   AND vd.VIDEO_WITH_ADS = TRUE
 )`;

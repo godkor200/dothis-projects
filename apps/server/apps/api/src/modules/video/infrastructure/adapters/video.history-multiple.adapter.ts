@@ -1,9 +1,7 @@
 import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-
 import { Err, Ok, Result } from 'oxide.ts';
-
 import {
   CacheDoesNotFoundException,
   TableNotFoundException,
@@ -20,18 +18,26 @@ export type TGetRelatedVideoAnalyticsData = Result<
   | TableNotFoundException
   | CacheDoesNotFoundException
 >;
+
+/**
+ * 연관어에 관련된 관련어를 가지고 있는 비디오를 찾아 옵니다.
+ * 조건:
+ *  - 비디오 조회수 1천회 이상
+ *  - 비디오 6개월내 이상
+ */
 export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
 {
-  async execute(
-    dao: GetRelatedLastVideoAndVideoHistory,
-  ): Promise<TGetRelatedVideoAnalyticsData> {
-    const { search, relatedCluster, relatedWords } = dao;
-    let { day, month, year } = DateUtil.currentDate();
+  private queryString(
+    clusterNumbers: string[],
+    search: string,
+    related: string[],
+  ): string {
+    let { month, year } = DateUtil.currentDate();
     let queryString = '';
-    relatedCluster.forEach((cluster, index) => {
-      let wordQuery = relatedWords
+    clusterNumbers.forEach((cluster, index) => {
+      let wordQuery = related
         .map(
           (word) =>
             `(VD.video_title LIKE '%${word}%' OR VD.video_tags LIKE '%${word}%')`,
@@ -48,7 +54,7 @@ export class VideoHistoryMultipleAdapter
         month,
       );
 
-      const subQuery = `
+      const query = `
         (
         SELECT VH.VIDEO_ID, VH.VIDEO_VIEWS, VH.DAY, VD.video_title, CH.CHANNEL_AVERAGE_VIEWS, VD.channel_id, VD.video_tags, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published
         FROM ${tableName} VH 
@@ -63,8 +69,16 @@ export class VideoHistoryMultipleAdapter
         )
       `;
 
-      queryString += index === 0 ? subQuery : ' UNION ' + subQuery;
+      queryString += index === 0 ? query : ' UNION ' + query;
     });
+    return queryString;
+  }
+  async execute(
+    dao: GetRelatedLastVideoAndVideoHistory,
+  ): Promise<TGetRelatedVideoAnalyticsData> {
+    let { month, year } = DateUtil.currentDate();
+    const { search, relatedCluster, relatedWords } = dao;
+    const queryString = this.queryString(relatedCluster, search, relatedWords);
     try {
       const query = this.createDistributedJoinQuery(queryString);
 

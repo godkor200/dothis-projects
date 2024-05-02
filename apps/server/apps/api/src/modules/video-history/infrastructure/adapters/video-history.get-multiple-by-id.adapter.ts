@@ -24,6 +24,7 @@ export class VideoHistoryGetMultipleByIdAdapter
     const { videoIds, clusterNumber } = dao;
 
     const { year, month } = DateUtil.currentDate();
+    console.log(year, month);
     const tableName = CacheNameMapper.getVideoHistoryCacheName(
       clusterNumber[0],
       year,

@@ -1,4 +1,6 @@
-// 이그나이트 쿼리 결과를 객체로 변환하는 역할을 하는 클래스입니다.
+/**
+ * Ignite 데이터 쿼리 결과를 객체로 매핑하기 위한 맵퍼입니다.
+ */
 export class IgniteResultToObjectMapper {
   // SELECT 문에서 칼럼 이름들을 추출하는 정적 메소드입니다.
   private static parseColumnsFromQuery(query: string): string[] {
