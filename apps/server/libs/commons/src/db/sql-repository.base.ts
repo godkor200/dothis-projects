@@ -1,4 +1,5 @@
 import {
+  Paginated,
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
@@ -12,7 +13,18 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected abstract tableName: string;
   protected abstract schema: ZodObject<any>;
   protected abstract repository: Repository<E>;
-
+  public parseFrom(from: string): {
+    year: number;
+    month: number;
+    day: number;
+  } {
+    const dateParts = from.split('-').map((part) => parseInt(part, 10));
+    return {
+      year: dateParts[0],
+      month: dateParts[1],
+      day: dateParts[2],
+    };
+  }
   async updateOne(params: updateObject): Promise<IRes<void>> {
     const res = await this.repository
       .createQueryBuilder()
@@ -35,17 +47,26 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   async findAll(): Promise<E[]> {
     return await this.repository.find();
   }
-  //TODO: 오프셋 필요할시 구현 Promise<Paginated<E>>
-  async findAllPaginated(params: PaginatedQueryParams): Promise<any> {
-    const res = this.repository
+
+  async findAllPaginated(
+    params: PaginatedQueryParams,
+    where: any,
+    sort: string,
+    order: 'ASC' | 'DESC',
+  ): Promise<Paginated<E>> {
+    const [data, total] = await this.repository
       .createQueryBuilder(this.tableName)
+      .where({ ...where })
       .limit(Number(params.limit))
-      .offset(Number(params.offset))
-      .getCount();
-    // return new Paginated({
-    //   data: res,
-    //   count: res,
-    // });
+      .offset(Number(params.limit) * Number(params.page))
+      .orderBy(sort, order)
+      .getManyAndCount();
+    return new Paginated({
+      count: total,
+      limit: Number(params.limit),
+      page: Number(params.page),
+      data,
+    });
   }
 
   async findOneById(id: string): Promise<E> {

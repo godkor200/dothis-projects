@@ -1,4 +1,5 @@
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
@@ -17,7 +18,11 @@ import {
   Body,
 } from '@nestjs/common';
 import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { nestControllerContract, TsRest, tsRestHandler } from '@ts-rest/nest';
+import {
+  nestControllerContract,
+  TsRestHandler,
+  tsRestHandler,
+} from '@ts-rest/nest';
 import { apiRouter, TPostStoryBoardBody } from '@dothis/dto';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
@@ -57,6 +62,7 @@ import { OverviewParams } from '@Apps/modules/story-board/domain/events/request'
 import { TOverviewRes } from '@Apps/modules/story-board/application/commands/post-story-board-overview.command';
 import { TPostStoryBoardReferenceRes } from '@Apps/modules/story-board/application/commands/post-reference.command';
 import { TPostMemoCommand } from '@Apps/modules/story-board/application/commands/post-memo.command';
+import { TCreateStoryBoardCommandRes } from '@Apps/modules/story-board/application/commands/create-story-board.command';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const {
@@ -86,7 +92,7 @@ const { summary: updateDraftSummary, description: updateDraftDescription } =
 export class PostStoryBoardHttpV1Controller {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @TsRest(createStoryBoard)
+  @TsRestHandler(createStoryBoard)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary: createSummary,
@@ -94,25 +100,30 @@ export class PostStoryBoardHttpV1Controller {
   })
   @ApiCreatedResponse({ type: StoryBoardCreateRes })
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiBearerAuth('Authorization')
   @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async createStoryBoard(
     @User() userInfo: UserInfoCommandDto,
     @Headers() headers: AuthToken,
-  ): Promise<IRes<StoryBoardEntity>> {
+  ) {
     const arg = new RecentStoryBoardCreateDto(userInfo);
-
-    const result: Result<StoryBoardEntity, InternalServerErrorException> =
-      await this.commandBus.execute(arg);
-
-    return match(result, {
-      Ok: (result) => ({ success: true, data: result }),
-      Err: (err: Error) => {
-        throw new InternalServerErrorException(err.message);
-      },
+    return tsRestHandler(createStoryBoard, async () => {
+      const result: TCreateStoryBoardCommandRes = await this.commandBus.execute(
+        arg,
+      );
+      return match<
+        TCreateStoryBoardCommandRes,
+        TTsRestRes<IRes<StoryBoardEntity>>
+      >(result, {
+        Ok: (result) => ({ status: 201, body: result }),
+        Err: (err: Error) => {
+          throw new InternalServerErrorException(err.message);
+        },
+      });
     });
   }
 
-  @TsRest(updateStoryBoardDraft)
+  @TsRestHandler(updateStoryBoardDraft)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary: updateDraftSummary,
@@ -120,6 +131,7 @@ export class PostStoryBoardHttpV1Controller {
   })
   @ApiCreatedResponse({ type: SuccessBase })
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiBearerAuth('Authorization')
   @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async toggleAutoSave(
     @User() userInfo: UserInfoCommandDto,
@@ -153,13 +165,14 @@ export class PostStoryBoardHttpV1Controller {
     });
   }
 
-  @TsRest(updateStoryBoardTitle)
+  @TsRestHandler(updateStoryBoardTitle)
   @ApiOperation({
     summary: updateTitleSummary,
     description: updateTitleDescription,
   })
   @ApiCreatedResponse({ type: SuccessBase })
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
+  @ApiBearerAuth('Authorization')
   @ApiUnauthorizedResponse({ type: UnauthorizedErr })
   async updateStoryBoardTitle(
     @Body() body: PostStoryBoardBody,
@@ -189,12 +202,13 @@ export class PostStoryBoardHttpV1Controller {
     });
   }
 
-  @TsRest(addStoryBoardOverviews)
+  @TsRestHandler(addStoryBoardOverviews)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary: addDetailSummary,
     description: addDetailDescription,
   })
+  @ApiBearerAuth('Authorization')
   @ApiBody({
     schema: {
       oneOf: [
@@ -252,12 +266,13 @@ export class PostStoryBoardHttpV1Controller {
     });
   }
 
-  @TsRest(addStoryBoardReference)
+  @TsRestHandler(addStoryBoardReference)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
     summary: addReferenceSummary,
     description: addReferenceDescription,
   })
+  @ApiBearerAuth('Authorization')
   @ApiCreatedResponse({ type: SuccessBase })
   @ApiNotFoundResponse({ type: NotFoundErr })
   @ApiUnauthorizedResponse({ type: UnauthorizedErr })
@@ -287,8 +302,9 @@ export class PostStoryBoardHttpV1Controller {
     });
   }
 
-  @TsRest(addStoryBoardMemo)
+  @TsRestHandler(addStoryBoardMemo)
   @UseGuards(JwtAccessGuard)
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     summary: addMemoSummary,
     description: addMemoDescription,

@@ -45,9 +45,6 @@ export class FindVideoDateQuery implements IQuery {
 export interface FindDailyViewsDto
   extends Omit<FindVideoDateQuery, 'clusterNumber'> {}
 
-export class SearchRelationVideoDto extends SearchRelationVideoAndHistoryDao {
-  constructor(props: SearchRelationVideoDto) {
-    super(props);
-    Object.assign(this, props);
-  }
+export class SearchRelationVideoDto {
+  constructor(props: SearchRelationVideoDto) {}
 }

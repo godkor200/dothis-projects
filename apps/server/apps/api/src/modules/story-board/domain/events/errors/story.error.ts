@@ -1,7 +1,7 @@
 import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { zErrNotFound } from '@dothis/dto/dist/lib/error.response.zod';
+import { zErrNotFound } from '@dothis/dto';
 
 export class StoryNotExistsError extends ExceptionBase {
   static readonly message = 'The story does not exist';

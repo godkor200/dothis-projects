@@ -26,6 +26,14 @@ export class StoryBoardEntity extends IdBaseDateEntityAbstract {
   title: string;
 
   @Column({
+    name: 'author',
+    type: 'varchar',
+    length: 50,
+    comment: '작성자',
+  })
+  author: string;
+
+  @Column({
     name: 'is_draft',
     default: true,
     type: 'boolean',

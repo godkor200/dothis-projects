@@ -19,15 +19,15 @@ import useGetUserInfo from './useGetUserInfo';
 
 const useGetRelWords = (
   keyword: string | null,
-  queryOptions?: UseQueryOptions<typeof apiRouter.relwords.getRelWords>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.relatedWords.getRelWords>,
 ) => {
   const { isLoading } = useGetUserInfo();
 
-  const queryResult = apiClient(1).relwords.getRelWords.useQuery(
+  const queryResult = apiClient(1).relatedWords.getRelWords.useQuery(
     RELATIONWORD_KEY.list([{ keyword: keyword }]),
     {
       params: {
-        keyword: keyword!,
+        search: keyword!,
       },
     },
     { ...queryOptions, enabled: !isLoading && !!keyword },
@@ -35,9 +35,21 @@ const useGetRelWords = (
   const requiredQueryResult = queryResult.data as DeepRequired<
     typeof queryResult.data
   >;
+
+  const data = requiredQueryResult?.body.data;
+
   return {
     ...queryResult,
-    data: requiredQueryResult?.body.data,
+    data,
+    getRelatedClusterArray: () => {
+      let clusters: string[] = [];
+
+      if (data && data.cluster) {
+        clusters = data.cluster.match(/\d+/g)?.map((item) => item) || [];
+      }
+
+      return clusters.slice(0, 5);
+    },
   };
 };
 export default useGetRelWords;

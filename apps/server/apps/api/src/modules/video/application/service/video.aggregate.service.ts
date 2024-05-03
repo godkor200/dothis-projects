@@ -1,11 +1,11 @@
 import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video_history/interface/find-video.history.res';
+
 import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-export interface IIncreaseHitsData extends Pick<IIncreaseData, 'date'> {
-  videoViews: number;
+import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
+export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }
 export class VideoAggregateService {
@@ -223,6 +223,8 @@ export class VideoAggregateService {
 
     let prevVideo: GetRelatedVideoHistory = null;
     let sumViews = 0;
+    let sumLikes = 0;
+    let sumComments = 0;
 
     for (let [i, history] of histories.entries()) {
       if (prevVideo) {
@@ -231,23 +233,39 @@ export class VideoAggregateService {
           .split('T')[0]; // Extract only the date part
 
         sumViews += history.videoViews;
+        sumLikes += history.videoLikes;
+        sumComments += history.videoComments;
 
         let averageIncreaseViews = sumViews / (i + 1);
+        let averageIncreaseLike = sumLikes / (i + 1);
+        let averageIncreaseComments = sumComments / (i + 1);
 
         const increaseViews =
           history.videoViews !== 0
             ? history.videoViews - prevVideo.videoViews
             : averageIncreaseViews;
+        const increaseLikes =
+          history.videoLikes !== 0
+            ? history.videoLikes - prevVideo.videoLikes
+            : averageIncreaseLike;
+        const increaseComments =
+          history.videoComments !== 0
+            ? history.videoComments - prevVideo.videoComments
+            : averageIncreaseComments;
 
         if (!result[date]) {
           result[date] = {
             date,
-            videoViews: 0,
+            increaseViews: 0,
+            increaseLikes: 0,
+            increaseComments: 0,
             uniqueVideoCount: undefined,
           };
         }
 
-        result[date].videoViews += increaseViews;
+        result[date].increaseViews += increaseViews;
+        result[date].increaseLikes += increaseLikes;
+        result[date].increaseComments += increaseComments;
       }
 
       prevVideo = history;
@@ -289,7 +307,7 @@ export class VideoAggregateService {
 
     // dailyViewAggregate를 객체로 변환하여 빠른 조회를 가능하게 함
     const dailyViewAggregateMap = dailyViewAggregate.reduce((map, data) => {
-      map[data.date] = data.increase_views;
+      map[data.date] = data.increaseViews;
       return map;
     }, {});
 

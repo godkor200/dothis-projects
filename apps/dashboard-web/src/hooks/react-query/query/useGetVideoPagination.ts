@@ -1,4 +1,3 @@
-// import type { apiRouter } from '@dothis/dto/src/lib/apiRouter';
 import type { apiRouter } from '@dothis/dto';
 import type { UseQueryOptions } from '@ts-rest/react-query';
 
@@ -24,13 +23,9 @@ const useGetVideoPagination = (
   lastIndex_ID?: string,
   queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV2>,
 ) => {
-  const { data } = useGetRelWords(keyword);
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
-  let clusters: string[] = [];
-
-  if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
-  }
+  const clusters = getRelatedClusterArray();
 
   const queryResults = apiClient(2).video.getVideoPageV2.useQuery(
     VIDEODATA_KEY.list([

@@ -1,12 +1,12 @@
 {
   "extends": "../../config/tsconfig/tsconfig-base.json",
-  "include": [
-    "src/*.ts","src/lib/**/*.ts","src/*.ts"
-  ],
+  "include": ["src/*.ts", "src/lib/**/*.ts", "webpack.config.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
     "rootDir": "src",
+    "declaration": true,
     "outDir": "dist",
     "noEmit": false,
     "composite": true

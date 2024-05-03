@@ -14,10 +14,13 @@ export const metadata: Metadata = {
 
 const YoutubeSEO = () => {
   return (
-    <li className={styles.container}>
+    <div className={styles.container}>
       <h1>{'초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO)'}</h1>
       <p className={styles.date}>{'2023.10.24. 01:51'}</p>
       <div className={styles.contentDivision}>
+        <img src={'/images/blog/blog-2-thumbnail.png'} alt="2-1" />
+        <br />
+
         <p>
           안녕하세요! 영상 기획 어시스턴트 두디스입니다.
           <br />
@@ -223,7 +226,7 @@ const YoutubeSEO = () => {
         <br />
         <a href="https://dothis.kr/">https://dothis.kr/</a>
       </p>
-    </li>
+    </div>
   );
 };
 export default YoutubeSEO;

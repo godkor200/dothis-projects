@@ -1,9 +1,0 @@
-export const CHANNEL_DATA_REPOSITORY = Symbol('CHANNEL_DATA_REPOSITORY');
-
-export const CHANNEL_TERM = Symbol('CHANNEL_TERM');
-
-export const CHANNEL_DATA_REPOSITORY_BY_OS = Symbol(
-  'CHANNEL_DATA_REPOSITORY_BY_OS',
-);
-
-export const CHANNEL_OS_DI_TOKEN = Symbol('CHANNEL_OS_DI_TOKEN');

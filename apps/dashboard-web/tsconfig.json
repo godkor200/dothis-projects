@@ -7,6 +7,7 @@
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     },
+
     "incremental": true,
     "plugins": [
       {
@@ -16,7 +17,13 @@
     "strictNullChecks": true,
     "allowJs": true,
     "types": ["node"]
+
+    //apiClient ts 컴파일러 직렬화 맥시멈초과로 인해 삽입
+    // "declaration": false,
+    // //Option 'declarationMap' cannot be specified without specifying option 'declaration' or option 'composite'.ts
+    // "declarationMap": false
   },
+
   "include": [
     "./src/**/*",
     "next-env.d.ts",

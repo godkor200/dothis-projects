@@ -10,7 +10,7 @@ import {
   zPostStoryBoardBodyBoolean,
 } from '@dothis/dto';
 import { PaginatedSqlQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
-import { zSuccessBase } from '@dothis/dto/dist/lib/success.response.zod';
+import { zSuccessBase } from '@dothis/dto';
 
 /**
  * FIXME: 이렇게 다 정의 할 필요 없을텐데..

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { MessageBuilder } from 'minimal-discord-webhook-node';
-import { sendWebhook } from '@Libs/commons/src/util/hooks';
+import { sendWebhook } from '@Libs/commons/src/utils/hooks';
 import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
 
 @Catch(HttpException)
@@ -28,7 +28,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       });
     }
 
-    if (err.statusCode > 429) {
+    if (err.statusCode > 429 && err.statusCode < 500) {
       const hostHeaders = request.headers;
 
       const embed = new MessageBuilder()
@@ -41,8 +41,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         .setDescription(err.message)
         .setTimestamp();
       sendWebhook(embed);
+      response.status(status).json({
+        success: false,
+        ...err,
+      });
     }
-
     // 사용자 정의 에러(HttpException, BadRequestException 등..)
     response.status(status).json({
       success: false,

@@ -1,11 +1,17 @@
 import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-
+import { TGetVideoViewsMatchingSearchOnSpecificDateRes } from '@Apps/modules/video/domain/ports/video.outbound.port';
+import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { Ok } from 'oxide.ts';
+export type TData = Pick<
+  GetRelatedVideoHistory,
+  'videoId' | 'videoLikes' | 'videoViews' | 'year' | 'month' | 'day'
+>;
 export function createDummyData(
   numEntries: number,
   numEntriesPerId: number,
-): GetRelatedVideoHistory[] {
-  let dummyData: GetRelatedVideoHistory[] = [];
+): TData[] {
+  let dummyData: TData[] = [];
   let currentViews: number = 0;
   for (let i = 0; i < numEntries; i++) {
     // 일정 주기로 비디오 아이디를 변경합니다
@@ -14,12 +20,13 @@ export function createDummyData(
     currentViews += Math.floor(i / numEntriesPerId) + 1;
     // day는 한 videoId당 중복 없이 증가
     let currentDay = (i % numEntriesPerId) + 1;
-    let data: GetRelatedVideoHistory = {
-      id: currentVideoId,
+    let data: TData = {
+      videoId: currentVideoId,
       videoViews: currentViews,
       year: 2024,
       month: 1,
       day: currentDay,
+      videoLikes: 0,
     };
     dummyData.push(data);
   }
@@ -8673,3 +8680,325 @@ export const fourToTen: IVideoHistory[] = [
     },
   },
 ];
+
+export const performanceLengthTestData: TGetVideoViewsMatchingSearchOnSpecificDateRes<GetVideoViewsPerformanceMatchingSearchOnSpecificDate> =
+  Ok([
+    {
+      videoId: 'po-b6w0WJHM',
+      videoViews: 12084,
+      videoPerformance: null,
+      videoDuration: 1278,
+    },
+    {
+      videoId: '1xT4_cJSoOk',
+      videoViews: 59,
+      videoPerformance: null,
+      videoDuration: 156,
+    },
+    {
+      videoId: 'uHfjwdYm81M',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 508,
+    },
+    {
+      videoId: 'zHdC34JQhGQ',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 3004,
+    },
+    {
+      videoId: 'x5hRlRmQohc',
+      videoViews: 251,
+      videoPerformance: null,
+      videoDuration: 1891,
+    },
+    {
+      videoId: '400DcvY6TFg',
+      videoViews: 691,
+      videoPerformance: null,
+      videoDuration: 40,
+    },
+    {
+      videoId: 'KchJ6l04XW4',
+      videoViews: 1030,
+      videoPerformance: null,
+      videoDuration: 163,
+    },
+    {
+      videoId: '29G3g5RyUec',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 3124,
+    },
+    {
+      videoId: '1XvP4uEjMfY',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1252,
+    },
+    {
+      videoId: '9IG19MR0Hks',
+      videoViews: 74,
+      videoPerformance: null,
+      videoDuration: 741,
+    },
+    {
+      videoId: '91zR51qGPiE',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1622,
+    },
+    {
+      videoId: 'A0IUyNyv9_Y',
+      videoViews: 855,
+      videoPerformance: null,
+      videoDuration: 349,
+    },
+    {
+      videoId: 'zDzeRsO_6Yk',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1648,
+    },
+    {
+      videoId: 'CjaydTR6q-k',
+      videoViews: 1053,
+      videoPerformance: null,
+      videoDuration: 269,
+    },
+    {
+      videoId: 'mqPEojhxP5M',
+      videoViews: 1940,
+      videoPerformance: null,
+      videoDuration: 130,
+    },
+    {
+      videoId: 'eFaSfM2jC_E',
+      videoViews: 17073,
+      videoPerformance: null,
+      videoDuration: 1178,
+    },
+    {
+      videoId: 'f3K5hSj_Nm4',
+      videoViews: 25,
+      videoPerformance: null,
+      videoDuration: 220,
+    },
+    {
+      videoId: 'K50X9LLlB1Q',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1365,
+    },
+    {
+      videoId: 'SFGqrJqfp8I',
+      videoViews: 12629,
+      videoPerformance: null,
+      videoDuration: 986,
+    },
+    {
+      videoId: 'aPLnXGHC93U',
+      videoViews: 9423,
+      videoPerformance: null,
+      videoDuration: 138,
+    },
+    {
+      videoId: 'aauBhtA0tFw',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 5560,
+    },
+    {
+      videoId: 'RG_mcr2lrPY',
+      videoViews: 2422,
+      videoPerformance: null,
+      videoDuration: 2678,
+    },
+    {
+      videoId: 'zMNPdhTnWK4',
+      videoViews: 52280,
+      videoPerformance: null,
+      videoDuration: 1170,
+    },
+    {
+      videoId: 'XXbX7tBEG9A',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 2968,
+    },
+    {
+      videoId: 'q9FVVW7rbEg',
+      videoViews: 290,
+      videoPerformance: null,
+      videoDuration: 6605,
+    },
+    {
+      videoId: 'AI7mZ47zqUQ',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1365,
+    },
+    {
+      videoId: '_GVnU5rvWYc',
+      videoViews: 4870,
+      videoPerformance: null,
+      videoDuration: 154,
+    },
+    {
+      videoId: 'lhKc4Sj1T6E',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1230,
+    },
+    {
+      videoId: 'MEkzBYi5O5k',
+      videoViews: 3471,
+      videoPerformance: null,
+      videoDuration: 5202,
+    },
+    {
+      videoId: 'iArg46pMGE4',
+      videoViews: 81,
+      videoPerformance: null,
+      videoDuration: 543,
+    },
+    {
+      videoId: 'ufFfK1gI8h0',
+      videoViews: 529,
+      videoPerformance: null,
+      videoDuration: 350,
+    },
+    {
+      videoId: 'SZH-l0J6yUo',
+      videoViews: 498,
+      videoPerformance: null,
+      videoDuration: 782,
+    },
+    {
+      videoId: 'TJB7InHObq0',
+      videoViews: 713,
+      videoPerformance: null,
+      videoDuration: 523,
+    },
+    {
+      videoId: '0UasSEIyVzA',
+      videoViews: 4016,
+      videoPerformance: null,
+      videoDuration: 127,
+    },
+    {
+      videoId: 'JXh9R78RRzQ',
+      videoViews: 302,
+      videoPerformance: null,
+      videoDuration: 1001,
+    },
+    {
+      videoId: 'Pw2VM1FFuyc',
+      videoViews: 29,
+      videoPerformance: null,
+      videoDuration: 95,
+    },
+    {
+      videoId: 'X7wfrBZjfvU',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 581,
+    },
+    {
+      videoId: 'T5miJZyLcnE',
+      videoViews: 426,
+      videoPerformance: null,
+      videoDuration: 767,
+    },
+    {
+      videoId: 'eN0e4l63qyA',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1589,
+    },
+    {
+      videoId: 'gvfC2QUGpys',
+      videoViews: 334648,
+      videoPerformance: null,
+      videoDuration: 579,
+    },
+    {
+      videoId: 'fUDBBtsIYl8',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 3231,
+    },
+    {
+      videoId: 'fSZq18M-NlI',
+      videoViews: 2206,
+      videoPerformance: null,
+      videoDuration: 43,
+    },
+    {
+      videoId: '3DGfavnancc',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 746,
+    },
+    {
+      videoId: 'MiUPeUk32M4',
+      videoViews: 2209,
+      videoPerformance: null,
+      videoDuration: 158,
+    },
+    {
+      videoId: 'KMkKRHf3380',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1116,
+    },
+    {
+      videoId: 'sqluZosFASM',
+      videoViews: 38,
+      videoPerformance: null,
+      videoDuration: 284,
+    },
+    {
+      videoId: 'hrC1yU_4B28',
+      videoViews: 459,
+      videoPerformance: null,
+      videoDuration: 3415,
+    },
+    {
+      videoId: 'x9Js3ORqlMQ',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1342,
+    },
+    {
+      videoId: 'm-gOjSZOtfA',
+      videoViews: 388,
+      videoPerformance: null,
+      videoDuration: 405,
+    },
+    {
+      videoId: 'B7y_TH8p6GI',
+      videoViews: 314,
+      videoPerformance: null,
+      videoDuration: 178,
+    },
+    {
+      videoId: '2m6sXANxDB4',
+      videoViews: 488,
+      videoPerformance: null,
+      videoDuration: 318,
+    },
+    {
+      videoId: 'UZwhktf2y5I',
+      videoViews: 28,
+      videoPerformance: null,
+      videoDuration: 963,
+    },
+    {
+      videoId: 'KX3gsvJZ2aU',
+      videoViews: 0,
+      videoPerformance: null,
+      videoDuration: 1037,
+    },
+  ]);

@@ -1,17 +1,3 @@
-import { ResponsiveLine } from '@nivo/line';
-import dayjs from 'dayjs';
-
-import CustomTooltip from '@/components/MainContents/InfoChartAndRanking/CustomTooltip';
-import { VIEWCHART_LABEL } from '@/components/MainContents/InfoChartAndRanking/KeywordAnalyticsView';
-import { NIVO_CHART_COLOR } from '@/constants/nivoChartColor';
-import {
-  ceilToNearest,
-  floorToNearest,
-  getRoundingUnit,
-  roundToNearest,
-  unitFormat,
-} from '@/utils/mainContentUtil';
-
 import type { NivoLineChart } from './Container';
 import RelationDailyViewChart from './RelationDailyViewChart';
 import RelationExpectedViewChart from './RelationExpectedViewChart';

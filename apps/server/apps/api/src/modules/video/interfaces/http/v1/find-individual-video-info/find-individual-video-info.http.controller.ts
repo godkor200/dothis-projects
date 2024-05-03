@@ -5,25 +5,33 @@ import {
   NotFoundException,
   Param,
 } from '@nestjs/common';
-import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
-import { match, Result } from 'oxide.ts';
+import {
+  FindIndividualVideoInfoParams,
+  FindIndividualVideoInfoV1Dto,
+} from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
+import { match } from 'oxide.ts';
 import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
 import { apiRouter, VideoDetailsModel } from '@dothis/dto';
-import { nestControllerContract, TsRest } from '@ts-rest/nest';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
+import {
+  nestControllerContract,
+  TsRestHandler,
+  tsRestHandler,
+} from '@ts-rest/nest';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   VideoInfoRes,
   IRes,
+  TTsRestRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
+import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;
 
@@ -31,17 +39,8 @@ const { summary, responses, description } = c.getIndividualVideo;
 @Controller()
 export class FindIndividualVideoInfoHttpController {
   constructor(private readonly queryBus: QueryBus) {}
-  @ApiParam({
-    name: 'videoId',
-    description: '찾을 비디오의 id 값을 입력받습니다.',
-    example: 'Mm-8O8iFmao',
-  })
-  @ApiParam({
-    name: 'clusterNumber',
-    description: '찾을 비디오의 클러스터 번호 값을 입력받습니다.',
-    example: '0',
-  })
-  @TsRest(c.getIndividualVideo)
+
+  @TsRestHandler(c.getIndividualVideo)
   @ApiInternalServerErrorResponse()
   @ApiOkResponse({ type: VideoInfoRes })
   @ApiNotFoundResponse({
@@ -51,23 +50,28 @@ export class FindIndividualVideoInfoHttpController {
     summary,
     description,
   })
-  async execute(
-    @Param() param: { videoId: string; clusterNumber: string },
-  ): Promise<IRes<VideoDetailsModel>> {
-    const arg = new FindIndividualVideoInfoV1Dto(param);
-    const result: Result<VideoDetailsModel, NotFoundException> =
-      await this.queryBus.execute(arg);
-    return match(result, {
-      Ok: (result) => ({ success: true, data: result }),
-      Err: (err: Error) => {
-        if (
-          err instanceof VideoNotFoundError ||
-          err instanceof ChannelHistoryNotFoundError
-        ) {
-          throw new NotFoundException(err.message);
-        }
-        throw new InternalServerErrorException(err);
-      },
+  async execute(@Param() param: FindIndividualVideoInfoParams) {
+    return tsRestHandler(c.getIndividualVideo, async ({ params }) => {
+      const arg = new FindIndividualVideoInfoV1Dto(params);
+      const result: TVideoIndividualRes = await this.queryBus.execute(arg);
+      return match<TVideoIndividualRes, TTsRestRes<IRes<VideoDetailsModel>>>(
+        result,
+        {
+          Ok: (result: IRes<VideoDetailsModel>) => ({
+            status: 200,
+            body: result,
+          }),
+          Err: (err: Error) => {
+            if (
+              err instanceof VideoNotFoundError ||
+              err instanceof ChannelHistoryNotFoundError
+            ) {
+              throw new NotFoundException(err.message);
+            }
+            throw new InternalServerErrorException(err);
+          },
+        },
+      );
     });
   }
 }

@@ -1,6 +1,6 @@
 import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
-import { CHANNEL_DATA_KEY } from '@Apps/modules/channel_history/dtos/expected-views.dtos';
-import { FindVideoChannelHistory } from '@Apps/modules/channel_history/dtos/channel-history.interface';
+import { CHANNEL_DATA_KEY } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
+import { FindVideoChannelHistory } from '@Apps/modules/channel-history/application/dtos/channel-history.interface';
 export interface VideoSource {
   video_title: string;
   video_views: number;

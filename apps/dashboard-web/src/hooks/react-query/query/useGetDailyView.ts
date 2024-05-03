@@ -22,21 +22,17 @@ const useGetDailyView = (
     keyword: string | null;
     relword: string | null;
   },
-  queryOptions?: UseQueryOptions<typeof apiRouter.dailyViews.getDailyViews>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.hits.getDailyViewsV1>,
 ) => {
-  const { data } = useGetRelWords(keyword);
-
   const startDate = useStartDate();
 
   const endDate = useEndDate();
 
-  let clusters: string[] = [];
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
-  if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
-  }
+  const clusters = getRelatedClusterArray();
 
-  const queryResults = apiClient(3).dailyViews.getDailyViews.useQueries({
+  const queryResults = apiClient(1).hits.getDailyViewsV1.useQueries({
     queries: clusters.map((clusterNumber) => {
       return {
         queryKey: DAILYVIEW_KEY.list([
@@ -49,7 +45,7 @@ const useGetDailyView = (
           },
         ]),
         params: {
-          clusterNumber,
+          clusterNumber: String(clusterNumber),
         },
         query: {
           keyword: keyword!,
@@ -65,13 +61,11 @@ const useGetDailyView = (
     }),
   });
 
-  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
-  // const isLoading = queryResults.some((result) => result.isLoading);
-  const isLoading = requiredQueryResult.map((item) => item.isLoading);
+  const isLoading = queryResults.map((item) => item.isLoading);
 
   return {
     isLoading,
-    data: requiredQueryResult.map((result) => result.data?.body.data),
+    data: queryResults.map((result) => result.data?.body.data),
   };
 };
 

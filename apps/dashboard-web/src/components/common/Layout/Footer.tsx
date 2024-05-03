@@ -16,7 +16,7 @@ const Footer = () => {
         </div>
 
         {/* 구글 로그인 인증용 disable */}
-        <div className="flex gap-[2.5rem] text-[1.125rem] font-bold">
+        <div className="flex gap-[2.5rem] text-[1.0rem] font-bold">
           <Link href={'/policy'}>
             <span>서비스 이용약관</span>
           </Link>
@@ -58,9 +58,7 @@ const Footer = () => {
       </div>
 
       <p className="text-grey600 mb-[1.25rem] text-[0.875rem]">
-        두디스 | 대표 : 민상현 | 개인정보 보호 최고책임자 : 유병국
-        <br />
-        사업자등록번호 : 685-87-02606 | TEL : 070-8028-1139 | 메일 : &nbsp;
+        사업자등록번호 685-87-02606 | TEL 070-8028-1139 | 메일 : &nbsp;
         <a href={`mailto:${ContactMail}`}>{ContactMail}</a>
         <br />
         주소 : 서울시 서대문구 연세로2다길 19, 304호(창천동)

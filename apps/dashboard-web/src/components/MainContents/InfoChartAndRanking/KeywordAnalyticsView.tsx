@@ -2,15 +2,18 @@
 
 import { useEffect, useMemo } from 'react';
 
-import type { ResponseType, VideoCount } from '@/constants/convertText';
+import type {
+  SubscriberRange,
+  SubscriberRangeVideoCounts,
+} from '@/constants/convertText';
 import { CONVERT_SUBSCRIBERANGE } from '@/constants/convertText';
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 import {
-  useDailyViewChartDataForNivo,
-  useExpectedViewChartDataForNivo,
-} from '@/hooks/contents/useLineGraph';
+  useAveragePerformanceFormatter,
+  useDailyViewDataFormatter,
+} from '@/hooks/contents/useChartFormatter';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
-import useGetExpectedView from '@/hooks/react-query/query/useGetExpectedView';
+import useGetPerformanceData from '@/hooks/react-query/query/useGetPerformanceData';
 import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelData';
 import useGetVideoCount from '@/hooks/react-query/query/useGetVideoCount';
 import { useGptOptionAction } from '@/store/gptOptionStore';
@@ -19,8 +22,9 @@ import { handleZeroDivision } from '@/utils/common';
 import { getCompetitionScore } from '@/utils/contents/competitionScore';
 
 import AnalysisWidgetList from './AnalysisWidgetList';
+import AnalyticsSummaryCard from './AnalyticsSummaryCard';
+import AnalyticsSummaryList from './AnalyticsSummaryList';
 import CumulativeVideoChart from './CumulativeVideoChart';
-import DailyView from './DailyView';
 import ViewChart from './ViewChart';
 
 export const VIEWCHART_LABEL = {
@@ -33,27 +37,32 @@ const KeywordAnalyticsView = () => {
 
   const { isLoading: dailyViewIsLoading } = useGetDailyView(selectedWord);
 
-  const dailyViewChartData = useDailyViewChartDataForNivo(
-    selectedWord,
-    '일일 조회 수',
-  );
+  const { data: dailyViewData } = useDailyViewDataFormatter(selectedWord);
 
-  const lastDailyView = dailyViewChartData[0].data.at(-1)?.y;
-  const totalDailyView = dailyViewChartData[0].data.reduce(
-    (accumulator: number, currentValue: { x: string; y: number }) => {
-      return accumulator + Number(currentValue.y);
+  const firstDailyView = (dailyViewData.at(0) as SeriesDetail)?.y;
+  const lastDailyView = (dailyViewData.at(-1) as SeriesDetail)?.y;
+
+  const totalDailyView = (dailyViewData as SeriesDetail[])?.reduce<number>(
+    (sum, item) => {
+      if (item === null) {
+        return sum;
+      }
+      if ((item as SeriesDetail)?.y === null) {
+        return sum;
+      }
+      return sum + (item as SeriesDetail)?.y;
     },
     0,
   );
 
-  const { isLoading: expectedViewIsLoading } = useGetExpectedView(selectedWord);
+  const { isLoading: expectedViewIsLoading } =
+    useGetPerformanceData(selectedWord);
 
-  const expectedViewChartData = useExpectedViewChartDataForNivo(
-    selectedWord,
-    '기대 조회 수',
-  );
+  const { data: averagePerformanceData } =
+    useAveragePerformanceFormatter(selectedWord);
 
-  const lastExpectedView = expectedViewChartData[0].data.at(-1)?.y;
+  const lastAveragePerformance = (averagePerformanceData.at(-1) as SeriesDetail)
+    ?.y;
 
   const { data: videoCountData, isLoading } = useGetVideoCount(selectedWord);
 
@@ -61,26 +70,25 @@ const KeywordAnalyticsView = () => {
     () =>
       videoCountData.reduce<{
         totalCount: number;
-        videoCountViewChartData: ResponseType;
+        videoCountViewChartData: SubscriberRangeVideoCounts;
       }>(
         (acc, dataItem) => {
-          dataItem?.section.forEach((sectionItem) => {
+          dataItem?.section?.forEach((sectionItem) => {
             const key = sectionItem.section;
 
             if (key in CONVERT_SUBSCRIBERANGE) {
               acc.totalCount += sectionItem.number;
-              const existingRange = CONVERT_SUBSCRIBERANGE[key as VideoCount];
+              const existingRange =
+                CONVERT_SUBSCRIBERANGE[key as SubscriberRange];
               const existingItem =
-                acc.videoCountViewChartData[key as VideoCount];
+                acc.videoCountViewChartData[key as SubscriberRange];
 
               if (existingItem) {
-                existingItem.value += sectionItem.number;
+                acc.videoCountViewChartData[key as SubscriberRange] +=
+                  sectionItem.number;
               } else {
-                acc.videoCountViewChartData[key as VideoCount] = {
-                  id: existingRange,
-                  label: existingRange,
-                  value: sectionItem.number,
-                };
+                acc.videoCountViewChartData[key as SubscriberRange] =
+                  sectionItem.number;
               }
             }
           });
@@ -92,7 +100,7 @@ const KeywordAnalyticsView = () => {
           videoCountViewChartData: {},
         } as {
           totalCount: number;
-          videoCountViewChartData: ResponseType;
+          videoCountViewChartData: SubscriberRangeVideoCounts;
         },
       ),
     [JSON.stringify(videoCountData)],
@@ -123,14 +131,9 @@ const KeywordAnalyticsView = () => {
     if (!dailyViewIsLoading.some((item) => item === true)) {
       setTotalDailyView(totalDailyView);
 
-      setDailyViewTendency(
-        handleZeroDivision(
-          dailyViewChartData[0].data.at(-1)?.y!,
-          dailyViewChartData[0].data[0]?.y,
-        ),
-      );
+      setDailyViewTendency(handleZeroDivision(lastDailyView, firstDailyView));
     }
-  }, [JSON.stringify(dailyViewChartData), JSON.stringify(dailyViewIsLoading)]);
+  }, [JSON.stringify(dailyViewData), JSON.stringify(dailyViewIsLoading)]);
 
   const { data: userChannelData, isLoading: userChannelIsLoading } =
     useGetUserChannelData();
@@ -143,9 +146,11 @@ const KeywordAnalyticsView = () => {
       //   setCompetitionScore(lastExpectedView||0 /'유저 데이터의 평균 조회수')
       //   return
       // }
-      if (lastExpectedView) {
+      if (lastAveragePerformance) {
         setExpectedPercentage(
-          Number(((lastExpectedView / GUEST_AVERAGEVIEW) * 100).toFixed()),
+          Number(
+            ((lastAveragePerformance / GUEST_AVERAGEVIEW) * 100).toFixed(),
+          ),
         );
       }
     }
@@ -153,7 +158,7 @@ const KeywordAnalyticsView = () => {
     isLoading,
     JSON.stringify(videoCountViewChartData),
     JSON.stringify(dailyViewIsLoading),
-    lastExpectedView,
+    lastAveragePerformance,
   ]);
 
   useEffect(() => {
@@ -179,12 +184,12 @@ const KeywordAnalyticsView = () => {
       if (range.includes('~')) {
         let [min, max] = range.split('~').map(Number);
         if (number < max) {
-          sum += videoCountViewChartData[range as VideoCount].value;
+          sum += videoCountViewChartData[range as SubscriberRange];
         }
       } else if (range.includes('이상')) {
         let min = parseInt(range);
         if (number < min) {
-          sum += videoCountViewChartData[range as VideoCount].value;
+          sum += videoCountViewChartData[range as SubscriberRange];
         }
       }
     }
@@ -195,18 +200,21 @@ const KeywordAnalyticsView = () => {
   return (
     <div className="bg-grey00 ml-5 grow pt-[2.5rem]">
       <AnalysisWidgetList
-        expectedView={lastExpectedView || 0}
+        expectedView={lastAveragePerformance || 0}
         competitionScore={competitionScore}
       />
       <div className="flex h-[520px] w-full">
         <ViewChart />
         <div className="flex min-w-[18.12rem] flex-col [&_text]:font-bold">
-          <DailyView view={totalDailyView || 0} />
+          <AnalyticsSummaryList
+            totalView={totalDailyView || 0}
+            viewCountChange={totalDailyView || 0}
+            searchVolumeChange={totalDailyView || 0}
+          />
+
           <CumulativeVideoChart
             totalCount={totalCount}
-            videoCountsBySection={Object.values(
-              videoCountViewChartData,
-            ).reverse()}
+            videoCountsBySection={videoCountViewChartData}
           />
         </div>
       </div>

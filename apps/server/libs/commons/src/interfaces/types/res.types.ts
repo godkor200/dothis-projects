@@ -4,20 +4,19 @@ import {
   zChannelAnalysis,
   zDailyViewData,
   zExpectedViewsData,
+  zGetAdsRelatedTopHitsRes,
+  zGetProbabilityRes,
+  zGetVideoAdsInfoRes,
   zKeywords,
   zRanking,
   zResWordsPickData,
   zTokenExpired,
   zVideoDetails,
-  zVideoHistory,
   zVideoModel,
   zWeeklyKeywordsList,
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
-import { zPostStoryBoardPathParams } from '@dothis/dto';
-import { PickType } from '@nestjs/swagger';
-import { extend } from 'joi';
 
 export interface IRes<T = undefined> {
   success: boolean;
@@ -25,7 +24,6 @@ export interface IRes<T = undefined> {
 }
 
 export class UserRes extends UserDto {}
-export class VideoHistoryRes extends createZodDto(extendApi(zVideoHistory)) {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
 
@@ -44,12 +42,31 @@ export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
 export class WeeklyData extends createZodDto(
   extendApi(zWeeklyKeywordsListSourceSchema),
 ) {}
-export class VideoInfoRes extends createZodDto(extendApi(zVideoDetails)) {}
+export class VideoInfoRes extends createZodDto(
+  extendApi(zVideoDetails.shape.data),
+) {}
 
 export class ChannelAnalysisRes extends createZodDto(
   extendApi(zChannelAnalysis),
 ) {}
 export class WeeklyKeywordsRes extends createZodDto(
+  extendApi(zWeeklyKeywordsList),
+) {}
+export class WeeklyKeywordsListSchema extends createZodDto(
+  extendApi(zWeeklyKeywordsListSourceSchema),
+) {}
+
+export class FindAdsInfoRes extends createZodDto(
+  extendApi(zGetVideoAdsInfoRes),
+) {}
+
+export class FindAdsRelatedTopHitsRes extends createZodDto(
+  extendApi(zGetAdsRelatedTopHitsRes),
+) {}
+export class GetProbabilityResultType extends createZodDto(
+  extendApi(zGetProbabilityRes),
+) {}
+export class GetWeeklyKeywordsListResType extends createZodDto(
   extendApi(zWeeklyKeywordsList),
 ) {}
 

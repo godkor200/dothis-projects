@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 
 const BlogLayout = ({ children }: PropsWithChildren) => {
-  return <div className="py-[160px]">{children}</div>;
+  return <div className="py-[80px]">{children}</div>;
 };
 
 export default BlogLayout;

@@ -42,7 +42,8 @@ export class GoogleLoginRedirectCommandHandler
       },
       { expiresIn: '24h' },
     );
-
+    const googleAccessToken = command.googleAccessToken;
+    const googleRefreshToken = command.googleRefreshToken;
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
 
     return Ok({
@@ -59,6 +60,8 @@ export class GoogleLoginRedirectCommandHandler
       refreshToken,
       isNewUser,
       isEnvLocal: checkUser.isEnvLocal,
+      googleAccessToken,
+      googleRefreshToken,
     });
   }
 }

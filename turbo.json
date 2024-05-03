@@ -5,7 +5,9 @@
       "dependsOn": ["^build"]
     },
     "build:api": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "@dothis/dto#build"
+      ]
     },
     "build:dashboard": {
       "dependsOn": ["^build"],
@@ -83,6 +85,12 @@
     "@dothis/theme#build": {
       "outputs": ["./dist/**/*"],
       "inputs": ["./dashboard/**/*", "./utils/**/*"],
+      "cache": true
+    },
+    "@dothis/tsconfig#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "inputs": ["package.json", "tsconfig-base.json"],
       "cache": true
     },
     "storybook": {

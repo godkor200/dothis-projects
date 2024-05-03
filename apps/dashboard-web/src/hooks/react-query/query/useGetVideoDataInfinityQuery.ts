@@ -28,17 +28,13 @@ const useGetVideoDataInfinityQuery = (
     relword: string | null;
   },
   lastIndex_ID?: string,
-  queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPageV2>,
+  queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPageV1>,
 ) => {
-  const { data } = useGetRelWords(keyword);
+  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
-  let clusters: string[] = [];
+  const clusters = getRelatedClusterArray();
 
-  if (data && data.cluster) {
-    clusters = JSON.parse(data.cluster);
-  }
-
-  const queryResults = apiClient(2).video.getVideoPageV2.useInfiniteQuery(
+  const queryResults = apiClient(1).video.getVideoPageV1.useInfiniteQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,
@@ -50,12 +46,14 @@ const useGetVideoDataInfinityQuery = (
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
     ({ pageParam = 0 }) => ({
+      params: {
+        clusterNumber: clusters.join(','),
+      },
       query: {
-        last: lastIndex_ID ? lastIndex_ID : undefined,
         limit: String(10),
+        page: pageParam ? pageParam + 1 : 1,
         related: relword!,
         search: keyword!,
-        cluster: clusters.join(','),
       },
     }),
     {
@@ -75,6 +73,7 @@ const useGetVideoDataInfinityQuery = (
   const requiredQueryResult = queryResults.data as DeepRequired<
     typeof queryResults.data
   >;
+
   return {
     ...queryResults,
     data: requiredQueryResult?.pages.flatMap((item) => item.body.data.data),

@@ -28,7 +28,8 @@ const KeywordRankingList = () => {
 
   const { hashKeywordList } = useKeyword();
 
-  const { setModalOpen, setModalContent, initializeModal } = useModalActions();
+  const { setIsModalOpen, setModalContent, initializeModal } =
+    useModalActions();
 
   const { mutate: resetKeywordMutate } = useResetKeywordMutation();
   const { mutate: resetSearchwordMutate } = useResetSearchwordMutation();
@@ -64,13 +65,13 @@ const KeywordRankingList = () => {
           <RelatedRetryModal dismissCallback={dismissReTryModalCallback} />,
         );
 
-        setModalOpen(true);
+        setIsModalOpen(true);
         return;
       }
       setModalContent(
         <RelwordErrorModal dismissCallback={dismissModalCallback} />,
       );
-      setModalOpen(true);
+      setIsModalOpen(true);
       return;
     },
   });

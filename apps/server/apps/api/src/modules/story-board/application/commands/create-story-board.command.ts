@@ -7,14 +7,15 @@ import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/stor
 import { Ok, Result } from 'oxide.ts';
 import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/story-board-details.di-token.constant';
 import { StoryBoardDetailOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board-details.outbound';
-
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+export type TCreateStoryBoardCommandRes = Result<
+  IRes<StoryBoardEntity>,
+  InternalServerErrorException
+>;
 @CommandHandler(RecentStoryBoardCreateDto)
 export class CreateStoryBoardCommand
   implements
-    ICommandHandler<
-      RecentStoryBoardCreateDto,
-      Result<StoryBoardEntity, InternalServerErrorException>
-    >
+    ICommandHandler<RecentStoryBoardCreateDto, TCreateStoryBoardCommandRes>
 {
   constructor(
     @Inject(RECENT_STORY_BOARD_DI_TOKEN_CONSTANT)
@@ -25,10 +26,10 @@ export class CreateStoryBoardCommand
   ) {}
   async execute(
     command: RecentStoryBoardCreateDto,
-  ): Promise<Result<StoryBoardEntity, InternalServerErrorException>> {
+  ): Promise<TCreateStoryBoardCommandRes> {
     const storyBoardResult = await this.recentStoryBoard.create(command.id);
     const storyBoardId = storyBoardResult.id;
     await this.storyBoardDetail.create(storyBoardId);
-    return Ok(storyBoardResult);
+    return Ok({ success: true, data: storyBoardResult });
   }
 }

@@ -28,7 +28,7 @@ const useGetTrendingKeywords = (
     lastIndex_ID,
   }: SortingQuery & TrendingQuery & { lastIndex_ID?: string },
   queryOptions?: UseInfiniteQueryOptions<
-    typeof apiRouter.weeklyViews.getWeeklyKeywordListWithPaging
+    typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,
 ) => {
   const date = startDate.format('YYYY-MM-DD');
@@ -36,7 +36,7 @@ const useGetTrendingKeywords = (
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
     1,
-  ).weeklyViews.getWeeklyKeywordListWithPaging.useInfiniteQuery(
+  ).hits.getWeeklyKeywordListWithPaging.useInfiniteQuery(
     TRENDING_KEYWORD_KEY.list([
       {
         date: date,

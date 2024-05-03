@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import type { KeyboardEvent } from 'react';
 import { useCallback, useState, useTransition } from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
@@ -45,7 +46,7 @@ const SearchBar = () => {
 
   const isSignedIn = useIsSignedIn();
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   const { data: userData } = useGetUserInfo();
 
@@ -94,12 +95,34 @@ const SearchBar = () => {
 
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
+    setOpenInput(false);
     setIsOpenSignUpModal(true);
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
 
     setModalContent(<SignUpModal />);
-    setModalOpen(true);
+    setIsModalOpen(true);
     return false;
+  };
+
+  const handleKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>,
+    currentInput: string,
+  ) => {
+    if (!checkIsSignedIn()) {
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (
+        data &&
+        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+          currentInput
+      ) {
+        // 엔터 키가 눌렸을 때 실행할 동작
+
+        createSearchwordMutate(currentInput);
+      }
+    }
   };
 
   return (
@@ -123,7 +146,9 @@ const SearchBar = () => {
                 startTransition(() => handleInput(e.currentTarget.value));
               }}
               // ref={searchInputRef}
-              // onKeyDown={handleSubmit}
+              onKeyDown={(e) => {
+                handleKeyDown(e, e.currentTarget.value);
+              }}
             />
             <div className="cursor-pointer">
               <SvgComp icon="HeaderPlus" size="32px" />

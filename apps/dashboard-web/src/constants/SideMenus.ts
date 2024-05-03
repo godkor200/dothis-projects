@@ -39,7 +39,7 @@ interface GNBMenus {
 export const GNB_MENUS: GNBMenus[] = [
   {
     icon: 'HeaderEdit',
-    link: '/about',
+    link: '/storyboard',
   },
   {
     icon: 'HeaderTicket',

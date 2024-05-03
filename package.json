@@ -4,6 +4,11 @@
   "private": true,
   "main": "./prisma/client.ts",
   "packageManager": "pnpm@8.4.0",
+  "workspaces": [
+    "config/*",
+  "apps/*",
+  "packages/*"
+  ],
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
     "dev": "dotenv -e .env -- turbo run dev --parallel",
@@ -34,6 +39,7 @@
     "theme-gen": "turbo theme-gen --parallel",
     "debug-dev": "turbo debug-dev",
     "dev:back-end": "dotenv -e ./apps/server/development.env -- turbo run start:dev-api",
+    "prod:back-end": "pm2-runtime start ./apps/server/apps/api/ecosystem.config.js",
     "dev:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run start:dev-api",
     "build:back-end": "dotenv -e ./apps/server/development.env -- turbo run build:api --filter=server",
     "build:back-end:prod": "dotenv -e ./apps/server/production.env -- turbo run build --filter=server",
@@ -41,10 +47,10 @@
     "typeorm-create": "dotenv -e ./apps/server/development.env -- turbo run typeorm-create --filter=server",
     "typeorm-run": "dotenv -e ./apps/server/development.env turbo typeorm-run --filter=server",
     "typeorm-generate": "dotenv -e ./apps/server/development.env turbo typeorm-generate --filter=server",
-    "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server"
+    "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server",
+    "dockerization:server": "turbo prune server --docker"
   },
   "devDependencies": {
-    "@dothis/theme": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "dotenv-cli": "^7.2.1",

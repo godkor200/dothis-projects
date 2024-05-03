@@ -1,10 +1,6 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zDateQuery,
-  zPaginatedQuery,
-  zSearchKeyword,
-} from '../common.model';
+import { dataObject } from '../common.model';
+import { zPredictedViews, zVideoDetails, zVideoPrediction } from './video.zod';
 
 export const zVideoSection = z.enum([
   '0~100',
@@ -32,44 +28,33 @@ export const zAccVideoModel = dataObject(
   }),
 );
 
-export const zVideoModel = z.object({
-  id: z.number().nullable().describe('The id of video'),
-  channelIndex: z.string().describe('The index of channel'),
-  videoTitle: z.string().describe('The title of video'),
-  videoUrl: z.string().describe('The url of video'),
-  videoDescription: z.string().describe('The Description of video'),
-  videoDuration: z.string().describe('The Duration of video'),
-
-  videoPublished: z.string().describe('The Published of video'),
-
-  videoViews: z.string().describe('Daily view count').default('0'),
-
-  videoLikes: z.number().describe('like count').default(0),
-
-  videoTags: z.string().describe('video tag').default('[]'),
-
-  videoCategory: z.string().describe('video category').default('[]'),
-
-  videoInfoCard: z.string().describe('video info card').default('0'),
-
-  videoWithAds: z
-    .string()
-    .describe(
-      'whether or not there is an advertisement and the number of advertisements',
-    ),
-
-  videoEndScreen: z
-    .string()
-    .describe(
-      `I think it's the next video recommendation on YouTube, but I'm not sure what it is`,
-    ),
-
-  //   videoCoreKeyword: z.string(),
-
-  videoAverageViews: z.number().describe('Average number of hits'),
-
-  crawlUpdateAt: z.date().describe('Crawled time'),
+export const zVideo = z.object({
+  channelId: z.string(),
+  videoId: z.string(),
+  videoTitle: z.string(),
+  videoDescription: z.string(),
+  videoTags: z.string(),
+  videoDuration: z.number(),
+  videoPublished: z.string(),
+  videoCategory: z.string(),
+  videoInfoCard: z.boolean(),
+  videoWithAds: z.boolean(),
+  videoEndScreen: z.boolean(),
+  videoCluster: z.number(),
+  channelName: z.string(),
+  videoViews: z.number(),
+  crawledDate: z.string(),
+  year: z.number(),
+  month: z.number(),
+  day: z.number(),
 });
+
+export const zVideoModel = dataObject(
+  z.object({
+    total: z.number(),
+    data: z.array(zVideo),
+  }),
+);
 
 export const zVideoResponse = z.object({
   data: z.object({
@@ -121,70 +106,38 @@ export const zVideoResponse = z.object({
   }),
 });
 
-export const zClusterQueryParams = z.object({
-  cluster: z.string(),
-});
-export const zClusterPathParams = z.object({
-  clusterNumber: z.string().describe('6'),
-});
-
-export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
-export const findVideoBySearchKeywordClusterNumber = zSearchKeyword
-  .merge(zDateQuery)
-  .merge(zClusterPathParams);
-
-export const findVideoPageQuery = zSearchKeyword.merge(zPaginatedQuery);
-export const zFindVideoPageWithClusterQuery = zSearchKeyword
-  .merge(zPaginatedQuery)
-  .merge(zClusterQueryParams);
-
-export type IKeyword = z.TypeOf<typeof zSearchKeyword>;
-export type IPageQuery = z.TypeOf<typeof zPaginatedQuery>;
-export type TPageWithClusterQueryQuery = z.TypeOf<
-  typeof zFindVideoPageWithClusterQuery
->;
-
-export type VideoModel = z.TypeOf<typeof zVideoModel>;
-
-/**
- * 개별 비디오
- * */
-
-export const zPredictionStatus = z.enum(['INSUFFICIENT_DATA', 'PREDICTING']);
-
-export const VideoPerformance = z.object({
-  expectedViews: z.number(),
-  participationRate: z.number(),
-});
-
-export const zPredictedViews = z.object({
-  date: z.string(),
-  predictedViews: z.number(),
-});
-
-export const zVideoPrediction = z.object({
-  status: zPredictionStatus,
-  dailyViews: z.array(zPredictedViews).nullable(),
-});
-
-export const ChannelPerformance = z.object({
-  subscribers: z.number(),
-  averageViews: z.number(),
-});
-
-export const zVideoDetails = z.object({
-  data: z.object({
-    videoTags: z.string(),
-    videoPerformance: VideoPerformance,
-    videoPrediction: zVideoPrediction,
-    channelPerformance: ChannelPerformance,
-  }),
-});
-/*
- * 연간 비디오수 v2
- */
-export const zFindAccumulateQuery = findVideoBySearchKeyword;
-
 export type VideoDetailsModel = z.TypeOf<typeof zVideoDetails.shape.data>;
 export type VideoPrediction = z.TypeOf<typeof zVideoPrediction>;
 export type PredictedViews = z.TypeOf<typeof zPredictedViews>;
+
+/**
+ * 해당 dto는 존재해서 밑으로 옮겨두었습니다.
+ */
+export const isVideoModel = z.object({
+  id: z.number().nullable().describe('The id of video'),
+  channelIndex: z.string().describe('The index of channel'),
+  videoId: z.string(),
+  videoTitle: z.string().describe('The title of video'),
+  videoUrl: z.string().describe('The url of video'),
+  videoDescription: z.string().describe('The Description of video'),
+  videoDuration: z.string().describe('The Duration of video'),
+  videoPublished: z.string().describe('The Published of video'),
+  videoViews: z.string().describe('Daily view count').default('0'),
+  videoLikes: z.number().describe('like count').default(0),
+  videoTags: z.string().describe('video tag').default('[]'),
+  videoCategory: z.string().describe('video category').default('[]'),
+  videoInfoCard: z.string().describe('video info card').default('0'),
+  videoWithAds: z
+    .string()
+    .describe(
+      'whether or not there is an advertisement and the number of advertisements',
+    ),
+  videoEndScreen: z
+    .string()
+    .describe(
+      `I think it's the next video recommendation on YouTube, but I'm not sure what it is`,
+    ),
+  //   videoCoreKeyword: z.string(),
+  videoAverageViews: z.number().describe('Average number of hits'),
+  crawlUpdateAt: z.date().describe('Crawled time'),
+});

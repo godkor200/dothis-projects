@@ -18,7 +18,7 @@ export class StoryBoardAdapter
   extends SqlRepositoryBase<StoryBoardEntity, TRecentStoryBoardModel>
   implements StoryBoardOutboundPort
 {
-  protected tableName = 'story-board';
+  protected tableName = 'story_board';
   protected schema = zStoryBoardSchema;
 
   @InjectRepository(StoryBoardEntity)
@@ -55,7 +55,7 @@ export class StoryBoardAdapter
   async findAllPaginatedWithCondition(
     props: StoryBoardDao,
   ): Promise<TGetManyStoryBoardRes> {
-    const { userInfo, limit, offset, field, param } = props;
+    const { userInfo, limit, offset, sort, order } = props;
 
     const userId = userInfo.id;
     const queryBuilder = this.repository
@@ -65,9 +65,9 @@ export class StoryBoardAdapter
       .offset(offset);
 
     // orderBy 적용
-    if (field && param) {
-      const fieldValue = typeof field === 'boolean' ? 'id' : field; // `true`일 경우 'id'로 대체
-      queryBuilder.orderBy(fieldValue, param.toUpperCase() as 'ASC' | 'DESC');
+    if (sort && order) {
+      const fieldValue = typeof sort === 'boolean' ? 'id' : sort; // `true`일 경우 'id'로 대체
+      queryBuilder.orderBy(fieldValue, order.toUpperCase() as 'ASC' | 'DESC');
     }
     try {
       // 결과와 총 개수 가져오기

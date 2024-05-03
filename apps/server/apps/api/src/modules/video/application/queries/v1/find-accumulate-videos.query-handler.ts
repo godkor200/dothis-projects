@@ -4,58 +4,35 @@ import { Inject } from '@nestjs/common';
 import {
   IFindAccumulateVideoWithOutUserSection,
   ISection,
-  SECTION_NUMBER,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
-import { Ok, Result } from 'oxide.ts';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/event/channel.errors';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/event/video.error';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel_history/domain/event/channel_history.error';
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel_history/service/channel-history.aggregate.service';
+import { Result } from 'oxide.ts';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
-import { VIDEO_OS_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
-
+import { VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { FindAccumulateVideoInboundPort } from '@Apps/modules/video/domain/ports/find-accumulate-video.inbound.port';
+export type IFindAccumulateVideosV1Res = Result<
+  IRes<IFindAccumulateVideoWithOutUserSection<ISection[]>>,
+  | ChannelNotFoundError
+  | VideoNotFoundError
+  | ChannelHistoryNotFoundError
+  | ScrollApiError
+>;
 @QueryHandler(FindAccumulateVideosV1Dto)
 export class FindAccumulateVideosV1QueryHandler
   implements
-    IQueryHandler<
-      FindAccumulateVideosV1Dto,
-      Result<
-        IFindAccumulateVideoWithOutUserSection<ISection[]>,
-        | ChannelNotFoundError
-        | VideoNotFoundError
-        | ChannelHistoryNotFoundError
-        | ScrollApiError
-      >
-    >
+    IQueryHandler<FindAccumulateVideosV1Dto, IFindAccumulateVideosV1Res>
 {
   constructor(
-    @Inject(VIDEO_OS_DI_TOKEN)
-    protected readonly video: VideoQueryHandlerOutboundPort,
+    @Inject(VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN)
+    protected readonly findAccumulateVideo: FindAccumulateVideoInboundPort,
   ) {}
 
-  /**
-   * 연간 조회수 기능
-   * @param arg
-   */
   async execute(
-    arg: FindAccumulateVideosV1Dto,
-  ): Promise<
-    Result<
-      IFindAccumulateVideoWithOutUserSection<ISection[]>,
-      | ChannelNotFoundError
-      | VideoNotFoundError
-      | ChannelHistoryNotFoundError
-      | ScrollApiError
-    >
-  > {
-    /**
-     * TODO: 비디오 클러스터로 구현
-     */
-
-    return Ok({
-      videoTotal: 0,
-      section: [{ section: SECTION_NUMBER.RANGE_0_100, number: 0 }],
-    });
+    dto: FindAccumulateVideosV1Dto,
+  ): Promise<IFindAccumulateVideosV1Res> {
+    return await this.findAccumulateVideo.execute(dto);
   }
 }

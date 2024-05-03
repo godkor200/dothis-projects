@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zSuccessBase } from '../success.response.zod';
-import { dataObject } from '../common.model';
+import { dataObject, zPaginatedOffsetQuery, zSortQuery } from '../common.model';
 import { zStoryBoardSchema } from './story-board.model';
 
 export const zPostStoryBoardPathParams = z.object({
@@ -53,6 +53,44 @@ export type TPostStoryBoardMainParams = z.TypeOf<
 >;
 export type TPostStoryBoardBody = z.TypeOf<typeof zPostStoryBoardBody>;
 
+export const zStoryBoard = z.object({
+  id: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  // deletedAt: null,
+  userId: z.number(), // author 필요
+  title: z.string(),
+  // isDraft: z.boolean(),
+  overview: z.object({
+    // createDate: z.string(),
+    uploadDate: z.string(),
+    description: z.string(),
+    actors: z.string(),
+    location: z.string(),
+    references: z.string().array(),
+  }),
+});
+
+export const zStoryBoardDetailRes = zSuccessBase.merge(dataObject(zStoryBoard));
+
 export const zStoryBoardCreateRes = zSuccessBase.merge(
   dataObject(zStoryBoardSchema),
 );
+
+export const zStoryBoardArray = z.object({
+  count: z.number(),
+  limit: z.number(),
+  page: z.number(),
+  data: zStoryBoardSchema.array(),
+});
+export const zStoryBoardCreateArrayRes = zSuccessBase.merge(
+  // dataObject(zStoryBoardSchema.array()),
+  dataObject(zStoryBoardArray),
+);
+
+const storyBoardSortQuery = zSortQuery(Object.keys(zStoryBoardSchema.shape));
+
+export const zSortSqlQuery = storyBoardSortQuery;
+export const zPaginatedSqlQueryParams = zPaginatedOffsetQuery
+  .merge(zSortSqlQuery)
+  .describe('페이지네이션 쿼리 파라미터');

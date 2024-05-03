@@ -14,22 +14,18 @@ import { apiClient } from '@/utils/api/apiClient';
 const useGetAutoCompleteWord = (
   word: string,
   queryOptions?: UseQueryOptions<
-    typeof apiRouter.relwords.getAutoCompleteWords
+    typeof apiRouter.relatedWords.getAutoCompleteWords
   >,
 ) => {
-  const queryResult = apiClient(2).relwords.getAutoCompleteWords.useQuery(
+  const queryResult = apiClient(1).relatedWords.getAutoCompleteWords.useQuery(
     [AUTO_COMPLETEWORD_KEY.all, word],
     { params: { word } },
     { enabled: !!word, ...queryOptions },
   );
 
-  const requiredQueryResult = queryResult.data as DeepRequired<
-    typeof queryResult.data
-  >;
-
   return {
     ...queryResult,
-    data: requiredQueryResult?.body.data,
+    data: queryResult.data?.body.data,
   };
 };
 

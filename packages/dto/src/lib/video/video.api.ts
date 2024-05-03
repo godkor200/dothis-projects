@@ -1,19 +1,27 @@
-import { z } from 'zod';
 import { c } from '../contract';
+
 import {
-  findVideoBySearchKeyword,
-  findVideoPageQuery,
+  isVideoModel,
   zAccVideoModel,
-  zFindVideoPageWithClusterQuery,
-  zVideoDetails,
+  zVideoModel,
   zVideoResponse,
 } from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
-  zClusterNumber,
   zClusterNumberMulti,
   zPaginatedIgniteQueryParams,
 } from '../common.model';
+import {
+  findVideoBySearchKeyword,
+  zFindAccumulateQuery,
+  zFindIndividualVideoInfoParams,
+  zFindVideoBySearchKeyword,
+  zFindVideoPageWithClusterQuery,
+  zGetAdsRelatedTopHits,
+  zGetAdsRelatedTopHitsRes,
+  zGetVideoAdsInfoRes,
+  zVideoDetails,
+} from './video.zod';
 
 export const videoBaseApiUrl = '/video';
 
@@ -35,12 +43,11 @@ export const videoApi = c.router({
     pathParams: zClusterNumberMulti,
     query: zPaginatedIgniteQueryParams,
     responses: {
-      200: zVideoResponse,
+      200: zVideoModel,
       ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
-    description:
-      '관련어와 탐색어를 기준으로 비디오를 가져옵니다. 마지막 _id를 last에 넣고 다시 요청하면 다음 페이지의 비디오 리스트를 받을수 있습니다.',
+    description: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
   },
   getVideoPageV2: {
     method: 'GET',
@@ -54,10 +61,35 @@ export const videoApi = c.router({
     description:
       '관련어와 탐색어를 기준으로 비디오를 가져옵니다. 마지막 _id를 last에 넣고 다시 요청하면 다음 페이지의 비디오 리스트를 받을수 있습니다. 쿼리로 cluster를 배열로 넣고 한번 호출하고 페이지네이션 기능구현하시면 됩니다',
   },
+  getVideoAdsInfo: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/:clusterNumber/ads`,
+    pathParams: zClusterNumberMulti,
+    query: zFindVideoBySearchKeyword,
+    responses: {
+      200: zGetVideoAdsInfoRes,
+      ...zErrResBase,
+    },
+    summary: '관련어와 탐색어를 기준으로 광고 정보를 가져옵니다',
+    description: '관련어와 탐색어를 기준으로 광고 정보를 가져옵니다.',
+  },
+  getAdvertisingRelatedVideo: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/:clusterNumber/ads/top-hits`,
+    pathParams: zClusterNumberMulti,
+    query: zGetAdsRelatedTopHits,
+    responses: {
+      200: zGetAdsRelatedTopHitsRes,
+      ...zErrResBase,
+    },
+    summary: '관련어와 탐색어를 기준으로 광고 조회수 큰것부터 불러옵니다.',
+    description:
+      '관련어와 탐색어를 기준으로 광고 조회수 큰것부터 불러옵니다. limit 쿼리로 불러오는 갯수를 지정할수 있습니다.',
+  },
   getIndividualVideo: {
     method: 'GET',
-    path: `${videoBaseApiUrl}/:clusterNumber/:videoId`,
-    pathParams: z.object({ clusterNumber: z.number(), videoId: z.string() }), // 비디오 카테고리(cluster) 넘버, 비디오 아이디
+    path: `${videoBaseApiUrl}/:videoId/info/:clusterNumber`,
+    pathParams: zFindIndividualVideoInfoParams, // 비디오 카테고리(cluster) 넘버, 비디오 아이디
     responses: {
       200: zVideoDetails,
       ...zErrResBase,
@@ -65,10 +97,11 @@ export const videoApi = c.router({
     summary: '비디오 id를 기준으로 비디오 정보를 가져 옵니다',
     description: '비디오 id를 기준으로 비디오 정보를 가져 옵니다 ',
   },
-  getAccVideo: {
+  getAccumulateVideo: {
     method: 'GET',
-    path: `${videoBaseApiUrl}/accumulate`,
-    query: findVideoBySearchKeyword,
+    path: `${videoBaseApiUrl}/:clusterNumber/accumulate`,
+    pathParams: zClusterNumberMulti,
+    query: zFindAccumulateQuery,
     responses: {
       200: zAccVideoModel,
       ...zErrResBase,
@@ -76,5 +109,19 @@ export const videoApi = c.router({
     summary: '관련어와 탐색어를 기준으로 누적 영상수를 가져옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 누적 영상수를 가져옵니다 .기존에꺼 대비해서 한번만 호출하면 됩니다.',
+  },
+  getPerformanceByVideoLength: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/:clusterNumber/performance/duration`,
+    pathParams: zClusterNumberMulti,
+    query: zFindAccumulateQuery,
+    responses: {
+      200: zAccVideoModel,
+      ...zErrResBase,
+    },
+    summary:
+      '관련어와 탐색어를 기준으로 영상 길이별 조회수/성과 분포를 가져옵니다.',
+    description:
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 영상 길이별 조회수/성과 분포를 가져옵니다.',
   },
 });

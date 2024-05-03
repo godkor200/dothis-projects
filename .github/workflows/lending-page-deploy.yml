@@ -22,7 +22,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repositories under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout source code.
         uses: actions/checkout@master
         with:
@@ -68,4 +68,4 @@ jobs:
 
       - name: Deploy Next.js app
         run: |
-          cd apps/dashboard-web && pnpm sst deploy --stage prod
+          cd apps/dashboard-web && pnpm sst remove --stage prod

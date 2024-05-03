@@ -2,6 +2,7 @@
 
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 import type { Route } from 'next';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -21,7 +22,7 @@ const GNB = () => {
   const isSignedIn = useIsSignedIn();
   const { setIsOpenSignUpModal } = useAuthActions();
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   const router = useRouter();
 
@@ -31,7 +32,7 @@ const GNB = () => {
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
 
     setModalContent(<SignUpModal />);
-    setModalOpen(true);
+    setIsModalOpen(true);
     return false;
   };
 
@@ -72,13 +73,15 @@ const GNB = () => {
             </div>
           ))
         ) : (
-          <Button size="M" theme="contained" onClick={checkIsSignedIn}>
-            로그인
-          </Button>
+          <Link href={'/auth'}>
+            <Button size="M" theme="contained">
+              로그인
+            </Button>
+          </Link>
         )}
       </div>
 
-      {pathName === '/contents' && (
+      {(pathName === '/contents' || pathName === '/api-test') && (
         <div className="w-[680px]">
           <SearchBar />
         </div>

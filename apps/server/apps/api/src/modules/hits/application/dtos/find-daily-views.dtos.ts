@@ -2,8 +2,16 @@ import { IQuery } from '@nestjs/cqrs';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { findVideoBySearchKeyword, zClusterNumber } from '@dothis/dto';
+import {
+  findVideoBySearchKeyword,
+  zClusterNumber,
+  zClusterNumberMulti,
+} from '@dothis/dto';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 
+export class ClusterNumberMulti extends createZodDto(
+  extendApi(zClusterNumberMulti),
+) {}
 export class ClusterNumber extends createZodDto(extendApi(zClusterNumber)) {}
 export interface IPickDateFromLimitLast
   extends Pick<IDateRange, 'from'>,
@@ -58,7 +66,7 @@ export class FindDailyViewsV1Query extends createZodDto(
 export class FindDailyViewsV3Dto extends createZodDto(
   extendApi(findVideoBySearchKeyword),
 ) {
-  readonly clusterNumber: string;
+  readonly clusterNumber: string[];
   readonly data?: VIDEO_DATA_KEY[];
   constructor(props: FindDailyViewsV3Dto) {
     super();
@@ -66,16 +74,20 @@ export class FindDailyViewsV3Dto extends createZodDto(
   }
 }
 export class FindDailyViewsV1Dto
-  implements Omit<FindDailyViewsV3Dto, 'clusterNumber'>
+  extends FindDailyViewsV1Query
+  implements IParamsInterface
 {
+  readonly clusterNumber: string[];
+
   constructor(props: FindDailyViewsV1Dto) {
+    super(props);
     Object.assign(this, props);
   }
 }
 
 export interface IIncreaseData {
   date: string;
-  increase_views: number;
-  increase_likes: number;
-  increase_comments: number;
+  increaseViews: number;
+  increaseLikes: number;
+  increaseComments: number;
 }
