@@ -2,8 +2,11 @@
 
 import './YourComponent.css'; // CSS 파일 임포트
 
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
+import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
 
 const request_body = {
   startDate: '2017-01-01',
@@ -27,13 +30,13 @@ const request_body = {
 const YourComponent = () => {
   const [testUnmounted, setTestUnmounted] = useState(false);
 
+  const { data } = useGetNaverSearchRatio({ keyword: '키위', relword: '새' });
+  console.log(data);
   useEffect(() => {
-    async function test() {
-      const data = await axios.post('api/search');
-
-      console.log(data);
-    }
-
+    // async function test() {
+    //   const data = await axios.post('api/search', {});
+    //   console.log(data);
+    // }
     // async function clientTest() {
     //   const response = await fetch('v1/search', {
     //     method: 'POST',
@@ -44,11 +47,10 @@ const YourComponent = () => {
     //     },
     //     body: JSON.stringify(request_body),
     //   });
-
     //   const data = await response.json();
     //   console.log(data);
     // }
-    test();
+    // test();
     // clientTest();
   });
 
