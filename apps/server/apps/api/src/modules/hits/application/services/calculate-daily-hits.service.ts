@@ -38,7 +38,9 @@ export class CalculateDailyHitsMetricsService
           res.unwrap(),
         );
         const counts = await this.getRelatedVideosCountByDay.execute(dao);
-
+        if (counts.isErr()) {
+          return Err(counts.unwrapErr());
+        }
         const data = hitsData.map((viewData) => {
           /**
            * 날짜 매칭 해서 넣는 로직 start

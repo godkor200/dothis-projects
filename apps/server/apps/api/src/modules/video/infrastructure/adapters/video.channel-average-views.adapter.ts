@@ -13,12 +13,24 @@ import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 /**
- * 두번 조인 쿼리는 어떻게 하든 느림.... 그러나 스플릿이 완성되면 다를수도 있음
+ *
+ *  두 번의 조인 쿼리를 사용하여 특정 기간과 키워드에 맞는 비디오 및 채널의 조회수 평균을 계산하는 어댑터.
+ *  이 클래스는 느린 쿼리 성능을 개선하기 위한 스플릿 구조의 가능성을 탐구하며,
+ *  비디오 및 채널 조회수 평균을 효율적으로 가져오는 메커니즘을 구현합니다.
+ *
+ * ref: 두번 조인 쿼리는 어떻게 하든 느림.... 그러나 스플릿이 완성되면 다를수도 있음
  */
 export class VideoChannelAverageViewsAdapter
   extends VideoBaseAdapter
   implements IGetVideoAndChannelViewsByDateAndKeywordsOutboundPort
 {
+  /**
+   * 특정 날짜 범위와 키워드를 기반으로 비디오 및 채널의 조회수 평균을 검색합니다.
+   * 이 메소드는 비디오 제목 또는 태그가 주어진 검색어와 관련된 항목을 찾고, 동일한 기준으로 채널 데이터를 조인하여 결과를 반환합니다.
+   *
+   * @param dao GetVideoAndChannelViewsByDateAndKeywordsDao - 검색어, 관련어, 관련 클러스터, 시작 및 종료 날짜를 포함하는 객체.
+   * @returns Promise<TGetVideoAndChannelViewsByDateAndKeywordsRes> - 검색 결과에 해당하는 비디오 및 채널 조회수 데이터를 담은 객체 또는 에러.
+   */
   async execute(
     dao: GetVideoAndChannelViewsByDateAndKeywordsDao,
   ): Promise<TGetVideoAndChannelViewsByDateAndKeywordsRes> {

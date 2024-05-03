@@ -55,7 +55,8 @@ export class VideoPaginatedAdapter
         fromDate.month,
       );
       const joinSecTableName = CacheNameMapper.getChannelDataCacheName();
-      if (fromDate.year === toDate.year && toDate.month === toDate.month) {
+
+      if (fromDate.year === toDate.year && fromDate.month === toDate.month) {
         return `SELECT DISTINCT ${
           this.videoColumns.map((column) => ` vd.${column}`) +
           `, ch.channel_name, TO_CHAR(VIDEO_PUBLISHED, 'YYYY-MM-DD HH:MM:SS') as VIDEO_PUBLISHED`
@@ -78,8 +79,10 @@ export class VideoPaginatedAdapter
       }
       FROM
         ${tableName} vd
-      JOIN ${joinTableName} vh1 ON vd.VIDEO_ID = vh.VIDEO_ID
-      JOIN ${joinThirdTableName} vh2 ON vd.VIDEO_ID = vh.VIDEO_ID
+      JOIN ${joinTableName} vh1 ON vd.VIDEO_ID = vh1.VIDEO_ID
+      JOIN ${joinThirdTableName} vh2 ON vd.VIDEO_ID = vh2.VIDEO_ID
+      JOIN ${joinSecTableName} ch
+                ON vd.channel_id = ch.channel_id
       WHERE (vd.VIDEO_TITLE LIKE '%${search}%' OR vd.VIDEO_TAGS LIKE '%${search}%')
         ${relatedCondition}
         AND vh2.DAY <= ${toDate.day} 
@@ -92,22 +95,15 @@ export class VideoPaginatedAdapter
   async execute(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
 
-    /**
-     * FIXME: 밑에 배열화 시키는거 수정할필요가 있음
-     */
-    const clusterNumbers = Array.isArray(clusterNumber)
-      ? clusterNumber
-      : [clusterNumber];
-
     const queryString = this.queryString(
-      clusterNumbers,
+      clusterNumber,
       search,
       from,
       to,
       related,
     );
 
-    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumbers[0]);
+    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumber[0]);
     const pageSize = Number(limit);
     const currentPage = Number(page);
     try {

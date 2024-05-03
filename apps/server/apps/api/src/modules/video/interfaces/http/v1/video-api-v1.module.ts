@@ -53,7 +53,7 @@ import { FindAccumulateVideosV1QueryHandler } from '@Apps/modules/video/applicat
 import { FindLatestChannelHistoryByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.latest-tuple.adapter';
 import { ChannelHistoryRelatedVideoAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.related-video.adapter';
 import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.by-channel-id.adapter';
-import { VideoHistoryGetOneAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-one.adapter';
+import { VideoHistorySingleDuoAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.single-duo.adapter';
 import { VideoHistoryLastOneAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.last-one.adapter';
 import { VideoHistoryGetMultipleByIdAdapter } from '@Apps/modules/video-history/infrastructure/adapters';
 import { FindAdsInfoService } from '@Apps/modules/video/application/service/find-ads-info.service';
@@ -129,7 +129,7 @@ const adapters: Provider[] = [
   },
   {
     provide: VIDEO_HISTORY_GET_HISTORY_HIT_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryGetOneAdapter,
+    useClass: VideoHistorySingleDuoAdapter,
   },
   {
     provide: VIDEO_HISTORY_GET_LAST_HISTORY_HIT_IGNITE_DI_TOKEN,
@@ -167,7 +167,7 @@ const adapters: Provider[] = [
   },
   {
     provide: VIDEO_HISTORY_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryGetOneAdapter,
+    useClass: VideoHistorySingleDuoAdapter,
   },
   {
     provide: DATE_SPECIFIC_HISTORY_REPOSITORY_DI_TOKEN,

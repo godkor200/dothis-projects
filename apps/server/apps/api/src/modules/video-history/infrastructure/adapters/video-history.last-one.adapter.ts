@@ -30,7 +30,7 @@ export class VideoHistoryLastOneAdapter
     );
     try {
       const cache = await this.client.getCache(
-        tableName + `_${clusterNumber}_${fromDate.year}_${fromDate.month}`,
+        tableName + `_${clusterNumber}_${fromDate.year}${fromDate.month}`,
       );
 
       const query = this.createDistributedJoinQuery(
@@ -45,7 +45,6 @@ export class VideoHistoryLastOneAdapter
         IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
       );
     } catch (e) {
-      console.log(e);
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));
       }

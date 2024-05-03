@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   FindIndividualVideoInfoParams,
+  FindIndividualVideoInfoParamsInterface,
   FindIndividualVideoInfoV1Dto,
 } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { match } from 'oxide.ts';
@@ -15,6 +16,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -32,6 +34,7 @@ import {
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
+import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;
 
@@ -50,9 +53,28 @@ export class FindIndividualVideoInfoHttpController {
     summary,
     description,
   })
-  async execute(@Param() param: FindIndividualVideoInfoParams) {
+  @ApiParam({
+    name: 'clusterNumber',
+    type: String,
+    required: true,
+    description: '클러스터 번호 단일 가능',
+    example: '0',
+  })
+  @ApiParam({
+    name: 'videoId',
+    type: String,
+    required: true,
+    description: '비디오아이디',
+    example: '-2QMneQQGNU',
+  })
+  async execute(
+    @Param(ParseArrayPipe) param: FindIndividualVideoInfoParamsInterface,
+  ) {
     return tsRestHandler(c.getIndividualVideo, async ({ params }) => {
-      const arg = new FindIndividualVideoInfoV1Dto(params);
+      const arg = new FindIndividualVideoInfoV1Dto({
+        videoId: param.videoId,
+        clusterNumber: param.clusterNumber,
+      });
       const result: TVideoIndividualRes = await this.queryBus.execute(arg);
       return match<TVideoIndividualRes, TTsRestRes<IRes<VideoDetailsModel>>>(
         result,

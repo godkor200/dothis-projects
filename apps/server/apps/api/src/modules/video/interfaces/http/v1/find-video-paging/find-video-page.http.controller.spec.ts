@@ -16,12 +16,12 @@ describe('예외 처리', () => {
     mockQueryBus.execute.mockResolvedValue(Err(new NotFoundException()));
     try {
       await controller.execute(
-        { clusterNumber: '6' },
         {
           limit: '5',
           search: '고기',
           related: '영화평론',
         },
+        { clusterNumber: ['6'] },
       );
     } catch (err) {
       expect(err.message).toBe('Not Found');

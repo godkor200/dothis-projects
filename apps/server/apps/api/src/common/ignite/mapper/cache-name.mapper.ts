@@ -52,13 +52,13 @@ export class CacheNameMapper {
   ): string {
     // 클러스터, 연도, 월의 유효성 검사
     if (!this.isValidCluster(cluster)) {
-      throw new Error('유효하지 않은 클러스터입니다.');
+      throw new Error(`유효하지 않은 클러스터입니다. value:${cluster}`);
     }
     if (!this.isValidYear(year)) {
-      throw new Error('유효하지 않은 연도입니다.');
+      throw new Error(`유효하지 않은 연도입니다. value:${year}`);
     }
     if (!this.isValidMonth(month)) {
-      throw new Error('유효하지 않은 월입니다.');
+      throw new Error(`유효하지 않은 월입니다.${month}`);
     }
     return `${this.BASE_VIDEO_HISTORY_TABLE}_${this.formatNumber(
       cluster,

@@ -162,7 +162,6 @@ WHERE
 
       const queryString = queries.join(' UNION ');
       const query = this.createDistributedJoinQuery(queryString);
-      console.log(query);
       const cache = await this.client.getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();

@@ -63,7 +63,7 @@ export class VideoHistoryListAdapter
        ON vd.video_id = vh.video_id
        WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
        ${relatedCondition}
-       AND (vh.DAY <= ${fromDate.day}) 
+       AND (vh.DAY >= ${fromDate.day}) 
        UNION 
        SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY
        FROM ${SecTableName} vh 
@@ -71,7 +71,7 @@ export class VideoHistoryListAdapter
        ON vd.video_id = vh.video_id
        WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%')
        ${relatedCondition}
-       AND (vh.DAY >= ${toDate.day})`;
+       AND (vh.DAY <= ${toDate.day})`;
       } else {
         //아닌경우
         return `SELECT vh.VIDEO_ID, vh.VIDEO_VIEWS, vh.YEAR, vh.MONTH, vh.DAY
@@ -107,11 +107,13 @@ export class VideoHistoryListAdapter
         to,
         related,
       );
+
       const cache = await this.client.getCache(tableName);
       const query = this.createDistributedJoinQuery(queryRes);
 
       const result = await cache.query(query);
       const resArr = await result.getAll();
+
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
 
       return Ok(

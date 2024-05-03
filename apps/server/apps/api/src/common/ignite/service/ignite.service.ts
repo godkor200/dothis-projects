@@ -30,6 +30,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
       const tableNames = await this.client.cacheNames();
       const cache = await this.client.getCache(tableNames[0]);
       const result = await cache.query(query);
+      this.logger.log(`health Check: ${result.length !== 0}`);
       return result.length !== 0; // Checks for a non-empty result as an indication of a healthy connection
     } catch (error) {
       this.logger.error(

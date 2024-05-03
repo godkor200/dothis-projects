@@ -39,6 +39,7 @@ export class VideoCountDayAdapter
         to,
         relatedCluster,
         related,
+        'vh.DAY',
       );
 
       const query = this.createDistributedJoinQuery(clusterQueryString);

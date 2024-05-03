@@ -11,11 +11,19 @@ import {
   TGetVideoHistoryRes,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { IGetListVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-
+/**
+ * 비디오 히스토리 리스트 확장 어댑터 클래스.
+ * VideoBaseAdapter를 상속받아 비디오 히스토리 정보를 조회하는 기능을 제공한다.
+ */
 export class ExtendedVideoHistoryListAdapter
   extends VideoBaseAdapter
   implements IGetListVideoHistoryOutboundPort
 {
+  /**
+   * 비디오 히스토리 정보를 조회하여 반환하는 메소드. union으로 여러개의 캐시 테이블을 조회
+   * @param {IGetListVideoHistoryDao} dao - 비디오 히스토리 조회에 필요한 파라미터 객체.
+   * @returns {Promise<TGetVideoHistoryRes>} 조회 결과를 반환하는 프로미스 객체.
+   */
   async execute(dao: IGetListVideoHistoryDao): Promise<TGetVideoHistoryRes> {
     const { from, to, clusterNumber, videoId } = dao;
 

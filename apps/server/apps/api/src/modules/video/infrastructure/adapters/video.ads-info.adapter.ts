@@ -56,8 +56,8 @@ FROM
   ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
   JOIN ${CacheNameMapper.getVideoHistoryCacheName(
     cluster,
-    fromDate.year.toString(),
-    fromDate.month.toString(),
+    fromDate.year,
+    fromDate.month,
   )} vh ON vd.VIDEO_ID = vh.VIDEO_ID
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
@@ -76,13 +76,13 @@ FROM
   ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
   JOIN ${CacheNameMapper.getVideoHistoryCacheName(
     cluster,
-    fromDate.year.toString(),
-    fromDate.month.toString(),
+    fromDate.year,
+    fromDate.month,
   )} vh1 ON vd.VIDEO_ID = vh.VIDEO_ID
   JOIN ${CacheNameMapper.getVideoHistoryCacheName(
     cluster,
-    toDate.year.toString(),
-    toDate.month.toString(),
+    toDate.year,
+    toDate.month,
   )} vh2 ON vd.VIDEO_ID = vh.VIDEO_ID
 WHERE
   vd.VIDEO_TITLE LIKE '%${search}%'
@@ -108,9 +108,9 @@ WHERE
     const queryString = this.queryString(
       relatedCluster,
       search,
-      related,
       from,
       to,
+      related,
     );
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
