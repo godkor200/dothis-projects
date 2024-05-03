@@ -3,6 +3,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
@@ -29,6 +30,8 @@ import { PaginatedIgniteQueryParams } from '@Libs/commons/src/interfaces/types/d
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
+import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getVideoPageV1;
 
@@ -46,13 +49,20 @@ export class FindVideoPageHttpController {
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
   })
+  @ApiParam({
+    name: 'clusterNumber',
+    type: String,
+    required: true,
+    description: '클러스터 번호 단일, 멀티 둘다 가능',
+    example: '4, 93, 14, 13, 57, 5, 43, 1, 10, 45',
+  })
   async execute(
-    @Param() param: ClusterNumberMulti,
     @Query() query: PaginatedIgniteQueryParams,
+    @Param(ParseArrayPipe) param: IParamsInterface,
   ) {
     return tsRestHandler(c.getVideoPageV1, async ({ params, query }) => {
       const arg = new GetVideoPaginatedPageDto({
-        clusterNumber: params.clusterNumber,
+        clusterNumber: param.clusterNumber,
         ...query,
       });
       const data: TGetVideoPage = await this.queryBus.execute(arg);

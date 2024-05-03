@@ -21,6 +21,7 @@ export type TGetRelatedVideoAnalyticsData = Result<
 
 /**
  * 연관어에 관련된 관련어를 가지고 있는 비디오를 찾아 옵니다.
+ * 연관어는 하나인 반면 관련어는 다수입니다
  * 조건:
  *  - 비디오 조회수 1천회 이상
  *  - 비디오 6개월내 이상

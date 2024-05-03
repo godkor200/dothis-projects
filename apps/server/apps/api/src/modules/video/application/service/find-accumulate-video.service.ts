@@ -37,7 +37,7 @@ export class FindAccumulateVideoService
     const dao = new FindChannelHistoryRelatedVideoDao(dto);
     try {
       const videoData = await this.getChannelHistoryRelateVideo.execute(dao);
-      console.log(videoData);
+
       if (!videoData.isOk()) {
         return Err(new VideoNotFoundError());
       }

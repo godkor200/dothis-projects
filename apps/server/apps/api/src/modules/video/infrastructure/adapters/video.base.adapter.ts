@@ -63,6 +63,7 @@ export class VideoBaseAdapter extends IgniteService {
     to: string,
     clusterNumber: string | string[],
     related?: string,
+    groupBy?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
@@ -73,12 +74,16 @@ export class VideoBaseAdapter extends IgniteService {
     const clusterNumbers = Array.isArray(clusterNumber)
       ? clusterNumber
       : [clusterNumber];
-    let relatedCondition = '';
+    let relatedCondition: string,
+      groupByCondition: string = '';
     if (related) {
       relatedCondition = `AND (
         vd.video_title LIKE '%${related}%'
         OR vd.video_tags LIKE '%${related}%'
       )`;
+    }
+    if (groupBy) {
+      groupByCondition = `GROUP BY ${groupBy}`;
     }
     const queryParts = clusterNumbers.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
@@ -94,7 +99,8 @@ export class VideoBaseAdapter extends IgniteService {
               ON vd.video_id = vh.video_id 
               WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%') 
               ${relatedCondition}
-              AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+              AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
+              ${groupByCondition}`;
       }
 
       // 기간이 한 달을 넘어가는 경우 두 달 모두를 포함해야 하므로, 두 번째 캐시 테이블을 조인합니다.
@@ -110,6 +116,7 @@ export class VideoBaseAdapter extends IgniteService {
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
         ${relatedCondition}
         AND vh.DAY >= ${fromDate.day}
+        ${groupByCondition}
       ) UNION (
         SELECT DISTINCT ${columns.join(', ')}
         FROM ${tableName} vd
@@ -117,6 +124,7 @@ export class VideoBaseAdapter extends IgniteService {
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
         ${relatedCondition}
         AND vh.DAY <= ${toDate.day}
+        ${groupByCondition}
       )`;
     });
 

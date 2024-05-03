@@ -47,7 +47,7 @@ export class FindIndividualVideoInfoService
     const dao = new FindIndividualVideoInfoV1Dao(dto);
     const channelHistoryResult = await this.channelHistoryPort.execute(dao);
     const videoHistoryResult = await this.videoHistoryPort.execute({
-      clusterNumber: dto.clusterNumber,
+      clusterNumber: dto.clusterNumber[0],
       videoId: dto.videoId,
       from: DateUtil.getDaysAgo(7),
       to: DateUtil.getDaysAgo(),

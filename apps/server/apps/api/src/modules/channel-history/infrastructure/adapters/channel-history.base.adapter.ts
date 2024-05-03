@@ -60,7 +60,9 @@ export class ChannelHistoryBaseAdapter
     const { clusterNumber, videoId } = dao;
     const { year, month } = DateUtil.currentDate();
     const tableName = CacheNameMapper.getChannelHistoryCacheName(year, month);
-    const joinTableName = CacheNameMapper.getVideoDataCacheName(clusterNumber);
+    const joinTableName = CacheNameMapper.getVideoDataCacheName(
+      clusterNumber[0],
+    );
     const queryString = `SELECT ch.${this.keys.join(
       ', ch.',
     )}, vd.video_tags FROM ${tableName} ch JOIN ${joinTableName} vd ON ch.channel_id = vd.channel_id WHERE vd.video_id = '${videoId}'`;

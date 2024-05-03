@@ -10,11 +10,7 @@ import { apiRouter } from '@dothis/dto';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 import { match, Result } from 'oxide.ts';
-import {
-  ClusterNumber,
-  ClusterNumberMulti,
-  FindDailyViewsV1Query,
-} from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+import { FindDailyViewsV1Query } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,

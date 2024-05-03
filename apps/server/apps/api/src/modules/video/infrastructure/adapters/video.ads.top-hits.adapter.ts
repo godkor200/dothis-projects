@@ -69,7 +69,7 @@ export class VideoAdsTopHitsAdapter
       )`;
       }
       if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
-        return `(SELECT VD.VIDEO_TITLE, VD.VIDEO_PUBLISHED, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
+        return `(SELECT VD.VIDEO_TITLE, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
     FROM ${tableName} VD 
     JOIN ${joinTableName} CD ON VD.CHANNEL_ID = CD.CHANNEL_ID 
     JOIN ${joinSecCacheName} VH ON VD.VIDEO_ID = VH.VIDEO_ID 
@@ -87,7 +87,7 @@ export class VideoAdsTopHitsAdapter
       );
       const startMonthQuery = `
       SELECT
-        VD.VIDEO_TITLE, VD.VIDEO_PUBLISHED, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
+        VD.VIDEO_TITLE, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
       FROM
         ${tableName} VD 
         JOIN ${joinTableName} CD ON VD.CHANNEL_ID = CD.CHANNEL_ID
@@ -103,7 +103,7 @@ export class VideoAdsTopHitsAdapter
 
       const endMonthQuery = `
       SELECT
-        VD.VIDEO_TITLE, VD.VIDEO_PUBLISHED, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
+        VD.VIDEO_TITLE, to_char(VD.video_published, 'YYYY-MM-DD') AS video_published, CD.CHANNEL_NAME, MAX(VH.VIDEO_VIEWS) AS VIDEO_VIEWS
       FROM
         ${tableName} VD 
         JOIN ${joinTableName} CD ON VD.CHANNEL_ID = CD.CHANNEL_ID
@@ -131,10 +131,10 @@ export class VideoAdsTopHitsAdapter
     const queryString = this.queryString(
       relatedCluster,
       search,
-      related,
       from,
       to,
       limit,
+      related,
     );
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
