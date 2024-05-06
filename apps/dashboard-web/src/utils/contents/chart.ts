@@ -97,7 +97,33 @@ export const handleDailyViewData = (
       const views = item.increaseViews;
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
-        dateBasedDataSet[date] += views;
+        dateBasedDataSet[date] += Math.abs(views);
+      }
+    }
+  });
+
+  const result = createDateTimeApexChart(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleDailyVideoCount = (
+  data: (DailyView | undefined)[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+
+      const views = item.uniqueVideoCount;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.abs(views);
       }
     }
   });
