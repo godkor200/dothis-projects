@@ -1,14 +1,17 @@
 import { Button } from 'dashboard-storybook/src/components/Button/Button';
 
+import { useDraggableContext } from '@/components/common/Dnd/DraggableContext';
 import ConfirmModal from '@/components/common/Modal/ModalContent/ConfirmModal';
 import { useModalActions } from '@/store/modalStore';
 
 interface SceneControlsProps {
+  isEditing: boolean;
   toggleEdit: () => void;
   getCheckedSceneIds: () => void;
 }
 // TODO: 씬 추가, 삭제 버튼 design
 const SceneControls = ({
+  isEditing,
   toggleEdit,
   getCheckedSceneIds,
 }: SceneControlsProps) => {
@@ -32,7 +35,27 @@ const SceneControls = ({
     setModalContent(
       <ConfirmModal
         message={`선택한 씬 스토리보드를 삭제하시겠습니까?\u000A삭제된 씬 스토리보드는 복구되지 않습니다.`}
-        callback={() => console.log('confirmed! mutate~')}
+        callback={() => {
+          console.log('confirmed! mutate~');
+          toggleEdit();
+        }}
+      />,
+    );
+    setModalOpen(true);
+  };
+
+  const { draggableItems } = useDraggableContext('SceneControls');
+  const applyEdit = () => {
+    // API에 따라서 수정되어야 함 (id리스트가 필요한지 등)
+    console.log('변경된 순서', draggableItems);
+    // TODO: mutate
+    setModalContent(
+      <ConfirmModal
+        message={`편집을 완료하시겠습니까?`}
+        callback={() => {
+          console.log('confirmed! mutate~');
+          toggleEdit();
+        }}
       />,
     );
     setIsModalOpen(true);
@@ -54,19 +77,21 @@ const SceneControls = ({
         </Button>
         <p></p>
       </div>
-      <div className="inline-flex grow-0 gap-[10px]">
-        <Button
-          className=" bg-grey700 border-grey500 rounded-8 border-[1px] border-solid px-6 py-2 text-white focus:outline-none"
-          size="L"
-          theme="outlined"
-          onClick={deleteScene}
-        >
-          씬 삭제
-        </Button>
-        <Button size="L" theme="contained">
-          완료
-        </Button>
-      </div>
+      {isEditing && (
+        <div className="inline-flex grow-0 gap-[10px]">
+          <Button
+            className=" bg-grey700 border-grey500 rounded-8 border-[1px] border-solid px-6 py-2 text-white focus:outline-none"
+            size="L"
+            theme="outlined"
+            onClick={deleteScene}
+          >
+            씬 삭제
+          </Button>
+          <Button size="L" theme="contained" onClick={applyEdit}>
+            완료
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
