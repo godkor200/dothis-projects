@@ -6,14 +6,14 @@ import axios from 'axios';
 import { NAVER_SEARCH_RATIO_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 
-type NaverAPI_Response = {
+export type NaverAPI_Response = {
   startDate: string;
   endDate: string;
   timeUnit: string;
   results: Array<NaverAPI_Results>;
 };
 
-type NaverAPI_Results = {
+export type NaverAPI_Results = {
   title: string;
   keywords: Array<string>;
   data: Array<{ period: string; ratio: string }>;
