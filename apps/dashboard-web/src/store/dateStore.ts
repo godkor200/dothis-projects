@@ -17,10 +17,10 @@ interface DateState {
  * 추 후 캘린더 형식으로 날짜를 커스텀할 수도 있기때문에 이렇게 setter가 가능한 전역상태로 작성하였습니다
  */
 export const dateStore = create<DateState>((set) => ({
-  // startDate: dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
-  startDate: '2024-04-16',
-  // endDate: dayjs().subtract(0, 'day').format('YYYY-MM-DD'),
-  endDate: '2024-04-22',
+  startDate: dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
+  // startDate: '2024-04-16',
+  endDate: dayjs().subtract(0, 'day').format('YYYY-MM-DD'),
+  // endDate: '2024-04-22',
 
   actions: {
     setStartDate: (value: string) => set(() => ({ startDate: value })),
