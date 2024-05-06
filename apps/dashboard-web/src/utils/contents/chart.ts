@@ -5,6 +5,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 import type { DeepRequired } from '@/hooks/react-query/query/common';
+import type { NaverAPI_Results } from '@/hooks/react-query/query/useGetNaverSearchRatio';
 
 import { getDateObjTime } from './dateObject';
 
@@ -77,6 +78,27 @@ export const createDateTimeApexChart = (
 };
 
 /**
+ *  ApexChart series의 포맷팅을 고정적으로 해주는 유틸리티 함수입니다.
+ * @param dataFunction data 프로퍼티의 들어가는 포맷팅 함수입니다.
+ * @param name series 네임
+ * @param type chart 타입
+ * @returns @dataFunction을 반환합니다.
+ */
+export const formatToApexChart = <T extends any[], U extends any[]>(
+  dataFunction: (...args: U) => T,
+  { name, type }: { name: string; type: ChartType },
+) => {
+  return function (...args: U): ApexAxisChartSeries[number] {
+    const result = {
+      data: dataFunction(...args),
+      name,
+      type,
+    };
+    return result;
+  };
+};
+
+/**
  * getDailyView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 increase_views를 모두 합산하는 함수
  * @param data getDailyView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
  * @returns @createDateTimeApexChart 에 반환된 형식을 가진다.
@@ -131,27 +153,6 @@ export const handleDailyVideoCount = (
   const result = createDateTimeApexChart(dateBasedDataSet);
 
   return result;
-};
-
-/**
- *  ApexChart series의 포맷팅을 고정적으로 해주는 유틸리티 함수입니다.
- * @param dataFunction data 프로퍼티의 들어가는 포맷팅 함수입니다.
- * @param name series 네임
- * @param type chart 타입
- * @returns @dataFunction을 반환합니다.
- */
-export const formatToApexChart = <T extends any[], U extends any[]>(
-  dataFunction: (...args: U) => T,
-  { name, type }: { name: string; type: ChartType },
-) => {
-  return function (...args: U): ApexAxisChartSeries[number] {
-    const result = {
-      data: dataFunction(...args),
-      name,
-      type,
-    };
-    return result;
-  };
 };
 
 /**
@@ -220,6 +221,15 @@ export const handleScopePerformanceData = (
 
   return result;
 };
+
+/**
+ *
+ */
+
+export const handleNaverSearchRation = (
+  data: NaverAPI_Results[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {};
 
 /**
  * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
