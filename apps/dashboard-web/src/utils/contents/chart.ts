@@ -227,7 +227,7 @@ export const handleScopePerformanceData = (
  */
 
 export const handleNaverSearchRatio = (
-  data: NaverAPI_Results[],
+  data: NaverAPI_Results[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const dateBasedDataSet = initChartDateFormatter({
@@ -235,17 +235,18 @@ export const handleNaverSearchRatio = (
     endDate,
     format: 'single',
   });
-  data[0].data?.forEach((item) => {
-    if (item) {
-      const date = item.period;
+  data &&
+    data[0].data?.forEach((item) => {
+      if (item) {
+        const date = item.period;
 
-      const views = item.ratio;
+        const views = item.ratio;
 
-      if (dateBasedDataSet.hasOwnProperty(date)) {
-        dateBasedDataSet[date] += Number(views);
+        if (dateBasedDataSet.hasOwnProperty(date)) {
+          dateBasedDataSet[date] += Number(views);
+        }
       }
-    }
-  });
+    });
 
   const result = createDateTimeApexChart(dateBasedDataSet);
 
