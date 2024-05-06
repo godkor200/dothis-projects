@@ -226,10 +226,31 @@ export const handleScopePerformanceData = (
  *
  */
 
-export const handleNaverSearchRation = (
+export const handleNaverSearchRatio = (
   data: NaverAPI_Results[],
   { startDate, endDate }: { startDate: string; endDate: string },
-) => {};
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data[0].data?.forEach((item) => {
+    if (item) {
+      const date = item.period;
+
+      const views = item.ratio;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Number(views);
+      }
+    }
+  });
+
+  const result = createDateTimeApexChart(dateBasedDataSet);
+
+  return result;
+};
 
 /**
  * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
