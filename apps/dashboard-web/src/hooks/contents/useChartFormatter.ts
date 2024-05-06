@@ -4,12 +4,52 @@ import { useEndDate, useStartDate } from '@/store/dateStore';
 import {
   formatToApexChart,
   handleAveragePerformanceData,
+  handleDailyVideoCount,
   handleDailyViewData,
+  handleNaverSearchRatio,
   handleScopePerformanceData,
 } from '@/utils/contents/chart';
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
+import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
+
+/**
+ *
+ */
+
+export const useSearchRatioFormatter = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: searchRatioData } = useGetNaverSearchRatio({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  const handleSearchRatioDataCallback = formatToApexChart(
+    handleNaverSearchRatio,
+    {
+      name: '검색량',
+      type: 'line',
+    },
+  );
+
+  return useMemo(
+    () =>
+      handleSearchRatioDataCallback(searchRatioData?.results, {
+        startDate,
+        endDate,
+      }),
+    [JSON.stringify(searchRatioData)],
+  );
+};
 
 /**
  * 서버에서 가져온 일일조회수 데이터를 Apex포맷으로 변경화는 과정을 추상화한 hook입니다.
@@ -34,6 +74,34 @@ export const useDailyViewDataFormatter = ({
   const handleDailyViewDataCallback = formatToApexChart(handleDailyViewData, {
     name: '일일조회수',
     type: 'line',
+  });
+
+  return useMemo(
+    () =>
+      handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyVideoCountFormatter = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyView({
+    keyword,
+    relword,
+  });
+
+  console.log(dailyViewData);
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  const handleDailyViewDataCallback = formatToApexChart(handleDailyVideoCount, {
+    name: '영상 수',
+    type: 'bar',
   });
 
   return useMemo(
@@ -104,7 +172,7 @@ export const useScopePerformanceFormatter = ({
   const scopePerformanceDataCallback = formatToApexChart(
     handleScopePerformanceData,
     {
-      name: '범위성과',
+      name: '평균성과 기대치',
       type: 'rangeArea',
     },
   );
