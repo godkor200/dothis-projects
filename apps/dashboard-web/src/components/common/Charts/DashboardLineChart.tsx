@@ -19,6 +19,17 @@ const DashboardLineChart = ({ series }: Props) => {
       series={series}
       // 데이터의 숫자가 정확히 일치해야 tooltipe이 같이뜬다.,
       options={{
+        noData: {
+          text: 'Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            color: '#000000',
+            fontSize: '16px',
+          },
+        },
         chart: {
           zoom: {
             enabled: false,
@@ -30,6 +41,7 @@ const DashboardLineChart = ({ series }: Props) => {
           type: 'line',
           stacked: false,
         },
+
         plotOptions: {
           bar: {
             horizontal: false,
@@ -112,7 +124,7 @@ const DashboardLineChart = ({ series }: Props) => {
               show: true,
 
               formatter(val, opts) {
-                return val.toLocaleString('ko-kr');
+                return val?.toLocaleString('ko-kr');
               },
               style: {
                 colors: '#71717A',
