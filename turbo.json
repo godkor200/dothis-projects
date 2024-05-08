@@ -11,12 +11,12 @@
     },
     "build:dashboard": {
       "dependsOn": ["^build"],
-      "env": ["OPENAI_API_KEY"]
+      "env": ["OPENAI_API_KEY", "NAVER_API_ID", "NAVER_API_PWD"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["OPENAI_API_KEY"]
+      "env": ["OPENAI_API_KEY", "NAVER_API_ID", "NAVER_API_PWD"]
     },
     "request-web#build": {
       "dependsOn": ["^request-web#db-generate", "^build"],
@@ -32,7 +32,7 @@
         "@dothis/dto#build",
         "dashboard-storybook#build"
       ],
-      "env": ["OPENAI_API_KEY"]
+      "env": ["OPENAI_API_KEY", "NAVER_API_ID", "NAVER_API_PWD"]
     },
     "dashboard-web#build": {
       "dependsOn": [
@@ -40,7 +40,7 @@
         "@dothis/dto#build",
         "dashboard-storybook#build"
       ],
-      "env": ["OPENAI_API_KEY"]
+      "env": ["OPENAI_API_KEY", "NAVER_API_ID", "NAVER_API_PWD"]
     },
     "dashboard-storybook#build": {
       "dependsOn": ["@dothis/theme#build"]
@@ -150,7 +150,9 @@
     "AWS_SECRET_ACCESS_KEY",
     "NODE_ENV",
     "VERCEL",
-    "OPENAI_API_KEY"
+    "OPENAI_API_KEY",
+    "NAVER_API_ID",
+    "NAVER_API_PWD"
   ],
   "globalDependencies": [".env", ".env.local", "tsconfig.json"]
 }

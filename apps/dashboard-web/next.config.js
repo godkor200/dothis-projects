@@ -68,5 +68,14 @@ const config = {
 
     return config;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/v1/search',
+        destination: 'https://openapi.naver.com/v1/datalab/search',
+      },
+    ];
+  },
 };
 module.exports = withVanillaExtract(config);

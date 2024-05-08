@@ -1,15 +1,17 @@
+import './styles.css';
+
 import dayjs from 'dayjs';
 import ReactApexChart from 'react-apexcharts';
 
 import { useStartDate } from '@/store/dateStore';
 import { getDateObjTime } from '@/utils/contents/dateObject';
-
 interface Props {
   series: ApexAxisChartSeries;
 }
 
 const DashboardLineChart = ({ series }: Props) => {
   const startDate = useStartDate();
+
   return (
     <ReactApexChart
       type="line"
@@ -19,6 +21,17 @@ const DashboardLineChart = ({ series }: Props) => {
       series={series}
       // 데이터의 숫자가 정확히 일치해야 tooltipe이 같이뜬다.,
       options={{
+        noData: {
+          text: 'Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            color: '#000000',
+            fontSize: '16px',
+          },
+        },
         chart: {
           zoom: {
             enabled: false,
@@ -30,6 +43,7 @@ const DashboardLineChart = ({ series }: Props) => {
           type: 'line',
           stacked: false,
         },
+
         plotOptions: {
           bar: {
             horizontal: false,
@@ -112,7 +126,7 @@ const DashboardLineChart = ({ series }: Props) => {
               show: true,
 
               formatter(val, opts) {
-                return val.toLocaleString('ko-kr');
+                return val?.toLocaleString('ko-kr');
               },
               style: {
                 colors: '#71717A',
@@ -198,13 +212,15 @@ const DashboardLineChart = ({ series }: Props) => {
         ],
         xaxis: {
           type: 'datetime',
-          min: getDateObjTime(startDate), // 시작 날짜 설정
+          // min: new Date('2024-04-30').getTime(), // 시작 날짜 설정  (버그체크용)
           // max: getDateObjTime(endDate),
+
           tooltip: {
             enabled: false,
           },
           labels: {
             format: 'MM.dd',
+
             // offsetX:
           },
           tickPlacement: 'on',
