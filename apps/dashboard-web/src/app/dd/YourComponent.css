@@ -1,6 +1,0 @@
-.up-animation {
-  transition: transform 1s ease; /* 움직임을 부드럽게 만듭니다. */
-  transform: translateY(
-    -100px
-  ); /* 원하는 만큼의 이동 거리 및 방향을 설정합니다. */
-}
