@@ -12,6 +12,7 @@ import {
   useDailyVideoCountFormatter,
   useDailyViewDataFormatter,
   useScopePerformanceFormatter,
+  useSearchRatioFormatter,
 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetPerformanceData from '@/hooks/react-query/query/useGetPerformanceData';
@@ -115,6 +116,13 @@ const ViewChart = () => {
     relword: selectedWord.relword,
   });
 
+  const search = useSearchRatioFormatter({
+    keyword: selectedWord.keyword,
+    relword: selectedWord.relword,
+  });
+
+  console.log(search);
+
   // if (
   //   combinedArray.length === 0 ||
   //   combinedArray.some((item) => item === true)
@@ -199,8 +207,6 @@ const ViewChart = () => {
   //   );
   // }
 
-  console.log(dailyVideoCount);
-
   return (
     <div className="mr-7 flex h-[460px] w-full flex-col">
       <div className="flex h-3/6 justify-center [&_svg]:overflow-visible">
@@ -223,17 +229,18 @@ const ViewChart = () => {
               // ),
             },
             {
-              name: '검색량',
-              type: 'line',
-              color: '#818CF8',
-              data: [23, 31, 33, 14, 15, 12, 18].map((item, index) => {
-                return {
-                  y: item,
-                  x: getDateObjTime(
-                    dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
-                  ),
-                };
-              }),
+              ...search,
+              // name: '검색량',
+              // type: 'line',
+              // color: '#818CF8',
+              // data: [23, 31, 33, 14, 15, 12, 18].map((item, index) => {
+              //   return {
+              //     y: item,
+              //     x: getDateObjTime(
+              //       dayjs(startDate).add(index, 'day').format('YYYY-MM-DD'),
+              //     ),
+              //   };
+              // }),
             },
             {
               ...dailyVideoCount,
