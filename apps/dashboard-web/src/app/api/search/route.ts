@@ -12,7 +12,7 @@ const request_body = ({
   endDate,
 }: {
   keyword: string;
-  relword: string;
+  relword: string | null;
   startDate: string;
   endDate: string;
 }) => {
@@ -23,7 +23,7 @@ const request_body = ({
     keywordGroups: [
       {
         groupName: keyword,
-        keywords: [keyword, relword],
+        keywords: relword ? [keyword, relword] : [keyword],
       },
     ],
     device: 'pc',

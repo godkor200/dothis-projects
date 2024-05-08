@@ -42,7 +42,13 @@ const useGetNaverSearchRatio = (
         endDate,
       },
     ]),
-    () => queryFn({ keyword: keyword!, relword: relword!, startDate, endDate }),
+    () =>
+      queryFn({
+        keyword: keyword!,
+        relword: relword,
+        startDate,
+        endDate,
+      }),
     {
       ...queryOptions,
       enabled: !!keyword && !!startDate && !!endDate,
@@ -59,7 +65,7 @@ const queryFn = async ({
   endDate,
 }: {
   keyword: string;
-  relword: string;
+  relword: string | null;
   startDate: string;
   endDate: string;
 }): Promise<NaverAPI_Response> => {
