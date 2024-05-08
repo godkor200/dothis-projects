@@ -95,7 +95,6 @@ export const useDailyVideoCountFormatter = ({
     relword,
   });
 
-  console.log(dailyViewData);
   const startDate = useStartDate();
   const endDate = useEndDate();
 

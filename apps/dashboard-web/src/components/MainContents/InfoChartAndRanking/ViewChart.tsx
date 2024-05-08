@@ -121,8 +121,6 @@ const ViewChart = () => {
     relword: selectedWord.relword,
   });
 
-  console.log(search);
-
   // if (
   //   combinedArray.length === 0 ||
   //   combinedArray.some((item) => item === true)
