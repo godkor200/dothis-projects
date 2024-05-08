@@ -41,7 +41,7 @@ const SceneControls = ({
         }}
       />,
     );
-    setModalOpen(true);
+    setIsModalOpen(true);
   };
 
   const { draggableItems } = useDraggableContext('SceneControls');
