@@ -33,7 +33,7 @@ const SearchGNB = () => {
   const isSignedIn = useIsSignedIn();
   const { setIsOpenSignUpModal } = useAuthActions();
 
-  const { setModalOpen, setModalContent } = useModalActions();
+  const { setIsModalOpen, setModalContent } = useModalActions();
 
   const router = useRouter();
 
@@ -43,7 +43,7 @@ const SearchGNB = () => {
     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
 
     setModalContent(<SignUpModal />);
-    setModalOpen(true);
+    setIsModalOpen(true);
     return false;
   };
 

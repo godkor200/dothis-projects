@@ -53,13 +53,9 @@ const useGetAdsInformation = (
     },
   );
 
-  const requiredQueryResult = queryResult.data as DeepRequired<
-    typeof queryResult.data
-  >;
-
   return {
     ...queryResult,
-    data: requiredQueryResult?.body,
+    data: queryResult.data?.body,
   };
 };
 

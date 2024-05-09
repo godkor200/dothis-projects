@@ -21,7 +21,7 @@ const useGetUserChannelData = (
   const queryResult = apiClient(1).channel.analyzeChannel.useQuery(
     USER_CHANNEL_KEY.all,
     {},
-    queryOptions,
+    { ...queryOptions },
   );
 
   const requiredQueryResult = queryResult.data as DeepRequired<

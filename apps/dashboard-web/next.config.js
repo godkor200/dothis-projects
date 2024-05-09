@@ -2,6 +2,9 @@
 
 const path = require('path');
 
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
 const config = {
   reactStrictMode: false,
   swcMinify: true,
@@ -65,5 +68,14 @@ const config = {
 
     return config;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/v1/search',
+        destination: 'https://openapi.naver.com/v1/datalab/search',
+      },
+    ];
+  },
 };
-module.exports = config;
+module.exports = withVanillaExtract(config);

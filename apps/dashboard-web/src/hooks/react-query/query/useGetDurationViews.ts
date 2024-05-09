@@ -37,9 +37,6 @@ const useGetDurationViews = (
     ]),
 
     {
-      params: {
-        clusterNumber: clusters.join(','),
-      },
       query: {
         search: keyword!,
         related: relword!,
@@ -53,13 +50,9 @@ const useGetDurationViews = (
     },
   );
 
-  const requiredQueryResult = queryResult.data as DeepRequired<
-    typeof queryResult.data
-  >;
-
   return {
     ...queryResult,
-    data: requiredQueryResult?.body.data,
+    data: queryResult.data?.body.data,
   };
 };
 

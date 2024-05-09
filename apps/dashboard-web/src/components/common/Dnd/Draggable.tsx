@@ -39,7 +39,6 @@ const Draggable = ({
     const record: Record<number, React.ReactNode> = {};
     React.Children.map(children, (child, index) => {
       record[index] = child;
-      console.log(index, child);
     });
     return record;
   }, [children]);

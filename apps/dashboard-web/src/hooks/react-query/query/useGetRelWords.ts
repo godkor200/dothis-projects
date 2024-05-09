@@ -27,7 +27,7 @@ const useGetRelWords = (
     RELATIONWORD_KEY.list([{ keyword: keyword }]),
     {
       params: {
-        keyword: keyword!,
+        search: keyword!,
       },
     },
     { ...queryOptions, enabled: !isLoading && !!keyword },

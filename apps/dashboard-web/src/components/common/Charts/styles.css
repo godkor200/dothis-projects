@@ -1,0 +1,4 @@
+.apexcharts-xaxis-label {
+  font-weight: 400;
+}
+/* DateTime XAxis -> Label이 font-weight가 다르게 생길 떄가 있어서 생성함 */

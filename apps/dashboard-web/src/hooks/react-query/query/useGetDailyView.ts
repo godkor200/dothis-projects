@@ -61,13 +61,11 @@ const useGetDailyView = (
     }),
   });
 
-  const requiredQueryResult = queryResults as DeepRequired<typeof queryResults>;
-  // const isLoading = queryResults.some((result) => result.isLoading);
-  const isLoading = requiredQueryResult.map((item) => item.isLoading);
+  const isLoading = queryResults.map((item) => item.isLoading);
 
   return {
     isLoading,
-    data: requiredQueryResult.map((result) => result.data?.body.data),
+    data: queryResults.map((result) => result.data?.body.data),
   };
 };
 

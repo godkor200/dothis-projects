@@ -28,7 +28,8 @@
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "^4.29.6",
     "@ts-rest/core": "^3.33.0",
-    "@ts-rest/react-query": "^3.19.3",
+    "@ts-rest/react-query": "^3.30.4",
+    "@types/d3": "^7.4.3",
     "@types/js-cookie": "^3.0.4",
     "@types/lodash": "^4.14.195",
     "ai": "^2.2.31",
@@ -36,6 +37,7 @@
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "cookies-next": "^4.0.0",
+    "d3": "^7.9.0",
     "dashboard-storybook": "workspace:*",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
@@ -74,6 +76,7 @@
     "@types/react-copy-to-clipboard": "^5.0.5",
     "@types/react-dom": "^18.2.4",
     "@types/styled-components": "^5.1.26",
+    "@vanilla-extract/next-plugin": "^2.4.0",
     "autoprefixer": "^10.4.13",
     "aws-cdk-lib": "2.84.0",
     "constructs": "10.1.156",
@@ -97,5 +100,6 @@
   },
   "peerDependencies": {
     "zod": "^3.21.4"
-  }
+  },
+  "proxy": "https://openapi.naver.com"
 }

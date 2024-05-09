@@ -73,7 +73,7 @@ const KeywordAnalyticsView = () => {
         videoCountViewChartData: SubscriberRangeVideoCounts;
       }>(
         (acc, dataItem) => {
-          dataItem?.section.forEach((sectionItem) => {
+          dataItem?.section?.forEach((sectionItem) => {
             const key = sectionItem.section;
 
             if (key in CONVERT_SUBSCRIBERANGE) {
