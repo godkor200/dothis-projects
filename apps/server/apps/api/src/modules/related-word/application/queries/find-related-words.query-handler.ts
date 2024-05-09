@@ -1,12 +1,12 @@
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
 import { Err, Ok, Result } from 'oxide.ts';
 
 import { GetRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/find-related-words.request.dto';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 
 @QueryHandler(GetRelatedWordsDto)
 export class FindRelatedWordsQueryHandler
@@ -18,13 +18,13 @@ export class FindRelatedWordsQueryHandler
 {
   constructor(
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
-    private readonly query: FindRelatedWordOutboundPort,
+    private readonly query: RelatedWordsRepositoryPort,
   ) {}
   async execute(
     query: GetRelatedWordsDto,
   ): Promise<Result<RelWordsEntity, RelatedWordsNotFoundError>> {
     const res = await this.query.findOneByKeyword(query.search);
     if (!res) return Err(new RelatedWordsNotFoundError());
-    return Ok(res);
+    return Ok(res.unwrap());
   }
 }

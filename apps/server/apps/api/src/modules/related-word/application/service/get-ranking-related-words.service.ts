@@ -5,7 +5,6 @@ import {
   RELWORDS_DI_TOKEN,
   RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
 } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
-import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
@@ -16,12 +15,15 @@ import {
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
   | TableNotFoundException
   | CacheDoesNotFoundException
   | VideoHistoryNotFoundError
+  | RelatedWordsNotFoundError
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
@@ -30,7 +32,7 @@ export class GetRankingRelatedWordsService
 {
   constructor(
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
-    private readonly relWordsRepository: FindRelatedWordOutboundPort,
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
 
     @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
     private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
@@ -49,46 +51,47 @@ export class GetRankingRelatedWordsService
     query: GetRankingRelatedWordsDto,
   ): Promise<TGetRankingRelatedWordsRes> {
     try {
-      /**
-       * FIXME: relWordsEntity 없을 경우 예외처리
-       */
       const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
         query.search,
       );
+      if (relWordsEntity.isOk()) {
+        const resRelWordsEntity = relWordsEntity.unwrap();
+        const relatedWords = resRelWordsEntity.relWords
+          .split(',')
+          .map((item) => item.trim());
+        const relatedCluster = resRelWordsEntity.cluster
+          .split(',')
+          .map((item) => item.trim())
+          .slice(0, 5);
 
-      const relatedWords = relWordsEntity.relWords
-        .split(',')
-        .map((item) => item.trim());
-      const relatedCluster = relWordsEntity.cluster
-        .split(',')
-        .map((item) => item.trim())
-        .slice(0, 5);
-
-      const dao = new GetRelatedLastVideoAndVideoHistory({
-        search: query.search,
-        relatedWords,
-        relatedCluster,
-      });
-
-      const data = await this.getRelatedVideoHistory.execute(dao);
-
-      if (data.isOk()) {
-        const unwrapData = data.unwrap();
-
-        const res = this.rankingRelatedWordAggregateService.calculateWordStats(
+        const dao = new GetRelatedLastVideoAndVideoHistory({
+          search: query.search,
           relatedWords,
-          unwrapData,
-        );
-        return Ok({
-          keyword: query.search,
-          ranking: res.map((e) => ({
-            word: e.word,
-            sortFigure: e.sortFigures,
-            expectedViews: e.expectedViews,
-          })),
+          relatedCluster,
         });
+
+        const data = await this.getRelatedVideoHistory.execute(dao);
+
+        if (data.isOk()) {
+          const unwrapData = data.unwrap();
+
+          const res =
+            this.rankingRelatedWordAggregateService.calculateWordStats(
+              relatedWords,
+              unwrapData,
+            );
+          return Ok({
+            keyword: query.search,
+            ranking: res.map((e) => ({
+              word: e.word,
+              sortFigure: e.sortFigures,
+              expectedViews: e.expectedViews,
+            })),
+          });
+        }
+        return Err(data.unwrapErr());
       }
-      return Err(data.unwrapErr());
+      return Err(relWordsEntity.unwrapErr());
     } catch (e) {
       return Err(e);
     }

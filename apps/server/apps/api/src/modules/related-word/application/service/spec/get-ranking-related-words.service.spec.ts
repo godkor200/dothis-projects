@@ -1,13 +1,11 @@
 import { GetRankingRelatedWordsService } from '@Apps/modules/related-word/application/service/get-ranking-related-words.service';
-import { FindRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-related-word.outbound.port';
 import { mock } from 'jest-mock-extended';
 import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
-import { Ok } from 'oxide.ts';
-import { history } from '@Apps/modules/related-word/application/service/spec/__dummy__/video_history.dummy';
 import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 
-const mockFindRelAdapter = mock<FindRelatedWordOutboundPort>();
+const mockFindRelAdapter = mock<RelatedWordsRepositoryPort>();
 const mockIGetRelatedLastVideoHistory = mock<IGetRelatedLastVideoHistory>();
 const mockRankingRelatedWordAggregateService =
   mock<RankingRelatedWordAggregateService>();

@@ -62,19 +62,13 @@ export class VideoBaseAdapter extends IgniteService {
     search: string,
     from: string,
     to: string,
-    clusterNumber: string | string[],
+    clusterNumber: string[],
     related?: string,
     groupBy?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
-    /**
-     * clusterNumber가 배열이 아니라면 하나의 요소를 가진 배열로 변환
-     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
-     */
-    const clusterNumbers = Array.isArray(clusterNumber)
-      ? clusterNumber
-      : [clusterNumber];
+
     let relatedCondition: string,
       groupByCondition: string = '';
     if (related) {
@@ -86,7 +80,7 @@ export class VideoBaseAdapter extends IgniteService {
     if (groupBy) {
       groupByCondition = `GROUP BY ${groupBy}`;
     }
-    const queryParts = clusterNumbers.map((cluster) => {
+    const queryParts = clusterNumber.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
       const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
