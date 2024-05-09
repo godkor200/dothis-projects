@@ -8,7 +8,6 @@ import {
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
-import { GetWeeklyHitsListV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-hits-list/get-weekly-hits-list.v1.http.controller';
 import {
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   EXPECTED_HITS_SERVICE_DI_TOKEN,

@@ -21,20 +21,15 @@ export class VideoEntireCountAdapter
   async execute(dao: GetVideoDao): Promise<TRelatedEntireCount> {
     const { search, related, from, to, clusterNumber } = dao;
     const queryString = this.getClusterQueryString(
-      [`vd.*`],
+      [`vd.video_id`],
       search,
       from,
       to,
       clusterNumber,
       related,
     );
-    /**
-     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
-     */
-    const clusterNumberValue = Array.isArray(clusterNumber)
-      ? clusterNumber[0]
-      : clusterNumber;
-    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumberValue);
+
+    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumber[0]);
     try {
       const query = this.createDistributedJoinQuery(
         `SELECT COUNT(*) FROM (` + queryString + `) AS subquery`,

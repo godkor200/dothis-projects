@@ -14,6 +14,8 @@ import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 
 /**
  * 비디오 총갯수를 받아오는 어뎁터
+ * 조건:
+ *  - video_published 3개월내 이상
  */
 export class VideoCountDayAdapter
   extends VideoBaseAdapter

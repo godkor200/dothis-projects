@@ -110,7 +110,6 @@ export class VideoHistoryListAdapter
 
       const cache = await this.client.getCache(tableName);
       const query = this.createDistributedJoinQuery(queryRes);
-
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

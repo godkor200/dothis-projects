@@ -24,7 +24,7 @@ export type TGetRelatedVideoAnalyticsData = Result<
  * 연관어는 하나인 반면 관련어는 다수입니다
  * 조건:
  *  - 비디오 조회수 1천회 이상
- *  - 비디오 6개월내 이상
+ *  - video_published 6개월내 이상
  */
 export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
@@ -82,7 +82,6 @@ export class VideoHistoryMultipleAdapter
     const queryString = this.queryString(relatedCluster, search, relatedWords);
     try {
       const query = this.createDistributedJoinQuery(queryString);
-
       const cache = await this.client.getCache(
         CacheNameMapper.getVideoHistoryCacheName(
           relatedCluster[0],
