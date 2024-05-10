@@ -16,6 +16,8 @@ import {
 
 /**
  * 대량의 비디오를 페이지네이션 방식으로 리턴합니다.
+ * 조건:
+ *  - video_published 3개월내 이상
  */
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
@@ -67,7 +69,8 @@ export class VideoPaginatedAdapter
                 ON vd.channel_id = ch.channel_id
           WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
           ${relatedCondition} 
-          AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+          AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
+          AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)`;
       }
       const joinThirdTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
@@ -87,6 +90,7 @@ export class VideoPaginatedAdapter
         ${relatedCondition}
         AND vh2.DAY <= ${toDate.day} 
         AND vh1.DAY >= ${fromDate.day}
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       `;
     });
 

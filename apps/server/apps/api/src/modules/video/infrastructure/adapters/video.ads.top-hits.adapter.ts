@@ -40,6 +40,9 @@ export class VideoAdsTopHitsAdapter
    * @param to 검색 종료 날짜. `YYYY-MM-DD` 형식을 따릅니다.
    * @param limit 결과의 최대 개수를 지정합니다. 상위 N개의 결과를 반환합니다.
    * @return 쿼리 문자열. 주어진 매개변수에 따라 조건을 만족하는 비디오 데이터를 조회하기 위한 SQL 쿼리 문자열입니다.
+   *
+   * 조건:
+   *  - video_published 3개월내 이상
    */
 
   private queryString(
@@ -76,7 +79,8 @@ export class VideoAdsTopHitsAdapter
     WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
     ${relatedCondition} 
     AND (VH.DAY BETWEEN ${fromDate.day} AND ${toDate.day}) 
-    AND VD.VIDEO_WITH_ADS = TRUE 
+    AND VD.VIDEO_WITH_ADS = TRUE
+    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP) 
     GROUP BY VD.VIDEO_ID 
     ORDER BY VIDEO_VIEWS DESC)`;
       }
@@ -97,6 +101,7 @@ export class VideoAdsTopHitsAdapter
         ${relatedCondition}
         AND vh.DAY >= '${fromDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       GROUP BY VD.VIDEO_ID 
       ORDER BY VIDEO_VIEWS DESC 
     `;
@@ -113,6 +118,7 @@ export class VideoAdsTopHitsAdapter
         ${relatedCondition}
         AND vh.DAY <= '${toDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       GROUP BY VD.VIDEO_ID 
       ORDER BY VIDEO_VIEWS DESC
     `;

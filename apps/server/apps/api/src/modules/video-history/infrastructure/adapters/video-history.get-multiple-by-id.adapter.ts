@@ -29,13 +29,8 @@ export class VideoHistoryGetMultipleByIdAdapter
       year,
       month,
     );
-    /**
-     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
-     */
-    const cluster = Array.isArray(clusterNumber)
-      ? clusterNumber
-      : [clusterNumber];
-    const queryUnion = cluster.map((cluster) => {
+
+    const queryUnion = clusterNumber.map((cluster) => {
       const tableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
         year,

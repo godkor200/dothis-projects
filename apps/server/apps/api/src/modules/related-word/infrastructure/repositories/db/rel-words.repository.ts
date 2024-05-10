@@ -1,10 +1,15 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { RelatedWordModel, zRelWords } from '@dothis/dto';
-import { RelatedWordsRepositoryPort } from './rel-words.repository.port';
+import {
+  RelatedWordsRepositoryFindOneByKeywordRes,
+  RelatedWordsRepositoryPort,
+} from './rel-words.repository.port';
+import { RelatedWordsEntity } from '../entity/related_words.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
+import { Err, Ok, Result } from 'oxide.ts';
 import { ZodObject } from 'zod';
-import { RelatedWordsEntity } from '../entity/related_words.entity';
+import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 export class RelatedWordsRepository
   extends SqlRepositoryBase<RelatedWordsEntity, RelatedWordModel>
@@ -19,11 +24,23 @@ export class RelatedWordsRepository
     super(dataSource);
   }
 
-  async findOneByKeyword(keyword: string): Promise<RelatedWordsEntity> {
-    return await this.repository
-      .createQueryBuilder(this.tableName)
-      .where({ keyword })
-      .getOne();
+  async findOneByKeyword(
+    keyword: string,
+  ): Promise<RelatedWordsRepositoryFindOneByKeywordRes> {
+    try {
+      const res = Ok(
+        await this.repository
+          .createQueryBuilder(this.tableName)
+          .where({ keyword })
+          .getOne(),
+      );
+      if (!res) {
+        return Err(new RelatedWordsNotFoundError());
+      }
+      return res;
+    } catch (e) {
+      return Err(e);
+    }
   }
 
   async findAllKeyword(): Promise<{ keyword: string }[]> {

@@ -47,7 +47,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
       if (!isHealthy) {
         this.logger.log('health Check failed, Attempting to reconnect....');
         this.client = new IgniteClient(this.onStateChanged.bind(this)); // 클라이언트를 다시 생성합니다.
-        await this.connectWithRetry(10000, 10);
+        await this.connectWithRetry(60000, 10);
       }
     }, interval);
   }
@@ -77,7 +77,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   ): Promise<void> {
     let retries = 0;
 
-    while (retries < maxRetries && this.connectionState !== 'connected') {
+    while (retries < maxRetries) {
       try {
         this.client = new IgniteClient(this.onStateChanged.bind(this));
         await this.connect();

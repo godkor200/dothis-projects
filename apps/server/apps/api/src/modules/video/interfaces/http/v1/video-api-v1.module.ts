@@ -24,7 +24,6 @@ import {
   CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN,
 } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/application/service/channel-history.service.module';
-import { CHANNEL_OS_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 import { FindIndividualVideoInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
@@ -40,7 +39,6 @@ import {
   VIDEO_HISTORY_GET_LIST_VIDEO_HISTORY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video-history/video_history.di-token';
-import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
 import { VideoEntireCountAdapter } from '@Apps/modules/video/infrastructure/adapters/video.entire-count.adapter';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';

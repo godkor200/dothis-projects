@@ -4,7 +4,7 @@ import {
   ExpectedViewsV1Dto,
   ExpectedViewsV1Query,
 } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
-import { match, Result } from 'oxide.ts';
+import { match } from 'oxide.ts';
 import { apiRouter, TExpectedViewsRes } from '@dothis/dto';
 import {
   nestControllerContract,
@@ -29,6 +29,7 @@ import {
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { TExpectedViewsV1QueryHandlerRes } from '@Apps/modules/hits/application/queries/expected-views.v1.query-handler';
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 const { summary, description } = getExpectedViews;
 
 @ApiTags('조회수')
@@ -75,6 +76,7 @@ export class ExpectedHitsV1HttpController {
         Err: (err: Error) => {
           if (
             err instanceof VideoNotFoundError ||
+            err instanceof VideoHistoryNotFoundError ||
             err instanceof ChannelNotFoundError
           ) {
             throw new NotFoundException(err.message);

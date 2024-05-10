@@ -16,3 +16,6 @@ export interface IGetChannelHistoryLatestTupleByVideoAdapter {
 export interface IGetChannelHistoryRelateVideoOutboundPort {
   execute(dao: FindChannelHistoryRelatedVideoDao): Promise<TGetRelatedVideoRes>;
 }
+export interface IGetChannelHistoryEntireListAdapterOutboundPort {
+  execute(dao: FindIndividualVideoInfoV1Dao): Promise<TChannelHistoryTuplesRes>;
+}

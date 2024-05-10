@@ -16,6 +16,8 @@ export type TGetRelatedVideoChannelHistoryRes = Result<
 
 /**
  * 날짜 범위를 지정하여 관련 비디오 채널 히스토리를 가져오는 어댑터 클래스
+ * 조건:
+ *  - video_published 3개월내 이상
  */
 export class VideoChannelHistoryAdapter
   extends VideoBaseAdapter
@@ -63,35 +65,36 @@ export class VideoChannelHistoryAdapter
         }
         if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
           return `SELECT
-  vh.VIDEO_ID,
-  vh.VIDEO_VIEWS,
-  ch.channel_id,
-  ch.channel_average_views,
-  vh.YEAR,
-  vh.MONTH,
-  vh.DAY
-FROM
-  ${tableName} vh
-  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
-  JOIN (
-    SELECT
-      channel_id,
-      channel_average_views
-    FROM
-      ${channelIdTableName}
-    WHERE
-      day = (SELECT MAX(day) FROM ${channelIdTableName})
-  ) ch ON ch.channel_id = vd.channel_id
-WHERE
-  (
-    vd.video_title LIKE '%${search}%'
-    OR vd.video_tags LIKE '%${search}%'
-  )
- ${relatedCondition}
-  AND (
-    vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day}
-  )
-`;
+                    vh.VIDEO_ID,
+                    vh.VIDEO_VIEWS,
+                    ch.channel_id,
+                    ch.channel_average_views,
+                    vh.YEAR,
+                    vh.MONTH,
+                    vh.DAY
+                  FROM
+                    ${tableName} vh
+                    JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+                    JOIN (
+                      SELECT
+                        channel_id,
+                        channel_average_views
+                      FROM
+                        ${channelIdTableName}
+                      WHERE
+                        day = (SELECT MAX(day) FROM ${channelIdTableName})
+                    ) ch ON ch.channel_id = vd.channel_id
+                  WHERE
+                    (
+                      vd.video_title LIKE '%${search}%'
+                      OR vd.video_tags LIKE '%${search}%'
+                    )
+                   ${relatedCondition}
+                    AND (
+                      vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day}
+                    )
+                    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
+                  `;
         } else {
           const tableSecName = CacheNameMapper.getVideoHistoryCacheName(
             cluster,
@@ -99,64 +102,68 @@ WHERE
             toDate.month.toString(),
           );
           return `(SELECT
-  vh.VIDEO_ID,
-  vh.VIDEO_VIEWS,
-  ch.channel_id,
-  ch.channel_average_views,
-  vh.YEAR,
-  vh.MONTH,
-  vh.DAY
-FROM
-  ${tableName} vh
-  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
-  JOIN (
-    SELECT
-      channel_id,
-      channel_average_views
-    FROM
-      ${channelIdTableName}
-    WHERE
-      day = (SELECT MAX(day) FROM ${channelIdTableName})
-  ) ch ON ch.channel_id = vd.channel_id
-WHERE
-  (
-    vd.video_title LIKE '%${search}%'
-    OR vd.video_tags LIKE '%${search}%'
-  )
- ${relatedCondition}
-  AND (
-    vh.DAY >= ${fromDate.day}
-  )) UNION (
-SELECT
-  vh.VIDEO_ID,
-  vh.VIDEO_VIEWS,
-  ch.channel_id,
-  ch.channel_average_views,
-  vh.YEAR,
-  vh.MONTH,
-  vh.DAY
-FROM
-  ${tableSecName} vh
-  JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
-  JOIN (
-    SELECT
-      channel_id,
-      channel_average_views
-    FROM
-      ${channelIdTableName}
-    WHERE
-      day = (SELECT MAX(day) FROM ${channelIdTableName})
-  ) ch ON ch.channel_id = vd.channel_id
-WHERE
-  (
-    vd.video_title LIKE '%${search}%'
-    OR vd.video_tags LIKE '%${search}%'
-  )
-  ${relatedCondition}
-  AND (
-    vh.DAY <= ${toDate.day}
-  ))
-`;
+                    vh.VIDEO_ID,
+                    vh.VIDEO_VIEWS,
+                    ch.channel_id,
+                    ch.channel_average_views,
+                    vh.YEAR,
+                    vh.MONTH,
+                    vh.DAY
+                  FROM
+                    ${tableName} vh
+                    JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+                    JOIN (
+                      SELECT
+                        channel_id,
+                        channel_average_views
+                      FROM
+                        ${channelIdTableName}
+                      WHERE
+                        day = (SELECT MAX(day) FROM ${channelIdTableName})
+                    ) ch ON ch.channel_id = vd.channel_id
+                  WHERE
+                    (
+                      vd.video_title LIKE '%${search}%'
+                      OR vd.video_tags LIKE '%${search}%'
+                    )
+                   ${relatedCondition}
+                    AND (
+                      vh.DAY >= ${fromDate.day}
+                    )
+                    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
+                    ) UNION (
+                  SELECT
+                    vh.VIDEO_ID,
+                    vh.VIDEO_VIEWS,
+                    ch.channel_id,
+                    ch.channel_average_views,
+                    vh.YEAR,
+                    vh.MONTH,
+                    vh.DAY
+                  FROM
+                    ${tableSecName} vh
+                    JOIN ${joinTableName} vd ON vd.video_id = vh.video_id
+                    JOIN (
+                      SELECT
+                        channel_id,
+                        channel_average_views
+                      FROM
+                        ${channelIdTableName}
+                      WHERE
+                        day = (SELECT MAX(day) FROM ${channelIdTableName})
+                    ) ch ON ch.channel_id = vd.channel_id
+                  WHERE
+                    (
+                      vd.video_title LIKE '%${search}%'
+                      OR vd.video_tags LIKE '%${search}%'
+                    )
+                    ${relatedCondition}
+                    AND (
+                      vh.DAY <= ${toDate.day}
+                    )
+                    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
+                    )
+                  `;
         }
       });
 

@@ -4,9 +4,10 @@ import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 /**
  * VideoBaseAdapter 클래스는 비디오 데이터에 대한 접근 및 쿼리를 관리합니다.
- * 이 클래스는 IgniteService를 상속받아 Ignite 캐시에 저장된 비디오 관련 데이터를
+ * 이 클래스는 IgniteService 상속받아 Ignite 캐시에 저장된 비디오 관련 데이터를
  * 조회하고, 필요한 정보를 추출하기 위한 쿼리 문자열을 생성하는 역할을 수행합니다.
- *
+ * 조건:
+ *  - video_published 3개월내 이상
  * 주요 기능:
  * - 주어진 조건에 맞는 비디오 데이터를 조회하기 위한 쿼리 문자열 생성
  * - 필요한 비디오 컬럼 정보를 정의하고 관리
@@ -61,19 +62,13 @@ export class VideoBaseAdapter extends IgniteService {
     search: string,
     from: string,
     to: string,
-    clusterNumber: string | string[],
+    clusterNumber: string[],
     related?: string,
     groupBy?: string,
   ): string {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
-    /**
-     * clusterNumber가 배열이 아니라면 하나의 요소를 가진 배열로 변환
-     * FIXME: dao 클래스안에서 배열로 변환 시킬 방법 찾기
-     */
-    const clusterNumbers = Array.isArray(clusterNumber)
-      ? clusterNumber
-      : [clusterNumber];
+
     let relatedCondition: string,
       groupByCondition: string = '';
     if (related) {
@@ -85,7 +80,7 @@ export class VideoBaseAdapter extends IgniteService {
     if (groupBy) {
       groupByCondition = `GROUP BY ${groupBy}`;
     }
-    const queryParts = clusterNumbers.map((cluster) => {
+    const queryParts = clusterNumber.map((cluster) => {
       const tableName = CacheNameMapper.getVideoDataCacheName(cluster);
       const joinTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
@@ -100,7 +95,9 @@ export class VideoBaseAdapter extends IgniteService {
               WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%') 
               ${relatedCondition}
               AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
-              ${groupByCondition}`;
+              AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
+              ${groupByCondition}
+              `;
       }
 
       // 기간이 한 달을 넘어가는 경우 두 달 모두를 포함해야 하므로, 두 번째 캐시 테이블을 조인합니다.
@@ -116,6 +113,7 @@ export class VideoBaseAdapter extends IgniteService {
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
         ${relatedCondition}
         AND vh.DAY >= ${fromDate.day}
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
         ${groupByCondition}
       ) UNION (
         SELECT DISTINCT ${columns.join(', ')}
@@ -124,6 +122,7 @@ export class VideoBaseAdapter extends IgniteService {
         WHERE (vd.video_title LIKE '%${search}%' OR vd.video_tags LIKE '%${search}%')
         ${relatedCondition}
         AND vh.DAY <= ${toDate.day}
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
         ${groupByCondition}
       )`;
     });
