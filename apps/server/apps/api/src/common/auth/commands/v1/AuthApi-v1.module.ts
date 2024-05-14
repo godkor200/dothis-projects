@@ -19,6 +19,7 @@ import { PassportModule } from '@nestjs/passport';
 import { CookieValidationMiddleware } from '@Apps/common/auth/middleware/cookie.middleware';
 import { LogoutCommandHandler } from '@Apps/common/auth/commands/v1/logout/logout.command-handler';
 import { LogoutHttpController } from '@Apps/common/auth/commands/v1/logout/logout.http.controller';
+import { KafkaModule } from '@Apps/common/kafka/kafka.module';
 const httpControllers = [
   GoogleLoginHttpController,
   GoogleLoginRedirectHttpController,
@@ -41,6 +42,7 @@ const repositories: Provider[] = [
   controllers: [...httpControllers],
   imports: [
     CqrsModule,
+    KafkaModule,
     PassportModule,
     UserEntityModule,
     JwtModule.register({

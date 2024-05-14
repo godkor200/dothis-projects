@@ -9,6 +9,7 @@ import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-logi
 import { Err, Ok, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
+import { ProducerService } from '@Apps/common/kafka/service/producer.service';
 
 @CommandHandler(UserInfoCommandDto)
 export class GoogleLoginRedirectCommandHandler
@@ -18,6 +19,8 @@ export class GoogleLoginRedirectCommandHandler
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepositoryPort,
     private readonly jwtService: JwtService,
+
+    private readonly producerService: ProducerService,
   ) {}
 
   async execute(
@@ -45,7 +48,10 @@ export class GoogleLoginRedirectCommandHandler
     const googleAccessToken = command.googleAccessToken;
     const googleRefreshToken = command.googleRefreshToken;
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
-
+    await this.producerService.produce({
+      topic: 'channel_id',
+      messages: [{ value: checkUser.channelId }],
+    });
     return Ok({
       accessToken: this.jwtService.sign(
         {

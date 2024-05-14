@@ -19,6 +19,8 @@ import { ContextInterceptor } from '@Libs/commons/src/application/context/contex
 import { ExceptionInterceptor } from '@Libs/commons/src/application/interceptors/exception.Interceptor';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaConfigService } from '@Apps/common/kafka/service/kafka.service';
+import { ProducerService } from '@Apps/common/kafka/service/producer.service';
+import { KafkaModule } from '@Apps/common/kafka/kafka.module';
 
 const interceptors = [
   {
