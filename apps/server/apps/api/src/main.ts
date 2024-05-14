@@ -6,12 +6,15 @@ import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@Libs/commons/src/filter/httpException.filter';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import { MicroserviceOptions } from '@nestjs/microservices';
+import { KafkaConfigService } from '@Apps/common/kafka/service/kafka.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const databaseUri: string = configService.get<string>('db.DB_HOST');
   const appPort = configService.get<number | string>('app.APP_PORT');
+  const kafkaService = new KafkaConfigService(configService).getKafkaOptions();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   const logger = new Logger();
@@ -28,7 +31,10 @@ async function bootstrap() {
     credentials: true,
     exposedHeaders: ['Authorization'],
   });
+  app.connectMicroservice<MicroserviceOptions>(kafkaService);
+  await app.startAllMicroservices();
   await app.listen(appPort);
+  // Kafka 마이크로서비스 생성 및 실행
 
   logger.log(`==========================================================`);
 
