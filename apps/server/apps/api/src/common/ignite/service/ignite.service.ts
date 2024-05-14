@@ -3,13 +3,14 @@ import {
   OnModuleInit,
   OnModuleDestroy,
   Logger,
+  Scope,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const IgniteClient = require('apache-ignite-client');
 const IgniteClientConfiguration = IgniteClient.IgniteClientConfiguration;
 
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT })
 export class IgniteService implements OnModuleInit, OnModuleDestroy {
   public client: typeof IgniteClient;
   private connectionState: 'connected' | 'disconnected' | 'error' =
@@ -47,7 +48,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
       if (!isHealthy) {
         this.logger.log('health Check failed, Attempting to reconnect....');
         this.client = new IgniteClient(this.onStateChanged.bind(this)); // 클라이언트를 다시 생성합니다.
-        await this.connectWithRetry(60000, 10);
+        await this.connectWithRetry(2000000, 10);
       }
     }, interval);
   }
@@ -107,7 +108,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     } catch (error) {
       console.error('초기 Ignite 연결 실패. 재시도 중...');
     } finally {
-      await this.checkConnectionPeriodically(60000);
+      await this.checkConnectionPeriodically(1000000);
     }
   }
 

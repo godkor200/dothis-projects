@@ -20,7 +20,7 @@ export const typeOrmConfigSubAsync: TypeOrmModuleAsyncOptions = {
 @Module({
   imports: [
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
-    TypeOrmModule.forRootAsync(typeOrmConfigSubAsync),
+    // TypeOrmModule.forRootAsync(typeOrmConfigSubAsync),
   ],
 })
 export class TypeormModule {}
