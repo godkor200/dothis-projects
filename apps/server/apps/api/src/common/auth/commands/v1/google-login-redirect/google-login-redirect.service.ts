@@ -3,13 +3,11 @@ import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { JwtService } from '@nestjs/jwt';
-import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-login-redirect.interface';
 import { Err, Ok, Result } from 'oxide.ts';
 import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
-import { ProducerService } from '@Apps/common/kafka/service/producer.service';
 
 @CommandHandler(UserInfoCommandDto)
 export class GoogleLoginRedirectCommandHandler
@@ -19,8 +17,6 @@ export class GoogleLoginRedirectCommandHandler
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepositoryPort,
     private readonly jwtService: JwtService,
-
-    private readonly producerService: ProducerService,
   ) {}
 
   async execute(
@@ -48,10 +44,7 @@ export class GoogleLoginRedirectCommandHandler
     const googleAccessToken = command.googleAccessToken;
     const googleRefreshToken = command.googleRefreshToken;
     await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
-    await this.producerService.produce({
-      topic: 'channel_id',
-      messages: [{ value: checkUser.channelId }],
-    });
+
     return Ok({
       accessToken: this.jwtService.sign(
         {
