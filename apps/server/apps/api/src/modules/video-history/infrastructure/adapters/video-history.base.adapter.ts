@@ -1,6 +1,6 @@
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 
-export class VideoHistoryBaseAdapter extends IgniteService {
+export class VideoHistoryBaseAdapter {
   readonly keys: string[] = [
     'VIDEO_ID',
     'VIDEO_VIEWS',

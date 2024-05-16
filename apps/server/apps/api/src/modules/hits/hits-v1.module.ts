@@ -44,6 +44,7 @@ import { GetSomeWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/
 import { SomeWeeklyHitsService } from '@Apps/modules/hits/application/services/some-weekly-hits.service';
 import { WeeklyHitsV1Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v1.repository';
 import { GetSomeWeeklyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-some-weekly-hits/get-some-weekly-hits.v1.http.controller';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -74,7 +75,6 @@ const service: Provider[] = [
 const controllers = [
   ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
-  // GetWeeklyHitsListV1HttpController,
   GetProbabilitySuccessHttpController,
   GetSomeWeeklyHitsV1HttpController,
 ];
@@ -113,7 +113,7 @@ const repositories: Provider[] = [
 ];
 
 @Module({
-  imports: [CqrsModule, WeeklyHitsEntityModule],
+  imports: [CqrsModule, IgniteModule, WeeklyHitsEntityModule],
   controllers,
   providers: [...commands, ...queries, ...repositories, ...service],
 })

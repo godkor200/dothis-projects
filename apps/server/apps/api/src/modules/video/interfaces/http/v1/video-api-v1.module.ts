@@ -68,6 +68,8 @@ import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/
 import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
 import { FindPerformanceLengthQueryHandler } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
 import { ExtendedVideoHistoryListAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-list-extended.adapter';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
+
 const controllers = [
   FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
@@ -181,7 +183,7 @@ const adapters: Provider[] = [
   },
 ];
 @Module({
-  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
+  imports: [IgniteModule, CqrsModule, AwsModule, ChannelHistoryServiceModule],
   controllers,
   providers: [
     ...queryHandlers,

@@ -1,7 +1,6 @@
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { ConfigService } from '@nestjs/config';
 
-export class ChannelBaseAdapter extends IgniteService {
+export class ChannelBaseAdapter {
   readonly channelColumns: string[] = [
     'CHANNEL_ID',
     'CHANNEL_NAME',
@@ -16,7 +15,4 @@ export class ChannelBaseAdapter extends IgniteService {
     'CRAWLED_DATE',
     'USER_ID',
   ];
-  constructor(configService: ConfigService) {
-    super(configService);
-  }
 }

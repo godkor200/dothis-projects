@@ -9,7 +9,10 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class VideoAdsInfoAdapter
   extends VideoBaseAdapter
   implements IGetVideoAdsInfoAdapterOutboundPort
@@ -98,6 +101,9 @@ export class VideoAdsInfoAdapter
     });
     return queryParts.length > 1 ? queryParts.join(' UNION ') : queryParts[0];
   }
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
 
   /**
    *
@@ -119,8 +125,8 @@ export class VideoAdsInfoAdapter
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
