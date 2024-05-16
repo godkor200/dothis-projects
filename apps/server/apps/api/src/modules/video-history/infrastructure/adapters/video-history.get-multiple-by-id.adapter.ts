@@ -10,10 +10,16 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class VideoHistoryGetMultipleByIdAdapter
   extends VideoHistoryBaseAdapter
   implements IGetVideoHistoryGetMultipleByIdOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 비디오 아이디를 여러개 받아서 여러 비디오의 히스토리를 리턴
    * @param dao
@@ -48,8 +54,8 @@ export class VideoHistoryGetMultipleByIdAdapter
       queryString = queryUnion[0];
     }
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());

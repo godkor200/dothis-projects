@@ -18,7 +18,7 @@ import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
  * 비디오 데이터에 대한 조회 및 처리를 위한 공통 기능을 제공합니다.
  */
 
-export class VideoBaseAdapter extends IgniteService {
+export class VideoBaseAdapter {
   readonly videoColumns: string[] = [
     'VIDEO_ID',
     'CHANNEL_ID',
@@ -35,10 +35,6 @@ export class VideoBaseAdapter extends IgniteService {
     'MONTH',
     'DAY',
   ];
-
-  constructor(configService: ConfigService) {
-    super(configService);
-  }
 
   /**
    * 특정 비디오 데이터에 대한 쿼리 문자열을 생성합니다.

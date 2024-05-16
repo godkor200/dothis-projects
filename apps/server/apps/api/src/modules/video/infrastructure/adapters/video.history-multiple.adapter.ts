@@ -12,6 +12,8 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 export type TGetRelatedVideoAnalyticsData = Result<
   IRelatedVideoAnalyticsData[],
   | VideoHistoryNotFoundError
@@ -26,10 +28,14 @@ export type TGetRelatedVideoAnalyticsData = Result<
  *  - 비디오 조회수 1천회 이상
  *  - video_published 6개월내 이상
  */
+@Injectable()
 export class VideoHistoryMultipleAdapter
   extends VideoBaseAdapter
   implements IGetRelatedLastVideoHistory
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   private queryString(
     clusterNumbers: string[],
     search: string,
@@ -81,14 +87,17 @@ export class VideoHistoryMultipleAdapter
     const { search, relatedCluster, relatedWords } = dao;
     const queryString = this.queryString(relatedCluster, search, relatedWords);
     try {
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(
-        CacheNameMapper.getVideoHistoryCacheName(
-          relatedCluster[0],
-          year,
-          month,
-        ),
-      );
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      console.log(query);
+      const cache = await this.igniteService
+        .getClient()
+        .getCache(
+          CacheNameMapper.getVideoHistoryCacheName(
+            relatedCluster[0],
+            year,
+            month,
+          ),
+        );
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

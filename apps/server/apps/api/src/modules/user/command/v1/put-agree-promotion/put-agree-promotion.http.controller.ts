@@ -64,7 +64,11 @@ export class PutAgreePromotionHttpController {
     @Body('isAgree') isAgree: boolean,
     @User() user: UserInfoCommandDto,
   ): Promise<IRes<void>> {
-    const arg = new PutAgreePromotionDto({ isAgree, id: user.id });
+    const arg = new PutAgreePromotionDto({
+      isAgree,
+      id: user.id,
+      channelId: user.channelId,
+    });
     const result: Result<boolean, NotFoundException> =
       await this.commandBus.execute(arg);
     return match(result, {

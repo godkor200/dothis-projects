@@ -3,7 +3,6 @@ import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { JwtService } from '@nestjs/jwt';
-import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-login-redirect.interface';
 import { Err, Ok, Result } from 'oxide.ts';

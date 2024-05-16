@@ -12,6 +12,8 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domai
 import { IGetChannelHistoryRelateVideoOutboundPort } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 /**
  * 탐색어, 연관어에 관한 비디오의 비디오히스토리와 함께 가져오는 날짜에 한하여 가져오는 어뎁터
  * 이 메소드는 특정 클러스터 번호들, 검색어, 관련 검색어, 날짜 범위를 기반으로 정보를 검색합니다.
@@ -19,8 +21,8 @@ import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
  * 이건 채널히스토리랑 관계없지 않을까?
  * @param dao
  */
+@Injectable()
 export class ChannelHistoryRelatedVideoAdapter
-  extends ChannelHistoryBaseAdapter
   implements IGetChannelHistoryRelateVideoOutboundPort
 {
   private queryString(
@@ -70,6 +72,7 @@ export class ChannelHistoryRelatedVideoAdapter
     });
     return queries.length > 1 ? queries.join(' UNION ') : queries[0];
   }
+  constructor(private readonly igniteService: IgniteService) {}
 
   async execute(
     dao: FindChannelHistoryRelatedVideoDao,
@@ -86,8 +89,8 @@ export class ChannelHistoryRelatedVideoAdapter
         to,
         related,
       );
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

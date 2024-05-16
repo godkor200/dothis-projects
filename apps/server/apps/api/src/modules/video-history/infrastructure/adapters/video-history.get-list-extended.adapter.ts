@@ -11,14 +11,20 @@ import {
   TGetVideoHistoryRes,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { IGetListVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 /**
  * 비디오 히스토리 리스트 확장 어댑터 클래스.
  * VideoBaseAdapter를 상속받아 비디오 히스토리 정보를 조회하는 기능을 제공한다.
  */
+@Injectable()
 export class ExtendedVideoHistoryListAdapter
   extends VideoBaseAdapter
   implements IGetListVideoHistoryOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 비디오 히스토리 정보를 조회하여 반환하는 메소드. union으로 여러개의 캐시 테이블을 조회
    * @param {IGetListVideoHistoryDao} dao - 비디오 히스토리 조회에 필요한 파라미터 객체.
@@ -81,8 +87,10 @@ export class ExtendedVideoHistoryListAdapter
       const queryRes =
         queryString.length > 1 ? queryString.join(' UNION ') : queryString[0];
 
-      const cache = await this.client.getCache(queryString[0]); // Assuming first query table as cache name for simplicity
-      const query = this.createDistributedJoinQuery(queryRes);
+      const cache = await this.igniteService
+        .getClient()
+        .getCache(queryString[0]); // Assuming first query table as cache name for simplicity
+      const query = this.igniteService.createDistributedJoinQuery(queryRes);
 
       const result = await cache.query(query);
       const resArr = await result.getAll();

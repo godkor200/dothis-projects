@@ -10,11 +10,13 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
-
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class ChannelHistoryByChannelIdAdapter
-  extends ChannelHistoryBaseAdapter
   implements ChannelHistoryByChannelIdOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {}
   /**
    * 채널 아이디로 CHANNEL_SUBSCRIBERS 불러오는 어뎁터,
    * @param ids 채널 아이디
@@ -34,8 +36,8 @@ export class ChannelHistoryByChannelIdAdapter
     } AND NOT EXISTS (SELECT 1 FROM ${cacheName} WHERE DAY = ${day}))
     );`;
     try {
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(cacheName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(cacheName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

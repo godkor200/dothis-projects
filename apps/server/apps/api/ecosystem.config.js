@@ -37,6 +37,13 @@ module.exports = {
         IGNITE_ENDPOINT3: process.env.IGNITE_ENDPOINT3,
         IGNITE_USER_NAME: process.env.IGNITE_USER_NAME,
         IGNITE_PASSWORD: process.env.IGNITE_PASSWORD,
+
+        KAFKA_ENDPOINT1: process.env.KAFKA_ENDPOINT1,
+        KAFKA_ENDPOINT2: process.env.KAFKA_ENDPOINT2,
+        KAFKA_ENDPOINT3: process.env.KAFKA_ENDPOINT3,
+
+        KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID,
+        KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID,
       },
       env_production: {
         APP_PORT: 8080,
@@ -65,6 +72,13 @@ module.exports = {
         IGNITE_ENDPOINT3: process.env.IGNITE_ENDPOINT3,
         IGNITE_USER_NAME: process.env.IGNITE_USER_NAME,
         IGNITE_PASSWORD: process.env.IGNITE_PASSWORD,
+
+        KAFKA_ENDPOINT1: process.env.KAFKA_ENDPOINT1,
+        KAFKA_ENDPOINT2: process.env.KAFKA_ENDPOINT2,
+        KAFKA_ENDPOINT3: process.env.KAFKA_ENDPOINT3,
+
+        KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID,
+        KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID,
       },
     },
   ],

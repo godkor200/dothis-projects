@@ -13,12 +13,15 @@ import {
   DateFormatter,
   IgniteResultToObjectMapper,
 } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 대량의 비디오를 페이지네이션 방식으로 리턴합니다.
  * 조건:
  *  - video_published 3개월내 이상
  */
+@Injectable()
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosPaginatedOutBoundPort
@@ -96,6 +99,9 @@ export class VideoPaginatedAdapter
 
     return queryParts.length > 1 ? queryParts.join(' UNION ') : queryParts[0];
   }
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   async execute(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
 
@@ -111,13 +117,13 @@ export class VideoPaginatedAdapter
     const pageSize = Number(limit);
     const currentPage = Number(page);
     try {
-      const query = this.createDistributedJoinQuery(
+      const query = this.igniteService.createDistributedJoinQuery(
         '(' +
           queryString +
           `) LIMIT ${pageSize} OFFSET ${(currentPage - 1) * pageSize}`,
       );
 
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());

@@ -11,7 +11,7 @@ import { VideoHistoryApiModule } from '@Apps/modules/video-history/video_history
 import { ChannelHistoryApiModule } from '@Apps/modules/channel-history/channel-history-api.module';
 import { StoryBoardApiModule } from '@Apps/modules/story-board/story-board.api.module';
 import { IgniteHealthCheckMiddleware } from '@Libs/commons/src/application/middleware/ignite-health-check.middleware';
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 
 @Module({
   imports: [
@@ -21,8 +21,9 @@ import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
     VideoHistoryApiModule,
     ChannelHistoryApiModule,
     StoryBoardApiModule,
+    IgniteModule,
   ],
-  providers: [IgniteService, IgniteHealthCheckMiddleware],
+  providers: [IgniteHealthCheckMiddleware],
 })
 export class IgniteDependentApiModule implements NestModule {
   private router = ['video', 'hits', 'channel-history', 'channel'];

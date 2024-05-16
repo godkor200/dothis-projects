@@ -14,14 +14,20 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 비디오의 기록을 관리하는 시스템의 일부로, 특정 비디오의 이력을 데이터베이스에서 가져오는 기능을 담당, 비디오 히스토리의 기간내에 전부 가져오는 함수
  */
+@Injectable()
 export class VideoHistorySingleDuoAdapter
   extends VideoHistoryBaseAdapter
   implements IGetOneVideoHistoryOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 주어진 조건으로 쿼리 문자열을 생성하는 메소드
    * @param keys - 컬럼명
@@ -83,8 +89,8 @@ export class VideoHistorySingleDuoAdapter
       toDate,
     );
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());

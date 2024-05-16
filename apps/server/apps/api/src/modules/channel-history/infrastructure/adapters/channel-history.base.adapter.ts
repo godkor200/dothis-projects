@@ -3,8 +3,10 @@ import { Err, Ok } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { Injectable } from '@nestjs/common';
 
-export class ChannelHistoryBaseAdapter extends IgniteService {
+@Injectable()
+export class ChannelHistoryBaseAdapter {
   protected readonly keys: string[] = [
     'CHANNEL_ID',
     'CHANNEL_AVERAGE_VIEWS',
@@ -15,6 +17,7 @@ export class ChannelHistoryBaseAdapter extends IgniteService {
     'MONTH',
     'DAY',
   ];
+  constructor(private readonly igniteService: IgniteService) {}
 
   protected async get<T>(
     tableName: string,
@@ -23,9 +26,9 @@ export class ChannelHistoryBaseAdapter extends IgniteService {
     Ok<T[]> | Err<ChannelHistoryNotFoundError | TableNotFoundException>
   > {
     try {
-      const query = this.createDistributedJoinQuery(queryString);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
 
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.igniteService.getClient().getCache(tableName);
 
       const result = await cache.query(query);
       const res = await result.getAll();

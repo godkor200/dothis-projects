@@ -12,11 +12,17 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class VideoAdsTopHitsAdapter
   extends VideoBaseAdapter
   implements IGetVideoAdsTopHitsAdapterOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 이 함수는 특정 비디오 데이터를 검색하기 위한 SQL 쿼리 문자열을 생성합니다. 주어진 클러스터 번호들(clusterNumbers), 검색어(search), 관련어(related), 날짜 범위(from, to),
    * 한도(limit)를 기반으로 비디오 데이터에 대한 정보를 검색하는 데 사용되는 조건들을 포함한 쿼리를 만듭니다.
@@ -145,8 +151,8 @@ export class VideoAdsTopHitsAdapter
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());

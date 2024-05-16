@@ -11,16 +11,22 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 해당하는 비디오의 히스토리를 list up 해서 불러옵니다.
  * 이 메소드는 특정 클러스터 번호들, 검색어, 관련 검색어, 날짜 범위를 기반으로 정보를 검색합니다.
  * 날짜 범위가 같은 달 내에 있을 때와 다른 달에 걸쳐 있을 때의 로직을 다르게 처리합니다.
  */
+@Injectable()
 export class VideoHistoryListAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideoAndVideoHistoryOutBoundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   private queryString(
     clusterNumbers: string[],
     search: string,
@@ -108,8 +114,8 @@ export class VideoHistoryListAdapter
         related,
       );
 
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryRes);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryRes);
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

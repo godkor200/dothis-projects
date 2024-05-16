@@ -9,6 +9,8 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 export type TGetRelatedVideoChannelHistoryRes = Result<
   IGetVideoChannelHistoryRes[],
   TableNotFoundException | VideoHistoryNotFoundError
@@ -19,10 +21,15 @@ export type TGetRelatedVideoChannelHistoryRes = Result<
  * 조건:
  *  - video_published 3개월내 이상
  */
+@Injectable()
 export class VideoChannelHistoryAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideoChannelHistoryOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
+
   /**
    * 지정된 날짜 범위(fromDate ~ toDate) 내에서 관련 비디오 채널 히스토리를 가져옵니다.
    * @param dao - 비디오 채널 히스토리 조회에 필요한 DAO 객체
@@ -168,8 +175,8 @@ export class VideoChannelHistoryAdapter
       });
 
       const queryString = queries.join(' UNION ');
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from 'apps/api/src/config/validationsSchema';
 import dbConfig from '@Apps/config/database/config/db.env';
 import cacheConfig from '@Apps/config/cache/config/cache.env';
@@ -17,8 +17,6 @@ import { CommonModule } from '@Apps/common/common.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@Libs/commons/src/application/context/context.interceptor';
 import { ExceptionInterceptor } from '@Libs/commons/src/application/interceptors/exception.Interceptor';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { KafkaConfigService } from '@Apps/common/kafka/service/kafka.service';
 
 const interceptors = [
   {
@@ -39,19 +37,6 @@ const interceptors = [
       load: [dbConfig, cacheConfig, appConfig, awsConfig, igniteConfig],
       validationSchema,
     }),
-    ClientsModule.registerAsync([
-      {
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        name: 'KAFKA_CLIENT', // injection 시 사용할 name
-        useFactory: async (configService: ConfigService) => {
-          const kafkaConfigService = new KafkaConfigService(configService);
-          return {
-            options: kafkaConfigService.getKafkaOptions(),
-          };
-        },
-      },
-    ]),
     RequestContextModule,
     ScheduleModule.forRoot(),
     TypeormModule,
