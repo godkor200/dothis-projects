@@ -3,7 +3,7 @@ import {
   tsRestHandler,
   TsRestHandler,
 } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
+import { apiRouter, TAnalysisViewsRes } from '@dothis/dto';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { match } from 'oxide.ts';
 import { QueryBus } from '@nestjs/cqrs';
@@ -26,14 +26,16 @@ import {
   BadReq,
   InternalServerErr,
   NotFound,
-  Ok,
 } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
-
+import { TAnalysisHitsServiceRes } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
+import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { AnalysisHitsOk } from '@Apps/modules/hits/application/response-types';
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getAnalysisHits;
+
 @ApiTags('조회수')
 @Controller()
 export class AnalysisHitsV1HttpController {
@@ -45,7 +47,7 @@ export class AnalysisHitsV1HttpController {
     description,
   })
   @ApiOkResponse({
-    type: Ok,
+    type: AnalysisHitsOk,
   })
   @ApiNotFoundResponse({ type: NotFound })
   @ApiBadRequestResponse({ type: BadReq })
@@ -66,8 +68,11 @@ export class AnalysisHitsV1HttpController {
         ...query,
         clusterNumber: param.clusterNumber,
       });
-      const res = await this.queryBus.execute(dto);
-      return match(res, {
+      const res: TAnalysisHitsServiceRes = await this.queryBus.execute(dto);
+      return match<
+        TAnalysisHitsServiceRes,
+        TTsRestRes<IRes<TAnalysisViewsRes[]>>
+      >(res, {
         Ok: (res) => ({ status: 200, body: res }),
         Err: (err) => {
           if (
