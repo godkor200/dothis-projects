@@ -59,12 +59,12 @@ export class AnalysisHitsV1HttpController {
   })
   async execute(
     @Query() query: GetAnalysisHitsQuery,
-    @Param(ParseArrayPipe) params: IParamsInterface,
+    @Param(ParseArrayPipe) param: IParamsInterface,
   ) {
-    return tsRestHandler(c.getAnalysisHits, async ({}) => {
+    return tsRestHandler(c.getAnalysisHits, async ({ query, params }) => {
       const dto = new GetAnalysisHitsDto({
         ...query,
-        clusterNumber: params.clusterNumber,
+        clusterNumber: param.clusterNumber,
       });
       const res = await this.queryBus.execute(dto);
       return match(res, {
