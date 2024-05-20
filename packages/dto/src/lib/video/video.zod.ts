@@ -11,11 +11,42 @@ export const zClusterPathParams = z.object({
     .describe('찾을 비디오의 클러스터 번호 값을 입력받습니다.')
     .default('0'),
 });
-
+/**
+ * findVideoBySearchKeyword 스키마 정의:
+ *
+ * search: string
+ * - 탐색어. 기본값: '서울'
+ *
+ * related: string (optional)
+ * - 연관어. 기본값: '대구'. 선택적 항목.
+ *
+ * from: string
+ * - 언제부터 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-01'
+ *
+ * to: string
+ * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
+ */
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
 
 export const zFindVideoBySearchKeyword = findVideoBySearchKeyword;
-
+/**
+ * findVideoBySearchKeywordClusterNumber 스키마 정의:
+ *
+ * search: string
+ * - 탐색어. 기본값: '서울'
+ *
+ * related: string (optional)
+ * - 연관어. 기본값: '대구'. 선택적 항목.
+ *
+ * from: string
+ * - 언제부터 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-01'
+ *
+ * to: string
+ * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
+ *
+ * clusterNumber: string
+ * - 클러스터 번호. pathParams를 통해 제공되어야 함.
+ */
 export const findVideoBySearchKeywordClusterNumber = zSearchKeyword
   .merge(zDateQuery)
   .merge(zClusterPathParams);

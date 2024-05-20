@@ -59,7 +59,10 @@ export type TGetVideoWithChannelInfo = Result<
   IVideoSchema,
   VideoNotFoundError | TableNotFoundException
 >;
-export type TRelatedVideosCountByDay = Result<CountByDayRes[], any>;
+export type TRelatedVideosCountByDay = Result<
+  CountByDayRes[],
+  VideoHistoryNotFoundError | TableNotFoundException
+>;
 export type TFindAdsTopHitsRepoRes = Result<
   GetAdsRelatedTopHitsRes[],
   VideoNotFoundError | TableNotFoundException

@@ -13,21 +13,3 @@ export const zChannelHistoryModel = z.object({
 
   crawled_date: z.string(),
 });
-export const zExpectedViewsData = z.object({
-  date: z.string().describe('yyyy-mm-dd 형식'),
-  expectedHits: z.number(),
-  maxPerformance: z.number(),
-  minPerformance: z.number().min(0),
-});
-
-export const zExpectedViewsArr = z.array(zExpectedViewsData);
-
-export const zExpectedViews = z.object({
-  data: zExpectedViewsArr,
-});
-
-export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
-
-export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
-
-export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;

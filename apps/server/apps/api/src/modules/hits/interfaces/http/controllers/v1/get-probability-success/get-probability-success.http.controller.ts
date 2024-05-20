@@ -34,7 +34,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
 import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
-const c = nestControllerContract(apiRouter.hits);
+const c = apiRouter.hits;
 const { getProbabilitySuccess } = c;
 const { summary, description } = getProbabilitySuccess;
 
@@ -42,7 +42,7 @@ const { summary, description } = getProbabilitySuccess;
 @Controller()
 export class GetProbabilitySuccessHttpController {
   constructor(private readonly queryBus: QueryBus) {}
-  @TsRestHandler(getProbabilitySuccess)
+  @TsRestHandler(c.getProbabilitySuccess)
   @ApiOperation({
     summary,
     description,
