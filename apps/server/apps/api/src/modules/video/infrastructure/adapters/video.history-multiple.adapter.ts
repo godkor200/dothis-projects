@@ -88,7 +88,7 @@ export class VideoHistoryMultipleAdapter
     const queryString = this.queryString(relatedCluster, search, relatedWords);
     try {
       const query = this.igniteService.createDistributedJoinQuery(queryString);
-      console.log(query);
+
       const cache = await this.igniteService
         .getClient()
         .getCache(

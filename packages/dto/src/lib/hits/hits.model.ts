@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { dataObject, zTotalData, zSortQuery } from '../common.model';
+import { zChannelHistoryModel } from '../channel-history';
 
 export const zDailyViewData = z.object({
   date: z.string(),
@@ -75,3 +76,42 @@ export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
 export const zSortWeeklyViews = zSortQuery(SortOrderQuery);
 export type WeeklyHitsModel = z.TypeOf<typeof zWeeklyKeywordsListSourceSchema>;
+
+export const zCombinedViewsData = z.object({
+  date: z.string().describe('날짜, yyyy-mm-dd 형식을 권장'),
+
+  // 일일 조회수 데이터
+  uniqueVideoCount: z
+    .number()
+    .optional()
+    .describe('해당하는 날짜의 산정 비디오수'),
+  increaseComments: z.number().optional().describe('비디오 코멘트 수 증가분'),
+  increaseLikes: z.number().optional().describe('비디오 좋아요 수 증가분'),
+  increaseViews: z.number().describe('비디오 조회수 증가분'),
+
+  // 기대 조회수 데이터
+  expectedHits: z.number().describe('기대 조회수'),
+  maxPerformance: z.number().describe('최대 성능'),
+  minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
+});
+
+export const zExpectedViewsData = z.object({
+  date: z.string().describe('yyyy-mm-dd 형식'),
+  expectedHits: z.number().describe('기대 조회수'),
+  maxPerformance: z.number().describe('최대 성능'),
+  minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
+});
+
+export const zExpectedViewsArr = z.array(zExpectedViewsData);
+
+export const zExpectedViews = z.object({
+  data: zExpectedViewsArr,
+});
+
+export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
+
+export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
+
+export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
+
+export type TAnalysisViewsRes = z.TypeOf<typeof zCombinedViewsData>;

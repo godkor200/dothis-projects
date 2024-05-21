@@ -1,4 +1,10 @@
-export interface IVideoSchema {
+export interface DateData {
+  year: number;
+  month: number;
+  day: number;
+}
+
+export interface IVideoSchema extends DateData {
   videoId: string;
   channelId: string;
   videoTitle: string;
@@ -14,22 +20,16 @@ export interface IVideoSchema {
   crawledDate: Date;
   videoViews?: number;
   channelName?: string;
-  year: number;
-  month: number;
-  day: number;
 }
 export type CountByDayRes = {
   day: number;
   uniqueVideoCount: number;
 };
-export interface IGetVideoChannelHistoryRes {
+export interface IGetVideoChannelHistoryRes extends DateData {
   videoId: string;
   videoViews: number;
   channelId: string;
   channelAverageViews: number;
-  year: number;
-  month: number;
-  day: number;
 }
 export interface GetVideoAndChannelViewsByDateAndKeywordsRes
   extends Pick<

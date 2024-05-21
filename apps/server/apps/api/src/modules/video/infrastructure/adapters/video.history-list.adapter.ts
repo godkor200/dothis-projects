@@ -7,7 +7,6 @@ import { SearchRelationVideoAndHistoryDao } from '@Apps/modules/hits/infrastruct
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
