@@ -32,7 +32,7 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { TAnalysisHitsServiceRes } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { AnalysisHitsOk } from '@Apps/modules/hits/application/response-types';
+import { AnalysisHitsOk } from '@Apps/modules/hits/application/types/analysis.res-types';
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getAnalysisHits;
 

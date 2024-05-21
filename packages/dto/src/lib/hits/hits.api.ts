@@ -8,11 +8,7 @@ import {
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
-import {
-  zClusterNumber,
-  zClusterNumberMulti,
-  zKeywordsMulti,
-} from '../common.model';
+import { zClusterNumber, zClusterNumberMulti } from '../common.model';
 import { zGetWeeklyViewsBySomeQuery, zGetWeeklyViewsQuery } from './hits.zod';
 
 export const expectedHitsApiUrl = '/expectation';

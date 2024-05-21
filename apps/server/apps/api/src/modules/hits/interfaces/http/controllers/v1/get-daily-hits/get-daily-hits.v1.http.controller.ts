@@ -9,7 +9,7 @@ import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
 import { apiRouter } from '@dothis/dto';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
-import { match, Result } from 'oxide.ts';
+import { match } from 'oxide.ts';
 import { FindDailyViewsV1Query } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import {
   ApiBadRequestResponse,
@@ -24,13 +24,13 @@ import {
   BadReq,
   InternalServerErr,
   NotFound,
-  Ok,
 } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { getDailyHitsV1Ok } from '@Apps/modules/hits/application/types/daily-hits.res-types';
 
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV1,
@@ -43,7 +43,7 @@ export class GetDailyHitsV1HttpController {
 
   @TsRestHandler(g)
   @ApiOkResponse({
-    type: Ok,
+    type: getDailyHitsV1Ok,
   })
   @ApiNotFoundResponse({ type: NotFound })
   @ApiBadRequestResponse({ type: BadReq })
