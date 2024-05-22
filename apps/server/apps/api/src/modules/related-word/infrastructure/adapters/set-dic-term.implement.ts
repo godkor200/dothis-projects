@@ -1,22 +1,18 @@
 import { SetSearchTermOutboundPort } from '@Apps/modules/related-word/domain/ports/set-search-term.outbound.port';
-import {
-  SetDicTermCommand,
-  SetDicTermCommandOutput,
-} from '@Apps/modules/related-word/application/dtos/set-dic-term.command';
-import { RedisClientService } from '@Apps/modules/related-word/infrastructure/adapters/redis.client.service';
+import { SetDicTermCommandOutput } from '@Apps/modules/related-word/application/dtos/set-dic-term.command';
+import { RedisClientService } from '@Apps/common/redis/service/redis.client.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class SetDicTermImplement
-  extends RedisClientService
-  implements SetSearchTermOutboundPort
-{
+export class SetDicTermImplement implements SetSearchTermOutboundPort {
+  constructor(private readonly redisService: RedisClientService) {}
+
   setDicTerm(options: string[]): Promise<SetDicTermCommandOutput> {
-    const hashkey = options
+    const hashKey = options
       .map((e, i) => `${i} ${e}`)
       .join(' ')
       .split(' ');
 
-    return this.redisClient.hmset('dic-term', hashkey);
+    return this.redisService.redisClient.hmset('dic-term', hashKey);
   }
 }

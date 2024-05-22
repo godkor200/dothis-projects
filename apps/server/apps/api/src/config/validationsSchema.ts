@@ -37,6 +37,9 @@ export const validationSchema = Joi.object({
   REDIS_PASSWORD: Joi.string()
     .required()
     .description('Redis 서버에 접속하기 위한 비밀번호입니다.'),
+  REDIS_NODE: Joi.string()
+    .required()
+    .description('Redis on promise 서버의 접속할 node number 입니다.'),
   AWS_CREDENTIAL_KEY: Joi.string()
     .required()
     .description('AWS 서비스에 접속하기 위한 크레덴셜 키입니다.'),
@@ -69,4 +72,18 @@ export const validationSchema = Joi.object({
   IGNITE_PASSWORD: Joi.string()
     .required()
     .description('Apache Ignite 서비스 접속을 위한 비밀번호입니다.'),
+
+  REDIS_ON_PROMISE_PORT: Joi.number().required(),
+  REDIS_ON_PROMISE_HOSTNAME: Joi.string().description(
+    'Redis on promise 서버의 호스트 이름입니다.',
+  ),
+  REDIS_ON_PROMISE_PASSWORD: Joi.string().description(
+    'Redis on promise 서버의 패스워드 이름입니다.',
+  ),
+  REDIS_ON_PROMISE_USERNAME: Joi.string().description(
+    'Redis on promise 서버의 접속할 사용자 이름입니다.',
+  ),
+  REDIS_ON_PROMISE_NODE: Joi.number()
+    .required()
+    .description('Redis on promise 서버의 접속할 node number 입니다.'),
 });

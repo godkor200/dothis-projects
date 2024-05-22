@@ -1,7 +1,7 @@
 import { FindDicTermQuery } from '@Apps/modules/related-word/application/dtos/find-dic-term.query';
 import { FindSearchTermOutboundPort } from '@Apps/modules/related-word/domain/ports/find-search-term.outbound.port';
 import { FindSearchTermRes } from '@Apps/modules/related-word/domain/ports/find-search-term.res';
-import { RedisClientService } from '@Apps/modules/related-word/infrastructure/adapters/redis.client.service';
+import { RedisClientService } from '@Apps/common/redis/service/redis.client.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

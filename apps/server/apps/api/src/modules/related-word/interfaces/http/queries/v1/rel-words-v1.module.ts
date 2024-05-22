@@ -44,13 +44,14 @@ import { DeleteRelWordsCommandHandler } from '../../command/v1/delete-rel-words/
 import { DeleteKeyWordHttpController } from '@Apps/modules/related-word/interfaces/http/command/v1/delete-keyword/delete-keyword.http.controller';
 import { DeleteKeyWordCommandHandler } from '@Apps/modules/related-word/application/command/delete-keyword.command-handler';
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
+import { CacheConfigModule } from '@Apps/config/cache/cache.config.module';
 const controllers = [
   FindRelHttpV1Controller,
   UpdateAutoCompleteWordsHttpController,
   GetRankingRelatedWordsHttpController,
   FindSearchKeywordHttpController,
   FindAutoCompleteHttpController,
-  FindSearchTermHttpController,
+  // FindSearchTermHttpController,
   DeleteRelWordsHttpController,
   DeleteKeyWordHttpController,
 ];
@@ -103,6 +104,7 @@ const handler = [
 ];
 @Module({
   imports: [
+    CacheConfigModule,
     IgniteModule,
     CqrsModule,
     AwsModule,

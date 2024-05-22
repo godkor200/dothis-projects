@@ -4,9 +4,9 @@ import { RedisService } from '@liaoliaots/nestjs-redis';
 
 @Injectable()
 export class RedisClientService {
-  protected readonly redisClient: Redis;
+  public readonly redisClient: Redis;
 
-  constructor(protected readonly redisService: RedisService) {
+  constructor(private readonly redisService: RedisService) {
     this.redisClient = this.redisService.getClient();
   }
   async findAllKeys(): Promise<string[]> {
