@@ -6,6 +6,7 @@ import D3Chart from '@/components/common/Charts/D3Chart';
 import BoxFrame from '../BoxFrame';
 import MediaImageCard from '../MediaImageCard';
 import MediaTextCard from '../MediaTextCard';
+import CircleForceChart from './CircleForceChart';
 
 const Page = ({ params }: { params: { keyword: string } }) => {
   const keyword = decodeURIComponent(params.keyword);
@@ -81,11 +82,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     연관 소재
                   </p>
-                  <p className="text-grey900 truncate text-center text-[18px] font-bold">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Explicabo ullam labo
-                  </p>
-                  <D3Chart />
+                  <CircleForceChart keyword={keyword} /> <D3Chart />
                 </div>
               </BoxFrame>
             </div>
