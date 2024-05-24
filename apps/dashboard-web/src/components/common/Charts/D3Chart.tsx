@@ -1,99 +1,130 @@
 'use client';
 
 import * as d3 from 'd3';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const transactionsData = [
-  { title: 'test', value: 100, type: 'low' },
-  { title: 'test', value: 200, type: 'low' },
-  { title: 'test', value: 300, type: 'middle' },
-  { title: 'test', value: 400, type: 'middle' },
-  { title: 'test', value: 400, type: 'middle' },
-  { title: 'test', value: 300, type: 'middle' },
-  { title: 'test', value: 500, type: 'middle' },
-  { title: 'test', value: 500, type: 'middle' },
-  { title: 'test', value: 1000, type: 'high' },
-  { title: 'test', value: 1000, type: 'high' },
-  { title: 'test', value: 1000, type: 'high' },
+  { title: '주점', value: 100, type: 'low' },
+  { title: '돼지고기', value: 200, type: 'low' },
+  { title: '중국', value: 300, type: 'middle' },
+  { title: '차오', value: 400, type: 'middle' },
+  { title: '마파두부', value: 400, type: 'middle' },
+  { title: '고추잡채', value: 300, type: 'middle' },
+  { title: '짜장', value: 500, type: 'middle' },
+  { title: '세종대왕', value: 500, type: 'middle' },
+  { title: '두부김치', value: 1000, type: 'high' },
+  { title: '마라탕', value: 1000, type: 'high' },
+  { title: '탕수육', value: 1000, type: 'high' },
 ];
+
+const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
+  const getDimensions = () => {
+    return {
+      width: targetRef.current ? targetRef.current.offsetWidth : 0,
+      height: targetRef.current ? targetRef.current.offsetHeight : 0,
+    };
+  };
+
+  const [dimensions, setDimensions] = useState(getDimensions);
+
+  const handleResize = () => {
+    setDimensions(getDimensions());
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useLayoutEffect(() => {
+    handleResize();
+  }, []);
+
+  return dimensions;
+};
 
 const D3Chart = () => {
   const ref = useRef<HTMLDivElement>(null);
-  Object.defineProperty(d3, 'tip', {
-    value: require('d3-tip'),
-  });
 
+  const { width } = useDimensions(ref);
   useEffect(() => {
-    // set the dimensions and margins of the graph
-    const width = 460;
-    const height = 460;
+    const chart = d3.select(ref.current);
+    chart.selectAll('*').remove();
 
-    // append the svg object to the body of the page
+    const height = 320;
+
     const svg = d3
       .select('#my_dataviz')
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
-    // Color palette for each transaction
     const color = d3
       .scaleOrdinal()
       .domain(['high', 'low', 'middle'])
-      .range(['#353745', '#d9d9d9', '#00C853']);
+      .range(['#F7B4C0', '#f07288', '#FDE7EB']);
 
-    // Size scale for transactions
-    const size = d3.scaleLinear().domain([0, 2000]).range([7, 100]); // circle will be between 7 and 55 px wide
+    const size = d3.scaleLinear().domain([0, 2000]).range([7, 100]);
 
-    // Initialize the circle: all located at the center of the svg area
-    var node = svg
+    const node = svg
       .append('g')
       .selectAll('circle')
       .data(transactionsData)
       .join('circle')
       .attr('class', 'node')
       .attr('r', (d) => size(d.value))
-      .attr('cx', width)
-      .attr('cy', height)
-      .style('fill', function (d) {
-        console.log(d);
-
-        return color(d.type) as string;
-      })
+      .attr('cx', width / 2)
+      .attr('cy', height / 2)
+      .style('fill', (d) => color(d.type) as string)
       .style('fill-opacity', 0.8);
 
-    // Features of the forces applied to the nodes:
-    // const simulation = d3
-    //   .forceSimulation()
-    //   .force(
-    //     'center',
-    //     d3
-    //       .forceCenter()
-    //       .x(width / 2)
-    //       .y(height / 2),
-    //   ) // Attraction to the center of the svg area
-    //   .force('charge', d3.forceManyBody().strength(0.1)) // Nodes are attracted one each other of value is > 0
-    //   .force(
-    //     'collide',
-    //     d3
-    //       .forceCollide()
-    //       .strength(0.2)
-    //       .radius(function (d) {
-    //         return size(d.value) + 3;
-    //       })
-    //       .iterations(1),
-    //   ); // Force that avoids circle overlapping
+    const labels = svg
+      .append('g')
+      .selectAll('text')
+      .data(transactionsData)
+      .join('text')
+      .attr('class', 'label')
+      .attr('x', width / 2)
+      .attr('y', height / 2)
+      .text((d) => d.title)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .style('fill', '#71717A')
+      .style('font-size', '16px')
+      .style('font-weight', 700);
 
-    // Apply these forces to the nodes and update their positions.
-    // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
-    // simulation.nodes(transactionsData).on('tick', function (d) {
-    //   node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
-    // });
-    // });
-  }, [ref]);
+    const simulation = d3
+      .forceSimulation(transactionsData)
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force(
+        'charge',
+        d3.forceManyBody().strength((d) => -size(d.value)),
+      )
+      .force(
+        'attract',
+        d3
+          .forceRadial((d) => size(d.value) / 2, width / 2, height / 2)
+          .strength((d) => d.value / 1000),
+      )
+      .force(
+        'collide',
+        d3
+          .forceCollide()
+          .strength(0.5)
+          .radius((d) => size(d.value) + 10)
+          .iterations(1),
+      )
+      .force('y', d3.forceY(height / 2).strength(0.3));
+
+    simulation.nodes(transactionsData).on('tick', () => {
+      node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
+      labels.attr('x', (d) => d.x).attr('y', (d) => d.y);
+    });
+  }, [ref, width]);
 
   return (
-    <div ref={ref} className="App">
-      <div id="my_dataviz"></div>
+    <div className="App">
+      <div id="my_dataviz" ref={ref}></div>
     </div>
   );
 };
