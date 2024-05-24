@@ -1,3 +1,4 @@
+'use client';
 import dayjs from 'dayjs';
 
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
