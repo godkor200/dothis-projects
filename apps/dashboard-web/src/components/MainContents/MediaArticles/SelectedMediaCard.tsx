@@ -20,20 +20,16 @@ const SelectedMediaCard = ({
   return (
     <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
       <Link href={`${link}` as Route} target="_blank">
-        <div className="relative h-[180px] w-[320px] overflow-hidden bg-black">
+        <div className="relative aspect-video overflow-hidden bg-black">
           <Image
             unoptimized
             src={image}
             alt="Picture of the author"
             onError={handleImageError}
-            width={0}
-            height={0}
-            style={{
-              objectFit: 'contain',
-              layout: 'fill',
-              width: '640px',
-              height: '100%',
-            }}
+            fill={true}
+            // layout="responsive"
+
+            className="object-cover"
           />
         </div>
 
