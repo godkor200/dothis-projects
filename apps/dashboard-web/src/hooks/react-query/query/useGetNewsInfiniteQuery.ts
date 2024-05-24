@@ -20,16 +20,17 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
 const useGetNewsInfiniteQuery = (
   queryOptions?: UseInfiniteQueryResult<NewsResponse>,
 ): UseInfiniteQueryResult<NewsResponse> => {
-  const selectedWord = useSelectedWord();
+  const { keyword = '아이돌', relword = '노래' } = useSelectedWord();
 
   const startDate = useStartDate();
+
   const endDate = useEndDate();
 
   const retrievePosts = async (pageParam: number): Promise<NewsResponse> => {
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: { title: selectedWord.keyword },
+        query: { title: keyword || '아이돌' },
 
         published_at: {
           from: startDate,
@@ -65,7 +66,7 @@ const useGetNewsInfiniteQuery = (
   };
 
   return useInfiniteQuery(
-    ['뉴스', selectedWord.keyword, 1],
+    ['뉴스', keyword || '아이돌', 1],
     ({ pageParam = 0 }) => retrievePosts(pageParam),
     {
       ...queryOptions,
@@ -91,7 +92,7 @@ const useGetNewsInfiniteQuery = (
           }),
         };
       },
-      enabled: !!selectedWord.keyword && !!startDate && !!endDate,
+      enabled: !!startDate && !!endDate,
     },
   );
 };
