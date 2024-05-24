@@ -51,8 +51,9 @@ const YouTube = () => {
    * @mediaDigestData api로 받아온 youtubeVideoData의 필요한 프로퍼티만 가져와서 포맷팅을 수정하는 코드
    * News 컴포넌트와 동일한 컴포넌트를(MediaDigest) 사용하기때문에 추가된 섹션
    */
-  const mediaDigestData: MediaDigestData[] | undefined = youtubeVideoData?.map(
-    (item) => {
+  const mediaDigestData: MediaDigestData[] | undefined = youtubeVideoData
+    ?.filter((item) => item.videoViews)
+    ?.map((item) => {
       const compactNumber = new Intl.NumberFormat('ko', {
         notation: 'compact',
       });
@@ -64,8 +65,7 @@ const YouTube = () => {
         image: externalYouTubeImageLoader(item.videoId),
         link: item.channelId,
       };
-    },
-  );
+    });
 
   /**
    * 이하 jsx전까지의 코드들은 선택된 video의 대한 추가적인 분석정보를 가져와서 Block을 구성했을 디자인 때 존재했던 코드입니다.
