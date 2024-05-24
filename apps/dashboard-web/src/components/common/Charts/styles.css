@@ -2,3 +2,31 @@
   font-weight: 400;
 }
 /* DateTime XAxis -> Label이 font-weight가 다르게 생길 떄가 있어서 생성함 */
+
+.dashed {
+  stroke-dasharray: 5, 5;
+  opacity: 0.2;
+}
+
+body {
+  /* background-color: #f7f7f7; */
+}
+
+#chart {
+  margin: 25px auto;
+  width: 1000px;
+  position: relative;
+}
+
+#tooltip {
+  border: 1px solid #ccc;
+  position: absolute;
+  padding: 10px;
+  background-color: #fff;
+  /* display: none; */
+  pointer-events: none;
+}
+
+.price {
+  font-weight: bold;
+}
