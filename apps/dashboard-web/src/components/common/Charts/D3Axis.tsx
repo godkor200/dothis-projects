@@ -204,7 +204,7 @@ const D3Axis = () => {
 
       .curve(D3.curveCatmullRom);
 
-    const convertRemToPixels = (rem) => {
+    const convertRemToPixels = (rem: number) => {
       return (
         rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
       );
@@ -414,7 +414,7 @@ const D3Axis = () => {
       .on('mouseover', (e, i) => {
         // console.log(e);
 
-        const bisect = D3.bisector((d) => d.month).left;
+        const bisect = D3.bisector((d: DataItem) => d.month).left;
         const dataLavel = bisect(data, i.month);
         const data2Lavel = bisect(data2, i.month);
         const data3Lavel = bisect(data3, i.month);
@@ -429,9 +429,7 @@ const D3Axis = () => {
 
         svg
           .selectAll('circle')
-          .filter(function (d: DataItem, item) {
-            return d.month === i.month;
-          })
+          .filter((d, item) => (d as DataItem).month === i.month)
           .style('opacity', 1);
 
         D3.select(e.target).transition().attr('r', 4);
