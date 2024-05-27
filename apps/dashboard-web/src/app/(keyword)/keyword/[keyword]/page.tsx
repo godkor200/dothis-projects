@@ -7,6 +7,8 @@ import BoxFrame from '../BoxFrame';
 import MediaImageCard from '../MediaImageCard';
 import MediaTextCard from '../MediaTextCard';
 import CircleForceChart from './CircleForceChart';
+import CompetitionRate from './CompetitionRate';
+import MainCluster from './MainCluster';
 
 const Page = ({ params }: { params: { keyword: string } }) => {
   const keyword = decodeURIComponent(params.keyword);
@@ -39,13 +41,17 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     대표 카테고리
                   </p>
-                  <p className="text-center text-[20px] font-bold">먹방</p>
+
+                  <p className="text-center text-[20px] font-bold">
+                    <MainCluster keyword={keyword} />
+                  </p>
                 </div>
               </BoxFrame>
               <BoxFrame>
                 <div>
                   <p className="text-grey600 mb-[20px] text-[14px]">경쟁강도</p>
-                  <p className="text-center text-[20px] font-bold">경쟁 과열</p>
+
+                  <CompetitionRate keyword={keyword} />
                 </div>
               </BoxFrame>
             </div>
