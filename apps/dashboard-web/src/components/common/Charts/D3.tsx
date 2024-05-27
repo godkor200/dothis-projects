@@ -2,6 +2,12 @@
 import * as d3 from 'd3';
 import React, { useEffect } from 'react';
 
+interface DataItem {
+  month: string;
+  value: number; // value 속성의 타입을 number로 명시
+  color: string;
+}
+
 const D3 = () => {
   useEffect(() => {
     makeGraph();
@@ -53,7 +59,7 @@ const D3 = () => {
       .nice()
       .range([height - marginBottom, marginTop]);
 
-    const xAxis = (g) => {
+    const xAxis = (g: d3.Selection<SVGGElement, any, HTMLElement, any>) => {
       console.log(g);
       return g
         .attr('transform', `translate(0, ${height})`)
@@ -61,7 +67,7 @@ const D3 = () => {
         .call(d3.axisBottom(x).tickSizeOuter(0));
     };
 
-    const yAxis = (g) =>
+    const yAxis = (g: d3.Selection<SVGGElement, any, HTMLElement, any>) =>
       g
         .attr('transform', `translate(${marginLeft}, 0)`)
         .call(
@@ -120,8 +126,8 @@ const D3 = () => {
     //   .attr('text-anchor', 'middle');
 
     const line = d3
-      .line()
-      .x((d) => x(d.month) + x.bandwidth() / 2)
+      .line<DataItem>()
+      .x((d) => Number(x(d.month)) + x.bandwidth() / 2)
       .y((d) => y(d.value));
 
     svg
