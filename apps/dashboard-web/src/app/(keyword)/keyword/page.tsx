@@ -81,7 +81,7 @@ const Page = () => {
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Explicabo ullam labo
                 </p>
-                <D3Chart />
+                <D3Chart keyword="한국어" />
               </div>
             </BoxFrame>
           </div>
@@ -95,14 +95,14 @@ const Page = () => {
                   유튜브
                 </p>
                 <div className="flex justify-between gap-[24px] ">
-                  <MediaImageCard />
+                  <MediaImageCard keyword="한국어" />
                 </div>
 
                 <p className="text-grey600 mb-[20px] text-[14px]">
                   <span className="text-primary500">양념치킨</span> 관련 뉴스
                 </p>
                 <div className="flex gap-[24px]">
-                  <MediaTextCard />
+                  <MediaTextCard keyword="한국어" />
                 </div>
               </div>
             </BoxFrame>

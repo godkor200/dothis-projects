@@ -34,13 +34,17 @@ const MediaTextCard = ({ keyword }: { keyword: string }) => {
     })
     .slice(0, 3);
 
-  if (!mediaDigestData) {
-    return Array.from({ length: 3 }).map((item, i) => (
-      <div
-        key={i}
-        className="rounded-10 bg-grey200 h-[100px] w-[480px] px-[30px] py-[17px]"
-      ></div>
-    ));
+  if (isLoading || !mediaDigestData) {
+    return (
+      <>
+        {Array.from({ length: 3 }).map((item, i) => (
+          <div
+            key={i}
+            className="rounded-10 bg-grey200 h-[100px] w-[480px] px-[30px] py-[17px]"
+          ></div>
+        ))}
+      </>
+    );
   }
 
   return (

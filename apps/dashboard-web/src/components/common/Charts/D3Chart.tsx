@@ -149,7 +149,7 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
         labels.attr('x', (d) => d.x).attr('y', (d) => d.y);
       });
     }
-  }, [ref, width, circleData]);
+  }, [ref, width, JSON.stringify(data)]);
 
   return (
     <div className="App">
