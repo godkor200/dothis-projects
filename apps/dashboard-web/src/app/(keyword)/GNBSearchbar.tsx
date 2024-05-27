@@ -18,6 +18,8 @@ import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
 const GNBSearchbar = () => {
+  const router = useRouter();
+
   const [openInput, setOpenInput] = useState(false);
 
   const [searchInput, setSearchInput] = useState('');
@@ -72,8 +74,6 @@ const GNBSearchbar = () => {
   //로그인 유도 시퀀스
 
   const { setIsOpenSignUpModal } = useAuthActions();
-
-  const router = useRouter();
 
   const checkIsSignedIn = () => {
     if (isSignedIn) return true;
@@ -138,7 +138,7 @@ const GNBSearchbar = () => {
                   if (!checkIsSignedIn()) {
                     return;
                   }
-                  createSearchwordMutate(item.replace('*', ''));
+                  router.push(`/keyword/${item.replace('*', '')}`);
                   return;
                 }}
               >
