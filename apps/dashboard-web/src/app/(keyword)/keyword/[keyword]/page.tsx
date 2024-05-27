@@ -62,7 +62,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     <div className="w-[222px] px-[12px] py-[15px] text-center">
                       <p className="text-grey700 text-[14px]">조회수 합계</p>
                       <p className="text-grey900 text-[18px] font-bold">
-                        12345678
+                        {Number('1520200').toLocaleString('ko-kr')}
                       </p>
                     </div>
                     <div className="w-[222px] px-[12px] py-[15px] text-center">
@@ -71,7 +71,10 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     </div>
                     <div className="w-[222px] px-[12px] py-[15px] text-center">
                       <p className="text-grey700 text-[14px]">발행 영상 수</p>
-                      <p className="text-grey900 text-[18px] font-bold">1234</p>
+                      <p className="text-grey900 text-[18px] font-bold">
+                        {' '}
+                        {Number('150').toLocaleString('ko-kr')}
+                      </p>
                     </div>
                   </div>
                   <D3Axis />
@@ -82,7 +85,8 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     연관 소재
                   </p>
-                  <CircleForceChart keyword={keyword} /> <D3Chart />
+                  <CircleForceChart keyword={keyword} />{' '}
+                  <D3Chart keyword={keyword} />
                 </div>
               </BoxFrame>
             </div>
@@ -92,18 +96,18 @@ const Page = ({ params }: { params: { keyword: string } }) => {
               <BoxFrame>
                 <div className="flex flex-col gap-[20px] overflow-hidden">
                   <p className="text-grey600 mb-[20px] text-[14px]">
-                    <span className="text-primary500">양념치킨</span> 관련 인기
+                    <span className="text-primary500">{keyword}</span> 관련 인기
                     유튜브
                   </p>
                   <div className="flex justify-between gap-[24px] ">
-                    <MediaImageCard />
+                    <MediaImageCard keyword={keyword} />
                   </div>
 
                   <p className="text-grey600 mb-[20px] text-[14px]">
-                    <span className="text-primary500">양념치킨</span> 관련 뉴스
+                    <span className="text-primary500">{keyword}</span> 관련 뉴스
                   </p>
                   <div className="flex justify-between gap-[24px]">
-                    <MediaTextCard />
+                    <MediaTextCard keyword={keyword} />
                   </div>
                 </div>
               </BoxFrame>
@@ -114,9 +118,6 @@ const Page = ({ params }: { params: { keyword: string } }) => {
         </div>
       </div>
       <div></div>
-      <Link href={`/keyword/${keyword}/중국어`}>
-        연관어로 이동 클릭해주세요
-      </Link>
     </div>
   );
 };
