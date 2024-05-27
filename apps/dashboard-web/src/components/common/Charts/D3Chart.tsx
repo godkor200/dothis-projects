@@ -65,8 +65,6 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
     y: 0,
   }));
 
-  console.log(circleData);
-
   const { width } = useDimensions(ref);
   useEffect(() => {
     const chart = d3.select(ref.current);
