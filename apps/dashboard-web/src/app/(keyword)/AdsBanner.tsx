@@ -9,7 +9,7 @@ function AdsBanner() {
   const [slide, setSlide] = useState(0);
   const delay = 2000;
 
-  const slides = ['/Banner.png', '/RelatedContentMain.png', '/Banner.png'];
+  const slides = ['/AdsBanner.png'];
   useEffect(() => {
     const interval = setInterval(() => {
       goForward();
