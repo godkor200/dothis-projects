@@ -1,18 +1,18 @@
 'use client';
 import dayjs from 'dayjs';
 
+import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
+import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
-import type { MediaDigestData } from '.';
-import SelectedMediaCard from './SelectedMediaCard';
-
-const TopBannerMediaList = () => {
+const MediaBanner = () => {
   const selectedWord = useSelectedWord();
   const { data: newsData, isLoading } = useGetNewsInfiniteQuery();
 
+  console.log(newsData);
   const flattenNewsData = newsData?.pages.flatMap(
     (item) => item.return_object.documents,
   );
@@ -47,36 +47,22 @@ const TopBannerMediaList = () => {
   }
 
   return (
-    <div className="mx-auto w-[1342px]  px-[48px]">
-      <h2 className="mb-[40px] text-center text-[20px] font-bold">
-        "{selectedWord.keyword}" 키워드에 있었던 특별한 이슈
-      </h2>
-      <div
-        className={cn('mb-[40px]  flex justify-center gap-[120px]', {
-          'justify-evenly': mediaDigestData.length === 2,
-          'justify-between': mediaDigestData.length === 3,
-        })}
-      >
-        {mediaDigestData.map(
-          ({ title, element, provider, uploadDate, image, link }, index) => (
-            <SelectedMediaCard
-              key={title + index}
-              title={title}
-              provider={provider}
-              element={element}
-              uploadDate={uploadDate}
-              image={image}
-              link={link}
-            />
-          ),
-        )}
-      </div>
-      <p className="mb-[40px] text-center text-[20px] font-bold">
-        "{selectedWord.keyword}" 키워드를 주제로 만든 영상들의 성과를 확인하고,
-        소재를 결정하세요.
-      </p>
+    <div className="flex justify-between gap-[20px] ">
+      {mediaDigestData.map(
+        ({ title, element, provider, uploadDate, image, link }, index) => (
+          <SelectedMediaCard
+            key={title + index}
+            title={title}
+            provider={provider}
+            element={element}
+            uploadDate={uploadDate}
+            image={image}
+            link={link}
+          />
+        ),
+      )}
     </div>
   );
 };
 
-export default TopBannerMediaList;
+export default MediaBanner;

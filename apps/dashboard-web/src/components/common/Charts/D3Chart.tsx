@@ -1,99 +1,157 @@
 'use client';
 
 import * as d3 from 'd3';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-const transactionsData = [
-  { title: 'test', value: 100, type: 'low' },
-  { title: 'test', value: 200, type: 'low' },
-  { title: 'test', value: 300, type: 'middle' },
-  { title: 'test', value: 400, type: 'middle' },
-  { title: 'test', value: 400, type: 'middle' },
-  { title: 'test', value: 300, type: 'middle' },
-  { title: 'test', value: 500, type: 'middle' },
-  { title: 'test', value: 500, type: 'middle' },
-  { title: 'test', value: 1000, type: 'high' },
-  { title: 'test', value: 1000, type: 'high' },
-  { title: 'test', value: 1000, type: 'high' },
+import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
+
+interface TransactionData {
+  title: string;
+  value: number;
+  type: string;
+  x: number;
+  y: number;
+}
+const transactionsData: TransactionData[] = [
+  { title: '주점', value: 100, type: 'low', x: 0, y: 0 },
+  { title: '돼지고기', value: 200, type: 'low', x: 0, y: 0 },
+  { title: '중국', value: 300, type: 'middle', x: 0, y: 0 },
+  { title: '차오', value: 400, type: 'middle', x: 0, y: 0 },
+  { title: '마파두부', value: 400, type: 'middle', x: 0, y: 0 },
+  { title: '고추잡채', value: 300, type: 'middle', x: 0, y: 0 },
+  { title: '짜장', value: 500, type: 'middle', x: 0, y: 0 },
+  { title: '세종대왕', value: 500, type: 'middle', x: 0, y: 0 },
+  { title: '두부김치', value: 1000, type: 'high', x: 0, y: 0 },
+  { title: '마라탕', value: 1000, type: 'high', x: 0, y: 0 },
+  { title: '탕수육', value: 1000, type: 'high', x: 0, y: 0 },
 ];
 
-const D3Chart = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  Object.defineProperty(d3, 'tip', {
-    value: require('d3-tip'),
-  });
+const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
+  const getDimensions = () => {
+    return {
+      width: targetRef.current ? targetRef.current.offsetWidth : 0,
+      height: targetRef.current ? targetRef.current.offsetHeight : 0,
+    };
+  };
+
+  const [dimensions, setDimensions] = useState(getDimensions);
+
+  const handleResize = () => {
+    setDimensions(getDimensions());
+  };
 
   useEffect(() => {
-    // set the dimensions and margins of the graph
-    const width = 460;
-    const height = 460;
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    // append the svg object to the body of the page
-    const svg = d3
-      .select('#my_dataviz')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
+  useLayoutEffect(() => {
+    handleResize();
+  }, []);
 
-    // Color palette for each transaction
-    const color = d3
-      .scaleOrdinal()
-      .domain(['high', 'low', 'middle'])
-      .range(['#353745', '#d9d9d9', '#00C853']);
+  return dimensions;
+};
 
-    // Size scale for transactions
-    const size = d3.scaleLinear().domain([0, 2000]).range([7, 100]); // circle will be between 7 and 55 px wide
+const D3Chart = ({ keyword }: { keyword: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-    // Initialize the circle: all located at the center of the svg area
-    var node = svg
-      .append('g')
-      .selectAll('circle')
-      .data(transactionsData)
-      .join('circle')
-      .attr('class', 'node')
-      .attr('r', (d) => size(d.value))
-      .attr('cx', width)
-      .attr('cy', height)
-      .style('fill', function (d) {
-        console.log(d);
+  const { data } = useGetRankingRelWords(keyword);
 
-        return color(d.type) as string;
-      })
-      .style('fill-opacity', 0.8);
+  const circleData = data?.map((item, i) => ({
+    title: item,
+    value: i < 4 ? 1000 : i < 7 ? 500 : 250,
+    type: i < 4 ? 'high' : i < 7 ? 'middle' : 'low',
+    x: 0,
+    y: 0,
+  }));
 
-    // Features of the forces applied to the nodes:
-    // const simulation = d3
-    //   .forceSimulation()
-    //   .force(
-    //     'center',
-    //     d3
-    //       .forceCenter()
-    //       .x(width / 2)
-    //       .y(height / 2),
-    //   ) // Attraction to the center of the svg area
-    //   .force('charge', d3.forceManyBody().strength(0.1)) // Nodes are attracted one each other of value is > 0
-    //   .force(
-    //     'collide',
-    //     d3
-    //       .forceCollide()
-    //       .strength(0.2)
-    //       .radius(function (d) {
-    //         return size(d.value) + 3;
-    //       })
-    //       .iterations(1),
-    //   ); // Force that avoids circle overlapping
+  const { width } = useDimensions(ref);
+  useEffect(() => {
+    const chart = d3.select(ref.current);
+    chart.selectAll('*').remove();
 
-    // Apply these forces to the nodes and update their positions.
-    // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
-    // simulation.nodes(transactionsData).on('tick', function (d) {
-    //   node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
-    // });
-    // });
-  }, [ref]);
+    const height = 320;
+
+    if (circleData) {
+      const svg = d3
+        .select('#my_dataviz')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      const color = d3
+        .scaleOrdinal()
+        .domain(['high', 'low', 'middle'])
+        .range(['#f07288', '#FDE7EB', '#F7B4C0']);
+
+      const size = d3.scaleLinear().domain([0, 2000]).range([7, 100]);
+
+      const node = svg
+        .append('g')
+        .selectAll('circle')
+        .data(circleData!)
+        .join('circle')
+        .attr('class', 'node')
+        .attr('r', (d) => size(d.value))
+        .attr('cx', width / 2)
+        .attr('cy', height / 2)
+        .style('fill', (d) => color(d.type) as string)
+        .style('fill-opacity', 0.8);
+
+      const labels = svg
+        .append('g')
+        .selectAll('text')
+        .data(circleData!)
+        .join('text')
+        .attr('class', 'label')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .text((d) => d.title)
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle')
+        .style('fill', '#71717A')
+        .style('font-size', '16px')
+        .style('font-weight', 700);
+
+      const simulation = d3
+        .forceSimulation(circleData!)
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force(
+          'charge',
+          d3
+            .forceManyBody()
+            .strength((d) => -size((d as TransactionData).value)),
+        )
+        .force(
+          'attract',
+          d3
+            .forceRadial(
+              (d) => size((d as TransactionData).value) / 2,
+              width / 2,
+              height / 2,
+            )
+            .strength((d) => (d as TransactionData).value / 1000),
+        )
+        .force(
+          'collide',
+          d3
+            .forceCollide()
+            .strength(0.5)
+            .radius((d) => size((d as TransactionData).value) + 10)
+            .iterations(1),
+        )
+        .force('y', d3.forceY(height / 2).strength(0.3));
+
+      simulation.nodes(circleData!).on('tick', () => {
+        node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
+        labels.attr('x', (d) => d.x).attr('y', (d) => d.y);
+      });
+    }
+  }, [ref, width, JSON.stringify(data)]);
 
   return (
-    <div ref={ref} className="App">
-      <div id="my_dataviz"></div>
+    <div className="App">
+      <div id="my_dataviz" ref={ref}></div>
     </div>
   );
 };
