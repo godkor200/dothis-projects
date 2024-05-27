@@ -21,16 +21,18 @@ export const SideItemContainer = styled.div<{ $isInActive: boolean }>`
   ${({ $isInActive }) =>
     $isInActive &&
     css`
-      background-color: ${colors.primary200};
-      color: ${colors.primary600};
+      background-color: ${colors.primary100};
+      color: ${colors.primary500};
     `};
 
   ${({ theme, $isInActive }) => css`
     & path {
       fill: ${!$isInActive && theme.colors.grey00};
-      stroke: ${!$isInActive && theme.colors.grey500};
+      stroke: ${!$isInActive ? theme.colors.grey500 : theme.colors.primary500};
     }
   `}
+
+  cursor: pointer;
 `;
 
 export const IconItemContainer = styled.div<{ $isInActive: boolean }>`
@@ -44,13 +46,15 @@ export const IconItemContainer = styled.div<{ $isInActive: boolean }>`
   ${({ $isInActive }) =>
     $isInActive &&
     css`
-      background-color: ${colors.primary200};
+      background-color: ${colors.primary100};
     `};
 
   ${({ theme, $isInActive }) => css`
     & path {
       fill: ${!$isInActive && theme.colors.grey00};
-      stroke: ${!$isInActive && theme.colors.grey500};
+      stroke: ${!$isInActive ? theme.colors.grey500 : theme.colors.primary500};
     }
   `}
+
+  cursor: pointer;
 `;
