@@ -38,10 +38,6 @@ export class ExpectedViewsData extends createZodDto(
   extendApi(zExpectedViewsData),
 ) {}
 
-export class IncreaseData extends createZodDto(extendApi(zDailyViewData)) {}
-export class WeeklyData extends createZodDto(
-  extendApi(zWeeklyKeywordsListSourceSchema),
-) {}
 export class VideoInfoRes extends createZodDto(
   extendApi(zVideoDetails.shape.data),
 ) {}

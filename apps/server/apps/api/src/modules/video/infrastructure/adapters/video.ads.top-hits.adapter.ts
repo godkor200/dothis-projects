@@ -12,11 +12,17 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class VideoAdsTopHitsAdapter
   extends VideoBaseAdapter
   implements IGetVideoAdsTopHitsAdapterOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 이 함수는 특정 비디오 데이터를 검색하기 위한 SQL 쿼리 문자열을 생성합니다. 주어진 클러스터 번호들(clusterNumbers), 검색어(search), 관련어(related), 날짜 범위(from, to),
    * 한도(limit)를 기반으로 비디오 데이터에 대한 정보를 검색하는 데 사용되는 조건들을 포함한 쿼리를 만듭니다.
@@ -40,6 +46,9 @@ export class VideoAdsTopHitsAdapter
    * @param to 검색 종료 날짜. `YYYY-MM-DD` 형식을 따릅니다.
    * @param limit 결과의 최대 개수를 지정합니다. 상위 N개의 결과를 반환합니다.
    * @return 쿼리 문자열. 주어진 매개변수에 따라 조건을 만족하는 비디오 데이터를 조회하기 위한 SQL 쿼리 문자열입니다.
+   *
+   * 조건:
+   *  - video_published 3개월내 이상
    */
 
   private queryString(
@@ -76,7 +85,8 @@ export class VideoAdsTopHitsAdapter
     WHERE (VD.VIDEO_TITLE LIKE '%${search}%' or VD.VIDEO_TAGS LIKE '%${search}%') 
     ${relatedCondition} 
     AND (VH.DAY BETWEEN ${fromDate.day} AND ${toDate.day}) 
-    AND VD.VIDEO_WITH_ADS = TRUE 
+    AND VD.VIDEO_WITH_ADS = TRUE
+    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP) 
     GROUP BY VD.VIDEO_ID 
     ORDER BY VIDEO_VIEWS DESC)`;
       }
@@ -97,6 +107,7 @@ export class VideoAdsTopHitsAdapter
         ${relatedCondition}
         AND vh.DAY >= '${fromDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       GROUP BY VD.VIDEO_ID 
       ORDER BY VIDEO_VIEWS DESC 
     `;
@@ -113,6 +124,7 @@ export class VideoAdsTopHitsAdapter
         ${relatedCondition}
         AND vh.DAY <= '${toDate.day}'
         AND vd.VIDEO_WITH_ADS = TRUE
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       GROUP BY VD.VIDEO_ID 
       ORDER BY VIDEO_VIEWS DESC
     `;
@@ -139,8 +151,8 @@ export class VideoAdsTopHitsAdapter
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());

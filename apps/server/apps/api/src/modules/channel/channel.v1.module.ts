@@ -12,6 +12,7 @@ import { FindInfluentialListQueryHandler } from '@Apps/modules/channel/applicati
 import { AnalyzeChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/analyze-channel/analyze-channel.http.controller';
 import { AnalyzeChannelQueryHandler } from '@Apps/modules/channel/interfaces/http/controllers/v1/analyze-channel/analyze-channel.query-handler';
 import { ChannelAndHistoryJoinAdapter } from '@Apps/modules/channel/infrastucture/adapters/channel.extend-history.adapter';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 const controllers = [
   FindInfluentialListHttpController,
   AnalyzeChannelHttpController,
@@ -38,7 +39,7 @@ const queries: Provider[] = [
   AnalyzeChannelQueryHandler,
 ];
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, IgniteModule],
   controllers,
   providers: [...service, ...adapter, ...queries],
 })

@@ -1,7 +1,10 @@
 import { IGetChannelHistoryLatestTupleByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.base.adapter';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { TChannelHistoryTuplesRes } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
+import {
+  ChannelHistoryLatestDayTupleRes,
+  TChannelHistoryTuplesRes,
+} from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 
@@ -29,6 +32,9 @@ export class FindLatestChannelHistoryByVideoAdapter
         JOIN ${joinTableName} vd ON ch.channel_id = vd.channel_id 
         WHERE vd.video_id = '${videoId}' 
         AND ch.day = (SELECT MAX(DAY) FROM ${tableName})`;
-    return await this.history(tableName, queryString);
+    return await this.get<ChannelHistoryLatestDayTupleRes>(
+      tableName,
+      queryString,
+    );
   }
 }

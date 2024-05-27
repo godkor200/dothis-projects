@@ -11,6 +11,8 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  *
@@ -20,10 +22,15 @@ import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
  *
  * ref: 두번 조인 쿼리는 어떻게 하든 느림.... 그러나 스플릿이 완성되면 다를수도 있음
  */
+@Injectable()
 export class VideoChannelAverageViewsAdapter
   extends VideoBaseAdapter
   implements IGetVideoAndChannelViewsByDateAndKeywordsOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
+
   /**
    * 특정 날짜 범위와 키워드를 기반으로 비디오 및 채널의 조회수 평균을 검색합니다.
    * 이 메소드는 비디오 제목 또는 태그가 주어진 검색어와 관련된 항목을 찾고, 동일한 기준으로 채널 데이터를 조인하여 결과를 반환합니다.
@@ -77,8 +84,8 @@ export class VideoChannelAverageViewsAdapter
       });
 
       const queryString = queries.join(' UNION ');
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());

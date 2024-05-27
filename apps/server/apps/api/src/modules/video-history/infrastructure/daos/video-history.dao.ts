@@ -12,7 +12,7 @@ export interface IGetListVideoHistoryDao extends IGetVideoHistoryDao {}
 export class IGetVideoHistoryGetMultipleByIdDao {
   readonly videoIds: string[];
 
-  readonly clusterNumber: string | string[];
+  readonly clusterNumber: string[];
 
   constructor(props: IGetVideoHistoryGetMultipleByIdDao) {
     this.clusterNumber = props.clusterNumber;

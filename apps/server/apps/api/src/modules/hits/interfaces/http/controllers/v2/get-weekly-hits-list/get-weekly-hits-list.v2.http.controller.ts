@@ -65,7 +65,6 @@ export class GetWeeklyHitsListV2HttpController {
               body: result,
             }),
             Err: (err: Error) => {
-              console.log(err);
               if (err instanceof WeeklyViewsError) {
                 throw new NotFoundException(err.message);
               }

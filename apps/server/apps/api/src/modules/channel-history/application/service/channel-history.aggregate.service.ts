@@ -99,6 +99,7 @@ export class ChannelHistoryAggregateService {
 
   /**
    * 날짜별 성과 리턴
+   * - 날짜별 정리 전제
    *   1. 채널, 비디오 히스토리에서 각각 채널아이디, 날짜를 비교해서 맞으면 비디오 히스토리의 조회수/채널의 평균조회수(성과) 계산
    *   2. 날짜 별로 계산된 것을 모두 더하고 평균을 내어 리턴
    *
@@ -166,7 +167,7 @@ export class ChannelHistoryAggregateService {
     for (let date in dateViewRatios) {
       let keywordPerformance =
         dateViewRatios[date].performanceTotal / dateViewRatios[date].videoCount;
-      dateViewRatios[date].maxPerformance;
+
       result.push({
         date: date,
         expectedHits: keywordPerformance,

@@ -12,6 +12,9 @@ import { PutAgreePromotionHttpController } from '@Apps/modules/user/command/v1/p
 import { PutAgreePromotionCommandHandler } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.command-handler';
 import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
 import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
+import { ClientsModule } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { KafkaConfigService } from '@Apps/common/kafka/service/kafka.service';
 
 const httpControllers = [
   GetKeywordByUserHttpController,
@@ -36,6 +39,19 @@ const queryHandlers: Provider[] = [];
     MembershipEntityModule,
     AwsModule,
     ChannelEntity,
+    ClientsModule.registerAsync([
+      {
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        name: 'KAFKA_CLIENT', // injection 시 사용할 name
+        useFactory: async (configService: ConfigService) => {
+          const kafkaConfigService = new KafkaConfigService(configService);
+          return {
+            options: kafkaConfigService.getKafkaOptions(),
+          };
+        },
+      },
+    ]),
   ],
   controllers: [...httpControllers],
   providers: [...repositories, ...commandHandlers, ...queryHandlers],

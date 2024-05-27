@@ -10,11 +10,17 @@ import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
-
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class VideoHistoryLastOneAdapter
   extends VideoHistoryBaseAdapter
   implements IGetLastVideoHistoryOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
+
   async execute(dao: IGetLastVideoHistoryDao): Promise<TGetVideoHistoryRes> {
     const { clusterNumber, from, to, videoId } = dao;
     const fromDate = DateFormatter.getFormattedDate(from);
@@ -29,11 +35,13 @@ export class VideoHistoryLastOneAdapter
       toDate,
     );
     try {
-      const cache = await this.client.getCache(
-        tableName + `_${clusterNumber}_${fromDate.year}${fromDate.month}`,
-      );
+      const cache = await this.igniteService
+        .getClient()
+        .getCache(
+          tableName + `_${clusterNumber}_${fromDate.year}${fromDate.month}`,
+        );
 
-      const query = this.createDistributedJoinQuery(
+      const query = this.igniteService.createDistributedJoinQuery(
         `SELECT * FROM (${tableName}_${clusterNumber}_${fromDate.year}_${fromDate.month}) AS combinedQuery ORDER BY DAY DESC LIMIT 1`,
       );
 

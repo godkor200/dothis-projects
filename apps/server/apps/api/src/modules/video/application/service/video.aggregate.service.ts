@@ -5,6 +5,7 @@ import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
+import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
 export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }
@@ -337,5 +338,17 @@ export class VideoAggregateService {
       status: PredictionStatus.PREDICTING,
       dailyViews: predictedViews,
     };
+  }
+  groupDataByDate<T extends DateData>(data: T[]): { [key: string]: T[] } {
+    return data.reduce((acc, cur) => {
+      const date = `${cur.year}-${String(cur.month).padStart(2, '0')}-${String(
+        cur.day,
+      ).padStart(2, '0')}`;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(cur);
+      return acc;
+    }, {});
   }
 }

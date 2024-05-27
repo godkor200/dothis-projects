@@ -13,10 +13,15 @@ import {
   DateFormatter,
   IgniteResultToObjectMapper,
 } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 대량의 비디오를 페이지네이션 방식으로 리턴합니다.
+ * 조건:
+ *  - video_published 3개월내 이상
  */
+@Injectable()
 export class VideoPaginatedAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosPaginatedOutBoundPort
@@ -67,7 +72,8 @@ export class VideoPaginatedAdapter
                 ON vd.channel_id = ch.channel_id
           WHERE (vd.video_title LIKE '%${search}%' or vd.video_tags LIKE '%${search}%') 
           ${relatedCondition} 
-          AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})`;
+          AND (vh.DAY BETWEEN ${fromDate.day} AND ${toDate.day})
+          AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)`;
       }
       const joinThirdTableName = CacheNameMapper.getVideoHistoryCacheName(
         cluster,
@@ -87,10 +93,14 @@ export class VideoPaginatedAdapter
         ${relatedCondition}
         AND vh2.DAY <= ${toDate.day} 
         AND vh1.DAY >= ${fromDate.day}
+        AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP)
       `;
     });
 
     return queryParts.length > 1 ? queryParts.join(' UNION ') : queryParts[0];
+  }
+  constructor(private readonly igniteService: IgniteService) {
+    super();
   }
   async execute(dao: GetVideoDao): Promise<TRelatedVideos> {
     const { search, related, from, to, clusterNumber, limit, page } = dao;
@@ -107,13 +117,13 @@ export class VideoPaginatedAdapter
     const pageSize = Number(limit);
     const currentPage = Number(page);
     try {
-      const query = this.createDistributedJoinQuery(
+      const query = this.igniteService.createDistributedJoinQuery(
         '(' +
           queryString +
           `) LIMIT ${pageSize} OFFSET ${(currentPage - 1) * pageSize}`,
       );
 
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoNotFoundError());

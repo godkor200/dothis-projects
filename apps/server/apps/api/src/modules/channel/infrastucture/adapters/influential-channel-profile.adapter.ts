@@ -7,10 +7,11 @@ import {
 import { Err, Ok } from 'oxide.ts';
 
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 
 /**
  * 동영상 관련된 현재 날짜에 영향력있는 채널들을 불러오는 어뎁터
@@ -20,10 +21,14 @@ import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
  * 예외 처리: 테이블을 찾을 수 없는 경우 TableNotFoundException을, 결과가 없는 경우 NotFoundException을 반환합니다.
  * ref: 없음
  */
+@Injectable()
 export class InfluentialChannelProfileAdapter
   extends ChannelBaseAdapter
   implements InfluentialChannelProfileOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * execute 메서드는 ChannelProfileDao 객체를 입력받아 해당 조건에 맞는 채널 정보를 반환합니다.
    *
@@ -85,8 +90,8 @@ export class InfluentialChannelProfileAdapter
       let queryString = queries.join(' UNION ');
       queryString =
         '(' + queryString + `) ORDER BY \n  ${sort} ${order}\n LIMIT 5`;
-      const query = this.createDistributedJoinQuery(queryString);
-      const cache = await this.client.getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new NotFoundException());

@@ -31,16 +31,19 @@ export class CalculateDailyHitsMetricsService
     const dao = new SearchRelationVideoAndHistoryDao(props);
 
     try {
-      const res = await this.getRelatedVideoAndVideoHistory.execute(dao);
+      /**
+       * 관련된 비디오 가져와서 리스트업
+       */
+      const [res, counts] = await Promise.all([
+        await this.getRelatedVideoAndVideoHistory.execute(dao),
+        await this.getRelatedVideosCountByDay.execute(dao),
+      ]);
 
-      if (res.isOk()) {
+      if (res.isOk() && counts.isOk()) {
         const hitsData = this.videoAggregateService.calculateIncreaseByIgnite(
           res.unwrap(),
         );
-        const counts = await this.getRelatedVideosCountByDay.execute(dao);
-        if (counts.isErr()) {
-          return Err(counts.unwrapErr());
-        }
+
         const data = hitsData.map((viewData) => {
           /**
            * 날짜 매칭 해서 넣는 로직 start
@@ -63,6 +66,9 @@ export class CalculateDailyHitsMetricsService
         });
 
         return Ok({ success: true, data });
+      }
+      if (counts.isErr()) {
+        return Err(counts.unwrapErr());
       }
       return Err(res.unwrapErr());
     } catch (e) {

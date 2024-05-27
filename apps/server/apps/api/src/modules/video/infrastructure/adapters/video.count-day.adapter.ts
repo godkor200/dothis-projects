@@ -11,14 +11,23 @@ import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions'
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { CountByDayRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 비디오 총갯수를 받아오는 어뎁터
+ * 조건:
+ *  - video_published 3개월내 이상
  */
+@Injectable()
 export class VideoCountDayAdapter
   extends VideoBaseAdapter
   implements IGetRelatedVideosCountByDayOutBoundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
+
   async execute(
     dao: SearchRelationVideoAndHistoryDao,
   ): Promise<TRelatedVideosCountByDay> {
@@ -31,7 +40,7 @@ export class VideoCountDayAdapter
         fromDate.year.toString(),
         fromDate.month.toString(),
       );
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const clusterQueryString = this.getClusterQueryString(
         ['vh.DAY', 'COUNT(DISTINCT vh.VIDEO_ID) AS unique_video_count'],
         search,
@@ -42,7 +51,8 @@ export class VideoCountDayAdapter
         'vh.DAY',
       );
 
-      const query = this.createDistributedJoinQuery(clusterQueryString);
+      const query =
+        this.igniteService.createDistributedJoinQuery(clusterQueryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

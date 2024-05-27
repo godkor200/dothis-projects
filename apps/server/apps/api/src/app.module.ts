@@ -17,6 +17,7 @@ import { CommonModule } from '@Apps/common/common.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@Libs/commons/src/application/context/context.interceptor';
 import { ExceptionInterceptor } from '@Libs/commons/src/application/interceptors/exception.Interceptor';
+
 const interceptors = [
   {
     provide: APP_INTERCEPTOR,

@@ -143,7 +143,7 @@ docker run --rm -it -v ${PWD}:/scripts --platform linux/amd64 --network dothis_d
 
 #### 테스트 시나리오 파일
 
-`test-scenario.yaml` 파일에는 테스트할 HTTP 요청, 지속 시간, 요청률 등과 같은 다양한 테스트 시나리오 설정이 포함되어 있습니다. 이 파일을 수정하여 테스트 범위와 목표를 조정할 수 있습니다.
+`test-scenario.yaml`[깃허브 링크](https://github.com/dothis-world/dothis-projects/blob/main/scripts/test-scenario.yaml) 파일에는 테스트할 HTTP 요청, 지속 시간, 요청률 등과 같은 다양한 테스트 시나리오 설정이 포함되어 있습니다. 이 파일을 수정하여 테스트 범위와 목표를 조정할 수 있습니다.
 
 ## Support
 

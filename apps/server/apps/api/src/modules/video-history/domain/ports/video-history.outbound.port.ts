@@ -7,16 +7,14 @@ import {
   IGetVideoHistoryGetMultipleByIdDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
 
-export interface GetRelatedVideoAndVideoHistory {
+export interface GetRelatedVideoAndVideoHistory extends DateData {
   videoId: string;
   videoViews: number;
   videoLikes: number;
   videoComments: number;
   videoPerformance: number;
-  year: number;
-  month: number;
-  day: number;
 }
 export type TGetVideoHistoryRes = Result<
   GetRelatedVideoAndVideoHistory[],

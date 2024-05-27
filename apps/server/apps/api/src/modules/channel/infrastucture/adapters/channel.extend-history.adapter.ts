@@ -12,14 +12,21 @@ import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/vi
 import { Err, Ok } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
 /**
  * 채널과 채널히스토리의 제일 최근 데이터만 가져오는 어뎁터
  */
+@Injectable()
 export class ChannelAndHistoryJoinAdapter
   extends VideoBaseAdapter
   implements ChannelAndExtendHistoryOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
+
   async execute(
     dao: AnalyzeChannelDao,
   ): Promise<TFindExtendChannelHistoryListRes> {
@@ -38,8 +45,8 @@ export class ChannelAndHistoryJoinAdapter
                                      WHERE cd.channel_id = '${channelId}'
                                      AND ch.DAY = (SELECT MAX(DAY) FROM ${joinTableName})`;
 
-      const query = this.createDistributedJoinQuery(queries);
-      const cache = await this.client.getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queries);
+      const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());

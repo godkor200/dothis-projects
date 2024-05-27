@@ -1,4 +1,4 @@
-import { Module, Provider } from '@nestjs/common';
+import { Module, Provider, Scope } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   CHANNEL_HISTORY_IGNITE_DI_TOKEN,
@@ -13,6 +13,7 @@ import { FindChannelHistoryQueryHandler } from '@Apps/modules/channel-history/ap
 import { FindLatestChannelHistoryByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.latest-tuple.adapter';
 import { FIND_CHANNEL_EXTEND_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 import { ChannelAndHistoryJoinAdapter } from '@Apps/modules/channel/infrastucture/adapters/channel.extend-history.adapter';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 const controllers = [FindChannelHistoryHttpController];
 const repositories: Provider[] = [
   {
@@ -29,7 +30,7 @@ const repositories: Provider[] = [
   },
 ];
 @Module({
-  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule],
+  imports: [CqrsModule, AwsModule, ChannelHistoryServiceModule, IgniteModule],
   controllers,
   providers: [...repositories, FindChannelHistoryQueryHandler],
 })

@@ -19,11 +19,16 @@ import {
   DateFormatter,
   IgniteResultToObjectMapper,
 } from '@Apps/common/ignite/mapper';
-
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class VideoLastHistoryAdapter
   extends VideoBaseAdapter
   implements IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort
 {
+  constructor(private readonly igniteService: IgniteService) {
+    super();
+  }
   /**
    * 이 메소드는 특정 날짜에 대한 검색어와 일치하는 비디오 조회수를 반환합니다.
    * 관련 클러스터, 검색어, 관련 검색어, 시작 및 종료 날짜를 기반으로 가장 최근의 비디오 히스토리 정보를 조회합니다.
@@ -113,7 +118,7 @@ export class VideoLastHistoryAdapter
         year,
         month,
       );
-      const cache = await this.client.getCache(tableName);
+      const cache = await this.igniteService.getClient().getCache(tableName);
 
       const queryString = this.queryString(
         relatedCluster,
@@ -123,7 +128,7 @@ export class VideoLastHistoryAdapter
         columns,
         related,
       );
-      const query = this.createDistributedJoinQuery(queryString);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
 
       const result = await cache.query(query);
 

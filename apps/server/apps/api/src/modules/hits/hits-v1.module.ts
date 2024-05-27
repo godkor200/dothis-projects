@@ -8,8 +8,8 @@ import {
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
-import { GetWeeklyHitsListV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-hits-list/get-weekly-hits-list.v1.http.controller';
 import {
+  ANALYSIS_HITS_SERVICE_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   EXPECTED_HITS_SERVICE_DI_TOKEN,
   HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
@@ -45,6 +45,10 @@ import { GetSomeWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/
 import { SomeWeeklyHitsService } from '@Apps/modules/hits/application/services/some-weekly-hits.service';
 import { WeeklyHitsV1Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v1.repository';
 import { GetSomeWeeklyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-some-weekly-hits/get-some-weekly-hits.v1.http.controller';
+import { IgniteModule } from '@Apps/common/ignite/ignite.module';
+import { AnalysisHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/analysis-hits/analysis-hits.v1.http.controller';
+import { AnalysisHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v1.query-handler';
+import { AnalysisHitsService } from '@Apps/modules/hits/application/services/analysis-hits.service';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -54,6 +58,7 @@ const queries: Provider[] = [
   ExpectedViewsV1QueryHandler,
   GetProbabilitySuccessQueryHandler,
   GetSomeWeeklyHitsV1QueryHandler,
+  AnalysisHitsV1QueryHandler,
 ];
 const service: Provider[] = [
   {
@@ -70,14 +75,18 @@ const service: Provider[] = [
     provide: WEEKLY_VIEWS_SOME_SERVICE_DI_TOKEN,
     useClass: SomeWeeklyHitsService,
   },
+  {
+    provide: ANALYSIS_HITS_SERVICE_DI_TOKEN,
+    useClass: AnalysisHitsService,
+  },
   ChannelHistoryAggregateService,
 ];
 const controllers = [
   ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
-  // GetWeeklyHitsListV1HttpController,
   GetProbabilitySuccessHttpController,
   GetSomeWeeklyHitsV1HttpController,
+  AnalysisHitsV1HttpController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
@@ -114,7 +123,7 @@ const repositories: Provider[] = [
 ];
 
 @Module({
-  imports: [CqrsModule, WeeklyHitsEntityModule],
+  imports: [CqrsModule, IgniteModule, WeeklyHitsEntityModule],
   controllers,
   providers: [...commands, ...queries, ...repositories, ...service],
 })

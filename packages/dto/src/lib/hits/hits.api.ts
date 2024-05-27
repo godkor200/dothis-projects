@@ -1,15 +1,15 @@
 import { c } from '../contract';
-import { zDailyViews, zWeeklyKeywordsList } from './hits.model';
+import {
+  zCombinedViewsData,
+  zDailyViews,
+  zExpectedViews,
+  zWeeklyKeywordsList,
+} from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
-import {
-  zClusterNumber,
-  zClusterNumberMulti,
-  zKeywordsMulti,
-} from '../common.model';
+import { zClusterNumber, zClusterNumberMulti } from '../common.model';
 import { zGetWeeklyViewsBySomeQuery, zGetWeeklyViewsQuery } from './hits.zod';
-import { zExpectedViews } from '../channel-history';
 
 export const expectedHitsApiUrl = '/expectation';
 export const viewApiUrl = '/hits';
@@ -77,7 +77,7 @@ export const hitsApi = c.router({
     },
     summary: '기대 조회수를 가져옵니다',
     description:
-      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 기대 조회수 를 출력합니다.',
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 기대 조회수를 출력합니다.',
   },
   getProbabilitySuccess: {
     method: 'GET',
@@ -102,5 +102,16 @@ export const hitsApi = c.router({
     },
     summary: '주간 키워드를 필터링해서 가져옵니다.',
     description: '날짜(from, to)로 주간 키워드 리스트를 출력합니다.',
+  },
+
+  getAnalysisHits: {
+    method: 'GET',
+    path: `${viewApiUrl}/:clusterNumber`,
+    query: zFindVideoBySearchKeyword,
+    pathParams: zClusterNumberMulti,
+    responses: { 200: zCombinedViewsData, ...zErrResBase },
+    summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
+    description:
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to),클러스터 번호(clusterNumber) 로 일일조회수,기대 조회수를 출력합니다.',
   },
 });

@@ -9,7 +9,10 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
+import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class VideoAdsInfoAdapter
   extends VideoBaseAdapter
   implements IGetVideoAdsInfoAdapterOutboundPort
@@ -28,6 +31,8 @@ export class VideoAdsInfoAdapter
    * @private
    *
    * @returns 쿼리 문자열. 주어진 매개변수에 따라 조건을 만족하는 비디오 데이터를 조회하기 위한 SQL 쿼리 문자열입니다.
+   * 조건:
+   *  - video_published 3개월내 이상
    */
   private queryString(
     clusterNumbers: string[],
@@ -48,51 +53,56 @@ export class VideoAdsInfoAdapter
     const queryParts = clusterNumbers.map((cluster) => {
       if (fromDate.month === toDate.month && fromDate.year === toDate.year) {
         return `(
-SELECT
-  COUNT(DISTINCT vd.VIDEO_ID) AS numberOfAdVideos,
-  AVG(vh.video_views) AS averageViewCount,
-  COUNT(vd.VIDEO_ID) AS totalVideos
-FROM
-  ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
-  JOIN ${CacheNameMapper.getVideoHistoryCacheName(
-    cluster,
-    fromDate.year,
-    fromDate.month,
-  )} vh ON vd.VIDEO_ID = vh.VIDEO_ID
-WHERE
-  vd.VIDEO_TITLE LIKE '%${search}%'
-  OR vd.VIDEO_TAGS LIKE '%${search}%'
-  ${relatedCondition}
-  AND vh.DAY BETWEEN ${from} AND ${to}
-  AND vd.VIDEO_WITH_ADS = TRUE
-)`;
+                  SELECT
+                    COUNT(DISTINCT vd.VIDEO_ID) AS numberOfAdVideos,
+                    AVG(vh.video_views) AS averageViewCount,
+                    COUNT(vd.VIDEO_ID) AS totalVideos
+                  FROM
+                    ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
+                    JOIN ${CacheNameMapper.getVideoHistoryCacheName(
+                      cluster,
+                      fromDate.year,
+                      fromDate.month,
+                    )} vh ON vd.VIDEO_ID = vh.VIDEO_ID
+                  WHERE
+                    vd.VIDEO_TITLE LIKE '%${search}%'
+                    OR vd.VIDEO_TAGS LIKE '%${search}%'
+                    ${relatedCondition}
+                    AND vh.DAY BETWEEN ${from} AND ${to}
+                    AND vd.VIDEO_WITH_ADS = TRUE
+                    AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP) 
+                )`;
       }
       return `(
-SELECT
-  COUNT(DISTINCT vd.VIDEO_ID) AS numberOfAdVideos,
-  AVG(vh.video_views) AS averageViewCount,
-  COUNT(vd.VIDEO_ID) AS totalVideos
-FROM
-  ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
-  JOIN ${CacheNameMapper.getVideoHistoryCacheName(
-    cluster,
-    fromDate.year,
-    fromDate.month,
-  )} vh1 ON vd.VIDEO_ID = vh.VIDEO_ID
-  JOIN ${CacheNameMapper.getVideoHistoryCacheName(
-    cluster,
-    toDate.year,
-    toDate.month,
-  )} vh2 ON vd.VIDEO_ID = vh.VIDEO_ID
-WHERE
-  vd.VIDEO_TITLE LIKE '%${search}%'
-  OR vd.VIDEO_TAGS LIKE '%${search}%'
-  ${relatedCondition}
-  AND vh2.DAY <= ${toDate.day} AND vh1.DAY >= ${fromDate.day}
-  AND vd.VIDEO_WITH_ADS = TRUE
-)`;
+                SELECT
+                  COUNT(DISTINCT vd.VIDEO_ID) AS numberOfAdVideos,
+                  AVG(vh.video_views) AS averageViewCount,
+                  COUNT(vd.VIDEO_ID) AS totalVideos
+                FROM
+                  ${CacheNameMapper.getVideoDataCacheName(cluster)} vd
+                  JOIN ${CacheNameMapper.getVideoHistoryCacheName(
+                    cluster,
+                    fromDate.year,
+                    fromDate.month,
+                  )} vh1 ON vd.VIDEO_ID = vh.VIDEO_ID
+                  JOIN ${CacheNameMapper.getVideoHistoryCacheName(
+                    cluster,
+                    toDate.year,
+                    toDate.month,
+                  )} vh2 ON vd.VIDEO_ID = vh.VIDEO_ID
+                WHERE
+                  vd.VIDEO_TITLE LIKE '%${search}%'
+                  OR vd.VIDEO_TAGS LIKE '%${search}%'
+                  ${relatedCondition}
+                  AND vh2.DAY <= ${toDate.day} AND vh1.DAY >= ${fromDate.day}
+                  AND vd.VIDEO_WITH_ADS = TRUE
+                  AND VD.video_published >= DATEADD(month, -3, CURRENT_TIMESTAMP) 
+              )`;
     });
     return queryParts.length > 1 ? queryParts.join(' UNION ') : queryParts[0];
+  }
+  constructor(private readonly igniteService: IgniteService) {
+    super();
   }
 
   /**
@@ -115,8 +125,8 @@ WHERE
 
     const tableName = CacheNameMapper.getVideoDataCacheName(relatedCluster[0]);
     try {
-      const cache = await this.client.getCache(tableName);
-      const query = this.createDistributedJoinQuery(queryString);
+      const cache = await this.igniteService.getClient().getCache(tableName);
+      const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await cache.query(query);
       const resArr = await result.getAll();
       if (!resArr.length) return Err(new VideoHistoryNotFoundError());
