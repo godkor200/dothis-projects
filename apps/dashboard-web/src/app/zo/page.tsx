@@ -1,11 +1,12 @@
-import D3 from '@/components/common/Charts/D3';
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+
 import D3Axis from '@/components/common/Charts/D3Axis';
 import D3Chart from '@/components/common/Charts/D3Chart';
-import Test from '@/components/common/Charts/D3Combine';
-import D3Tool from '@/components/common/Charts/D3Tool';
-import D3ToolTip from '@/components/common/Charts/D3Tooltip';
 
 const Page = () => {
+  const searchparmas = useSearchParams();
   return (
     <>
       {/* <D3
@@ -20,7 +21,7 @@ const Page = () => {
         ]}
       /> */}
 
-      <D3Chart />
+      <D3Chart keyword="세종" />
       <D3Axis />
       {/* <D3Tool />
       <D3ToolTip /> */}
