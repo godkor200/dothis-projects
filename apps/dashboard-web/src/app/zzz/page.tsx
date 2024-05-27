@@ -2,17 +2,12 @@
 
 import dayjs from 'dayjs';
 
-import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
-import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
+// import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import { useEndDate, useStartDate } from '@/store/dateStore';
-import { useSelectedWord } from '@/store/selectedWordStore';
 import { getDateObjTime } from '@/utils/contents/dateObject';
 
 const Page = () => {
-  const selectedWord = useSelectedWord();
-
   const startDate = useStartDate();
-  const endDate = useEndDate();
 
   // 1. true의 개수 세기
 
@@ -30,7 +25,7 @@ const Page = () => {
   return (
     <div>
       <div className="ml-[2px] flex h-3/6 justify-center [&_svg]:overflow-visible">
-        <DashboardAreaChart
+        {/* <DashboardAreaChart
           series={[
             {
               type: 'rangeArea',
@@ -54,7 +49,7 @@ const Page = () => {
               })),
             },
           ]}
-        />
+        /> */}
 
         {/* <DashboardLineChart
           series={[
