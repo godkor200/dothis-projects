@@ -45,7 +45,7 @@ export class FindAccumulateVideoService
       const channelIds = historyResult.map((e) => e.channelId);
 
       const channelSubscribersData =
-        await this.getChannelHistoryByChannelId.execute(channelIds);
+        await this.getChannelHistoryByChannelId.execute({ channelIds });
       if (!channelSubscribersData.isOk()) {
         return Err(new ChannelHistoryNotFoundError());
       }
