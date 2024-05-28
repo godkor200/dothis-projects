@@ -65,7 +65,7 @@ export class VideoBaseAdapter {
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
 
-    let relatedCondition: string,
+    let relatedCondition: string = '',
       groupByCondition: string = '';
     if (related) {
       relatedCondition = `AND (
