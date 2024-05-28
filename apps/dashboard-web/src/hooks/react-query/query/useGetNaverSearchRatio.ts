@@ -69,7 +69,7 @@ const queryFn = async ({
   startDate: string;
   endDate: string;
 }): Promise<NaverAPI_Response> => {
-  const response = await axios.post<NaverAPI_Response>('api/search', {
+  const response = await axios.post<NaverAPI_Response>('/api/search', {
     keyword,
     relword,
     startDate,
