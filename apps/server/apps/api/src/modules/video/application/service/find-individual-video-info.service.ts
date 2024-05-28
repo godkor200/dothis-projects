@@ -2,7 +2,7 @@ import { FindIndividualVideoInboundPort } from '@Apps/modules/video/domain/ports
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
 import { Inject } from '@nestjs/common';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { IGetChannelHistoryLatestTupleByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
@@ -75,8 +75,8 @@ export class FindIndividualVideoInfoService
       lastHistory.videoLikes,
     );
     const dailyViewIncrease =
-      this.videoAggregateService.calculateIncreaseByIgnite(videoHistory);
-    const estimatedTotalViews = this.videoAggregateService.getVideoPrediction(
+      VideoAggregateService.calculateIncreaseByIgnite(videoHistory);
+    const estimatedTotalViews = VideoAggregateService.getVideoPrediction(
       videoPublished,
       dailyViewIncrease,
     );
