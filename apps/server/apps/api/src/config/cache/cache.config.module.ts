@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RedisModule, RedisModuleAsyncOptions } from '@liaoliaots/nestjs-redis';
 import { RedisConfigService } from 'apps/api/src/config/cache/config/cache.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RedisConnectionModule } from '@Apps/common/redis/redis.module';
+import { HitsV2Module } from '@Apps/modules/hits/hits-v2.module';
 
 export const cacheConfigAsync: RedisModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -11,7 +11,7 @@ export const cacheConfigAsync: RedisModuleAsyncOptions = {
 };
 
 @Module({
-  imports: [RedisModule.forRootAsync(cacheConfigAsync), RedisConnectionModule],
-  exports: [RedisModule, RedisConnectionModule],
+  imports: [RedisModule.forRootAsync(cacheConfigAsync), HitsV2Module],
+  exports: [RedisModule],
 })
 export class CacheConfigModule {}
