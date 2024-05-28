@@ -83,7 +83,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                       </p>
                     </div>
                   </div>
-                  <D3Axis />
+                  <D3Axis keyword={keyword} />
                 </div>
               </BoxFrame>
               <BoxFrame>
