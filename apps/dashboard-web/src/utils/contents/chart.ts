@@ -77,6 +77,22 @@ export const createDateTimeApexChart = (
   return formattedResult.sort((a, b) => a.x - b.x);
 };
 
+export const createDateTimeD3 = (
+  timeSeriesData: Record<string, number | number[]>,
+) => {
+  const formattedResult = [];
+
+  for (const date in timeSeriesData) {
+    const data = timeSeriesData[date];
+    formattedResult.push({
+      date: date,
+      value: data,
+    });
+  }
+
+  return formattedResult;
+};
+
 /**
  *  ApexChart series의 포맷팅을 고정적으로 해주는 유틸리티 함수입니다.
  * @param dataFunction data 프로퍼티의 들어가는 포맷팅 함수입니다.
@@ -125,6 +141,32 @@ export const handleDailyViewData = (
   });
 
   const result = createDateTimeApexChart(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleDailyViewDataD3 = (
+  data: (DailyView | undefined)[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+
+      const views = item.increaseViews;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.abs(Math.floor(views));
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
 
   return result;
 };
@@ -249,6 +291,33 @@ export const handleNaverSearchRatio = (
     });
 
   const result = createDateTimeApexChart(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleNaverSearchRatioD3 = (
+  data: NaverAPI_Results[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data &&
+    data[0].data?.forEach((item) => {
+      if (item) {
+        const date = item.period;
+
+        const views = item.ratio;
+
+        if (dateBasedDataSet.hasOwnProperty(date)) {
+          dateBasedDataSet[date] += Math.floor(Number(views));
+        }
+      }
+    });
+
+  const result = createDateTimeD3(dateBasedDataSet);
 
   return result;
 };
