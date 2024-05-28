@@ -6,7 +6,10 @@ import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-indi
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
-import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import {
+  GetRelatedVideoAndVideoHistory,
+  GetRelatedVideoAndVideoHistoryPickChannelAverageViews,
+} from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }
@@ -361,7 +364,7 @@ export class VideoAggregateService {
    * @param groupedData 날짜별 그룹화된 객체
    */
   static calculateMetrics(groupedData: {
-    [key: string]: GetRelatedVideoAndVideoHistory[];
+    [key: string]: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[];
   }) {
     return Object.entries(groupedData).map(([date, videos]) => {
       const uniqueVideoCount = videos.length;
