@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
   RedisOptionsFactory,
   RedisModuleOptions,
@@ -11,12 +11,21 @@ export class RedisConfigService implements RedisOptionsFactory {
 
   async createRedisOptions(): Promise<RedisModuleOptions> {
     return {
-      config: {
-        host: this.configService.get<string>('redis.local.hostname'),
-        port: this.configService.get<number>('redis.local.post'),
-        password: this.configService.get<string>('redis.local.password'),
-        db: this.configService.get<number>('redis.local.node'),
-      },
+      config: [
+        {
+          host: this.configService.get<string>('redis.local.hostname'),
+          port: this.configService.get<number>('redis.local.post'),
+          password: this.configService.get<string>('redis.local.password'),
+          db: this.configService.get<number>('redis.local.node'),
+        },
+        {
+          namespace: 'onPromise',
+          host: this.configService.get<string>('redis.onPromise.hostname'),
+          port: this.configService.get<number>('redis.onPromise.port'),
+          password: this.configService.get<string>('redis.onPromise.password'),
+          db: this.configService.get<number>('redis.onPromise.node'),
+        },
+      ],
     };
   }
 }

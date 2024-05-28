@@ -11,7 +11,7 @@ import {
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { Err, Ok } from 'oxide.ts';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 
 export class CalculateDailyHitsMetricsService
@@ -23,8 +23,6 @@ export class CalculateDailyHitsMetricsService
 
     @Inject(VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN)
     private readonly getRelatedVideoAndVideoHistory: IGetRelatedVideoAndVideoHistoryOutBoundPort,
-
-    private readonly videoAggregateService: VideoAggregateService,
   ) {}
 
   async execute(props: FindDailyViewsV1Dto): Promise<TFindDailyView> {
@@ -40,7 +38,7 @@ export class CalculateDailyHitsMetricsService
       ]);
 
       if (res.isOk() && counts.isOk()) {
-        const hitsData = this.videoAggregateService.calculateIncreaseByIgnite(
+        const hitsData = VideoAggregateService.calculateIncreaseByIgnite(
           res.unwrap(),
         );
 
