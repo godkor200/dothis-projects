@@ -63,6 +63,8 @@ module.exports = {
         REDIS_PORT: process.env.REDIS_PORT,
         REDIS_HOSTNAME: process.env.REDIS_HOSTNAME,
         REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+        REDIS_NODE: process.env.REDIS_NODE,
+
         AWS_CREDENTIAL_KEY: process.env.AWS_CREDENTIAL_KEY,
         AWS_CREDENTIAL_SECRET: process.env.AWS_CREDENTIAL_SECRET,
         AWS_REGION: process.env.AWS_REGION,
@@ -79,6 +81,10 @@ module.exports = {
 
         KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID,
         KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID,
+        REDIS_ON_PROMISE_HOSTNAME: process.env.REDIS_ON_PROMISE_HOSTNAME,
+        REDIS_ON_PROMISE_PASSWORD: process.env.REDIS_ON_PROMISE_PASSWORD,
+        REDIS_ON_PROMISE_USERNAME: process.env.REDIS_ON_PROMISE_USERNAME,
+        REDIS_ON_PROMISE_NODE: process.env.REDIS_ON_PROMISE_NODE,
       },
     },
   ],
