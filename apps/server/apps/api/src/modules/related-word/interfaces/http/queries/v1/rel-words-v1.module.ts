@@ -104,7 +104,6 @@ const handler = [
 ];
 @Module({
   imports: [
-    CacheConfigModule,
     IgniteModule,
     CqrsModule,
     AwsModule,
