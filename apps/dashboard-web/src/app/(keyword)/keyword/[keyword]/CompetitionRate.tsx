@@ -11,60 +11,6 @@ import {
 const CompetitionRate = ({ keyword }: { keyword: string }) => {
   const { data } = useGetDailyView({ keyword: keyword, relword: keyword });
 
-  // increaseViews 값을 모두 더하는 함수
-  function sumIncreaseViews(
-    data: (
-      | {
-          date: string;
-          uniqueVideoCount: number;
-          increaseComments: number;
-          increaseLikes: number;
-          increaseViews: number;
-        }[]
-      | undefined
-    )[],
-  ) {
-    return data.reduce((total, nestedArray) => {
-      if (nestedArray) {
-        return (
-          total +
-          nestedArray.reduce(
-            (subtotal, item) => subtotal + item.increaseViews,
-            0,
-          )
-        );
-      }
-      return total;
-    }, 0 as number);
-  }
-
-  // increaseViews 값을 모두 더하는 함수
-  function sumVideoCount(
-    data: (
-      | {
-          date: string;
-          uniqueVideoCount: number;
-          increaseComments: number;
-          increaseLikes: number;
-          increaseViews: number;
-        }[]
-      | undefined
-    )[],
-  ) {
-    return data.reduce((total, nestedArray) => {
-      if (nestedArray) {
-        return (
-          total +
-          nestedArray.reduce(
-            (subtotal, item) => subtotal + item.uniqueVideoCount,
-            0,
-          )
-        );
-      }
-      return total;
-    }, 0 as number);
-  }
-
   const totalIncreaseViews = sumIncreaseViews(data);
 
   const totalVideo = sumVideoCount(data);
@@ -85,3 +31,54 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
 };
 
 export default CompetitionRate;
+
+// increaseViews 값을 모두 더하는 함수
+export function sumIncreaseViews(
+  data: (
+    | {
+        date: string;
+        uniqueVideoCount: number;
+        increaseComments: number;
+        increaseLikes: number;
+        increaseViews: number;
+      }[]
+    | undefined
+  )[],
+) {
+  return data.reduce((total, nestedArray) => {
+    if (nestedArray) {
+      return (
+        total +
+        nestedArray.reduce((subtotal, item) => subtotal + item.increaseViews, 0)
+      );
+    }
+    return total;
+  }, 0 as number);
+}
+
+// uniqueVideoCount 값을 모두 더하는 함수
+export function sumVideoCount(
+  data: (
+    | {
+        date: string;
+        uniqueVideoCount: number;
+        increaseComments: number;
+        increaseLikes: number;
+        increaseViews: number;
+      }[]
+    | undefined
+  )[],
+) {
+  return data.reduce((total, nestedArray) => {
+    if (nestedArray) {
+      return (
+        total +
+        nestedArray.reduce(
+          (subtotal, item) => subtotal + item.uniqueVideoCount,
+          0,
+        )
+      );
+    }
+    return total;
+  }, 0 as number);
+}
