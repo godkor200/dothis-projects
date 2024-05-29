@@ -128,17 +128,17 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       .style('padding', '9px 6px')
       .style('border-radius', '10px');
 
-    const [min = 0, max = 0] = D3.extent(
+    const [min = 0, max = 100] = D3.extent(
       datad3,
       (data) => data.value as number,
     );
 
-    const [min2 = 0, max2 = 0] = D3.extent(
+    const [min2 = 0, max2 = 100] = D3.extent(
       data2d3,
       (data) => data.value as number,
     );
 
-    const [min3 = 0, max3 = 0] = D3.extent(
+    const [min3 = 0, max3 = 100] = D3.extent(
       data3,
       (data) => data.value as number,
     );
@@ -167,7 +167,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     };
 
     const y = D3.scaleLinear()
-      .domain([0, max])
+      .domain([0, max === 0 ? 100 : max])
       .nice()
       .range([height - marginBottom, marginTop]);
 
@@ -179,7 +179,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
         .call(D3.axisLeft(y).tickSize(-width).ticks(3));
 
     const y2 = D3.scaleLinear()
-      .domain([0, max2])
+      .domain([0, max2 === 0 ? 100 : max2])
       .nice()
       .range([height - marginBottom, marginTop]);
 
@@ -191,7 +191,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
         .call(D3.axisLeft(y2).tickSize(-width).ticks(3));
 
     const y3 = D3.scaleLinear()
-      .domain([0, max2])
+      .domain([0, max3 === 0 ? 100 : max3])
       .nice()
       .range([height - marginBottom, marginTop]);
 
@@ -603,7 +603,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     // // apply axis to canvas
     // svg.append('g').call(xAxis);
     // svg.append('g').call(yAxis);
-  }, [width, JSON.stringify(datad3)]);
+  }, [width, JSON.stringify(datad3), JSON.stringify(data2d3)]);
 
   return (
     <div className="">
