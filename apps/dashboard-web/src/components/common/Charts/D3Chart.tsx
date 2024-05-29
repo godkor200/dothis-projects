@@ -57,10 +57,10 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
 
   const { data } = useGetRankingRelWords(keyword);
 
-  const circleData = data?.map((item, i) => ({
+  const circleData = data?.slice(0, 10)?.map((item, i) => ({
     title: item,
-    value: i < 4 ? 1000 : i < 7 ? 500 : 250,
-    type: i < 4 ? 'high' : i < 7 ? 'middle' : 'low',
+    value: i < 3 ? 1000 : i < 7 ? 500 : 250,
+    type: i < 3 ? 'high' : i < 7 ? 'middle' : 'low',
     x: 0,
     y: 0,
   }));
@@ -109,7 +109,7 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
         .text((d) => d.title)
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
-        .style('fill', '#71717A')
+        .style('fill', (d) => (d.type === 'high' ? '#fff' : '#71717A'))
         .style('font-size', '16px')
         .style('font-weight', 700);
 
