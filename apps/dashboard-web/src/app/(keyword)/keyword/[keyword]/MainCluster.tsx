@@ -8,7 +8,13 @@ const MainCluster = ({ keyword }: { keyword: string }) => {
 
   const clusterData = getRelatedClusterArray();
 
-  return <>{clustersCategories[clusterData[0]]}</>;
+  return (
+    <>
+      {clustersCategories[clusterData[0]] || (
+        <span className="text-grey600">분석중</span>
+      )}
+    </>
+  );
 };
 
 export default MainCluster;
