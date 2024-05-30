@@ -31,8 +31,6 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
   const first_searchRatio = searchRatio[0];
   const last_searchRatio = searchRatio[searchRatio.length - 1];
 
-  console.log(first_searchRatio, last_searchRatio);
-
   return (
     <div className="flex justify-between">
       <div className="w-[222px] px-[12px] py-[15px] text-center">
@@ -44,8 +42,12 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
       <div className="w-[222px] px-[12px] py-[15px] text-center">
         <p className="text-grey700 text-[14px]">검색량 변동</p>
         <p className="text-grey900 text-[18px] font-bold">
-          {((((last_searchRatio.value || 0) as number) /
-            Number(first_searchRatio.value || 1)) as number) * 100}
+          {Math.floor(
+            ((((last_searchRatio.value || 0) as number) /
+              Number(first_searchRatio.value || 1)) as number) *
+              100 *
+              100,
+          ) / 100}
           %
         </p>
       </div>
