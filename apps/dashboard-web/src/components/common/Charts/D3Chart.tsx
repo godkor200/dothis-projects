@@ -86,8 +86,9 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
 
       const size = d3.scaleLinear().domain([0, 2000]).range([7, 100]);
 
-      const node = svg
-        .append('g')
+      const group = svg.append('g');
+
+      const node = group
         .selectAll('circle')
         .data(circleData!)
         .join('circle')
@@ -96,10 +97,44 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
         .attr('cx', width / 2)
         .attr('cy', height / 2)
         .style('fill', (d) => color(d.type) as string)
-        .style('fill-opacity', 0.8);
+        .style('fill-opacity', 0.8)
+        .raise()
+        .on('mouseover', (e, i) => {
+          d3.select(e.target)
+            .raise()
+            .transition()
+            .style('cursor', 'pointer')
+            .style('fill', (d) => '#D4D4D8')
+            .attr('r', () => size(i.value + 100));
 
-      const labels = svg
-        .append('g')
+          const selectedLabel = labels.filter((d) => d.title === i.title);
+
+          selectedLabel
+            .style('stroke', '#D4D4D8')
+            .style('paint-order', 'stroke')
+            .style('stroke-linecap', 'butt')
+            .style('stroke-linejoin', 'miter')
+            .style('stroke-width', 2)
+            .style('fill', '#fff')
+            .raise();
+        })
+        .on('mouseout', (e, i) => {
+          const selectedLabel = labels.filter((d) => d.title === i.title);
+
+          selectedLabel
+            .style('fill', () => (i.type === 'high' ? '#fff' : '#71717A'))
+            .style('stroke-width', 0)
+            .lower();
+
+          d3.select(e.target)
+            .lower()
+            .transition()
+            .style('cursor', 'auto')
+            .style('fill', () => color(i.type) as string)
+            .attr('r', () => size(i.value));
+        });
+
+      const labels = group
         .selectAll('text')
         .data(circleData!)
         .join('text')
@@ -111,7 +146,17 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
         .attr('alignment-baseline', 'middle')
         .style('fill', (d) => (d.type === 'high' ? '#fff' : '#71717A'))
         .style('font-size', '16px')
-        .style('font-weight', 700);
+        .style('font-weight', 700)
+        .attr('pointer-events', 'none');
+      // .style('pointer-events', 'none');
+      // .on('mouseover', (e, i) => {
+      //   d3.select(e.target).style('fill', (d) => '#fff');
+      // })
+      // .on('mouseout', (e, i) => {
+      //   d3.select(e.target).style('fill', () =>
+      //     i.type === 'high' ? '#fff' : '#71717A',
+      //   );
+      // });
 
       const simulation = d3
         .forceSimulation(circleData!)
