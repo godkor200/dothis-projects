@@ -1,11 +1,11 @@
 import { FindRelCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache.port';
-import { RedisClientService } from '@Apps/modules/related-word/infrastructure/adapters/redis.client.service';
 import { NotFoundException } from '@nestjs/common';
+import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import { Redis } from 'ioredis';
 
-export class FindRelCache
-  extends RedisClientService
-  implements FindRelCachePort
-{
+export class FindRelCache implements FindRelCachePort {
+  constructor(@InjectRedis() private readonly redisClient: Redis) {}
+
   async findOneRelWord(keyword: string): Promise<string> {
     const result: string = await this.redisClient.get(keyword);
     if (!result) {

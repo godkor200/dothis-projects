@@ -24,7 +24,7 @@ import {
   CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN,
 } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/application/service/channel-history.service.module';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 import { FindIndividualVideoInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
 import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http/v1/find-video-paging/find-video-page.http.controller';

@@ -5,13 +5,13 @@ import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 import { Err, Ok, Result } from 'oxide.ts';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { Injectable } from '@nestjs/common';
+import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export type TGetRelatedVideoChannelHistoryRes = Result<
-  IGetVideoChannelHistoryRes[],
+  GetRelatedVideoAndVideoHistoryPickChannelAverageViews[],
   TableNotFoundException | VideoHistoryNotFoundError
 >;
 

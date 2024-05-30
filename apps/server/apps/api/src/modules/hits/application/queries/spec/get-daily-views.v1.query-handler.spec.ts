@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 
 import { videoHistoryDummy } from './__dummy__/daily-view-dummy-data';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { VideoDataService } from '@Apps/modules/video/application/service/video-data.service';
 import { GetDailyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 

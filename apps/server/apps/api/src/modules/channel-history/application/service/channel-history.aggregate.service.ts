@@ -4,9 +4,9 @@ import {
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.interface';
 
 import { TExpectedViewsArr, TRankingArrayOmitWord } from '@dothis/dto';
-import { IGetVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { IGetRelatedVideoRes } from '@Apps/modules/channel-history/infrastructure/daos/channel-history.dao';
 import { IChannelHistoryByChannelIdRes } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
+import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 
 interface IDailyPerformance {
   [date: string]: {
@@ -111,7 +111,7 @@ export class ChannelHistoryAggregateService {
    * @private
    */
   calculateDailyPerformance(
-    channelHistories: IGetVideoChannelHistoryRes[],
+    channelHistories: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[],
   ): IDailyPerformance {
     let dateViewRatios: IDailyPerformance = {};
     for (let channel of channelHistories) {

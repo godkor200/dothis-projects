@@ -1,13 +1,14 @@
+export interface DateUtilsResultType {
+  date: Date;
+  year: string;
+  month: string;
+  day: string;
+}
 export class DateUtil {
   /**
    * 현재 날짜 정보를 반환합니다.
    */
-  public static currentDate(): {
-    date: Date;
-    year: string;
-    month: string;
-    day: string;
-  } {
+  public static currentDate(): DateUtilsResultType {
     const date = new Date();
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 한 자리 수일 경우 앞에 '0'을 더함

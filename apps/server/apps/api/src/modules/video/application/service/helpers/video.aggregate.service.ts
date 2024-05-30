@@ -6,6 +6,10 @@ import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-indi
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
+import {
+  GetRelatedVideoAndVideoHistory,
+  GetRelatedVideoAndVideoHistoryPickChannelAverageViews,
+} from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }
@@ -16,7 +20,7 @@ export class VideoAggregateService {
    * @param index
    * @private
    */
-  private calculateAverageIncrease(sum: number, index: number): number {
+  private static calculateAverageIncrease(sum: number, index: number): number {
     return Math.floor(sum / (index + 1));
   }
 
@@ -25,7 +29,7 @@ export class VideoAggregateService {
    * @param date
    * @private
    */
-  private isWithinThreeMonths(date: Date): boolean {
+  private static isWithinThreeMonths(date: Date): boolean {
     const threeMonthsAgo = new Date();
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
     return date >= threeMonthsAgo;
@@ -39,7 +43,7 @@ export class VideoAggregateService {
    *      increase_comments: 일일증가 코맨트수
    * }
    */
-  calculateIncrease(videoData: IVideoHistory[]): IIncreaseData[] {
+  static calculateIncrease(videoData: IVideoHistory[]): IIncreaseData[] {
     let result: IIncreaseData[] = [];
     for (let video of videoData) {
       let videoList = video.inner_hits.video_history.hits.hits;
@@ -133,7 +137,7 @@ export class VideoAggregateService {
    *      increase_comments: 일일증가 코맨트수
    * }
    */
-  calculateIncreaseBySource(
+  static calculateIncreaseBySource(
     histories: IFindVideoHistoryResponse[],
   ): IIncreaseData[] {
     let result: IIncreaseData[] = [];
@@ -209,7 +213,7 @@ export class VideoAggregateService {
 
     return Object.values(result);
   }
-  calculateIncreaseByIgnite(
+  static calculateIncreaseByIgnite(
     histories: GetRelatedVideoHistory[],
   ): IIncreaseHitsData[] {
     let result: {
@@ -293,7 +297,7 @@ export class VideoAggregateService {
    * @param postDate 영상 개시일
    * @param dailyViewAggregate 비디오 일일조회수
    */
-  getVideoPrediction(
+  static getVideoPrediction(
     postDate: string,
     dailyViewAggregate: IIncreaseData[],
   ): VideoPrediction {
@@ -339,7 +343,9 @@ export class VideoAggregateService {
       dailyViews: predictedViews,
     };
   }
-  groupDataByDate<T extends DateData>(data: T[]): { [key: string]: T[] } {
+  static groupDataByDate<T extends DateData>(
+    data: T[],
+  ): { [key: string]: T[] } {
     return data.reduce((acc, cur) => {
       const date = `${cur.year}-${String(cur.month).padStart(2, '0')}-${String(
         cur.day,
@@ -347,8 +353,67 @@ export class VideoAggregateService {
       if (!acc[date]) {
         acc[date] = [];
       }
+
       acc[date].push(cur);
       return acc;
     }, {});
+  }
+
+  /**
+   * 날짜별로 그룹화된 데이터 배열을 일일조회수 기대조회수를 계산하는 함수
+   * @param groupedData 날짜별 그룹화된 객체
+   */
+  static calculateMetrics(groupedData: {
+    [key: string]: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[];
+  }) {
+    return Object.entries(groupedData).map(([date, videos]) => {
+      const uniqueVideoCount = videos.length;
+      let sumViews = 0;
+      let prevVideoViews = 0;
+      let increaseViews = 0;
+      let totalPerformance = 0;
+      let maxPerformance = -Infinity;
+      let minPerformance = Infinity;
+
+      for (let i = 0; i < videos.length; i++) {
+        const video = videos[i];
+        const { videoViews, channelAverageViews } = video;
+        sumViews += videoViews;
+        const averageIncreaseViews = sumViews / (i + 1);
+
+        if (channelAverageViews !== 0 && videoViews !== 0) {
+          const performance = videoViews / channelAverageViews;
+          totalPerformance += performance;
+
+          if (performance > maxPerformance) {
+            maxPerformance = performance;
+          }
+          if (performance < minPerformance) {
+            minPerformance = performance;
+          }
+        }
+
+        if (i > 0) {
+          if (video.videoViews !== 0) {
+            increaseViews += video.videoViews - prevVideoViews;
+          } else {
+            increaseViews += averageIncreaseViews;
+          }
+        } else {
+          increaseViews += videoViews;
+        }
+
+        prevVideoViews = videoViews;
+      }
+
+      return {
+        date,
+        uniqueVideoCount,
+        increaseViews,
+        expectedHits: totalPerformance / uniqueVideoCount,
+        maxPerformance,
+        minPerformance,
+      };
+    });
   }
 }

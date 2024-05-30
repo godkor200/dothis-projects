@@ -53,6 +53,7 @@ export class VideoCountDayAdapter
 
       const query =
         this.igniteService.createDistributedJoinQuery(clusterQueryString);
+
       const result = await cache.query(query);
       const resArr = await result.getAll();
 

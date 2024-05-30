@@ -6,7 +6,7 @@ import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { Inject } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
-import { IIncreaseHitsData } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { IIncreaseHitsData } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;

@@ -56,3 +56,10 @@ export class GetAnalysisHitsDto extends GetAnalysisHitsQuery {
     Object.assign(this, props);
   }
 }
+
+export class GetAnalysisHitsV2Dto extends GetAnalysisHitsQuery {
+  constructor(props: GetAnalysisHitsV2Dto) {
+    super(props);
+    Object.assign(this, props);
+  }
+}

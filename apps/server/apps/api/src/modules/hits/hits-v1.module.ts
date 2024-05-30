@@ -7,7 +7,7 @@ import {
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/video.aggregate.service';
+import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import {
   ANALYSIS_HITS_SERVICE_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
