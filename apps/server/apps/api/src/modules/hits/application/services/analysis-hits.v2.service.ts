@@ -10,7 +10,7 @@ import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token
 import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
 import {
   GetChannelHistoryByChannelIdV2Dao,
-  GetVideoHistoryGetMultipleByIdV2Dao,
+  GetVideoHistoryMultipleByIdV2Dao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
@@ -22,63 +22,66 @@ import { VideoHelper } from '@Apps/modules/video/application/service/helpers/vid
 export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   constructor(
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
-    private readonly videoCache: VideoCacheOutboundPorts,
+    private readonly videoCacheService: VideoCacheOutboundPorts,
     @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
-    private readonly videoHistoryAdapter: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
+    private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
     @Inject(CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN)
-    private readonly getChannelHistoryByChannelId: ChannelHistoryByChannelIdOutboundPort,
+    private readonly channelHistoryService: ChannelHistoryByChannelIdOutboundPort,
   ) {}
 
   async execute(dto: GetAnalysisHitsV2Dto): Promise<TAnalysisHitsServiceRes> {
     console.time('execute 함수 실행 시간');
-    const dao = new GetVideoCacheDao(dto);
+    const videoCacheDao = new GetVideoCacheDao(dto);
     try {
       console.time('비디오 캐시 조회 시간');
-      const videoCache = await this.videoCache.execute(dao);
+      const videoCacheResult = await this.videoCacheService.execute(
+        videoCacheDao,
+      );
       console.timeEnd('비디오 캐시 조회 시간');
 
-      const videoHistoryDao = new GetVideoHistoryGetMultipleByIdV2Dao({
-        videoIds: videoCache,
-        from: dao.from,
-        to: dao.to,
+      const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
+        videoIds: videoCacheResult,
+        from: videoCacheDao.from,
+        to: videoCacheDao.to,
       });
       console.time('비디오 히스토리 조회 시간');
-      const videoHistoryPromise =
-        this.videoHistoryAdapter.execute(videoHistoryDao);
+      const videoHistoryResultPromise =
+        this.videoHistoryService.execute(videoHistoryDao);
       console.timeEnd('비디오 히스토리 조회 시간');
 
       console.time('채널 히스토리 조회 시간');
       const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
-        channelIds: videoCache,
+        channelIds: videoCacheResult,
       });
-      const channelHistoryPromise =
-        this.getChannelHistoryByChannelId.execute(channelHistoryDao);
+      const channelHistoryResultPromise =
+        this.channelHistoryService.execute(channelHistoryDao);
       console.timeEnd('채널 히스토리 조회 시간');
 
       console.time('비동기 작업 병렬 처리 시간');
       const [videoHistoryResult, channelHistoryResult] = await Promise.all([
-        videoHistoryPromise,
-        channelHistoryPromise,
+        videoHistoryResultPromise,
+        channelHistoryResultPromise,
       ]);
       console.timeEnd('비동기 작업 병렬 처리 시간');
 
       if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
-        console.time('조인작업 작업 처리 시간');
-        const videoHistoriesResult = videoHistoryResult.unwrap();
-        const channelHistoriesResult = channelHistoryResult.unwrap();
+        console.time('조인작업 처리 시간');
+        const videoHistories = videoHistoryResult.unwrap();
+        const channelHistories = channelHistoryResult.unwrap();
         const mergedVideoHistory = VideoHelper.mergeVideoData(
-          videoCache,
-          channelHistoriesResult,
-          videoHistoriesResult,
+          videoCacheResult,
+          channelHistories,
+          videoHistories,
         );
 
         const groupedData =
           VideoAggregateService.groupDataByDate(mergedVideoHistory);
 
-        const res = VideoAggregateService.calculateMetrics(groupedData);
-        console.timeEnd('조인작업 작업 처리 시간');
+        const metricsResult =
+          VideoAggregateService.calculateMetrics(groupedData);
+        console.timeEnd('조인작업 처리 시간');
         console.timeEnd('execute 함수 실행 시간');
-        return Ok({ success: true, data: res });
+        return Ok({ success: true, data: metricsResult });
       }
       if (videoHistoryResult.isErr()) {
         return Err(videoHistoryResult.unwrapErr());
