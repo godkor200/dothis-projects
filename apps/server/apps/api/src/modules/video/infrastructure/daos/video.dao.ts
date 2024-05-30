@@ -111,3 +111,9 @@ export class GetVideoCacheDao extends GetAnalysisHitsQuery {
     Object.assign(this, props);
   }
 }
+export class GetVideosMultiRelatedWordsCacheDao {
+  public words: string[];
+  constructor(props: GetVideosMultiRelatedWordsCacheDao) {
+    this.words = props.words;
+  }
+}
