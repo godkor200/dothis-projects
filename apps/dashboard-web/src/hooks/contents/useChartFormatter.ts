@@ -5,6 +5,7 @@ import {
   formatToApexChart,
   handleAveragePerformanceData,
   handleDailyVideoCount,
+  handleDailyVideoCountD3,
   handleDailyViewData,
   handleDailyViewDataD3,
   handleNaverSearchRatio,
@@ -159,6 +160,32 @@ export const useDailyVideoCountFormatter = ({
   return useMemo(
     () =>
       handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyVideoCount = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyView({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyVideoCount, {
+  //   name: '영상 수',
+  //   type: 'bar',
+  // });
+
+  return useMemo(
+    () => handleDailyVideoCountD3(dailyViewData.flat(), { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
   );
 };
