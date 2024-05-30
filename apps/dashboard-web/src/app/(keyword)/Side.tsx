@@ -60,7 +60,9 @@ const DashboardList = ({
         {menuList.map((item) => (
           <Link href={item.link} key={item.title}>
             <Style.SideItemContainer
-              $isInActive={`/${pathName?.split('/')[1]}` === item.link}
+              $isInActive={item.active.includes(
+                `/${pathName?.split('/')[1]}` as Route,
+              )}
               key={item.title}
             >
               <SvgComp icon={item.icon} size={24} />
@@ -82,7 +84,9 @@ const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
         {menuList.map((item) => (
           <Link href={item.link} key={item.title}>
             <Style.IconItemContainer
-              $isInActive={`/${pathName?.split('/')[1]}` === item.link}
+              $isInActive={item.active.includes(
+                `/${pathName?.split('/')[1]}` as Route,
+              )}
               key={item.title}
             >
               <SvgComp icon={item.icon} size={24} />
@@ -98,23 +102,27 @@ interface SideMenus {
   title: string;
   icon: SVGType;
   link: Route;
+  active: Route[];
 }
 
 const SIDE_MENUS: SideMenus[] = [
   {
     title: '콘텐츠 소재',
     icon: 'SideMain',
-    link: '/keyword',
+    link: '/',
+    active: ['/', '/keyword'],
   },
   {
     title: '내 채널 분석',
     icon: 'SideChannel',
     link: '/channel',
+    active: ['/channel'],
   },
   {
     title: '인기 키워드 분석',
     icon: 'SideTrend',
     link: '/trendingsearches',
+    active: ['/trendingsearches'],
   },
 ];
 
@@ -123,20 +131,24 @@ const SIDE_MENUS2: SideMenus[] = [
     title: '커뮤니티',
     icon: 'SideCommunity',
     link: '/community',
+    active: ['/community'],
   },
   {
     title: '멤버십',
     icon: 'SideMembership',
     link: '/membership',
+    active: ['/membership'],
   },
   {
     title: '블로그',
     icon: 'SideBlog',
     link: '/blog/views-count',
+    active: ['/blog/views-count'],
   },
   {
     title: '도움말',
     icon: 'SideHelp',
     link: '/help',
+    active: ['/help'],
   },
 ];
