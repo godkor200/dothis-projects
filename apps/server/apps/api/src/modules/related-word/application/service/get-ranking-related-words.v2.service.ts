@@ -22,7 +22,7 @@ import {
   GetChannelHistoryByChannelIdV2Dao,
   GetVideoHistoryMultipleByIdAndRelatedWordsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import { VideoHelper } from '@Apps/modules/video/application/service/helpers/video.helper';
+import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
 
 export class GetRankingRelatedWordsV2Service {
   constructor(
@@ -92,7 +92,7 @@ export class GetRankingRelatedWordsV2Service {
 
           console.timeEnd('비디오 히스토리 조회 시간');
           if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
-            const res = VideoHelper.mergeVideoByRelateWords(
+            const res = VideoDataMapper.mergeVideoByRelateWords(
               unwrapData,
               channelHistoryResult.unwrap(),
               videoHistoryResult.unwrap(),
