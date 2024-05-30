@@ -17,6 +17,7 @@ import {
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
@@ -24,6 +25,7 @@ export type TGetRankingRelatedWordsRes = Result<
   | CacheDoesNotFoundException
   | VideoHistoryNotFoundError
   | RelatedWordsNotFoundError
+  | ChannelHistoryNotFoundError
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
@@ -36,8 +38,6 @@ export class GetRankingRelatedWordsService
 
     @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
     private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
-
-    private readonly rankingRelatedWordAggregateService: RankingRelatedWordAggregateService,
   ) {}
 
   /**
@@ -75,11 +75,10 @@ export class GetRankingRelatedWordsService
         if (data.isOk()) {
           const unwrapData = data.unwrap();
 
-          const res =
-            this.rankingRelatedWordAggregateService.calculateWordStats(
-              relatedWords,
-              unwrapData,
-            );
+          const res = RankingRelatedWordAggregateService.calculateWordStats(
+            relatedWords,
+            unwrapData,
+          );
           return Ok({
             keyword: query.search,
             ranking: res.map((e) => ({

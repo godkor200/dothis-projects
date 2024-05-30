@@ -15,3 +15,9 @@ export class GetRankingRelatedWordsDto extends GetRankingRelatedWordsParams {
     Object.assign(this, props);
   }
 }
+export class GetRankingRelatedWordsV2Dto extends GetRankingRelatedWordsParams {
+  constructor(props: GetRankingRelatedWordsV2Dto) {
+    super(props);
+    Object.assign(this, props);
+  }
+}
