@@ -1,7 +1,7 @@
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
-import { IRankingRelWords } from '@Apps/modules/related-word/domain/ports/ranking-related-word.res';
-import { Injectable } from '@nestjs/common';
-import { IRelatedVideoAnalyticsData } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import {
+  GetRelatedVideoAndVideoHistoryPickChannelAverageViews,
+  IRelatedVideoAnalyticsData,
+} from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 
 interface ICalculateWordStatsRes {
   // `word`: 분석 대상이 되는 연관 단어입니다.
@@ -25,12 +25,7 @@ interface ICalculateWordStatsRes {
   sortFigures: number;
 }
 
-@Injectable()
 export class RankingRelatedWordAggregateService {
-  constructor(
-    private readonly channelHistoryAggregateService: ChannelHistoryAggregateService,
-  ) {}
-
   /**
    * 설명: 연관어 정렬의 필요한 계산식 계산 함수
    * 1.성과(videoPerformance):영상의 조회수 / 채널의 평균 조회수
@@ -40,7 +35,7 @@ export class RankingRelatedWordAggregateService {
    * @param words: 연관어 배열
    * @param data: 탐색어와 연관어와 관련된 동영상들에 관한 채널평균조회수, 비디오 조회수 데이터
    */
-  calculateWordStats(
+  static calculateWordStats(
     words: string[],
     data: IRelatedVideoAnalyticsData[],
   ): ICalculateWordStatsRes[] {
@@ -74,41 +69,41 @@ export class RankingRelatedWordAggregateService {
       };
     });
   }
-
   /**
-   * 관련어의 기대조회수를 계산하는 집계 함수
-   * */
-  calculationExpectationNumberRelatedWord(
-    channelVideoData: IRankingRelWords[],
-  ): void {
-    // let result: TRankResData = [];
-    // for (let i = 0; i < channelVideoData.length; i++) {
-    //   let videos = channelVideoData[i].data;
-    //   let relWord = channelVideoData[i].relatedWord;
-    //
-    //   const dailyPerformance =
-    //     this.channelHistoryAggregateService.calculateDailyPerformance(videos);
-    //
-    //   const expectedViewsData =
-    //     this.channelHistoryAggregateService.calculateKeywordSortFigure(
-    //       dailyPerformance,
-    //     );
-    //   let totalExpectedViews = 0;
-    //   let totalVideoViews = 0;
-    //   for (let data of expectedViewsData) {
-    //     totalExpectedViews += data.expectedViews;
-    //     totalVideoViews += data.sortFigure;
-    //   }
-    //
-    //   let averageExpectedViews = totalExpectedViews / expectedViewsData.length;
-    //   let sortFigure = totalVideoViews / expectedViewsData.length;
-    //   result.push({
-    //     expectedViews: averageExpectedViews,
-    //     sortFigure,
-    //     word: relWord,
-    //   });
-    // }
-    //
-    // return result;
+   * 동영상 데이터로부터 연관어 통계 계산
+   * @param data: 동영상과 연관어 데이터가 매핑된 객체
+   */
+  static analyzeRelatedWordStatistics(
+    data: Record<
+      string,
+      GetRelatedVideoAndVideoHistoryPickChannelAverageViews[]
+    >,
+  ): ICalculateWordStatsRes[] {
+    return Object.entries(data).map(([word, videos]) => {
+      let count = 0;
+      let totalViews = 0;
+      let totalPerformance = 0;
+
+      videos.forEach((video) => {
+        let videoPerformance = video.videoViews / video.channelAverageViews;
+        count++;
+        totalViews += video.videoViews;
+        totalPerformance += videoPerformance;
+      });
+
+      const basicSubscribers = 1000;
+      const videoPerformanceAvg = count > 0 ? totalPerformance / count : 0;
+      const sortFigures = (videoPerformanceAvg * totalViews) / count;
+      const expectedViews = videoPerformanceAvg * basicSubscribers;
+
+      return {
+        word,
+        count,
+        totalViews,
+        relatedKeywordPerformance: videoPerformanceAvg,
+        sortFigures: sortFigures > 0 ? sortFigures : 0,
+        expectedViews: expectedViews > 0 ? expectedViews : 0,
+      };
+    });
   }
 }
