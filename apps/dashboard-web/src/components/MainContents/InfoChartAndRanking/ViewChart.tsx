@@ -3,7 +3,7 @@
 import './styles.css';
 
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import DashboardLineChart from '@/components/common/Charts/DashboardLineChart';
@@ -105,7 +105,9 @@ const ViewChart = () => {
     keyword: selectedWord.keyword,
     relword: selectedWord.relword,
   });
+  // dailyVideoCount  -> dailyView api에서 함께 가져오는 video 수로 책정한다.
 
+  // videoViews filter 걸어주기
   const scopePerformance = useScopePerformanceFormatter({
     keyword: selectedWord.keyword,
     relword: selectedWord.relword,

@@ -5,6 +5,7 @@ import '@/styles/global.css';
 
 import clsx from 'clsx';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import type { PropsWithChildren } from 'react';
 
 import { StyledComponentsRegistry } from '@/app/StyledComponentsRegistry';
@@ -55,3 +56,5 @@ export default function RootLayout({ children }: PropsWithChildren) {
     </html>
   );
 }
+
+// export default dynamic(() => Promise.resolve(RootLayout), { ssr: false });

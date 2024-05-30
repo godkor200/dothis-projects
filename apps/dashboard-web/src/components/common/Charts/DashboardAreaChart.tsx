@@ -125,39 +125,8 @@ const DashboardAreaChart = ({ series }: Props) => {
               enabled: true,
             },
           },
-          {
-            seriesName: '평균성과 기대치',
-            opposite: false,
-            axisTicks: {
-              show: false,
-            },
-            axisBorder: {
-              show: false,
-
-              color: '#F0516D',
-            },
-
-            labels: {
-              show: false,
-
-              style: {
-                colors: '#F0516D',
-              },
-            },
-            title: {
-              // text: '일일 조회 수',
-
-              style: {
-                color: '#F0516D',
-              },
-            },
-            tooltip: {
-              enabled: true,
-            },
-          },
 
           {
-            seriesName: '평균성과 기대치',
             opposite: true,
             axisTicks: {
               show: false,
@@ -172,10 +141,10 @@ const DashboardAreaChart = ({ series }: Props) => {
               style: {
                 colors: '#818CF8',
               },
+
+              minWidth: 0,
             },
             title: {
-              // text: '검색량',
-
               style: {
                 color: '#818CF8',
               },

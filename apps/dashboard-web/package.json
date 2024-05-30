@@ -41,6 +41,7 @@
     "dashboard-storybook": "workspace:*",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "framer-motion": "^10.12.8",
     "html-react-parser": "^5.0.6",
     "iron-session": "^6.3.1",
     "isomorphic-dompurify": "^1.9.0",
