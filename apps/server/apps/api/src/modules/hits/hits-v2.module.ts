@@ -12,11 +12,11 @@ import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekl
 import { CqrsModule } from '@nestjs/cqrs';
 import { AnalysisHitsV2Service } from '@Apps/modules/hits/application/services/analysis-hits.v2.service';
 import { AnalysisHitsV2Controller } from '@Apps/modules/hits/interfaces/http/controllers/v2/analysis-hits/analysis-hits.http.v2.controller';
-import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/video.cache.adapter';
+import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.cache.adapter';
 import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { AnalysisHitsV2QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v2.query-handler';
 import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-hitstory.get-multiple-by-id.adapter';
+import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-multiple-by-id.adapter';
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters';
