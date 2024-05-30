@@ -22,3 +22,7 @@ export * from './video.last-history.adapter';
 export * from './video.paginated.adapter';
 // video.video-list.adapter.ts: 비디오 목록 조회
 export * from './video.video-list.adapter';
+// 비디오 탐색어로 조회
+export * from './cache/video.cache.adapter';
+// 비디오 다수의 탐색어로 조회
+export * from './cache/video-multi-related-words.cache.adapter';
