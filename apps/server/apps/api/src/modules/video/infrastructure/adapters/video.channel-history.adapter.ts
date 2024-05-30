@@ -9,9 +9,9 @@ import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { Injectable } from '@nestjs/common';
-import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 export type TGetRelatedVideoChannelHistoryRes = Result<
-  GetRelatedVideoAndVideoHistory[],
+  GetRelatedVideoAndVideoHistoryPickChannelAverageViews[],
   TableNotFoundException | VideoHistoryNotFoundError
 >;
 
