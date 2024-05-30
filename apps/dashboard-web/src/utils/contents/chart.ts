@@ -197,6 +197,32 @@ export const handleDailyVideoCount = (
   return result;
 };
 
+export const handleDailyVideoCountD3 = (
+  data: (DailyView | undefined)[],
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+
+      const views = item.uniqueVideoCount;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.abs(views);
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
 /**
  * getPerformance api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 평균성과를 모두 합산하는 함수
  * @param data getPerformance api의 response에서 flat으로 펼쳐준 형식으로 받는다.
