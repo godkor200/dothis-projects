@@ -16,7 +16,7 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { Injectable } from '@nestjs/common';
-import { GetVideoHistoryGetMultipleByIdV2Dao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
+import { GetVideoHistoryMultipleByIdV2Dao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 
 @Injectable()
 export class VideoHistoryGetMultipleByIdV2Adapter
@@ -70,7 +70,7 @@ export class VideoHistoryGetMultipleByIdV2Adapter
   }
 
   async execute(
-    dao: GetVideoHistoryGetMultipleByIdV2Dao,
+    dao: GetVideoHistoryMultipleByIdV2Dao,
   ): Promise<TGetVideoHistoryRes> {
     const { videoIds, from, to } = dao;
     const fromDate = DateFormatter.getFormattedDate(from);

@@ -5,7 +5,8 @@ import {
   IGetListVideoHistoryDao,
   IGetVideoHistoryDao,
   IGetVideoHistoryGetMultipleByIdDao,
-  GetVideoHistoryGetMultipleByIdV2Dao,
+  GetVideoHistoryMultipleByIdV2Dao,
+  GetVideoHistoryMultipleByIdAndRelatedWordsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
@@ -56,7 +57,10 @@ export interface IGetVideoHistoryGetMultipleByIdOutboundPort {
   ): Promise<TGetVideoHistoryRes>;
 }
 export interface IGetVideoHistoryGetMultipleByIdV2OutboundPort {
+  execute(dao: GetVideoHistoryMultipleByIdV2Dao): Promise<TGetVideoHistoryRes>;
+}
+export interface IGetVideoHistoryLastOneByIdsOutboundPort {
   execute(
-    dao: GetVideoHistoryGetMultipleByIdV2Dao,
+    dao: GetVideoHistoryMultipleByIdAndRelatedWordsDao,
   ): Promise<TGetVideoHistoryRes>;
 }
