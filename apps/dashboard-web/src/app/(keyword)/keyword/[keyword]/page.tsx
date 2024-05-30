@@ -34,7 +34,9 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     키워드 순위
                   </p>
-                  <p className="text-center text-[20px] font-bold">4</p>
+                  <p className="text-center text-[20px] font-bold">
+                    <span className="text-grey600">분석중</span>
+                  </p>
                 </div>
               </BoxFrame>
               <BoxFrame>
