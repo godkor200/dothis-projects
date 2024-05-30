@@ -1,4 +1,9 @@
-export type DateFormatterRes = { year: number; month: number; day: number };
+export type DateFormatterRes = {
+  year: number;
+  month: number;
+  day: number;
+  date?: Date;
+};
 
 export class DateFormatter {
   static getFormattedDate(dateString: string): DateFormatterRes {
