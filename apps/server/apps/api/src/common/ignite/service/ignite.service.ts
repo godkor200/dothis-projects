@@ -53,7 +53,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
 
       if (!isHealthy) {
         this.logger.log('health Check failed, Attempting to reconnect....');
-        await this.connectWithRetry(1000000, 10);
+        await this.connectWithRetry(30000, 10);
       }
     }, interval);
   }
@@ -111,7 +111,7 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     } catch (error) {
       console.error('초기 Ignite 연결 실패. 재시도 중...');
     } finally {
-      await this.checkConnectionPeriodically(1000000);
+      await this.checkConnectionPeriodically(30000); // 30초 마다 헬크체크를 보냄
     }
   }
 
