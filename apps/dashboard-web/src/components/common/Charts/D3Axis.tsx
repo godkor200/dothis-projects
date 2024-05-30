@@ -6,6 +6,7 @@ import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import {
+  useDailyVideoCount,
   useDailyView,
   useSearchRatioFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
@@ -19,6 +20,8 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     keyword: keyword,
     relword: keyword,
   });
+
+  const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
 
   // const width = 680;
   const height = 290;
@@ -66,7 +69,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
   const dataReady = [
     { name: '일일조회수', values: datad3, color: '#F0ABFC' },
     { name: '검색량', values: data2d3, color: '#FCD34D' },
-    { name: '영상수', values: data3, color: '#818CF8' },
+    { name: '영상수', values: data3d3, color: '#818CF8' },
   ];
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
@@ -139,7 +142,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     );
 
     const [min3 = 0, max3 = 100] = D3.extent(
-      data3,
+      data3d3,
       (data) => data.value as number,
     );
 
@@ -158,7 +161,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
           D3.axisBottom(x)
             .tickSizeOuter(0)
             .tickSize(0)
-            .tickFormat((d) => d + '월'),
+            .tickFormat((d) => d),
         )
         .selectAll('text')
         .attr('font-size', '12px')
@@ -237,17 +240,17 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     svg
       .append('g')
       .selectAll('rect')
-      .data(data3)
+      .data(data3d3)
       .enter()
       .append('rect')
       .attr('x', (data) => (x(data?.date) as number) + x.bandwidth() / 2 - 20)
-      .attr('y', (data) => y3(data.value))
+      .attr('y', (data) => y3(data.value as number))
       .attr('width', 40)
-      .attr('height', (data) => y3(0) - y3(data.value))
+      .attr('height', (data) => y3(0) - y3(data.value as number))
       .attr('class', 'bar-chart')
       .attr('class', '영상수')
       .attr('rx', 5)
-      .attr('fill', (data) => data.color);
+      .attr('fill', '#818CF8');
 
     const line2 = D3.line<(typeof data2d3)[number]>()
       .x((datum) => Number(x(datum.date)) + x.bandwidth() / 2)
@@ -433,7 +436,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
     const dot3 = svg
       .selectAll('dot')
-      .data(data3)
+      .data(data3d3)
       .enter()
       .append('circle')
       .attr('class', 'node')
@@ -447,7 +450,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
         return x(d.date)! + x.bandwidth() / 2;
       })
       .attr('cy', function (d) {
-        return y3(d.value);
+        return y3(d.value as number);
       });
 
     svg
@@ -470,11 +473,11 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
         ).left;
         const dataLavel = bisect(datad3, i.date);
         const data2Lavel = bisect(data2d3, i.date);
-        const data3Lavel = bisect(data3, i.date);
+        const data3Lavel = bisect(data3d3, i.date);
 
         const d1 = datad3[dataLavel];
         const d2 = data2d3[data2Lavel];
-        const d3 = data3[data3Lavel];
+        const d3 = data3d3[data3Lavel];
 
         hoverLine.filter((d) => d.date === i.date).style('opacity', 1);
 
