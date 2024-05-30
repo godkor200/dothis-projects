@@ -17,7 +17,7 @@ import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-his
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { Err, Ok } from 'oxide.ts';
-import { VideoHelper } from '@Apps/modules/video/application/service/helpers/video.helper';
+import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
 
 export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   constructor(
@@ -68,7 +68,7 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
         console.time('조인작업 처리 시간');
         const videoHistories = videoHistoryResult.unwrap();
         const channelHistories = channelHistoryResult.unwrap();
-        const mergedVideoHistory = VideoHelper.mergeVideoData(
+        const mergedVideoHistory = VideoDataMapper.mergeVideoData(
           videoCacheResult,
           channelHistories,
           videoHistories,
