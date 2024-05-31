@@ -17,17 +17,15 @@ const Page = () => {
     { label: '게임', lastWeek: 5 },
   ];
   return (
-    <div>
+    <div className="">
       <h2 className="text-grey900 mb-[40px] mt-[80px] text-center text-[28px]">
         콘텐츠에서 가장 중요한 주제 선정,
         <br />
         <span className="text-primary500 font-bold">두디스</span>에서
         <span className="text-primary500 font-bold">검색</span>해보세요!
       </h2>
-
       <MainSearchbar />
-
-      <div className="mx-auto mb-[57px]">
+      <div className=" mb-[57px]">
         <Link
           href={
             'https://docs.google.com/forms/d/e/1FAIpQLSc4WwQb9SbmZMMhghQWQQ3Oh-q1slxewT4kpic3C-kf-YnXmw/viewform' as Route

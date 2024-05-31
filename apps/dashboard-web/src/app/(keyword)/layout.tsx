@@ -9,12 +9,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="relative ">
+    <div className="relative">
       <Top isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+
       {/* GNB infinity border */}
       <div className="flex">
         <Side isSidebarOpen={isSidebarOpen} />
-        <div className="flex-1 px-[66px]">{children}</div>
+        <div className="mx-auto">{children}</div>
       </div>
     </div>
   );
