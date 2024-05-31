@@ -46,7 +46,7 @@ function AdsBanner() {
       <button className="next" onClick={goForward}>
         Next
       </button>
-      <div className="slideWrapper relative">
+      <div className="slideWrapper mx-auto ">
         {slides.map((slider, i) => (
           <div className={slide === i ? 'active' : ''} key={slider + i}>
             {' '}
@@ -55,7 +55,7 @@ function AdsBanner() {
               width={0}
               height={0}
               sizes="100%"
-              style={{ width: '100%', height: '200px' }} // optional
+              style={{ width: '1548px', height: '200px' }} // optional
               alt="text"
               className={
                 slide === i ? 'active rounded-[16px]' : 'rounded-[16px]'
