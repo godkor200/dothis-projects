@@ -27,7 +27,7 @@ const Page = () => {
 
       <MainSearchbar />
 
-      <div className="mb-[57px]">
+      <div className="mx-auto mb-[57px]">
         <Link
           href={
             'https://docs.google.com/forms/d/e/1FAIpQLSc4WwQb9SbmZMMhghQWQQ3Oh-q1slxewT4kpic3C-kf-YnXmw/viewform' as Route
