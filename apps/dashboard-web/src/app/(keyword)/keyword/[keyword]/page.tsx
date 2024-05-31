@@ -9,6 +9,7 @@ import MediaTextCard from '../MediaTextCard';
 import ChartSummaryCards from './ChartSummaryCards';
 import CircleForceChart from './CircleForceChart';
 import CompetitionRate from './CompetitionRate';
+import KeywordRank from './KeywordRank';
 import MainCluster from './MainCluster';
 
 const Page = ({ params }: { params: { keyword: string } }) => {
@@ -35,7 +36,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     키워드 순위
                   </p>
                   <p className="text-center text-[20px] font-bold">
-                    <span className="text-grey600">분석중</span>
+                    <KeywordRank keyword={keyword} />
                   </p>
                 </div>
               </BoxFrame>
