@@ -90,13 +90,13 @@ const GNBSearchbar = () => {
     return false;
   };
 
-  const handleKeyDown = (
+  const handleRouteChangeKeyDown = (
     event: KeyboardEvent<HTMLInputElement>,
     currentInput: string,
   ) => {
-    if (!checkIsSignedIn()) {
-      return;
-    }
+    // if (!checkIsSignedIn()) {
+    //   return;
+    // }
 
     if (event.key === 'Enter') {
       if (
@@ -106,7 +106,7 @@ const GNBSearchbar = () => {
       ) {
         // 엔터 키가 눌렸을 때 실행할 동작
 
-        createSearchwordMutate(currentInput);
+        router.push(`/keyword/${currentInput}`);
       }
     }
   };
@@ -152,7 +152,7 @@ const GNBSearchbar = () => {
           }}
           // ref={searchInputRef}
           onKeyDown={(e) => {
-            handleKeyDown(e, e.currentTarget.value);
+            handleRouteChangeKeyDown(e, e.currentTarget.value);
           }}
         />
       </div>
