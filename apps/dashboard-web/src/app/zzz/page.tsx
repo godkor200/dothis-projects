@@ -2,6 +2,10 @@
 
 import dayjs from 'dayjs';
 
+import {
+  useSearchRatioFormatter,
+  useSearchRatioFormatterD3,
+} from '@/hooks/contents/useChartFormatter';
 // import DashboardAreaChart from '@/components/common/Charts/DashboardAreaChart';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { getDateObjTime } from '@/utils/contents/dateObject';
@@ -12,6 +16,13 @@ const Page = () => {
   // 1. true의 개수 세기
 
   const rangeTargetData = [[0.59], [1.4], [2], [3], [0], [0]];
+
+  const data = useSearchRatioFormatterD3({
+    keyword: '한국어',
+    relword: '한국어',
+  });
+
+  console.log(data);
 
   const rangeData = [
     [0.55, 0.61],
@@ -25,6 +36,7 @@ const Page = () => {
   return (
     <div>
       <div className="ml-[2px] flex h-3/6 justify-center [&_svg]:overflow-visible">
+        <div>xptmxm</div>
         {/* <DashboardAreaChart
           series={[
             {

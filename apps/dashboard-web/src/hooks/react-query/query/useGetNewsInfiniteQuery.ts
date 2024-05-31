@@ -30,7 +30,7 @@ const useGetNewsInfiniteQuery = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: { title: keyword || '아이돌' },
+        query: { title: keyword || '먹방' },
 
         published_at: {
           from: startDate,
@@ -41,7 +41,12 @@ const useGetNewsInfiniteQuery = (
         // category_incident: ['범죄', '교통사고', '재해>자연재해'],
         // byline: '',
 
-        sort: { date: 'desc' },
+        sort: [
+          { date: 'desc' },
+          {
+            _score: 'desc',
+          },
+        ],
         hilight: 200,
         return_from: pageParam * 10,
         // 페이지네이션을 위해 25개로 수정하였습니다.
@@ -66,7 +71,7 @@ const useGetNewsInfiniteQuery = (
   };
 
   return useInfiniteQuery(
-    ['뉴스', keyword || '아이돌', 1],
+    ['뉴스', keyword || '먹방', 1],
     ({ pageParam = 0 }) => retrievePosts(pageParam),
     {
       ...queryOptions,

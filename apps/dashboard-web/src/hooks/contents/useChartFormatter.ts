@@ -5,8 +5,11 @@ import {
   formatToApexChart,
   handleAveragePerformanceData,
   handleDailyVideoCount,
+  handleDailyVideoCountD3,
   handleDailyViewData,
+  handleDailyViewDataD3,
   handleNaverSearchRatio,
+  handleNaverSearchRatioD3,
   handleScopePerformanceData,
 } from '@/utils/contents/chart';
 
@@ -51,6 +54,31 @@ export const useSearchRatioFormatter = ({
   );
 };
 
+export const useSearchRatioFormatterD3 = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: searchRatioData } = useGetNaverSearchRatio({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () =>
+      handleNaverSearchRatioD3(searchRatioData?.results, {
+        startDate,
+        endDate,
+      }),
+    [JSON.stringify(searchRatioData)],
+  );
+};
+
 /**
  * 서버에서 가져온 일일조회수 데이터를 Apex포맷으로 변경화는 과정을 추상화한 hook입니다.
  * @param selectedWord 선택된 키워드 및 연관어를 받습니다.
@@ -83,6 +111,32 @@ export const useDailyViewDataFormatter = ({
   );
 };
 
+export const useDailyView = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyView({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyViewData, {
+  //   name: '일일조회수',
+  //   type: 'line',
+  // });
+
+  return useMemo(
+    () => handleDailyViewDataD3(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
 export const useDailyVideoCountFormatter = ({
   keyword,
   relword,
@@ -106,6 +160,32 @@ export const useDailyVideoCountFormatter = ({
   return useMemo(
     () =>
       handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyVideoCount = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyView({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyVideoCount, {
+  //   name: '영상 수',
+  //   type: 'bar',
+  // });
+
+  return useMemo(
+    () => handleDailyVideoCountD3(dailyViewData.flat(), { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
   );
 };

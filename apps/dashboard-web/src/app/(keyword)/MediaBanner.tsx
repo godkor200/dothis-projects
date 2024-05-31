@@ -12,7 +12,6 @@ const MediaBanner = () => {
   const selectedWord = useSelectedWord();
   const { data: newsData, isLoading } = useGetNewsInfiniteQuery();
 
-  console.log(newsData);
   const flattenNewsData = newsData?.pages.flatMap(
     (item) => item.return_object.documents,
   );

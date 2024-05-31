@@ -6,8 +6,10 @@ import D3Chart from '@/components/common/Charts/D3Chart';
 import BoxFrame from '../BoxFrame';
 import MediaImageCard from '../MediaImageCard';
 import MediaTextCard from '../MediaTextCard';
+import ChartSummaryCards from './ChartSummaryCards';
 import CircleForceChart from './CircleForceChart';
 import CompetitionRate from './CompetitionRate';
+import KeywordRank from './KeywordRank';
 import MainCluster from './MainCluster';
 
 const Page = ({ params }: { params: { keyword: string } }) => {
@@ -33,7 +35,9 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     키워드 순위
                   </p>
-                  <p className="text-center text-[20px] font-bold">4</p>
+                  <p className="text-center text-[20px] font-bold">
+                    <KeywordRank keyword={keyword} />
+                  </p>
                 </div>
               </BoxFrame>
               <BoxFrame>
@@ -64,26 +68,8 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     콘텐츠 추이
                   </p>
 
-                  <div className="flex justify-between">
-                    <div className="w-[222px] px-[12px] py-[15px] text-center">
-                      <p className="text-grey700 text-[14px]">조회수 합계</p>
-                      <p className="text-grey900 text-[18px] font-bold">
-                        {Number('1520200').toLocaleString('ko-kr')}
-                      </p>
-                    </div>
-                    <div className="w-[222px] px-[12px] py-[15px] text-center">
-                      <p className="text-grey700 text-[14px]">검색량 변동</p>
-                      <p className="text-grey900 text-[18px] font-bold">42%</p>
-                    </div>
-                    <div className="w-[222px] px-[12px] py-[15px] text-center">
-                      <p className="text-grey700 text-[14px]">발행 영상 수</p>
-                      <p className="text-grey900 text-[18px] font-bold">
-                        {' '}
-                        {Number('150').toLocaleString('ko-kr')}
-                      </p>
-                    </div>
-                  </div>
-                  <D3Axis />
+                  <ChartSummaryCards keyword={keyword} />
+                  <D3Axis keyword={keyword} />
                 </div>
               </BoxFrame>
               <BoxFrame>

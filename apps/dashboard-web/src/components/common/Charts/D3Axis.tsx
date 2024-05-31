@@ -5,8 +5,23 @@ import './styles.css';
 import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-const D3Axis = () => {
+import {
+  useDailyVideoCount,
+  useDailyView,
+  useSearchRatioFormatterD3,
+} from '@/hooks/contents/useChartFormatter';
+
+const D3Axis = ({ keyword }: { keyword: string }) => {
   const selectRef = useRef(null);
+
+  const datad3 = useDailyView({ keyword: keyword, relword: keyword });
+
+  const data2d3 = useSearchRatioFormatterD3({
+    keyword: keyword,
+    relword: keyword,
+  });
+
+  const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
 
   // const width = 680;
   const height = 290;
@@ -16,45 +31,45 @@ const D3Axis = () => {
   const marginLeft = 0;
 
   interface DataItem {
-    month: string;
+    date: string;
     value: number; // value 속성의 타입을 number로 명시
     color: string;
   }
 
   const data: DataItem[] = [
-    { month: '05/04', value: 222, color: 'red' },
-    { month: '05/05', value: 311, color: 'orange' },
-    { month: '05/06', value: 290, color: 'yellow' },
-    { month: '05/07', value: 288, color: 'green' },
-    { month: '05/08', value: 230, color: 'blue' },
-    { month: '05/09', value: 222, color: 'indigo' },
+    { date: '05/04', value: 222, color: 'red' },
+    { date: '05/05', value: 311, color: 'orange' },
+    { date: '05/06', value: 290, color: 'yellow' },
+    { date: '05/07', value: 288, color: 'green' },
+    { date: '05/08', value: 230, color: 'blue' },
+    { date: '05/09', value: 222, color: 'indigo' },
   ];
 
   const data2: DataItem[] = [
-    { month: '05/04', value: 50, color: 'red' },
-    { month: '05/05', value: 60, color: 'orange' },
-    { month: '05/06', value: 40, color: 'yellow' },
-    { month: '05/07', value: 28, color: 'green' },
-    { month: '05/08', value: 34, color: 'blue' },
-    { month: '05/09', value: 21, color: 'indigo' },
+    { date: '2024-05-01', value: 50, color: 'red' },
+    { date: '2024-05-02', value: 60, color: 'orange' },
+    { date: '2024-05-03', value: 40, color: 'yellow' },
+    { date: '2024-05-04', value: 28, color: 'green' },
+    { date: '2024-05-05', value: 34, color: 'blue' },
+    { date: '2024-05-06', value: 21, color: 'indigo' },
   ];
 
   const data3: DataItem[] = [
-    { month: '05/04', value: 60, color: '#818CF8' },
-    { month: '05/05', value: 15, color: '#818CF8' },
-    { month: '05/06', value: 26, color: '#818CF8' },
-    { month: '05/07', value: 34, color: '#818CF8' },
-    { month: '05/08', value: 31, color: '#818CF8' },
-    { month: '05/09', value: 22, color: '#818CF8' },
+    { date: '2024-05-01', value: 60, color: '#818CF8' },
+    { date: '2024-05-02', value: 15, color: '#818CF8' },
+    { date: '2024-05-03', value: 26, color: '#818CF8' },
+    { date: '2024-05-04', value: 34, color: '#818CF8' },
+    { date: '2024-05-05', value: 31, color: '#818CF8' },
+    { date: '2024-05-06', value: 22, color: '#818CF8' },
   ];
 
   const allGroup = ['valueA', 'valueB', 'valueC'];
 
   // Reformat the data: we need an array of arrays of {x, y} tuples
   const dataReady = [
-    { name: '일일조회수', values: data, color: '#F0ABFC' },
-    { name: '검색량', values: data2, color: '#FCD34D' },
-    { name: '영상수', values: data3, color: '#818CF8' },
+    { name: '일일조회수', values: datad3, color: '#F0ABFC' },
+    { name: '검색량', values: data2d3, color: '#FCD34D' },
+    { name: '영상수', values: data3d3, color: '#818CF8' },
   ];
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
@@ -116,10 +131,23 @@ const D3Axis = () => {
       .style('padding', '9px 6px')
       .style('border-radius', '10px');
 
-    const [min = 0, max = 0] = D3.extent(data, (data) => data.value);
+    const [min = 0, max = 100] = D3.extent(
+      datad3,
+      (data) => data.value as number,
+    );
+
+    const [min2 = 0, max2 = 100] = D3.extent(
+      data2d3,
+      (data) => data.value as number,
+    );
+
+    const [min3 = 0, max3 = 100] = D3.extent(
+      data3d3,
+      (data) => data.value as number,
+    );
 
     const x = D3.scaleBand()
-      .domain(data.map((item) => item.month))
+      .domain(datad3.map((item) => item.date))
       .range([marginLeft, width - marginRight]);
 
     // const xAxis = D3.axisBottom(x);
@@ -133,7 +161,7 @@ const D3Axis = () => {
           D3.axisBottom(x)
             .tickSizeOuter(0)
             .tickSize(0)
-            .tickFormat((d) => d + '월'),
+            .tickFormat((d) => d),
         )
         .selectAll('text')
         .attr('font-size', '12px')
@@ -142,7 +170,7 @@ const D3Axis = () => {
     };
 
     const y = D3.scaleLinear()
-      .domain([0, max])
+      .domain([0, max === 0 ? 100 : max])
       .nice()
       .range([height - marginBottom, marginTop]);
 
@@ -152,6 +180,30 @@ const D3Axis = () => {
       g
         .attr('transform', `translate(${marginLeft}, 0)`)
         .call(D3.axisLeft(y).tickSize(-width).ticks(3));
+
+    const y2 = D3.scaleLinear()
+      .domain([0, max2 === 0 ? 100 : max2])
+      .nice()
+      .range([height - marginBottom, marginTop]);
+
+    const yAxisCallback2 = (
+      g: D3.Selection<SVGGElement, any, HTMLElement, any>,
+    ) =>
+      g
+        .attr('transform', `translate(${marginLeft}, 0)`)
+        .call(D3.axisLeft(y2).tickSize(-width).ticks(3));
+
+    const y3 = D3.scaleLinear()
+      .domain([0, max3 === 0 ? 100 : max3])
+      .nice()
+      .range([height - marginBottom, marginTop]);
+
+    const yAxisCallback3 = (
+      g: D3.Selection<SVGGElement, any, HTMLElement, any>,
+    ) =>
+      g
+        .attr('transform', `translate(${marginLeft}, 0)`)
+        .call(D3.axisLeft(y3).tickSize(-width).ticks(3));
 
     // .call((g) => g.select('#axis').remove())
     // .attr('class', 'grid');
@@ -173,6 +225,8 @@ const D3Axis = () => {
       // .attr('transform', `translate(${marginLeft},0)`)
 
       .call(yAxisCallback)
+      .call(yAxisCallback2)
+      .call(yAxisCallback3)
       .call((g: D3.Selection<SVGGElement, any, HTMLElement, any>) =>
         g.select('.domain').remove(),
       )
@@ -186,21 +240,21 @@ const D3Axis = () => {
     svg
       .append('g')
       .selectAll('rect')
-      .data(data3)
+      .data(data3d3)
       .enter()
       .append('rect')
-      .attr('x', (data) => (x(data?.month) as number) + x.bandwidth() / 2 - 20)
-      .attr('y', (data) => y(data.value))
+      .attr('x', (data) => (x(data?.date) as number) + x.bandwidth() / 2 - 20)
+      .attr('y', (data) => y3(data.value as number))
       .attr('width', 40)
-      .attr('height', (data) => y(0) - y(data.value))
+      .attr('height', (data) => y3(0) - y3(data.value as number))
       .attr('class', 'bar-chart')
       .attr('class', '영상수')
       .attr('rx', 5)
-      .attr('fill', (data) => data.color);
+      .attr('fill', '#818CF8');
 
-    const line2 = D3.line<DataItem>()
-      .x((datum) => Number(x(datum.month)) + x.bandwidth() / 2)
-      .y((datum) => y(datum.value))
+    const line2 = D3.line<(typeof data2d3)[number]>()
+      .x((datum) => Number(x(datum.date)) + x.bandwidth() / 2)
+      .y((datum) => y2(datum.value as number))
 
       .curve(D3.curveCatmullRom);
 
@@ -250,7 +304,7 @@ const D3Axis = () => {
     //   (D3.curveCatmullRom.alpha(0.3));
     svg
       .append('path')
-      .datum(data2)
+      .datum(data2d3)
       .attr('fill', 'none')
       .attr('stroke', '#FCD34D')
       .attr('class', '검색량')
@@ -258,20 +312,20 @@ const D3Axis = () => {
       .style('stroke-linecap', 'round') // 선의 끝 모양을 둥글게 설정
       .attr('d', line2);
 
-    const line = D3.line<DataItem>()
+    const line = D3.line<(typeof datad3)[number]>()
       .x((datum) => {
         // console.log(x(d.month) + x.bandwidth() / 2);
 
-        return Number(x(datum.month)) + x.bandwidth() / 2;
+        return Number(x(datum.date)) + x.bandwidth() / 2;
       })
       .y((d) => {
-        return y(d.value);
+        return y(d.value as number);
       })
       .curve(D3.curveCatmullRom);
 
     svg
       .append('path')
-      .datum(data)
+      .datum(datad3)
       .attr('fill', 'none')
       .attr('stroke', '#F0ABFC')
       .attr('class', '일일조회수')
@@ -333,10 +387,10 @@ const D3Axis = () => {
     const hoverLine = svg
       .append('g')
       .selectAll('rect')
-      .data(data)
+      .data(datad3)
       .enter()
       .append('rect')
-      .attr('x', (d) => (x(d?.month) as number) + x.bandwidth() / 2)
+      .attr('x', (d) => (x(d?.date) as number) + x.bandwidth() / 2)
       .attr('y', marginTop)
       .attr('width', 1)
       .attr('height', height - marginBottom - marginTop)
@@ -345,7 +399,7 @@ const D3Axis = () => {
 
     const dot = svg
       .selectAll('dot')
-      .data(data)
+      .data(datad3)
       .enter()
       .append('circle')
       .attr('class', 'node')
@@ -356,14 +410,14 @@ const D3Axis = () => {
       .style('opacity', 0)
       .attr('r', 5)
       .attr('cx', function (d) {
-        return x(d.month)! + x.bandwidth() / 2;
+        return x(d.date)! + x.bandwidth() / 2;
       })
       .attr('cy', function (d) {
-        return y(d.value);
+        return y(d.value as number);
       });
     const dot2 = svg
       .selectAll('dot')
-      .data(data2)
+      .data(data2d3)
       .enter()
       .append('circle')
       .attr('class', 'node')
@@ -374,15 +428,15 @@ const D3Axis = () => {
       .style('opacity', 0)
       .attr('r', 5)
       .attr('cx', function (d) {
-        return x(d.month)! + x.bandwidth() / 2;
+        return x(d.date)! + x.bandwidth() / 2;
       })
       .attr('cy', function (d) {
-        return y(d.value);
+        return y2(d.value as number);
       });
 
     const dot3 = svg
       .selectAll('dot')
-      .data(data3)
+      .data(data3d3)
       .enter()
       .append('circle')
       .attr('class', 'node')
@@ -393,19 +447,19 @@ const D3Axis = () => {
       .style('z-index', 9999)
       .attr('r', 5)
       .attr('cx', function (d) {
-        return x(d.month)! + x.bandwidth() / 2;
+        return x(d.date)! + x.bandwidth() / 2;
       })
       .attr('cy', function (d) {
-        return y(d.value);
+        return y3(d.value as number);
       });
 
     svg
       .append('g')
       .selectAll('rect')
-      .data(data)
+      .data(datad3)
       .enter()
       .append('rect')
-      .attr('x', (d) => (x(d?.month) as number) + x.bandwidth() / 2 - 20)
+      .attr('x', (d) => (x(d?.date) as number) + x.bandwidth() / 2 - 20)
       .attr('y', marginTop)
       .attr('width', 40)
       .attr('height', height - marginBottom - marginTop)
@@ -414,22 +468,24 @@ const D3Axis = () => {
       .on('mouseover', (e, i) => {
         // console.log(e);
 
-        const bisect = D3.bisector((d: DataItem) => d.month).left;
-        const dataLavel = bisect(data, i.month);
-        const data2Lavel = bisect(data2, i.month);
-        const data3Lavel = bisect(data3, i.month);
+        const bisect = D3.bisector(
+          (d: DataItem | (typeof datad3)[number]) => d.date,
+        ).left;
+        const dataLavel = bisect(datad3, i.date);
+        const data2Lavel = bisect(data2d3, i.date);
+        const data3Lavel = bisect(data3d3, i.date);
 
-        const d1 = data[dataLavel];
-        const d2 = data2[data2Lavel];
-        const d3 = data3[data3Lavel];
+        const d1 = datad3[dataLavel];
+        const d2 = data2d3[data2Lavel];
+        const d3 = data3d3[data3Lavel];
 
-        hoverLine.filter((d) => d.month === i.month).style('opacity', 1);
+        hoverLine.filter((d) => d.date === i.date).style('opacity', 1);
 
         // Linear interpolation
 
         svg
           .selectAll('circle')
-          .filter((d, item) => (d as DataItem).month === i.month)
+          .filter((d, item) => (d as DataItem).date === i.date)
           .style('opacity', 1);
 
         D3.select(e.target).transition().attr('r', 4);
@@ -550,7 +606,7 @@ const D3Axis = () => {
     // // apply axis to canvas
     // svg.append('g').call(xAxis);
     // svg.append('g').call(yAxis);
-  }, [width]);
+  }, [width, JSON.stringify(datad3), JSON.stringify(data2d3)]);
 
   return (
     <div className="">

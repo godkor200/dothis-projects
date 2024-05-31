@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import type { KeyboardEvent } from 'react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -8,7 +9,7 @@ import MyKeywordList from '@/components/MainContents/KeywordSearch/MyKeywordList
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
-import { useIsSignedIn } from '@/store/authStore';
+import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
 const MainSearchbar = () => {
@@ -55,16 +56,18 @@ const MainSearchbar = () => {
 
   const keyword = convertKeywordsToArray(userData?.personalizationTag);
 
-  //   const checkIsSignedIn = () => {
-  //     if (isSignedIn) return true;
-  //     setOpenInput(false);
-  //     setIsOpenSignUpModal(true);
-  //     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+  const { setIsOpenSignUpModal } = useAuthActions();
 
-  //     setModalContent(<SignUpModal />);
-  //     setIsModalOpen(true);
-  //     return false;
-  //   };
+  // const checkIsSignedIn = () => {
+  //   if (isSignedIn) return true;
+  //   setOpenInput(false);
+  //   setIsOpenSignUpModal(true);
+  //   // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+
+  //   setModalContent(<SignUpModal />);
+  //   setIsModalOpen(true);
+  //   return false;
+  // };
 
   //   const handleKeyDown = (
   //     event: KeyboardEvent<HTMLInputElement>,
@@ -86,6 +89,27 @@ const MainSearchbar = () => {
   //       }
   //     }
   //   };
+
+  const handleRouteChangeKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>,
+    currentInput: string,
+  ) => {
+    // if (!checkIsSignedIn()) {
+    //   return;
+    // }
+
+    if (event.key === 'Enter') {
+      if (
+        data &&
+        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+          currentInput
+      ) {
+        // 엔터 키가 눌렸을 때 실행할 동작
+
+        router.push(`/keyword/${currentInput}`);
+      }
+    }
+  };
 
   return (
     <div className="relative mx-auto mb-[108px] w-[630px]">
@@ -110,9 +134,9 @@ const MainSearchbar = () => {
             startTransition(() => handleInput(e.currentTarget.value));
           }}
           // ref={searchInputRef}
-          //   onKeyDown={(e) => {
-          //     handleKeyDown(e, e.currentTarget.value);
-          //   }}
+          onKeyDown={(e) => {
+            handleRouteChangeKeyDown(e, e.currentTarget.value);
+          }}
         />
 
         {isFocused && (

@@ -2,10 +2,11 @@ import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 import type { DeepRequired } from 'react-hook-form';
 
-import type { SortingQuery } from '@/app/(main)/(searchGNB)/trending/page';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import { TRENDING_KEYWORD_KEY } from '@/constants/querykey';
+import type { WEEKLY_SORT_OPTION } from '@/constants/weeklySortOption';
 import { useIsSignedIn } from '@/store/authStore';
+import type { SortingQuery } from '@/types/common';
 import { apiClient } from '@/utils/api/apiClient';
 
 export const videoKeys = {
@@ -18,6 +19,9 @@ export const videoKeys = {
  * @param queryOptions
  * @returns
  */
+
+export type Weekly_Sort_Key = (typeof WEEKLY_SORT_OPTION)[number]['key'];
+
 const useGetTrendingKeywords = (
   {
     startDate,
@@ -26,7 +30,7 @@ const useGetTrendingKeywords = (
     sort,
     order,
     lastIndex_ID,
-  }: SortingQuery & TrendingQuery & { lastIndex_ID?: string },
+  }: SortingQuery<Weekly_Sort_Key> & TrendingQuery & { lastIndex_ID?: string },
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordListWithPaging
   >,

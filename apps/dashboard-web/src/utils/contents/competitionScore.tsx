@@ -51,7 +51,7 @@ export const convertCompetitionScoreFormatToHTML = ({
     competitionScore === 0 ||
     totalDailyView === 0
   ) {
-    return <CompetitionTag color="grey600">{`파악중`}</CompetitionTag>;
+    return <CompetitionTag color="grey600">{`분석중`}</CompetitionTag>;
   }
 
   if (totalDailyView < 1_000_000) {
@@ -72,7 +72,7 @@ export const convertCompetitionScoreFormatToHTML = ({
   } else if (competitionScore >= 0) {
     return <CompetitionTag color="chip-red">{`공급 과잉`}</CompetitionTag>;
   }
-  return <CompetitionTag color="grey600">{`파악중`}</CompetitionTag>;
+  return <CompetitionTag color="grey600">{`분석중`}</CompetitionTag>;
 };
 
 /**
