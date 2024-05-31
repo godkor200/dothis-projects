@@ -18,7 +18,7 @@ const useGetRankingRelWords = (
     typeof apiRouter.relatedWords.rankingRelatedWords
   >,
 ) => {
-  const queryResult = apiClient(1).relatedWords.rankingRelatedWords.useQuery(
+  const queryResult = apiClient(2).relatedWords.rankingRelatedWords.useQuery(
     RANK_RELATIONWORD_KEY.list([{ keyword }]),
     { params: { search: keyword! } },
     { ...queryOptions, enabled: !!keyword, retry: 3 },
