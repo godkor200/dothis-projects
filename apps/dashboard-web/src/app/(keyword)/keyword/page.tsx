@@ -71,7 +71,7 @@ const Page = () => {
                     <p className="text-grey900 text-[18px] font-bold">1234</p>
                   </div>
                 </div>
-                <D3Axis />
+                <D3Axis keyword="한국어" />
               </div>
             </BoxFrame>
             <BoxFrame>
