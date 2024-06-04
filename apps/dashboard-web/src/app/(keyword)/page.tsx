@@ -17,7 +17,7 @@ const Page = () => {
     { label: '게임', lastWeek: 5 },
   ];
   return (
-    <div className="">
+    <div className="mx-auto w-[1548px]">
       <h2 className="text-grey900 mb-[40px] mt-[80px] text-center text-[28px]">
         콘텐츠에서 가장 중요한 주제 선정,
         <br />

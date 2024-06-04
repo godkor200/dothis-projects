@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* GNB infinity border */}
       <div className="flex">
         <Side isSidebarOpen={isSidebarOpen} />
-        <div className="mx-auto">{children}</div>
+        <div className="flex-grow">{children}</div>
       </div>
     </div>
   );

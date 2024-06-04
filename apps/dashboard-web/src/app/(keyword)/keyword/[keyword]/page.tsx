@@ -16,8 +16,8 @@ const Page = ({ params }: { params: { keyword: string } }) => {
   const keyword = decodeURIComponent(params.keyword);
 
   return (
-    <div>
-      <div className="border-grey500 mx-auto mt-[40px] max-w-[1700px] ">
+    <div className="px-[66px]">
+      <div className="mx-auto mt-[40px] max-w-[1700px]">
         <div className="">
           <h2 className="mb-[20px] text-[20px] font-bold">검색어 결과</h2>
           <div className="grid grid-rows-[140px_460px] gap-[20px]">
@@ -109,7 +109,6 @@ const Page = ({ params }: { params: { keyword: string } }) => {
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };
