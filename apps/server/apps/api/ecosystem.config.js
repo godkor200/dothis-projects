@@ -29,6 +29,7 @@ module.exports = {
         REDIS_PORT: process.env.REDIS_PORT,
         REDIS_HOSTNAME: process.env.REDIS_HOSTNAME,
         REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+        REDIS_RANKING_NODE: process.env.REDIS_RANKING_NODE,
         AWS_CREDENTIAL_KEY: process.env.AWS_CREDENTIAL_KEY,
         AWS_CREDENTIAL_SECRET: process.env.AWS_CREDENTIAL_SECRET,
         AWS_REGION: process.env.AWS_REGION,
@@ -64,6 +65,7 @@ module.exports = {
         REDIS_HOSTNAME: process.env.REDIS_HOSTNAME,
         REDIS_PASSWORD: process.env.REDIS_PASSWORD,
         REDIS_NODE: process.env.REDIS_NODE,
+        REDIS_RANKING_NODE: process.env.REDIS_RANKING_NODE,
 
         AWS_CREDENTIAL_KEY: process.env.AWS_CREDENTIAL_KEY,
         AWS_CREDENTIAL_SECRET: process.env.AWS_CREDENTIAL_SECRET,
