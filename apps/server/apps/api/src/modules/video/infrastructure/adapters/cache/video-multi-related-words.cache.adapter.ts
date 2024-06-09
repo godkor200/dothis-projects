@@ -10,6 +10,7 @@ import { Err, Ok } from 'oxide.ts';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { appGlobalConfig } from '@Apps/config/app/config/app.global';
 import dayjs from 'dayjs';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 export class VideoMultiRelatedWordsCacheAdapter
   implements VideosMultiRelatedWordsCacheOutboundPorts
@@ -25,13 +26,14 @@ export class VideoMultiRelatedWordsCacheAdapter
     dao: GetVideosMultiRelatedWordsCacheDao,
   ): Promise<VideosMultiRelatedWordsCacheTypeResult> {
     try {
-      const period = appGlobalConfig.videoPublishedPeriodConstraint;
+      const period = this.appGlobalConfig.videoPublishedPeriodConstraint;
       const words = dao.words;
       const transaction = this.redisClient.multi();
       words.forEach((key) => {
         transaction.smembers(key);
       });
       const results = await transaction.exec();
+      if (!results[1].length) return Err(new VideoNotFoundError());
 
       const currentDate = dayjs(); // 현재 날짜
       const cutoffDate = currentDate.subtract(period, 'month'); // 기준 날짜

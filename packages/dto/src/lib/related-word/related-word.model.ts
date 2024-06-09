@@ -38,7 +38,7 @@ export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
 export const zResWordsPickData = zRelWords.shape.data;
 
-export type TRankResData = z.TypeOf<typeof zRankingArray>;
+export type zRankingArray = z.TypeOf<typeof zRankingArray>;
 
 export type TRankRes = z.TypeOf<typeof zRankRes>;
 

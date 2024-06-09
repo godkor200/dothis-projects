@@ -23,22 +23,24 @@ import {
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { match } from 'oxide.ts';
-import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
+import {
+  GetVideoPaginatedPageSortDto,
+  GetVideoPaginatedPageSortQuery,
+} from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
-import { PaginatedIgniteQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
+
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 const c = nestControllerContract(apiRouter.video);
-const { summary, responses, description } = c.getVideoPageV1;
+const findVideoPage = c.getVideoPageV2;
+const { summary, responses, description } = findVideoPage;
 
 @ApiTags('영상')
 @Controller()
 export class FindVideoPageHttpController {
   constructor(private readonly queryBus: QueryBus) {}
-  @TsRestHandler(c.getVideoPageV1)
+  @TsRestHandler(findVideoPage)
   @ApiOperation({
     summary,
     description,
@@ -48,22 +50,9 @@ export class FindVideoPageHttpController {
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
   })
-  @ApiParam({
-    name: 'clusterNumber',
-    type: String,
-    required: true,
-    description: '클러스터 번호 단일, 멀티 둘다 가능',
-    example: '4, 93, 14, 13, 57, 5, 43, 1, 10, 45',
-  })
-  async execute(
-    @Query() query: PaginatedIgniteQueryParams,
-    @Param(ParseArrayPipe) param: IParamsInterface,
-  ) {
-    return tsRestHandler(c.getVideoPageV1, async ({ params, query }) => {
-      const arg = new GetVideoPaginatedPageDto({
-        clusterNumber: param.clusterNumber,
-        ...query,
-      });
+  async execute(@Query() query: GetVideoPaginatedPageSortQuery) {
+    return tsRestHandler(findVideoPage, async ({ query }) => {
+      const arg = new GetVideoPaginatedPageSortDto(query);
       const data: TGetVideoPage = await this.queryBus.execute(arg);
 
       return match<TGetVideoPage, TTsRestRes<IRes<IPagingRes>>>(data, {

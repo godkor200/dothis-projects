@@ -1,4 +1,8 @@
-import { findVideoPageQuery, zPaginatedIgniteQueryParams } from '@dothis/dto';
+import {
+  findVideoPageQuery,
+  zPaginatedIgniteQueryParams,
+  zPaginatedIgniteQuerySort,
+} from '@dothis/dto';
 import { IFindVideoPageQuery as IFindVideoPage } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { VIDEO_DATA_KEY } from '@Apps/modules/video/application/dtos/find-videos.dtos';
 import { createZodDto } from '@anatine/zod-nestjs';
@@ -34,5 +38,20 @@ export class GetVideoPaginatedPageDto extends createZodDto(
     if (typeof props.clusterNumber === 'string') {
       this.clusterNumber = props.clusterNumber;
     }
+  }
+}
+
+export class GetVideoPaginatedPageSortQuery extends createZodDto(
+  extendApi(zPaginatedIgniteQuerySort),
+) {
+  constructor(props: GetVideoPaginatedPageSortQuery) {
+    super();
+  }
+}
+
+export class GetVideoPaginatedPageSortDto extends GetVideoPaginatedPageSortQuery {
+  constructor(props: GetVideoPaginatedPageSortDto) {
+    super(props);
+    Object.assign(this, props);
   }
 }

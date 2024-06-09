@@ -10,6 +10,8 @@ import { zErrResBase } from '../error.response.zod';
 import {
   zClusterNumberMulti,
   zPaginatedIgniteQueryParams,
+  zSearchKeyword,
+  zTotalData,
 } from '../common.model';
 import {
   findVideoBySearchKeyword,
@@ -123,5 +125,17 @@ export const videoApi = c.router({
       '관련어와 탐색어를 기준으로 영상 길이별 조회수/성과 분포를 가져옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to)로 영상 길이별 조회수/성과 분포를 가져옵니다.',
+  },
+  getVideoCount: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/count`,
+    query: findVideoBySearchKeyword,
+    responses: {
+      200: zTotalData,
+      ...zErrResBase,
+    },
+    summary: '관련어와 탐색어를 기준으로 영상 갯수를 가져옵니다.',
+    description:
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from, to)로 영상 발행일(publish) 기준으로 영상 갯수를 가져옵니다.',
   },
 });

@@ -18,6 +18,7 @@ import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/ev
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
@@ -26,6 +27,7 @@ export type TGetRankingRelatedWordsRes = Result<
   | VideoHistoryNotFoundError
   | RelatedWordsNotFoundError
   | ChannelHistoryNotFoundError
+  | VideoNotFoundError
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService

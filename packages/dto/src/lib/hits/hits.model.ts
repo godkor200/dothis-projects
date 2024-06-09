@@ -5,7 +5,9 @@ import { zChannelHistoryModel } from '../channel-history';
 export const zDailyViewData = z.object({
   date: z.string(),
 
-  uniqueVideoCount: z.number().describe('해당하는 날짜의 산정 비디오수'),
+  uniqueVideoCount: z
+    .number()
+    .describe('해당하는 날짜의 산정 비디오수(분석 영상 수)'),
 
   increaseComments: z.number().describe('비디오 코멘트 수'),
 

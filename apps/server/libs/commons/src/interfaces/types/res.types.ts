@@ -11,6 +11,7 @@ import {
   zRanking,
   zResWordsPickData,
   zTokenExpired,
+  zVideoCountRes,
   zVideoDetails,
   zVideoModel,
   zWeeklyKeywordsList,
@@ -26,6 +27,7 @@ export interface IRes<T = undefined> {
 export class UserRes extends UserDto {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
+export class VideoCountRes extends createZodDto(extendApi(zVideoCountRes)) {}
 
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),
