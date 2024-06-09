@@ -38,55 +38,58 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
         videoCacheDao,
       );
       console.timeEnd('비디오 캐시 조회 시간');
+      if (videoCacheResult.isOk()) {
+        const videoCacheResultUnwrap = videoCacheResult.unwrap();
+        const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
+          videoIds: videoCacheResultUnwrap,
+          from: videoCacheDao.from,
+          to: videoCacheDao.to,
+        });
+        console.time('비디오 히스토리 조회 시간');
+        const videoHistoryResultPromise =
+          this.videoHistoryService.execute(videoHistoryDao);
+        console.timeEnd('비디오 히스토리 조회 시간');
 
-      const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
-        videoIds: videoCacheResult,
-        from: videoCacheDao.from,
-        to: videoCacheDao.to,
-      });
-      console.time('비디오 히스토리 조회 시간');
-      const videoHistoryResultPromise =
-        this.videoHistoryService.execute(videoHistoryDao);
-      console.timeEnd('비디오 히스토리 조회 시간');
+        console.time('채널 히스토리 조회 시간');
+        const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
+          channelIds: videoCacheResultUnwrap,
+        });
+        const channelHistoryResultPromise =
+          this.channelHistoryService.execute(channelHistoryDao);
+        console.timeEnd('채널 히스토리 조회 시간');
 
-      console.time('채널 히스토리 조회 시간');
-      const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
-        channelIds: videoCacheResult,
-      });
-      const channelHistoryResultPromise =
-        this.channelHistoryService.execute(channelHistoryDao);
-      console.timeEnd('채널 히스토리 조회 시간');
+        console.time('비동기 작업 병렬 처리 시간');
+        const [videoHistoryResult, channelHistoryResult] = await Promise.all([
+          videoHistoryResultPromise,
+          channelHistoryResultPromise,
+        ]);
+        console.timeEnd('비동기 작업 병렬 처리 시간');
 
-      console.time('비동기 작업 병렬 처리 시간');
-      const [videoHistoryResult, channelHistoryResult] = await Promise.all([
-        videoHistoryResultPromise,
-        channelHistoryResultPromise,
-      ]);
-      console.timeEnd('비동기 작업 병렬 처리 시간');
+        if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
+          console.time('조인작업 처리 시간');
+          const videoHistories = videoHistoryResult.unwrap();
+          const channelHistories = channelHistoryResult.unwrap();
+          const mergedVideoHistory = VideoDataMapper.mergeVideoData(
+            videoCacheResultUnwrap,
+            channelHistories,
+            videoHistories,
+          );
 
-      if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
-        console.time('조인작업 처리 시간');
-        const videoHistories = videoHistoryResult.unwrap();
-        const channelHistories = channelHistoryResult.unwrap();
-        const mergedVideoHistory = VideoDataMapper.mergeVideoData(
-          videoCacheResult,
-          channelHistories,
-          videoHistories,
-        );
+          const groupedData =
+            VideoAggregateService.groupDataByDate(mergedVideoHistory);
 
-        const groupedData =
-          VideoAggregateService.groupDataByDate(mergedVideoHistory);
-
-        const metricsResult =
-          VideoAggregateService.calculateMetrics(groupedData);
-        console.timeEnd('조인작업 처리 시간');
-        console.timeEnd('execute 함수 실행 시간');
-        return Ok({ success: true, data: metricsResult });
+          const metricsResult =
+            VideoAggregateService.calculateMetrics(groupedData);
+          console.timeEnd('조인작업 처리 시간');
+          console.timeEnd('execute 함수 실행 시간');
+          return Ok({ success: true, data: metricsResult });
+        }
+        if (videoHistoryResult.isErr()) {
+          return Err(videoHistoryResult.unwrapErr());
+        }
+        return Err(channelHistoryResult.unwrapErr());
       }
-      if (videoHistoryResult.isErr()) {
-        return Err(videoHistoryResult.unwrapErr());
-      }
-      return Err(channelHistoryResult.unwrapErr());
+      return Err(videoCacheResult.unwrapErr());
     } catch (e) {
       return Err(e);
     }
