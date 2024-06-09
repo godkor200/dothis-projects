@@ -46,8 +46,8 @@ export const zSortQuery = (enumElement: Array<string>) => {
         )
         .optional(),
       order: z
-        .enum(['ASC', 'DESC'] as const)
-        .default('ASC')
+        .enum(['asc', 'desc'] as const)
+        .default('asc')
         .optional(),
     })
     .describe('소트 쿼리');
@@ -63,6 +63,11 @@ export const zPaginatedOffsetQuery = z
 export const zPaginatedIgniteQueryParams = zSearchKeyword
   .merge(zPaginatedOffsetQuery)
   .merge(zDateQuery);
+
+export const zPaginatedIgniteQuerySort = zPaginatedIgniteQueryParams.merge(
+  zSortQuery(['videoViews']),
+);
+
 export const zTotalData = z
   .object({ total: z.number() })
   .describe('토탈 데이터 resp');
