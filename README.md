@@ -147,4 +147,15 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 pnpm dlx turbo link
 ```
 
-배포 기능 구현중
+
+
+### 필요한 라이브러리 다운로드
+
+logstash 컨테이너를 실행하기 위해서는 MySQL Connector/J가 필요합니다. 다음 단계에 따라 설치하세요.
+[ref](./docker-compose.yml)
+#### MySQL Connector/J 설치 방법
+MySQL Connector/J 다운로드: [MySQL 공식 홈페이지](https://dev.mysql.com/downloads/connector/j/)에서 MySQL Connector/J를 다운로드하세요.
+
+선택한 버전 다운로드: 버전 8.0.26를 선택하여 다운로드합니다.
+
+압축 해제: 다운로드한 파일을 압축 해제하고, mysql-connector-java-8.0.26.jar 파일을 프로젝트의 /apps/server/logstash/ 디렉토리에 복사합니다.
