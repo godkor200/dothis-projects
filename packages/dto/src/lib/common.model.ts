@@ -44,6 +44,7 @@ export const zSortQuery = (enumElement: Array<string>) => {
         .describe(
           '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
         )
+        .default(snakeCaseEnumElement[0])
         .optional(),
       order: z
         .enum(['asc', 'desc'] as const)
