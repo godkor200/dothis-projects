@@ -89,7 +89,7 @@ const GptTest = ({
       .attr('y', y(0))
       .attr('height', 0)
       .attr('width', x.bandwidth())
-      .merge(bars)
+
       .transition()
       .delay(1000)
       .attr('x', (d, i) => {
