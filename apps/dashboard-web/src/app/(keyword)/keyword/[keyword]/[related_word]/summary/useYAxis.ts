@@ -4,7 +4,7 @@ import { forwardRef, useImperativeHandle, useRef } from 'react';
 import type { DataItem } from './SummaryChart';
 
 interface YAxisRef {
-  y: D3.ScaleLinear<number, number>;
+  //   y: D3.ScaleLinear<number, number>;
   render: () => void;
 }
 
@@ -18,7 +18,7 @@ interface Dimensions {
 }
 
 interface Props {
-  chartSelector: D3.Selection<SVGSVGElement | null, unknown, null, undefined>;
+  chartSelector: D3.Selection<D3.BaseType, unknown, HTMLElement, any>;
   data: DataItem[];
   dimensions: Dimensions;
   styleMethod?: (selection: D3.Selection<any, any, any, any>) => void;
@@ -40,7 +40,7 @@ const useYAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
     () => ({
       render: () => {
         const yAxisCallback = (
-          g: D3.Selection<SVGGElement, unknown, null, undefined>,
+          g: D3.Selection<SVGGElement, unknown, HTMLElement, undefined>,
         ) =>
           g
             .attr('transform', `translate(${marginLeft}, 0)`)
@@ -50,8 +50,9 @@ const useYAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
           .append('g')
           // .attr('transform', `translate(${marginLeft},0)`)
           .call(yAxisCallback)
-          .call((g: D3.Selection<SVGGElement, unknown, null, undefined>) =>
-            g.select('.domain').remove(),
+          .call(
+            (g: D3.Selection<SVGGElement, unknown, HTMLElement, undefined>) =>
+              g.select('.domain').remove(),
           )
           .attr('class', 'grid')
           .attr('class', function (d) {
@@ -65,12 +66,11 @@ const useYAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
           .selectAll('text')
           .remove();
       },
-      y: y,
     }),
     [chartSelector, width, data],
   );
 
-  return yAxisRef;
+  return { y, yAxisRef };
 };
 
 export default useYAxis;
