@@ -1,10 +1,9 @@
 import * as D3 from 'd3';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
 import type { DataItem } from './SummaryChart';
 
 interface XAxisRef {
-  x: D3.ScaleBand<string>;
   render: () => void;
 }
 
@@ -18,7 +17,7 @@ interface Dimensions {
 }
 
 interface Props {
-  chartSelector: D3.Selection<SVGSVGElement | null, unknown, null, undefined>;
+  chartSelector: D3.Selection<D3.BaseType, unknown, HTMLElement, any>;
   data: DataItem[];
   dimensions: Dimensions;
   styleMethod?: (selection: D3.Selection<any, any, any, any>) => void;
@@ -38,7 +37,7 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
     () => ({
       render: () => {
         const xAxisCallback = (
-          g: D3.Selection<SVGGElement, unknown, null, undefined>,
+          g: D3.Selection<SVGGElement, unknown, HTMLElement, undefined>,
         ) => {
           return g
             .attr('transform', `translate(0, ${height - marginBottom})`)
@@ -56,8 +55,9 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
         chartSelector
           .append('g')
           .call(xAxisCallback)
-          .call((g: D3.Selection<SVGGElement, unknown, null, undefined>) =>
-            g.select('.domain').remove(),
+          .call(
+            (g: D3.Selection<SVGGElement, unknown, HTMLElement, undefined>) =>
+              g.select('.domain').remove(),
           )
           .call((xAxis) => {
             if (styleMethod) {
@@ -67,12 +67,11 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
           .selectAll('text')
           .attr('transform', 'translate(0,10)');
       },
-      x: x,
     }),
     [chartSelector, width, data],
   );
 
-  return xAxisRef;
+  return { xAxisRef, x };
 };
 
 export default useXAxis;
