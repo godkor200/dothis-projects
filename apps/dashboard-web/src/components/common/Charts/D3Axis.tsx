@@ -255,7 +255,6 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     const line2 = D3.line<(typeof data2d3)[number]>()
       .x((datum) => Number(x(datum.date)) + x.bandwidth() / 2)
       .y((datum) => y2(datum.value as number))
-
       .curve(D3.curveCatmullRom);
 
     const convertRemToPixels = (rem: number) => {
