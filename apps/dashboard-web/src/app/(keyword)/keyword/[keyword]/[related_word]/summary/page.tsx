@@ -3,14 +3,16 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
+import SummaryChart from './SummaryChart';
 
 const SummaryTab = ({
-  keyword,
-  relatedWord,
+  params,
 }: {
-  keyword: string;
-  relatedWord: string;
+  params: { keyword: string; related_word: string };
 }) => {
+  const keyword = decodeURIComponent(params.keyword);
+  const relatedWord = decodeURIComponent(params.related_word);
+
   return (
     <div className="mt-[20px] flex flex-col gap-[20px]">
       <Link
@@ -99,8 +101,8 @@ const SummaryTab = ({
                       className={cn(
                         'flex  items-center justify-between px-[36px] text-error ',
                         {
-                          'text-green': green === item,
-                          'text-sky': blue === item,
+                          'text-[#34D399]': green === item,
+                          'text-[#818CF8]': blue === item,
                         },
                       )}
                     >
@@ -118,16 +120,9 @@ const SummaryTab = ({
         <BoxFrame>
           <div>
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              소재 전망
+              키워드 분석 결과 비교
             </p>
-
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">보통</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                검색에 의한 노출이 줄어드니 추천 알고리즘에 대비한 전략을
-                준비하세요.
-              </p>
-            </div>
+            <SummaryChart />
           </div>
         </BoxFrame>
       </div>
