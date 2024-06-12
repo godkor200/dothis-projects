@@ -143,7 +143,7 @@ const MainSearchbar = () => {
           <SvgComp
             icon="SearchIcon"
             size={16}
-            className="ml-auto [&_path]:fill-[#F0516D]"
+            className="ml-auto cursor-pointer [&_path]:fill-[#F0516D]"
           />
         )}
       </div>
@@ -167,6 +167,10 @@ const MainSearchbar = () => {
                     //     return;
                     //   }}
                     key={item}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      router.push(`/keyword/${item.replace('*', '')}`);
+                    }}
                   >
                     <SvgComp
                       icon="BorderSearchIcon"
@@ -179,10 +183,6 @@ const MainSearchbar = () => {
                       //   console.log('check');
                       //   router.push(`/keyword/${item.replace('*', '')}`);
                       // }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
-                      }}
                     />
                     <span
                       dangerouslySetInnerHTML={{
@@ -192,10 +192,6 @@ const MainSearchbar = () => {
                             regex,
                             '<span style="font-weight: bold; ">$1</span>',
                           ),
-                      }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
                       }}
                     />
                   </div>
