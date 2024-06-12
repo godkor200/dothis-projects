@@ -44,7 +44,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
         element: `조회수 ${compactNumber.format(item.videoViews)}`,
         uploadDate: dayjs(item.videoPublished).format('YYYY-MM-DD'),
         image: externalYouTubeImageLoader(item.videoId),
-        link: item.channelId,
+        link: item.videoId,
       };
     });
 
@@ -127,7 +127,10 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
               className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid"
               key={title + index}
             >
-              <Link href={`${link}` as Route} target="_blank">
+              <Link
+                href={`https://www.youtube.com/watch?v=${link}` as Route}
+                target="_blank"
+              >
                 <div className="relative aspect-video overflow-hidden bg-black">
                   <Image
                     unoptimized
