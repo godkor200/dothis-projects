@@ -46,6 +46,7 @@ export class GetVideoPaginatedPageSortQuery extends createZodDto(
 ) {
   constructor(props: GetVideoPaginatedPageSortQuery) {
     super();
+    Object.assign(this, props);
   }
 }
 

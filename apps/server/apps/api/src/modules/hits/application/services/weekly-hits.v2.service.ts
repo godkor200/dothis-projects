@@ -24,8 +24,7 @@ export class WeeklyHitsV2Service implements WeeklyHitsV2InboundPort {
         );
       if (result.isOk()) {
         const unwrap = result.unwrap();
-        const total = unwrap.count;
-        const data = unwrap.data;
+
         return Ok({
           success: true,
           body: {

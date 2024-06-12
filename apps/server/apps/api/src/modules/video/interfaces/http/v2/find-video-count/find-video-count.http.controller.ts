@@ -32,6 +32,7 @@ import { TFindVideoCount } from '@Apps/modules/video/application/queries/v1/find
 const c = nestControllerContract(apiRouter.video);
 const videoCount = c.getVideoCount;
 const { summary, responses, description } = videoCount;
+
 @ApiTags('영상')
 @Controller()
 export class FindVideosCountHttpController {
@@ -41,7 +42,18 @@ export class FindVideosCountHttpController {
     summary,
     description,
   })
-  @ApiOkResponse({ type: VideoCountRes })
+  @ApiOkResponse({
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          date: { type: 'string', example: '2024-01-01' },
+          number: { type: 'integer', example: 1 },
+        },
+      },
+    },
+  })
   @ApiNotFoundResponse({ description: VideoNotFoundError.message })
   @ApiInternalServerErrorResponse({
     type: InternalServerErr,
@@ -50,7 +62,7 @@ export class FindVideosCountHttpController {
     return tsRestHandler(videoCount, async ({ query }) => {
       const dto = new FindVideoCountDto(query);
 
-      const result = await this.queryBus.execute(dto);
+      const result: TFindVideoCount = await this.queryBus.execute(dto);
 
       return match<TFindVideoCount, TTsRestRes<IRes<VideoCountRes>>>(result, {
         Ok: (result) => ({

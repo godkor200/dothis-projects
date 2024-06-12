@@ -3,6 +3,8 @@ FROM node:20.14.0-alpine
 
 # pnpm 글로벌 설치
 RUN npm install -g pnpm
+# TypeScript 설치
+RUN npm install -g typescript
 
 # 작업 디렉토리 설정 및 파일 복사
 WORKDIR /app

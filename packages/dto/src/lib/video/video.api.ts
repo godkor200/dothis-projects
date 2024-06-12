@@ -1,16 +1,10 @@
 import { c } from '../contract';
-
-import {
-  isVideoModel,
-  zAccVideoModel,
-  zVideoModel,
-  zVideoResponse,
-} from './video.model';
+import { zAccVideoModel, zVideoModel, zVideoResponse } from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
   zClusterNumberMulti,
   zPaginatedIgniteQueryParams,
-  zSearchKeyword,
+  zPaginatedIgniteQuerySort,
   zTotalData,
 } from '../common.model';
 import {
@@ -18,7 +12,6 @@ import {
   zFindAccumulateQuery,
   zFindIndividualVideoInfoParams,
   zFindVideoBySearchKeyword,
-  zFindVideoPageWithClusterQuery,
   zGetAdsRelatedTopHits,
   zGetAdsRelatedTopHitsRes,
   zGetVideoAdsInfoRes,
@@ -54,14 +47,13 @@ export const videoApi = c.router({
   getVideoPageV2: {
     method: 'GET',
     path: `${videoBaseApiUrl}`,
-    query: zFindVideoPageWithClusterQuery,
+    query: zPaginatedIgniteQuerySort,
     responses: {
       200: zVideoResponse,
       ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다. v2',
-    description:
-      '관련어와 탐색어를 기준으로 비디오를 가져옵니다. 마지막 _id를 last에 넣고 다시 요청하면 다음 페이지의 비디오 리스트를 받을수 있습니다. 쿼리로 cluster를 배열로 넣고 한번 호출하고 페이지네이션 기능구현하시면 됩니다',
+    description: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
   },
   getVideoAdsInfo: {
     method: 'GET',

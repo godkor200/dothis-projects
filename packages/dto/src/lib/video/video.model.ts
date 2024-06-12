@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { number, z } from 'zod';
 import { dataObject } from '../common.model';
 import { zPredictedViews, zVideoDetails, zVideoPrediction } from './video.zod';
 
@@ -52,20 +52,22 @@ export const zVideoRes = z.object({
   total: z.number(),
   data: z.array(zVideo),
 });
-export const zVideoPublishCountData = z.record(
-  z
-    .string()
-    .refine(
-      (dateString) => {
-        // 날짜 형식 검증 (YYYYMMDD)
-        return /^\d{4}\d{2}\d{2}$/.test(dateString);
-      },
-      {
-        message: '날짜는 YYYYMMDD 형식이어야 합니다.',
-      },
-    )
-    .describe('영상 발행 날짜'),
-  z.number().describe('해당 날짜의 영상수').default(0),
+export const zVideoPublishCountData = z.array(
+  z.object({
+    date: z
+      .string()
+      .refine(
+        (dateString) => {
+          // 날짜 형식 검증 (YYYYMMDD)
+          return /^\d{4}\d{2}\d{2}$/.test(dateString);
+        },
+        {
+          message: '날짜는 YYYYMMDD 형식이어야 합니다.',
+        },
+      )
+      .describe('영상 발행 날짜'),
+    number: z.number().describe('해당 날짜의 영상수').default(0),
+  }),
 );
 
 export const zVideoModel = dataObject(zVideoRes);

@@ -20,16 +20,23 @@ export class FindVideoCountService
   ) {}
 
   private countVideosByDate(videoData: VideoCacheRecord) {
-    const counts = {};
+    let counts = [];
 
     for (const cluster in videoData) {
       const videos = videoData[cluster];
       videos.forEach((video) => {
         const date = video.publishedDate;
-        if (counts[date]) {
-          counts[date]++;
+        const formattedDate = `${date.slice(0, 4)}-${date.slice(
+          4,
+          6,
+        )}-${date.slice(6, 8)}`;
+
+        const countItem = counts.find((item) => item.date === formattedDate);
+
+        if (countItem) {
+          countItem.number++;
         } else {
-          counts[date] = 1;
+          counts.push({ date: formattedDate, number: 1 });
         }
       });
     }
@@ -41,6 +48,7 @@ export class FindVideoCountService
     try {
       const dao = new GetVideoCacheDao(dto);
       const cache = await this.videoCacheService.execute(dao);
+
       if (cache.isOk()) {
         return Ok(this.countVideosByDate(cache.unwrap()));
       }

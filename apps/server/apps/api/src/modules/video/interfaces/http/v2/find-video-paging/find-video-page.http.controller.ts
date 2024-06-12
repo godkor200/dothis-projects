@@ -3,7 +3,6 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
@@ -15,7 +14,10 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IPagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
+import {
+  IIgnitePagingRes,
+  IPagingRes,
+} from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import {
   VideoRes,
   IRes,
@@ -28,19 +30,18 @@ import {
   GetVideoPaginatedPageSortQuery,
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
-
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 const c = nestControllerContract(apiRouter.video);
-const findVideoPage = c.getVideoPageV2;
-const { summary, responses, description } = findVideoPage;
+const videoPagenation = c.getVideoPageV2;
+const { summary, responses, description } = videoPagenation;
 
 @ApiTags('영상')
 @Controller()
 export class FindVideoPageHttpController {
   constructor(private readonly queryBus: QueryBus) {}
-  @TsRestHandler(findVideoPage)
+  @TsRestHandler(videoPagenation)
   @ApiOperation({
     summary,
     description,
@@ -51,11 +52,11 @@ export class FindVideoPageHttpController {
     type: InternalServerErr,
   })
   async execute(@Query() query: GetVideoPaginatedPageSortQuery) {
-    return tsRestHandler(findVideoPage, async ({ query }) => {
+    return tsRestHandler(videoPagenation, async ({ query }) => {
       const arg = new GetVideoPaginatedPageSortDto(query);
       const data: TGetVideoPage = await this.queryBus.execute(arg);
 
-      return match<TGetVideoPage, TTsRestRes<IRes<IPagingRes>>>(data, {
+      return match<TGetVideoPage, TTsRestRes<IRes<IIgnitePagingRes>>>(data, {
         Ok: (result) => ({
           status: 200,
           body: {

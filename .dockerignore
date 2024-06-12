@@ -12,3 +12,5 @@ LICENSE
 /apps/server/node_modules/
 /apps/server/db/
 /apps/server/logstash/
+/packages/dto/tsconfig.tsbuildinfo
+

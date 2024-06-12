@@ -118,3 +118,4 @@ export const zAuth = z.object({
     .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')")
     .optional(),
 });
+export const zOnlyLimit = zPaginatedQuery.pick({ limit: true });

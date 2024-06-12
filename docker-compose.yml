@@ -16,6 +16,7 @@ services:
       - dev-server
     networks:
       - dev-dothis-network
+
   dev-server:
     container_name: api-server
     build:
@@ -38,6 +39,7 @@ services:
     restart: always
     networks:
       - dev-dothis-network
+
   db-mysql:
     platform: linux/arm64/v8
     container_name: dothis-mysql
@@ -61,6 +63,7 @@ services:
       - 3306:3306
     networks:
       - dev-dothis-network
+
   cache-redis:
     platform: linux/arm64/v8
     container_name: dothis-redis
@@ -79,90 +82,7 @@ services:
       - 6379:6379
     networks:
       - dev-dothis-network
-  opensearch-node1:
-    image: opensearchproject/opensearch:latest
-    container_name: opensearch-node1
-    environment:
-      - OPENSEARCH_PASSWORD=Dothis123!
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Dothis123!
-      - cluster.name=opensearch-cluster
-      - node.name=opensearch-node1
-      - discovery.seed_hosts=opensearch-node1,opensearch-node2
-      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
-      - bootstrap.memory_lock=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    volumes:
-      - ./apps/server/db/opensearch/opensearch-data1:/usr/share/opensearch/data
-    ports:
-      - 9200:9200
-      - 9600:9600
-    networks:
-      - dev-dothis-network
-
-  opensearch-node2:
-      image: opensearchproject/opensearch:latest
-      container_name: opensearch-node2
-      environment:
-        - OPENSEARCH_PASSWORD=Dothis123!
-        - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Dothis123!
-        - cluster.name=opensearch-cluster
-        - node.name=opensearch-node2
-        - discovery.seed_hosts=opensearch-node1,opensearch-node2
-        - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
-        - bootstrap.memory_lock=true
-        - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
-        nofile:
-          soft: 65536
-          hard: 65536
-      volumes:
-        - ./apps/server/db/opensearch/opensearch-data2:/usr/share/opensearch/data
-      networks:
-        - dev-dothis-network
-
-  opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:latest
-    container_name: opensearch-dashboards
-    ports:
-      - 5601:5601
-    environment:
-      - OPENSEARCH_HOSTS=["https://opensearch-node1:9200","https://opensearch-node2:9200"]
-      - OPENSEARCH_USERNAME=admin
-      - OPENSEARCH_PASSWORD=Dothis123!
-    networks:
-      - dev-dothis-network
-
-  logstash:
-    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.2
-    container_name: logstash
-    volumes:
-      - ./apps/server/logstash/last_run_metadata/:/usr/share/logstash/last_run_metadata/
-      - ./apps/server/logstash/pipeline:/usr/share/logstash/pipeline
-      - ./apps/server/logstash/mysql-connector-java-8.0.26/mysql-connector-java-8.0.26.jar:/usr/share/logstash/mysql-connector-java.jar
-      - ./apps/server/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-    environment:
-      - "LS_JAVA_OPTS=-Xms2g -Xmx4g"
-    ports:
-      - "5044:5044"
-    restart: always
-    networks:
-      - dev-dothis-network
-
-volumes:
-  opensearch-data1:
-  opensearch-data2:
 
 networks:
   dev-dothis-network:
     driver: bridge
-

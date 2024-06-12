@@ -19,6 +19,7 @@ import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastru
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
@@ -28,6 +29,7 @@ export type TGetRankingRelatedWordsRes = Result<
   | RelatedWordsNotFoundError
   | ChannelHistoryNotFoundError
   | VideoNotFoundError
+  | KeywordsNotFoundError
 >;
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
