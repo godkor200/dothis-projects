@@ -17,7 +17,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
 
   return (
     <div className="px-[66px]">
-      <div className="mx-auto mt-[40px] max-w-[1700px]">
+      <div className="mx-auto my-[40px] max-w-[1700px]">
         <div className="">
           <h2 className="mb-[20px] text-[20px] font-bold">검색어 결과</h2>
           <div className="grid grid-rows-[140px_460px] gap-[20px]">
@@ -87,7 +87,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
             <div className="grid grid-cols-[repeat(1,minmax(1300px,1fr))] gap-[20px]">
               <BoxFrame>
                 <div className="flex flex-col gap-[20px] overflow-hidden">
-                  <p className="text-grey600 mb-[20px] text-[14px]">
+                  <p className="text-grey600 text-[14px]">
                     <span className="text-primary500">{keyword}</span> 관련 인기
                     유튜브
                   </p>
@@ -95,7 +95,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     <MediaImageCard keyword={keyword} />
                   </div>
 
-                  <p className="text-grey600 mb-[20px] text-[14px]">
+                  <p className="text-grey600 text-[14px]">
                     <span className="text-primary500">{keyword}</span> 관련 뉴스
                   </p>
                   <div className="flex justify-between gap-[24px]">
