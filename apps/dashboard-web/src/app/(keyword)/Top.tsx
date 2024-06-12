@@ -86,7 +86,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
           </>
         ) : (
           <Link href="/auth">
-            <div className="text-grey700 rounded-8 border-grey700 border-2 px-4  py-2 text-[14px] font-bold">
+            <div className="text-grey700 rounded-8 bg-primary100  px-[52px]  py-[13px] text-[14px] font-bold">
               로그인
             </div>
           </Link>
