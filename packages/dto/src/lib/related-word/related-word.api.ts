@@ -144,7 +144,7 @@ export const relatedWordsApi = c.router({
   },
   getKeywordInformation: {
     method: 'GET',
-    path: `${keywordApiUrl}/:search/Information`,
+    path: `${keywordApiUrl}/:search/information`,
     pathParams: zSearch,
     responses: {
       200: zGetKeywordInformationRes,
