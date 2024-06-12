@@ -3,12 +3,17 @@ import {
   zCombinedViewsData,
   zDailyViews,
   zExpectedViews,
+  zKeywordThisWeeklyRes,
   zWeeklyKeywordsList,
 } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
-import { zClusterNumber, zClusterNumberMulti } from '../common.model';
+import {
+  zClusterNumber,
+  zClusterNumberMulti,
+  zOnlyLimit,
+} from '../common.model';
 import { zGetWeeklyViewsBySomeQuery, zGetWeeklyViewsQuery } from './hits.zod';
 
 export const expectedHitsApiUrl = '/expectation';
@@ -123,5 +128,14 @@ export const hitsApi = c.router({
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to) 로 일일조회수,기대 조회수를 출력합니다.',
+  },
+  getKeywordThisWeekly: {
+    method: 'GET',
+    path: `${weeklyApiUrl}/keyword`,
+    query: zOnlyLimit,
+    responses: { 200: zKeywordThisWeeklyRes, ...zErrResBase },
+    summary: '이번주 키워드 변동량에 따른 상위 리스트를 출력합니다.',
+    description:
+      '이번주 키워드 변동량에 따른 상위 리스트를 출력합니다. limit로 갯수를 제한합니다. ',
   },
 });

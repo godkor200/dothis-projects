@@ -44,10 +44,11 @@ export const zSortQuery = (enumElement: Array<string>) => {
         .describe(
           '정렬에 사용될 필드 이름을 나타냅니다. 문자열 값을 가질 수 있습니다.',
         )
+        .default(snakeCaseEnumElement[0])
         .optional(),
       order: z
-        .enum(['ASC', 'DESC'] as const)
-        .default('ASC')
+        .enum(['asc', 'desc'] as const)
+        .default('asc')
         .optional(),
     })
     .describe('소트 쿼리');
@@ -63,6 +64,11 @@ export const zPaginatedOffsetQuery = z
 export const zPaginatedIgniteQueryParams = zSearchKeyword
   .merge(zPaginatedOffsetQuery)
   .merge(zDateQuery);
+
+export const zPaginatedIgniteQuerySort = zPaginatedIgniteQueryParams.merge(
+  zSortQuery(['videoViews']),
+);
+
 export const zTotalData = z
   .object({ total: z.number() })
   .describe('토탈 데이터 resp');
@@ -112,3 +118,4 @@ export const zAuth = z.object({
     .describe("우리 사이트 accessToken(ex:'Bearer ~~~~~~')")
     .optional(),
 });
+export const zOnlyLimit = zPaginatedQuery.pick({ limit: true });

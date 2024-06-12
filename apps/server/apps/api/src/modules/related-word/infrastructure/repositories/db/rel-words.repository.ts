@@ -9,7 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { Err, Ok, Result } from 'oxide.ts';
 import { ZodObject } from 'zod';
-import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export class RelatedWordsRepository
   extends SqlRepositoryBase<RelatedWordsEntity, RelatedWordModel>
@@ -28,16 +29,12 @@ export class RelatedWordsRepository
     keyword: string,
   ): Promise<RelatedWordsRepositoryFindOneByKeywordRes> {
     try {
-      const res = Ok(
-        await this.repository
-          .createQueryBuilder(this.tableName)
-          .where({ keyword })
-          .getOne(),
-      );
-      if (!res) {
-        return Err(new RelatedWordsNotFoundError());
-      }
-      return res;
+      const res = await this.repository
+        .createQueryBuilder(this.tableName)
+        .where({ keyword })
+        .getOne();
+      if (!res) return Err(new KeywordsNotFoundError());
+      return Ok(res);
     } catch (e) {
       return Err(e);
     }

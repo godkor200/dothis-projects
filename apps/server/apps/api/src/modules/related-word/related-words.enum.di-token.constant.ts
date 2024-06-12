@@ -23,3 +23,13 @@ export const CACHE_SET_DIC_TERM = Symbol('CACHE_SET_DIC_TERM');
 export const RANKING_V2_SERVICE_DI_TOKEN = Symbol(
   'RANKING_V2_SERVICE_DI_TOKEN',
 );
+/**
+ * 연관어 랭킹 redis에서 받아오는 id_token
+ */
+export const GET_RANKING_RELATED_WORD_DI_TOKEN = Symbol(
+  'GET_RANKING_RELATED_WORD_DI_TOKEN',
+);
+
+export const SET_RANKING_RELATED_WORD_DI_TOKEN = Symbol(
+  'SET_RANKING_RELATED_WORD_DI_TOKEN',
+);

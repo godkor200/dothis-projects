@@ -14,4 +14,8 @@ export default registerAs('redis', () => ({
     password: process.env.REDIS_ON_PROMISE_PASSWORD,
     node: process.env.REDIS_ON_PROMISE_NODE,
   },
+
+  ranking: {
+    node: process.env.REDIS_RANKING_NODE,
+  },
 }));

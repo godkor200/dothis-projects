@@ -1,3 +1,5 @@
+import { GetWeeklyKeywordService } from '@Apps/modules/hits/application/services/get-weekly-keyword.service';
+
 export const WEEKLY_VIEWS_SERVICE_DI_TOKEN = Symbol(
   'WEEKLY_VIEWS_SERVICE_DI_TOKEN',
 );
@@ -46,4 +48,7 @@ export const ANALYSIS_HITS_SERVICE_DI_TOKEN = Symbol(
 );
 export const ANALYSIS_HITS_V2_SERVICE_DI_TOKEN = Symbol(
   'ANALYSIS_HITS_V2_SERVICE_DI_TOKEN',
+);
+export const GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN = Symbol(
+  'GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN',
 );

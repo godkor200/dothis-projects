@@ -8,4 +8,9 @@ npm-debug.log
 *.env
 *.md
 LICENSE
-*.yml
+*.yml/node_modules/
+/apps/server/node_modules/
+/apps/server/db/
+/apps/server/logstash/
+/packages/dto/tsconfig.tsbuildinfo
+
