@@ -202,7 +202,7 @@ const MainSearchbar = () => {
               <p className="text-grey500 text-[14px]">두디스 추천 검색어</p>
 
               <div className="mt-[20px] flex flex-wrap gap-[10px]  ">
-                {isSignedIn &&
+                {isSignedIn ? (
                   keyword.map((item) => (
                     <div
                       className="border-grey400 rounded-[40px] border px-[10px] py-[7px] text-[14px] font-bold"
@@ -210,7 +210,14 @@ const MainSearchbar = () => {
                     >
                       {item}
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className="flex flex-grow justify-center">
+                    <p className="text-grey700 text-[14px] font-bold">
+                      간편 로그인으로 취향에 맞는 키워드를 추천받으세요.
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           )}
