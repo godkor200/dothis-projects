@@ -30,10 +30,12 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
       )}
     >
       <div className="mr-[66px] flex items-center gap-[53px]">
-        <div className="my-[24px] ml-[28px] flex items-center gap-[8px] ">
-          <SvgComp icon="SideLogo" size={30} />
-          <SvgComp icon="LogoTitle" width={100} height={40} />
-        </div>
+        <Link href={'/'}>
+          <div className="my-[24px] ml-[28px] flex cursor-pointer items-center gap-[8px]">
+            <SvgComp icon="SideLogo" size={30} />
+            <SvgComp icon="LogoTitle" width={100} height={40} />
+          </div>
+        </Link>
 
         <SvgComp
           icon="ArrowLeft"
