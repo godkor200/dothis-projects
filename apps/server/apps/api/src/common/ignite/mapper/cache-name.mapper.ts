@@ -20,9 +20,24 @@ export class CacheNameMapper {
    * 클러스터가 1부터 100 사이의 숫자인지 확인하는 메서드
    */
   private static isValidCluster(cluster: string | number): boolean {
-    if (!this.canConvertToNumber(cluster)) return false;
+    if (cluster === 'None') return true;
+    if (!this.canConvertToNumber(cluster)) {
+      return false;
+    }
     const clusterNumber = Number(cluster);
-    return !isNaN(clusterNumber) && clusterNumber >= 0 && clusterNumber <= 100;
+    /**
+     * 클러스터 범위 0~100, NULL 까지
+     */
+    return clusterNumber >= 0 && clusterNumber <= 100;
+  }
+
+  /**
+   * 클러스터 값을 변환하는 메서드
+   * @param cluster 클러스터 값
+   */
+  private static transformCluster(cluster: string | number): string {
+    if (cluster === 'None') return 'NULL';
+    return this.formatNumber(cluster);
   }
 
   /**
@@ -60,7 +75,7 @@ export class CacheNameMapper {
     if (!this.isValidMonth(month)) {
       throw new Error(`유효하지 않은 월입니다.${month}`);
     }
-    return `${this.BASE_VIDEO_HISTORY_TABLE}_${this.formatNumber(
+    return `${this.BASE_VIDEO_HISTORY_TABLE}_${this.transformCluster(
       cluster,
     )}_${year.toString().trim()}${this.formatNumber(month)}`;
   }
@@ -84,7 +99,7 @@ export class CacheNameMapper {
     if (!this.isValidCluster(cluster)) {
       throw new Error('유효하지 않은 클러스터입니다.');
     }
-    return `${this.BASE_VIDEO_DATA_TABLE}_${this.formatNumber(cluster)}`;
+    return `${this.BASE_VIDEO_DATA_TABLE}_${this.transformCluster(cluster)}`;
   }
 
   static getChannelHistoryCacheName(year: string, month: string): string {
