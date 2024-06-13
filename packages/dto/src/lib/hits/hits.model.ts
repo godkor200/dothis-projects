@@ -5,7 +5,9 @@ import { zChannelHistoryModel } from '../channel-history';
 export const zDailyViewData = z.object({
   date: z.string(),
 
-  uniqueVideoCount: z.number().describe('해당하는 날짜의 산정 비디오수'),
+  uniqueVideoCount: z
+    .number()
+    .describe('해당하는 날짜의 산정 비디오수(분석 영상 수)'),
 
   increaseComments: z.number().describe('비디오 코멘트 수'),
 
@@ -108,6 +110,17 @@ export const zExpectedViews = z.object({
   data: zExpectedViewsArr,
 });
 
+// 각 추천 키워드 객체의 구조 정의
+export const zKeywordSchema = z.object({
+  recommendedKeyword: z.string().describe('키워드'),
+  topAssociatedWord: z.string().describe('1등 연관어'),
+  topCategoryNumber: z.string().describe('1등 카테고리 번호'),
+  rankChange: z.number().describe('변동 순위'),
+  year: z.number().describe('수집 연도'),
+  month: z.number().describe('수집 월'),
+  day: z.number().describe('수집 일'),
+});
+export const zKeywordThisWeeklyRes = z.array(zKeywordSchema);
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
 
 export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
@@ -115,3 +128,5 @@ export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
 export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
 
 export type TAnalysisViewsRes = z.TypeOf<typeof zCombinedViewsData>;
+
+export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;

@@ -1,11 +1,25 @@
-import { GetWeeklyViewsDaoV2 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
+import {
+  GetWeeklyKeyword,
+  GetWeeklyViewsDaoV2,
+} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Paginated, RepositoryPort } from '@Libs/commons/src';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { Result } from 'oxide.ts';
 
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
+import { TGetKeywordInformationRes, TKeywordThisWeeklyRes } from '@dothis/dto';
 export type TPaginatedWeeklyHitsV2Res = Result<
   Paginated<WeeklyHitsEntity>,
+  WeeklyViewsError
+>;
+
+export type TGetWeeklyKeywords = Result<
+  TKeywordThisWeeklyRes,
+  WeeklyViewsError
+>;
+
+export type TOneKeywordRes = Result<
+  TGetKeywordInformationRes,
   WeeklyViewsError
 >;
 export interface WeeklyHitsV2OutboundPort
@@ -13,4 +27,8 @@ export interface WeeklyHitsV2OutboundPort
   getPaginatedWeeklyHitsByKeywordAndCount(
     dao: GetWeeklyViewsDaoV2,
   ): Promise<TPaginatedWeeklyHitsV2Res>;
+
+  getWeeklyKeywords(dao: GetWeeklyKeyword): Promise<TGetWeeklyKeywords>;
+
+  getKeyword(keyword: string): Promise<TOneKeywordRes>;
 }

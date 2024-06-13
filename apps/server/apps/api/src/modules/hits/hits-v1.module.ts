@@ -12,6 +12,7 @@ import {
   ANALYSIS_HITS_SERVICE_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   EXPECTED_HITS_SERVICE_DI_TOKEN,
+  GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
   HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
   PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
   VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
@@ -49,6 +50,9 @@ import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { AnalysisHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/analysis-hits/analysis-hits.v1.http.controller';
 import { AnalysisHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v1.query-handler';
 import { AnalysisHitsService } from '@Apps/modules/hits/application/services/analysis-hits.service';
+import { GetWeeklyKeywordQueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-keyword.query-handler';
+import { GetWeeklyKeywordService } from '@Apps/modules/hits/application/services/get-weekly-keyword.service';
+import { GetWeeklyKeywordHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-keyword/get-weekly-keyword.http.controller';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -59,6 +63,7 @@ const queries: Provider[] = [
   GetProbabilitySuccessQueryHandler,
   GetSomeWeeklyHitsV1QueryHandler,
   AnalysisHitsV1QueryHandler,
+  GetWeeklyKeywordQueryHandler,
 ];
 const service: Provider[] = [
   {
@@ -79,6 +84,10 @@ const service: Provider[] = [
     provide: ANALYSIS_HITS_SERVICE_DI_TOKEN,
     useClass: AnalysisHitsService,
   },
+  {
+    provide: GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
+    useClass: GetWeeklyKeywordService,
+  },
   ChannelHistoryAggregateService,
 ];
 const controllers = [
@@ -87,6 +96,7 @@ const controllers = [
   GetProbabilitySuccessHttpController,
   GetSomeWeeklyHitsV1HttpController,
   AnalysisHitsV1HttpController,
+  GetWeeklyKeywordHttpController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,

@@ -14,6 +14,8 @@ import { z } from 'zod';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { GetProbabilitySuccessQuery } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
 import { PickType } from '@nestjs/swagger';
+import { GetWeeklyKeywordService } from '@Apps/modules/hits/application/services/get-weekly-keyword.service';
+import { GetWeeklyKeywordDto } from '@Apps/modules/hits/application/dtos/get-weekly-keyword.dto';
 export type TWeeklyhitsSqlField = z.TypeOf<
   typeof zGetWeeklyViewsQuery.shape.sort
 >;
@@ -111,6 +113,12 @@ export class GetVideoViewsMatchingSearchOnSpecificDateDao extends GetProbability
 
   constructor(props: GetVideoViewsMatchingSearchOnSpecificDateDao) {
     super();
+    Object.assign(this, props);
+  }
+}
+export class GetWeeklyKeyword extends GetWeeklyKeywordDto {
+  constructor(props: GetWeeklyKeywordDto) {
+    super(props);
     Object.assign(this, props);
   }
 }

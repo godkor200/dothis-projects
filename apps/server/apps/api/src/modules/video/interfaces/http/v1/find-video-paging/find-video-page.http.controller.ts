@@ -25,7 +25,6 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { match } from 'oxide.ts';
 import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
-import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { PaginatedIgniteQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';

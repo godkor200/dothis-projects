@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import {
+  VideoCacheAdapterRes,
   VideoCacheOutboundPorts,
-  VideoCacheReturnType,
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { appGlobalConfig } from '@Apps/config/app/config/app.global';
 import { Redis } from 'ioredis';
-import dayjs from 'dayjs'; // dayjs 라이브러리 import
+import dayjs from 'dayjs';
+import { Err, Ok, Result } from 'oxide.ts';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error'; // dayjs 라이브러리 import
 
 @Injectable()
 export class VideoCacheAdapter implements VideoCacheOutboundPorts {
@@ -19,55 +21,67 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
     private readonly redisClient: Redis,
   ) {}
 
-  async execute(
-    dao: GetVideoCacheDao,
-  ): Promise<Record<string, VideoCacheReturnType[]>> {
-    const { search, related } = dao;
-    const period = this.appGlobalConfig.videoPublishedPeriodConstraint; // 게시 기간 제한
+  async execute(dao: GetVideoCacheDao): Promise<VideoCacheAdapterRes> {
+    const { search, related, from, to } = dao;
+    try {
+      const searchResults = await this.redisClient.smembers(search);
+      console.log(`[탐색어 count]`, searchResults.length);
+      if (!searchResults.length) return Err(new VideoNotFoundError());
+      let finalResults: string[];
 
-    const searchResults = await this.redisClient.smembers(search);
-    console.log(`[탐색어 count]`, searchResults.length);
-    let finalResults = searchResults;
+      // from과 to 사이의 날짜인지 확인하는 함수
+      const isWithinRange = (date: string, from: string, to: string) => {
+        return (
+          dayjs(date).isAfter(dayjs(from).subtract(1, 'day')) &&
+          dayjs(date).isBefore(dayjs(to).add(1, 'day'))
+        );
+      };
 
-    // 검색 결과에 대한 게시 기간 제한 적용
-    const filteredByDate = finalResults.filter((item) => {
-      const [videoId, publishDate] = item.split(':');
-      // dayjs를 사용하여 게시 날짜가 제한 기간 내인지 확인
-      return dayjs().diff(dayjs(publishDate), 'month') <= period;
-    });
+      // 검색 결과에 대한 날짜 범위 적용
+      const filteredByDateRange = searchResults.filter((item) => {
+        const [publishDate, channelId, videoId, clusterNumber] =
+          item.split(':');
 
-    if (related) {
-      const relatedResults = await this.redisClient.smembers(related);
-      console.log(`[연관어 count]`, relatedResults.length);
+        // dayjs를 사용하여 게시 날짜가 사용자가 지정한 기간 내인지 확인
+        return isWithinRange(publishDate, from, to);
+      });
 
-      const filterUCAndDate = (items: string[]) =>
-        items.filter((item) => {
-          const parts = item.split(':');
-          const publishDate = parts[1];
-          return (
-            !parts[0].startsWith('UC') &&
-            dayjs().diff(dayjs(publishDate), 'month') <= period
-          );
-        });
+      if (related) {
+        const relatedResults = await this.redisClient.smembers(related);
+        console.log(`[연관어 count]`, relatedResults.length);
+        if (!relatedResults.length) return Err(new VideoNotFoundError());
 
-      const filteredSearchResults = filterUCAndDate(filteredByDate);
-      const filteredRelatedResults = filterUCAndDate(relatedResults);
+        const filterByDateRange = (items: string[]) =>
+          items.filter((item) => {
+            const parts = item.split(':');
+            const publishDate = parts[0];
+            return isWithinRange(publishDate, from, to);
+          });
 
-      const intersectionResults = filteredSearchResults.filter((item) =>
-        filteredRelatedResults.includes(item),
+        const filteredRelatedResults = filterByDateRange(relatedResults);
+
+        const intersectionResults = filteredByDateRange.filter((item) =>
+          filteredRelatedResults.includes(item),
+        );
+
+        finalResults = intersectionResults;
+      } else {
+        finalResults = filteredByDateRange;
+      }
+
+      console.log(
+        `[Final Results Count]: ${finalResults.length}`,
+        `[Final Results]`,
+        finalResults,
       );
 
-      finalResults = intersectionResults;
+      return Ok(
+        RedisResultMapper.groupByCluster(
+          RedisResultMapper.toObjects(finalResults),
+        ),
+      );
+    } catch (e) {
+      return Err(e);
     }
-
-    console.log(
-      `[Final Results Count]: ${finalResults.length}`,
-      `[Final Results]`,
-      finalResults,
-    );
-
-    return RedisResultMapper.groupByCluster(
-      RedisResultMapper.toObjects(finalResults),
-    );
   }
 }

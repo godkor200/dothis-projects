@@ -23,6 +23,7 @@ import {
   GetVideoAndChannelViewsByDateAndKeywordsRes,
   GetVideoViewsMatchingSearchOnSpecificDateRes,
   IVideoSchema,
+  TVideoRes,
 } from '@Apps/modules/video/infrastructure/daos/video.res';
 import {
   CacheDoesNotFoundException,
@@ -34,6 +35,9 @@ import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructur
 import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 import { GetAdsRelatedTopHitsRes } from '@dothis/dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VideoNoKeywordPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video-no-keyword.paginated.adapter';
+import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
+import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -125,4 +129,7 @@ export interface IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort {
   execute<T>(
     dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
   ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes<T>>;
+}
+export interface IGetVideoVideoNoKeywordPaginatedOutboundPort {
+  execute(dao: VideoNoKeywordPaginatedDao): Promise<TVideoRes>;
 }

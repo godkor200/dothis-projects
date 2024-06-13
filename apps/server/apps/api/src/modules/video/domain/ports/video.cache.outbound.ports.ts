@@ -3,6 +3,8 @@ import {
   GetVideosMultiRelatedWordsCacheDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Result } from 'oxide.ts';
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 export type VideoCacheRecord = Record<string, VideoCacheReturnType[]>;
 export type VideoCacheReturnType = {
   publishedDate: string;
@@ -12,15 +14,17 @@ export type VideoCacheReturnType = {
 };
 
 export interface VideoCacheOutboundPorts {
-  execute(dao: GetVideoCacheDao): Promise<VideoCacheRecord>;
+  execute(dao: GetVideoCacheDao): Promise<VideoCacheAdapterRes>;
 }
 export type VideosMultiRelatedWordsCacheType = Record<
   string,
   VideoCacheReturnType[]
 >;
+
+export type VideoCacheAdapterRes = Result<VideoCacheRecord, VideoNotFoundError>;
 export type VideosMultiRelatedWordsCacheTypeResult = Result<
   VideosMultiRelatedWordsCacheType,
-  any
+  TableNotFoundException | VideoNotFoundError
 >;
 export interface VideosMultiRelatedWordsCacheOutboundPorts {
   execute(

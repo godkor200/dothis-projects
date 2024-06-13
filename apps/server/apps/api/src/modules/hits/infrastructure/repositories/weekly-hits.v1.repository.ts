@@ -6,7 +6,7 @@ import {
   WeeklyHitsV1OutboundPort,
 } from '@Apps/modules/hits/domain/ports/weekly-hits.v1.outbound.port';
 import { DataSource, Repository } from 'typeorm';
-import { undefined, ZodObject } from 'zod';
+import { ZodObject } from 'zod';
 import { GetSomeWeeklyViewsDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok } from 'oxide.ts';

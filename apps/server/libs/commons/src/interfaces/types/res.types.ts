@@ -2,7 +2,6 @@ import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import {
   zChannelAnalysis,
-  zDailyViewData,
   zExpectedViewsData,
   zGetAdsRelatedTopHitsRes,
   zGetProbabilityRes,
@@ -11,12 +10,14 @@ import {
   zRanking,
   zResWordsPickData,
   zTokenExpired,
+  zVideoCountRes,
   zVideoDetails,
   zVideoModel,
   zWeeklyKeywordsList,
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
+import { z } from 'zod';
 
 export interface IRes<T = undefined> {
   success: boolean;
@@ -26,6 +27,7 @@ export interface IRes<T = undefined> {
 export class UserRes extends UserDto {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
+export type VideoCountRes = z.infer<typeof zVideoCountRes>;
 
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),

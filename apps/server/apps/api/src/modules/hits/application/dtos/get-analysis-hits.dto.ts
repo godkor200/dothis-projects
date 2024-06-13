@@ -1,9 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import {
-  findVideoBySearchKeyword,
-  findVideoBySearchKeywordClusterNumber,
-} from '@dothis/dto';
+import { findVideoBySearchKeyword } from '@dothis/dto';
 
 export class GetAnalysisHitsQuery extends createZodDto(
   extendApi(findVideoBySearchKeyword),

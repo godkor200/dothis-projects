@@ -1,7 +1,6 @@
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export interface IGetVideoHistoryDao
   extends Pick<GetRelatedVideoAndVideoHistory, 'videoId'> {
@@ -58,5 +57,32 @@ export class GetVideoHistoryMultipleByIdAndRelatedWordsDao {
     this.videoIds = RedisResultMapper.createVideoIds(
       RedisResultMapper.groupByCluster(Object.values(props.videoIds).flat()),
     );
+  }
+}
+export class VideoNoKeywordPaginatedDao {
+  videoIds: Record<string, string[]>;
+  from: string;
+  to: string;
+  sort: string;
+  order: 'asc' | 'desc';
+  limit: string;
+  page: string;
+
+  constructor(props: {
+    videoIds: Record<string, VideoCacheReturnType[]>;
+    from: string;
+    to: string;
+    sort: string;
+    order: 'asc' | 'desc';
+    limit: string;
+    page: string;
+  }) {
+    this.videoIds = RedisResultMapper.createVideoIds(props.videoIds);
+    this.from = props.from;
+    this.to = props.to;
+    this.sort = props.sort;
+    this.order = props.order;
+    this.limit = props.limit;
+    this.page = props.page;
   }
 }

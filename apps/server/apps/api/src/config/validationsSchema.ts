@@ -39,6 +39,9 @@ export const validationSchema = Joi.object({
     .description('Redis 서버에 접속하기 위한 비밀번호입니다.'),
   REDIS_NODE: Joi.string()
     .required()
+    .description('Redis 자동완성 서버의 접속할 node number 입니다.'),
+  REDIS_RANKING_NODE: Joi.string()
+    .required()
     .description('Redis on promise 서버의 접속할 node number 입니다.'),
   AWS_CREDENTIAL_KEY: Joi.string()
     .required()

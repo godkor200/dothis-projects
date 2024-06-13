@@ -1,3 +1,7 @@
+import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { Result } from 'oxide.ts';
+
 export interface DateData {
   year: number;
   month: number;
@@ -46,3 +50,7 @@ export interface GetVideoViewsPerformanceMatchingSearchOnSpecificDate
   videoPerformance: number;
   videoDuration: number;
 }
+export type TVideoRes = Result<
+  IVideoSchema[],
+  TableNotFoundException | VideoNotFoundError
+>;
