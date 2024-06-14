@@ -34,8 +34,8 @@ const useGetSingleVideo = (
     to,
     limit,
     page,
-    queryKeyIndex,
-  }: KeywordQuery & DateQuery & PaginationQuery & { queryKeyIndex: number },
+    extraQueryKey,
+  }: KeywordQuery & DateQuery & PaginationQuery & { extraQueryKey: any },
   queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV2>,
   test?: boolean,
 ) => {
@@ -47,7 +47,7 @@ const useGetSingleVideo = (
 
   const queryResult = apiClient(2).video.getVideoPageV2.useQuery(
     VIDEODATA_KEY.list([
-      { searchKeyword, relatedkeyword, from, to, limit, page, queryKeyIndex },
+      { searchKeyword, relatedkeyword, from, to, limit, page, extraQueryKey },
     ]),
     {
       query: {
