@@ -21,25 +21,48 @@ interface PaginationQuery {
   page?: number;
 }
 
+interface DateQuery {
+  from?: string;
+  to?: string;
+}
+
+interface KeywordQuery {
+  searchKeyword: string;
+  relatedkeyword?: string;
+}
+
 export const useGetRandomMedia = ({
   mediaCategory,
   page,
   index,
+  searchKeyword,
+  relatedkeyword,
 }: {
   mediaCategory: string;
   index: number;
-} & PaginationQuery) => {
+} & PaginationQuery &
+  KeywordQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
   const { data: youtubeData } = useGetSingleVideo(
-    { searchKeyword: '아이돌', page, extraQueryKey: index },
+    {
+      searchKeyword: searchKeyword,
+      relatedkeyword: relatedkeyword ?? searchKeyword,
+      page,
+      extraQueryKey: index,
+    },
     {
       enabled: mediaCategory === 'youtube',
     },
   );
 
   const { data: newsData } = useGetSingleNews(
-    { searchKeyword: '아이돌', page, queryKeyIndex: index },
+    {
+      searchKeyword: searchKeyword,
+      relatedkeyword: relatedkeyword ?? searchKeyword,
+      page,
+      queryKeyIndex: index,
+    },
     {
       enabled: mediaCategory === 'news',
     },
