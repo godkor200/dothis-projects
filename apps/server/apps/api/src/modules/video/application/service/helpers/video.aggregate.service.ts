@@ -343,6 +343,27 @@ export class VideoAggregateService {
       dailyViews: predictedViews,
     };
   }
+
+  /**
+   * 클러스터 별로 그룹화
+   * @param data
+   */
+  static groupDataByCluster<T extends { videoCluster: number }>(
+    data: T[],
+  ): { [key: number]: T[] } {
+    return data.reduce((acc, cur) => {
+      const cluster = cur.videoCluster;
+      if (!acc[cluster]) {
+        acc[cluster] = [];
+      }
+      acc[cluster].push(cur);
+      return acc;
+    }, {});
+  }
+  /**
+   * 클러스터 별로 구룹화 되지 않은 배열을 그룹회
+   * @param data
+   */
   static groupDataByDate<T extends DateData>(
     data: T[],
   ): { [key: string]: T[] } {

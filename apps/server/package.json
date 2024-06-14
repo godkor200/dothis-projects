@@ -119,6 +119,6 @@
     "ts-node": "10.8.2",
     "tsconfig-paths": "4.0.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "typescript": "5.0.4"
+    "typescript": "^5.4.0"
   }
 }
