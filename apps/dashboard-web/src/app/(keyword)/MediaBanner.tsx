@@ -40,19 +40,15 @@ const MediaBanner = ({ randomOptios }: Props) => {
   };
 
   // 해당 useQuery 라이프사이클에서 혼동이 왔음 (select문이 해당 fetch를 성공했을 경우 한번만 출력되길 바랬는데, 안되네)
-  const firstMedia = useGetRandomMedia(
-    {
-      mediaCategory: randomOptios[0],
-      page: getCategoryOrder(randomOptios[0], 0),
-      index: 1,
-    },
-    true,
-  );
+  const firstMedia = useGetRandomMedia({
+    mediaCategory: randomOptios[0],
+    page: getCategoryOrder(randomOptios[0], 0),
+    index: 1,
+  });
   /**
    * index 프로퍼티, (category가 다른데, queryKey 중복이 일어나는걸 방지 )
    */
 
-  console.log(firstMedia);
   const secondMedia = useGetRandomMedia({
     mediaCategory: randomOptios[1],
     page: getCategoryOrder(randomOptios[1], 1),
