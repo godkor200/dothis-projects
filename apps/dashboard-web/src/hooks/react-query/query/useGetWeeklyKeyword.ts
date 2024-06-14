@@ -35,12 +35,12 @@ const useGetWeeklyKeyword = (
     ({ pageParam = 1 }) => {
       return {
         query: {
-          page: pageParam,
           limit: String(30),
           from: '2024-04-29',
           keywords: keywordList?.join(','),
           categoryNumbers: selectOptions?.map((item) => item.value).join(','),
           sort: sort,
+          page: String(pageParam),
           order: order,
         },
       };
