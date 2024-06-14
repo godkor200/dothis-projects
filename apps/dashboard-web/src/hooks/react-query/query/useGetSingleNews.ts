@@ -106,24 +106,11 @@ const useGetSingleNews = <T extends any = ServerResponse<NewsResponse>>(
     typeof retrievePosts,
     NewsResponse['return_object']['documents'][number]
   >,
-  test?: boolean,
 ) => {
   const startDate = useStartDate();
   const endDate = useEndDate();
 
   const queryClient = useQueryClient();
-
-  const cachedData = queryClient.getQueryData([
-    'news',
-    {
-      searchKeyword,
-      relatedkeyword,
-      from,
-      to,
-      limit,
-      page,
-    },
-  ]);
 
   return useQuery(
     [

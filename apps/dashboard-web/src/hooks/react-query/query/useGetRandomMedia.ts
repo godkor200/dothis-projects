@@ -21,17 +21,14 @@ interface PaginationQuery {
   page?: number;
 }
 
-export const useGetRandomMedia = (
-  {
-    mediaCategory,
-    page,
-    index,
-  }: {
-    mediaCategory: string;
-    index: number;
-  } & PaginationQuery,
-  test?: boolean,
-) => {
+export const useGetRandomMedia = ({
+  mediaCategory,
+  page,
+  index,
+}: {
+  mediaCategory: string;
+  index: number;
+} & PaginationQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
   const { data: youtubeData } = useGetSingleVideo(
@@ -39,7 +36,6 @@ export const useGetRandomMedia = (
     {
       enabled: mediaCategory === 'youtube',
     },
-    test,
   );
 
   const { data: newsData } = useGetSingleNews(
@@ -47,14 +43,9 @@ export const useGetRandomMedia = (
     {
       enabled: mediaCategory === 'news',
     },
-    test,
   );
 
   useEffect(() => {
-    if (test) {
-      console.log(youtubeData);
-      console.log(newsData);
-    }
     if (youtubeData) {
       setFetchTime(new Date().getTime());
     }
