@@ -125,7 +125,7 @@ export class WeeklyHitsV2Repository
           return '(wv.year, wv.month, wv.day) = (' + subQuery + ')';
         })
         .andWhere('wv.weekly_views >= :limit', { limit: limitViews })
-        .orderBy('changes', 'DESC')
+        .orderBy('last_ranking', 'DESC')
         .limit(Number(dao.limit));
 
       const results = await queryBuilder.getRawMany();

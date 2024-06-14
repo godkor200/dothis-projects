@@ -1,6 +1,7 @@
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 
 export interface IGetVideoHistoryDao
   extends Pick<GetRelatedVideoAndVideoHistory, 'videoId'> {
@@ -64,7 +65,7 @@ export class VideoNoKeywordPaginatedDao {
   from: string;
   to: string;
   sort: string;
-  order: 'asc' | 'desc';
+  order: TSqlParam;
   limit: string;
   page: string;
 
@@ -73,7 +74,7 @@ export class VideoNoKeywordPaginatedDao {
     from: string;
     to: string;
     sort: string;
-    order: 'asc' | 'desc';
+    order: TSqlParam;
     limit: string;
     page: string;
   }) {

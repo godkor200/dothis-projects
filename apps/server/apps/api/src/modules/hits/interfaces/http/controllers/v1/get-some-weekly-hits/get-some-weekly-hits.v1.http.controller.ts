@@ -80,7 +80,7 @@ export class GetSomeWeeklyHitsV1HttpController {
       'video_count',
       'competitive',
       'mega_channel',
-      'changes',
+      'last_ranking',
       'YEAR',
       'MONTH',
       'DAY',
@@ -91,7 +91,7 @@ export class GetSomeWeeklyHitsV1HttpController {
     type: String,
     required: false,
     description: '정렬 순서를 나타냅니다. 기본은 asc 입니다.',
-    enum: ['asc', 'desc'],
+    enum: ['asc', 'desc', 'ASC', 'DESC'],
   })
   @ApiQuery({
     name: 'keywords',

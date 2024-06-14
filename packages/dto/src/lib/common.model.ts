@@ -47,7 +47,7 @@ export const zSortQuery = (enumElement: Array<string>) => {
         .default(snakeCaseEnumElement[0])
         .optional(),
       order: z
-        .enum(['asc', 'desc'] as const)
+        .enum(['asc', 'desc', 'ASC', 'DESC'] as const)
         .default('asc')
         .optional(),
     })
