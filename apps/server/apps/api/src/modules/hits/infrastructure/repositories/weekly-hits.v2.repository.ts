@@ -39,7 +39,7 @@ export class WeeklyHitsV2Repository
         .select('wv.ranking', 'ranking')
         .addSelect('wv.category', 'category')
         .addSelect('wv.competitive', 'competitive')
-        .addSelect('wv.changes', 'changes')
+        .addSelect('wv.last_ranking', 'lastRanking')
         .where({ keyword: keyword })
         .addSelect('wv.year', 'year')
         .addSelect('wv.month', 'month')

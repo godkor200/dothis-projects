@@ -26,8 +26,8 @@ export class WeeklyHitsEntity {
   @Column({ name: 'mega_channel', type: 'int', nullable: true })
   megaChannel: number;
 
-  @Column({ name: 'changes', type: 'int', nullable: true })
-  changes: number;
+  @Column({ name: 'last_ranking', type: 'int', nullable: true })
+  lastRanking: number;
 
   @PrimaryColumn({ name: 'YEAR', type: 'int' })
   year: number;

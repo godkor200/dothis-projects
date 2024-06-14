@@ -30,14 +30,11 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   ) {}
 
   async execute(dto: GetAnalysisHitsV2Dto): Promise<TAnalysisHitsServiceRes> {
-    console.time('execute 함수 실행 시간');
     const videoCacheDao = new GetVideoCacheDao(dto);
     try {
-      console.time('비디오 캐시 조회 시간');
       const videoCacheResult = await this.videoCacheService.execute(
         videoCacheDao,
       );
-      console.timeEnd('비디오 캐시 조회 시간');
       if (videoCacheResult.isOk()) {
         const videoCacheResultUnwrap = videoCacheResult.unwrap();
         const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
@@ -45,28 +42,20 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           from: videoCacheDao.from,
           to: videoCacheDao.to,
         });
-        console.time('비디오 히스토리 조회 시간');
+
         const videoHistoryResultPromise =
           this.videoHistoryService.execute(videoHistoryDao);
-        console.timeEnd('비디오 히스토리 조회 시간');
-
-        console.time('채널 히스토리 조회 시간');
         const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
           channelIds: videoCacheResultUnwrap,
         });
         const channelHistoryResultPromise =
           this.channelHistoryService.execute(channelHistoryDao);
-        console.timeEnd('채널 히스토리 조회 시간');
-
-        console.time('비동기 작업 병렬 처리 시간');
         const [videoHistoryResult, channelHistoryResult] = await Promise.all([
           videoHistoryResultPromise,
           channelHistoryResultPromise,
         ]);
-        console.timeEnd('비동기 작업 병렬 처리 시간');
 
         if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
-          console.time('조인작업 처리 시간');
           const videoHistories = videoHistoryResult.unwrap();
           const channelHistories = channelHistoryResult.unwrap();
           const mergedVideoHistory = VideoDataMapper.mergeVideoData(
@@ -74,15 +63,29 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
             channelHistories,
             videoHistories,
           );
+          if (dto.separation) {
+            const groupDataByCluster =
+              VideoAggregateService.groupDataByCluster(mergedVideoHistory);
+            const result = Object.entries(groupDataByCluster).map(
+              ([clusterNumber, clusterData]) => {
+                const dateGroupedData =
+                  VideoAggregateService.groupDataByDate(clusterData);
+                const metrics =
+                  VideoAggregateService.calculateMetrics(dateGroupedData);
 
-          const groupedData =
+                return {
+                  clusterNumber: Number(clusterNumber),
+                  data: metrics,
+                };
+              },
+            );
+            return Ok({ success: true, data: result });
+          }
+          const dateGroupedData =
             VideoAggregateService.groupDataByDate(mergedVideoHistory);
-
-          const metricsResult =
-            VideoAggregateService.calculateMetrics(groupedData);
-          console.timeEnd('조인작업 처리 시간');
-          console.timeEnd('execute 함수 실행 시간');
-          return Ok({ success: true, data: metricsResult });
+          const metrics =
+            VideoAggregateService.calculateMetrics(dateGroupedData);
+          return Ok({ success: true, data: metrics });
         }
         if (videoHistoryResult.isErr()) {
           return Err(videoHistoryResult.unwrapErr());

@@ -35,7 +35,7 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
       .int()
       .positive()
       .describe('10만이상 구독자 채널 수'),
-    changes: z.number().int().describe('순위 변동'),
+    lastRanking: z.number().int().describe('순위 변동'),
     YEAR: z
       .number()
       .int()

@@ -7,6 +7,7 @@ export class VideoHistoryBaseAdapter {
     'VIDEO_LIKES',
     'VIDEO_COMMENTS',
     'VIDEO_PERFORMANCE',
+    'VIDEO_CLUSTER',
     'YEAR',
     'MONTH',
     'DAY',

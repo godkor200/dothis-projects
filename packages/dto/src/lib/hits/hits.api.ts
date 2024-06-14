@@ -127,7 +127,7 @@ export const hitsApi = c.router({
     responses: { 200: zCombinedViewsData, ...zErrResBase },
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
     description:
-      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to) 로 일일조회수,기대 조회수를 출력합니다.',
+      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to), 클러스터분리(separation)로 일일조회수,기대 조회수를 출력합니다.',
   },
   getKeywordThisWeekly: {
     method: 'GET',
@@ -136,6 +136,17 @@ export const hitsApi = c.router({
     responses: { 200: zKeywordThisWeeklyRes, ...zErrResBase },
     summary: '이번주 키워드 변동량에 따른 상위 리스트를 출력합니다.',
     description:
-      '이번주 키워드 변동량에 따른 상위 리스트를 출력합니다. limit로 갯수를 제한합니다. ',
+      '이번주 키워드 변동량에 따른 상위 리스트를 출력합니다. limit로 갯수를 제한합니다. ' +
+      '' +
+      '기능 개요\n' +
+      '\n' +
+      '- 이번주 키워드\n' +
+      '    - weekly_views 테이블 조회\n' +
+      '        - 필터 : weekly_views 컬럼에서 10,000,000 이상\n' +
+      '        - 정렬 : 순위 변동(change) 순 정렬\n' +
+      '        - 제한 : limit 상위 5개 추출\n' +
+      '    - 추출한 키워드의 연관어 1번 추출\n' +
+      '    - 해당 키워드, 연관어1번, 변동량 표시\n' +
+      '    - 클릭 시 해당 키워드 + 연관어 분석 페이지로 이동',
   },
 });

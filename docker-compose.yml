@@ -1,3 +1,10 @@
+x-defaults:
+  &defaults
+  init: true
+  tty: true
+  networks:
+    - dev-dothis-network
+
 services:
   nginx:
     platform: linux/arm64/v8
@@ -18,24 +25,23 @@ services:
       - dev-dothis-network
 
   dev-server:
+    <<: *defaults
     container_name: api-server
+    command: pnpm dev:back-end
+    ports:
+      - "8080"
     build:
+      args:
+        APP: server
+        START_COMMAND: dev
       context: .
-      dockerfile: Dockerfile.development
+      dockerfile: ./Dockerfile.dev
     env_file:
       - apps/server/development.env
     volumes:
-      - ./package.json:/app/package.json
-      - ./turbo.json:/app/turbo.json
-      - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
-      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
-      - ./.npmrc:/app/.npmrc
-      - ./apps/server/package.json:/app/apps/server/package.json
       - ./apps/server:/app/apps/server
-      - ./config:/app/config
-      - ./packages:/app/packages
-    ports:
-      - "8080"
+      - ./packages/dto:/app/packages/dto
+      - /app/apps/server/node_modules
     restart: always
     networks:
       - dev-dothis-network

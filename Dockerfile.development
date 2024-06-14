@@ -1,5 +1,5 @@
 # 베이스 이미지 설정
-FROM node:20.14.0-alpine
+FROM node:20.14.0-slim
 
 # pnpm 글로벌 설치
 RUN npm install -g pnpm
