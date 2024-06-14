@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import D3Axis from '@/components/common/Charts/D3Axis';
 import D3Chart from '@/components/common/Charts/D3Chart';
 
@@ -91,9 +89,8 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     <span className="text-primary500">{keyword}</span> 관련 인기
                     유튜브
                   </p>
-                  <div className="flex justify-between gap-[24px] ">
-                    <MediaImageCard keyword={keyword} />
-                  </div>
+
+                  <MediaImageCard keyword={keyword} />
 
                   <p className="text-grey600 text-[14px]">
                     <span className="text-primary500">{keyword}</span> 관련 뉴스
