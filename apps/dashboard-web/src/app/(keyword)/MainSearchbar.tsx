@@ -143,7 +143,7 @@ const MainSearchbar = () => {
           <SvgComp
             icon="SearchIcon"
             size={16}
-            className="ml-auto [&_path]:fill-[#F0516D]"
+            className="ml-auto cursor-pointer [&_path]:fill-[#F0516D]"
           />
         )}
       </div>
@@ -167,6 +167,10 @@ const MainSearchbar = () => {
                     //     return;
                     //   }}
                     key={item}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      router.push(`/keyword/${item.replace('*', '')}`);
+                    }}
                   >
                     <SvgComp
                       icon="BorderSearchIcon"
@@ -179,10 +183,6 @@ const MainSearchbar = () => {
                       //   console.log('check');
                       //   router.push(`/keyword/${item.replace('*', '')}`);
                       // }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
-                      }}
                     />
                     <span
                       dangerouslySetInnerHTML={{
@@ -193,10 +193,6 @@ const MainSearchbar = () => {
                             '<span style="font-weight: bold; ">$1</span>',
                           ),
                       }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
-                      }}
                     />
                   </div>
                 );
@@ -206,7 +202,7 @@ const MainSearchbar = () => {
               <p className="text-grey500 text-[14px]">두디스 추천 검색어</p>
 
               <div className="mt-[20px] flex flex-wrap gap-[10px]  ">
-                {isSignedIn &&
+                {isSignedIn ? (
                   keyword.map((item) => (
                     <div
                       className="border-grey400 rounded-[40px] border px-[10px] py-[7px] text-[14px] font-bold"
@@ -214,7 +210,14 @@ const MainSearchbar = () => {
                     >
                       {item}
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className="flex flex-grow justify-center">
+                    <p className="text-grey700 text-[14px] font-bold">
+                      간편 로그인으로 취향에 맞는 키워드를 추천받으세요.
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           )}

@@ -49,7 +49,7 @@ export const videoApi = c.router({
     path: `${videoBaseApiUrl}`,
     query: zPaginatedIgniteQuerySort,
     responses: {
-      200: zVideoResponse,
+      200: zVideoModel,
       ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다. v2',

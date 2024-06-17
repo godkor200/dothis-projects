@@ -30,10 +30,12 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
       )}
     >
       <div className="mr-[66px] flex items-center gap-[53px]">
-        <div className="my-[24px] ml-[28px] flex items-center gap-[8px] ">
-          <SvgComp icon="SideLogo" size={30} />
-          <SvgComp icon="LogoTitle" width={100} height={40} />
-        </div>
+        <Link href={'/'}>
+          <div className="my-[24px] ml-[28px] flex cursor-pointer items-center gap-[8px]">
+            <SvgComp icon="SideLogo" size={30} />
+            <SvgComp icon="LogoTitle" width={100} height={40} />
+          </div>
+        </Link>
 
         <SvgComp
           icon="ArrowLeft"
@@ -84,7 +86,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
           </>
         ) : (
           <Link href="/auth">
-            <div className="text-grey700 rounded-8 border-grey700 border-2 px-4  py-2 text-[14px] font-bold">
+            <div className="text-grey700 rounded-8 bg-primary100  px-[52px]  py-[13px] text-[14px] font-bold">
               로그인
             </div>
           </Link>

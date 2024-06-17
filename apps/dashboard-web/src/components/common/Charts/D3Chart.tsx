@@ -3,7 +3,9 @@
 import * as d3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
+import { cn } from '@/utils/cn';
 
 interface TransactionData {
   title: string;
@@ -55,7 +57,7 @@ const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
 const D3Chart = ({ keyword }: { keyword: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data } = useGetRankingRelWords(keyword);
+  const { data, isLoading } = useGetRankingRelWords(keyword);
 
   const circleData = data?.slice(0, 10)?.map((item, i) => ({
     title: item,
@@ -195,9 +197,16 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
   }, [ref, width, JSON.stringify(data)]);
 
   return (
-    <div className="App">
-      <div id="my_dataviz" ref={ref}></div>
-    </div>
+    <>
+      {isLoading && (
+        <BoxLoadingComponent
+          classname={cn('absolute top-3 right-3 w-[40px] h-[40px]')}
+        />
+      )}
+      <div className="App">
+        <div id="my_dataviz" ref={ref}></div>
+      </div>
+    </>
   );
 };
 

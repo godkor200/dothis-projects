@@ -8,6 +8,11 @@ import { apiClient } from '@/utils/api/apiClient';
 
 import type { Weekly_Sort_Key } from './useGetTrendingKeywords';
 
+interface PaginationQuery {
+  limit?: number;
+  page?: number;
+}
+
 const useGetWeeklyKeyword = (
   {
     startDate,
@@ -15,7 +20,11 @@ const useGetWeeklyKeyword = (
     selectOptions,
     sort,
     order,
-  }: Partial<SortingQuery<Weekly_Sort_Key>> & Partial<TrendingQuery>,
+    limit,
+    page,
+  }: Partial<SortingQuery<Weekly_Sort_Key>> &
+    Partial<TrendingQuery> &
+    PaginationQuery,
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordSome
   >,
@@ -35,12 +44,12 @@ const useGetWeeklyKeyword = (
     ({ pageParam = 1 }) => {
       return {
         query: {
-          page: pageParam,
-          limit: String(30),
-          from: '2024-04-29',
+          limit: limit ? String(limit) : String(30),
+          from: '2024-05-06',
           keywords: keywordList?.join(','),
           categoryNumbers: selectOptions?.map((item) => item.value).join(','),
           sort: sort,
+          page: String(pageParam),
           order: order,
         },
       };
