@@ -20,3 +20,5 @@ export const ADS_LIST_KEY = createQueryKeys('ads_list');
 export const DURATION_VIEWS_KEY = createQueryKeys('duration_views');
 export const NAVER_SEARCH_RATIO_KEY = createQueryKeys('naver_search_ratio');
 export const NEWS_DATA_KEY = createQueryKeys('news_data');
+
+export const UPLOAD_VIDEO_COUNT_KEY = createQueryKeys('upload_video_count');

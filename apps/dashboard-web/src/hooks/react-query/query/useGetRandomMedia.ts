@@ -85,7 +85,7 @@ export const useGetRandomMedia = ({
     [youtubeData, newsData],
   );
 
-  return { mediaResult, fetchTime };
+  return { mediaResult, fetchTime, searchKeyword, relatedkeyword };
 };
 
 // 배열에 남은수만큼

@@ -1,5 +1,10 @@
 import { c } from '../contract';
-import { zAccVideoModel, zVideoModel, zVideoResponse } from './video.model';
+import {
+  zAccVideoModel,
+  zVideoModel,
+  zVideoPublishCountData,
+  zVideoResponse,
+} from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
   zClusterNumberMulti,
@@ -123,7 +128,7 @@ export const videoApi = c.router({
     path: `${videoBaseApiUrl}/count`,
     query: findVideoBySearchKeyword,
     responses: {
-      200: zTotalData,
+      200: zVideoPublishCountData,
       ...zErrResBase,
     },
     summary: '관련어와 탐색어를 기준으로 영상 갯수를 가져옵니다.',

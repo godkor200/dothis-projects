@@ -1,5 +1,6 @@
 'use client';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -59,11 +60,10 @@ const MediaBanner = ({ randomOptios }: Props) => {
           // console.log(keywordMap.has(item.keyword));
           // console.log(item);
           hasMedia.current.set(item.keyword, item);
-          setKeywordMap((prev) => prev.set(item.keyword, item));
         }
       });
 
-      return Array.from(keywordMap.values());
+      return Array.from(hasMedia.current.values());
     },
     [JSON.stringify(rankingRelatedWord)],
   );
@@ -122,8 +122,14 @@ const MediaBanner = ({ randomOptios }: Props) => {
 
   const results = [firstMedia, secondMedia, thirdMedia]
     .filter(
-      (media): media is { mediaResult: MediaProps; fetchTime: number } =>
-        media.mediaResult !== undefined,
+      (
+        media,
+      ): media is {
+        mediaResult: MediaProps;
+        fetchTime: number;
+        searchKeyword: string;
+        relatedkeyword: string;
+      } => media.mediaResult !== undefined,
     )
     .sort((a, b) => a.fetchTime! - b.fetchTime!);
 
@@ -188,22 +194,24 @@ const MediaBanner = ({ randomOptios }: Props) => {
   return (
     <div className="flex justify-between gap-[20px] ">
       {results?.map(
-        ({ mediaResult }, index) =>
+        ({ mediaResult, searchKeyword, relatedkeyword }, index, array) =>
           mediaResult && (
-            <SelectedMediaCard
-              key={mediaResult.title + index}
-              title={mediaResult.title}
-              provider={mediaResult.provider}
-              element={mediaResult.element}
-              uploadDate={mediaResult.uploadDate}
-              image={mediaResult.image}
-              link={mediaResult.link}
-            />
+            <Link href={`/keyword/${searchKeyword}/${relatedkeyword}`}>
+              <SelectedMediaCard
+                key={mediaResult.title + index}
+                title={mediaResult.title}
+                provider={mediaResult.provider}
+                element={mediaResult.element}
+                uploadDate={mediaResult.uploadDate}
+                image={mediaResult.image}
+                link={mediaResult.link}
+              />
+            </Link>
           ),
       )}
 
       {Array.from({ length: emptyMediaLength }).map((_, i) => (
-        <SelectedMediaCard.skeleton />
+        <SelectedMediaCard.skeleton key={i} />
       ))}
     </div>
   );
