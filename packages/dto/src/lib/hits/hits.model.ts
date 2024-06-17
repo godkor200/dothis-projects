@@ -120,7 +120,7 @@ export const zKeywordSchema = z.object({
   month: z.number().describe('수집 월'),
   day: z.number().describe('수집 일'),
 });
-export const zKeywordThisWeeklyRes = z.array(zKeywordSchema);
+export const zKeywordThisWeeklyRes = dataObject(z.array(zKeywordSchema));
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
 
 export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
