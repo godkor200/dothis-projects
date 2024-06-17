@@ -27,14 +27,14 @@ const useGetVideoDataInfinityQuery = (
     keyword: string | null;
     relword: string | null;
   },
-  lastIndex_ID?: string,
+
   queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPageV1>,
 ) => {
   const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
   const clusters = getRelatedClusterArray();
 
-  const queryResults = apiClient(1).video.getVideoPageV1.useInfiniteQuery(
+  const queryResults = apiClient(2).video.getVideoPageV2.useInfiniteQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,
@@ -46,14 +46,13 @@ const useGetVideoDataInfinityQuery = (
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
     ({ pageParam = 0 }) => ({
-      params: {
-        clusterNumber: clusters.join(','),
-      },
       query: {
         limit: String(10),
         page: pageParam ? pageParam + 1 : 1,
         related: relword!,
         search: keyword!,
+        sort: 'video_views',
+        order: 'desc',
       },
     }),
     {
