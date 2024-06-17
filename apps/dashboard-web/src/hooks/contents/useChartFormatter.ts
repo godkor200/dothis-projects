@@ -11,11 +11,13 @@ import {
   handleNaverSearchRatio,
   handleNaverSearchRatioD3,
   handleScopePerformanceData,
+  handleVideoUploadCountD3,
 } from '@/utils/contents/chart';
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
+import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
 
 /**
  *
@@ -76,6 +78,32 @@ export const useSearchRatioFormatterD3 = ({
         endDate,
       }),
     [JSON.stringify(searchRatioData)],
+  );
+};
+
+export const useUploadVideoCountFormatterD3 = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: videoUploadCount } = useGetVideoUploadCount({
+    keyword,
+    relword,
+  });
+  console.log(videoUploadCount);
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () =>
+      handleVideoUploadCountD3(videoUploadCount, {
+        startDate,
+        endDate,
+      }),
+    [JSON.stringify(videoUploadCount)],
   );
 };
 
