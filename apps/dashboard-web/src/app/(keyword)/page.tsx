@@ -7,6 +7,7 @@ import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBanne
 import AdsBanner from './AdsBanner';
 import MainSearchbar from './MainSearchbar';
 import MediaBanner from './MediaBanner';
+import WeeklyKeyword from './WeeklyKeyword';
 
 const Page = () => {
   const mock_weeklyKeywordRank = [
@@ -54,6 +55,8 @@ const Page = () => {
               이번 주 키워드
             </p>
 
+            <WeeklyKeyword />
+            {/* 
             <ul className="flex flex-col gap-[15px]">
               {mock_weeklyKeywordRank.map((item, i) => (
                 <li key={i} className="gap-30 flex items-center p-[10px]">
@@ -83,7 +86,7 @@ const Page = () => {
                   </div>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
