@@ -6,6 +6,7 @@ import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import { useGetRandomMedia } from '@/hooks/react-query/query/useGetRandomMedia';
+import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useGetWeeklyKeyword from '@/hooks/react-query/query/useGetWeeklyKeyword';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
@@ -25,6 +26,58 @@ const useTest = () => {
 };
 
 const MediaBanner = ({ randomOptios }: Props) => {
+  const [sliceNumber, setSliceNumber] = useState(3);
+
+  const { data } = useGetWeeklyKeyword({ limit: 5 });
+
+  const [keywordMap, setKeywordMap] = useState<
+    Map<string, (typeof rankingRelatedWord)[number]>
+  >(new Map());
+
+  const topKeywordList = data
+    ?.map((data) => data.keyword)
+    .slice(0, sliceNumber);
+
+  const { data: rankingRelatedWord } = useGetRankingWordList(
+    topKeywordList || [],
+    {
+      onError(err) {
+        setSliceNumber((prev) => prev + 1);
+      },
+    },
+  );
+
+  console.log(data);
+
+  console.log(rankingRelatedWord);
+
+  // console.log(keywordMap.has('한국'));
+  // 정해진 인덱스읙 개념을 주입해서 넣어줘야함
+  const getFirstOccurrences = useCallback(
+    (arr: typeof rankingRelatedWord): typeof rankingRelatedWord => {
+      arr.forEach((item) => {
+        if (!keywordMap.has(item.keyword)) {
+          // console.log(keywordMap.has(item.keyword));
+          // console.log(item);
+          setKeywordMap((prev) => prev.set(item.keyword, item));
+        }
+      });
+
+      return Array.from(keywordMap.values());
+    },
+    [JSON.stringify(rankingRelatedWord)],
+  );
+
+  // useEffect(() => {
+  //   const result = getFirstOccurrences(rankingRelatedWord);
+
+  //   console.log(result);
+  // }, [JSON.stringify(rankingRelatedWord)]);
+  const result = getFirstOccurrences(rankingRelatedWord);
+
+  // console.log(keywordMap);
+  // console.log(result);
+
   const getCategoryOrder = (category: MediaCategory, index: number) => {
     if (category === 'youtube') {
       const youtubeIndex = randomOptios
@@ -41,6 +94,8 @@ const MediaBanner = ({ randomOptios }: Props) => {
 
   // 해당 useQuery 라이프사이클에서 혼동이 왔음 (select문이 해당 fetch를 성공했을 경우 한번만 출력되길 바랬는데, 안되네)
   const firstMedia = useGetRandomMedia({
+    searchKeyword: result[0]?.keyword ?? undefined,
+    relatedkeyword: result[0]?.relword ?? undefined,
     mediaCategory: randomOptios[0],
     page: getCategoryOrder(randomOptios[0], 0),
     index: 1,
@@ -50,12 +105,16 @@ const MediaBanner = ({ randomOptios }: Props) => {
    */
 
   const secondMedia = useGetRandomMedia({
+    searchKeyword: result[1]?.keyword ?? undefined,
+    relatedkeyword: result[1]?.relword ?? undefined,
     mediaCategory: randomOptios[1],
     page: getCategoryOrder(randomOptios[1], 1),
     index: 2,
   });
 
   const thirdMedia = useGetRandomMedia({
+    searchKeyword: result[2]?.keyword ?? undefined,
+    relatedkeyword: result[2]?.relword ?? undefined,
     mediaCategory: randomOptios[2],
     page: getCategoryOrder(randomOptios[2], 2),
     index: 3,
@@ -68,6 +127,7 @@ const MediaBanner = ({ randomOptios }: Props) => {
     )
     .sort((a, b) => a.fetchTime! - b.fetchTime!);
 
+  console.log(results);
   // console.log(results);
 
   // console.log(firstMedia);
@@ -77,29 +137,42 @@ const MediaBanner = ({ randomOptios }: Props) => {
   // 해당 부분 코드에 대해서 의심이 있음. map으로써 custom hook을 실행하는 것인데, 이렇게 하면 useMemo useCallback은 hook rule 위배로 인하여 불가능한 구조이고 해당 컴포넌트가 리렌더링이 일어날 때마다 지속적인 생성이 되지않을까 걱정
 
   // 해당 부분 useGetRandomMedia가 렌더링마다 실행되어서 마지막 데이터가 load될 때 리렌더링 일어남  (그로인해 sort가 정확하지 않음)
-  const hookResults = randomOptios.map((category, index, array) => {
-    if (category === 'youtube') {
-      const youtubeIndex = array
-        .slice(0, index + 1)
-        .filter((cat) => cat === 'youtube').length;
 
-      return useGetRandomMedia({
-        mediaCategory: category,
-        page: youtubeIndex,
-        index: index,
-      });
-    } else {
-      const newsIndex = array
-        .slice(0, index + 1)
-        .filter((cat) => cat === 'news').length;
+  /**
+   * 아래 코드는 반복문에서 hook을 사용해서 hookrule 위배
+   * const hookResults = result.length
+    ? result.map(({ keyword, relword }, index, array) => {
+        if (randomOptios[index] === 'youtube') {
+          const youtubeIndex = randomOptios
+            .slice(0, index + 1)
+            .filter((cat) => cat === 'youtube').length;
 
-      return useGetRandomMedia({
-        mediaCategory: category,
-        page: newsIndex,
-        index,
-      });
-    }
-  });
+          return useGetRandomMedia({
+            searchKeyword: keyword,
+            relatedkeyword: relword,
+            mediaCategory: randomOptios[index],
+            page: youtubeIndex,
+            index: index,
+          });
+        } else {
+          const newsIndex = randomOptios
+            .slice(0, index + 1)
+            .filter((cat) => cat === 'news').length;
+
+          return useGetRandomMedia({
+            searchKeyword: keyword,
+            relatedkeyword: relword,
+            mediaCategory: randomOptios[index],
+            page: newsIndex,
+            index,
+          });
+        }
+      })
+    : [];
+
+  console.log(hookResults);
+   */
+
   // .filter(
   //   (media): media is { mediaResult: MediaProps; fetchTime: number } =>
   //     media.mediaResult !== undefined,
