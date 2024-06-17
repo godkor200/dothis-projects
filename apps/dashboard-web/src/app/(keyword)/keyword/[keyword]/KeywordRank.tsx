@@ -12,7 +12,7 @@ const KeywordRank = ({ keyword }: { keyword: string }) => {
   return (
     <>
       {matchedKeyword ? (
-        matchedKeyword.ranking
+        matchedKeyword.ranking?.toLocaleString('ko-kr')
       ) : (
         <span className="text-grey600">분석중</span>
       )}
