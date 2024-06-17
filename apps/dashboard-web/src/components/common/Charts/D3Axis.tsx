@@ -9,7 +9,9 @@ import {
   useDailyVideoCount,
   useDailyView,
   useSearchRatioFormatterD3,
+  useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
+import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
 
 const D3Axis = ({ keyword }: { keyword: string }) => {
   const selectRef = useRef(null);
@@ -21,7 +23,12 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     relword: keyword,
   });
 
-  const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
+  const data3d3 = useUploadVideoCountFormatterD3({
+    keyword: keyword,
+    relword: keyword,
+  });
+
+  // const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
 
   // const width = 680;
   const height = 290;
@@ -606,7 +613,12 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     // // apply axis to canvas
     // svg.append('g').call(xAxis);
     // svg.append('g').call(yAxis);
-  }, [width, JSON.stringify(datad3), JSON.stringify(data2d3)]);
+  }, [
+    width,
+    JSON.stringify(datad3),
+    JSON.stringify(data2d3),
+    JSON.stringify(data3d3),
+  ]);
 
   return (
     <div className="">
