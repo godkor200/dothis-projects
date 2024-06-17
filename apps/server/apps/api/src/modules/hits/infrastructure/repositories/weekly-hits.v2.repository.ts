@@ -105,7 +105,7 @@ export class WeeklyHitsV2Repository
       const queryBuilder = this.repository
         .createQueryBuilder('wv')
         .select('wv.keyword', 'recommendedKeyword')
-        .addSelect('wv.changes', 'rankChange')
+        .addSelect('wv.last_ranking', 'rankChange')
         .addSelect('wv.category', 'topCategoryNumber')
         .addSelect('wv.year', 'year')
         .addSelect('wv.month', 'month')
