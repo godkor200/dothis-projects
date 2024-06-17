@@ -38,7 +38,7 @@ const useGetRankingWordList = (
           ...queryOptions,
           enabled:
             isTokenRequired !== null && keyword.length > 0 && !userLoading,
-          retry: 3,
+
           select(data) {
             return data;
           },
