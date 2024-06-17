@@ -2,6 +2,7 @@
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import SvgComp from '@/components/common/SvgComp';
 import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
@@ -204,10 +205,58 @@ const MediaBanner = ({ randomOptios }: Props) => {
       )}
 
       {Array.from({ length: emptyMediaLength }).map((_, i) => (
-        <SelectedMediaCard.skeleton key={i} />
+        <SelectedMediaCard.skeleton />
       ))}
     </div>
   );
 };
 
 export default MediaBanner;
+
+const Skeleton = () => {
+  return (
+    <div>
+      <div className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid">
+        <div className="relative flex aspect-video items-center justify-center overflow-hidden">
+          <SvgComp
+            icon="SideLogo"
+            width={60}
+            height={60}
+            className="opacity-30"
+          />
+        </div>
+        <div className="h-[100px]"></div>
+      </div>
+    </div>
+    // <div
+    //   className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid"
+    //   key={i}
+    // >
+    //   <div
+    //     className="bg-grey200 dark:bg-grey700 relative flex aspect-video animate-pulse  items-center justify-center overflow-hidden rounded-lg"
+    //     role="status"
+    //   >
+    //     <svg
+    //       className="text-grey400 dark:text-grey600 h-10 w-10"
+    //       aria-hidden="true"
+    //       xmlns="http://www.w3.org/2000/svg"
+    //       fill="currentColor"
+    //       viewBox="0 0 16 20"
+    //     >
+    //       <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+    //       <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z" />
+    //     </svg>
+    //     <span className="sr-only">Loading...</span>
+    //   </div>
+
+    //   <div className="px-[16px] py-[12px]">
+    //     <p className=" bg-grey200 mb-2 line-clamp-2 h-[16px] w-[278px] rounded-full "></p>
+    //     <div className="flex gap-[8px]">
+    //       <p className=" bg-grey200 h-[16px] w-[64px] rounded-full "></p>
+    //       <p className=" bg-grey200  h-[16px] w-[32px] rounded-full "></p>
+    //       <p className=" bg-grey200  h-[16px] w-[32px] rounded-full "></p>
+    //     </div>
+    //   </div>
+    // </div>
+  );
+};
