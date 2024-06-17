@@ -48,18 +48,17 @@ const MediaBanner = ({ randomOptios }: Props) => {
     },
   );
 
-  console.log(data);
-
-  console.log(rankingRelatedWord);
+  const hasMedia = useRef(new Map());
 
   // console.log(keywordMap.has('한국'));
   // 정해진 인덱스읙 개념을 주입해서 넣어줘야함
   const getFirstOccurrences = useCallback(
     (arr: typeof rankingRelatedWord): typeof rankingRelatedWord => {
       arr.forEach((item) => {
-        if (!keywordMap.has(item.keyword)) {
+        if (!hasMedia.current.has(item.keyword)) {
           // console.log(keywordMap.has(item.keyword));
           // console.log(item);
+          hasMedia.current.set(item.keyword, item);
           setKeywordMap((prev) => prev.set(item.keyword, item));
         }
       });
@@ -128,7 +127,6 @@ const MediaBanner = ({ randomOptios }: Props) => {
     )
     .sort((a, b) => a.fetchTime! - b.fetchTime!);
 
-  console.log(results);
   // console.log(results);
 
   // console.log(firstMedia);
