@@ -70,7 +70,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <D3Axis keyword={keyword} />
                 </div>
               </BoxFrame>
-              <BoxFrame>
+              <BoxFrame isPositionProperty={true}>
                 <div>
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     연관 소재
@@ -83,7 +83,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
 
             {/* 주석 */}
             <div className="grid grid-cols-[repeat(1,minmax(1300px,1fr))] gap-[20px]">
-              <BoxFrame>
+              <BoxFrame isPositionProperty={true}>
                 <div className="flex flex-col gap-[20px] overflow-hidden">
                   <p className="text-grey600 text-[14px]">
                     <span className="text-primary500">{keyword}</span> 관련 인기
