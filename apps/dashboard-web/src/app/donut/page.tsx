@@ -3,7 +3,6 @@ import D3TextBorder from '@/components/common/Charts/D3TextBorder';
 import D3Transition from '@/components/common/Charts/D3Transition';
 
 import GPT from './Gpt';
-import D3MergeExample from './MergeTest';
 import Test from './Test';
 import Transition from './YoutubeD3';
 
@@ -17,7 +16,7 @@ const Page = () => {
     <div>
       <D3Donut />
       <GPT />
-      <D3MergeExample />
+
       <Transition />
       <D3TextBorder />
       <Test />
