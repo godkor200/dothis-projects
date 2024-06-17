@@ -1,7 +1,7 @@
 import D3Donut from '@/components/common/Charts/D3Donut';
 import D3TextBorder from '@/components/common/Charts/D3TextBorder';
-import D3Transition from '@/components/common/Charts/D3Transition';
 
+// import D3Transition from '@/components/common/Charts/D3Transition';
 import GPT from './Gpt';
 import Test from './Test';
 import Transition from './YoutubeD3';
