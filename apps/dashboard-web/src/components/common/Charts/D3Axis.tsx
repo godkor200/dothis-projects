@@ -507,9 +507,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
                 <p style="color: #E4E4E7; font-size: 14px;
                 font-style: normal;
-                font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                  d1.value
-                }</p>
+                font-weight: 700; flex-basis: 30%; margin-right:8px;">${d1.value.toLocaleString(
+                  'ko-kr',
+                )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
                 font-weight: 500; "> ${`일일조회수`} </p>
@@ -520,9 +520,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
                 <p style="color: #E4E4E7; font-size: 14px;
                 font-style: normal;
-                font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                  d2.value
-                }</p>
+                font-weight: 700; flex-basis: 30%; margin-right:8px;">${d2.value.toLocaleString(
+                  'ko-kr',
+                )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
                 font-weight: 500; "> ${`검색량`} </p>
@@ -533,9 +533,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
                 <p style="color: #E4E4E7; font-size: 14px;
                 font-style: normal;
-                font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                  d3.value
-                }</p>
+                font-weight: 700; flex-basis: 30%; margin-right:8px;">${d3.value.toLocaleString(
+                  'ko-kr',
+                )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
                 font-weight: 500; "> ${`영상수`} </p>
