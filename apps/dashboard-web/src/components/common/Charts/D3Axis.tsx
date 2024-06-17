@@ -609,7 +609,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
   }, [width, JSON.stringify(datad3), JSON.stringify(data2d3)]);
 
   return (
-    <div className="">
+    <div className="relative">
       <div id="axis" className="h-[290px] w-full" ref={selectRef}></div>
       <div id="tooltip2"></div>
     </div>
