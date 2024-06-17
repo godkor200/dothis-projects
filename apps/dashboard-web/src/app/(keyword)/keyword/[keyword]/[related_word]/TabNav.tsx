@@ -19,7 +19,10 @@ const TabNav = ({
   return (
     <div className="border-grey400 flex  gap-[50px] border-b-4">
       {tabList.map((item) => (
-        <Link href={`/keyword/${keyword}/${relatedWord}/${item.link}`}>
+        <Link
+          href={`/keyword/${keyword}/${relatedWord}/${item.link}`}
+          key={item.link}
+        >
           <div
             className={cn(
               'mb-[-4px] w-[100px] border-b-4 border-grey400 pb-2 text-center font-bold',
