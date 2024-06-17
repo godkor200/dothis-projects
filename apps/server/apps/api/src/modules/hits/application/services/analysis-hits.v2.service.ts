@@ -60,8 +60,8 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           const channelHistories = channelHistoryResult.unwrap();
           const mergedVideoHistory = VideoDataMapper.mergeVideoData(
             videoCacheResultUnwrap,
-            channelHistories,
             videoHistories,
+            channelHistories,
           );
           if (dto.separation) {
             const groupDataByCluster =

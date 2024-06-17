@@ -23,6 +23,7 @@ export class SomeWeeklyHitsService implements WeeklyHitsSomeInboundPort {
         order: dto.order,
         sort: dto.sort,
       });
+
       const result = await this.weeklyHitsRepository.filterWeeklyKeywordHits(
         dao,
       );

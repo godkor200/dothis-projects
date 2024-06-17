@@ -105,7 +105,7 @@ export class WeeklyHitsV2Repository
       const queryBuilder = this.repository
         .createQueryBuilder('wv')
         .select('wv.keyword', 'recommendedKeyword')
-        .addSelect('wv.changes', 'rankChange')
+        .addSelect('wv.last_ranking', 'rankChange')
         .addSelect('wv.category', 'topCategoryNumber')
         .addSelect('wv.year', 'year')
         .addSelect('wv.month', 'month')
@@ -125,7 +125,7 @@ export class WeeklyHitsV2Repository
           return '(wv.year, wv.month, wv.day) = (' + subQuery + ')';
         })
         .andWhere('wv.weekly_views >= :limit', { limit: limitViews })
-        .orderBy('changes', 'DESC')
+        .orderBy('last_ranking', 'DESC')
         .limit(Number(dao.limit));
 
       const results = await queryBuilder.getRawMany();

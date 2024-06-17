@@ -6,14 +6,35 @@ import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-indi
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
-import {
-  GetRelatedVideoAndVideoHistory,
-  GetRelatedVideoAndVideoHistoryPickChannelAverageViews,
-} from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+
 export interface IIncreaseHitsData extends IIncreaseData {
   uniqueVideoCount: number;
 }
 export class VideoAggregateService {
+  private static videoHistoryMappingSort(histories: GetRelatedVideoHistory[]): {
+    [videoId: string]: GetRelatedVideoHistory[];
+  } {
+    // 비디오 ID를 기준으로 그룹화
+    let videoHistoryMap: { [videoId: string]: GetRelatedVideoHistory[] } = {};
+
+    for (let history of histories) {
+      if (!videoHistoryMap[history.videoId]) {
+        videoHistoryMap[history.videoId] = [];
+      }
+      videoHistoryMap[history.videoId].push(history);
+    }
+
+    // 각 비디오별로 날짜순으로 정렬
+    for (let videoId in videoHistoryMap) {
+      videoHistoryMap[videoId].sort(
+        (a, b) =>
+          new Date(a.year, a.month - 1, a.day).getTime() -
+          new Date(b.year, b.month - 1, b.day).getTime(),
+      );
+    }
+    return videoHistoryMap;
+  }
   /**
    * 평균값 구하는 함수, 소수점 내림
    * @param sum
@@ -213,70 +234,88 @@ export class VideoAggregateService {
 
     return Object.values(result);
   }
+
+  /**
+   * 목적:
+   *  특정 날짜별로 조회수, 좋아요 수, 댓글 수의 증가량을 계산합니다.
+   *  날짜별로 고유 비디오 개수를 계산합니다.
+   * 주요 기능:
+   *  videoHistoryMap을 생성하여 비디오 히스토리를 정렬합니다.
+   *  각 날짜별로 조회수, 좋아요 수, 댓글 수의 증가량을 계산합니다.
+   *  각 날짜에 대해 고유 비디오 ID를 추적하여 고유 비디오 개수를 계산합니다.
+   *  최종적으로 날짜별로 증가량과 고유 비디오 개수를 반환합니다.
+   * 일일조회수
+   * @param histories
+   */
   static calculateIncreaseByIgnite(
     histories: GetRelatedVideoHistory[],
   ): IIncreaseHitsData[] {
     let result: {
-      [date: string]: IIncreaseHitsData;
+      [date: string]: IIncreaseHitsData & { videoIds: Set<string> };
     } = {};
+    const videoHistoryMap = this.videoHistoryMappingSort(histories);
 
-    histories.sort(
-      (a, b) =>
-        new Date(a.year, a.month - 1, a.day).getTime() -
-        new Date(b.year, b.month - 1, b.day).getTime(),
-    );
+    for (let histories of Object.values(videoHistoryMap)) {
+      let prevVideo: GetRelatedVideoHistory = null;
+      let sumViews = 0;
+      let sumLikes = 0;
+      let sumComments = 0;
 
-    let prevVideo: GetRelatedVideoHistory = null;
-    let sumViews = 0;
-    let sumLikes = 0;
-    let sumComments = 0;
+      for (let [i, history] of histories.entries()) {
+        if (prevVideo) {
+          const date = new Date(history.year, history.month - 1, history.day)
+            .toISOString()
+            .split('T')[0]; // Extract only the date part
 
-    for (let [i, history] of histories.entries()) {
-      if (prevVideo) {
-        const date = new Date(history.year, history.month - 1, history.day)
-          .toISOString()
-          .split('T')[0]; // Extract only the date part
+          sumViews += history.videoViews;
+          sumLikes += history.videoLikes;
+          sumComments += history.videoComments;
 
-        sumViews += history.videoViews;
-        sumLikes += history.videoLikes;
-        sumComments += history.videoComments;
+          let averageIncreaseViews = sumViews / (i + 1);
+          let averageIncreaseLike = sumLikes / (i + 1);
+          let averageIncreaseComments = sumComments / (i + 1);
+          console.log('current', history, 'prevVideo', prevVideo);
+          const increaseViews =
+            history.videoViews !== 0
+              ? history.videoViews - prevVideo.videoViews
+              : averageIncreaseViews;
+          const increaseLikes =
+            history.videoLikes !== 0
+              ? history.videoLikes - prevVideo.videoLikes
+              : averageIncreaseLike;
+          const increaseComments =
+            history.videoComments !== 0
+              ? history.videoComments - prevVideo.videoComments
+              : averageIncreaseComments;
 
-        let averageIncreaseViews = sumViews / (i + 1);
-        let averageIncreaseLike = sumLikes / (i + 1);
-        let averageIncreaseComments = sumComments / (i + 1);
+          if (!result[date]) {
+            result[date] = {
+              date,
+              increaseViews: 0,
+              increaseLikes: 0,
+              increaseComments: 0,
+              uniqueVideoCount: undefined, //해당 날짜에 산정된 비디오의 수
+              videoIds: new Set<string>(),
+            };
+          }
 
-        const increaseViews =
-          history.videoViews !== 0
-            ? history.videoViews - prevVideo.videoViews
-            : averageIncreaseViews;
-        const increaseLikes =
-          history.videoLikes !== 0
-            ? history.videoLikes - prevVideo.videoLikes
-            : averageIncreaseLike;
-        const increaseComments =
-          history.videoComments !== 0
-            ? history.videoComments - prevVideo.videoComments
-            : averageIncreaseComments;
-
-        if (!result[date]) {
-          result[date] = {
-            date,
-            increaseViews: 0,
-            increaseLikes: 0,
-            increaseComments: 0,
-            uniqueVideoCount: undefined,
-          };
+          result[date].increaseViews += increaseViews;
+          result[date].increaseLikes += increaseLikes;
+          result[date].increaseComments += increaseComments;
+          result[date].videoIds.add(history.videoId);
         }
 
-        result[date].increaseViews += increaseViews;
-        result[date].increaseLikes += increaseLikes;
-        result[date].increaseComments += increaseComments;
+        prevVideo = history;
       }
-
-      prevVideo = history;
     }
 
-    return Object.values(result);
+    return Object.values(result).map((data) => {
+      const { videoIds, ...rest } = data;
+      return {
+        ...rest,
+        uniqueVideoCount: videoIds.size,
+      };
+    });
   }
   /**
    * "영상 조회수 성장 예측" 기능은 다음과 같은 기획을 가집니다:
@@ -381,59 +420,135 @@ export class VideoAggregateService {
   }
 
   /**
-   * 날짜별로 그룹화된 데이터 배열을 일일조회수 기대조회수를 계산하는 함수
+   * 날짜별로 그룹화된 데이터 배열을 일일조회수 기대조회수 둘다를 계산하는 함수
+   * 목적:
+   *  날짜별로 비디오의 조회수 증가량과 기대조회수를 계산합니다.
+   *  비디오의 성과(조회수 대비 채널 평균 조회수 비율)를 계산합니다.
+   *  날짜별로 최대 및 최소 성과를 추적합니다.
+   * 주요 기능:
+   *  videoHistoryMap을 생성하여 비디오 히스토리를 비디오 ID별로 그룹화하고 정렬합니다.
+   *  각 비디오에 대해 날짜별로 조회수 증가량을 계산합니다.
+   *  비디오의 성과를 계산하여 날짜별로 최대 및 최소 성과를 추적합니다.
+   *  날짜별로 기대조회수(총 성과를 고유 비디오 수로 나눈 값)를 계산합니다.
+   *  최종적으로 날짜별로 조회수 증가량, 기대조회수, 최대 및 최소 성과를 반환합니다
    * @param groupedData 날짜별 그룹화된 객체
    */
+
   static calculateMetrics(groupedData: {
     [key: string]: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[];
-  }) {
-    return Object.entries(groupedData).map(([date, videos]) => {
-      const uniqueVideoCount = videos.length;
-      let sumViews = 0;
+  }): {
+    date: string;
+    uniqueVideoCount: number;
+    increaseViews: number;
+    expectedHits: number;
+    maxPerformance: number;
+    minPerformance: number;
+  }[] {
+    // 비디오 ID를 기준으로 그룹화
+    let videoHistoryMap: {
+      [
+        videoId: string
+      ]: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[];
+    } = {};
+
+    for (let date in groupedData) {
+      for (let video of groupedData[date]) {
+        if (!videoHistoryMap[video.videoId]) {
+          videoHistoryMap[video.videoId] = [];
+        }
+        videoHistoryMap[video.videoId].push(video);
+      }
+    }
+
+    // 각 비디오별로 날짜순으로 정렬
+    for (let videoId in videoHistoryMap) {
+      videoHistoryMap[videoId].sort(
+        (a, b) =>
+          new Date(a.year, a.month - 1, a.day).getTime() -
+          new Date(b.year, b.month - 1, b.day).getTime(),
+      );
+    }
+
+    // 날짜별로 그룹화된 데이터에 대해 증가량과 기대조회수 계산
+    let result: {
+      date: string;
+      uniqueVideoCount: number;
+      increaseViews: number;
+      expectedHits: number;
+      maxPerformance: number;
+      minPerformance: number;
+      videoIds: Set<string>;
+    }[] = [];
+
+    for (let videoId in videoHistoryMap) {
+      let videos = videoHistoryMap[videoId];
       let prevVideoViews = 0;
-      let increaseViews = 0;
+      let sumViews = 0;
       let totalPerformance = 0;
       let maxPerformance = -Infinity;
       let minPerformance = Infinity;
 
       for (let i = 0; i < videos.length; i++) {
         const video = videos[i];
-        const { videoViews, channelAverageViews } = video;
-        sumViews += videoViews;
-        const averageIncreaseViews = sumViews / (i + 1);
+        const { videoViews, channelAverageViews, year, month, day } = video;
+        if (prevVideoViews) {
+          const date = new Date(year, month - 1, day)
+            .toISOString()
+            .split('T')[0];
 
-        if (channelAverageViews !== 0 && videoViews !== 0) {
-          const performance = videoViews / channelAverageViews;
-          totalPerformance += performance;
-
-          if (performance > maxPerformance) {
-            maxPerformance = performance;
+          if (!result[date]) {
+            result[date] = {
+              date,
+              uniqueVideoCount: 0,
+              increaseViews: 0,
+              expectedHits: 0,
+              maxPerformance,
+              minPerformance,
+              videoIds: new Set<string>(),
+            };
           }
-          if (performance < minPerformance) {
-            minPerformance = performance;
-          }
-        }
 
-        if (i > 0) {
-          if (video.videoViews !== 0) {
-            increaseViews += video.videoViews - prevVideoViews;
+          result[date].uniqueVideoCount += 1;
+
+          sumViews += videoViews;
+          const averageIncreaseViews = sumViews / (i + 1);
+
+          if (channelAverageViews !== 0 && videoViews !== 0) {
+            const performance = videoViews / channelAverageViews;
+            totalPerformance += performance;
+
+            if (performance > result[date].maxPerformance) {
+              result[date].maxPerformance = performance;
+            }
+            if (performance < result[date].minPerformance) {
+              result[date].minPerformance = performance;
+            }
+            result[date].videoIds.add(video.videoId);
+          }
+
+          if (i > 0) {
+            if (videoViews !== 0) {
+              result[date].increaseViews += videoViews - prevVideoViews;
+            } else {
+              result[date].increaseViews += averageIncreaseViews;
+            }
           } else {
-            increaseViews += averageIncreaseViews;
+            result[date].increaseViews += videoViews;
           }
-        } else {
-          increaseViews += videoViews;
         }
-
         prevVideoViews = videoViews;
       }
+      for (let date in result) {
+        result[date].expectedHits =
+          totalPerformance / result[date].uniqueVideoCount;
+      }
+    }
 
+    return Object.values(result).map((data) => {
+      const { videoIds, ...rest } = data;
       return {
-        date,
-        uniqueVideoCount,
-        increaseViews,
-        expectedHits: totalPerformance / uniqueVideoCount,
-        maxPerformance,
-        minPerformance,
+        ...rest,
+        uniqueVideoCount: videoIds.size,
       };
     });
   }
