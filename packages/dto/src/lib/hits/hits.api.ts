@@ -34,6 +34,18 @@ export const hitsApi = c.router({
     description:
       '탐색어(search), 연관어(related), 날짜(from, to)로 일일 조회수 를 출력합니다.',
   },
+  getDailyViewsV2: {
+    method: 'GET',
+    path: `${viewApiUrl}${dailyApiUrl}`,
+    query: findVideoBySearchKeyword,
+    responses: {
+      200: zSuccessBase.merge(zDailyViews),
+      ...zErrResBase,
+    },
+    summary: '일일 조회수를 가져옵니다',
+    description:
+      '탐색어(search), 연관어(related), 날짜(from, to)로 일일 조회수 를 출력합니다.',
+  },
 
   getDailyViews: {
     method: 'GET',

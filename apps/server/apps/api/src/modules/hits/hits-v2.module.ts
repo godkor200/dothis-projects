@@ -1,6 +1,7 @@
 import { Module, Provider } from '@nestjs/common';
 import {
   ANALYSIS_HITS_V2_SERVICE_DI_TOKEN,
+  DAILY_HITS_V2_SERVICE_IGNITE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
   WEEKLY_VIEWS_SERVICE_V2_DI_TOKEN,
 } from '@Apps/modules/hits/hits.di-token.contants';
@@ -20,20 +21,29 @@ import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-histor
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters';
+import { GetDailyHitsV2HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v2/get-daily-hits/get-daily-hits.v2.http.controller';
+import { GetDailyHitsV2Service } from '@Apps/modules/hits/application/services/get-daily-hits.v2.service';
+import { GetDailyHitsV2QueryHandler } from '@Apps/modules/hits/application/queries/get-daliy-hits.v2.query-handler';
 
 const controllers = [
   GetWeeklyHitsListV2HttpController,
   AnalysisHitsV2Controller,
+  GetDailyHitsV2HttpController,
 ];
 const query: Provider[] = [
   GetWeeklyHitsV2QueryHandler,
   AnalysisHitsV2QueryHandler,
+  GetDailyHitsV2QueryHandler,
 ];
 const service: Provider[] = [
   { provide: WEEKLY_VIEWS_SERVICE_V2_DI_TOKEN, useClass: WeeklyHitsV2Service },
   {
     provide: ANALYSIS_HITS_V2_SERVICE_DI_TOKEN,
     useClass: AnalysisHitsV2Service,
+  },
+  {
+    provide: DAILY_HITS_V2_SERVICE_IGNITE_DI_TOKEN,
+    useClass: GetDailyHitsV2Service,
   },
 ];
 const repository: Provider[] = [
