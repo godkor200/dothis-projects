@@ -75,6 +75,9 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   </p>
                   <CircleForceChart keyword={keyword} />{' '}
                   <D3Chart keyword={keyword} />
+                  <p className="text-primary300 absolute bottom-4 right-5 text-[14px]">
+                    * 키워드를 선택해주세요
+                  </p>
                 </div>
               </BoxFrame>
             </div>
