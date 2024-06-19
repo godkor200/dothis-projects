@@ -31,7 +31,7 @@ const SelectedMediaCard = ({
         }
         target="_blank"
       >
-        <div className="relative aspect-video overflow-hidden bg-black">
+        <div className="relative aspect-video overflow-hidden bg-white">
           <Image
             unoptimized
             src={image}
