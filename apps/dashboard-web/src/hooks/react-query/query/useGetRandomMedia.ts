@@ -85,7 +85,13 @@ export const useGetRandomMedia = ({
     [youtubeData, newsData],
   );
 
-  return { mediaResult, fetchTime, searchKeyword, relatedkeyword };
+  return {
+    mediaResult,
+    fetchTime,
+    searchKeyword,
+    relatedkeyword,
+    mediaCategory,
+  };
 };
 
 // 배열에 남은수만큼
