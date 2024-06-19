@@ -29,7 +29,9 @@ const Layout = ({
         </Link>
 
         <div className="flex items-center gap-[10px] text-[20px] font-bold">
-          <span className="text-grey700">{keyword}</span>{' '}
+          <Link href={`/keyword/${keyword}`}>
+            <span className="text-grey700">{keyword}</span>{' '}
+          </Link>
           <SvgComp icon="KeywordRightArrow" size={24} />
           <span className="text-primary500"> {relatedWord}</span>
         </div>
