@@ -8,7 +8,9 @@ import { handleImageError } from '@/utils/imagesUtil';
 import type { MediaDigestData } from '.';
 import MediaDigestSummary from './MediaDigestSummary';
 
-interface Props extends MediaDigestData {}
+interface Props extends MediaDigestData {
+  mediaType?: string;
+}
 
 const SelectedMediaCard = ({
   title,
@@ -17,10 +19,18 @@ const SelectedMediaCard = ({
   uploadDate,
   image,
   link,
+  mediaType,
 }: Props) => {
   return (
     <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
-      <Link href={`${link}` as Route} target="_blank">
+      <Link
+        href={
+          mediaType === 'youtube'
+            ? (`https://www.youtube.com/watch?v=${link}` as Route)
+            : (`${link}` as Route)
+        }
+        target="_blank"
+      >
         <div className="relative aspect-video overflow-hidden bg-black">
           <Image
             unoptimized
@@ -68,8 +78,6 @@ const SelectedMediaCardSkeleton = () => {
       </div>
 
       <div className="p-[30px]">
-        <h3 className="text-grey700 bg-grey300 dark:bg-grey700 mb-6 h-[1.5rem] rounded-full text-[1.5rem] font-bold"></h3>
-
         <div className=" mb-4 flex items-center gap-[0.5rem]">
           <span className="bg-grey300 h-[16px] w-[64px] rounded-full"></span>
 
