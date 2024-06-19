@@ -74,7 +74,7 @@ const LoginKeyword = () => {
       { body: { tag: [...hashkeywords, ...restkeywords] } },
       {
         onSuccess: () => {
-          router.push('/contents');
+          router.push('/');
         },
       },
     );
