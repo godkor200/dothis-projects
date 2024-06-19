@@ -17,7 +17,6 @@ const Page = ({ params }: { params: { keyword: string } }) => {
     <div className="px-[66px]">
       <div className="mx-auto my-[40px] max-w-[1700px]">
         <div className="">
-          <h2 className="mb-[20px] text-[20px] font-bold">검색어 결과</h2>
           <div className="grid grid-rows-[140px_460px] gap-[20px]">
             <div className="grid grid-cols-[repeat(4,minmax(300px,1fr))] gap-[20px]">
               <BoxFrame>
