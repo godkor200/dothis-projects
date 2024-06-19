@@ -19,7 +19,7 @@ const Side = ({ isSidebarOpen }: Props) => {
     <div className=" border-r-1 border-r-grey400">
       <div
         className={cn(
-          'flex h-screen w-[240px] flex-shrink-0 flex-col gap-[62px] pt-[40px] transition-all duration-75',
+          'flex h-[calc(100vh-90px)] w-[240px] flex-shrink-0 flex-col gap-[62px] pt-[40px] transition-all duration-75',
           {
             'w-[79px]': !isSidebarOpen,
           },

@@ -129,6 +129,7 @@ const MediaBanner = ({ randomOptios }: Props) => {
         fetchTime: number;
         searchKeyword: string;
         relatedkeyword: string;
+        mediaCategory: string;
       } => media.mediaResult !== undefined,
     )
     .sort((a, b) => a.fetchTime! - b.fetchTime!);
@@ -194,19 +195,22 @@ const MediaBanner = ({ randomOptios }: Props) => {
   return (
     <div className="flex justify-between gap-[20px] ">
       {results?.map(
-        ({ mediaResult, searchKeyword, relatedkeyword }, index, array) =>
+        (
+          { mediaResult, searchKeyword, relatedkeyword, mediaCategory },
+          index,
+          array,
+        ) =>
           mediaResult && (
-            <Link href={`/keyword/${searchKeyword}/${relatedkeyword}`}>
-              <SelectedMediaCard
-                key={mediaResult.title + index}
-                title={mediaResult.title}
-                provider={mediaResult.provider}
-                element={mediaResult.element}
-                uploadDate={mediaResult.uploadDate}
-                image={mediaResult.image}
-                link={mediaResult.link}
-              />
-            </Link>
+            <SelectedMediaCard
+              key={mediaResult.title + index}
+              mediaType={mediaCategory}
+              title={mediaResult.title}
+              provider={mediaResult.provider}
+              element={mediaResult.element}
+              uploadDate={mediaResult.uploadDate}
+              image={mediaResult.image}
+              link={mediaResult.link}
+            />
           ),
       )}
 

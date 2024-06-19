@@ -17,7 +17,6 @@ const Page = ({ params }: { params: { keyword: string } }) => {
     <div className="px-[66px]">
       <div className="mx-auto my-[40px] max-w-[1700px]">
         <div className="">
-          <h2 className="mb-[20px] text-[20px] font-bold">검색어 결과</h2>
           <div className="grid grid-rows-[140px_460px] gap-[20px]">
             <div className="grid grid-cols-[repeat(4,minmax(300px,1fr))] gap-[20px]">
               <BoxFrame>
@@ -33,9 +32,8 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     키워드 순위
                   </p>
-                  <p className="text-center text-[20px] font-bold">
-                    <KeywordRank keyword={keyword} />
-                  </p>
+
+                  <KeywordRank keyword={keyword} />
                 </div>
               </BoxFrame>
               <BoxFrame>
@@ -77,6 +75,9 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   </p>
                   <CircleForceChart keyword={keyword} />{' '}
                   <D3Chart keyword={keyword} />
+                  <p className="text-primary300 absolute bottom-4 right-5 text-[14px]">
+                    * 키워드를 선택해주세요
+                  </p>
                 </div>
               </BoxFrame>
             </div>

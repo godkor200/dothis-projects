@@ -52,7 +52,7 @@ const LoginTerms = () => {
             return;
           }
 
-          router.replace('/contents');
+          router.replace('/');
         },
       },
     );
