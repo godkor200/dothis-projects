@@ -8,8 +8,6 @@ import { convertCompetitionScoreFormatToHTML } from '@/utils/contents/competitio
 const WeeklyKeyword = () => {
   const { data } = useGetWeeklyTrendKeyword();
 
-  console.log(data);
-
   return (
     <ul className="flex flex-col gap-[15px]">
       {data?.map((item, i) => (
