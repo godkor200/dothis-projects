@@ -36,8 +36,9 @@ const useGetRankingWordList = (
           queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
           params: { search: keyword },
           ...queryOptions,
-          enabled:
-            isTokenRequired !== null && keyword.length > 0 && !userLoading,
+
+          // isTokenRequired !== null &&
+          enabled: keyword.length > 0 && !userLoading,
 
           select(data) {
             return data;
