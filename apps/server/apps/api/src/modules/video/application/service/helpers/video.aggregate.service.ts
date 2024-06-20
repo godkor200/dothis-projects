@@ -1,5 +1,4 @@
 import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
-
 import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
@@ -400,7 +399,7 @@ export class VideoAggregateService {
     }, {});
   }
   /**
-   * 클러스터 별로 구룹화 되지 않은 배열을 그룹회
+   * 클러스터 별로 그룹화 되지 않은 배열을 그룹회
    * @param data
    */
   static groupDataByDate<T extends DateData>(

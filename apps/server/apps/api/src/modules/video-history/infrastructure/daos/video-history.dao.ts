@@ -2,6 +2,7 @@ import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/doma
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
+import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
 export interface IGetVideoHistoryDao
   extends Pick<GetRelatedVideoAndVideoHistory, 'videoId'> {
@@ -36,9 +37,13 @@ export class GetVideoHistoryMultipleByIdV2Dao {
     to: string;
     from: string;
   }) {
+    const { adjustedTo, adjustedFrom } = DateUtil.adjustDates(
+      props.to,
+      props.from,
+    );
     this.videoIds = RedisResultMapper.createVideoIds(props.videoIds);
-    this.to = props.to;
-    this.from = props.from;
+    this.to = adjustedTo;
+    this.from = adjustedFrom;
   }
 }
 export class GetChannelHistoryByChannelIdV2Dao {

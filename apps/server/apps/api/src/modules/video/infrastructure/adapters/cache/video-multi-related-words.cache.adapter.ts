@@ -33,7 +33,10 @@ export class VideoMultiRelatedWordsCacheAdapter
         transaction.smembers(key);
       });
       const results = await transaction.exec();
-      if (!results[1].length) return Err(new VideoNotFoundError());
+      // results 배열이 정의되어 있는지 확인합니다.
+      if (!results || results.length === 0) {
+        return Err(new VideoNotFoundError());
+      }
 
       const currentDate = dayjs(); // 현재 날짜
       const cutoffDate = currentDate.subtract(period, 'month'); // 기준 날짜

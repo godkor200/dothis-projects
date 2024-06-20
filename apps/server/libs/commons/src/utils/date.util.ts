@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export interface DateUtilsResultType {
   date: Date;
   year: string;
@@ -29,5 +31,15 @@ export class DateUtil {
     const day = today.getDate().toString().padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+  }
+
+  // 날짜를 조정하는 헬퍼 함수
+  public static adjustDates(
+    to: string,
+    from: string,
+  ): { adjustedTo: string; adjustedFrom: string } {
+    const adjustedTo = dayjs(to).add(1, 'day').format('YYYY-MM-DD');
+    const adjustedFrom = dayjs(from).subtract(1, 'day').format('YYYY-MM-DD');
+    return { adjustedTo, adjustedFrom };
   }
 }

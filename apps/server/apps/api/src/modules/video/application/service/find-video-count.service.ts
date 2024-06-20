@@ -20,6 +20,7 @@ export class FindVideoCountService
   ) {}
 
   private countVideosByDate(videoData: VideoCacheRecord) {
+    console.time('FindVideoCountService.countVideosByDate');
     let counts = [];
 
     for (const cluster in videoData) {
@@ -40,7 +41,7 @@ export class FindVideoCountService
         }
       });
     }
-
+    console.timeEnd('FindVideoCountService.countVideosByDate');
     return counts;
   }
 

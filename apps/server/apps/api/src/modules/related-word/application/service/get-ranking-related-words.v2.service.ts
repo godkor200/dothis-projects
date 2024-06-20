@@ -79,6 +79,7 @@ export class GetRankingRelatedWordsV2Service {
       const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
         query.search,
       );
+
       if (relWordsEntity.isOk()) {
         const resRelWordsEntity = relWordsEntity.unwrap();
         const relatedWords = resRelWordsEntity.relWords

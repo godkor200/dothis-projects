@@ -56,14 +56,14 @@ export class VideoHistoryGetMultipleByIdV2Adapter
 
         return `((SELECT ${
           'vh.' + keys.join(', vh.')
-        } FROM ${tableName} vh WHERE vh.VIDEO_ID = '${videoIds[cluster].join(
+        } FROM ${tableName} vh WHERE vh.VIDEO_ID in ('${videoIds[cluster].join(
           `','`,
-        )}' AND vh.DAY BETWEEN ${startDay} AND ${31}) UNION (
+        )}') AND vh.DAY BETWEEN ${startDay} AND ${31}) UNION (
       SELECT ${
         'vh.' + keys.join(', vh.')
-      } FROM ${toTableName} vh WHERE vh.VIDEO_ID = '${videoIds[cluster].join(
+      } FROM ${toTableName} vh WHERE vh.VIDEO_ID in ('${videoIds[cluster].join(
           `','`,
-        )}' AND vh.DAY BETWEEN ${1} AND ${endDay}
+        )}') AND vh.DAY BETWEEN ${1} AND ${endDay}
       ))`;
       })
       .join(' UNION ');
@@ -72,6 +72,7 @@ export class VideoHistoryGetMultipleByIdV2Adapter
   async execute(
     dao: GetVideoHistoryMultipleByIdV2Dao,
   ): Promise<TGetVideoHistoryRes> {
+    console.log('dao', dao);
     const { videoIds, from, to } = dao;
     const fromDate = DateFormatter.getFormattedDate(from);
     const toDate = DateFormatter.getFormattedDate(to);
