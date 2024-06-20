@@ -67,7 +67,7 @@
 .slideWrapper {
   display: block;
   position: relative;
-  width: 1548px;
+  /* width: 1548px; */
   height: 200px;
   background: white;
   border-radius: 16px;

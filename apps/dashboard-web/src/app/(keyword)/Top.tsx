@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { Dispatch, SetStateAction } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -19,6 +20,10 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
   const isSignedIn = useIsSignedIn();
 
   const { data } = useGetUserInfo();
+
+  const pathName = usePathname();
+
+  const currentPath = `/${pathName?.split('/')[1]}`;
 
   return (
     <div
@@ -85,7 +90,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
             </div>
           </>
         ) : (
-          <Link href="/auth">
+          <Link href={`/login?previous_url=${currentPath}`}>
             <div className="text-grey700 rounded-8 bg-primary100  px-[52px]  py-[13px] text-[14px] font-bold">
               로그인
             </div>

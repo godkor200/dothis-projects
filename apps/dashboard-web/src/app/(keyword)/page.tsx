@@ -24,7 +24,7 @@ const Page = () => {
 
   return (
     <div className="px-[66px]">
-      <div className="mx-auto w-[1548px]">
+      <div className="mx-auto  flex  max-w-[1548px] flex-col">
         <h2 className="text-grey900 mb-[40px] mt-[80px] text-center text-[28px]">
           콘텐츠에서 가장 중요한 주제 선정,
           <br />
@@ -32,6 +32,7 @@ const Page = () => {
           <span className="text-primary500 font-bold">검색</span>해보세요!
         </h2>
         <MainSearchbar />
+
         <div className=" mb-[57px]">
           <Link
             href={
@@ -43,14 +44,14 @@ const Page = () => {
           </Link>
         </div>
         <div className="mb-[52px] flex">
-          <div className="mr-[100px] flex-grow">
+          <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
             <p className="text-grey700 mb-[30px] text-[14px] font-bold">
               오늘의 이슈{' '}
             </p>
             <MediaBanner randomOptios={randomMediaCategoryList} />
           </div>
 
-          <div className="ml-auto w-[410px] px-[12px]">
+          <div className="ml-auto min-w-[300px] flex-grow px-[12px]">
             <p className="text-grey700 mb-[30px] text-[14px] font-bold">
               이번 주 키워드
             </p>
