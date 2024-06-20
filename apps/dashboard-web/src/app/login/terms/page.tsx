@@ -79,6 +79,10 @@ const Page = () => {
       { body: { isAgree: true } },
       {
         onSuccess: () => {
+          if (!userData) {
+            return;
+          }
+
           if (
             !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
           ) {
