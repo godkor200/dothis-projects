@@ -44,7 +44,7 @@ const TERMS_OPTIONS: {
   },
 ];
 
-const Page = ({ hasDismissButton }: { hasDismissButton?: boolean }) => {
+const Page = () => {
   const { data: userData } = useGetUserInfo();
 
   const { mutate } = useSignUpTermsMutation();
@@ -106,13 +106,13 @@ const Page = ({ hasDismissButton }: { hasDismissButton?: boolean }) => {
 
   return (
     <div className="border-grey400 relative mx-auto flex w-[600px] min-w-[600px] flex-col  items-center rounded-[30px] border bg-white px-[100px] ">
-      {hasDismissButton && (
+      {/* {hasDismissButton && (
         <SvgComp
           icon="Close"
           size={24}
           className="absolute right-[24px] top-[24px] cursor-pointer"
         />
-      )}
+      )} */}
       <div className="mb-[84px] mt-[100px] flex items-center gap-[12px]">
         <SvgComp icon="SideLogo" size={50} />
         <SvgComp icon="LogoTitle" width={170} height={70} />
