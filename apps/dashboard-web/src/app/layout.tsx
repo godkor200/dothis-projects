@@ -49,7 +49,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
       >
         <StyledComponentsRegistry>
           <StyledTheme>
-            <ClientContext>{children}</ClientContext>
+            <ClientContext>
+              {children}
+
+              <div id="router-modal-root" />
+            </ClientContext>
           </StyledTheme>
         </StyledComponentsRegistry>
       </body>
