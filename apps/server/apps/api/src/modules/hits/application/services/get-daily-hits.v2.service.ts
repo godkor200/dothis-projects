@@ -9,7 +9,8 @@ import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.
 import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
 import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { GetVideoHistoryMultipleByIdV2Dao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
+import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
+import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
 
 export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
   constructor(
@@ -42,10 +43,17 @@ export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
         );
         if (videoHistoryResult.isOk()) {
           const videoHistoryResultUnwrap = videoHistoryResult.unwrap();
-          const res = VideoAggregateService.calculateIncreaseByIgnite(
+          const res = VideoAggregateHelper.calculateIncreaseByIgnite(
             videoHistoryResultUnwrap,
           );
-          return Ok({ success: true, data: res });
+          return Ok({
+            success: true,
+            data: VideoAggregateUtils.generateDailyFakeViews(
+              props.from,
+              props.to,
+              res,
+            ),
+          });
         }
         return Err(videoHistoryResult.unwrapErr());
       }

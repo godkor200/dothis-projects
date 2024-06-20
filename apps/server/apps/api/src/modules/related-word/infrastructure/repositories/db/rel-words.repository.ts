@@ -33,6 +33,7 @@ export class RelatedWordsRepository
         .createQueryBuilder(this.tableName)
         .where({ keyword })
         .getOne();
+
       if (!res) return Err(new KeywordsNotFoundError());
       return Ok(res);
     } catch (e) {

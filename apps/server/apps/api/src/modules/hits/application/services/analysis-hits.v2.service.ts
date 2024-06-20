@@ -15,10 +15,22 @@ import {
 import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { Err, Ok } from 'oxide.ts';
 import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
+import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
+import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
+/**
+ * 시퀀스
+ * 예를 들어 2024년 05월 01일 부터 05월 06일까지 산출한다면
+ * history를 2024년 04월 30일부터 불러와서 05월 01일과 일일조회수를 계산하고
+ * 5/1과 5/2를 뺴서 5/2일짜 일일조회수를 계산하고
+ * 5/2과 5/3를 뺴서 5/3일짜 일일조회수를 계산하고
+ * 5/3과 5/4를 뺴서 5/4일을 계산하고
+ * ...
+ * 5/5과 5/6일을 뺴서 5/6일을 계산하기 떄문
+ */
 export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   constructor(
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
@@ -37,6 +49,8 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
       );
       if (videoCacheResult.isOk()) {
         const videoCacheResultUnwrap = videoCacheResult.unwrap();
+        if (!Object.keys(videoCacheResultUnwrap).length)
+          return Err(new VideoNotFoundError());
         const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
           videoIds: videoCacheResultUnwrap,
           from: videoCacheDao.from,
@@ -54,24 +68,25 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           videoHistoryResultPromise,
           channelHistoryResultPromise,
         ]);
-
         if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
           const videoHistories = videoHistoryResult.unwrap();
+
           const channelHistories = channelHistoryResult.unwrap();
           const mergedVideoHistory = VideoDataMapper.mergeVideoData(
             videoCacheResultUnwrap,
             videoHistories,
             channelHistories,
           );
+
           if (dto.separation) {
-            const groupDataByCluster =
-              VideoAggregateService.groupDataByCluster(mergedVideoHistory);
+            const groupDataByCluster = VideoAggregateUtils.groupBy(
+              mergedVideoHistory,
+              (history) => history.videoCluster,
+            );
             const result = Object.entries(groupDataByCluster).map(
               ([clusterNumber, clusterData]) => {
-                const dateGroupedData =
-                  VideoAggregateService.groupDataByDate(clusterData);
                 const metrics =
-                  VideoAggregateService.calculateMetrics(dateGroupedData);
+                  VideoAggregateHelper.calculateMetrics(clusterData);
 
                 return {
                   clusterNumber: Number(clusterNumber),
@@ -82,10 +97,18 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
             return Ok({ success: true, data: result });
           }
           const dateGroupedData =
-            VideoAggregateService.groupDataByDate(mergedVideoHistory);
-          const metrics =
-            VideoAggregateService.calculateMetrics(dateGroupedData);
-          return Ok({ success: true, data: metrics });
+            VideoAggregateUtils.groupDataByDate(mergedVideoHistory);
+          const metrics = VideoAggregateHelper.calculateMetrics(
+            Object.values(dateGroupedData).flat(),
+          );
+          return Ok({
+            success: true,
+            data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+              dto.from,
+              dto.to,
+              metrics,
+            ),
+          });
         }
         if (videoHistoryResult.isErr()) {
           return Err(videoHistoryResult.unwrapErr());
