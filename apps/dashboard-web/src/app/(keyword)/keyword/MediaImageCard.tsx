@@ -8,7 +8,6 @@ import Link from 'next/link';
 import SvgComp from '@/components/common/SvgComp';
 import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import MediaDigestSummary from '@/components/MainContents/MediaArticles/MediaDigestSummary';
-import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
@@ -51,36 +50,6 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
         link: item.videoId,
       };
     });
-
-  const mock = [
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-  ];
 
   if (isLoading) {
     return (
@@ -169,7 +138,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
                   </div>
 
                   <div className="px-[16px] py-[12px]">
-                    <h3 className="text-grey700 mb-5 line-clamp-2    text-[16px] font-bold">
+                    <h3 className="text-grey700 mb-5 line-clamp-1    text-[16px] font-bold">
                       {title}
                     </h3>
                     <MediaDigestSummary
