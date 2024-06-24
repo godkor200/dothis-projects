@@ -19,7 +19,10 @@ const WeeklyKeyword = () => {
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
             <p className="text-grey500">{i + 1}</p>
-            <p className="flex-grow">{item.recommendedKeyword}</p>
+            <p className="flex-grow">
+              {item.recommendedKeyword} <span className="text-grey500">-</span>{' '}
+              {item.topAssociatedWord}
+            </p>
             <div className="h-[20px] w-[20px]">
               {Math.sign(item.rankChange) === 0 ? (
                 <div className="text-center">
