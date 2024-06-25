@@ -7,6 +7,8 @@ import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
 import { cn } from '@/utils/cn';
 
+import ApiErrorComponent from './ApiErrorComponent ';
+
 interface TransactionData {
   title: string;
   value: number;
@@ -14,19 +16,6 @@ interface TransactionData {
   x: number;
   y: number;
 }
-const transactionsData: TransactionData[] = [
-  { title: '주점', value: 100, type: 'low', x: 0, y: 0 },
-  { title: '돼지고기', value: 200, type: 'low', x: 0, y: 0 },
-  { title: '중국', value: 300, type: 'middle', x: 0, y: 0 },
-  { title: '차오', value: 400, type: 'middle', x: 0, y: 0 },
-  { title: '마파두부', value: 400, type: 'middle', x: 0, y: 0 },
-  { title: '고추잡채', value: 300, type: 'middle', x: 0, y: 0 },
-  { title: '짜장', value: 500, type: 'middle', x: 0, y: 0 },
-  { title: '세종대왕', value: 500, type: 'middle', x: 0, y: 0 },
-  { title: '두부김치', value: 1000, type: 'high', x: 0, y: 0 },
-  { title: '마라탕', value: 1000, type: 'high', x: 0, y: 0 },
-  { title: '탕수육', value: 1000, type: 'high', x: 0, y: 0 },
-];
 
 const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
   const getDimensions = () => {
@@ -57,11 +46,13 @@ const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
 const D3Chart = ({ keyword }: { keyword: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading } = useGetRankingRelWords(keyword);
+  const { data, isLoading, isError, refetch } = useGetRankingRelWords(keyword);
+
+  console.log(data);
 
   const circleData = data?.slice(0, 10)?.map((item, i) => ({
     title: item,
-    value: i < 3 ? 1000 : i < 7 ? 500 : 250,
+    value: i < 3 ? 1200 : i < 6 ? 1000 : 800,
     type: i < 3 ? 'high' : i < 7 ? 'middle' : 'low',
     x: 0,
     y: 0,
@@ -163,12 +154,15 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
       const simulation = d3
         .forceSimulation(circleData!)
         .force('center', d3.forceCenter(width / 2, height / 2))
-        .force(
-          'charge',
-          d3
-            .forceManyBody()
-            .strength((d) => -size((d as TransactionData).value)),
-        )
+        .force('charge', d3.forceManyBody().strength(-30))
+        // .force(
+        //   'attract',
+        //   d3.forceRadial(
+        //     (d) => size((d as TransactionData).value) / 2,
+        //     width / 2,
+        //     height / 2,
+        //   ),
+        // )
         .force(
           'attract',
           d3
@@ -177,17 +171,27 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
               width / 2,
               height / 2,
             )
-            .strength((d) => (d as TransactionData).value / 1000),
+            .strength(0.1),
         )
         .force(
           'collide',
           d3
             .forceCollide()
-            .strength(0.5)
-            .radius((d) => size((d as TransactionData).value) + 10)
+            .strength(1)
+            .radius((d) => size((d as TransactionData).value + 100))
+            // 거리를 얼마나 띄울거냐, 기존 value에 따라 생성된 size만큼 띄우며(독립적인 자리를 가지려면 기본적으로 띄어야함 ) + margin을 100만큼 부여한 것
             .iterations(1),
         )
-        .force('y', d3.forceY(height / 2).strength(0.3));
+        // .force(
+        //   'collide',
+        //   d3
+        //     .forceCollide()
+        //     .strength(0.5)
+        //     .radius((d) => size((d as TransactionData).value) + 10)
+        //     .iterations(1),
+        // )
+        .force('x', d3.forceX(width / 2).strength(0.1)) // 추가된 forceX
+        .force('y', d3.forceY(height / 2).strength(0.7)); // forceY 강도 조정
 
       simulation.nodes(circleData!).on('tick', () => {
         node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
@@ -196,14 +200,18 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
     }
   }, [ref, width, JSON.stringify(data)]);
 
+  if (isError) {
+    return <ApiErrorComponent refetch={refetch} />;
+  }
+
   return (
     <>
       {isLoading && (
         <BoxLoadingComponent
-          classname={cn('absolute top-3 right-3 w-[40px] h-[40px]')}
+          classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
         />
       )}
-      <div className="App">
+      <div className="App [&_svg]:overflow-visible">
         <div id="my_dataviz" ref={ref}></div>
       </div>
     </>
