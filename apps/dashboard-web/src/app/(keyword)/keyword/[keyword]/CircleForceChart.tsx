@@ -5,8 +5,6 @@ import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWor
 const CircleForceChart = ({ keyword }: { keyword: string }) => {
   const { data } = useGetRankingRelWords(keyword);
 
-  console.log(data);
-
   return (
     <>
       {!!data?.length && (
