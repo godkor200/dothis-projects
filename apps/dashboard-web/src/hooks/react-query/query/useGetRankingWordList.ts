@@ -47,6 +47,7 @@ const useGetRankingWordList = (
       }),
     },
   );
+
   const requiredQueryResults = queryResults as DeepRequired<
     typeof queryResults
   >;
@@ -85,6 +86,8 @@ const useGetRankingWordList = (
 
   const isError = requiredQueryResults.every((query) => query.isError);
 
+  const isErrorList = requiredQueryResults.map((query) => query.isError);
+
   const isErrorKeyword = requiredQueryResults
     .map((item, index) => (item.isError === true ? keywordArray[index] : null))
     .filter(Boolean);
@@ -92,6 +95,7 @@ const useGetRankingWordList = (
   return {
     isLoading,
     isError,
+    isErrorList,
     isErrorKeyword,
     data: sortArray.map((item) => ({
       relword: item.word,
