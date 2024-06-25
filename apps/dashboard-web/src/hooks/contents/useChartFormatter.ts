@@ -15,6 +15,7 @@ import {
 } from '@/utils/contents/chart';
 
 import useGetDailyView from '../react-query/query/useGetDailyView';
+import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
@@ -92,6 +93,7 @@ export const useUploadVideoCountFormatterD3 = ({
     keyword,
     relword,
   });
+  console.log(videoUploadCount);
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -134,6 +136,32 @@ export const useDailyViewDataFormatter = ({
   return useMemo(
     () =>
       handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyViewV2 = ({
+  keyword,
+  relword,
+}: {
+  keyword: string;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyViewV2({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyViewData, {
+  //   name: '일일조회수',
+  //   type: 'line',
+  // });
+
+  return useMemo(
+    () => handleDailyViewDataD3(dailyViewData, { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
   );
 };
