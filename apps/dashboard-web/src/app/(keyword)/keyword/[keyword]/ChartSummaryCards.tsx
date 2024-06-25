@@ -1,30 +1,44 @@
 'use client';
 
-import {
-  useDailyView,
-  useSearchRatioFormatterD3,
-} from '@/hooks/contents/useChartFormatter';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
+import { useSearchRatioFormatterD3 } from '@/hooks/contents/useChartFormatter';
+import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
+1;
+import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
+import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
 
-import { sumIncreaseViews, sumVideoCount } from './CompetitionRate';
+import {
+  sumIncreaseViews,
+  sumIncreaseViewsV2,
+  sumVideoCount,
+  sumVideoCountV2,
+} from './CompetitionRate';
 
 const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
   // 조회수 합계 및 영상 수 코드
   //   const dailViewData = useDailyView({ keyword: keyword, relword: keyword });
 
-  const { data: dailyViewData } = useGetDailyView({
+  const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
     keyword,
     relword: keyword,
   });
 
-  const totalIncreaseViews = sumIncreaseViews(dailyViewData);
+  const { data: videoUploadCount, isLoading: videoLoading } =
+    useGetVideoUploadCount({
+      keyword,
+      relword: keyword,
+    });
+  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCount(dailyViewData);
+  const totalVideoCount = sumVideoCountV2(videoUploadCount);
 
   //   검색량 코드
-
   const searchRatio = useSearchRatioFormatterD3({
     keyword: keyword,
+    relword: keyword,
+  });
+
+  const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
+    keyword,
     relword: keyword,
   });
 
@@ -42,13 +56,14 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
       <div className="w-[222px] px-[12px] py-[15px] text-center">
         <p className="text-grey700 text-[14px]">검색량 변동</p>
         <p className="text-grey900 text-[18px] font-bold">
-          {Math.floor(
-            ((((last_searchRatio.value || 0) as number) /
-              Number(first_searchRatio.value || 1)) as number) *
-              100 *
-              100,
-          ) / 100}
-          %
+          {searchRatioLoading
+            ? '분석중'
+            : Math.floor(
+                ((((last_searchRatio.value || 0) as number) /
+                  Number(first_searchRatio.value || 1)) as number) * 100,
+              ) -
+              100 +
+              '%'}
         </p>
       </div>
       <div className="w-[222px] px-[12px] py-[15px] text-center">
