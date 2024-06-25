@@ -116,6 +116,8 @@ export const zKeywordSchema = z.object({
   topAssociatedWord: z.string().describe('1등 연관어'),
   topCategoryNumber: z.string().describe('1등 카테고리 번호'),
   rankChange: z.number().describe('변동 순위'),
+  ranking: z.number(),
+  changes: z.number(),
   year: z.number().describe('수집 연도'),
   month: z.number().describe('수집 월'),
   day: z.number().describe('수집 일'),
