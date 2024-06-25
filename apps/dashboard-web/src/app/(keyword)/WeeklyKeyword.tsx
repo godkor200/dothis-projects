@@ -13,22 +13,27 @@ const WeeklyKeyword = () => {
       {data?.map((item, i) => (
         <Link
           href={`/keyword/${item.recommendedKeyword}/${
-            item.topAssociatedWord.split(',')[0]
+            item.topAssociatedWord ? item.topAssociatedWord.split(',')[0] : ''
           }`}
           key={item.recommendedKeyword}
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
             <p className="text-grey500">{i + 1}</p>
-            <p className="flex-grow">{item.recommendedKeyword}</p>
+            <p className="flex-grow">
+              {item.recommendedKeyword} <span className="text-grey500">-</span>{' '}
+              {item.topAssociatedWord
+                ? item.topAssociatedWord.split(',')[0]
+                : ''}
+            </p>
             <div className="h-[20px] w-[20px]">
-              {Math.sign(item.rankChange) === 0 ? (
+              {Math.sign(item.changes) === 0 ? (
                 <div className="text-center">
                   <span className="">-</span>
                 </div>
-              ) : Math.sign(item.rankChange) === 1 ? (
+              ) : Math.sign(item.changes) === -1 ? (
                 <div className="flex items-center  justify-center">
                   <span className="text-[12px] text-[#F00]">
-                    {item.rankChange}
+                    {Math.abs(item.changes)}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-b-[8px]  border-x-transparent border-b-[#F00]"></span>
                 </div>
@@ -36,7 +41,7 @@ const WeeklyKeyword = () => {
                 <div className="flex items-center justify-center">
                   <span className="text-[12px] text-[#3183FF]">
                     {' '}
-                    {item.rankChange}
+                    {Math.abs(item.changes)}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-t-[8px]  border-x-transparent border-t-[#3183FF]"></span>
                 </div>

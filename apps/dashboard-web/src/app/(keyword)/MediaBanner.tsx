@@ -6,10 +6,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SvgComp from '@/components/common/SvgComp';
 import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
-import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import { useGetRandomMedia } from '@/hooks/react-query/query/useGetRandomMedia';
 import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useGetWeeklyKeyword from '@/hooks/react-query/query/useGetWeeklyKeyword';
+import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
@@ -21,33 +21,36 @@ interface Props {
   randomOptios: MediaCategory[];
 }
 
-const useTest = () => {
-  const [state, setState] = useState(1);
-
-  return state;
-};
-
 const MediaBanner = ({ randomOptios }: Props) => {
-  const [sliceNumber, setSliceNumber] = useState(3);
+  const mediaCount = 3;
 
-  const { data } = useGetWeeklyKeyword({ limit: 5 });
+  const [sliceNumber, setSliceNumber] = useState(mediaCount);
+
+  // const { data } = useGetWeeklyKeyword({ limit: 5 });
+
+  const { data } = useGetWeeklyTrendKeyword();
 
   const [keywordMap, setKeywordMap] = useState<
     Map<string, (typeof rankingRelatedWord)[number]>
   >(new Map());
 
   const topKeywordList = data
-    ?.map((data) => data.keyword)
+    ?.map((data) => data.recommendedKeyword)
     .slice(0, sliceNumber);
 
-  const { data: rankingRelatedWord } = useGetRankingWordList(
-    topKeywordList || [],
-    {
-      onError(err) {
-        setSliceNumber((prev) => prev + 1);
-      },
-    },
-  );
+  const {
+    data: rankingRelatedWord,
+    isError,
+    isErrorList,
+  } = useGetRankingWordList(topKeywordList || [], {
+    onError(err) {},
+  });
+
+  useEffect(() => {
+    setSliceNumber(
+      mediaCount + isErrorList.filter((isError) => isError === true).length,
+    );
+  }, [isErrorList]);
 
   const hasMedia = useRef(new Map());
 

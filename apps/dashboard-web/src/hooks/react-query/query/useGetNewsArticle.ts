@@ -23,10 +23,9 @@ const useGetNewsArticle = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: seletedWord.relword,
+        query: '',
 
         published_at: {
-          from: startDate,
           until: endDate,
         },
         // provider: ['경향신문'],
@@ -55,12 +54,16 @@ const useGetNewsArticle = (
       JSON.stringify(obj),
     );
 
+    if (response.data.result === -1) {
+      throw new Error(response.data.reason || 'Unknown error occurred');
+    }
+
     return response.data;
   };
 
   return useQuery(['뉴스', seletedWord.relword], () => retrievePosts(), {
     ...queryOptions,
-    enabled: !!seletedWord.relword && !!startDate && !!endDate,
+    enabled: !!startDate && !!endDate,
   });
 };
 

@@ -2,19 +2,25 @@ import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 
 import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
+import { useSelectedWord } from '@/store/selectedWordStore';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 
 import type { MediaDigestData } from '.';
 import MediaDigestList from './MediaDigestList';
 
 const News = () => {
+  const selectedWord = useSelectedWord();
+
   const {
     data: newsData,
     fetchNextPage,
     hasNextPage,
     isLoading,
     isFetching,
-  } = useGetNewsInfiniteQuery();
+  } = useGetNewsInfiniteQuery({
+    keyword: selectedWord.keyword!,
+    relword: selectedWord.relword,
+  });
 
   const handleFetchNextPage = useCallback(
     (isInview: boolean) => {

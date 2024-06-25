@@ -43,7 +43,8 @@ const MediaDigestSummary = ({
       >
         {element}
       </span>
-      <div className="bg-grey400 h-4 w-[1px]" />
+
+      {provider && <div className="bg-grey400 h-4 w-[1px]" />}
       <span
         className={cn(
           'text-grey500 font-semibold  whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',

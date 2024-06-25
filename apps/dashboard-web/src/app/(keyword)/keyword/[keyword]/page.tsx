@@ -4,6 +4,8 @@ import D3Chart from '@/components/common/Charts/D3Chart';
 import BoxFrame from '../BoxFrame';
 import MediaImageCard from '../MediaImageCard';
 import MediaTextCard from '../MediaTextCard';
+import MediaTextContainer from '../MediaTextContainer';
+import ChartContainer from './ChartContainer';
 import ChartSummaryCards from './ChartSummaryCards';
 import CircleForceChart from './CircleForceChart';
 import CompetitionRate from './CompetitionRate';
@@ -58,18 +60,17 @@ const Page = ({ params }: { params: { keyword: string } }) => {
 
             {/* 주석 */}
             <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
-              <BoxFrame>
-                <div>
+              <BoxFrame isPositionProperty={true}>
+                <div className="flex h-full flex-col">
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     콘텐츠 추이
                   </p>
 
-                  <ChartSummaryCards keyword={keyword} />
-                  <D3Axis keyword={keyword} />
+                  <ChartContainer keyword={keyword} />
                 </div>
               </BoxFrame>
               <BoxFrame isPositionProperty={true}>
-                <div>
+                <div className="flex h-full flex-col">
                   <p className="text-grey600 mb-[20px] text-[14px]">
                     연관 소재
                   </p>
@@ -93,12 +94,9 @@ const Page = ({ params }: { params: { keyword: string } }) => {
 
                   <MediaImageCard keyword={keyword} />
 
-                  <p className="text-grey600 text-[14px]">
-                    <span className="text-primary500">{keyword}</span> 관련 뉴스
-                  </p>
-                  <div className="flex justify-between gap-[24px]">
-                    <MediaTextCard keyword={keyword} />
-                  </div>
+                  {/* 서버 사이드 렌더링을 아직 안하고 있어서, client 사이드 api response 유무를 따지기 위해  Container를 하나 생성하였다. */}
+
+                  <MediaTextContainer keyword={keyword} />
                 </div>
               </BoxFrame>
             </div>

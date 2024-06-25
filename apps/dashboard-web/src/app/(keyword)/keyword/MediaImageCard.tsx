@@ -5,10 +5,10 @@ import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ApiErrorComponent from '@/components/common/Charts/ApiErrorComponent ';
 import SvgComp from '@/components/common/SvgComp';
 import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import MediaDigestSummary from '@/components/MainContents/MediaArticles/MediaDigestSummary';
-import useGetNewsInfiniteQuery from '@/hooks/react-query/query/useGetNewsInfiniteQuery';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
@@ -29,6 +29,8 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
     fetchNextPage,
     hasNextPage,
     isLoading,
+    isError,
+    refetch,
     isFetching,
   } = useGetVideoDataInfinityQuery({ keyword: keyword, relword: keyword });
 
@@ -42,6 +44,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
       const compactNumber = new Intl.NumberFormat('ko', {
         notation: 'compact',
       });
+
       return {
         title: item.videoTitle,
         provider: item.channelName,
@@ -52,41 +55,11 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
       };
     });
 
-  const mock = [
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-    {
-      title: '탕후루집 오픈',
-      provider: '탕후루',
-      element: '창업',
-      uploadDate: dayjs(`${'2024-04-05'}`).format('YYYY.MM.DD'),
-      image: externaImageLoader(getMainImage('213232')),
-      link: '없음',
-      hilight: '테스트 ',
-    },
-  ];
-
   if (isLoading) {
     return (
       <div>
         <BoxLoadingComponent
-          classname={cn('absolute top-3 right-3 w-[40px] h-[40px]')}
+          classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
         />
         <div className="flex justify-between gap-[24px] ">
           {Array.from({ length: 3 }).map((item, i) => (
@@ -102,7 +75,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
                   className="opacity-30"
                 />
               </div>
-              <div className="h-[100px]"></div>
+              <div className="h-[50px]"></div>
             </div>
             // <div
             //   className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid"
@@ -140,6 +113,14 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
     );
   }
 
+  if (isError) {
+    return (
+      <div className="flex min-h-[350px] items-center">
+        <ApiErrorComponent refetch={refetch} />
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="flex justify-between gap-[24px] ">
@@ -169,7 +150,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
                   </div>
 
                   <div className="px-[16px] py-[12px]">
-                    <h3 className="text-grey700 mb-5 line-clamp-2    text-[16px] font-bold">
+                    <h3 className="text-grey700 mb-5 line-clamp-1    text-[16px] font-bold">
                       {title}
                     </h3>
                     <MediaDigestSummary
