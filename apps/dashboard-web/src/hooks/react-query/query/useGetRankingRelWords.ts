@@ -21,7 +21,7 @@ const useGetRankingRelWords = (
   const queryResult = apiClient(2).relatedWords.rankingRelatedWords.useQuery(
     RANK_RELATIONWORD_KEY.list([{ keyword }]),
     { params: { search: keyword! } },
-    { ...queryOptions, enabled: !!keyword, retry: 3 },
+    { ...queryOptions, enabled: !!keyword },
   );
 
   const requiredQueryResult = queryResult.data as DeepRequired<
@@ -31,7 +31,7 @@ const useGetRankingRelWords = (
   return {
     ...queryResult,
     data: requiredQueryResult?.body.data.ranking
-      .sort((a, b) => b.expectedViews - a.expectedViews)
+      .sort((a, b) => b.sortFigure - a.sortFigure)
       .map((item) => item.word),
   };
 };
