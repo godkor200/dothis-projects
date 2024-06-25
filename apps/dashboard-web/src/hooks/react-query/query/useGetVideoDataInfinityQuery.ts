@@ -2,6 +2,7 @@ import type { apiRouter } from '@dothis/dto';
 import type { UseInfiniteQueryOptions } from '@ts-rest/react-query';
 
 import { VIDEODATA_KEY } from '@/constants/querykey';
+import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import type { DeepRequired } from './common';
@@ -34,6 +35,10 @@ const useGetVideoDataInfinityQuery = (
 
   const clusters = getRelatedClusterArray();
 
+  const startDate = useStartDate();
+
+  const endDate = useEndDate();
+
   const queryResults = apiClient(2).video.getVideoPageV2.useInfiniteQuery(
     VIDEODATA_KEY.list([
       {
@@ -53,6 +58,8 @@ const useGetVideoDataInfinityQuery = (
         search: keyword!,
         sort: 'video_views',
         order: 'desc',
+        // from: startDate,
+        // to: endDate,
       },
     }),
     {
