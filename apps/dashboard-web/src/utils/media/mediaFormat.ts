@@ -36,7 +36,9 @@ export const formatYoutubeForMediaProps = (
     title: data.videoTitle,
     provider: data.channelName,
     element: `조회수 ${compactNumber.format(data.videoViews)}`,
-    uploadDate: dayjs(data.videoPublished).format('YYYY-MM-DD'),
+    uploadDate: dayjs(`${data.year}-${data.month}-${data.day}`).format(
+      'YYYY-MM-DD',
+    ),
     image: externalYouTubeImageLoader(data.videoId),
     link: data.videoId,
   };
