@@ -18,10 +18,9 @@ import type { NewsResponse, ServerResponse } from '@/types/news';
  * @returns queryOptions 타입에서 제네릭을 생략해서 사용하면 UseQueryResult에서라도 제네릭으로 return 타입을 지정해줘야한다.
  */
 const useGetNewsInfiniteQuery = (
+  { keyword, relword }: { keyword: string; relword?: string | null },
   queryOptions?: UseInfiniteQueryResult<NewsResponse>,
 ): UseInfiniteQueryResult<NewsResponse> => {
-  const { keyword = '아이돌', relword = '노래' } = useSelectedWord();
-
   const startDate = useStartDate();
 
   const endDate = useEndDate();
@@ -30,7 +29,7 @@ const useGetNewsInfiniteQuery = (
     const obj = {
       access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
       argument: {
-        query: { title: keyword || '먹방' },
+        query: { title: relword ? `${keyword} AND ${relword}` : `${keyword}` },
 
         published_at: {
           from: startDate,
@@ -42,7 +41,7 @@ const useGetNewsInfiniteQuery = (
         // byline: '',
 
         sort: [
-          { date: 'desc' },
+          // { date: 'desc' },
           {
             _score: 'desc',
           },
