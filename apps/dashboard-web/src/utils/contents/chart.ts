@@ -151,7 +151,7 @@ export const handleDailyViewData = (
 };
 
 export const handleDailyViewDataD3 = (
-  data: (DailyView | undefined)[],
+  data: (DailyView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const dateBasedDataSet = initChartDateFormatter({
