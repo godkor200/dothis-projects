@@ -48,8 +48,6 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
 
   const { data, isLoading, isError, refetch } = useGetRankingRelWords(keyword);
 
-  console.log(data);
-
   const circleData = data?.slice(0, 10)?.map((item, i) => ({
     title: item,
     value: i < 3 ? 1200 : i < 6 ? 1000 : 800,

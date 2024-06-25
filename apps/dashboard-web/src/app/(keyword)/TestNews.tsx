@@ -5,8 +5,6 @@ import useGetSingleNews from '@/hooks/react-query/query/useGetSingleNews';
 const Test = () => {
   const { data, isError } = useGetNewsArticle();
 
-  console.log(data);
-  console.log(isError);
   return <div>dasd</div>;
 };
 
