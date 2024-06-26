@@ -49,7 +49,7 @@ const useGetSingleVideo = (
     {
       query: {
         search: searchKeyword,
-        related: relatedkeyword ?? searchKeyword,
+        related: relatedkeyword,
         // from: from ?? startDate,
         // to: to ?? endDate,
         limit: '1',

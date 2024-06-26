@@ -13,12 +13,11 @@ import {
 const CompetitionRate = ({ keyword }: { keyword: string }) => {
   const { data: dailyViewData } = useGetDailyViewV2({
     keyword,
-    relword: keyword,
   });
 
   const { data: videoUploadCount } = useGetVideoUploadCount({
     keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);

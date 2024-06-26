@@ -32,7 +32,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
     isError,
     refetch,
     isFetching,
-  } = useGetVideoDataInfinityQuery({ keyword: keyword, relword: keyword });
+  } = useGetVideoDataInfinityQuery({ keyword: keyword, relword: null });
 
   /**
    * @mediaDigestData api로 받아온 youtubeVideoData의 필요한 프로퍼티만 가져와서 포맷팅을 수정하는 코드

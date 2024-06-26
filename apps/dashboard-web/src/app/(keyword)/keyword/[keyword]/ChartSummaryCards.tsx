@@ -19,13 +19,12 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
 
   const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
     keyword,
-    relword: keyword,
   });
 
   const { data: videoUploadCount, isLoading: videoLoading } =
     useGetVideoUploadCount({
       keyword,
-      relword: keyword,
+      relword: null,
     });
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
@@ -34,12 +33,12 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
   //   검색량 코드
   const searchRatio = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
     keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const first_searchRatio = searchRatio[0];

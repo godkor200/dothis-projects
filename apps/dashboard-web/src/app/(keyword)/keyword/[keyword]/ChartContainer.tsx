@@ -22,7 +22,6 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: dailViewRefetch,
   } = useGetDailyViewV2({
     keyword: keyword,
-    relword: keyword,
   });
 
   const {
@@ -31,7 +30,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: naverSearchRefetch,
   } = useGetNaverSearchRatio({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const {
@@ -40,7 +39,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: videoRefetch,
   } = useGetVideoUploadCount({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const refetchCallback = () => {
