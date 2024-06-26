@@ -47,7 +47,7 @@ export const useGetRandomMedia = ({
   const { data: youtubeData } = useGetSingleVideo(
     {
       searchKeyword: searchKeyword,
-      relatedkeyword: relatedkeyword ?? searchKeyword,
+      relatedkeyword: relatedkeyword,
       page,
       extraQueryKey: index,
     },
@@ -59,7 +59,7 @@ export const useGetRandomMedia = ({
   const { data: newsData } = useGetSingleNews(
     {
       searchKeyword: searchKeyword,
-      relatedkeyword: relatedkeyword ?? searchKeyword,
+      relatedkeyword: relatedkeyword,
       page,
       queryKeyIndex: index,
     },
