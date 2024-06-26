@@ -7,20 +7,20 @@ const useGetDailyViewV2 = ({
   relword,
 }: {
   keyword: string;
-  relword: string | null;
+  relword?: string | null;
 }) => {
   const startDate = useStartDate();
 
   const endDate = useEndDate();
 
   const queryResult = apiClient(2).hits.getDailyViewsV2.useQuery(
-    DAILYVIEW_KEY.list([keyword, relword]),
+    DAILYVIEW_KEY.list([{ keyword, relword, startDate, endDate }]),
     {
       query: {
         from: startDate,
         to: endDate,
         search: keyword,
-        related: relword ? relword : keyword,
+        related: relword ?? undefined,
       },
     },
     {
