@@ -24,7 +24,7 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
   const { data: videoUploadCount, isLoading: videoLoading } =
     useGetVideoUploadCount({
       keyword,
-      relword: keyword,
+      relword: null,
     });
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 

@@ -23,7 +23,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
   const data3d3 = useUploadVideoCountFormatterD3({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   // const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });

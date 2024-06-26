@@ -39,7 +39,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: videoRefetch,
   } = useGetVideoUploadCount({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const refetchCallback = () => {

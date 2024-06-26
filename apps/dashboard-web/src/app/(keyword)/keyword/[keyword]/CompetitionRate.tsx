@@ -17,7 +17,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
 
   const { data: videoUploadCount } = useGetVideoUploadCount({
     keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
