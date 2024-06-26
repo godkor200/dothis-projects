@@ -1,6 +1,7 @@
 'use client';
 
 import * as d3 from 'd3';
+import { useRouter } from 'next/navigation';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
@@ -45,6 +46,8 @@ const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
 
 const D3Chart = ({ keyword }: { keyword: string }) => {
   const ref = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   const { data, isLoading, isError, refetch } = useGetRankingRelWords(keyword);
 
@@ -123,6 +126,9 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
             .style('cursor', 'auto')
             .style('fill', () => color(i.type) as string)
             .attr('r', () => size(i.value));
+        })
+        .on('click', function (event, d) {
+          router.push(`/keyword/${keyword}/${d.title}/summary`);
         });
 
       const labels = group
