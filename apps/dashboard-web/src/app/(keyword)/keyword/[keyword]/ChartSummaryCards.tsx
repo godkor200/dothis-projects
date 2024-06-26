@@ -19,7 +19,6 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
 
   const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
     keyword,
-    relword: keyword,
   });
 
   const { data: videoUploadCount, isLoading: videoLoading } =

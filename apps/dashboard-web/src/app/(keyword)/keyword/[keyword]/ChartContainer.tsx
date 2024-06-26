@@ -22,7 +22,6 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: dailViewRefetch,
   } = useGetDailyViewV2({
     keyword: keyword,
-    relword: keyword,
   });
 
   const {

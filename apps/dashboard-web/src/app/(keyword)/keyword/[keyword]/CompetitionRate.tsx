@@ -13,7 +13,6 @@ import {
 const CompetitionRate = ({ keyword }: { keyword: string }) => {
   const { data: dailyViewData } = useGetDailyViewV2({
     keyword,
-    relword: keyword,
   });
 
   const { data: videoUploadCount } = useGetVideoUploadCount({
