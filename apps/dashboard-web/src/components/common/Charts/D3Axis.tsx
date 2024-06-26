@@ -125,7 +125,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       .append('div')
       .style('opacity', 0)
       // .attr('class', 'tooltip')
-      .style('position', 'abolute')
+      .style('position', 'absolute')
       .style('background-color', 'white')
       .style('border', 'solid')
       .style('border-width', '1px')
@@ -134,8 +134,8 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
     const tooltip2 = D3.select('#tooltip2')
       .style('position', 'absolute')
-      .style('top', '-999px')
-      .style('left', '-999px')
+      // .style('top', '-999px')
+      // .style('left', '-999px')
       .style('display', 'none')
       .style('min-width', '150px')
       .style('background-color', '#3F3F46')
@@ -501,6 +501,12 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
         D3.select(e.target).transition().attr('r', 4);
 
+        // 이 코드는 mousemove 이벤트가 svg 요소에서 발생할 때마다 마우스 포인터의 좌표를 콘솔에 출력합니다. mouseX와 mouseY는 svg 요소의 왼쪽 상단 모서리를 기준으로 한 상대적인 좌표입니다.
+        // D3.pointer(e): 특정 요소(target element)를 기준으로 한 상대적인 좌표입니다.  <--> 기존에는 pageX pageY로 진행해서 relative에 따른 차이가 보였음
+        const [mouseX, mouseY] = D3.pointer(e);
+        console.log(mouseX, mouseY);
+        console.log(e.pageX, e.pageY);
+
         tooltip2.transition().duration(0).style('display', 'block');
         tooltip2
           .html(
@@ -546,14 +552,22 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
               </div>
             </div>`,
           )
-          .style('left', e.pageX + convertRemToPixels(-1.6) + 'px')
-          .style('top', e.pageY - convertRemToPixels(2) + 'px');
+          // .style('transform', `translate(${mouseX}px, ${mouseY}px)`);
+          .style('left', mouseY + convertRemToPixels(-1.6) + 'px')
+          .style('top', mouseX - convertRemToPixels(2) + 'px');
       })
       .on('mousemove', function (e, i) {
-        return tooltip2
-
-          .style('top', e.pageY + convertRemToPixels(-1.6) + 'px')
-          .style('left', e.pageX + convertRemToPixels(2) + 'px');
+        const [mouseX, mouseY] = D3.pointer(e);
+        console.log(mouseX, mouseY);
+        return (
+          tooltip2
+            // .style(
+            //   'transform',
+            //   `translate(${mouseX}px, ${mouseY}px)`,
+            // );
+            .style('top', mouseY + convertRemToPixels(-1.6) + 'px')
+            .style('left', mouseX + convertRemToPixels(2) + 'px')
+        );
       })
 
       .on('mouseout', (e) => {
@@ -566,8 +580,8 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
         tooltip2.transition().duration(0);
         tooltip2
-          .style('left', '-999px')
-          .style('top', '-999px')
+          // .style('left', '-999px')
+          // .style('top', '-999px')
           .style('display', 'none');
       });
 
@@ -625,9 +639,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
   ]);
 
   return (
-    <div className="">
+    <div className="relative">
       <div id="axis" className="h-[290px] w-full" ref={selectRef}></div>
-      <div id="tooltip2" className="z-[500]"></div>
+      <div id="tooltip2" className="z-[500]"></div>{' '}
     </div>
   );
 };
