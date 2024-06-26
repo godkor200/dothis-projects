@@ -6,16 +6,10 @@ import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import {
-  useDailyVideoCount,
   useDailyViewV2,
   useSearchRatioFormatterD3,
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
-import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
-import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
-import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
-
-import ApiErrorComponent from './ApiErrorComponent ';
 
 const D3Axis = ({ keyword }: { keyword: string }) => {
   const selectRef = useRef(null);
