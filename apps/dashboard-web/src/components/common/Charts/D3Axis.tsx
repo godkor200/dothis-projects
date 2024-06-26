@@ -18,7 +18,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
   const data2d3 = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const data3d3 = useUploadVideoCountFormatterD3({

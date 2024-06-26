@@ -33,12 +33,12 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
   //   검색량 코드
   const searchRatio = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
     keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const first_searchRatio = searchRatio[0];

@@ -30,7 +30,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: naverSearchRefetch,
   } = useGetNaverSearchRatio({
     keyword: keyword,
-    relword: keyword,
+    relword: null,
   });
 
   const {
