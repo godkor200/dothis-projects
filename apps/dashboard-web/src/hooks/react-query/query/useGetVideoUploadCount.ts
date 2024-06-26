@@ -23,7 +23,9 @@ const useGetVideoUploadCount = ({
         to: endDate,
       },
     },
-    { enabled: !!keyword && !!relword && !!startDate && !!endDate },
+    {
+      enabled: !!keyword && !!startDate && !!endDate,
+    },
   );
 
   return {
