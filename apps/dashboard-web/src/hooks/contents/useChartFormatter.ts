@@ -93,7 +93,6 @@ export const useUploadVideoCountFormatterD3 = ({
     keyword,
     relword,
   });
-  console.log(videoUploadCount);
 
   const startDate = useStartDate();
   const endDate = useEndDate();
