@@ -504,8 +504,6 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
         // 이 코드는 mousemove 이벤트가 svg 요소에서 발생할 때마다 마우스 포인터의 좌표를 콘솔에 출력합니다. mouseX와 mouseY는 svg 요소의 왼쪽 상단 모서리를 기준으로 한 상대적인 좌표입니다.
         // D3.pointer(e): 특정 요소(target element)를 기준으로 한 상대적인 좌표입니다.  <--> 기존에는 pageX pageY로 진행해서 relative에 따른 차이가 보였음
         const [mouseX, mouseY] = D3.pointer(e);
-        console.log(mouseX, mouseY);
-        console.log(e.pageX, e.pageY);
 
         tooltip2.transition().duration(0).style('display', 'block');
         tooltip2
@@ -558,7 +556,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       })
       .on('mousemove', function (e, i) {
         const [mouseX, mouseY] = D3.pointer(e);
-        console.log(mouseX, mouseY);
+
         return (
           tooltip2
             // .style(
