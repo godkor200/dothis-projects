@@ -72,7 +72,7 @@ const useGetVideoDataInfinityQuery = (
           : true;
       },
 
-      enabled: !!data && !!relword,
+      enabled: !!data && !!keyword,
     },
   );
 
