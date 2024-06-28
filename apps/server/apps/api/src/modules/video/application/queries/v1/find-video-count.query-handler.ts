@@ -5,9 +5,16 @@ import { FindVideoCountDto } from '@Apps/modules/video/application/dtos/find-vid
 import { Inject } from '@nestjs/common';
 import { VIDEO_COUNT_GET_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { findVideoCountByDateServiceInboundPort } from '@Apps/modules/video/domain/ports/find-video-count.inbound.port';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import {
+  RelatedVideoNotFoundError,
+  VideoNotFoundError,
+} from '@Apps/modules/video/domain/events/video.error';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
-export type TFindVideoCount = Result<VideoCountRes, VideoNotFoundError>;
+export type TFindVideoCount = Result<
+  VideoCountRes,
+  VideoNotFoundError | KeywordsNotFoundError | RelatedVideoNotFoundError
+>;
 
 @QueryHandler(FindVideoCountDto)
 export class FindVideoCountQueryHandler

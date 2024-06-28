@@ -25,6 +25,7 @@ export class ChannelHistoryByChannelIdAdapter
     dao: GetChannelHistoryByChannelIdV2Dao,
   ): Promise<TChannelHistoryByChannelIdRes> {
     const { year, month, day } = DateUtil.currentDate();
+
     const cacheName = CacheNameMapper.getChannelHistoryCacheName(year, month);
     const queryString = `
     SELECT DISTINCT ch.channel_id, ch.CHANNEL_SUBSCRIBERS, ch.CHANNEL_AVERAGE_VIEWS,ch.YEAR, ch.MONTH, ch.DAY

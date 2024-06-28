@@ -9,3 +9,14 @@ export class VideoNotFoundError extends ExceptionBase {
     super(VideoNotFoundError.message, undefined, metadata);
   }
 }
+
+export class RelatedVideoNotFoundError extends ExceptionBase {
+  static readonly message =
+    'Related videos for the given criteria could not be found.';
+
+  public readonly code = 'RELATED_VIDEO.NOT_FOUND';
+
+  constructor(metadata?: unknown) {
+    super(RelatedVideoNotFoundError.message, undefined, metadata);
+  }
+}

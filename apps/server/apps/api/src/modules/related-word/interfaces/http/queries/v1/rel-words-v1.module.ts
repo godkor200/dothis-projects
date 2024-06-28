@@ -2,6 +2,8 @@ import { Module, Provider } from '@nestjs/common';
 import {
   CACHE_FIND_ALL_QUERY,
   CACHE_SET_DIC_TERM,
+  GET_SEARCH_WORD_DI_TOKEN,
+  KOREAN_AUTO_COMPLETE_DI_TOKEN,
   RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
   RELWORDS_DI_TOKEN,
 } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
@@ -54,6 +56,8 @@ import { GetKeywordInformationQueryHandler } from '@Apps/modules/related-word/ap
 import { WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v2.repository';
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
+import { SearchTermCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/search-term.cache';
+import { KoreanAutocompleteCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/korean-autocomplete.cache';
 
 const controllers = [
   FindRelHttpV1Controller,
@@ -103,6 +107,10 @@ const repositories: Provider[] = [
     provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
     useClass: WeeklyHitsV2Repository,
   },
+  {
+    provide: KOREAN_AUTO_COMPLETE_DI_TOKEN,
+    useClass: KoreanAutocompleteCache,
+  },
   SetDicTermHandler,
   FindSearchTermService,
   FindAutoCompleteQueryHandler,
@@ -123,6 +131,7 @@ const handler = [
 const service: Provider[] = [
   { provide: GET_PAGE_BY_KEYWORD_SERVICE, useClass: GetPageByKeywordService },
   { provide: GET_KEYWORD_INFO_SERVICE, useClass: GetKeywordInformationService },
+  { provide: GET_SEARCH_WORD_DI_TOKEN, useClass: SearchTermCache },
 ];
 @Module({
   imports: [

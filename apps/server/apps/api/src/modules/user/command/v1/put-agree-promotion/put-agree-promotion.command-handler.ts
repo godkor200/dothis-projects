@@ -23,17 +23,6 @@ export class PutAgreePromotionCommandHandler
       agreePromotion: command.isAgree,
     });
     if (!res.success) return Err(new InternalServerErrorException());
-    await this.kafkaClient.produce({
-      topic: 'channel_id',
-      messages: [
-        {
-          value: JSON.stringify({
-            channelId: command.channelId,
-            userId: command.id,
-          }),
-        },
-      ],
-    });
     return Ok(res.success);
   }
 }

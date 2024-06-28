@@ -10,10 +10,11 @@ export class ChannelDataRepository
   extends SqlRepositoryBase<ChannelEntity, ChannelModel>
   implements ChannelDataRepositoryPort
 {
-  @InjectRepository(ChannelEntity)
-  protected repository: Repository<ChannelEntity>;
-  protected tableName = 'channel';
+  protected tableName = 'channel_data';
   protected schema: ZodObject<any> = zChannelData;
+
+  @InjectRepository(ChannelEntity, 'onPromisesMysql')
+  protected readonly repository: Repository<ChannelEntity>;
 
   constructor(dataSource: DataSource) {
     super(dataSource);

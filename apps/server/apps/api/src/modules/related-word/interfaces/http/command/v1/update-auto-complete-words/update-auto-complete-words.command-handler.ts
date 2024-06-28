@@ -1,28 +1,41 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/application/dtos/auto-complete-words.dto';
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
-import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { FindRelCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache.port';
+import {
+  GET_SEARCH_WORD_DI_TOKEN,
+  KOREAN_AUTO_COMPLETE_DI_TOKEN,
+} from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+
+import { SearchTermCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/search-term.cache.port';
+import { KoreanAutocompleteCachePort } from '@Apps/modules/related-word/infrastructure/repositories/cache/korean-autocomplete.cache.port';
 
 @CommandHandler(UpdateAutoCompleteWordsCommandDto)
 export class UpdateAutoCompleteWordsCommandHandler
   implements ICommandHandler<UpdateAutoCompleteWordsCommandDto>
 {
   constructor(
-    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
-    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+    @Inject(GET_SEARCH_WORD_DI_TOKEN)
+    private readonly searchTermCache: SearchTermCachePort,
 
-    @Inject(RELWORDS_DI_TOKEN.FIND_ONE_BY_ELASTICACHE)
-    private readonly relWordsCache: FindRelCachePort,
+    @Inject(KOREAN_AUTO_COMPLETE_DI_TOKEN)
+    private readonly koreanAutocompleteCache: KoreanAutocompleteCachePort,
   ) {}
 
   async execute(command: UpdateAutoCompleteWordsCommandDto): Promise<boolean> {
-    const res: { keyword: string }[] =
-      await this.relWordsRepository.findAllKeyword();
-
-    const autoCompleteWords = res.map((e) => e.keyword);
-
-    return await this.relWordsCache.setAutoCompleteWord(autoCompleteWords);
+    const searchTerm = await this.searchTermCache.execute();
+    try {
+      if (searchTerm.isOk()) {
+        const searchTermUnwrapped = searchTerm.unwrap();
+        const res = await this.koreanAutocompleteCache.addWords(
+          searchTermUnwrapped,
+        );
+        console.log(`Search result: ${res}`);
+        return true;
+      }
+      return searchTerm.isErr();
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 }

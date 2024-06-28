@@ -24,6 +24,9 @@ import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/
 import { GetDailyHitsV2HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v2/get-daily-hits/get-daily-hits.v2.http.controller';
 import { GetDailyHitsV2Service } from '@Apps/modules/hits/application/services/get-daily-hits.v2.service';
 import { GetDailyHitsV2QueryHandler } from '@Apps/modules/hits/application/queries/get-daliy-hits.v2.query-handler';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
+import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
 
 const controllers = [
   GetWeeklyHitsListV2HttpController,
@@ -60,9 +63,18 @@ const repository: Provider[] = [
     provide: CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
     useClass: ChannelHistoryByChannelIdAdapter,
   },
+  {
+    provide: RELWORDS_DI_TOKEN.FIND_ONE,
+    useClass: RelatedWordsRepository,
+  },
 ];
 @Module({
-  imports: [CqrsModule, IgniteModule, WeeklyHitsEntityModule],
+  imports: [
+    CqrsModule,
+    IgniteModule,
+    WeeklyHitsEntityModule,
+    RelatedWordsModule,
+  ],
   controllers,
   providers: [...service, ...query, ...repository],
 })

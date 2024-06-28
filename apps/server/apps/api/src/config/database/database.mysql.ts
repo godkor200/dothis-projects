@@ -2,6 +2,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
+import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -39,9 +40,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
           password: this.configService.get('db.ONPROMISES_MYSQL_ROOT_PASSWORD'),
           database: this.configService.get('db.ONPROMISES_DB_SCHEMA'),
           logging: true,
-          entities: [],
+          entities: [ChannelEntity],
           autoLoadEntities: true,
-          synchronize: this.configService.get('app.NODE_ENV') === 'development',
+          synchronize: false,
         };
   }
 }

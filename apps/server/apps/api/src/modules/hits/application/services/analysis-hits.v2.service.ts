@@ -20,6 +20,9 @@ import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-da
 import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 /**
  * 시퀀스
@@ -33,6 +36,8 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
  */
 export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   constructor(
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
     private readonly videoCacheService: VideoCacheOutboundPorts,
     @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
@@ -42,15 +47,33 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
   ) {}
 
   async execute(dto: GetAnalysisHitsV2Dto): Promise<TAnalysisHitsServiceRes> {
-    const videoCacheDao = new GetVideoCacheDao(dto);
     try {
+      const keywordInfo = await this.relWordsRepository.findOneByKeyword(
+        dto.search,
+      );
+      if (keywordInfo.isErr()) {
+        return Err(new KeywordsNotFoundError());
+      }
+      const keywordInfoUnwrap = keywordInfo.unwrap();
+      const relatedCluster = keywordInfoUnwrap.cluster
+        .split(',')
+        .map((e) => e.trim());
+
+      const videoCacheDao = new GetVideoCacheDao({
+        ...dto,
+        relatedCluster,
+      });
+
       const videoCacheResult = await this.videoCacheService.execute(
         videoCacheDao,
       );
+
       if (videoCacheResult.isOk()) {
         const videoCacheResultUnwrap = videoCacheResult.unwrap();
-        if (!Object.keys(videoCacheResultUnwrap).length)
+
+        if (!Object.values(videoCacheResultUnwrap).length) {
           return Err(new VideoNotFoundError());
+        }
         const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
           videoIds: videoCacheResultUnwrap,
           from: videoCacheDao.from,
@@ -72,12 +95,13 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           const videoHistories = videoHistoryResult.unwrap();
 
           const channelHistories = channelHistoryResult.unwrap();
+          console.log(videoHistories, channelHistoryResult);
           const mergedVideoHistory = VideoDataMapper.mergeVideoData(
             videoCacheResultUnwrap,
             videoHistories,
             channelHistories,
           );
-
+          console.log('mergedVideoHistory', mergedVideoHistory);
           if (dto.separation) {
             const groupDataByCluster = VideoAggregateUtils.groupBy(
               mergedVideoHistory,
@@ -90,7 +114,11 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
 
                 return {
                   clusterNumber: Number(clusterNumber),
-                  data: metrics,
+                  data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+                    dto.from,
+                    dto.to,
+                    metrics,
+                  ),
                 };
               },
             );
@@ -101,13 +129,17 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           const metrics = VideoAggregateHelper.calculateMetrics(
             Object.values(dateGroupedData).flat(),
           );
+          console.log(metrics);
           return Ok({
             success: true,
-            data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
-              dto.from,
-              dto.to,
-              metrics,
-            ),
+            data: {
+              clusterNumber: null,
+              data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+                dto.from,
+                dto.to,
+                metrics,
+              ),
+            },
           });
         }
         if (videoHistoryResult.isErr()) {

@@ -27,7 +27,7 @@ services:
   dev-server:
     <<: *defaults
     container_name: api-server
-    command: pnpm dev:back-end
+    command: pnpm dev:server
     ports:
       - "8080"
     build:

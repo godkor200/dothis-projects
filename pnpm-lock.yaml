@@ -427,6 +427,9 @@ importers:
       googleapis:
         specifier: ^111.0.0
         version: 111.0.0
+      hangul-js:
+        specifier: ^0.2.6
+        version: 0.2.6
       ioredis:
         specifier: ^5.4.1
         version: 5.4.1

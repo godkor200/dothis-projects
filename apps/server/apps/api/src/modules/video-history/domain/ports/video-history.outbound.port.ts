@@ -8,7 +8,10 @@ import {
   GetVideoHistoryMultipleByIdV2Dao,
   GetVideoHistoryMultipleByIdAndRelatedWordsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import {
+  ComplexQueryException,
+  TableNotFoundException,
+} from '@Libs/commons/src/exceptions/exceptions';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
 
 export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
@@ -29,7 +32,7 @@ export interface GetRelatedVideoAndVideoHistory
 
 export type TGetVideoHistoryRes = Result<
   GetRelatedVideoAndVideoHistory[],
-  VideoHistoryNotFoundError | TableNotFoundException
+  VideoHistoryNotFoundError | TableNotFoundException | ComplexQueryException
 >;
 
 export interface IRelatedVideoAnalyticsData

@@ -10,19 +10,30 @@ import {
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Err, Ok } from 'oxide.ts';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export class FindVideoCountService
   implements findVideoCountByDateServiceInboundPort
 {
   constructor(
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
     private readonly videoCacheService: VideoCacheOutboundPorts,
   ) {}
 
-  private countVideosByDate(videoData: VideoCacheRecord) {
-    console.time('FindVideoCountService.countVideosByDate');
+  private countVideosByDate(
+    videoData: VideoCacheRecord,
+    from: string,
+    to: string,
+  ) {
     let counts = [];
 
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
     for (const cluster in videoData) {
       const videos = videoData[cluster];
       videos.forEach((video) => {
@@ -31,13 +42,16 @@ export class FindVideoCountService
           4,
           6,
         )}-${date.slice(6, 8)}`;
+        const videoDate = new Date(formattedDate);
 
-        const countItem = counts.find((item) => item.date === formattedDate);
+        if (videoDate >= fromDate && videoDate <= toDate) {
+          const countItem = counts.find((item) => item.date === formattedDate);
 
-        if (countItem) {
-          countItem.number++;
-        } else {
-          counts.push({ date: formattedDate, number: 1 });
+          if (countItem) {
+            countItem.number++;
+          } else {
+            counts.push({ date: formattedDate, number: 1 });
+          }
         }
       });
     }
@@ -47,11 +61,26 @@ export class FindVideoCountService
 
   async execute(dto: FindVideoCountDto): Promise<TFindVideoCount> {
     try {
-      const dao = new GetVideoCacheDao(dto);
+      const keywordInfo = await this.relWordsRepository.findOneByKeyword(
+        dto.search,
+      );
+      if (keywordInfo.isErr()) {
+        return Err(new KeywordsNotFoundError());
+      }
+      const keywordInfoUnwrap = keywordInfo.unwrap();
+      const relatedCluster = keywordInfoUnwrap.cluster
+        .split(',')
+        .map((e) => e.trim());
+
+      const dao = new GetVideoCacheDao({ ...dto, relatedCluster });
       const cache = await this.videoCacheService.execute(dao);
 
       if (cache.isOk()) {
-        return Ok(this.countVideosByDate(cache.unwrap()));
+        const result = this.countVideosByDate(cache.unwrap(), dto.from, dto.to);
+        if (!result.length) {
+          return Ok(null);
+        }
+        return Ok(this.countVideosByDate(cache.unwrap(), dto.from, dto.to));
       }
     } catch (e) {
       return Err(e);

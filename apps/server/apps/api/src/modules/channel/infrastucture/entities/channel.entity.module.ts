@@ -3,8 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChannelEntity } from './channel.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ChannelEntity])],
+  imports: [TypeOrmModule.forFeature([ChannelEntity], 'onPromisesMysql')],
   exports: [TypeOrmModule],
-  providers: [],
 })
 export class ChannelEntityModule {}

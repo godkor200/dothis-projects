@@ -6,7 +6,6 @@ import {
 import { GetVideoHistoryMultipleByIdAndRelatedWordsDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { Injectable } from '@nestjs/common';
 import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
-import { DateFormatterRes } from '@Libs/commons/src/utils/videos.date-formatter';
 import {
   CacheNameMapper,
   IgniteResultToObjectMapper,
@@ -39,7 +38,6 @@ export class VideoHistoryGetLastOneByIdsAdapter
           from.year,
           from.month,
         );
-
         return `(SELECT ${
           'vh.' + keys.join(', vh.')
         } FROM ${tableName} vh WHERE vh.VIDEO_ID in (${

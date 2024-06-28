@@ -33,11 +33,12 @@ export class CacheNameMapper {
 
   /**
    * 클러스터 값을 변환하는 메서드
+   * 클러스터값이 정수로 처리 되어야 함
    * @param cluster 클러스터 값
    */
   private static transformCluster(cluster: string | number): string {
     if (cluster === 'None') return 'NULL';
-    return this.formatNumber(cluster);
+    return this.formatNumber(Math.floor(Number(cluster)));
   }
 
   /**

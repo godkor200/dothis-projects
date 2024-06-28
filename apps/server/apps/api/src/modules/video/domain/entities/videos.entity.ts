@@ -62,10 +62,6 @@ export class VideoEntity {
   @Column({ name: 'crawl_update_at' })
   crawlUpdateAt: Date;
 
-  @ManyToOne((type) => ChannelEntity, (channel) => channel.id)
-  @JoinColumn({ name: 'channel_id' })
-  Channel: ChannelEntity;
-
   @OneToMany((type) => DailyViewsEntity, (dailyViews) => dailyViews.videoId)
   DailyViews: DailyViewsEntity[];
 }
