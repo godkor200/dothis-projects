@@ -3,25 +3,29 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
+import Counter from '../Rolling';
+// import { Component, Counter } from '../Rolling';
+import OutlookChart from './OutlookChart';
 import SummaryChart from './SummaryChart';
 
 const SummaryTab = ({
   params,
 }: {
-  params: { keyword: string; related_word: string };
+  params: { baseKeyword: string; relatedKeyword: string };
 }) => {
-  const keyword = decodeURIComponent(params.keyword);
-  const relatedWord = decodeURIComponent(params.related_word);
+  const baseKeyword = decodeURIComponent(params.baseKeyword);
+  const relatedKeyword = decodeURIComponent(params.relatedKeyword);
 
   return (
     <div className="mt-[20px] flex flex-col gap-[20px]">
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/analysis`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
       >
         분석 {'[더보기]'}
       </Link>
 
+      {/* <Component /> */}
       <div className="grid grid-cols-[minmax(600px,2fr)_repeat(2,minmax(300px,1fr))] gap-[20px]">
         <BoxFrame>
           <div>
@@ -37,9 +41,9 @@ const SummaryTab = ({
 
               <div className="text-grey600 flex items-center justify-center gap-[10px] text-[14px] font-[400]">
                 <p>조회수</p>
-                <p className="text-primary500 px-[10px] text-[20px] font-bold">
-                  392,550,100
-                </p>
+                <div className="text-primary500   px-[10px] text-[18px] font-bold">
+                  <Counter value={1232324234} />
+                </div>
                 <p>예상</p>
                 {/* 여기 조회수에 그냥 가상선택자 달아주자 */}
               </div>
@@ -51,13 +55,11 @@ const SummaryTab = ({
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
               소재 전망
             </p>
-
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">보통</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                검색에 의한 노출이 줄어드니 추천 알고리즘에 대비한 전략을
-                준비하세요.
-              </p>
+            <div className="">
+              <OutlookChart
+                baseKeyword={baseKeyword}
+                relatedkeyword={relatedKeyword}
+              />
             </div>
           </div>
         </BoxFrame>
@@ -77,7 +79,7 @@ const SummaryTab = ({
         </BoxFrame>
       </div>
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/comparison`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/comparison`}
         className="text-[20px] font-bold"
       >
         비교 {'[더보기]'}
@@ -127,7 +129,7 @@ const SummaryTab = ({
         </BoxFrame>
       </div>
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/insight`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/insight`}
         className="text-[20px] font-bold"
       >
         인사이트 {'[더보기]'}
