@@ -44,10 +44,8 @@ const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
         <p className="text-grey900 text-[18px] font-bold">
           {Math.floor(
             ((((last_searchRatio.value || 0) as number) /
-              Number(first_searchRatio.value || 1)) as number) *
-              100 *
-              100,
-          ) / 100}
+              Number(first_searchRatio.value || 1)) as number) * 100,
+          ) - 100}
           %
         </p>
       </div>
