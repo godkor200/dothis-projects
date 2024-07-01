@@ -30,7 +30,7 @@ const useXAxis = ({ chartSelector, data, dimensions, styleMethod }: Props) => {
 
   const x = D3.scaleBand()
     .domain(data.map((item) => item.date))
-    .range([marginLeft, width - marginRight]);
+    .range([-40, width - -40]);
 
   useImperativeHandle(
     xAxisRef,
