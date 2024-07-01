@@ -25,6 +25,7 @@ import {
 } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { TGetRankingRelatedWordsRes } from '@Apps/modules/related-word/application/service/get-ranking-related-words.service';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 const c = nestControllerContract(apiRouter.relatedWords);
 const { rankingRelatedWordsV2 } = c;
@@ -63,7 +64,8 @@ export class RankingHttpController {
           Err: (err: Error) => {
             if (
               err instanceof RelatedWordsNotFoundError ||
-              err instanceof VideoNotFoundError
+              err instanceof VideoNotFoundError ||
+              err instanceof KeywordsNotFoundError
             )
               throw new NotFoundException(err.message);
 

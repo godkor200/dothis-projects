@@ -1,8 +1,13 @@
 import {
+  TGetWeeklyKeywords,
+  TOneKeywordRes,
   TPaginatedWeeklyHitsV2Res,
   WeeklyHitsV2OutboundPort,
 } from '@Apps/modules/hits/domain/ports/weekly-hits.v2.outbound.port';
-import { GetWeeklyViewsDaoV2 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
+import {
+  GetWeeklyKeyword,
+  GetWeeklyViewsDaoV2,
+} from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { WeeklyHitsModel, zWeeklyKeywordsListSourceSchema } from '@dothis/dto';
@@ -27,7 +32,37 @@ export class WeeklyHitsV2Repository
   constructor(dataSource: DataSource) {
     super(dataSource);
   }
-
+  async getKeyword(keyword: string): Promise<TOneKeywordRes> {
+    try {
+      const queryBuilder = this.repository
+        .createQueryBuilder('wv')
+        .select('wv.ranking', 'ranking')
+        .addSelect('wv.category', 'category')
+        .addSelect('wv.competitive', 'competitive')
+        .addSelect('wv.last_ranking', 'lastRanking')
+        .where({ keyword: keyword })
+        .addSelect('wv.year', 'year')
+        .addSelect('wv.month', 'month')
+        .addSelect('wv.day', 'day')
+        .andWhere((qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('subWv.year, subWv.month, subWv.day')
+            .from('weekly_views', 'subWv')
+            .orderBy('subWv.year', 'DESC')
+            .addOrderBy('subWv.month', 'DESC')
+            .addOrderBy('subWv.day', 'DESC')
+            .limit(1)
+            .getQuery();
+          return '(wv.year, wv.month, wv.day) = (' + subQuery + ')';
+        });
+      const results = await queryBuilder.getRawMany();
+      if (!results.length) return Err(new WeeklyViewsError());
+      return Ok(results[0]);
+    } catch (error) {
+      return Err(error);
+    }
+  }
   async getPaginatedWeeklyHitsByKeywordAndCount(
     dao: GetWeeklyViewsDaoV2,
   ): Promise<TPaginatedWeeklyHitsV2Res> {
@@ -59,6 +94,43 @@ export class WeeklyHitsV2Repository
           page,
         }),
       );
+    } catch (e) {
+      return Err(e);
+    }
+  }
+  async getWeeklyKeywords(dao: GetWeeklyKeyword): Promise<TGetWeeklyKeywords> {
+    const limitViews = 10000000; // 조회수 제한
+
+    try {
+      const queryBuilder = this.repository
+        .createQueryBuilder('wv')
+        .select('wv.keyword', 'recommendedKeyword')
+        .addSelect('wv.last_ranking', 'rankChange')
+        .addSelect('wv.category', 'topCategoryNumber')
+        .addSelect('wv.year', 'year')
+        .addSelect('wv.month', 'month')
+        .addSelect('wv.day', 'day')
+        .addSelect('rw.rel_words', 'topAssociatedWord')
+        .leftJoin('related_words', 'rw', 'wv.keyword = rw.keyword')
+        .where((qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('subWv.year, subWv.month, subWv.day')
+            .from('weekly_views', 'subWv')
+            .orderBy('subWv.year', 'DESC')
+            .addOrderBy('subWv.month', 'DESC')
+            .addOrderBy('subWv.day', 'DESC')
+            .limit(1)
+            .getQuery();
+          return '(wv.year, wv.month, wv.day) = (' + subQuery + ')';
+        })
+        .andWhere('wv.weekly_views >= :limit', { limit: limitViews })
+        .orderBy('last_ranking', 'DESC')
+        .limit(Number(dao.limit));
+
+      const results = await queryBuilder.getRawMany();
+      if (!results.length) return Err(new WeeklyViewsError());
+      return Ok(results);
     } catch (e) {
       return Err(e);
     }

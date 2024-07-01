@@ -1,4 +1,10 @@
-version: '3'
+x-defaults:
+  &defaults
+  init: true
+  tty: true
+  networks:
+    - dev-dothis-network
+
 services:
   nginx:
     platform: linux/arm64/v8
@@ -17,28 +23,29 @@ services:
       - dev-server
     networks:
       - dev-dothis-network
+
   dev-server:
+    <<: *defaults
     container_name: api-server
+    command: pnpm dev:back-end
+    ports:
+      - "8080"
     build:
+      args:
+        APP: server
+        START_COMMAND: dev
       context: .
-      dockerfile: Dockerfile.development
+      dockerfile: ./Dockerfile.dev
     env_file:
       - apps/server/development.env
     volumes:
-      - ./package.json:/app/package.json
-      - ./turbo.json:/app/turbo.json
-      - ./pnpm-workspace.yaml:/app/pnpm-workspace.yaml
-      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
-      - ./.npmrc:/app/.npmrc
-      - ./apps/server/package.json:/app/apps/server/package.json
       - ./apps/server:/app/apps/server
-      - ./config:/app/config
-      - ./packages:/app/packages
-    ports:
-      - "8080"
+      - ./packages/dto:/app/packages/dto
+      - /app/apps/server/node_modules
     restart: always
     networks:
       - dev-dothis-network
+
   db-mysql:
     platform: linux/arm64/v8
     container_name: dothis-mysql
@@ -62,10 +69,11 @@ services:
       - 3306:3306
     networks:
       - dev-dothis-network
+
   cache-redis:
     platform: linux/arm64/v8
     container_name: dothis-redis
-    image: redis:latest
+    image: redis:7.2-alpine
     restart: always
     environment:
       - REDIS_PORT=${REDIS_PORT}
@@ -80,32 +88,7 @@ services:
       - 6379:6379
     networks:
       - dev-dothis-network
-#  perf-test:
-#    build: .
-#    image: artilleryio/artillery:latest
-#    platform: linux/arm64/v8
-#    environment:
-#      REDIS_PORT: dev-server:80
-#      MAX_LATENCY: 1000
-#      MIN_RPS: 200
-#      TEST_CONFIG: |-
-#        config:
-#          target: "{{ $processEnvironment.TARGET_URL }}"
-#          phases:
-#            - duration: 1
-#              arrivalRate: 1
-#          defaults:
-#            headers:
-#              accept: application/json
-#
-#        scenarios:
-#          - flow:
-#              - get:
-#                  url: "/v1/hits/daily/24%2C%2033%2C%2022%2C%2023%2C%208?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
-#              - get:
-#                  url: "v1/hits/expectation/0%2C1%2C2%2C3%2C4?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
-#              - get:
-#                  url: "v1/related-word/%EC%84%9C%EC%9A%B8/ranking"
+
 networks:
   dev-dothis-network:
-
+    driver: bridge

@@ -28,7 +28,7 @@ export interface GetSomeWeeklyHitsQueryInterface {
     | 'YEAR'
     | 'MONTH'
     | 'DAY';
-  order?: 'ASC' | 'DESC';
+  order?: 'asc' | 'desc' | 'ASC' | 'DESC';
   keywords?: string[];
   categoryNumbers?: string[];
 }

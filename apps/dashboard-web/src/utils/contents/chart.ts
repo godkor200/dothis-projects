@@ -19,6 +19,11 @@ type ExpectedView = DeepRequired<
   ClientInferResponseBody<typeof apiRouter.hits.getExpectedViews, 200>
 >['data'][0];
 
+type UploadVideoCount = ClientInferResponseBody<
+  typeof apiRouter.video.getVideoCount,
+  200
+>['data'][0];
+
 /**
  * Date에 따른 initial 구조를 생성한다.
  * @returns @single format이 single일 경우 value-number로 반환
@@ -146,7 +151,7 @@ export const handleDailyViewData = (
 };
 
 export const handleDailyViewDataD3 = (
-  data: (DailyView | undefined)[],
+  data: (DailyView | undefined)[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const dateBasedDataSet = initChartDateFormatter({
@@ -214,6 +219,33 @@ export const handleDailyVideoCountD3 = (
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date] += Math.abs(views);
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleVideoUploadCountD3 = (
+  data: UploadVideoCount[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+
+      const views = item.number;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.floor(Number(views));
       }
     }
   });

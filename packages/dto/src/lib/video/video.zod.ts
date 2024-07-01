@@ -11,6 +11,16 @@ export const zClusterPathParams = z.object({
     .describe('찾을 비디오의 클러스터 번호 값을 입력받습니다.')
     .default('0'),
 });
+export const zClusterSeparationQuery = z.object({
+  separation: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      if (val.toLowerCase() === 'true') return true;
+      if (val.toLowerCase() === 'false') return false;
+    }
+    return val;
+  }, z.boolean().optional().describe('클러스터별 분리')),
+});
+
 /**
  * findVideoBySearchKeyword 스키마 정의:
  *
@@ -28,7 +38,9 @@ export const zClusterPathParams = z.object({
  */
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
 
-export const zFindVideoBySearchKeyword = findVideoBySearchKeyword;
+export const zFindVideoBySearchKeyword = findVideoBySearchKeyword.merge(
+  zClusterSeparationQuery,
+);
 /**
  * findVideoBySearchKeywordClusterNumber 스키마 정의:
  *

@@ -51,3 +51,4 @@ apps/server/db/redis
 /apps/dashboard-web/.open-next/
 /apps/server/db/data/mysql/
 /apps/dashboard-web/.sst/
+/apps/server/logstash/mysql-connector-java-8.0.26/

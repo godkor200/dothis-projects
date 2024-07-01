@@ -1,4 +1,4 @@
-FROM node:21-alpine AS base
+FROM node:20.14.0-alpine AS base
 
 ENV PNPM_HOME /usr/local/share/pnpm
 ENV PATH $PNPM_HOME:$PATH

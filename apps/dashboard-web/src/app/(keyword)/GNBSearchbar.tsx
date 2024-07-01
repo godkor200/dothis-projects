@@ -157,26 +157,62 @@ const GNBSearchbar = () => {
         />
       </div>
       {isFocused && !!data?.length && (
-        <div className=" border-grey400 bg-grey00 absolute mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border px-2 py-5">
+        <div className=" border-grey400 bg-grey00 absolute mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border   pt-5">
           {data
             ?.filter((item) => item.endsWith('*'))
             .slice(0, 5)
             .map((item) => (
-              <span
-                className="text-grey700 cursor-pointer text-[18px]"
-                key={item}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  // if (!checkIsSignedIn()) {
-                  //   return;
-                  // }
-                  router.push(`/keyword/${item.replace('*', '')}`);
-                  return;
-                }}
-              >
-                {item.replace('*', '')}
-              </span>
+              <div className="flex cursor-pointer px-[30px]">
+                <SvgComp
+                  icon="BorderSearchIcon"
+                  size={24}
+                  className="mr-[16px]"
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   e.stopPropagation();
+
+                  //   console.log('check');
+                  //   router.push(`/keyword/${item.replace('*', '')}`);
+                  // }}
+                />
+                <span
+                  className="text-grey700 text-[18px]"
+                  key={item}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    // if (!checkIsSignedIn()) {
+                    //   return;
+                    // }
+                    router.push(`/keyword/${item.replace('*', '')}`);
+                    return;
+                  }}
+                >
+                  {item.replace('*', '')}
+                </span>
+              </div>
             ))}
+
+          <div
+            className="border-grey400 border-t-1 text-grey500 flex px-[30px] py-[15px]"
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            <p
+              className="cursor-pointer"
+              onMouseDown={(e) => {
+                e.preventDefault();
+              }}
+            >
+              자동완성 끄기
+            </p>
+            <p
+              className="ml-auto cursor-pointer"
+              onClick={() => {
+                inputRef.current?.blur();
+              }}
+            >
+              닫기
+            </p>
+          </div>
         </div>
       )}
     </div>

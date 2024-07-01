@@ -17,20 +17,20 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const LoginButton = ({ iconName, boderColor, ...buttonProps }: Props) => {
   return (
     <Link
-      className="mb-[1rem] block w-[200px] "
+      className="mb-[12px] block w-[400px] "
       href={(BaseURL + '/v1/auth/google-login') as Route}
     >
       <div
-        className={cn('rounded-lg border border-solid py-2', {
-          [`border-${boderColor}`]: boderColor,
+        className={cn('rounded-[10px] border border-grey400 py-[20px]', {
+          // [`border-${boderColor}`]: boderColor,
         })}
       >
         <button
-          className="flex w-full items-center  gap-[0.7rem] px-[10px]"
+          className="relative flex w-full  items-center pl-[27px]"
           {...buttonProps}
         >
-          <SvgComp icon={iconName} size={26} />
-          <p className="flex-1 text-center font-bold">
+          <SvgComp icon={iconName} size={30} />
+          <p className="flex-1 text-center text-[16px] font-bold">
             {buttonProps['aria-label']}
           </p>
         </button>

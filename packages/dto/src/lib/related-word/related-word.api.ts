@@ -3,6 +3,7 @@ import { c } from '../contract';
 import {
   zAutoCompleteWords,
   zDeleteRelWords,
+  zGetKeywordInformationRes,
   zKeywords,
   zRankRel,
   zRelWords,
@@ -128,5 +129,53 @@ export const relatedWordsApi = c.router({
     pathParams: zSearch,
     summary: '탐색어로 연관어를 기대조회수를 매깁니다.',
     description: '탐색어로 연관어의 기대조회수를 리턴합니다.',
+  },
+  getPageBySearchKeyword: {
+    method: 'GET',
+    path: `${keywordApiUrl}/:search`,
+    pathParams: zSearch,
+    responses: {
+      200: zKeywords,
+      ...zErrResBase,
+    },
+    summary: '해당하는 탐색어가 있는지 호출합니다.',
+    description:
+      '해당하는 탐색어가 우리가 탐색한 db안에 있는지 없는지 호출합니다.',
+  },
+  getKeywordInformation: {
+    method: 'GET',
+    path: `${keywordApiUrl}/:search/information`,
+    pathParams: zSearch,
+    responses: {
+      200: zGetKeywordInformationRes,
+      ...zErrResBase,
+    },
+    summary: '키워드 인포 API 호출합니다.',
+    description:
+      '기능 개요\n' +
+      '\n' +
+      '- 검색 키워드\n' +
+      '    - 입력된 키워드 표시\n' +
+      '    - 최대 10글자\n' +
+      '- 키워드 순위\n' +
+      '    - 순위는 주간 키워드 순위 정렬 시 책정\n' +
+      '    - 표시 형식 - n (m ▲)\n' +
+      '    - n : 금주 순위, m : 전주 대비 변동량, 화살표 : 변동 방향▲▼\n' +
+      '- 대표 카테고리\n' +
+      '    - 키워드로 검색된 영상들의 카테고리 빈도를 통해 결정되어 weekly_views 테이블에 저장됨\n' +
+      '- 경쟁강도\n' +
+      '    - 콘텐츠의 수요 대비 공급량을 나타내는 지표\n' +
+      '    - 조회수 합계에 대한 기준 먼저 적용\n' +
+      '        - 조회수 합계 ~ 1,000,000 : 수요 부족\n' +
+      '        - 조회수 합계 1,000,000 ~\n' +
+      '            - 계산식 : (분석 기간 조회수 합계 / 영상 수) / 사용자 평균조회수\n' +
+      '            - 계산 결과\n' +
+      '                - 20~ : 블루오션\n' +
+      '                - 5~20 :\n' +
+      '                    - 영상 수 > 1,000 : 수요 폭발\n' +
+      '                    - 영상 수 < 1,000 : 공급 부족\n' +
+      '                - 1~5 : 양호\n' +
+      '                - 0.1~ 1 : 경쟁 과열\n' +
+      '                - ~0.1 : 공급 과잉',
   },
 });

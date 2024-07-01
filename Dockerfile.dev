@@ -1,0 +1,48 @@
+FROM node:20.14.0-alpine as base
+
+ENV PNPM_HOME /usr/local/share/pnpm
+ENV PATH $PNPM_HOME:$PATH
+
+# g++ 및 기타 빌드 도구를 설치하고 삭제하지 않도록 변경
+RUN apk add --update --no-cache nano bash libc6-compat python3 make g++ cmake \
+    && npm install -g pnpm@9.1.1 \
+    && pnpm add -g turbo
+
+FROM base AS pruned
+WORKDIR /app
+ARG APP
+
+COPY . .
+
+RUN turbo prune --scope=$APP --docker
+
+FROM base AS installer
+WORKDIR /app
+ARG APP
+
+COPY --from=pruned /app/out/json/ .
+COPY --from=pruned /app/out/pnpm-lock.yaml /app/pnpm-lock.yaml
+
+COPY apps/${APP}/package.json /app/apps/${APP}/package.json
+
+RUN \
+    --mount=type=cache,target=/root/.pnpm-store/v3,sharing=locked \
+    pnpm install --prefer-offline --frozen-lockfile
+
+COPY --from=pruned /app/out/full/ .
+COPY turbo.json turbo.json
+
+RUN turbo run build --no-cache --filter=${APP}^...
+
+RUN \
+    --mount=type=cache,target=/root/.pnpm-store/v3,sharing=locked \
+    pnpm install --prefer-offline --frozen-lockfile
+
+FROM base AS runner
+WORKDIR /app
+ARG APP
+ARG START_COMMAND=dev
+
+COPY --from=installer /app .
+
+CMD pnpm dev:back-end
