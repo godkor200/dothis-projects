@@ -95,13 +95,13 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           const videoHistories = videoHistoryResult.unwrap();
 
           const channelHistories = channelHistoryResult.unwrap();
-          console.log(videoHistories, channelHistoryResult);
+
           const mergedVideoHistory = VideoDataMapper.mergeVideoData(
             videoCacheResultUnwrap,
             videoHistories,
             channelHistories,
           );
-          console.log('mergedVideoHistory', mergedVideoHistory);
+
           if (dto.separation) {
             const groupDataByCluster = VideoAggregateUtils.groupBy(
               mergedVideoHistory,
@@ -129,7 +129,7 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           const metrics = VideoAggregateHelper.calculateMetrics(
             Object.values(dateGroupedData).flat(),
           );
-          console.log(metrics);
+
           return Ok({
             success: true,
             data: {
