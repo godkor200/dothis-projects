@@ -37,6 +37,10 @@ interface Props {
   title: string;
 }
 
+// 해당 Line은 X.scaleBand y.scaleLinear에 한정적인 hook이다
+
+// 다른 형식까지 포함하여 쓸 수 있는 구조도 고민중
+
 function usePrevious<T>(state: T) {
   const ref = useRef<T>(state);
 
@@ -100,7 +104,7 @@ const useD3Line = ({
           .attr('class', `${title}`)
           .attr('stroke', '#F0ABFC')
 
-          .attr('stroke-width', 5)
+          .attr('stroke-width', 3)
           .style('stroke-linecap', 'round')
           .call((line) => {
             if (styleMethod) {
