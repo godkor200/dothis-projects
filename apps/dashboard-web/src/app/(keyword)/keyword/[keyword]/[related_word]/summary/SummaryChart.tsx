@@ -296,8 +296,6 @@ const SummaryChart = () => {
   }, [width, xAxisRef, yAxisRef]);
 
   useEffect(() => {
-    console.log('effect');
-
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
       bar2.current?.render();
