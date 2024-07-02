@@ -4,7 +4,12 @@ import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DISABLE_SPEEDY } from 'styled-components/dist/constants';
 
+import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
+import {
+  getDailyView_FluctuationRate,
+  getSumDailyView,
+} from '@/utils/dailyView/common';
 import { getNaver_FluctuationRate } from '@/utils/naver-search/common';
 
 import useXAxis from './useXAxis';
@@ -379,6 +384,15 @@ const OutlookChart = ({
   const naverFluctuationRate = getNaver_FluctuationRate(naverSearchData);
 
   const naverOutlook = getOutlook(naverFluctuationRate);
+
+  const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
+    keyword: baseKeyword,
+    relword: relatedkeyword,
+  });
+
+  const dailyViewFluctuationRate = getDailyView_FluctuationRate(dailyViewData);
+
+  const totalDailyView = getSumDailyView(dailyViewData);
 
   const chart = D3.select('#outlook-chart')
     .select('svg')
