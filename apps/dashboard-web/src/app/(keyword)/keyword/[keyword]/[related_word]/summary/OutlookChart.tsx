@@ -14,7 +14,15 @@ interface DataItem {
   value: number; // value 속성의 타입을 number로 명시
 }
 
-const case1: '좋음' | '나쁨' | '보통' = '보통';
+type NaverOutlook = '좋음' | '나쁨' | '보통';
+
+type DailyViewOutlook = '좋음' | '나쁨' | '보통';
+
+type ConbineOutlook = `${NaverOutlook}-${DailyViewOutlook}`;
+
+type OutlookStatus = '매우좋음' | '좋음' | '나쁨' | '보통' | '매우나쁨';
+
+const case1: '좋음' | '나쁨' | '보통' = '좋음';
 
 const obj1: { type: string; content: '좋음' | '나쁨' | '보통' } = {
   type: '조회수',
@@ -26,7 +34,7 @@ const obj2 = {
   content: '보통',
 };
 
-const case2: '좋음' | '나쁨' | '보통' = '나쁨';
+const case2: '좋음' | '나쁨' | '보통' = '좋음';
 // const case3 = '보통';
 
 function convert(
@@ -34,9 +42,9 @@ function convert(
   ohterCase: '좋음' | '나쁨' | '보통',
 ) {
   if (ohterCase === '나쁨') {
-    return CONVERT_CHARTDATA['보통2'];
+    return OUTLOOK_POINT['보통2'];
   }
-  return CONVERT_CHARTDATA[currentCase];
+  return OUTLOOK_POINT[currentCase];
 }
 
 const getOutlook = (value: number | undefined) =>
@@ -63,7 +71,7 @@ const textObj = {
 
 const summaryObj = {
   좋음: {
-    좋음: '매우좋음',
+    좋음: '조회수와 검색량 모두 오르고 있어요. 영상만 잘 만든다면 좋은 성과를 얻을 수 있어요.',
     보통: '좋음',
     나쁨: '보통',
   },
@@ -79,9 +87,215 @@ const summaryObj = {
   },
 };
 
-function Test() {}
+const titles = {
+  '좋음-좋음': '매우좋음',
+  '좋음-보통': '좋음',
+  '좋음-나쁨': '보통',
+  '보통-좋음': '좋음',
+  '보통-보통': '보통',
+  '보통-나쁨': '나쁨',
+  '나쁨-좋음': '보통',
+  '나쁨-보통': '나쁨',
+  '나쁨-나쁨': '매우나쁨',
+};
 
-const CONVERT_CHARTDATA = {
+/**
+ * 밑에 방식으로는 key가 매우좋음 좋음 보통 나쁨 매우나쁨
+ * 이렇게 5가지이지만 보통에서 수치에 따른 분기처리가 너무 많이 들어감
+ */
+const description = {
+  매우좋음: () => 'ㅇ',
+  좋음: (amount: number) => {
+    if (amount > 1) {
+      return 'ㅇㅇ';
+    } else {
+      return 'ddd';
+    }
+  },
+};
+
+interface OutlookStatusInfo {
+  title: OutlookStatus;
+  description: (params: {
+    naverFluctuationRate?: number;
+    dailyViewFluctuationRate?: number;
+    dailyView?: number;
+  }) => React.ReactNode;
+}
+
+const OUTLOOK_STATUSINFO: {
+  [key in ConbineOutlook]: OutlookStatusInfo;
+} = {
+  '좋음-좋음': {
+    title: '매우좋음',
+    description: () => (
+      <>
+        조회수와 검색량 모두 오르고 있어요. <br />
+        영상만 잘 만든다면 좋은 성과를 얻을 수 있어요.
+      </>
+    ),
+  },
+  '좋음-보통': {
+    title: '좋음',
+    description: () => (
+      <>
+        검색량이 오르고 있어요.
+        <br />
+        소재의 조회수도 곧 따라 오를 거에요.
+      </>
+    ),
+  },
+  '좋음-나쁨': {
+    title: '보통',
+    description: ({ dailyViewFluctuationRate, naverFluctuationRate }) =>
+      getCompareDescription({ dailyViewFluctuationRate, naverFluctuationRate }),
+  },
+  '보통-좋음': {
+    title: '좋음',
+    description: () => (
+      <>
+        조회수가 오르고 있어요.
+        <br />
+        관련 영상을 만들면 추천 알고리즘에 등록될 확률이 높아요.
+      </>
+    ),
+  },
+  '보통-보통': {
+    title: '보통',
+    description: ({ dailyView }) => {
+      if (!dailyView) return '파악 중 문제가 발생하였습니다.';
+
+      if (dailyView > 1_000_000) {
+        return (
+          <>
+            높은 조회수와 검색량을 유지하고 있어요.
+            <br />
+            꾸준한 사랑을 받는 소재에요.
+          </>
+        );
+      } else if (dailyView < -300_000) {
+        return (
+          <>
+            낮은 조회수와 검색량을 유지하고 있어요.
+            <br />
+            시청자들이 관심 없대요.
+          </>
+        );
+      } else if (dailyView <= 1_000_000) {
+        return (
+          <>
+            적당한 조회수와 검색량을 유지하고 있어요.
+            <br />
+            나쁘지 않지만 좋지도 않아요.
+          </>
+        );
+      }
+      return '조건에 맞는 설명을 찾을 수 없습니다.';
+    },
+  },
+  '보통-나쁨': {
+    title: '나쁨',
+    description: () => (
+      <>
+        조회수가 줄어들고 있어요.
+        <br />
+        콘텐츠를 만들어도 좋은 결과를 장담하기 어려워요.
+      </>
+    ),
+  },
+  '나쁨-좋음': {
+    title: '보통',
+    description: ({ naverFluctuationRate, dailyViewFluctuationRate }) =>
+      getCompareDescription({ dailyViewFluctuationRate, naverFluctuationRate }),
+  },
+  '나쁨-보통': {
+    title: '나쁨',
+    description: () => (
+      <>
+        검색에 의한 노출이 줄어드니
+        <br />
+        추천 알고리즘에 대비한 전략을 준비하세요.
+      </>
+    ),
+  },
+  '나쁨-나쁨': {
+    title: '매우나쁨',
+    description: () => (
+      <>
+        조회수와 검색량이 모두 떨어지고 있어요.
+        <br />더 좋은 소재를 찾아보시길 추천드려요.
+      </>
+    ),
+  },
+};
+
+const getOutlookStatusInfo = ({
+  naverOutlook,
+  dailyViewOutlook,
+}: {
+  naverOutlook: NaverOutlook;
+  dailyViewOutlook: DailyViewOutlook;
+}) => OUTLOOK_STATUSINFO[`${naverOutlook}-${dailyViewOutlook}`];
+
+const getCompareDescription = ({
+  naverFluctuationRate,
+  dailyViewFluctuationRate,
+}: {
+  naverFluctuationRate?: number;
+  dailyViewFluctuationRate?: number;
+}) => {
+  if (!dailyViewFluctuationRate || !naverFluctuationRate)
+    return '파악 중 문제가 발생하였습니다.';
+
+  const biggerText =
+    Math.max(naverFluctuationRate, dailyViewFluctuationRate) ===
+    naverFluctuationRate
+      ? '검색량이'
+      : '조회수가';
+
+  const smallerText =
+    Math.min(naverFluctuationRate, dailyViewFluctuationRate) ===
+    naverFluctuationRate
+      ? '검색량이'
+      : '조회수가';
+
+  const totalFluctuation = dailyViewFluctuationRate + naverFluctuationRate;
+
+  if (totalFluctuation > 20) {
+    return (
+      <>
+        {smallerText} 낮아지지만 {biggerText} 크게 높아지고 있어요. <br />이
+        주제가 숨은 노다지일 수도 있어요
+      </>
+    );
+  } else if (totalFluctuation < -20) {
+    return (
+      <>
+        {biggerText} 높아지지만 {smallerText} 크게 낮아지고 있어요. <br />
+        전체적인 관심도의 양은 떨어지고 있으니 주의하세요.
+      </>
+    );
+  } else if (totalFluctuation <= 20) {
+    return (
+      <>
+        {biggerText} 높아진 만큼 {smallerText} 낮아지고 있어요. <br />
+        미래를 장담하기 어려워요.
+      </>
+    );
+  }
+  return '조건에 맞는 설명을 찾을 수 없습니다.';
+};
+
+/**
+ * 현재 해당 Description 구조
+ * 1* OUTLOOK_TITLE의 value를 기반으로 key를 나누는 방식 ex)매우좋음, 좋음,보통
+ * 2* '조회수:좋음-변동량-좋음' 형식으로 key를 나누는 방식 ex) OUTLOOK_DESCRIPTION[`${case1}-${case2}`];
+ * 위에 두 가지는 최대한 nested obj 구조를 피하기위해서 생각한 방식
+ * but 함수형 구조를 갖춰야함 (같은 보통-보통 구조에서 수치로 인해서 Description이 결정된다.)
+ * 3* nested 구조인 조회수 : { 변동량 : description }
+ */
+
+const OUTLOOK_POINT = {
   좋음: [
     { date: 1, value: 1 },
     { date: 6, value: 12 },
@@ -263,7 +477,7 @@ const OutlookChart = ({
         .data([
           (naverOutlook as '좋음' | '나쁨' | '보통') === '보통'
             ? convert(naverOutlook, case2)
-            : CONVERT_CHARTDATA[naverOutlook],
+            : OUTLOOK_POINT[naverOutlook],
         ]);
 
       path
@@ -298,7 +512,7 @@ const OutlookChart = ({
         .data([
           (case2 as '좋음' | '나쁨' | '보통') === '보통'
             ? convert(case2, case1)
-            : CONVERT_CHARTDATA[case2],
+            : OUTLOOK_POINT[case2],
         ]);
 
       path2
@@ -378,10 +592,24 @@ const OutlookChart = ({
 
       <div className=" gap-30 flex flex-col text-center">
         <p className=" px-[10px] text-[20px] font-bold">
-          {case1 ? (case2 ? textObj?.[case1]?.[case2] : case1) : case2}
+          {case1
+            ? case2
+              ? getOutlookStatusInfo({
+                  naverOutlook: case1,
+                  dailyViewOutlook: case2,
+                }).title
+              : case1
+            : case2}
         </p>
         <p className="text-grey600  text-[14px]  font-[400]">
-          검색에 의한 노출이 줄어드니 추천 알고리즘에 대비한 전략을 준비하세요.
+          {getOutlookStatusInfo({
+            naverOutlook: case1,
+            dailyViewOutlook: case2,
+          }).description({
+            naverFluctuationRate,
+            dailyViewFluctuationRate: 6,
+            dailyView: 400000,
+          })}
         </p>
       </div>
     </>
