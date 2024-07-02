@@ -4,6 +4,7 @@ import './styles.css';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
@@ -12,6 +13,7 @@ import { useIsOpenSignUpModal } from '@/store/authStore';
 import {
   useIsLoadingModalOpen,
   useIsModalOpen,
+  useIsRouterModalOpen,
   useModalActions,
   useModalContent,
 } from '@/store/modalStore';
@@ -19,12 +21,17 @@ import {
 const RootTemplate = ({ children }: StrictPropsWithChildren) => {
   const BasicDialog = Dialog;
   const LoadingDialog = Dialog;
+  const RouterDialog = Dialog;
 
   const isModalOpen = useIsModalOpen();
   const isLoadingModal = useIsLoadingModalOpen();
 
+  const isRouterModalOpen = useIsRouterModalOpen();
+
   const content = useModalContent();
   const { initializeModal } = useModalActions();
+
+  const router = useRouter();
 
   return (
     <AuthProvider>
@@ -56,6 +63,23 @@ const RootTemplate = ({ children }: StrictPropsWithChildren) => {
           </LoadingDialog.Overlay>
         </LoadingDialog.Portal>
       </LoadingDialog.Root>
+
+      <RouterDialog.Root
+        open={React.useMemo(() => isRouterModalOpen, [isRouterModalOpen])}
+        onOpenChange={() => {
+          initializeModal();
+          router.back();
+        }}
+        key={'RouterDialog'}
+      >
+        <RouterDialog.Portal>
+          <RouterDialog.Overlay className="DialogOverlay outline-0">
+            <RouterDialog.Content className="DialogContent outline-0">
+              {content}
+            </RouterDialog.Content>
+          </RouterDialog.Overlay>
+        </RouterDialog.Portal>
+      </RouterDialog.Root>
     </AuthProvider>
   );
 };

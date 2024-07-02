@@ -1,7 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { KeyboardEvent } from 'react';
-import { useCallback, useState, useTransition } from 'react';
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import SvgComp from '@/components/common/SvgComp';
@@ -19,6 +20,9 @@ import { cn } from '@/utils/cn';
 
 const GNBSearchbar = () => {
   const router = useRouter();
+
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [openInput, setOpenInput] = useState(false);
 
@@ -86,13 +90,13 @@ const GNBSearchbar = () => {
     return false;
   };
 
-  const handleKeyDown = (
+  const handleRouteChangeKeyDown = (
     event: KeyboardEvent<HTMLInputElement>,
     currentInput: string,
   ) => {
-    if (!checkIsSignedIn()) {
-      return;
-    }
+    // if (!checkIsSignedIn()) {
+    //   return;
+    // }
 
     if (event.key === 'Enter') {
       if (
@@ -102,10 +106,35 @@ const GNBSearchbar = () => {
       ) {
         // 엔터 키가 눌렸을 때 실행할 동작
 
-        createSearchwordMutate(currentInput);
+        router.push(`/keyword/${currentInput}`);
       }
     }
   };
+
+  useEffect(() => {
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+
+    const inputElement = inputRef.current;
+    if (inputElement) {
+      inputElement.addEventListener('focus', handleFocus);
+      inputElement.addEventListener('blur', handleBlur);
+    }
+
+    return () => {
+      if (inputElement) {
+        inputElement.removeEventListener('focus', handleFocus);
+        inputElement.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, []);
+
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setSearchInput('');
+    setInput('');
+  }, [pathName]);
 
   return (
     <div className="relative">
@@ -115,6 +144,7 @@ const GNBSearchbar = () => {
         <input
           className="text-grey600  placeholder:text-grey400  w-full text-[16px]  outline-none"
           placeholder="키워드를 넣어주세요"
+          ref={inputRef}
           value={input}
           onChange={(e) => {
             setInput(e.currentTarget.value);
@@ -122,29 +152,67 @@ const GNBSearchbar = () => {
           }}
           // ref={searchInputRef}
           onKeyDown={(e) => {
-            handleKeyDown(e, e.currentTarget.value);
+            handleRouteChangeKeyDown(e, e.currentTarget.value);
           }}
         />
       </div>
-      {!!data?.length && (
-        <div className=" border-grey400 bg-grey00 absolute mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border px-2 py-5">
+      {isFocused && !!data?.length && (
+        <div className=" border-grey400 bg-grey00 absolute mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border   pt-5">
           {data
             ?.filter((item) => item.endsWith('*'))
             .slice(0, 5)
             .map((item) => (
-              <span
-                className="text-grey700 cursor-pointer text-[18px]"
-                onClick={() => {
-                  if (!checkIsSignedIn()) {
+              <div className="flex cursor-pointer px-[30px]">
+                <SvgComp
+                  icon="BorderSearchIcon"
+                  size={24}
+                  className="mr-[16px]"
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   e.stopPropagation();
+
+                  //   console.log('check');
+                  //   router.push(`/keyword/${item.replace('*', '')}`);
+                  // }}
+                />
+                <span
+                  className="text-grey700 text-[18px]"
+                  key={item}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    // if (!checkIsSignedIn()) {
+                    //   return;
+                    // }
+                    router.push(`/keyword/${item.replace('*', '')}`);
                     return;
-                  }
-                  router.push(`/keyword/${item.replace('*', '')}`);
-                  return;
-                }}
-              >
-                {item.replace('*', '')}
-              </span>
+                  }}
+                >
+                  {item.replace('*', '')}
+                </span>
+              </div>
             ))}
+
+          <div
+            className="border-grey400 border-t-1 text-grey500 flex px-[30px] py-[15px]"
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            <p
+              className="cursor-pointer"
+              onMouseDown={(e) => {
+                e.preventDefault();
+              }}
+            >
+              자동완성 끄기
+            </p>
+            <p
+              className="ml-auto cursor-pointer"
+              onClick={() => {
+                inputRef.current?.blur();
+              }}
+            >
+              닫기
+            </p>
+          </div>
         </div>
       )}
     </div>

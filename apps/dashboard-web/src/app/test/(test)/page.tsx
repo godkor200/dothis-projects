@@ -8,8 +8,6 @@ const Page = () => {
 
   const data = searchParam?.get('test');
 
-  console.log(data);
-
   return (
     <div>
       <p className="font-bold"> 테스트용 페이지</p>

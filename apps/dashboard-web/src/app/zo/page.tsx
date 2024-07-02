@@ -22,7 +22,7 @@ const Page = () => {
       /> */}
 
       <D3Chart keyword="세종" />
-      <D3Axis />
+      <D3Axis keyword="세종" />
       {/* <D3Tool />
       <D3ToolTip /> */}
       {/* <D3Chart /> */}
