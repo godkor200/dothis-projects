@@ -4,9 +4,9 @@ import type { ClientInferResponseBody } from '@ts-rest/core';
 type DailyView = ClientInferResponseBody<
   typeof apiRouter.hits.getDailyViewsV2,
   200
->['data'][0];
+>['data'];
 
-export const getDailyView_FluctuationRate = (data: DailyView[]) => {
+export const getDailyView_FluctuationRate = (data?: DailyView) => {
   if (!data) return;
 
   const first_searchRatio = data[0];
@@ -20,7 +20,7 @@ export const getDailyView_FluctuationRate = (data: DailyView[]) => {
   );
 };
 
-export const getSumDailyView = (data: DailyView[]) => {
+export const getSumDailyView = (data?: DailyView) => {
   if (data) {
     return data?.reduce((total, item) => total + item.increaseViews, 0);
   }
