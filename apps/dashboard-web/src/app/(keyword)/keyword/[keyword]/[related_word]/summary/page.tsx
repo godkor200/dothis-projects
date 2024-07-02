@@ -11,10 +11,10 @@ import SummaryChart from './SummaryChart';
 const SummaryTab = ({
   params,
 }: {
-  params: { baseKeyword: string; relatedKeyword: string };
+  params: { keyword: string; related_word: string };
 }) => {
-  const baseKeyword = decodeURIComponent(params.baseKeyword);
-  const relatedKeyword = decodeURIComponent(params.relatedKeyword);
+  const baseKeyword = decodeURIComponent(params.keyword);
+  const relatedKeyword = decodeURIComponent(params.related_word);
 
   return (
     <div className="mt-[20px] flex flex-col gap-[20px]">
