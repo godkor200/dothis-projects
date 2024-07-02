@@ -128,7 +128,7 @@ export class VideoHistoryGetMultipleByIdV2Adapter
     );
 
     const queryString = this.queryString(this.keys, videoIds, fromDate, toDate);
-    console.log(`queryString: ${queryString}`);
+
     try {
       const cache = await this.igniteService.getClient().getCache(tableName);
       const query = this.igniteService.createDistributedJoinQuery(queryString);

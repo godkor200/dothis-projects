@@ -44,7 +44,7 @@ export class VideoMultiRelatedWordsCacheAdapter
 
       // words를 순회하며 결과를 매핑합니다.
       const mappedResults = words.reduce((acc, key, index) => {
-        // Redis에서 가져온 회원 목록을 필터링 합니다.
+        // Redis에서 가져온 목록을 필터링 합니다.
         const filteredMembers = VideoFetchHelper.filterByDateRangeAndCluster(
           results[index][1] as string[],
           cutoffDate,

@@ -71,6 +71,7 @@ export const zVideoPublishCountData = z.array(
 );
 
 export const zVideoModel = dataObject(zVideoRes);
+
 export const zVideoCountRes = zVideoPublishCountData;
 
 export const zVideoResponse = z.object({

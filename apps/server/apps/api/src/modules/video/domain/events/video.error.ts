@@ -20,3 +20,12 @@ export class RelatedVideoNotFoundError extends ExceptionBase {
     super(RelatedVideoNotFoundError.message, undefined, metadata);
   }
 }
+export class TodayIssueNotFoundError extends ExceptionBase {
+  static readonly message = "Today's issue could not be found.";
+
+  public readonly code = 'TODAY_ISSUE.NOT_FOUND';
+
+  constructor(metadata?: unknown) {
+    super(TodayIssueNotFoundError.message, undefined, metadata);
+  }
+}

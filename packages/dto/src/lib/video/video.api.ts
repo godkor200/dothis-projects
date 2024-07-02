@@ -15,6 +15,7 @@ import {
   zGetAdsRelatedTopHits,
   zGetAdsRelatedTopHitsRes,
   zGetVideoAdsInfoRes,
+  zTodayIssueVideo,
   zVideoDetails,
 } from './video.zod';
 
@@ -134,7 +135,7 @@ export const videoApi = c.router({
     method: 'GET',
     path: `${videoBaseApiUrl}/issue/today`,
     responses: {
-      200: zVideoModel,
+      200: zTodayIssueVideo,
       ...zErrResBase,
     },
     summary: '오늘의 이슈 영상을 가져옵니다.',

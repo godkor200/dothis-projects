@@ -7,12 +7,18 @@ import {
   IGetVideoHistoryGetMultipleByIdDao,
   GetVideoHistoryMultipleByIdV2Dao,
   GetVideoHistoryMultipleByIdAndRelatedWordsDao,
+  VideoHistoryGetTopViewsByIdsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import {
   ComplexQueryException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
-import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
+import {
+  DateData,
+  ITodayIssue,
+  IVideoSchema,
+} from '@Apps/modules/video/infrastructure/daos/video.res';
+import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
 
 export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
   extends DateData {
@@ -67,4 +73,8 @@ export interface IGetVideoHistoryLastOneByIdsOutboundPort {
   execute(
     dao: GetVideoHistoryMultipleByIdAndRelatedWordsDao,
   ): Promise<TGetVideoHistoryRes>;
+}
+
+export interface IVideoHistoryGetTopViewsByIdsOutboundPort {
+  execute(dao: VideoHistoryGetTopViewsByIdsDao): Promise<TIssueTodayRes>;
 }

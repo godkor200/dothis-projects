@@ -26,7 +26,6 @@ import {
 import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
 import { FindRankingRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-ranking-related-word.outbound.port';
 import { SetRankingRelatedWordOutbound } from '@Apps/modules/related-word/domain/ports/set-ranking-related-word.outbound.port';
-import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export class GetRankingRelatedWordsV2Service {
   constructor(
