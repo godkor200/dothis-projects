@@ -2,7 +2,6 @@
 
 import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { DISABLE_SPEEDY } from 'styled-components/dist/constants';
 
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
@@ -27,27 +26,12 @@ type ConbineOutlook = `${NaverOutlook}-${DailyViewOutlook}`;
 
 type OutlookStatus = '매우좋음' | '좋음' | '나쁨' | '보통' | '매우나쁨';
 
-const case1: '좋음' | '나쁨' | '보통' = '좋음';
-
-const obj1: { type: string; content: '좋음' | '나쁨' | '보통' } = {
-  type: '조회수',
-  content: '좋음',
-};
-
-const obj2 = {
-  type: '검색량',
-  content: '보통',
-};
-
-const case2: '좋음' | '나쁨' | '보통' = '좋음';
-// const case3 = '보통';
-
 function convert(
   currentCase: '좋음' | '나쁨' | '보통',
   ohterCase: '좋음' | '나쁨' | '보통',
 ) {
   if (ohterCase === '나쁨') {
-    return OUTLOOK_POINT['보통2'];
+    return OUTLOOK_POINT['보통REVERSE'];
   }
   return OUTLOOK_POINT[currentCase];
 }
@@ -56,68 +40,10 @@ const getOutlook = (value: number | undefined) =>
   value ? (value > 10 ? '좋음' : value < 10 ? '나쁨' : '보통') : '보통';
 // 마지막은 defaultValue로 일단 넣어둠
 
-const textObj = {
-  좋음: {
-    좋음: '매우좋음',
-    보통: '좋음',
-    나쁨: '보통',
-  },
-  보통: {
-    좋음: '좋음',
-    보통: '보통',
-    나쁨: '나쁨',
-  },
-  나쁨: {
-    좋음: '보통',
-    보통: '나쁨',
-    나쁨: '매우나쁨',
-  },
-};
-
-const summaryObj = {
-  좋음: {
-    좋음: '조회수와 검색량 모두 오르고 있어요. 영상만 잘 만든다면 좋은 성과를 얻을 수 있어요.',
-    보통: '좋음',
-    나쁨: '보통',
-  },
-  보통: {
-    좋음: '좋음',
-    보통: '보통',
-    나쁨: '나쁨',
-  },
-  나쁨: {
-    좋음: '보통',
-    보통: '나쁨',
-    나쁨: '매우나쁨',
-  },
-};
-
-const titles = {
-  '좋음-좋음': '매우좋음',
-  '좋음-보통': '좋음',
-  '좋음-나쁨': '보통',
-  '보통-좋음': '좋음',
-  '보통-보통': '보통',
-  '보통-나쁨': '나쁨',
-  '나쁨-좋음': '보통',
-  '나쁨-보통': '나쁨',
-  '나쁨-나쁨': '매우나쁨',
-};
-
 /**
  * 밑에 방식으로는 key가 매우좋음 좋음 보통 나쁨 매우나쁨
  * 이렇게 5가지이지만 보통에서 수치에 따른 분기처리가 너무 많이 들어감
  */
-const description = {
-  매우좋음: () => 'ㅇ',
-  좋음: (amount: number) => {
-    if (amount > 1) {
-      return 'ㅇㅇ';
-    } else {
-      return 'ddd';
-    }
-  },
-};
 
 interface OutlookStatusInfo {
   title: OutlookStatus;
@@ -314,7 +240,7 @@ const OUTLOOK_POINT = {
     { date: 13, value: 2 },
   ],
 
-  보통2: [
+  보통REVERSE: [
     { date: 1, value: 15 },
     { date: 6, value: 14 },
     { date: 8, value: 17 },
@@ -372,8 +298,6 @@ const OutlookChart = ({
   const marginBottom = 20;
   const marginLeft = 0;
 
-  const title = useRef('');
-
   const svgRef = useRef<SVGSVGElement | null>(null); // SVG 엘리먼트의 ref 추가
 
   const { data: naverSearchData } = useGetNaverSearchRatio({
@@ -391,6 +315,8 @@ const OutlookChart = ({
   });
 
   const dailyViewFluctuationRate = getDailyView_FluctuationRate(dailyViewData);
+
+  const dailyViewOutlook = getOutlook(dailyViewFluctuationRate);
 
   const totalDailyView = getSumDailyView(dailyViewData);
 
@@ -478,19 +404,12 @@ const OutlookChart = ({
         return y?.(d.value);
       });
 
-    const contentTest = () => {
-      let value1;
-      let value2;
-    };
-
-    title.current === textObj[obj1?.content]?.[case2];
-
-    if (naverOutlook) {
+    if (naverSearchData) {
       const path = chart
         .selectAll('.test')
         .data([
           (naverOutlook as '좋음' | '나쁨' | '보통') === '보통'
-            ? convert(naverOutlook, case2)
+            ? convert(naverOutlook, dailyViewOutlook)
             : OUTLOOK_POINT[naverOutlook],
         ]);
 
@@ -520,13 +439,13 @@ const OutlookChart = ({
         });
     }
 
-    if (case2) {
+    if (dailyViewData) {
       const path2 = chart
         .selectAll('.ttt')
         .data([
-          (case2 as '좋음' | '나쁨' | '보통') === '보통'
-            ? convert(case2, case1)
-            : OUTLOOK_POINT[case2],
+          (dailyViewOutlook as '좋음' | '나쁨' | '보통') === '보통'
+            ? convert(dailyViewOutlook, naverOutlook)
+            : OUTLOOK_POINT[dailyViewOutlook],
         ]);
 
       path2
@@ -556,8 +475,8 @@ const OutlookChart = ({
         })
         .call((path) => {
           if (
-            (case1 as '좋음' | '나쁨' | '보통') ===
-            (case2 as '좋음' | '나쁨' | '보통')
+            (naverOutlook as '좋음' | '나쁨' | '보통') ===
+            (dailyViewOutlook as '좋음' | '나쁨' | '보통')
           ) {
             path.attr('transform', `translate(0,10)`);
           }
@@ -594,7 +513,7 @@ const OutlookChart = ({
       .append('path')
       .attr('d', 'M 0 0 L 6 3 L 0 6 L 0 3') // Reduced size path
       .style('fill', '#818CF8');
-  }, [width, naverOutlook]);
+  }, [width, naverOutlook, dailyViewOutlook]);
 
   return (
     <>
@@ -606,19 +525,19 @@ const OutlookChart = ({
 
       <div className=" gap-30 flex flex-col text-center">
         <p className=" px-[10px] text-[20px] font-bold">
-          {case1
-            ? case2
+          {naverSearchData
+            ? dailyViewData
               ? getOutlookStatusInfo({
-                  naverOutlook: case1,
-                  dailyViewOutlook: case2,
+                  naverOutlook: naverOutlook,
+                  dailyViewOutlook: dailyViewOutlook,
                 }).title
-              : case1
-            : case2}
+              : naverOutlook
+            : dailyViewOutlook}
         </p>
         <p className="text-grey600  text-[14px]  font-[400]">
           {getOutlookStatusInfo({
-            naverOutlook: case1,
-            dailyViewOutlook: case2,
+            naverOutlook: naverOutlook,
+            dailyViewOutlook: dailyViewOutlook,
           }).description({
             naverFluctuationRate,
             dailyViewFluctuationRate: 6,
