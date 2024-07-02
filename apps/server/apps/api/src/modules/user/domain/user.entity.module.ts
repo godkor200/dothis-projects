@@ -5,7 +5,10 @@ import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Membership, ChannelEntity])],
+  imports: [
+    TypeOrmModule.forFeature([User, Membership], 'default'),
+    TypeOrmModule.forFeature([ChannelEntity], 'onPromisesMysql'),
+  ],
   exports: [TypeOrmModule],
   providers: [],
 })

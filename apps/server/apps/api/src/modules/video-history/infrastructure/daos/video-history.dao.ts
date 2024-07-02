@@ -92,3 +92,6 @@ export class VideoNoKeywordPaginatedDao {
     this.page = props.page;
   }
 }
+export class VideoHistoryGetTopViewsByIdsDao {
+  constructor(public videos: Record<string, VideoCacheReturnType[]>) {}
+}

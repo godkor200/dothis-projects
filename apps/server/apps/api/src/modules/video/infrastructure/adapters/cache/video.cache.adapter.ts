@@ -8,9 +8,9 @@ import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { appGlobalConfig } from '@Apps/config/app/config/app.global';
 import { Redis } from 'ioredis';
-import dayjs from 'dayjs';
-import { Err, Ok, Result } from 'oxide.ts';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error'; // dayjs 라이브러리 import
+import { Err, Ok } from 'oxide.ts';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { VideoFetchHelper } from '@Apps/modules/video/application/service/helpers/video.fetch.helper';
 
 @Injectable()
 export class VideoCacheAdapter implements VideoCacheOutboundPorts {
@@ -23,42 +23,31 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
 
   async execute(dao: GetVideoCacheDao): Promise<VideoCacheAdapterRes> {
     const { search, related, from, to } = dao;
+
     try {
       const searchResults = await this.redisClient.smembers(search);
-      console.log(`[탐색어 count]`, searchResults.length);
       if (!searchResults.length) return Err(new VideoNotFoundError());
+
+      const filteredByDateRange = VideoFetchHelper.filterByDateRangeAndCluster(
+        searchResults,
+        from,
+        to,
+        dao.relatedCluster,
+      );
+
       let finalResults: string[];
-
-      // from과 to 사이의 날짜인지 확인하는 함수
-      const isWithinRange = (date: string, from: string, to: string) => {
-        return (
-          dayjs(date).isAfter(dayjs(from).subtract(1, 'day')) &&
-          dayjs(date).isBefore(dayjs(to).add(1, 'day'))
-        );
-      };
-
-      // 검색 결과에 대한 날짜 범위 적용
-      const filteredByDateRange = searchResults.filter((item) => {
-        const [publishDate, channelId, videoId, clusterNumber] =
-          item.split(':');
-
-        // dayjs를 사용하여 게시 날짜가 사용자가 지정한 기간 내인지 확인
-        return isWithinRange(publishDate, from, to);
-      });
 
       if (related) {
         const relatedResults = await this.redisClient.smembers(related);
-        console.log(`[연관어 count]`, relatedResults.length);
         if (!relatedResults.length) return Err(new VideoNotFoundError());
 
-        const filterByDateRange = (items: string[]) =>
-          items.filter((item) => {
-            const parts = item.split(':');
-            const publishDate = parts[0];
-            return isWithinRange(publishDate, from, to);
-          });
-
-        const filteredRelatedResults = filterByDateRange(relatedResults);
+        const filteredRelatedResults =
+          VideoFetchHelper.filterByDateRangeAndCluster(
+            relatedResults,
+            from,
+            to,
+            dao.relatedCluster,
+          );
 
         const intersectionResults = filteredByDateRange.filter((item) =>
           filteredRelatedResults.includes(item),
@@ -70,8 +59,9 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
       }
 
       console.log(
+        `search:${dao.search},related:${dao.related}`,
         `[Final Results Count]: ${finalResults.length}`,
-        `[Final Results]`,
+        `[Final Results]:`,
         finalResults,
       );
 

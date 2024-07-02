@@ -99,18 +99,19 @@ export class WeeklyHitsV2Repository
     }
   }
   async getWeeklyKeywords(dao: GetWeeklyKeyword): Promise<TGetWeeklyKeywords> {
-    const limitViews = 10000000; // 조회수 제한
+    const limitViews: number = 5000000; // 조회수 제한 500만
 
     try {
       const queryBuilder = this.repository
         .createQueryBuilder('wv')
         .select('wv.keyword', 'recommendedKeyword')
-        .addSelect('wv.last_ranking', 'rankChange')
+        .addSelect('wv.ranking', 'ranking')
         .addSelect('wv.category', 'topCategoryNumber')
         .addSelect('wv.year', 'year')
         .addSelect('wv.month', 'month')
         .addSelect('wv.day', 'day')
         .addSelect('rw.rel_words', 'topAssociatedWord')
+        .addSelect('wv.ranking - wv.last_ranking', 'changes') // changes 컬럼 추가
         .leftJoin('related_words', 'rw', 'wv.keyword = rw.keyword')
         .where((qb) => {
           const subQuery = qb
@@ -125,7 +126,7 @@ export class WeeklyHitsV2Repository
           return '(wv.year, wv.month, wv.day) = (' + subQuery + ')';
         })
         .andWhere('wv.weekly_views >= :limit', { limit: limitViews })
-        .orderBy('last_ranking', 'DESC')
+        .orderBy('changes', 'DESC') // changes 기준 정렬
         .limit(Number(dao.limit));
 
       const results = await queryBuilder.getRawMany();

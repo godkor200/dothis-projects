@@ -10,7 +10,7 @@ COPY package.json turbo.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc ./
 COPY apps/server/package.json ./apps/server/package.json
 
 # pnpm 저장소 경로 설정 및 의존성 설치
-RUN pnpm config set store-dir ./.pnpm-store
+RUN pnpm config set store-dir ./.pnpm-store --global
 RUN apk add --no-cache g++ make gcc cmake
 RUN pnpm install --frozen-lockfile
 

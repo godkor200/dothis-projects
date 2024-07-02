@@ -12,6 +12,7 @@ import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/vi
 import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import {
   CacheDoesNotFoundException,
+  ComplexQueryException,
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
@@ -30,7 +31,9 @@ export type TGetRankingRelatedWordsRes = Result<
   | ChannelHistoryNotFoundError
   | VideoNotFoundError
   | KeywordsNotFoundError
+  | ComplexQueryException
 >;
+
 @QueryHandler(GetRankingRelatedWordsDto)
 export class GetRankingRelatedWordsService
   implements

@@ -2,20 +2,19 @@ import { z } from 'zod';
 import { dataObject } from '../common.model';
 
 export const zChannelData = z.object({
-  id: z.number(),
-  userId: z.number().nullable(),
-  channelName: z.string(),
-  channelUrl: z.string(),
-  channelSubscriber: z.number().nullable(),
+  channelId: z.string().max(48).default(''),
+  channelIdPart: z.string().max(1),
+  channelName: z.string().max(255).nullable(),
   channelDescription: z.string().nullable(),
-  channelSince: z.date(),
-  channelTotalViews: z.number(),
-  channelTotalVideos: z.number(),
-  channelNormalVideos: z.number(),
-  channelCountry: z.string().nullable(),
-  channelLink: z.string(),
-  channelKeywords: z.array(z.string()),
-  channelTags: z.array(z.string()).nullable(),
+  channelTags: z.array(z.string()).max(2000).nullable(),
+  keyword: z.array(z.string()).max(2000).nullable(),
+  tag: z.string().max(2000).nullable(),
+  channelCountry: z.string().max(100).nullable(),
+  channelLink: z.string().max(8000).nullable(),
+  channelSince: z.string().max(24).nullable(),
+  channelCluster: z.number().int().default(-1),
+  crawledDate: z.date().nullable(),
+  userId: z.number().int().nullable(),
 });
 
 export type ChannelModel = z.TypeOf<typeof zChannelData>;

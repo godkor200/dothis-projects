@@ -1,25 +1,30 @@
-/**
- * Ignite 데이터 쿼리 결과를 객체로 매핑하기 위한 맵퍼입니다.
- */
 export class IgniteResultToObjectMapper {
-  // SELECT 문에서 칼럼 이름들을 추출하는 정적 메소드입니다.
   private static parseColumnsFromQuery(query: string): string[] {
     const columnString = query.split('SELECT')[1].split('FROM')[0];
 
     const columns = columnString.split(',').map((column) => {
       let columnName = column.trim();
 
-      // 'AS' 구문을 사용한 별칭 처리
-      if (columnName.includes(' AS ')) {
-        columnName = columnName.split('AS')[1].trim();
-      }
-      // 특수문자 제거
-      columnName = columnName.replace(/['"\(\)]/g, '');
-
-      // 테이블 이름이나 복잡한 함수 호출 부분 제거 (예: 'vh.videoId' -> 'videoId')
-      if (columnName.includes('.')) {
+      // 'TO_CHAR' 함수 및 'AS' 구문을 사용한 별칭 처리
+      if (columnName.toUpperCase().includes('TO_CHAR')) {
+        const aliasIndex = columnName.toUpperCase().lastIndexOf(' AS ');
+        if (aliasIndex !== -1) {
+          columnName = columnName.substring(aliasIndex + 4).trim(); // 별칭 부분만 가져옴
+        } else {
+          // 별칭이 없는 경우 기본 이름 지정, 기본 함수 호출 부분 제거
+          columnName = columnName.substring(
+            columnName.toUpperCase().indexOf('TO_CHAR') + 7,
+          );
+          columnName = columnName.split(')')[1]?.trim() || 'video_published';
+        }
+      } else if (columnName.toUpperCase().includes(' AS ')) {
+        columnName = columnName.split(/AS/i)[1].trim();
+      } else if (columnName.includes('.')) {
         columnName = columnName.substring(columnName.lastIndexOf('.') + 1);
       }
+
+      // 특수문자 제거
+      columnName = columnName.replace(/['"\(\)]/g, '');
 
       return this.toCamelCase(columnName.toLowerCase());
     });
@@ -28,14 +33,12 @@ export class IgniteResultToObjectMapper {
     return [...new Set(columns)];
   }
 
-  // 문자열을 카멜 케이스로 변환하는 정적 메소드입니다.
   private static toCamelCase(str: string): string {
     return str.replace(/([-_][a-z])/gi, (group) =>
       group.toUpperCase().replace('-', '').replace('_', ''),
     );
   }
 
-  // SQL 쿼리 결과와 칼럼 문자열을 받아 객체 배열로 매핑하는 정적 메소드입니다.
   static mapResultToObjects<T = any>(result: string[][], columns: string): T[] {
     const parseColumns = this.parseColumnsFromQuery(columns);
     return result.map((row) => {
@@ -43,12 +46,10 @@ export class IgniteResultToObjectMapper {
       for (let i = 0; i < parseColumns.length; i++) {
         rowObject[parseColumns[i]] = row[i];
       }
-
       return rowObject;
     });
   }
 
-  // 단일 객체로 결과를 매핑하기 위한 정적 메소드입니다. 주로 단일 행 결과를 처리할 때 사용됩니다.
   static mapResultToObject<T = any>(result: string[][], columns: string): T {
     const res = this.mapResultToObjects(result, columns);
     return res[0]; // 첫 번째 객체만 반환합니다.

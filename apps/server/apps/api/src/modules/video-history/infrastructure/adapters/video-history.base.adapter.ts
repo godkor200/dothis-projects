@@ -1,5 +1,3 @@
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
-
 export class VideoHistoryBaseAdapter {
   readonly keys: string[] = [
     'VIDEO_ID',
@@ -7,9 +5,18 @@ export class VideoHistoryBaseAdapter {
     'VIDEO_LIKES',
     'VIDEO_COMMENTS',
     'VIDEO_PERFORMANCE',
-    'VIDEO_CLUSTER',
+    // 'VIDEO_CLUSTER',
     'YEAR',
     'MONTH',
     'DAY',
   ];
+
+  public modifyKeys(keys: string[], keyToCast: string): string[] {
+    return keys.map((key) => {
+      if (key === keyToCast) {
+        return `CAST(${key} AS DOUBLE) AS ${key}`;
+      }
+      return key;
+    });
+  }
 }

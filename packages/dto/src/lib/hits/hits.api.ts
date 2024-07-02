@@ -1,5 +1,6 @@
 import { c } from '../contract';
 import {
+  zClusterSpecificCombinedData,
   zCombinedViewsData,
   zDailyViews,
   zExpectedViews,
@@ -10,12 +11,13 @@ import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
 import {
+  dataObject,
   zClusterNumber,
   zClusterNumberMulti,
   zOnlyLimit,
 } from '../common.model';
 import { zGetWeeklyViewsBySomeQuery, zGetWeeklyViewsQuery } from './hits.zod';
-
+import { z } from 'zod';
 export const expectedHitsApiUrl = '/expectation';
 export const viewApiUrl = '/hits';
 const dailyApiUrl = '/daily';
@@ -136,7 +138,10 @@ export const hitsApi = c.router({
     method: 'GET',
     path: `${viewApiUrl}`,
     query: zFindVideoBySearchKeyword,
-    responses: { 200: zCombinedViewsData, ...zErrResBase },
+    responses: {
+      200: zClusterSpecificCombinedData,
+      ...zErrResBase,
+    },
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to), 클러스터분리(separation)로 일일조회수,기대 조회수를 출력합니다.',

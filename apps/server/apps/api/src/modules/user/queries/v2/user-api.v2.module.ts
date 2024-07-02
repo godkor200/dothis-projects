@@ -11,10 +11,11 @@ import { AwsModule } from '@Apps/common/aws/aws.module';
 import { PutAgreePromotionHttpController } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.http.controller';
 import { PutAgreePromotionCommandHandler } from '@Apps/modules/user/command/v1/put-agree-promotion/put-agree-promotion.command-handler';
 import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
-import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
+
 import { ClientsModule } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { KafkaConfigService } from '@Apps/common/kafka/service/kafka.service';
+import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
 
 const httpControllers = [
   GetKeywordByUserHttpController,
@@ -34,11 +35,11 @@ const commandHandlers: Provider[] = [
 const queryHandlers: Provider[] = [];
 @Module({
   imports: [
+    AwsModule,
     CqrsModule,
     UserEntityModule,
     MembershipEntityModule,
-    AwsModule,
-    ChannelEntity,
+    ChannelEntityModule,
     ClientsModule.registerAsync([
       {
         imports: [ConfigModule],

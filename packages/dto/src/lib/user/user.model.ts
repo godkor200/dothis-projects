@@ -4,7 +4,7 @@ export const zUserModel = z.object({
   data: z.object({
     id: z.number().nullable().describe('The id of user'),
     userEmail: z.string().email().max(30).nullable().describe('user email'),
-    channelId: z.number().nullable().describe('User Channel-id'),
+    channelId: z.string().nullable().describe('User Channel-id'),
     tokenRefresh: z.string().max(110).nullable().describe('refresh token'),
     plan: z.string().max(10).describe('price plan'),
     isAdmin: z

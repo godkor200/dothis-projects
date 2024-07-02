@@ -8,7 +8,10 @@ import { Result } from 'oxide.ts';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { FindIndividualVideoInboundPort } from '@Apps/modules/video/domain/ports/find-individual-video.inbound.port';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import {
+  ComplexQueryException,
+  TableNotFoundException,
+} from '@Libs/commons/src/exceptions/exceptions';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 
 export type TVideoIndividualRes = Result<
@@ -16,6 +19,7 @@ export type TVideoIndividualRes = Result<
   | ChannelHistoryNotFoundError
   | VideoHistoryNotFoundError
   | TableNotFoundException
+  | ComplexQueryException
 >;
 /**
  * 데이터 30일 미만 : “데이터가 부족합니다.”

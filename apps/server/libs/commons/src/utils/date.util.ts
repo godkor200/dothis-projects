@@ -42,4 +42,11 @@ export class DateUtil {
     const adjustedFrom = dayjs(from).subtract(1, 'day').format('YYYY-MM-DD');
     return { adjustedTo, adjustedFrom };
   }
+
+  public static isWithinRange(date: string, from: string, to: string) {
+    return (
+      dayjs(date).isAfter(dayjs(to).subtract(1, 'year')) &&
+      dayjs(date).isBefore(dayjs(to).add(1, 'day'))
+    );
+  }
 }
