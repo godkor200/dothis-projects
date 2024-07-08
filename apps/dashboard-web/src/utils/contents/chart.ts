@@ -24,6 +24,11 @@ type UploadVideoCount = ClientInferResponseBody<
   200
 >['data'][0];
 
+type CombineExpectedView = ClientInferResponseBody<
+  typeof apiRouter.hits.getAnalysisHitsV2,
+  200
+>['data']['data'][number];
+
 /**
  * Date에 따른 initial 구조를 생성한다.
  * @returns @single format이 single일 경우 value-number로 반환
@@ -82,10 +87,10 @@ export const createDateTimeApexChart = (
   return formattedResult.sort((a, b) => a.x - b.x);
 };
 
-export const createDateTimeD3 = (
-  timeSeriesData: Record<string, number | number[]>,
-) => {
-  const formattedResult = [];
+export const createDateTimeD3 = <T>(
+  timeSeriesData: Record<string, T>,
+): { date: string; value: T }[] => {
+  const formattedResult: { date: string; value: T }[] = [];
 
   for (const date in timeSeriesData) {
     const data = timeSeriesData[date];
@@ -246,6 +251,63 @@ export const handleVideoUploadCountD3 = (
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date] += Math.floor(Number(views));
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleExpectedViewD3 = (
+  data: CombineExpectedView[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+      // 소수점을 지우기 위해 round (평균성과로 변경이 되어 게스트 조회수 연산제거)
+      // const views = Math.round(item.expectedHits * GUEST_AVERAGEVIEW);
+      const views = Math.round(item.expectedHits * 100) / 100;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += views;
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleExpectedViewAreaD3 = (
+  data: CombineExpectedView[] | undefined,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'range',
+  });
+
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.date;
+      // 소수점을 지우기 위해 round
+      const maxPerformance = Math.round(item.maxPerformance * 100) / 100;
+      const minPerformance = Math.round(item.minPerformance * 100) / 100;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date][0] += minPerformance;
+        dateBasedDataSet[date][1] += maxPerformance;
       }
     }
   });

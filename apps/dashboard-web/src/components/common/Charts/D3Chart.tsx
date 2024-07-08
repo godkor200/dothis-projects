@@ -128,7 +128,7 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
             .attr('r', () => size(i.value));
         })
         .on('click', function (event, d) {
-          router.push(`/keyword/${keyword}/${d.title}/summary`);
+          router.push(`/keyword/${keyword}/${d.title}/analysis`);
         });
 
       const labels = group

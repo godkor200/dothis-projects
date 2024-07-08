@@ -11,19 +11,25 @@ import {
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
 
-const D3Axis = ({ keyword }: { keyword: string }) => {
+const D3Axis = ({
+  keyword,
+  relatedKeyword,
+}: {
+  keyword: string;
+  relatedKeyword: string | null;
+}) => {
   const selectRef = useRef(null);
 
-  const datad3 = useDailyViewV2({ keyword: keyword, relword: keyword });
+  const datad3 = useDailyViewV2({ keyword: keyword, relword: relatedKeyword });
 
   const data2d3 = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   const data3d3 = useUploadVideoCountFormatterD3({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   // const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
@@ -260,7 +266,6 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     const line2 = D3.line<(typeof data2d3)[number]>()
       .x((datum) => Number(x(datum.date)) + x.bandwidth() / 2)
       .y((datum) => y2(datum.value as number))
-
       .curve(D3.curveCatmullRom);
 
     const convertRemToPixels = (rem: number) => {

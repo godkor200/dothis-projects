@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import GptTest from './GptTest';
+import GptTest from './BarTransition';
 
 const GPT = () => {
   const [data, setData] = useState([

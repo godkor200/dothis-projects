@@ -82,6 +82,11 @@ export const zWeeklyKeywordData = z.object({
 export const dataObject = <T extends ZodTypeAny>(data: T) =>
   z.object({ data }).describe('data object');
 
+export const zClustersObject = <T extends ZodTypeAny>(data: T) =>
+  z
+    .object({ clusterNumber: z.number(), data: data })
+    .describe('clusters object');
+
 export const zClusterNumber = z.object({
   clusterNumber: z
     .string()

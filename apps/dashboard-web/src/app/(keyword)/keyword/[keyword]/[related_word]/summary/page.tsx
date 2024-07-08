@@ -1,61 +1,61 @@
 import Link from 'next/link';
 
+import D3Axis from '@/components/common/Charts/D3Axis';
+import TooltipComponent from '@/components/common/Tooltip/Tooltip';
 import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
+import ChartContainer from '../../ChartContainer';
+import Counter from '../Rolling';
+import AreaChartContainer from './AreaChartContainer';
+import D3AreaChart from './D3AreaChart';
+import MediaRank from './MediaRank';
+// import { Component, Counter } from '../Rolling';
+import OutlookChart from './OutlookChart';
+import PredictedView from './PredictedView';
+import SuccessProbability from './SuccessProbability';
+import SummaryChart from './SummaryChart';
 
 const SummaryTab = ({
-  keyword,
-  relatedWord,
+  params,
 }: {
-  keyword: string;
-  relatedWord: string;
+  params: { keyword: string; related_word: string };
 }) => {
+  const baseKeyword = decodeURIComponent(params.keyword);
+  const relatedKeyword = decodeURIComponent(params.related_word);
+
   return (
     <div className="mt-[20px] flex flex-col gap-[20px]">
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/analysis`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
       >
         분석 {'[더보기]'}
       </Link>
 
+      {/* <Component /> */}
       <div className="grid grid-cols-[minmax(600px,2fr)_repeat(2,minmax(300px,1fr))] gap-[20px]">
         <BoxFrame>
           <div>
-            <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              조회수 예측
-            </p>
-
-            <div className=" gap-30 flex flex-col text-center">
-              <p className="text-grey600  text-[14px]  font-[400]">
-                시청자 수요 계산... 소재 전망 계산... 성공 확률 계산... 키워드
-                성과 계산... 구독자 경쟁력 계산... 정민 평소 성과 계산...
-              </p>
-
-              <div className="text-grey600 flex items-center justify-center gap-[10px] text-[14px] font-[400]">
-                <p>조회수</p>
-                <p className="text-primary500 px-[10px] text-[20px] font-bold">
-                  392,550,100
-                </p>
-                <p>예상</p>
-                {/* 여기 조회수에 그냥 가상선택자 달아주자 */}
-              </div>
-            </div>
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p> 조회수 예측</p>
+            </div>{' '}
+            <PredictedView
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
           </div>
         </BoxFrame>
         <BoxFrame>
-          <div>
+          <div className="flex h-full flex-grow flex-col">
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
               소재 전망
             </p>
-
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">보통</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                검색에 의한 노출이 줄어드니 추천 알고리즘에 대비한 전략을
-                준비하세요.
-              </p>
+            <div className="flex flex-grow  flex-col items-center justify-center">
+              <OutlookChart
+                baseKeyword={baseKeyword}
+                relatedkeyword={relatedKeyword}
+              />
             </div>
           </div>
         </BoxFrame>
@@ -65,17 +65,59 @@ const SummaryTab = ({
               성공 확률
             </p>
 
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">48%</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                이 주제를 다룬 4,269명 중 2,049명이 평소보다 조회수가 높습니다.
-              </p>
-            </div>
+            <SuccessProbability
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
           </div>
         </BoxFrame>
       </div>
+
+      <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
+        <BoxFrame isPositionProperty={true}>
+          <div className="flex h-full flex-col">
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p>콘텐츠 추이</p>
+              <TooltipComponent
+                title={
+                  '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
+                }
+              />
+            </div>
+            <ChartContainer
+              keyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
+          </div>
+        </BoxFrame>
+
+        <BoxFrame isPositionProperty={true}>
+          <div className="flex h-full flex-col">
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p>조회수 예측</p>
+              <TooltipComponent title={''} />
+            </div>
+
+            <AreaChartContainer
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
+            {/* <D3Axis keyword={baseKeyword} relatedKeyword={relatedKeyword} /> */}
+          </div>
+        </BoxFrame>
+      </div>
+
+      <div>
+        <BoxFrame>
+          <MediaRank
+            baseKeyword={baseKeyword}
+            relatedKeyword={relatedKeyword}
+          />
+        </BoxFrame>
+      </div>
+
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/comparison`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/comparison`}
         className="text-[20px] font-bold"
       >
         비교 {'[더보기]'}
@@ -85,7 +127,7 @@ const SummaryTab = ({
         <BoxFrame>
           <div>
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              치킨의 다른 연관 키워드
+              {baseKeyword}의 다른 연관 키워드
             </p>
             <ul className="gap-30 flex flex-col py-[25px]">
               {['치킨매니아', '가라아게', '맥도날드'].map(
@@ -99,8 +141,8 @@ const SummaryTab = ({
                       className={cn(
                         'flex  items-center justify-between px-[36px] text-error ',
                         {
-                          'text-green': green === item,
-                          'text-sky': blue === item,
+                          'text-[#34D399]': green === item,
+                          'text-[#818CF8]': blue === item,
                         },
                       )}
                     >
@@ -118,21 +160,14 @@ const SummaryTab = ({
         <BoxFrame>
           <div>
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              소재 전망
+              키워드 분석 결과 비교
             </p>
-
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">보통</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                검색에 의한 노출이 줄어드니 추천 알고리즘에 대비한 전략을
-                준비하세요.
-              </p>
-            </div>
+            <SummaryChart />
           </div>
         </BoxFrame>
       </div>
       <Link
-        href={`/keyword/${keyword}/${relatedWord}/insight`}
+        href={`/keyword/${baseKeyword}/${relatedKeyword}/insight`}
         className="text-[20px] font-bold"
       >
         인사이트 {'[더보기]'}

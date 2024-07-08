@@ -49,7 +49,7 @@ const useGetSuccessRate = (
     },
     {
       ...queryOptions,
-      enabled: !!relword && !!startDate && !!endDate,
+      enabled: !!relword && !!startDate && !!endDate && !!clusters,
     },
   );
 
