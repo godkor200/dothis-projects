@@ -104,10 +104,12 @@ export const zCombinedViewsData = z.object({
 export const zCombinedViewsDataResponse = dataObject(
   zClustersObject(z.array(zCombinedViewsData)),
 );
-export const zClusterSpecificCombinedData = z.object({
-  clusterNumber: z.number().nullable(),
-  data: zCombinedViewsData,
-});
+export const zClusterSpecificCombinedData = dataObject(
+  z.object({
+    clusterNumber: z.number().nullable(),
+    data: zCombinedViewsData,
+  }),
+);
 
 export const zExpectedViewsData = z.object({
   date: z.string().describe('yyyy-mm-dd 형식'),
@@ -137,6 +139,7 @@ export const zKeywordSchema = z.object({
   year: z.number().describe('수집 연도'),
   month: z.number().describe('수집 월'),
   day: z.number().describe('수집 일'),
+  changes: z.number(),
 });
 export const zKeywordThisWeeklyRes = dataObject(z.array(zKeywordSchema));
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
