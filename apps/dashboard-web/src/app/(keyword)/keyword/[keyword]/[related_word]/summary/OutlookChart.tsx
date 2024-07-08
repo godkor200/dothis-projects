@@ -518,12 +518,12 @@ const OutlookChart = ({
   return (
     <>
       <div
-        className="grid flex-grow grid-cols-1 [&_svg]:overflow-visible"
+        className="grid w-full grid-cols-1 [&_svg]:overflow-visible"
         id="outlook-chart"
         ref={selectRef}
       ></div>
 
-      <div className=" gap-30 flex flex-col text-center">
+      <div className=" gap-30 flex flex-col whitespace-nowrap text-center">
         <p className=" px-[10px] text-[20px] font-bold">
           {naverSearchData
             ? dailyViewData
