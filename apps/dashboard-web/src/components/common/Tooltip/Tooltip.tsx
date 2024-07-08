@@ -1,3 +1,5 @@
+'use client';
+
 import './style.css';
 
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -20,10 +22,7 @@ const TooltipComponent = ({ title }: Props) => {
           </button>
         </Tooltip.Trigger>
         <Tooltip.Portal>
-          <Tooltip.Content
-            className="TooltipContent bg-primary400"
-            sideOffset={5}
-          >
+          <Tooltip.Content className="TooltipContent bg-grey700" sideOffset={5}>
             {splitEscape.map((item) => (
               <p key={item}>{item}</p>
             ))}
