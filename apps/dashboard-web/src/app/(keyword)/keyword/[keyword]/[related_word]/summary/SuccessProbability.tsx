@@ -92,7 +92,7 @@ const SuccessProbability = ({ baseKeyword, relatedKeyword }: Props) => {
       .text((d) => `${d.data.name}: ${d.data.value.toLocaleString()}`)
       .attr('transform', function (d) {
         var c = arc.centroid(d);
-        console.log(c);
+
         return 'translate(' + c[0] * 1.5 + ',' + c[1] * 1.5 + ')';
       });
 
