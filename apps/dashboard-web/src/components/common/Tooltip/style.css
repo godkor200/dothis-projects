@@ -43,7 +43,7 @@
 }
 
 .TooltipArrow {
-  fill: rgb(255 100 125);
+  fill: rgb(63, 63, 70);
 }
 
 .TooltipContent {
@@ -52,7 +52,7 @@
   font-size: 15px;
   line-height: 1;
   color: white;
-  background-color: rgb(255 100 125);
+  background-color: rgb(63, 63, 70);
   box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
     hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   user-select: none;

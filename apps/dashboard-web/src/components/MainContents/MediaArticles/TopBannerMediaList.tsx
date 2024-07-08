@@ -11,7 +11,10 @@ import SelectedMediaCard from './SelectedMediaCard';
 
 const TopBannerMediaList = () => {
   const selectedWord = useSelectedWord();
-  const { data: newsData, isLoading } = useGetNewsInfiniteQuery();
+  const { data: newsData, isLoading } = useGetNewsInfiniteQuery({
+    keyword: selectedWord.keyword!,
+    relword: selectedWord.relword,
+  });
 
   const flattenNewsData = newsData?.pages.flatMap(
     (item) => item.return_object.documents,

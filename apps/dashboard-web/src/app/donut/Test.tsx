@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import BarChart from '@/components/common/Charts/D3Transition';
+// import BarChart from '@/components/common/Charts/D3Transition';
 
 const Test = () => {
   const data = [
@@ -21,7 +21,7 @@ const Test = () => {
   return (
     <>
       <button onClick={() => setTest(data1)}>클릭</button>
-      <BarChart data={test} width={300} height={170} />
+      {/* <BarChart data={test} width={300} height={170} /> */}
     </>
   );
 };

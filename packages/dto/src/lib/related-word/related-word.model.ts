@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { zodDeepPick } from './utils';
-import { zSearchKeyword } from '../common.model';
+import { dataObject, zSearchKeyword } from '../common.model';
 import { zSuccessBase } from '../success.response.zod';
+import { zCreateWeeklyKeywordsListSourceSchema } from '../hits';
 
 export const zSearch = zSearchKeyword.pick({ search: true });
 
@@ -38,7 +39,23 @@ export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');
 
 export const zResWordsPickData = zRelWords.shape.data;
 
-export type TRankResData = z.TypeOf<typeof zRankingArray>;
+export const zAutoCompleteWords = z.object({
+  data: z.array(z.string()),
+});
+export const zDeleteRelWords = z.object({
+  deleteRelWords: z.array(z.string()).describe('사자'),
+});
+export const zGetKeywordInformationRes = dataObject(
+  zCreateWeeklyKeywordsListSourceSchema.pick({
+    ranking: true,
+    keyword: true,
+    category: true,
+    competitive: true,
+    changes: true,
+    lastRanking: true,
+  }),
+);
+export type zRankingArray = z.TypeOf<typeof zRankingArray>;
 
 export type TRankRes = z.TypeOf<typeof zRankRes>;
 
@@ -46,10 +63,6 @@ export type RelatedWordModel = z.TypeOf<typeof zRelWords>;
 
 export type TKeyword = z.TypeOf<typeof zKeywords>;
 export type TRankingArrayOmitWord = z.TypeOf<typeof zRankingArrayOmitWord>;
-
-export const zAutoCompleteWords = z.object({
-  data: z.array(z.string()),
-});
-export const zDeleteRelWords = z.object({
-  deleteRelWords: z.array(z.string()).describe('사자'),
-});
+export type TGetKeywordInformationRes = z.TypeOf<
+  typeof zGetKeywordInformationRes
+>;

@@ -21,7 +21,7 @@ const TabNav = ({
       {tabList.map((item) => (
         <Link
           href={`/keyword/${keyword}/${relatedWord}/${item.link}`}
-          key={item.title}
+          key={item.link}
         >
           <div
             className={cn(

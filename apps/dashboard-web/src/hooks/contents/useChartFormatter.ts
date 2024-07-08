@@ -8,14 +8,20 @@ import {
   handleDailyVideoCountD3,
   handleDailyViewData,
   handleDailyViewDataD3,
+  handleExpectedViewAreaD3,
+  handleExpectedViewD3,
   handleNaverSearchRatio,
   handleNaverSearchRatioD3,
   handleScopePerformanceData,
+  handleVideoUploadCountD3,
 } from '@/utils/contents/chart';
 
+import useGetDailyExpectedView from '../react-query/query/useGetDailyExpectedView';
 import useGetDailyView from '../react-query/query/useGetDailyView';
+import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
+import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
 
 /**
  *
@@ -79,6 +85,31 @@ export const useSearchRatioFormatterD3 = ({
   );
 };
 
+export const useUploadVideoCountFormatterD3 = ({
+  keyword,
+  relword,
+}: {
+  keyword: string | null;
+  relword: string | null;
+}) => {
+  const { data: videoUploadCount } = useGetVideoUploadCount({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () =>
+      handleVideoUploadCountD3(videoUploadCount, {
+        startDate,
+        endDate,
+      }),
+    [JSON.stringify(videoUploadCount)],
+  );
+};
+
 /**
  * 서버에서 가져온 일일조회수 데이터를 Apex포맷으로 변경화는 과정을 추상화한 hook입니다.
  * @param selectedWord 선택된 키워드 및 연관어를 받습니다.
@@ -107,6 +138,67 @@ export const useDailyViewDataFormatter = ({
   return useMemo(
     () =>
       handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useExpectedViewFormatter = ({
+  keyword,
+  relword,
+}: {
+  keyword: string;
+  relword: string | null;
+}) => {
+  const { data: expectedViewData } = useGetDailyExpectedView({
+    baseKeyword: keyword,
+    relatedKeyword: relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return {
+    expectedView: useMemo(
+      () =>
+        handleExpectedViewD3(expectedViewData?.data.data, {
+          startDate,
+          endDate,
+        }),
+      [JSON.stringify(expectedViewData)],
+    ),
+    expectedArea: useMemo(
+      () =>
+        handleExpectedViewAreaD3(expectedViewData?.data.data, {
+          startDate,
+          endDate,
+        }),
+      [JSON.stringify(expectedViewData)],
+    ),
+  };
+};
+
+export const useDailyViewV2 = ({
+  keyword,
+  relword,
+}: {
+  keyword: string;
+  relword: string | null;
+}) => {
+  const { data: dailyViewData } = useGetDailyViewV2({
+    keyword,
+    relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyViewData, {
+  //   name: '일일조회수',
+  //   type: 'line',
+  // });
+
+  return useMemo(
+    () => handleDailyViewDataD3(dailyViewData, { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
   );
 };

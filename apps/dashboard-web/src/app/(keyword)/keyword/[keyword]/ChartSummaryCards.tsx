@@ -1,62 +1,90 @@
 'use client';
 
+import { useSearchRatioFormatterD3 } from '@/hooks/contents/useChartFormatter';
+import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
+1;
+import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
+import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
+
+import ChartSummaryItem from './ChartSummaryItem';
 import {
-  useDailyView,
-  useSearchRatioFormatterD3,
-} from '@/hooks/contents/useChartFormatter';
-import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
+  sumIncreaseViews,
+  sumIncreaseViewsV2,
+  sumVideoCount,
+  sumVideoCountV2,
+} from './CompetitionRate';
 
-import { sumIncreaseViews, sumVideoCount } from './CompetitionRate';
-
-const ChartSummaryCards = ({ keyword }: { keyword: string }) => {
+const ChartSummaryCards = ({
+  keyword,
+  relatedKeyword,
+}: {
+  keyword: string;
+  relatedKeyword: string | null;
+}) => {
   // 조회수 합계 및 영상 수 코드
   //   const dailViewData = useDailyView({ keyword: keyword, relword: keyword });
 
-  const { data: dailyViewData } = useGetDailyView({
+  const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
     keyword,
-    relword: keyword,
+    relword: relatedKeyword,
   });
 
-  const totalIncreaseViews = sumIncreaseViews(dailyViewData);
+  const { data: videoUploadCount, isLoading: videoLoading } =
+    useGetVideoUploadCount({
+      keyword,
+      relword: relatedKeyword,
+    });
 
-  const totalVideoCount = sumVideoCount(dailyViewData);
+  console.log(videoUploadCount);
+  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
+
+  const totalVideoCount = sumVideoCountV2(videoUploadCount);
 
   //   검색량 코드
-
   const searchRatio = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: keyword,
+    relword: relatedKeyword,
+  });
+
+  const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
+    keyword,
+    relword: relatedKeyword,
   });
 
   const first_searchRatio = searchRatio[0];
   const last_searchRatio = searchRatio[searchRatio.length - 1];
 
+  const SummaryList = [
+    {
+      title: '조회수 합계',
+      value: Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr'),
+    },
+    {
+      title: '검색량 변동',
+      value: searchRatioLoading
+        ? '분석중'
+        : Math.floor(
+            ((((last_searchRatio.value || 0) as number) /
+              Number(first_searchRatio.value || 1)) as number) * 100,
+          ) -
+          100 +
+          '%',
+    },
+    {
+      title: '발행 영상 수',
+      value: Number(totalVideoCount).toLocaleString('ko-kr'),
+    },
+  ];
+
   return (
     <div className="flex justify-between">
-      <div className="w-[222px] px-[12px] py-[15px] text-center">
-        <p className="text-grey700 text-[14px]">조회수 합계</p>
-        <p className="text-grey900 text-[18px] font-bold">
-          {Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr')}
-        </p>
-      </div>
-      <div className="w-[222px] px-[12px] py-[15px] text-center">
-        <p className="text-grey700 text-[14px]">검색량 변동</p>
-        <p className="text-grey900 text-[18px] font-bold">
-          {Math.floor(
-            ((((last_searchRatio.value || 0) as number) /
-              Number(first_searchRatio.value || 1)) as number) *
-              100 *
-              100,
-          ) / 100}
-          %
-        </p>
-      </div>
-      <div className="w-[222px] px-[12px] py-[15px] text-center">
-        <p className="text-grey700 text-[14px]">발행 영상 수</p>
-        <p className="text-grey900 text-[18px] font-bold">
-          {Number(totalVideoCount).toLocaleString('ko-kr')}
-        </p>
-      </div>
+      {SummaryList.map((item) => (
+        <ChartSummaryItem
+          title={item.title}
+          value={item.value}
+          key={item.title}
+        />
+      ))}
     </div>
   );
 };

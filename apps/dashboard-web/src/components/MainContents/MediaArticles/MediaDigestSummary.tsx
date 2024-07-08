@@ -23,7 +23,7 @@ const MediaDigestSummary = ({
       {provider && (
         <span
           className={cn(
-            'text-grey500 font-semibold max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',
+            'text-grey500 font-semibold max-w-[60px] whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',
             {
               'text-[10px]': isList,
             },
@@ -43,7 +43,8 @@ const MediaDigestSummary = ({
       >
         {element}
       </span>
-      <div className="bg-grey400 h-4 w-[1px]" />
+
+      {provider && <div className="bg-grey400 h-4 w-[1px]" />}
       <span
         className={cn(
           'text-grey500 font-semibold  whitespace-nowrap overflow-hidden text-ellipsis text-[12px]',

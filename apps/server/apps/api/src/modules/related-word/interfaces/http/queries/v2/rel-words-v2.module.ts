@@ -1,8 +1,10 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
+  GET_RANKING_RELATED_WORD_DI_TOKEN,
   RANKING_V2_SERVICE_DI_TOKEN,
   RELWORDS_DI_TOKEN,
+  SET_RANKING_RELATED_WORD_DI_TOKEN,
 } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { FindRelCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/find-rel.cache';
 
@@ -25,6 +27,8 @@ import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/cha
 import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters';
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { VideoHistoryGetLastOneByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-last-one-by-ids.adapter';
+import { FindRankingRelatedWordAdapter } from '@Apps/modules/related-word/infrastructure/adapters/find-ranking-related-word.adapter';
+import { SetRankingRelatedWordAdapter } from '@Apps/modules/related-word/infrastructure/adapters/set-ranking-related-word.adapter';
 
 const queryHandler = [FindAutoCompleteQueryHandler, GetRankingV2QueryHandler];
 const service = [
@@ -60,6 +64,14 @@ const adapter: Provider[] = [
   {
     provide: VIDEO_HISTORY_GET_LAST_ADAPTER_IGNITE_DI_TOKEN,
     useClass: VideoHistoryGetLastOneByIdsAdapter,
+  },
+  {
+    provide: GET_RANKING_RELATED_WORD_DI_TOKEN,
+    useClass: FindRankingRelatedWordAdapter,
+  },
+  {
+    provide: SET_RANKING_RELATED_WORD_DI_TOKEN,
+    useClass: SetRankingRelatedWordAdapter,
   },
 ];
 @Module({

@@ -1,11 +1,18 @@
 import { z } from 'zod';
-import { dataObject, zTotalData, zSortQuery } from '../common.model';
+import {
+  dataObject,
+  zTotalData,
+  zSortQuery,
+  zClustersObject,
+} from '../common.model';
 import { zChannelHistoryModel } from '../channel-history';
 
 export const zDailyViewData = z.object({
   date: z.string(),
 
-  uniqueVideoCount: z.number().describe('해당하는 날짜의 산정 비디오수'),
+  uniqueVideoCount: z
+    .number()
+    .describe('해당하는 날짜의 산정 비디오수(분석 영상 수)'),
 
   increaseComments: z.number().describe('비디오 코멘트 수'),
 
@@ -22,7 +29,7 @@ export const zDailyViews = dataObject(z.array(zDailyViewData));
 export const zCreateWeeklyKeywordsListSourceSchema = z
   .object({
     id: z.number().int().positive().describe('조회수의 고유 식별자'),
-    ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
+    ranking: z.number().int().positive().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
     weekly_views: z.number().int().positive().describe('주간 조회수'),
@@ -33,7 +40,7 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
       .int()
       .positive()
       .describe('10만이상 구독자 채널 수'),
-    changes: z.number().int().describe('순위 변동'),
+    lastRanking: z.number().int().describe('순위 변동'),
     YEAR: z
       .number()
       .int()
@@ -95,6 +102,10 @@ export const zCombinedViewsData = z.object({
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
 
+export const zCombinedViewsDataResponse = dataObject(
+  zClustersObject(z.array(zCombinedViewsData)),
+);
+
 export const zExpectedViewsData = z.object({
   date: z.string().describe('yyyy-mm-dd 형식'),
   expectedHits: z.number().describe('기대 조회수'),
@@ -102,12 +113,32 @@ export const zExpectedViewsData = z.object({
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
 
+export const zSuccessRateData = z.object({
+  totalVideoCount: z.number(),
+  countAboveAverage: z.number(),
+});
+
+export const zSuccessRate = dataObject(zSuccessRateData);
+
 export const zExpectedViewsArr = z.array(zExpectedViewsData);
 
 export const zExpectedViews = z.object({
   data: zExpectedViewsArr,
 });
 
+// 각 추천 키워드 객체의 구조 정의
+export const zKeywordSchema = z.object({
+  recommendedKeyword: z.string().describe('키워드'),
+  topAssociatedWord: z.string().describe('1등 연관어'),
+  topCategoryNumber: z.string().describe('1등 카테고리 번호'),
+  rankChange: z.number().describe('변동 순위'),
+  ranking: z.number(),
+  changes: z.number(),
+  year: z.number().describe('수집 연도'),
+  month: z.number().describe('수집 월'),
+  day: z.number().describe('수집 일'),
+});
+export const zKeywordThisWeeklyRes = dataObject(z.array(zKeywordSchema));
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
 
 export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
@@ -115,3 +146,5 @@ export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
 export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
 
 export type TAnalysisViewsRes = z.TypeOf<typeof zCombinedViewsData>;
+
+export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;

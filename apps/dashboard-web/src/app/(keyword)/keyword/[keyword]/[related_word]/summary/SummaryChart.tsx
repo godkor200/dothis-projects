@@ -11,8 +11,6 @@ import {
 
 import { cn } from '@/utils/cn';
 
-import LineChar2t from './Test';
-import LineChart from './TestAnimate';
 import useD3 from './useD3';
 import useD3Bar from './useD3Bar';
 import useD3Line from './useD3Line';
@@ -296,8 +294,6 @@ const SummaryChart = () => {
   }, [width, xAxisRef, yAxisRef]);
 
   useEffect(() => {
-    console.log('effect');
-
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
       bar2.current?.render();

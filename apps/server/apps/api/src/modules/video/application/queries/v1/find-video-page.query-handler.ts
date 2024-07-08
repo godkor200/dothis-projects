@@ -12,6 +12,7 @@ export type TGetVideoPage = Result<
   IIgnitePagingRes,
   VideoNotFoundError | TableNotFoundException | VideoHistoryNotFoundError
 >;
+
 @QueryHandler(GetVideoPaginatedPageDto)
 export class FindVideoPageQueryHandler
   implements IQueryHandler<GetVideoPaginatedPageDto, TGetVideoPage>

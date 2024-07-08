@@ -1,7 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import type { MouseEventHandler } from 'react';
+import type { ElementRef, MouseEventHandler } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function Modal({
   children,
@@ -35,11 +36,21 @@ export default function Modal({
   );
 
   useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [onKeyDown]);
 
-  return (
+  return createPortal(
     <div
       ref={overlay}
       className="bg-grey300 fixed inset-0 z-[98] mx-auto bg-opacity-10"
@@ -51,6 +62,7 @@ export default function Modal({
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.getElementById('router-modal-root')!,
   );
 }

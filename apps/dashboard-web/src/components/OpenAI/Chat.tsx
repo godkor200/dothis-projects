@@ -63,7 +63,10 @@ export default function Chat() {
   /**
    * 아래 Query들은 setInput에 trigger 및 조건에서 사용된다
    */
-  const { isLoading: newsIsLoading } = useGetNewsInfiniteQuery();
+  const { isLoading: newsIsLoading } = useGetNewsInfiniteQuery({
+    keyword: selectedWord.keyword!,
+    relword: selectedWord.relword,
+  });
   const { isLoading: videoIsLoading } =
     useGetVideoDataInfinityQuery(selectedWord);
 

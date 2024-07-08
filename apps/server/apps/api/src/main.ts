@@ -14,9 +14,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const databaseUri: string = configService.get<string>('db.DB_HOST');
   const appPort = configService.get<number | string>('app.APP_PORT');
-  const kafkaService = new KafkaConfigService(configService).getKafkaOptions();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+  // const kafkaService = new KafkaConfigService(configService).getKafkaOptions();
   const logger = new Logger();
   app.use(cookieParser());
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -31,8 +31,8 @@ async function bootstrap() {
     credentials: true,
     exposedHeaders: ['Authorization'],
   });
-  app.connectMicroservice<MicroserviceOptions>(kafkaService);
-  await app.startAllMicroservices();
+  // app.connectMicroservice<MicroserviceOptions>(kafkaService);
+  //await app.startAllMicroservices();
   await app.listen(appPort);
   // Kafka 마이크로서비스 생성 및 실행
 

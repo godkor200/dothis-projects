@@ -18,6 +18,7 @@ export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
   videoLikes: number;
   videoComments: number;
   videoPerformance: number;
+  videoCluster: number;
   channelAverageViews: number;
 }
 export interface GetRelatedVideoAndVideoHistory

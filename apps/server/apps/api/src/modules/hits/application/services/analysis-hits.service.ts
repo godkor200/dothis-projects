@@ -8,7 +8,7 @@ import { Inject } from '@nestjs/common';
 import { HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { Err, Ok } from 'oxide.ts';
 import { GetRelatedVideoChannelHistoryDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
+import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 
 /**
  * api: 데일리뷰와 기대조회수 병합
@@ -26,8 +26,7 @@ export class AnalysisHitsService implements AnalysisHitsServiceInboundPort {
 
       if (data.isOk()) {
         const dataUnwrap = data.unwrap();
-        const groupedData = VideoAggregateService.groupDataByDate(dataUnwrap);
-        const metrics = VideoAggregateService.calculateMetrics(groupedData);
+        const metrics = VideoAggregateHelper.calculateMetrics(dataUnwrap);
         return Ok({ success: true, data: metrics });
       }
       return Err(data.unwrapErr());

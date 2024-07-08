@@ -1,4 +1,5 @@
 **/node_modules
+*/**/node_modules
 node_modules
 .git
 .gitignore
@@ -8,4 +9,9 @@ npm-debug.log
 *.env
 *.md
 LICENSE
-*.yml
+*.yml/node_modules/
+/apps/server/db/
+/apps/server/nginx/
+/apps/server/logstash/
+/packages/dto/tsconfig.tsbuildinfo
+/out/

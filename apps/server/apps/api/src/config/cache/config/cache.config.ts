@@ -25,6 +25,13 @@ export class RedisConfigService implements RedisOptionsFactory {
           password: this.configService.get<string>('redis.onPromise.password'),
           db: this.configService.get<number>('redis.onPromise.node'),
         },
+        {
+          namespace: 'ranking',
+          host: this.configService.get<string>('redis.local.hostname'),
+          port: this.configService.get<number>('redis.local.post'),
+          password: this.configService.get<string>('redis.local.password'),
+          db: this.configService.get<number>('redis.ranking.node'),
+        },
       ],
     };
   }

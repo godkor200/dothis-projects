@@ -3,6 +3,7 @@
 import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import type { SVGType } from '@/components/common/SvgComp';
 import SvgComp from '@/components/common/SvgComp';
@@ -19,7 +20,7 @@ const Side = ({ isSidebarOpen }: Props) => {
     <div className=" border-r-1 border-r-grey400">
       <div
         className={cn(
-          'flex h-screen w-[240px] flex-shrink-0 flex-col gap-[62px] pt-[40px] transition-all duration-75',
+          'flex h-[calc(100vh-90px)] w-[240px] flex-shrink-0 flex-col gap-[62px] pt-[40px] transition-all duration-75',
           {
             'w-[79px]': !isSidebarOpen,
           },
@@ -53,6 +54,8 @@ const DashboardList = ({
 }) => {
   const pathName = usePathname();
 
+  const searchParams = useSearchParams();
+
   return (
     <ul className="pl-[18px]">
       <p className="mb-[18px] text-[14px] font-bold">{title}</p>
@@ -60,9 +63,10 @@ const DashboardList = ({
         {menuList.map((item) => (
           <Link href={item.link} key={item.title}>
             <Style.SideItemContainer
-              $isInActive={item.active.includes(
-                `/${pathName?.split('/')[1]}` as Route,
-              )}
+              $isInActive={
+                item.active.includes(`/${pathName?.split('/')[1]}` as Route) ||
+                item.active.includes(searchParams?.get('previous_url') as Route)
+              }
               key={item.title}
             >
               <SvgComp icon={item.icon} size={24} />
@@ -78,15 +82,18 @@ const DashboardList = ({
 const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
   const pathName = usePathname();
 
+  const searchParams = useSearchParams();
+
   return (
     <ul className="px-[12px] pt-[39px]">
       <div className="flex flex-col gap-[14px]">
         {menuList.map((item) => (
           <Link href={item.link} key={item.title}>
             <Style.IconItemContainer
-              $isInActive={item.active.includes(
-                `/${pathName?.split('/')[1]}` as Route,
-              )}
+              $isInActive={
+                item.active.includes(`/${pathName?.split('/')[1]}` as Route) ||
+                item.active.includes(searchParams?.get('previous_url') as Route)
+              }
               key={item.title}
             >
               <SvgComp icon={item.icon} size={24} />

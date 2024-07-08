@@ -1,12 +1,9 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import {
-  findVideoBySearchKeyword,
-  findVideoBySearchKeywordClusterNumber,
-} from '@dothis/dto';
+import { zFindVideoBySearchKeyword } from '@dothis/dto';
 
 export class GetAnalysisHitsQuery extends createZodDto(
-  extendApi(findVideoBySearchKeyword),
+  extendApi(zFindVideoBySearchKeyword),
 ) {
   /**
    * GetAnalysisHitsQuery 정의:
@@ -23,6 +20,8 @@ export class GetAnalysisHitsQuery extends createZodDto(
    * to: string
    * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
    *
+   * separation:boolean
+   * - 클러스터별 분리 여부
    **/
 
   constructor(props: GetAnalysisHitsQuery) {

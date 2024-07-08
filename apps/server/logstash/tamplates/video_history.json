@@ -1,0 +1,50 @@
+{
+  "index_patterns": ["video_history_*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 3,
+      "number_of_replicas": 1
+    },
+    "mappings": {
+      "properties": {
+        "video_likes": {
+          "type": "integer"
+        },
+        "day": {
+          "type": "integer"
+        },
+        "video_comments": {
+          "type": "integer"
+        },
+        "month": {
+          "type": "integer"
+        },
+        "video_views": {
+          "type": "integer"
+        },
+        "video_id": {
+          "type": "keyword"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "video_performance": {
+          "type": "float"
+        },
+        "video_cluster": {
+          "type": "integer"
+        },
+        "@version": {
+          "type": "keyword"
+        },
+        "@timestamp": {
+          "type": "date"
+        }
+      }
+    }
+  },
+  "priority": 1,
+  "aliases": {
+    "video_history_*": {}
+  }
+}

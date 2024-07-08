@@ -1,5 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import {
+  GET_RANKING_RELATED_WORD_DI_TOKEN,
+  RELWORDS_DI_TOKEN,
+  SET_RANKING_RELATED_WORD_DI_TOKEN,
+} from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { Err, Ok } from 'oxide.ts';
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { GetRankingRelatedWordsV2Dto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
@@ -12,10 +16,7 @@ import {
 import { VideosMultiRelatedWordsCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { TGetRankingRelatedWordsRes } from '@Apps/modules/related-word/application/service/get-ranking-related-words.service';
 
-import {
-  IGetVideoHistoryGetMultipleByIdV2OutboundPort,
-  IGetVideoHistoryLastOneByIdsOutboundPort,
-} from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { IGetVideoHistoryLastOneByIdsOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import {
@@ -23,9 +24,17 @@ import {
   GetVideoHistoryMultipleByIdAndRelatedWordsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
+import { FindRankingRelatedWordOutboundPort } from '@Apps/modules/related-word/domain/ports/find-ranking-related-word.outbound.port';
+import { SetRankingRelatedWordOutbound } from '@Apps/modules/related-word/domain/ports/set-ranking-related-word.outbound.port';
 
 export class GetRankingRelatedWordsV2Service {
   constructor(
+    @Inject(GET_RANKING_RELATED_WORD_DI_TOKEN)
+    private readonly getRankingCacheService: FindRankingRelatedWordOutboundPort,
+
+    @Inject(SET_RANKING_RELATED_WORD_DI_TOKEN)
+    private readonly setRankingCacheService: SetRankingRelatedWordOutbound,
+
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
 
@@ -50,9 +59,27 @@ export class GetRankingRelatedWordsV2Service {
     query: GetRankingRelatedWordsV2Dto,
   ): Promise<TGetRankingRelatedWordsRes> {
     try {
+      /**
+       * 캐시 먼저 검색
+       */
+      const cache = await this.getRankingCacheService.execute({
+        key: query.search,
+      });
+
+      if (!cache.isErr()) {
+        return Ok({
+          keyword: query.search,
+          ranking: cache.unwrap().map((e) => ({
+            word: e.word,
+            sortFigure: e.sortFigure,
+            expectedViews: e.expectedViews,
+          })),
+        });
+      }
       const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
         query.search,
       );
+
       if (relWordsEntity.isOk()) {
         const resRelWordsEntity = relWordsEntity.unwrap();
         const relatedWords = resRelWordsEntity.relWords
@@ -68,7 +95,6 @@ export class GetRankingRelatedWordsV2Service {
         console.timeEnd('비디오 캐시 조회 시간');
         if (videoCache.isOk()) {
           const unwrapData = videoCache.unwrap();
-          console.log(unwrapData);
           console.time('비디오 dao 시간 converter');
           const videoHistoryDao =
             new GetVideoHistoryMultipleByIdAndRelatedWordsDao({
@@ -101,14 +127,19 @@ export class GetRankingRelatedWordsV2Service {
               RankingRelatedWordAggregateService.analyzeRelatedWordStatistics(
                 res,
               );
+            const ranking = cul.map((e) => ({
+              word: e.word,
+              sortFigure: e.sortFigures,
+              expectedViews: e.expectedViews,
+            }));
 
+            await this.setRankingCacheService.execute({
+              keyword: query.search,
+              ranking,
+            });
             return Ok({
               keyword: query.search,
-              ranking: cul.map((e) => ({
-                word: e.word,
-                sortFigure: e.sortFigures,
-                expectedViews: e.expectedViews,
-              })),
+              ranking,
             });
           }
           if (videoHistoryResult.isErr()) {

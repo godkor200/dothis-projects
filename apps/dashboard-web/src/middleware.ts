@@ -7,6 +7,16 @@ import { apiServer } from './utils/api/apiServer';
 
 // 추 후  라우팅가드를 위한 middleware 파일 생성 (기획단과 상의 후 라우팅 가드 적용 예정)
 export async function middleware(request: NextRequest) {
+  // if (
+  //   !request.nextUrl.pathname.endsWith('summary') &&
+  //   !request.nextUrl.pathname.endsWith('analysis') &&
+  //   !request.nextUrl.pathname.endsWith('comparison') &&
+  //   !request.nextUrl.pathname.endsWith('insight')
+  // ) {
+  //   return NextResponse.redirect(
+  //     new URL(request.nextUrl.pathname + '/summary', request.url),
+  //   );
+  // }
   // if (request.nextUrl.pathname.startsWith('/contents')) {
   //   const requestHeaders = new Headers(request.headers);
   //   requestHeaders.set(
@@ -69,6 +79,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // matcher: '/:path*',
-  matcher: ['/contents', '/mypage'],
+  // matcher: '/((?!api|_next|fonts|examples|[\\w-]+\\.\\w+).*)',
+  // matcher: ['/contents', '/mypage'],
 };

@@ -45,6 +45,7 @@ const LoginTerms = () => {
       { body: { isAgree: true } },
       {
         onSuccess: () => {
+          // 애초에 userData 가 없으면 아예 아무동작도 안하도록 return 해줘야함-> 지금 로그인 정보를 못불러오는데 넘어가짐
           if (
             !isHashKeyword(convertKeywordsToArray(userData?.personalizationTag))
           ) {
@@ -52,7 +53,7 @@ const LoginTerms = () => {
             return;
           }
 
-          router.replace('/contents');
+          router.replace('/');
         },
       },
     );

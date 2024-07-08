@@ -11,3 +11,5 @@ export const LOGIN_TERMS_SCHEMA = z.object({
 });
 
 export type TermsSchema = z.infer<typeof LOGIN_TERMS_SCHEMA>;
+
+export type TermsKey = keyof z.infer<typeof LOGIN_TERMS_SCHEMA>;
