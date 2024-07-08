@@ -66,7 +66,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     콘텐츠 추이
                   </p>
 
-                  <ChartContainer keyword={keyword} />
+                  <ChartContainer keyword={keyword} relatedKeyword={null} />
                 </div>
               </BoxFrame>
               <BoxFrame isPositionProperty={true}>
