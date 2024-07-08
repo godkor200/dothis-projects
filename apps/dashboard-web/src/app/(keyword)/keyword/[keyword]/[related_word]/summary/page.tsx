@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import D3Axis from '@/components/common/Charts/D3Axis';
+import TooltipComponent from '@/components/common/Tooltip/Tooltip';
 import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
@@ -11,6 +12,7 @@ import D3AreaChart from './D3AreaChart';
 import MediaRank from './MediaRank';
 // import { Component, Counter } from '../Rolling';
 import OutlookChart from './OutlookChart';
+import PredictedView from './PredictedView';
 import SuccessProbability from './SuccessProbability';
 import SummaryChart from './SummaryChart';
 
@@ -35,28 +37,13 @@ const SummaryTab = ({
       <div className="grid grid-cols-[minmax(600px,2fr)_repeat(2,minmax(300px,1fr))] gap-[20px]">
         <BoxFrame>
           <div>
-            <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              조회수 예측
-            </p>
-
-            <div className=" gap-30 flex flex-col pb-[30px] text-center">
-              <p className="text-grey600  mb-[50px]  text-[14px] font-[500]">
-                키워드에 대한 시청자 수요 X 주간 검색량 변동 X 경쟁 채널의
-                구독자 규모
-              </p>
-              <p className="text-grey600  mb-[40px]  text-[14px] font-[500]">
-                키워드의 평균 성과 X 채널의 평소 성과
-              </p>
-
-              <div className="text-grey600 flex items-center justify-center gap-[10px] text-[14px] font-[400]">
-                <p>조회수</p>
-                <div className="text-primary500   px-[10px] text-[18px] font-bold">
-                  <Counter value={1232324234} />
-                </div>
-                <p>예상</p>
-                {/* 여기 조회수에 그냥 가상선택자 달아주자 */}
-              </div>
-            </div>
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p> 조회수 예측</p>
+            </div>{' '}
+            <PredictedView
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
           </div>
         </BoxFrame>
         <BoxFrame>
@@ -89,7 +76,14 @@ const SummaryTab = ({
       <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
         <BoxFrame isPositionProperty={true}>
           <div className="flex h-full flex-col">
-            <p className="text-grey600 mb-[20px] text-[14px]">콘텐츠 추이</p>
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p>콘텐츠 추이</p>
+              <TooltipComponent
+                title={
+                  '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
+                }
+              />
+            </div>
             <ChartContainer
               keyword={baseKeyword}
               relatedKeyword={relatedKeyword}
@@ -99,7 +93,10 @@ const SummaryTab = ({
 
         <BoxFrame isPositionProperty={true}>
           <div className="flex h-full flex-col">
-            <p className="text-grey600 mb-[20px] text-[14px]">조회수 예측</p>
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p>조회수 예측</p>
+              <TooltipComponent title={''} />
+            </div>
 
             <AreaChartContainer
               baseKeyword={baseKeyword}
