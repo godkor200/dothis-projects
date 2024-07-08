@@ -11,9 +11,15 @@ import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/vid
 import { GetVideoHistoryMultipleByIdV2Dao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
   constructor(
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
     private readonly videoCacheService: VideoCacheOutboundPorts,
 
@@ -22,12 +28,25 @@ export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
   ) {}
   async execute(props: FindDailyViewsV2Dto): Promise<TFindDailyView> {
     try {
+      const keywordInfo = await this.relWordsRepository.findOneByKeyword(
+        props.search,
+      );
+      if (keywordInfo.isErr()) {
+        return Err(new KeywordsNotFoundError());
+      }
+      const keywordInfoUnwrap = keywordInfo.unwrap();
+      const relatedCluster = keywordInfoUnwrap.cluster
+        .split(',')
+        .map((e) => e.trim());
+
       const VideoDao = new GetVideoCacheDao({
         search: props.search,
         related: props.related,
         from: props.from,
         to: props.to,
+        relatedCluster,
       });
+
       const videoCacheResult = await this.videoCacheService.execute(VideoDao);
       if (videoCacheResult.isOk()) {
         const videoCacheResultUnwrap = videoCacheResult.unwrap();

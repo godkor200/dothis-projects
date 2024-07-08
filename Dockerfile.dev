@@ -1,13 +1,18 @@
+# 베이스 이미지 설정
 FROM node:20.14.0-alpine as base
 
+# 환경 변수 설정
 ENV PNPM_HOME /usr/local/share/pnpm
 ENV PATH $PNPM_HOME:$PATH
 
-# g++ 및 기타 빌드 도구를 설치하고 삭제하지 않도록 변경
-RUN apk add --update --no-cache nano bash libc6-compat python3 make g++ cmake \
-    && npm install -g pnpm@9.1.1 \
+# g++ 및 기타 빌드 도구를 설치
+RUN apk add --update --no-cache nano bash libc6-compat python3 make g++ cmake
+
+# pnpm 및 turbo 설치
+RUN npm install -g pnpm@9.1.1 \
     && pnpm add -g turbo
 
+# turbo prune 단계를 별도 단계로 분리
 FROM base AS pruned
 WORKDIR /app
 ARG APP
@@ -16,28 +21,27 @@ COPY . .
 
 RUN turbo prune --scope=$APP --docker
 
+# 의존성 설치 단계
 FROM base AS installer
 WORKDIR /app
 ARG APP
 
+# pruned 단계에서 생성된 파일들을 복사
 COPY --from=pruned /app/out/json/ .
 COPY --from=pruned /app/out/pnpm-lock.yaml /app/pnpm-lock.yaml
-
 COPY apps/${APP}/package.json /app/apps/${APP}/package.json
 
-RUN \
-    --mount=type=cache,target=/root/.pnpm-store/v3,sharing=locked \
+# 캐시를 사용하여 pnpm install 실행
+RUN --mount=type=cache,target=/root/.pnpm-store/v3,sharing=locked \
     pnpm install --prefer-offline --frozen-lockfile
 
+# 남은 파일들 복사 및 빌드
 COPY --from=pruned /app/out/full/ .
 COPY turbo.json turbo.json
 
 RUN turbo run build --no-cache --filter=${APP}^...
 
-RUN \
-    --mount=type=cache,target=/root/.pnpm-store/v3,sharing=locked \
-    pnpm install --prefer-offline --frozen-lockfile
-
+# 런타임 이미지 설정
 FROM base AS runner
 WORKDIR /app
 ARG APP
@@ -45,4 +49,4 @@ ARG START_COMMAND=dev
 
 COPY --from=installer /app .
 
-CMD pnpm dev:back-end
+CMD pnpm ${START_COMMAND}

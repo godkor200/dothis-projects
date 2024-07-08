@@ -20,6 +20,7 @@ import {
   zGetAdsRelatedTopHits,
   zGetAdsRelatedTopHitsRes,
   zGetVideoAdsInfoRes,
+  zTodayIssueVideo,
   zVideoDetails,
 } from './video.zod';
 
@@ -134,5 +135,29 @@ export const videoApi = c.router({
     summary: '관련어와 탐색어를 기준으로 영상 갯수를 가져옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from, to)로 영상 발행일(publish) 기준으로 영상 갯수를 가져옵니다.',
+  },
+  getIssueToday: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/issue/today`,
+    responses: {
+      200: zTodayIssueVideo,
+      ...zErrResBase,
+    },
+    summary: '오늘의 이슈 영상을 가져옵니다.',
+    description:
+      '오늘의 이슈 영상을 가져옵니다.' +
+      '\n' +
+      '- 영상 검색\n' +
+      '\n' +
+      '    - 추천 키워드 1 + 1등 연관어가 포함된 영상\n' +
+      '        - 조회수 1등 영상 반환(조회수 내림차순 정렬, limit 1)\n' +
+      '    - 추천 키워드 2 + 1등 연관어가 포함된 영상\n' +
+      '        - 조회수 1등 영상 반환(조회수 내림차순 정렬, limit 1)\n' +
+      '    - 추천 키워드 3 + 1등 연관어가 포함된 영상\n' +
+      '        - 조회수 1등 영상 반환(조회수 내림차순 정렬, limit 1)\n' +
+      '    - 총 3개 영상 반환\n' +
+      '    - 미니는 일단 영상은 3개 반환 받은 후 콘텐츠 블럭에 영상 or뉴스 중 뭐를 출력할지는 각각 랜덤\n' +
+      '        - ex)\n' +
+      '            - 영상/뉴스/뉴스 or 뉴스/영상/뉴스 or 영상/영상/영상 등',
   },
 });

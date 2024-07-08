@@ -19,7 +19,10 @@ import {
   TsRestHandler,
 } from '@ts-rest/nest';
 import { apiRouter, TAnalysisViewsRes } from '@dothis/dto';
-import { AnalysisHitsOk } from '@Apps/modules/hits/application/types/analysis.res-types';
+import {
+  AnalysisHitsCombinedV2Ok,
+  AnalysisHitsV2Ok,
+} from '@Apps/modules/hits/application/types/analysis.res-types';
 import {
   GetAnalysisHitsQuery,
   GetAnalysisHitsV2Dto,
@@ -45,7 +48,7 @@ export class AnalysisHitsV2Controller {
     description,
   })
   @ApiOkResponse({
-    type: AnalysisHitsOk,
+    type: AnalysisHitsCombinedV2Ok,
   })
   @ApiNotFoundResponse({ type: NotFound })
   @ApiBadRequestResponse({ type: BadReq })
@@ -53,9 +56,7 @@ export class AnalysisHitsV2Controller {
   async execute(@Query() query: GetAnalysisHitsQuery) {
     return tsRestHandler(getAnalysisHitsV2, async ({ query }) => {
       const dto = new GetAnalysisHitsV2Dto(query);
-
       const res: TAnalysisHitsServiceRes = await this.queryBus.execute(dto);
-
       return match<
         TAnalysisHitsServiceRes,
         TTsRestRes<IRes<TAnalysisViewsRes[]>>

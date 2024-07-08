@@ -102,3 +102,19 @@ export class CacheDoesNotFoundException extends ExceptionBase {
       'The Table could not be found.';
   }
 }
+/**
+ * Used to indicate that the query provided is too complex to process
+ *
+ * @class ComplexQueryException
+ * @extends {ExceptionBase}
+ */
+export class ComplexQueryException extends ExceptionBase {
+  public message: string;
+
+  public readonly code = 'COMPLEX_QUERY';
+
+  constructor(message: string, metadata?: unknown) {
+    super(message, undefined, metadata);
+    this.message = message || 'Too complex query to process.';
+  }
+}

@@ -1,6 +1,7 @@
 import { Module, Provider } from '@nestjs/common';
 import {
   DATE_SPECIFIC_HISTORY_REPOSITORY_DI_TOKEN,
+  RedisCacheAdapterTokens,
   VIDEO_ADS_INFO_IGNITE_DI_TOKEN,
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
@@ -11,11 +12,14 @@ import {
   VIDEO_GET_ADS_INFO_DI_TOKEN,
   VIDEO_GET_ADS_TOP_HITS_IGNITE_DI_TOKEN,
   VIDEO_GET_ADS_TOP_HITS_SERVICE_DI_TOKEN,
+  VIDEO_GET_TODAY_ISSUE_SERVICE_DI_TOKEN,
   VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
   VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN,
+  VIDEO_MULTI_KEYWORD_WORDS_ADAPTER_DI_TOKEN,
   VIDEO_PAGINATED_IGNITE_DI_TOKEN,
   VIDEO_PERFORMANCE_LENGTH_GET_VIDEO_SERVICE_DI_TOKEN,
+  VIDEO_TOP_VIEWS_ADAPTER_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { AwsModule } from '@Apps/common/aws/aws.module';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -66,12 +70,24 @@ import { VideoAdsTopHitsAdapter } from '@Apps/modules/video/infrastructure/adapt
 import { FindAdsTopHitsHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-top-hits/find-ads-top-hits.http.controller';
 import { FindPerformanceLengthHttpController } from '@Apps/modules/video/interfaces/http/v1/find-performance-length/find-performance-length.http.controller';
 import { FindPerformanceLengthService } from '@Apps/modules/video/application/service/find-performance-length.service';
-import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+import {
+  VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
+  WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
+} from '@Apps/modules/hits/hits.di-token.contants';
 import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
 import { FindPerformanceLengthQueryHandler } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
 import { ExtendedVideoHistoryListAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-list-extended.adapter';
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import { FindIssueTodayQueryHandler } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
+import { FindIssueTodayService } from '@Apps/modules/video/application/service/find-issue-today.service';
+import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v2.repository';
+import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
+import { FindIssueTodayHttpController } from '@Apps/modules/video/interfaces/http/v1/find-issue-today/find-issue-today.http.controller';
+import { VideoMultiKeywordCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.muti-keyword.cache.adapter';
+import { VideoHistoryGetTopViewsByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-top-views.by-ids.adapter';
+import { GetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.get-today-issue.cache.adapter';
+import { SetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.set-today-issue.cache.adapter';
 
 const controllers = [
   FindVideoPageHttpController,
@@ -80,6 +96,7 @@ const controllers = [
   FindAdsInfoHttpController,
   FindAdsTopHitsHttpController,
   FindPerformanceLengthHttpController,
+  FindIssueTodayHttpController,
 ];
 
 const commandHandlers: Provider[] = [];
@@ -92,6 +109,7 @@ const queryHandlers: Provider[] = [
   FindAdsInfoQueryHandler,
   FindAdsTopHitsQueryHandler,
   FindPerformanceLengthQueryHandler,
+  FindIssueTodayQueryHandler,
 ];
 const service: Provider[] = [
   { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
@@ -115,11 +133,14 @@ const service: Provider[] = [
     provide: VIDEO_PERFORMANCE_LENGTH_GET_VIDEO_SERVICE_DI_TOKEN,
     useClass: FindPerformanceLengthService,
   },
+  {
+    provide: VIDEO_GET_TODAY_ISSUE_SERVICE_DI_TOKEN,
+    useClass: FindIssueTodayService,
+  },
 ];
 
 const adapters: Provider[] = [
   { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
-
   {
     provide: VIDEO_GET_ADS_TOP_HITS_IGNITE_DI_TOKEN,
     useClass: VideoAdsTopHitsAdapter,
@@ -186,11 +207,42 @@ const adapters: Provider[] = [
     provide: VIDEO_HISTORY_GET_LIST_VIDEO_HISTORY_IGNITE_DI_TOKEN,
     useClass: ExtendedVideoHistoryListAdapter,
   },
+  {
+    provide: VIDEO_MULTI_KEYWORD_WORDS_ADAPTER_DI_TOKEN,
+    useClass: VideoMultiKeywordCacheAdapter,
+  },
+  {
+    provide: VIDEO_TOP_VIEWS_ADAPTER_DI_TOKEN,
+    useClass: VideoHistoryGetTopViewsByIdsAdapter,
+  },
+  {
+    provide: RedisCacheAdapterTokens.REDIS_CLIENT_SET_TODAY_ISSUE_DI_TOKEN,
+    useClass: SetVideoTodayIssueCacheAdapter,
+  },
+  {
+    provide: RedisCacheAdapterTokens.REDIS_CLIENT_GET_TODAY_ISSUE_DI_TOKEN,
+    useClass: GetVideoTodayIssueCacheAdapter,
+  },
 ];
+
+const repositories: Provider[] = [
+  {
+    provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
+    useClass: WeeklyHitsV2Repository,
+  },
+];
+
 @Module({
-  imports: [IgniteModule, CqrsModule, AwsModule, ChannelHistoryServiceModule],
+  imports: [
+    IgniteModule,
+    CqrsModule,
+    AwsModule,
+    ChannelHistoryServiceModule,
+    WeeklyHitsEntityModule,
+  ],
   controllers,
   providers: [
+    ...repositories,
     ...queryHandlers,
     ...commandHandlers,
     VideoAggregateService,

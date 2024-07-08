@@ -106,14 +106,23 @@ export class GetVideoAndChannelViewsByDateAndKeywordsDao extends GetVideoAdsTopH
 }
 
 export class GetVideoCacheDao extends GetAnalysisHitsQuery {
+  public relatedCluster: string[];
+
   constructor(props: GetVideoCacheDao) {
     super(props);
+
+    this.relatedCluster = props.relatedCluster ?? null;
     Object.assign(this, props);
   }
 }
 export class GetVideosMultiRelatedWordsCacheDao {
   public words: string[];
+  public relatedCluster: string[];
   constructor(props: GetVideosMultiRelatedWordsCacheDao) {
     this.words = props.words;
+    this.relatedCluster = props.relatedCluster ?? null;
   }
+}
+export class GetVideoMultiKeywordCacheDao {
+  constructor(public search: string, public related: string) {}
 }

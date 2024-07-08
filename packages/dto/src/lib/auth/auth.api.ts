@@ -1,6 +1,6 @@
 import { c } from '../contract';
 import { z } from 'zod';
-import { zUserModel } from '../user';
+import { zOwnInfo, zUserModel } from '../user';
 import { zErrResBase } from '../error.response.zod';
 
 export const authBaseApiUrl = '/auth';
@@ -39,7 +39,7 @@ export const authApi = c.router({
     method: 'GET',
     path: `${authBaseApiUrl}/own-info`,
     responses: {
-      200: zUserModel,
+      200: zOwnInfo,
       ...zErrResBase,
     },
     summary: '토큰 확인후 유저 정보 리턴',

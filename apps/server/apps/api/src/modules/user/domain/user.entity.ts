@@ -34,8 +34,8 @@ export class User {
   @Column({ name: 'token_refresh', type: 'varchar' })
   tokenRefresh: string;
 
-  @Column({ name: 'agree_promotion', type: 'varchar' })
-  agreePromotion: string;
+  @Column({ name: 'agree_promotion', type: 'boolean' })
+  agreePromotion: boolean;
 
   @Column({
     type: 'enum',
@@ -90,10 +90,6 @@ export class User {
 
   @OneToMany((type) => Membership, (Membership) => Membership.userId)
   Membership: Membership[];
-
-  @OneToMany((type) => ChannelEntity, (channel) => channel.user)
-  @JoinColumn({ name: 'channel_id' })
-  channel: ChannelEntity[];
 
   @OneToMany(
     () => StoryBoardEntity,

@@ -1,52 +1,68 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-import { User } from '@Apps/modules/user/domain/user.entity';
-
-@Entity({ name: 'channel' })
+@Entity('channel_data')
 export class ChannelEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
-
-  @Column({ type: 'int', nullable: true, name: 'user_id' })
-  userId?: number;
-
-  @Column({ type: 'varchar', length: 50, name: 'channel_id' })
+  @PrimaryColumn({ name: 'CHANNEL_ID', type: 'char', length: 48, default: '' })
   channelId: string;
 
-  @Column({ type: 'varchar', length: 100, name: 'channel_name' })
+  @PrimaryColumn({ name: 'channel_id_part', type: 'char', length: 1 })
+  channelIdPart: string;
+
+  @Column({ name: 'CHANNEL_NAME', type: 'char', length: 255, nullable: true })
   channelName: string;
 
-  @Column('varchar', { length: 30, nullable: true, name: 'channel_country' })
-  country?: string;
+  @Column({ name: 'CHANNEL_DESCRIPTION', type: 'text', nullable: true })
+  channelDescription: string;
 
-  @Column('text', { nullable: true, name: 'channel_description' })
-  description: string;
+  @Column({
+    name: 'CHANNEL_TAGS',
+    type: 'varchar',
+    length: 2000,
+    nullable: true,
+  })
+  channelTags: string;
 
-  @Column('text', { nullable: true, name: 'channel_keyword' })
+  @Column({
+    name: 'MAINLY_USED_KEYWORDS',
+    type: 'varchar',
+    length: 2000,
+    nullable: true,
+  })
   keyword: string;
 
-  @Column('text', { nullable: true, name: 'channel_link' })
-  link: string;
-
-  @Column('varchar', { length: 30, name: 'channel_since' })
-  since: Date;
-
-  @Column('int', { nullable: true, name: 'channel_subscriber' })
-  subscriber: number;
-
-  @Column('text', { nullable: true, name: 'channel_tag' })
+  @Column({
+    name: 'MAINLY_USED_TAGS',
+    type: 'varchar',
+    length: 2000,
+    nullable: true,
+  })
   tag: string;
 
-  @Column('varchar', { length: 100, name: 'channel_url' })
-  url: string;
+  @Column({
+    name: 'CHANNEL_COUNTRY',
+    type: 'char',
+    length: 100,
+    nullable: true,
+  })
+  channelCountry: string;
 
-  @ManyToOne((type) => User, (user) => user.channel)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({
+    name: 'CHANNEL_LINK',
+    type: 'varchar',
+    length: 8000,
+    nullable: true,
+  })
+  channelLink: string;
+
+  @Column({ name: 'CHANNEL_SINCE', type: 'char', length: 24, nullable: true })
+  channelSince: string;
+
+  @Column({ name: 'CHANNEL_CLUSTER', type: 'smallint', default: -1 })
+  channelCluster: number;
+
+  @Column({ name: 'CRAWLED_DATE', type: 'timestamp', nullable: true })
+  crawledDate: Date;
+
+  @Column({ name: 'USER_ID', type: 'int', nullable: true })
+  userId: number;
 }

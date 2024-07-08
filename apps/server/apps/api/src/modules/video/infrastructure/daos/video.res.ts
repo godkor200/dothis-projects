@@ -1,6 +1,9 @@
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { Result } from 'oxide.ts';
+import { zTodayIssueVideo } from '@dothis/dto';
+import { extendApi } from '@anatine/zod-openapi';
+import { createZodDto } from '@anatine/zod-nestjs';
 
 export interface DateData {
   year: number;
@@ -25,6 +28,7 @@ export interface IVideoSchema extends DateData {
   videoViews?: number;
   channelName?: string;
 }
+
 export type CountByDayRes = {
   day: number;
   uniqueVideoCount: number;
@@ -54,3 +58,11 @@ export type TVideoRes = Result<
   IVideoSchema[],
   TableNotFoundException | VideoNotFoundError
 >;
+export class TodayIssueVideo extends createZodDto(
+  extendApi(zTodayIssueVideo),
+) {}
+export interface ITodayIssue
+  extends Pick<
+    TodayIssueVideo,
+    'videoId' | 'videoTitle' | 'videoPublished' | 'videoViews' | 'category'
+  > {}

@@ -85,9 +85,12 @@ export class GetRankingRelatedWordsV2Service {
         const relatedWords = resRelWordsEntity.relWords
           .split(',')
           .map((item) => item.trim());
-
+        const relatedCluster = resRelWordsEntity.cluster
+          .split(',')
+          .map((item) => item.trim());
         const dao = new GetVideosMultiRelatedWordsCacheDao({
           words: relatedWords,
+          relatedCluster,
         });
 
         console.time('비디오 캐시 조회 시간');
@@ -100,6 +103,7 @@ export class GetRankingRelatedWordsV2Service {
             new GetVideoHistoryMultipleByIdAndRelatedWordsDao({
               videoIds: unwrapData,
             });
+          console.log('videoHistoryDao', unwrapData);
           console.timeEnd('비디오 dao 시간 converter');
           console.time('채널 히스토리 조회 시간');
           const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({

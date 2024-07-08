@@ -86,7 +86,6 @@ export type WeeklyHitsModel = z.TypeOf<typeof zWeeklyKeywordsListSourceSchema>;
 
 export const zCombinedViewsData = z.object({
   date: z.string().describe('날짜, yyyy-mm-dd 형식을 권장'),
-
   // 일일 조회수 데이터
   uniqueVideoCount: z
     .number()
@@ -105,6 +104,10 @@ export const zCombinedViewsData = z.object({
 export const zCombinedViewsDataResponse = dataObject(
   zClustersObject(z.array(zCombinedViewsData)),
 );
+export const zClusterSpecificCombinedData = z.object({
+  clusterNumber: z.number().nullable(),
+  data: zCombinedViewsData,
+});
 
 export const zExpectedViewsData = z.object({
   date: z.string().describe('yyyy-mm-dd 형식'),
@@ -125,15 +128,12 @@ export const zExpectedViewsArr = z.array(zExpectedViewsData);
 export const zExpectedViews = z.object({
   data: zExpectedViewsArr,
 });
-
 // 각 추천 키워드 객체의 구조 정의
 export const zKeywordSchema = z.object({
   recommendedKeyword: z.string().describe('키워드'),
   topAssociatedWord: z.string().describe('1등 연관어'),
   topCategoryNumber: z.string().describe('1등 카테고리 번호'),
-  rankChange: z.number().describe('변동 순위'),
-  ranking: z.number(),
-  changes: z.number(),
+  ranking: z.number().describe('현재 순위'),
   year: z.number().describe('수집 연도'),
   month: z.number().describe('수집 월'),
   day: z.number().describe('수집 일'),
@@ -145,6 +145,6 @@ export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
 
 export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
 
-export type TAnalysisViewsRes = z.TypeOf<typeof zCombinedViewsData>;
+export type TAnalysisViewsRes = z.TypeOf<typeof zClusterSpecificCombinedData>;
 
 export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;

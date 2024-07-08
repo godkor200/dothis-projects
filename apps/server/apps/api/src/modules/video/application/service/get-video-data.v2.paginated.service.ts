@@ -11,11 +11,17 @@ import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.
 import { IGetVideoVideoNoKeywordPaginatedOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { Err, Ok } from 'oxide.ts';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export class GetVideoDataV2PaginatedService
   implements GetVideoDataPageV2ServiceInboundPort
 {
   constructor(
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
     private readonly videoCacheService: VideoCacheOutboundPorts,
 
@@ -24,8 +30,19 @@ export class GetVideoDataV2PaginatedService
   ) {}
 
   async execute(dto: GetVideoPaginatedPageSortDto): Promise<TGetVideoPage> {
-    const videoCacheDao = new GetVideoCacheDao(dto);
     try {
+      const keywordInfo = await this.relWordsRepository.findOneByKeyword(
+        dto.search,
+      );
+      if (keywordInfo.isErr()) {
+        return Err(new KeywordsNotFoundError());
+      }
+      const keywordInfoUnwrap = keywordInfo.unwrap();
+      const relatedCluster = keywordInfoUnwrap.cluster
+        .split(',')
+        .map((e) => e.trim());
+
+      const videoCacheDao = new GetVideoCacheDao({ ...dto, relatedCluster });
       const videoCacheResult = await this.videoCacheService.execute(
         videoCacheDao,
       );

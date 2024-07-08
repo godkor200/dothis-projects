@@ -68,6 +68,7 @@
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.2",
     "googleapis": "^111.0.0",
+    "hangul-js": "^0.2.6",
     "ioredis": "^5.4.1",
     "jest-mock-extended": "^3.0.7",
     "joi": "^17.13.1",

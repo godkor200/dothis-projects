@@ -19,6 +19,9 @@ import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queri
 import { GetVideoDataV2PaginatedService } from '@Apps/modules/video/application/service/get-video-data.v2.paginated.service';
 import { VideoNoKeywordPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video-no-keyword.paginated.adapter';
 import { IgniteModule } from '@Apps/common/ignite/ignite.module';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
+import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
 
 const controllers = [
   FindVideosCountHttpController,
@@ -48,9 +51,13 @@ const service: Provider[] = [
 ];
 const adapters: Provider[] = [
   { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
+  {
+    provide: RELWORDS_DI_TOKEN.FIND_ONE,
+    useClass: RelatedWordsRepository,
+  },
 ];
 @Module({
-  imports: [CqrsModule, IgniteModule],
+  imports: [CqrsModule, IgniteModule, RelatedWordsModule],
   controllers,
   providers: [...service, ...queryHandlers, ...adapters],
 })

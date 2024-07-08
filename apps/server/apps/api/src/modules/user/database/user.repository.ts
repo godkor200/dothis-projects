@@ -29,7 +29,6 @@ export class UserRepository
   async findOneWithRelations(id: string): Promise<User> {
     return await this.repository.findOneOrFail({
       where: { id: Number(id) },
-      relations: { channel: true },
     });
   }
 }
