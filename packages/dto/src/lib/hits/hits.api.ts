@@ -5,6 +5,7 @@ import {
   zExpectedViews,
   zKeywordThisWeeklyRes,
   zWeeklyKeywordsList,
+  zSuccessRate,
 } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
@@ -102,7 +103,7 @@ export const hitsApi = c.router({
     query: zFindVideoBySearchKeyword,
     pathParams: zClusterNumberMulti,
     responses: {
-      200: zExpectedViews,
+      200: zSuccessRate,
       ...zErrResBase,
     },
     summary: '관련어, 연관어 영상들의 성공확률을 가져옵니다',

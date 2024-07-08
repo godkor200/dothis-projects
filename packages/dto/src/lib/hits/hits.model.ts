@@ -104,6 +104,13 @@ export const zExpectedViewsData = z.object({
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
 
+export const zSuccessRateData = z.object({
+  totalVideoCount: z.number(),
+  countAboveAverage: z.number(),
+});
+
+export const zSuccessRate = dataObject(zSuccessRateData);
+
 export const zExpectedViewsArr = z.array(zExpectedViewsData);
 
 export const zExpectedViews = z.object({
