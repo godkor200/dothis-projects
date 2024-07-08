@@ -12,7 +12,13 @@ import { cn } from '@/utils/cn';
 import BoxLoadingComponent from '../BoxLoadingComponent';
 import ChartSummaryCards from './ChartSummaryCards';
 
-const ChartContainer = ({ keyword }: { keyword: string }) => {
+const ChartContainer = ({
+  keyword,
+  relatedKeyword,
+}: {
+  keyword: string;
+  relatedKeyword: string | null;
+}) => {
   const [errorCount, setErrorCount] = useState(0);
 
   const {
@@ -22,6 +28,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: dailViewRefetch,
   } = useGetDailyViewV2({
     keyword: keyword,
+    relword: relatedKeyword,
   });
 
   const {
@@ -30,7 +37,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: naverSearchRefetch,
   } = useGetNaverSearchRatio({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   const {
@@ -39,7 +46,7 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
     refetch: videoRefetch,
   } = useGetVideoUploadCount({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   const refetchCallback = () => {
@@ -78,8 +85,8 @@ const ChartContainer = ({ keyword }: { keyword: string }) => {
 
   return (
     <>
-      <ChartSummaryCards keyword={keyword} />
-      <D3Axis keyword={keyword} />
+      <ChartSummaryCards keyword={keyword} relatedKeyword={relatedKeyword} />
+      <D3Axis keyword={keyword} relatedKeyword={relatedKeyword} />
     </>
   );
 };
