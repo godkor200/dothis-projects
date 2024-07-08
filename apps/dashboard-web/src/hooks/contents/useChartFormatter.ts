@@ -8,12 +8,15 @@ import {
   handleDailyVideoCountD3,
   handleDailyViewData,
   handleDailyViewDataD3,
+  handleExpectedViewAreaD3,
+  handleExpectedViewD3,
   handleNaverSearchRatio,
   handleNaverSearchRatioD3,
   handleScopePerformanceData,
   handleVideoUploadCountD3,
 } from '@/utils/contents/chart';
 
+import useGetDailyExpectedView from '../react-query/query/useGetDailyExpectedView';
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
@@ -137,6 +140,41 @@ export const useDailyViewDataFormatter = ({
       handleDailyViewDataCallback(dailyViewData.flat(), { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
   );
+};
+
+export const useExpectedViewFormatter = ({
+  keyword,
+  relword,
+}: {
+  keyword: string;
+  relword: string | null;
+}) => {
+  const { data: expectedViewData } = useGetDailyExpectedView({
+    baseKeyword: keyword,
+    relatedKeyword: relword,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return {
+    expectedView: useMemo(
+      () =>
+        handleExpectedViewD3(expectedViewData?.data.data, {
+          startDate,
+          endDate,
+        }),
+      [JSON.stringify(expectedViewData)],
+    ),
+    expectedArea: useMemo(
+      () =>
+        handleExpectedViewAreaD3(expectedViewData?.data.data, {
+          startDate,
+          endDate,
+        }),
+      [JSON.stringify(expectedViewData)],
+    ),
+  };
 };
 
 export const useDailyViewV2 = ({
