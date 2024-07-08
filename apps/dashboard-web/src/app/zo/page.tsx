@@ -22,7 +22,7 @@ const Page = () => {
       /> */}
 
       <D3Chart keyword="세종" />
-      <D3Axis keyword="세종" />
+      <D3Axis keyword="세종" relatedKeyword={'대왕'} />
       {/* <D3Tool />
       <D3ToolTip /> */}
       {/* <D3Chart /> */}
