@@ -141,7 +141,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}`,
     query: zFindVideoBySearchKeyword,
     responses: {
-      200: zClusterSpecificCombinedData,
+      200: zCombinedViewsDataResponse,
       ...zErrResBase,
     },
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
