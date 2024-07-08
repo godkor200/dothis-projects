@@ -132,7 +132,7 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
     ['#BB9A6B', '#CCAC7C'],
   ];
   return (
-    <div className="flex justify-between gap-[24px] ">
+    <div className="flex  gap-[24px] ">
       {mediaDigestData
         ?.slice(0, 5)
         ?.map(
