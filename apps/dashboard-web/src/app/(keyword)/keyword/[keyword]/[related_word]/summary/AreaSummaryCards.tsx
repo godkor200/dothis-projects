@@ -1,21 +1,45 @@
+'use client';
+
+import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
+
 import ChartSummaryItem from '../../ChartSummaryItem';
 
-const AreaSummaryCards = ({}: {
+const AreaSummaryCards = ({
+  baseKeyword,
+  relatedKeyword,
+}: {
   baseKeyword: string;
   relatedKeyword: string;
 }) => {
+  const { data: apiData } = useGetDailyExpectedView({
+    baseKeyword,
+    relatedKeyword,
+  });
+
+  const maxExpectedHits = apiData?.data
+    ? Math.max(...apiData.data.data.map((item) => item.expectedHits))
+    : 0;
+
+  const maxAreaExpectedHits = apiData?.data
+    ? Math.max(...apiData.data.data.map((item) => item.maxPerformance))
+    : 0;
+
+  const minAreaExpectedHits = apiData?.data
+    ? Math.max(...apiData.data.data.map((item) => item.minPerformance))
+    : 0;
+
   const SummaryList = [
     {
       title: '평균 성과',
-      value: '0',
+      value: `x${maxExpectedHits}`,
     },
     {
-      title: '대성공 시 최대 성과',
-      value: '0',
+      title: '최대 성과',
+      value: `x${maxAreaExpectedHits}`,
     },
     {
-      title: '실패 시 최소 성과',
-      value: '0',
+      title: '최소 성과',
+      value: `x${minAreaExpectedHits}`,
     },
   ];
 
