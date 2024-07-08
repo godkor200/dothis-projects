@@ -5,6 +5,7 @@ import './styles.css';
 import * as D3 from 'd3';
 import { useEffect, useRef } from 'react';
 
+import { useExpectedViewFormatter } from '@/hooks/contents/useChartFormatter';
 import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
 import useDimensions from '@/hooks/useDimenstions';
 
@@ -59,7 +60,10 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
     relatedKeyword,
   });
 
-  console.log(apiData);
+  const { expectedView, expectedArea } = useExpectedViewFormatter({
+    keyword: baseKeyword,
+    relword: relatedKeyword,
+  });
 
   useEffect(() => {
     const chart = D3.select(selectRef.current);
@@ -76,7 +80,7 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
     //   .attr('transform', `translate(${marginLeft},${marginTop})`);
 
     const x = D3.scalePoint()
-      .domain(areaData.map((item) => item.date))
+      .domain(expectedArea.map((item) => item.date))
       .range([marginLeft, width - marginRight])
       .padding(0.5);
 
@@ -109,10 +113,10 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
     const y = D3.scaleLinear()
       .domain([
         0,
-        (D3.max(areaData, (d) => d.value2) ?? 100) +
-          (D3.min(areaData, (d) => d.value)
-            ? (D3.min(areaData, (d) => d.value) ?? 0) / 2
-            : 0),
+        (D3.max(expectedArea, (d) => d.value[1]) ?? 100) +
+          (D3.min(expectedArea, (d) => d.value[0])
+            ? (D3.min(expectedArea, (d) => d.value[0]) ?? 0) / 2
+            : 100),
       ])
       .nice()
       .range([height - marginBottom, marginTop]);
@@ -138,7 +142,7 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .selectAll('text')
       .remove();
 
-    const line = D3.line<DataItem>()
+    const line = D3.line<(typeof expectedView)[number]>()
       .x((datum) => {
         // console.log(x(d.month) + x.bandwidth() / 2);
 
@@ -159,22 +163,25 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .style('padding', '9px 6px')
       .style('border-radius', '10px');
 
-    const area = D3.area<AreaDataItem>()
+    const area = D3.area<(typeof expectedArea)[number]>()
       .x((d) => x(d.date) as number)
-      .y0((d) => y(d.value))
-      .y1((d) => y(d.value2))
+      .y0((d) => y(d.value[0]))
+      .y1((d) => y(d.value[1]))
       .curve(D3.curveCatmullRom);
 
     svg
       .append('path')
-      .datum(areaData)
+      .datum(expectedArea)
       // .data(areaData)
       // .enter()
 
       .attr('fill', '#FDE7EB')
-      .attr('d', area(areaData))
+      .attr('d', area(expectedArea))
       .on('mouseover', (e, i) => {
-        const bisect = D3.bisector((d: DataItem | AreaDataItem) => d.date).left;
+        const bisect = D3.bisector(
+          (d: (typeof expectedView)[number] | (typeof expectedArea)[number]) =>
+            d.date,
+        ).left;
 
         const xPosition = D3.pointer(e)[0];
         var domain = x.domain();
@@ -182,10 +189,10 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
         var rangePoints = D3.range(range[0], range[1], x.step());
         var yPos = domain[D3.bisect(rangePoints, xPosition) - 1];
 
-        const dataLavel = bisect(areaData, yPos);
+        const dataLavel = bisect(expectedArea, yPos);
 
-        const currentAreaData = areaData[dataLavel];
-        const currentExpectedData = data[dataLavel];
+        const currentAreaData = expectedArea[dataLavel];
+        const currentExpectedData = expectedView[dataLavel];
 
         // Linear interpolation
 
@@ -206,8 +213,8 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
               <p style="color: #E4E4E7; font-size: 14px;
               font-style: normal;
               font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                currentAreaData.value
-              }~${currentAreaData.value2}</p>
+                currentAreaData.value[0]
+              }~${currentAreaData.value[1]}</p>
               <p style="color: #A1A1AA; font-size: 12px;
               font-style: normal;
               font-weight: 500; "> ${`예측 조회수`} </p>
@@ -236,7 +243,10 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
         // 이 코드는 mousemove 이벤트가 svg 요소에서 발생할 때마다 마우스 포인터의 좌표를 콘솔에 출력합니다. mouseX와 mouseY는 svg 요소의 왼쪽 상단 모서리를 기준으로 한 상대적인 좌표입니다.
         // D3.pointer(e): 특정 요소(target element)를 기준으로 한 상대적인 좌표입니다.  <--> 기존에는 pageX pageY로 진행해서 relative에 따른 차이가 보였음
 
-        const bisect = D3.bisector((d: DataItem | AreaDataItem) => d.date).left;
+        const bisect = D3.bisector(
+          (d: (typeof expectedView)[number] | (typeof expectedArea)[number]) =>
+            d.date,
+        ).left;
 
         const xPosition = D3.pointer(e)[0];
         var domain = x.domain();
@@ -244,10 +254,10 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
         var rangePoints = D3.range(range[0], range[1], x.step());
         var yPos = domain[D3.bisect(rangePoints, xPosition) - 1];
 
-        const dataLavel = bisect(areaData, yPos);
+        const dataLavel = bisect(expectedArea, yPos);
 
-        const currentAreaData = areaData[dataLavel];
-        const currentExpectedData = data[dataLavel];
+        const currentAreaData = expectedArea[dataLavel];
+        const currentExpectedData = expectedView[dataLavel];
 
         const [mouseX, mouseY] = D3.pointer(e);
 
@@ -272,8 +282,8 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
                   <p style="color: #E4E4E7; font-size: 14px;
                   font-style: normal;
                   font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                    currentAreaData.value
-                  }~${currentAreaData.value2}</p>
+                    currentAreaData.value[0]
+                  }~${currentAreaData.value[1]}</p>
                   <p style="color: #A1A1AA; font-size: 12px;
                   font-style: normal;
                   font-weight: 500; "> ${`예측 조회수`} </p>
@@ -348,7 +358,7 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
 
     svg
       .append('path')
-      .datum(data)
+      .datum(expectedView)
       .attr('fill', 'none')
       .attr('stroke', '#FF647D')
       .attr('class', '기대조회수')
@@ -356,7 +366,7 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .style('stroke-linecap', 'round')
       .style('pointer-events', 'none')
       .attr('d', line);
-  }, [width]);
+  }, [width, expectedView, expectedArea, apiData]);
 
   return (
     <div className="relative">
