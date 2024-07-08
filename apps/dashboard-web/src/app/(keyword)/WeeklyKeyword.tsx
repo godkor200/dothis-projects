@@ -13,7 +13,9 @@ const WeeklyKeyword = () => {
       {data?.map((item, i) => (
         <Link
           href={`/keyword/${item.recommendedKeyword}/${
-            item.topAssociatedWord ? item.topAssociatedWord.split(',')[0] : ''
+            item.topAssociatedWord
+              ? `${item.topAssociatedWord.split(',')[0]}/analysis`
+              : ''
           }`}
           key={item.recommendedKeyword}
         >
