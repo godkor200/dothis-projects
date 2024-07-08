@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { dataObject, zTotalData, zSortQuery } from '../common.model';
+import {
+  dataObject,
+  zTotalData,
+  zSortQuery,
+  zClustersObject,
+} from '../common.model';
 import { zChannelHistoryModel } from '../channel-history';
 
 export const zDailyViewData = z.object({
@@ -96,6 +101,10 @@ export const zCombinedViewsData = z.object({
   maxPerformance: z.number().describe('최대 성능'),
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
+
+export const zCombinedViewsDataResponse = dataObject(
+  zClustersObject(z.array(zCombinedViewsData)),
+);
 
 export const zExpectedViewsData = z.object({
   date: z.string().describe('yyyy-mm-dd 형식'),
