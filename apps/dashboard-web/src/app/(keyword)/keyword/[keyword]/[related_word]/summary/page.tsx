@@ -1,11 +1,17 @@
 import Link from 'next/link';
 
+import D3Axis from '@/components/common/Charts/D3Axis';
 import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
+import ChartContainer from '../../ChartContainer';
 import Counter from '../Rolling';
+import AreaChartContainer from './AreaChartContainer';
+import D3AreaChart from './D3AreaChart';
+import MediaRank from './MediaRank';
 // import { Component, Counter } from '../Rolling';
 import OutlookChart from './OutlookChart';
+import SuccessProbability from './SuccessProbability';
 import SummaryChart from './SummaryChart';
 
 const SummaryTab = ({
@@ -33,10 +39,13 @@ const SummaryTab = ({
               조회수 예측
             </p>
 
-            <div className=" gap-30 flex flex-col text-center">
-              <p className="text-grey600  text-[14px]  font-[400]">
-                시청자 수요 계산... 소재 전망 계산... 성공 확률 계산... 키워드
-                성과 계산... 구독자 경쟁력 계산... 정민 평소 성과 계산...
+            <div className=" gap-30 flex flex-col pb-[30px] text-center">
+              <p className="text-grey600  mb-[50px]  text-[14px] font-[500]">
+                키워드에 대한 시청자 수요 X 주간 검색량 변동 X 경쟁 채널의
+                구독자 규모
+              </p>
+              <p className="text-grey600  mb-[40px]  text-[14px] font-[500]">
+                키워드의 평균 성과 X 채널의 평소 성과
               </p>
 
               <div className="text-grey600 flex items-center justify-center gap-[10px] text-[14px] font-[400]">
@@ -51,11 +60,11 @@ const SummaryTab = ({
           </div>
         </BoxFrame>
         <BoxFrame>
-          <div>
+          <div className="flex h-full flex-grow flex-col">
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
               소재 전망
             </p>
-            <div className="">
+            <div className="flex flex-grow  flex-col items-center justify-center">
               <OutlookChart
                 baseKeyword={baseKeyword}
                 relatedkeyword={relatedKeyword}
@@ -69,15 +78,47 @@ const SummaryTab = ({
               성공 확률
             </p>
 
-            <div className=" gap-30 flex flex-col text-center">
-              <p className=" px-[10px] text-[20px] font-bold">48%</p>
-              <p className="text-grey600  text-[14px]  font-[400]">
-                이 주제를 다룬 4,269명 중 2,049명이 평소보다 조회수가 높습니다.
-              </p>
-            </div>
+            <SuccessProbability
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
           </div>
         </BoxFrame>
       </div>
+
+      <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
+        <BoxFrame isPositionProperty={true}>
+          <div className="flex h-full flex-col">
+            <p className="text-grey600 mb-[20px] text-[14px]">콘텐츠 추이</p>
+            <ChartContainer
+              keyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
+          </div>
+        </BoxFrame>
+
+        <BoxFrame isPositionProperty={true}>
+          <div className="flex h-full flex-col">
+            <p className="text-grey600 mb-[20px] text-[14px]">조회수 예측</p>
+
+            <AreaChartContainer
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
+            {/* <D3Axis keyword={baseKeyword} relatedKeyword={relatedKeyword} /> */}
+          </div>
+        </BoxFrame>
+      </div>
+
+      <div>
+        <BoxFrame>
+          <MediaRank
+            baseKeyword={baseKeyword}
+            relatedKeyword={relatedKeyword}
+          />
+        </BoxFrame>
+      </div>
+
       <Link
         href={`/keyword/${baseKeyword}/${relatedKeyword}/comparison`}
         className="text-[20px] font-bold"
@@ -89,7 +130,7 @@ const SummaryTab = ({
         <BoxFrame>
           <div>
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              치킨의 다른 연관 키워드
+              {baseKeyword}의 다른 연관 키워드
             </p>
             <ul className="gap-30 flex flex-col py-[25px]">
               {['치킨매니아', '가라아게', '맥도날드'].map(
