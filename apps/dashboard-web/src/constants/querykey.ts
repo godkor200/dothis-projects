@@ -11,6 +11,7 @@ export const VIDEO_COUNT_KEY = createQueryKeys('videocount');
 export const RANK_RELATIONWORD_KEY = createQueryKeys('rank_relationword');
 export const TRENDING_KEYWORD_KEY = createQueryKeys('trending_keyword');
 export const WEEKLY_KEYWORD_KEY = createQueryKeys('weekly_keyword');
+export const WEEKLY_TREND_KEYWORD_KEY = createQueryKeys('weekly_trend_keyword');
 export const USER_CHANNEL_KEY = createQueryKeys('user_channel');
 export const STORYBOARD_KEY = createQueryKeys('storyboard');
 export const INFLUENTIAL_CHANNEL_KEY = createQueryKeys('influential_channel');
