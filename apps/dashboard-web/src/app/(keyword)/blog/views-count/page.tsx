@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 import styles from '../blog.module.css';
 
 export const metadata: Metadata = {
-  title: `유튜브 조회수 카운팅 기준은? | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+  title: `유튜브 조회수 카운팅 기준은? | 영상 트렌드 분석 솔루션 두디스`,
   description: `유튜브 조회수 카운팅 기준은? 조회수와 집계 기준, 노출수와 집계 기준, 함께 묶어서 봐야하는 지표들`,
   keywords: `두디스, 유튜브 조회수 기준, 유튜브 조회수 집계, 유튜브 조회수 중복, 유튜브 조회수, 유튜브 분석`,
   openGraph: {
-    title: `유튜브 조회수 카운팅 기준은? | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+    title: `유튜브 조회수 카운팅 기준은? | 영상 트렌드 분석 솔루션 두디스`,
     description: `유튜브 조회수 카운팅 기준은? 조회수와 집계 기준, 노출수와 집계 기준, 함께 묶어서 봐야하는 지표들`,
   },
 };
@@ -21,7 +21,7 @@ const ViewsCount = () => {
         <img src={'/images/blog/blog-1-thumbnail.png'} alt="1-1" />
         <br />
         <p>
-          안녕하세요! 영상 기획 어시스턴트 두디스입니다. 오늘은 유튜브 영상
+          안녕하세요! 영상 트렌드 분석 솔루션 두디스입니다. 오늘은 유튜브 영상
           조회수와 노출수, 카운팅 기준에 대해 알려드리려고 합니다.
         </p>
         <br />
@@ -221,7 +221,7 @@ const ViewsCount = () => {
         </p>
       </div>
       <a href="https://dothis.kr/">
-        유튜브 영상 기획 서비스, 두디스(DOTHIS) 출시가 되었습니다! 지금 접속해서
+        영상 트렌드 분석 솔루션, 두디스(DOTHIS) 출시가 되었습니다! 지금 접속해서
         무료로 체험하세요.
       </a>
     </div>
