@@ -406,7 +406,7 @@ const OutlookChart = ({
 
     if (naverSearchData) {
       const path = chart
-        .selectAll('.test')
+        .selectAll('.검색량')
         .data([
           (naverOutlook as '좋음' | '나쁨' | '보통') === '보통'
             ? convert(naverOutlook, dailyViewOutlook)
@@ -417,7 +417,7 @@ const OutlookChart = ({
         .enter()
         .append('path')
         .attr('fill', 'none')
-        .attr('class', `test`)
+        .attr('class', `검색량`)
         .attr('stroke', '#F0516D')
 
         .attr('stroke-width', 4)
@@ -441,7 +441,7 @@ const OutlookChart = ({
 
     if (dailyViewData) {
       const path2 = chart
-        .selectAll('.ttt')
+        .selectAll('.조회수')
         .data([
           (dailyViewOutlook as '좋음' | '나쁨' | '보통') === '보통'
             ? convert(dailyViewOutlook, naverOutlook)
@@ -452,7 +452,7 @@ const OutlookChart = ({
         .enter()
         .append('path')
         .attr('fill', 'none')
-        .attr('class', `ttt`)
+        .attr('class', `조회수`)
         .attr('stroke', '#818CF8')
 
         .attr('stroke-width', 4)
