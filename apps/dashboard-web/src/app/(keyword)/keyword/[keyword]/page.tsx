@@ -16,7 +16,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
   const keyword = decodeURIComponent(params.keyword);
 
   return (
-    <div className="px-[66px]">
+    <div className="px-[66px] font-[500]">
       <div className="mx-auto my-[40px] max-w-[1700px]">
         <div className="">
           <div className="grid grid-rows-[140px_460px] gap-[20px]">
@@ -31,8 +31,10 @@ const Page = ({ params }: { params: { keyword: string } }) => {
               </BoxFrame>
               <BoxFrame>
                 <div>
-                  <p className="text-grey600 mb-[20px] text-[14px]">
-                    키워드 순위
+                  <p className="text-grey600 mb-[20px] text-[14px] font-[500]">
+                    전체 키워드 중{' '}
+                    <span className="text-primary500">{keyword}</span>의 조회수
+                    순위
                   </p>
 
                   <KeywordRank keyword={keyword} />
