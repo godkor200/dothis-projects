@@ -64,17 +64,19 @@ const MediaTextCard = ({ keyword }: { keyword: string }) => {
   return (
     <>
       {mediaDigestData.map((media) => (
-        <div
-          className="rounded-10 bg-grey200 flex w-[480px] flex-col  justify-between px-[30px] py-[17px]"
-          key={media.title}
-        >
-          <p>{media.title}</p>
-          <MediaDigestSummary
-            element={media.element}
-            provider={media.provider}
-            uploadDate={media.uploadDate}
-          />
-        </div>
+        <Link href={media.link as Route} target="_blank">
+          <div
+            className="rounded-10 bg-grey200 flex w-[480px] flex-col  justify-between px-[30px] py-[17px]"
+            key={media.title}
+          >
+            <p>{media.title}</p>
+            <MediaDigestSummary
+              element={media.element}
+              provider={media.provider}
+              uploadDate={media.uploadDate}
+            />
+          </div>
+        </Link>
       ))}
 
       {Array.from({ length: emptyMediaLength }).map((_, i) => (
