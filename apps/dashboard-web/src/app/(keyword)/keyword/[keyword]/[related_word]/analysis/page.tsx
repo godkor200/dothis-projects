@@ -92,7 +92,7 @@ const Page = ({
         <BoxFrame isPositionProperty={true}>
           <div className="flex h-full flex-col">
             <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
-              <p>조회수 예측</p>
+              <p>조회수 성과</p>
               <TooltipComponent title={''} />
             </div>
 
