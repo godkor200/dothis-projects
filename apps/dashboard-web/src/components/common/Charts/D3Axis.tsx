@@ -78,9 +78,9 @@ const D3Axis = ({
 
   // Reformat the data: we need an array of arrays of {x, y} tuples
   const dataReady = [
-    { name: '일일조회수', values: datad3, color: '#F0ABFC' },
+    { name: '일일조회-수', values: datad3, color: '#F0ABFC' },
     { name: '검색량', values: data2d3, color: '#FCD34D' },
-    { name: '영상수', values: data3d3, color: '#818CF8' },
+    { name: '발행-영상-수', values: data3d3, color: '#818CF8' },
   ];
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
@@ -259,7 +259,7 @@ const D3Axis = ({
       .attr('width', 40)
       .attr('height', (data) => y3(0) - y3(data.value as number))
       .attr('class', 'bar-chart')
-      .attr('class', '영상수')
+      .attr('class', '발행-영상-수')
       .attr('rx', 5)
       .attr('fill', '#818CF8');
 
@@ -338,7 +338,7 @@ const D3Axis = ({
       .datum(datad3)
       .attr('fill', 'none')
       .attr('stroke', '#F0ABFC')
-      .attr('class', '일일조회수')
+      .attr('class', '일일조회-수')
       .attr('stroke-width', 5)
       .style('stroke-linecap', 'round')
       .attr('d', line);
@@ -371,7 +371,7 @@ const D3Axis = ({
       // .attr('y', 30)
       .attr('cursor', 'pointer')
       .text(function (d) {
-        return d.name;
+        return d.name.replace(/-/g, ' ');
       })
       .style('fill', function (d) {
         return d.color;
@@ -382,6 +382,7 @@ const D3Axis = ({
       .on('click', function (d, i) {
         // is the element currently visible ?
 
+        console.log(i);
         let currentOpacity: string;
         currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
         // Change the opacity: from 0 to 1 or from 1 to 0
@@ -545,7 +546,7 @@ const D3Axis = ({
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`영상수`} </p>
+                font-weight: 500; "> ${`발행 영상 수`} </p>
               </div>
             </div>`,
           )
