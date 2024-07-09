@@ -29,14 +29,25 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     videoCount: totalVideoCount,
   });
 
-  const Score = convertCompetitionScoreFormatToHTML({
+  const score = convertCompetitionScoreFormatToHTML({
     competitionScore: copetitionScore,
     totalDailyView: totalIncreaseViews,
   });
 
-  // 결과 출력
+  return (
+    <div>
+      {score}
 
-  return <>{Score}</>;
+      <p className="text-grey600 mt-2 text-center font-[500]">
+        연관 영상의 조회수 평균{' '}
+        <span className="text-primary500">
+          {isNaN(totalIncreaseViews / totalVideoCount)
+            ? 0
+            : totalIncreaseViews / totalVideoCount}
+        </span>
+      </p>
+    </div>
+  );
 };
 
 export default CompetitionRate;
