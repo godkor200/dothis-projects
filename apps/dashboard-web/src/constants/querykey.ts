@@ -24,6 +24,7 @@ export const NEWS_DATA_KEY = createQueryKeys('news_data');
 
 export const UPLOAD_VIDEO_COUNT_KEY = createQueryKeys('upload_video_count');
 export const KEYWORD_INFORMATION_KEY = createQueryKeys('keyword_information');
+export const WEEKLY_TREND_VIDEO_KEY = createQueryKeys('weekly_trend_video');
 
 export const COMBINE_DAILY_EXPECTED_KEY = createQueryKeys(
   'combine_daily_expected',
