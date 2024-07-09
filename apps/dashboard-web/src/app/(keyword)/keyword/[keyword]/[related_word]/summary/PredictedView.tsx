@@ -27,11 +27,11 @@ const PredictedView = ({ baseKeyword, relatedKeyword }: Props) => {
     GUEST_AVERAGEVIEW * (maxExpectedHits ? maxExpectedHits : 1);
 
   return (
-    <div className=" gap-30 flex flex-col pb-[30px] text-center">
+    <div className=" flex flex-col pb-[40px] text-center">
       <p className="text-grey600  mb-[50px]  text-[14px] font-[500]">
         키워드에 대한 시청자 수요 X 주간 검색량 변동 X 경쟁 채널의 구독자 규모
       </p>
-      <p className="text-grey600  mb-[40px]  text-[14px] font-[500]">
+      <p className="text-grey600  mb-[45px]  text-[14px] font-[500]">
         키워드의 평균 성과 X 채널의 평소 성과
       </p>
 
