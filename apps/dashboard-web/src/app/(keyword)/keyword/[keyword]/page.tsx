@@ -24,7 +24,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
               <BoxFrame>
                 <div>
                   <p className="text-grey600 mb-[20px] text-[14px]">
-                    내 검색 키워드
+                    검색 키워드
                   </p>
                   <p className="text-center text-[20px] font-bold">{keyword}</p>
                 </div>
