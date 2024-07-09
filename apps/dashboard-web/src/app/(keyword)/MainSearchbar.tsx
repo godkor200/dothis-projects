@@ -99,15 +99,16 @@ const MainSearchbar = () => {
     // }
 
     if (event.key === 'Enter') {
-      if (
-        data &&
-        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
-          currentInput
-      ) {
-        // 엔터 키가 눌렸을 때 실행할 동작
+      // if (
+      //   data &&
+      //   data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+      //     currentInput
+      // ) {
+      //   // 엔터 키가 눌렸을 때 실행할 동작
 
-        router.push(`/keyword/${currentInput}`);
-      }
+      //   router.push(`/keyword/${currentInput}`);
+      // }
+      router.push(`/keyword/${currentInput}`);
     }
   };
 
