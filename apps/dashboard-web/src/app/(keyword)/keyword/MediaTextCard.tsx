@@ -64,7 +64,7 @@ const MediaTextCard = ({ keyword }: { keyword: string }) => {
   return (
     <>
       {mediaDigestData.map((media) => (
-        <Link href={media.link as Route} target="_blank">
+        <Link href={media.link as Route} target="_blank" key={media.title}>
           <div
             className="rounded-10 bg-grey200 flex w-[480px] flex-col  justify-between px-[30px] py-[17px]"
             key={media.title}
