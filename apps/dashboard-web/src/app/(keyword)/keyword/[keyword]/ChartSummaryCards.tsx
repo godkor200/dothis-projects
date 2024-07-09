@@ -35,7 +35,6 @@ const ChartSummaryCards = ({
       relword: relatedKeyword,
     });
 
-  console.log(videoUploadCount);
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
   const totalVideoCount = sumVideoCountV2(videoUploadCount);
