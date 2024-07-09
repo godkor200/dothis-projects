@@ -67,7 +67,7 @@ const Page = () => {
                     <p className="text-grey900 text-[18px] font-bold">42%</p>
                   </div>
                   <div className="w-[222px] px-[12px] py-[15px] text-center">
-                    <p className="text-grey700 text-[14px]">발행 영상 수</p>
+                    <p className="text-grey700 text-[14px]">경쟁 영상 수</p>
                     <p className="text-grey900 text-[18px] font-bold">1234</p>
                   </div>
                 </div>

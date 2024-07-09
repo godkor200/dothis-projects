@@ -71,7 +71,7 @@ const ChartSummaryCards = ({
           '%',
     },
     {
-      title: '발행 영상 수',
+      title: '경쟁 영상 수',
       value: Number(totalVideoCount).toLocaleString('ko-kr'),
     },
   ];
