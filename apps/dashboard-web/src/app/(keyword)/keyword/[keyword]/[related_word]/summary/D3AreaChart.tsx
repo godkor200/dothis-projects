@@ -338,35 +338,6 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .data(legendList)
       .join('rect');
 
-    svg
-      .selectAll('myLegend')
-      .data(legendList)
-      .enter()
-      .append('g')
-      .style('fill', '#cf2e2e')
-      .style('margin', 8)
-      .append('text')
-      .attr('class', 'legend')
-      .attr('class', 'legendsdasdsad')
-      .attr('class', (d) => `legend${d.name}`)
-
-      .attr('text-anchor', 'middle ') // 텍스트 중앙 정렬
-
-      .attr('transform', function (d, i) {
-        return `translate(${
-          legendStartX + i * legendSpacing
-        }, ${height - marginBottom / 3})`;
-      })
-      .attr('cursor', 'pointer')
-      .text(function (d) {
-        return d.name;
-      })
-      .style('fill', function (d) {
-        return d.color;
-      })
-      .style('font-size', 15)
-      .style('border', '1px solid black');
-
     const legendText = svg
       .append('g')
       .selectAll<SVGTextElement, (typeof legendList)[number]>('text')
@@ -384,8 +355,7 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .attr('cursor', 'pointer')
       .text((d) => d.name)
       .style('fill', (d) => d.color)
-      .style('font-size', 15)
-      .on('end', (d) => d.e);
+      .style('font-size', 15);
 
     // Calculate bounding boxes
     const bbox: Record<string, DOMRect> = {};
