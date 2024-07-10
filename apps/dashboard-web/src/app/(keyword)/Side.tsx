@@ -117,7 +117,7 @@ const SIDE_MENUS: SideMenus[] = [
     title: '콘텐츠 소재',
     icon: 'SideMain',
     link: '/',
-    active: ['/', '/keyword'],
+    active: ['/', '/keyword' as Route],
   },
   {
     title: '내 채널 분석',
