@@ -386,22 +386,7 @@ const D3Axis = ({
       })
       .style('font-size', 15)
       .style('border', '1px solid black')
-
-      .on('click', function (d, i) {
-        // is the element currently visible ?
-
-        console.log(i);
-        let currentOpacity: string;
-        currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
-        // Change the opacity: from 0 to 1 or from 1 to 0
-        D3.selectAll('.' + i.name)
-          .transition()
-          .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
-
-        D3.selectAll('.' + `legend${i.name}`)
-          .transition()
-          .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
-      });
+      .style('pointer-events', 'none');
 
     const bbox: Record<string, DOMRect> = {};
     legendText.each(function (d) {
@@ -424,7 +409,23 @@ const D3Axis = ({
       .attr('ry', 10)
       .attr('fill', '#fafafa')
       .attr('stroke', (d) => d.color)
-      .attr('stroke-width', 1);
+      .attr('stroke-width', 1)
+      .attr('cursor', 'pointer')
+      .on('click', function (d, i) {
+        // is the element currently visible ?
+
+        console.log(i);
+        let currentOpacity: string;
+        currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
+        // Change the opacity: from 0 to 1 or from 1 to 0
+        D3.selectAll('.' + i.name)
+          .transition()
+          .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
+
+        D3.selectAll('.' + `legend${i.name}`)
+          .transition()
+          .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
+      });
 
     const hoverLine = svg
       .append('g')
