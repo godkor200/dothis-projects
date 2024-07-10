@@ -32,7 +32,7 @@ const WeeklyKeyword = () => {
                 <div className="text-center">
                   <span className="">-</span>
                 </div>
-              ) : Math.sign(item.changes) === -1 ? (
+              ) : Math.sign(item.changes) === 1 ? (
                 <div className="flex items-center  justify-center">
                   <span className="text-[12px] text-[#F00]">
                     {Math.abs(item.changes)}
