@@ -320,14 +320,23 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
           });
       });
 
-    const legendSpacing = 80;
+    const xMargin = 16;
+    const yMargin = 6;
+    const legendSpacing = 80 + xMargin * 2;
 
     const legendList = [
-      { name: '평균 성과', color: '#FF647D' },
-      { name: '성과 범위', color: '#FDE7EB' },
+      { name: '평균 성과', color: '#F0516D' },
+      { name: '성과 범위', color: '#F7B4C0' },
     ];
+
     const legendWidth = legendList.length * legendSpacing;
     const legendStartX = (width - legendWidth) / 2 + 50;
+
+    const legendBackGround = svg
+      .append('g')
+      .selectAll('rect')
+      .data(legendList)
+      .join('rect');
 
     svg
       .selectAll('myLegend')
@@ -337,11 +346,13 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       .style('fill', '#cf2e2e')
       .style('margin', 8)
       .append('text')
+      .attr('class', 'legend')
+      .attr('class', 'legendsdasdsad')
       .attr('class', (d) => `legend${d.name}`)
+
       .attr('text-anchor', 'middle ') // 텍스트 중앙 정렬
 
       .attr('transform', function (d, i) {
-        d.name;
         return `translate(${
           legendStartX + i * legendSpacing
         }, ${height - marginBottom / 3})`;
@@ -355,6 +366,51 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
       })
       .style('font-size', 15)
       .style('border', '1px solid black');
+
+    const legendText = svg
+      .append('g')
+      .selectAll<SVGTextElement, (typeof legendList)[number]>('text')
+      .data(legendList)
+      .join('text')
+      .attr('class', 'legend')
+      .attr('text-anchor', 'middle')
+      .attr(
+        'transform',
+        (d, i) =>
+          `translate(${legendStartX + i * legendSpacing}, ${
+            height - marginBottom / 3
+          })`,
+      )
+      .attr('cursor', 'pointer')
+      .text((d) => d.name)
+      .style('fill', (d) => d.color)
+      .style('font-size', 15)
+      .on('end', (d) => d.e);
+
+    // Calculate bounding boxes
+    const bbox: Record<string, DOMRect> = {};
+    legendText.each(function (d) {
+      bbox[d.name] = this.getBBox();
+    });
+
+    // Create legend rectangles based on text bounding boxes
+    legendBackGround
+      .attr('fill', '#ff0000')
+      .attr('width', (d) => (bbox[d.name]?.width || 0) + 2 * xMargin)
+      .attr('height', (d) => (bbox[d.name]?.height || 0) + 2 * yMargin)
+      .attr('transform', (d, i) => {
+        const textBBox = bbox[d.name];
+        const rectX =
+          legendStartX + i * legendSpacing - textBBox.width / 2 - xMargin;
+        const rectY =
+          height - marginBottom / 3 - textBBox.height * 0.8 - yMargin;
+        return `translate(${rectX}, ${rectY})`;
+      })
+      .attr('rx', 10)
+      .attr('ry', 10)
+      .attr('fill', '#fafafa')
+      .attr('stroke', (d) => d.color)
+      .attr('stroke-width', 1);
 
     svg
       .append('path')
