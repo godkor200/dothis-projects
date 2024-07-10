@@ -23,7 +23,7 @@ const Page = ({
   const relatedKeyword = decodeURIComponent(params.related_word);
 
   return (
-    <div className="mt-[20px] flex flex-col gap-[20px]">
+    <div className="mb-[80px] mt-[20px] flex flex-col gap-[20px]">
       <Link
         href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
