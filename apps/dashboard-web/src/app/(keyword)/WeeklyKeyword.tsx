@@ -9,7 +9,7 @@ const WeeklyKeyword = () => {
   const { data } = useGetWeeklyTrendKeyword();
 
   return (
-    <ul className="flex flex-col gap-[15px]">
+    <ul className="flex flex-col gap-[15px] font-[500]">
       {data?.map((item, i) => (
         <Link
           href={`/keyword/${item.recommendedKeyword}/${
@@ -21,8 +21,8 @@ const WeeklyKeyword = () => {
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
             <p className="text-grey500">{i + 1}</p>
-            <p className="flex-grow">
-              {item.recommendedKeyword} <span className="text-grey500">-</span>{' '}
+            <p className="text-grey700 flex-grow text-[16px]">
+              {item.recommendedKeyword}{' '}
               {item.topAssociatedWord
                 ? item.topAssociatedWord.split(',')[0]
                 : ''}
@@ -32,7 +32,7 @@ const WeeklyKeyword = () => {
                 <div className="text-center">
                   <span className="">-</span>
                 </div>
-              ) : Math.sign(item.changes) === -1 ? (
+              ) : Math.sign(item.changes) === 1 ? (
                 <div className="flex items-center  justify-center">
                   <span className="text-[12px] text-[#F00]">
                     {Math.abs(item.changes)}

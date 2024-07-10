@@ -23,7 +23,7 @@ const Page = ({
   const relatedKeyword = decodeURIComponent(params.related_word);
 
   return (
-    <div className="mt-[20px] flex flex-col gap-[20px]">
+    <div className="mb-[80px] mt-[20px] flex flex-col gap-[20px]">
       <Link
         href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
@@ -32,10 +32,10 @@ const Page = ({
       </Link>
 
       {/* <Component /> */}
-      <div className="grid grid-cols-[minmax(600px,2fr)_repeat(2,minmax(300px,1fr))] gap-[20px]">
+      <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
         <BoxFrame>
           <div>
-            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+            <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
               <p> 조회수 예측</p>
             </div>{' '}
             <PredictedView
@@ -44,34 +44,36 @@ const Page = ({
             />
           </div>
         </BoxFrame>
-        <BoxFrame>
-          <div className="flex h-full flex-grow flex-col">
-            <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              소재 전망
-            </p>
-            <div className="flex flex-grow  flex-col items-center justify-center">
-              <OutlookChart
+        <div className="grid grid-cols-[repeat(2,minmax(300px,1fr))] gap-[20px]">
+          <BoxFrame>
+            <div className="flex h-full flex-grow flex-col">
+              <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
+                소재 전망
+              </p>
+              <div className="flex flex-grow  flex-col items-center justify-center">
+                <OutlookChart
+                  baseKeyword={baseKeyword}
+                  relatedkeyword={relatedKeyword}
+                />
+              </div>
+            </div>
+          </BoxFrame>
+          <BoxFrame>
+            <div>
+              <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
+                성공 확률
+              </p>
+
+              <SuccessProbability
                 baseKeyword={baseKeyword}
-                relatedkeyword={relatedKeyword}
+                relatedKeyword={relatedKeyword}
               />
             </div>
-          </div>
-        </BoxFrame>
-        <BoxFrame>
-          <div>
-            <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-              성공 확률
-            </p>
-
-            <SuccessProbability
-              baseKeyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
-          </div>
-        </BoxFrame>
+          </BoxFrame>
+        </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
+      <div className="grid grid-cols-[repeat(2,minmax(650px,1fr))] gap-[20px]">
         <BoxFrame isPositionProperty={true}>
           <div className="flex h-full flex-col">
             <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
@@ -92,7 +94,7 @@ const Page = ({
         <BoxFrame isPositionProperty={true}>
           <div className="flex h-full flex-col">
             <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
-              <p>조회수 예측</p>
+              <p>조회수 성과</p>
               <TooltipComponent title={''} />
             </div>
 

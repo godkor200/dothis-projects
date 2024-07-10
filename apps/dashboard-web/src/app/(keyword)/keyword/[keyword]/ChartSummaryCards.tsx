@@ -35,7 +35,6 @@ const ChartSummaryCards = ({
       relword: relatedKeyword,
     });
 
-  console.log(videoUploadCount);
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
   const totalVideoCount = sumVideoCountV2(videoUploadCount);
@@ -71,7 +70,7 @@ const ChartSummaryCards = ({
           '%',
     },
     {
-      title: '발행 영상 수',
+      title: '경쟁 영상 수',
       value: Number(totalVideoCount).toLocaleString('ko-kr'),
     },
   ];

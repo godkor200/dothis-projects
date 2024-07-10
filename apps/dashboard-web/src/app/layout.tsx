@@ -16,12 +16,12 @@ import StyledTheme from '@/styles/StyledTheme';
 import ClientContext from './ClientContext';
 
 export const metadata: Metadata = {
-  title: '두디스 - 데이터 기반 영상 기획 도구',
-  description: '데이터로 기획하는 영상 기획 도구, 두디스',
+  title: '두디스 - 영상 트렌드 분석 솔루션',
+  description: '영상 트렌드 분석 솔루션, 두디스',
   openGraph: {
     type: 'website',
     title: '두디스(Dothis)',
-    description: '데이터로 기획하는 영상 기획 도구, 두디스.',
+    description: '영상 트렌드 분석 솔루션, 두디스.',
     images:
       'https://dothis-lending.s3.ap-northeast-2.amazonaws.com/dothisLogo.png',
     url: 'https://dothis.kr',

@@ -10,6 +10,7 @@ import { useGetRandomMedia } from '@/hooks/react-query/query/useGetRandomMedia';
 import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
 import useGetWeeklyKeyword from '@/hooks/react-query/query/useGetWeeklyKeyword';
 import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
+import useGetWeeklyVideo from '@/hooks/react-query/query/useGetWeeklyVideo';
 import { useSelectedWord } from '@/store/selectedWordStore';
 import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
@@ -21,14 +22,22 @@ interface Props {
   randomOptios: MediaCategory[];
 }
 
-const MediaBanner = ({ randomOptios }: Props) => {
+const MediaBanner = ({ randomOptios: test }: Props) => {
   const mediaCount = 3;
+
+  const randomRef = useRef(
+    Array.from({ length: 3 }, () => (Math.random() < 0.5 ? 'news' : 'youtube')),
+  );
+
+  const randomOptios = randomRef.current;
 
   const [sliceNumber, setSliceNumber] = useState(mediaCount);
 
   // const { data } = useGetWeeklyKeyword({ limit: 5 });
 
   const { data } = useGetWeeklyTrendKeyword();
+
+  const { data: weeklyVideo } = useGetWeeklyVideo();
 
   const [keywordMap, setKeywordMap] = useState<
     Map<string, (typeof rankingRelatedWord)[number]>

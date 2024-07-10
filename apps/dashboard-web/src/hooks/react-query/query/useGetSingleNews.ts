@@ -29,16 +29,18 @@ interface DateQuery {
 
 interface KeywordQuery {
   searchKeyword: string;
-  relatedkeyword?: string;
+  relatedkeyword: string | null;
 }
 
 const retrievePosts = async ({
   keyword,
+  relatedKeyword,
   startDate,
   endDate,
   page,
 }: {
   keyword: string;
+  relatedKeyword: string | null;
   startDate: string;
   endDate: string;
   page?: number;
@@ -46,7 +48,12 @@ const retrievePosts = async ({
   const obj = {
     access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
     argument: {
-      query: { title: keyword || '먹방' },
+      query: {
+        title: relatedKeyword ?? keyword,
+        // relatedKeyword
+        // ? `${keyword} AND ${relatedKeyword}`
+        // : `${keyword}`,
+      },
 
       published_at: {
         from: startDate,
@@ -82,6 +89,12 @@ const retrievePosts = async ({
     'https://tools.kinds.or.kr/search/news?access_key=eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
     JSON.stringify(obj),
   );
+
+  const news = response.data.return_object.documents;
+
+  if (Array.isArray(news) && news.length === 0) {
+    throw new Error('뉴스가 없습니다.');
+  }
 
   return response.data;
 };
@@ -127,7 +140,14 @@ const useGetSingleNews = <T extends any = ServerResponse<NewsResponse>>(
       ]),
     ],
 
-    () => retrievePosts({ keyword: searchKeyword, startDate, endDate, page }),
+    () =>
+      retrievePosts({
+        keyword: searchKeyword,
+        relatedKeyword: relatedkeyword,
+        startDate,
+        endDate,
+        page,
+      }),
     {
       ...queryOptions,
       enabled:

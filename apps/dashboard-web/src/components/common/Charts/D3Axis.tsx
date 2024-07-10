@@ -78,9 +78,9 @@ const D3Axis = ({
 
   // Reformat the data: we need an array of arrays of {x, y} tuples
   const dataReady = [
-    { name: '일일조회수', values: datad3, color: '#F0ABFC' },
+    { name: '일일조회-수', values: datad3, color: '#F0ABFC' },
     { name: '검색량', values: data2d3, color: '#FCD34D' },
-    { name: '영상수', values: data3d3, color: '#818CF8' },
+    { name: '발행-영상-수', values: data3d3, color: '#818CF8' },
   ];
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
@@ -259,7 +259,7 @@ const D3Axis = ({
       .attr('width', 40)
       .attr('height', (data) => y3(0) - y3(data.value as number))
       .attr('class', 'bar-chart')
-      .attr('class', '영상수')
+      .attr('class', '발행-영상-수')
       .attr('rx', 5)
       .attr('fill', '#818CF8');
 
@@ -338,17 +338,25 @@ const D3Axis = ({
       .datum(datad3)
       .attr('fill', 'none')
       .attr('stroke', '#F0ABFC')
-      .attr('class', '일일조회수')
+      .attr('class', '일일조회-수')
       .attr('stroke-width', 5)
       .style('stroke-linecap', 'round')
       .attr('d', line);
 
-    const legendSpacing = 80;
+    const xMargin = 16;
+    const yMargin = 6;
+    const legendSpacing = 80 + xMargin * 2;
 
     const legendWidth = dataReady.length * legendSpacing;
     const legendStartX = (width - legendWidth) / 2 + 50;
 
-    svg
+    const legendBackGround = svg
+      .append('g')
+      .selectAll('rect')
+      .data(dataReady)
+      .join('rect');
+
+    const legendText = svg
       .selectAll('myLegend')
       .data(dataReady)
       .enter()
@@ -371,17 +379,42 @@ const D3Axis = ({
       // .attr('y', 30)
       .attr('cursor', 'pointer')
       .text(function (d) {
-        return d.name;
+        return d.name.replace(/-/g, ' ');
       })
       .style('fill', function (d) {
         return d.color;
       })
       .style('font-size', 15)
       .style('border', '1px solid black')
+      .style('pointer-events', 'none');
 
+    const bbox: Record<string, DOMRect> = {};
+    legendText.each(function (d) {
+      bbox[d.name] = this.getBBox();
+    });
+
+    legendBackGround
+      .attr('fill', '#ff0000')
+      .attr('width', (d) => (bbox[d.name]?.width || 0) + 2 * xMargin)
+      .attr('height', (d) => (bbox[d.name]?.height || 0) + 2 * yMargin)
+      .attr('transform', (d, i) => {
+        const textBBox = bbox[d.name];
+        const rectX =
+          legendStartX + i * legendSpacing - textBBox.width / 2 - xMargin;
+        const rectY =
+          height - marginBottom / 3 - textBBox.height * 0.8 - yMargin;
+        return `translate(${rectX}, ${rectY})`;
+      })
+      .attr('rx', 10)
+      .attr('ry', 10)
+      .attr('fill', '#fafafa')
+      .attr('stroke', (d) => d.color)
+      .attr('stroke-width', 1)
+      .attr('cursor', 'pointer')
       .on('click', function (d, i) {
         // is the element currently visible ?
 
+        console.log(i);
         let currentOpacity: string;
         currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
         // Change the opacity: from 0 to 1 or from 1 to 0
@@ -545,7 +578,7 @@ const D3Axis = ({
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`영상수`} </p>
+                font-weight: 500; "> ${`발행 영상 수`} </p>
               </div>
             </div>`,
           )

@@ -23,7 +23,7 @@ interface DateQuery {
 
 interface KeywordQuery {
   searchKeyword: string;
-  relatedkeyword?: string;
+  relatedkeyword: string | null;
 }
 
 const useGetSingleVideo = (
@@ -49,7 +49,7 @@ const useGetSingleVideo = (
     {
       query: {
         search: searchKeyword,
-        related: relatedkeyword,
+        related: relatedkeyword ?? undefined,
         // from: from ?? startDate,
         // to: to ?? endDate,
         limit: '1',

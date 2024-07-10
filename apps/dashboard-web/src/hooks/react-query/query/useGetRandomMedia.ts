@@ -28,7 +28,7 @@ interface DateQuery {
 
 interface KeywordQuery {
   searchKeyword: string;
-  relatedkeyword?: string;
+  relatedkeyword: string | null;
 }
 
 export const useGetRandomMedia = ({
@@ -56,7 +56,7 @@ export const useGetRandomMedia = ({
     },
   );
 
-  const { data: newsData } = useGetSingleNews(
+  const { data: newsData, isError } = useGetSingleNews(
     {
       searchKeyword: searchKeyword,
       relatedkeyword: relatedkeyword,

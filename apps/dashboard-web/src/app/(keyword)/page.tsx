@@ -56,7 +56,7 @@ const Page = () => {
 
             <div className="ml-auto min-w-[300px] flex-grow px-[12px]">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
-                이번 주 키워드
+                금주의 이슈 키워드
               </p>
 
               <WeeklyKeyword />
