@@ -343,12 +343,20 @@ const D3Axis = ({
       .style('stroke-linecap', 'round')
       .attr('d', line);
 
-    const legendSpacing = 80;
+    const xMargin = 16;
+    const yMargin = 6;
+    const legendSpacing = 80 + xMargin * 2;
 
     const legendWidth = dataReady.length * legendSpacing;
     const legendStartX = (width - legendWidth) / 2 + 50;
 
-    svg
+    const legendBackGround = svg
+      .append('g')
+      .selectAll('rect')
+      .data(dataReady)
+      .join('rect');
+
+    const legendText = svg
       .selectAll('myLegend')
       .data(dataReady)
       .enter()
@@ -394,6 +402,29 @@ const D3Axis = ({
           .transition()
           .style('opacity', Number(currentOpacity) == 1 ? 0.2 : 1);
       });
+
+    const bbox: Record<string, DOMRect> = {};
+    legendText.each(function (d) {
+      bbox[d.name] = this.getBBox();
+    });
+
+    legendBackGround
+      .attr('fill', '#ff0000')
+      .attr('width', (d) => (bbox[d.name]?.width || 0) + 2 * xMargin)
+      .attr('height', (d) => (bbox[d.name]?.height || 0) + 2 * yMargin)
+      .attr('transform', (d, i) => {
+        const textBBox = bbox[d.name];
+        const rectX =
+          legendStartX + i * legendSpacing - textBBox.width / 2 - xMargin;
+        const rectY =
+          height - marginBottom / 3 - textBBox.height * 0.8 - yMargin;
+        return `translate(${rectX}, ${rectY})`;
+      })
+      .attr('rx', 10)
+      .attr('ry', 10)
+      .attr('fill', '#fafafa')
+      .attr('stroke', (d) => d.color)
+      .attr('stroke-width', 1);
 
     const hoverLine = svg
       .append('g')
