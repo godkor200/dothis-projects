@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  dothis-redis:
+    image: 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com/dothis-redis:latest
+    networks:
+      - backend
+    env_file:
+      - production.env
+    container_name: dothis-redis
+
+  dothis-nginx:
+    image: nginx:latest
+    container_name: dev-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/wait-for-it.sh:/wait-for-it.sh
+      - ./nginx/docker-entrypoint.production.sh:/docker-entrypoint.production.sh
+    command: /bin/bash -c "chmod +x /docker-entrypoint.production.sh && /docker-entrypoint.production.sh"
+    networks:
+      - frontend
+    depends_on:
+      - dothis-server
+    ports:
+      - "80:80"
+
+
+  dothis-server:
+    image: 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com/dothis-server:latest
+    networks:
+      - backend
+      - frontend
+    env_file:
+      - production.env
+    depends_on:
+      - dothis-redis
+    ports:
+      - "8080"
+    container_name: api-server
+
+networks:
+  frontend:
+  backend:

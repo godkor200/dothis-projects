@@ -17,27 +17,52 @@ services:
     command: /bin/bash -c "chmod +x /docker-entrypoint.production.sh && /docker-entrypoint.production.sh"
     ports:
       - "80:80"
+      - "81:81"
     depends_on:
       - dev-server
+      - external-sales-api
     links:
       - dev-server
+      - external-sales-api
     networks:
       - dev-dothis-network
 
   dev-server:
     <<: *defaults
     container_name: api-server
-    command: pnpm dev:server
+    command: pnpm dev:api
     ports:
       - "8080"
     build:
       args:
         APP: server
-        START_COMMAND: dev
+        START_COMMAND: dev:api
       context: .
       dockerfile: ./Dockerfile.dev
     env_file:
       - apps/server/development.env
+    volumes:
+      - ./apps/server:/app/apps/server
+      - ./packages/dto:/app/packages/dto
+      - /app/apps/server/node_modules
+    restart: always
+    networks:
+      - dev-dothis-network
+
+  external-sales-api:
+    <<: *defaults
+    container_name: external-sales-api-server
+    command: pnpm dev:external-sales-api
+    ports:
+      - "8081"
+    build:
+      args:
+        APP: server
+        START_COMMAND: dev:external-sales-api
+      context: .
+      dockerfile: ./Dockerfile.dev
+    env_file:
+      - apps/server/apps/external-sales-api/development.env
     volumes:
       - ./apps/server:/app/apps/server
       - ./packages/dto:/app/packages/dto

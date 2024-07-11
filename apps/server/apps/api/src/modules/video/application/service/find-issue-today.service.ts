@@ -15,7 +15,12 @@ import {
 import { IVideoHistoryGetTopViewsByIdsOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { SetVideoTodayIssueCacheOutboundPort } from '@Apps/modules/related-word/domain/ports/set-video-today-issue.cache.outbound.port';
 import { GetVideoTodayIssueCacheOutboundPort } from '@Apps/modules/related-word/domain/ports/get-video-today-issue.cache.outbound.port';
+import { TodayIssueMapper } from '@Apps/modules/video/application/mapper/today-issue.mapper';
 
+/**
+ * fix: 키워드 5개로 고치기
+ * 요청한
+ */
 export class FindIssueTodayService implements FindIssueTodayInboundPort {
   constructor(
     @Inject(WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN)
@@ -36,7 +41,7 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
 
   async execute(): Promise<TIssueTodayRes> {
     try {
-      const dao = new GetWeeklyKeyword({ limit: '3' });
+      const dao = new GetWeeklyKeyword({ limit: '5' });
       const topThree = await this.weeklyKeywordRepository.getWeeklyKeywords(
         dao,
       );
@@ -48,7 +53,6 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             const firstTopAssociatedWord = item.topAssociatedWord
               .split(',')[0]
               .trim();
-
             return new GetVideoMultiKeywordCacheDao(
               item.recommendedKeyword,
               firstTopAssociatedWord,
@@ -62,8 +66,10 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
         if (cache.isOk()) {
           return Ok(cache.unwrap());
         }
+
         const VideoMultiKeywordCacheRes =
           await this.videoMultiKeywordCache.execute(videoMultiKeywordCacheRes);
+
         if (VideoMultiKeywordCacheRes.isOk()) {
           const videoMultiKeywordCacheResUnwrap =
             VideoMultiKeywordCacheRes.unwrap();
@@ -72,11 +78,16 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             videos: videoMultiKeywordCacheResUnwrap,
           });
           if (res.isOk()) {
-            await this.setVideoTodayIssueCacheAdapter.execute(
+            const videoHistoryGetTopViewsUnwrap = res.unwrap();
+
+            const result = TodayIssueMapper.mergeResults(
               videoMultiKeywordCacheRes,
-              res.unwrap(),
+              videoHistoryGetTopViewsUnwrap,
             );
-            return res;
+
+            await this.setVideoTodayIssueCacheAdapter.execute(result);
+
+            return Ok(result);
           }
         }
       }

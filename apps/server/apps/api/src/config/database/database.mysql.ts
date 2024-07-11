@@ -13,7 +13,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     console.log(
       connectionName,
       '__dirname',
-      __dirname + './**/**/**/**/*.entities.ts',
+      __dirname + './**/**/**/**/*.entity.ts',
     );
     return connectionName === 'default'
       ? {
@@ -26,6 +26,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
           logging: true,
           entities: [
             __dirname + './**/**/**/**/**/*.entities.ts',
+            __dirname + './**/**/**/**/*.entity.ts',
             WeeklyHitsEntity,
           ],
           autoLoadEntities: true,

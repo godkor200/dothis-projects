@@ -18,6 +18,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/api/tsconfig.app.json"
       }
+    },
+    "external-sales-api": {
+      "type": "application",
+      "root": "apps/external-sales-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/external-sales-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/external-sales-api/tsconfig.app.json"
+      }
     }
   }
 }

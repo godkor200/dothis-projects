@@ -64,5 +64,8 @@ export class TodayIssueVideo extends createZodDto(
 export interface ITodayIssue
   extends Pick<
     TodayIssueVideo,
-    'videoId' | 'videoTitle' | 'videoPublished' | 'videoViews' | 'category'
-  > {}
+    'videoId' | 'videoTitle' | 'videoPublished' | 'videoViews' | 'channelName'
+  > {
+  search: string;
+  related: string;
+}

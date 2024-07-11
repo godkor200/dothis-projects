@@ -4,22 +4,42 @@
     "outDir": "./dist",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": ["webpack-env", "jest", "node"],
+    "types": [
+      "webpack-env",
+      "jest",
+      "node"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@Apps/*": ["./apps/api/src/*"],
-      "@Libs/*": ["./libs/*"],
-      "@ts-rest/core/src": ["../../packages/dto/node_modules/@ts-rest/core/src"]
+      "@Apps/*": [
+        "./apps/api/src/*"
+      ],
+      "@ExternalApps/*": [
+        "./apps/external-sales-api/src/*"
+      ],
+      "@Libs/*": [
+        "./libs/*"
+      ],
+      "@ts-rest/core/src": [
+        "../../packages/dto/node_modules/@ts-rest/core/src"
+      ]
     }
   },
   "ts-node": {
     "files": true
   },
-  "files": ["apps/api/src/main.ts"],
-  "include": ["./", "../../packages/dto/**/*","jest.config.js"],
+  "files": [
+    "apps/api/src/main.ts",
+    "apps/external-sales-api/src/main.ts"
+  ],
+  "include": [
+    "./",
+    "../../packages/dto/**/*",
+    "jest.config.js"
+  ],
   "references": [
     {
       "path": "../../packages/dto"
     }
-  ],
+  ]
 }

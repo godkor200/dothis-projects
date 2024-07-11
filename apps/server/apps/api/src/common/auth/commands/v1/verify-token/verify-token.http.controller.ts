@@ -6,6 +6,7 @@ import { apiRouter, USER_AUTH } from '@dothis/dto';
 import { Cookies, TDecodePayload, User } from '@Libs/commons/src';
 import { TokenDto } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import {
+  ApiForbiddenResponse,
   ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -32,8 +33,12 @@ export class VerifyTokenHttpController {
     isArray: false,
     description: '쿠키와 해더로 토큰이 res 됩니다.',
   })
-  @ApiUnauthorizedResponse({
+  @ApiForbiddenResponse({
     description: `${USER_AUTH.RefreshTokenExpired} or ${USER_AUTH.NoTokenProvided} 메세지가 뜹니다`,
+    type: TokenExpired,
+  })
+  @ApiUnauthorizedResponse({
+    description: `${USER_AUTH.Unauthorized} 메세지가 뜹니다`,
     type: TokenExpired,
   })
   @ApiOperation({
