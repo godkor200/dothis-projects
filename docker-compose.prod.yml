@@ -19,10 +19,22 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: apps/server/apps/api/Dockerfile.production
     container_name: api-server
     env_file:
       - apps/server/production.env
+    ports:
+      - "8080"
+    restart: always
+    networks:
+      - dothis-network-prod
+  external-sales-api:
+    build:
+      context: .
+      dockerfile: apps/server/apps/external-sales-api/Dockerfile.production
+    container_name: external-sales-api-server
+    env_file:
+      - apps/server/apps/external-sales-api/production.env
     ports:
       - "8080"
     restart: always

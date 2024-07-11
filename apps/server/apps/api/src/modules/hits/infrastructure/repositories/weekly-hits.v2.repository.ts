@@ -111,7 +111,7 @@ export class WeeklyHitsV2Repository
         .addSelect('wv.month', 'month')
         .addSelect('wv.day', 'day')
         .addSelect('rw.rel_words', 'topAssociatedWord')
-        .addSelect('wv.ranking - wv.last_ranking', 'changes') // changes 컬럼 추가
+        .addSelect('wv.last_ranking - wv.ranking', 'changes') // changes 컬럼 추가
         .leftJoin('related_words', 'rw', 'wv.keyword = rw.keyword')
         .where((qb) => {
           const subQuery = qb

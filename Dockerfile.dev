@@ -44,8 +44,6 @@ RUN turbo run build --no-cache --filter=${APP}^...
 # 런타임 이미지 설정
 FROM base AS runner
 WORKDIR /app
-ARG APP
-ARG START_COMMAND=dev
 
 COPY --from=installer /app .
 

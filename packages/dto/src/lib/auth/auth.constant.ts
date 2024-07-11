@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { zErrUnauthorized } from '../error.response.zod';
+import { zErrForbidden } from '../error.response.zod';
 
-export const zTokenExpired = zErrUnauthorized;
+export const zTokenExpired = zErrForbidden;
 
 export type TTokenExpired = z.TypeOf<typeof zTokenExpired>;

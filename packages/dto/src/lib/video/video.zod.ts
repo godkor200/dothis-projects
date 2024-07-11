@@ -172,7 +172,7 @@ export const zGetPerformanceLengthRes = z
   })
   .describe('영상 길이별 조회수 및 성과 분석 결과');
 
-export const zTodayIssueVideo = dataObject(
+export const zTodayIssueVideos = dataObject(
   zVideo
     .pick({
       videoId: true,
@@ -183,6 +183,14 @@ export const zTodayIssueVideo = dataObject(
     })
     .merge(z.object({ category: z.string().describe('키워드') })),
 );
+export const zTodayIssueVideo = zVideo.pick({
+  videoId: true,
+  videoTitle: true,
+  channelName: true,
+  videoViews: true,
+  videoPublished: true,
+});
+
 // 타입 추출
 export type TFindPerformanceLengthRes = z.infer<
   typeof zGetPerformanceLengthRes

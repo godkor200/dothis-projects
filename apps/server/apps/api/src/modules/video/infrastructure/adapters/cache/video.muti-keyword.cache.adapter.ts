@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  VideoCacheAdapterRes,
-  VideoCacheOutboundPorts,
-  VideoCacheReturnType,
-} from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { GetVideoMultiKeywordCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';

@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { USER_AUTH } from './contract';
+import { UnauthorizedErrorType, USER_AUTH } from './contract';
 
 // 기본 에러 스키마 정의
-const zErrorBase = z.object({
+export const zErrorBase = z.object({
   success: z.literal(false),
   statusCode: z.number(),
   message: z.string(),
@@ -32,24 +32,34 @@ export const zErrBadRequest = zErrorBase
 export const zErrUnauthorized = zErrorBase
   .extend({
     statusCode: z.literal(401),
-    message: z
-      .enum([USER_AUTH.AccessTokenExpired, USER_AUTH.RefreshTokenExpired])
-      .describe('Unauthorized Error'),
+    message: z.enum([USER_AUTH.Unauthorized]).describe('unauthorized token'),
   })
   .describe('This schema represents an Unauthorized (401) error response.');
+
+// 토큰 만료 에러 스키마 정의
+export const zErrForbidden = z
+  .object({
+    statusCode: z.literal(403),
+    message: z
+      .enum([USER_AUTH.AccessTokenExpired, USER_AUTH.AccessTokenExpired])
+      .describe('token expired'),
+  })
+  .describe('This schema represents a Forbidden (403) error response.');
 
 // Internal Server Error 에러 스키마 정의
 export const zErrInternalServer = zErrorBase
   .extend({
     statusCode: z.literal(500),
     message: z
-      .literal('An unexpected condition was encountered.')
+      .literal('Internal Server Error')
       .describe('Internal Server Error'),
   })
   .describe(
     'This schema represents an Internal Server Error (500) error response.',
   );
-
+export const maxLengthWarning = (maxLength: number) => {
+  return { message: `최대 ${maxLength}자까지 입력이 가능합니다.` };
+};
 export const zErrResBase = {
   404: zErrNotFound,
   400: zErrBadRequest,

@@ -187,10 +187,18 @@ const D3Axis = ({
 
     const yAxisCallback = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y.domain()[0];
+      const yMax = y.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     const y2 = D3.scaleLinear()
       .domain([0, max2 === 0 ? 100 : max2])
@@ -199,10 +207,18 @@ const D3Axis = ({
 
     const yAxisCallback2 = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y2.domain()[0];
+      const yMax = y2.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y2).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y2).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     const y3 = D3.scaleLinear()
       .domain([0, max3 === 0 ? 100 : max3])
@@ -211,10 +227,18 @@ const D3Axis = ({
 
     const yAxisCallback3 = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y3.domain()[0];
+      const yMax = y3.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y3).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y3).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     // .call((g) => g.select('#axis').remove())
     // .attr('class', 'grid');
@@ -234,10 +258,9 @@ const D3Axis = ({
     svg
       .append('g')
       // .attr('transform', `translate(${marginLeft},0)`)
-
-      .call(yAxisCallback)
-      .call(yAxisCallback2)
       .call(yAxisCallback3)
+      .call(yAxisCallback2)
+      .call(yAxisCallback)
       .call((g: D3.Selection<SVGGElement, any, HTMLElement, any>) =>
         g.select('.domain').remove(),
       )
@@ -248,6 +271,7 @@ const D3Axis = ({
       .selectAll('text')
       .remove();
     // vertical bar chart
+
     svg
       .append('g')
       .selectAll('rect')
@@ -670,7 +694,11 @@ const D3Axis = ({
 
   return (
     <div className="relative">
-      <div id="axis" className="h-[290px] w-full" ref={selectRef}></div>
+      <div
+        id="axis"
+        className="h-[290px] w-full [&_svg]:overflow-visible"
+        ref={selectRef}
+      ></div>
       <div id="tooltip2" className="z-[500]"></div>{' '}
     </div>
   );
