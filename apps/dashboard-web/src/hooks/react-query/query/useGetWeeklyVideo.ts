@@ -12,7 +12,7 @@ const useGetWeeklyVideo = () => {
 
   return {
     ...queryResult,
-    data: queryResult.data?.body,
+    data: queryResult.data?.body.data,
   };
 };
 

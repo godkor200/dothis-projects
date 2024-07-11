@@ -44,7 +44,7 @@ export const useGetRandomMedia = ({
   KeywordQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
-  const { data: youtubeData } = useGetSingleVideo(
+  const { data: youtubeData, isError: youtubeIsError } = useGetSingleVideo(
     {
       searchKeyword: searchKeyword,
       relatedkeyword: relatedkeyword,
@@ -56,7 +56,7 @@ export const useGetRandomMedia = ({
     },
   );
 
-  const { data: newsData, isError } = useGetSingleNews(
+  const { data: newsData, isError: newsIsError } = useGetSingleNews(
     {
       searchKeyword: searchKeyword,
       relatedkeyword: relatedkeyword,
