@@ -49,7 +49,7 @@ const initChartDateFormatter = <T extends 'single' | 'range'>({
   const viewsObject: Record<string, InferViewType<T>> = {};
   for (
     let date = dayjs(startDate);
-    date.isBefore(endDate, 'day');
+    date.isSameOrBefore(endDate, 'day');
     date = date.add(1, 'day')
   ) {
     // if로 분기처리를 해도 타입추론이 안되서 에러가 발생했다.
