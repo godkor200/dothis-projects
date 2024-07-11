@@ -191,8 +191,6 @@ const D3Axis = ({
       const yMin = y.domain()[0];
       const yMax = y.domain()[1];
 
-      console.log(yMin, yMax);
-
       const yMiddle = (yMin + yMax) / 2; // 중간값 계산
 
       return g
@@ -232,7 +230,6 @@ const D3Axis = ({
     ) => {
       const yMin = y3.domain()[0];
       const yMax = y3.domain()[1];
-      console.log(y3.domain());
 
       const yMiddle = (yMin + yMax) / 2; // 중간값 계산
 
