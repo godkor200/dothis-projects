@@ -8,9 +8,9 @@ RUN npm install -g pnpm
 RUN pnpm install turbo -g
 RUN pnpm install pm2 -g
 
-
 FROM base AS builder
 WORKDIR /app
+# Note: Assuming context is set to the project root
 COPY . .
 RUN turbo prune server --docker
 
@@ -22,15 +22,15 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml /app/pnpm-lock.yaml
 RUN pnpm install
 
-##Build the project
+## Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-#
-RUN turbo run build:api --no-cache --filter=server
+
+RUN pnpm build:server:external-sales-api:prod
 
 FROM base AS runner
 WORKDIR /app
 
 COPY --from=installer /app .
 
-CMD ["pm2-runtime", "start", "apps/server/apps/api/ecosystem.config.js"]
+CMD ["pm2-runtime", "start", "apps/server/apps/external-sales-api/ecosystem.config.js"]
