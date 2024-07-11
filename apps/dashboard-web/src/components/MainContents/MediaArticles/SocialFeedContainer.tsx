@@ -22,8 +22,10 @@ const SocialFeedContainer = ({ selectedArticle }: Props) => {
    */
   const { setRelatedNews } = useGptOptionAction();
 
-  const { data: newsData, isLoading: newsIsLoading } =
-    useGetNewsInfiniteQuery();
+  const { data: newsData, isLoading: newsIsLoading } = useGetNewsInfiniteQuery({
+    keyword: seletedWord.keyword!,
+    relword: seletedWord.relword,
+  });
 
   /**
    * setter를 초기화와 동시에 상위 3가지 컬럼을 가져와서 저장한다.

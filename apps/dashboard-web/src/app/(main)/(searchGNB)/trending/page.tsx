@@ -12,7 +12,8 @@ import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
 import TrendingFilter from '@/components/Trending/TrendingFilter';
 import { clustersCategories } from '@/constants/clusterCategories';
-import { trendingTableHeaders } from '@/constants/trendingTable';
+import { WEEKLY_SORT_OPTION } from '@/constants/weeklySortOption';
+import type { Weekly_Sort_Key } from '@/hooks/react-query/query/useGetTrendingKeywords';
 import useGetTrendingKeywords from '@/hooks/react-query/query/useGetTrendingKeywords';
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { useModalActions } from '@/store/modalStore';
@@ -22,11 +23,10 @@ import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore
 import { useOpenFilterContext } from './OpenFilterContext';
 import { useTrendingQueryContext } from './TrendingQueryContext';
 
-export type SortingQuery = {
-  sort: (typeof trendingTableHeaders)[number]['key'];
-  order: 'ASC' | 'DESC';
+type SortParamsState = {
+  sort: Weekly_Sort_Key;
+  order: 'asc' | 'desc';
 };
-
 const TrendingPage = () => {
   const { trendingQueryOption, setTrendingQueryOption } =
     useTrendingQueryContext('trendingPage');
@@ -37,9 +37,9 @@ const TrendingPage = () => {
 
   const { setIsModalOpen, setModalContent } = useModalActions();
 
-  const [sortingParams, setSortingParams] = useState<SortingQuery>({
+  const [sortingParams, setSortingParams] = useState<SortParamsState>({
     sort: 'weekly_views',
-    order: 'DESC',
+    order: 'desc',
   });
 
   const [selectOptions, setSelectOptions] = useState<
@@ -94,15 +94,13 @@ const TrendingPage = () => {
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
   };
 
-  const sortByTableKey = (
-    key: (typeof trendingTableHeaders)[number]['key'],
-  ) => {
+  const sortByTableKey = (key: Weekly_Sort_Key) => {
     if (key === 'rank' || key === 'category') {
       return;
     }
     setSortingParams((prev) => {
       if (prev.sort === key) {
-        return { ...prev, order: prev.order === 'ASC' ? 'DESC' : 'ASC' };
+        return { ...prev, order: prev.order === 'asc' ? 'desc' : 'asc' };
       }
       return { ...prev, sort: key };
     });
@@ -152,7 +150,7 @@ const TrendingPage = () => {
             </div>
             <div className="bg-grey00 rounded-8 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
               <div className="grid grid-cols-[40px_140px_140px_140px_140px_140px_160px_80px] gap-[12px] py-[30px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
-                {trendingTableHeaders.map(({ label, key }) => (
+                {WEEKLY_SORT_OPTION.map(({ label, key }) => (
                   <div
                     key={key}
                     className={cn(
@@ -162,10 +160,10 @@ const TrendingPage = () => {
                           key !== 'rank' && key !== 'category',
                         'before:border-b-[#000]':
                           sortingParams.sort === key &&
-                          sortingParams.order === 'ASC',
+                          sortingParams.order === 'asc',
                         'after:border-t-[#000]':
                           sortingParams.sort === key &&
-                          sortingParams.order === 'DESC',
+                          sortingParams.order === 'desc',
                       },
                     )}
                     onClick={() => {

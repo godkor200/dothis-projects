@@ -1,4 +1,4 @@
-export const trendingTableHeaders = [
+export const WEEKLY_SORT_OPTION = [
   { label: '순위', key: 'rank' },
   { label: '키워드', key: 'keyword' },
   { label: '대표 카테고리', key: 'category' },

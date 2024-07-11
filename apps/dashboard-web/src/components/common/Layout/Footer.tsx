@@ -7,33 +7,46 @@ import SvgComp from '../SvgComp';
 
 const Footer = () => {
   return (
-    <footer className="border-t-grey400 h-[300px] border-t border-solid py-[3rem] pl-[3rem] pr-12">
-      <div className="mb-10 flex items-center justify-end">
-        <div className="mr-auto">
-          <Link href={'/'} title="두디스 홈">
-            <SvgComp icon="FooterLogo" width="11.25rem" height="2.5rem" />
-          </Link>
-        </div>
+    <footer className="border-t-grey400 text-grey600   border-t border-solid py-[3rem] pl-[3rem] pr-12 text-[14px] font-[500]">
+      <div className="mx-auto max-w-[1548px]">
+        <div className="mb-10 flex items-center justify-end">
+          <div className="mr-auto">
+            <Link href={'/'} title="두디스 홈">
+              {/* <SvgComp icon="FooterLogo" width="11.25rem" height="2.5rem" />
+               */}
+              <p>
+                {'('}주{')'}두디스
+              </p>
+            </Link>
+          </div>
 
-        {/* 구글 로그인 인증용 disable */}
-        <div className="flex gap-[2.5rem] text-[1.0rem] font-bold">
-          <Link href={'/policy'}>
-            <span>서비스 이용약관</span>
-          </Link>
-          <Link href={'/privacy'}>
-            <span>개인정보 처리방침</span>
-          </Link>
+          {/* 구글 로그인 인증용 disable */}
+          <div className="text-grey900 flex gap-[2.5rem] text-[1.0rem] font-bold">
+            <Link href={'/policy'}>
+              <span>서비스 이용약관</span>
+            </Link>
+            <Link href={'/privacy'}>
+              <span>개인정보 처리방침</span>
+            </Link>
 
-          <Link
-            href={
-              'https://developers.google.com/terms/api-services-user-data-policy' as Route
-            }
-            target="_blank"
-          >
-            <span>구글 데이터 이용 약관</span>
-          </Link>
+            <Link
+              href={
+                'https://developers.google.com/terms/api-services-user-data-policy' as Route
+              }
+              target="_blank"
+            >
+              <span>공지사항</span>
+            </Link>
 
-          {/*       <Link
+            <Link
+              href={
+                'https://developers.google.com/terms/api-services-user-data-policy' as Route
+              }
+              target="_blank"
+            >
+              <span>고객센터</span>
+            </Link>
+            {/*       <Link
             href={
               'https://dothis-world.notion.site/1a7e28e24d3d406399d784da996fa1c8' as Route
             }
@@ -54,20 +67,20 @@ const Footer = () => {
           >
             <span>고객센터</span>
           </Link> */}
+          </div>
         </div>
-      </div>
 
-      <p className="text-grey600 mb-[1.25rem] text-[0.875rem]">
-        사업자등록번호 685-87-02606 | TEL 070-8028-1139 | 메일 : &nbsp;
-        <a href={`mailto:${ContactMail}`}>{ContactMail}</a>
-        <br />
-        주소 : 서울시 서대문구 연세로2다길 19, 304호(창천동)
-        <br />
-        19, Yonsei-ro 2da-gil, Seodaemun-gu, Seoul, Republic of Korea
-      </p>
-      <span className="text-grey500 text-[0.75rem]">
-        Copyright ⓒ 2024 Dothis, Inc. All rights reserved
-      </span>
+        <p className="text-grey600 mb-[1.25rem] text-[0.875rem]">
+          서울특별시 중구 퇴계로36길 2 | 대표 민상현 | 사업자등록번호
+          685-87-02606
+          <br />
+          두디스 서비스 문의 &nbsp;
+          <a href={`mailto:${ContactMail}`}>{ContactMail}</a>
+        </p>
+        <span className="text-grey500 text-[0.75rem]">
+          Copyright ⓒ 2024 Dothis, Inc. All rights reserved
+        </span>
+      </div>
     </footer>
   );
 };

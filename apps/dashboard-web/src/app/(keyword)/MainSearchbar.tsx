@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import type { KeyboardEvent } from 'react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -8,7 +9,7 @@ import MyKeywordList from '@/components/MainContents/KeywordSearch/MyKeywordList
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
-import { useIsSignedIn } from '@/store/authStore';
+import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { convertKeywordsToArray } from '@/utils/keyword';
 
 const MainSearchbar = () => {
@@ -55,16 +56,18 @@ const MainSearchbar = () => {
 
   const keyword = convertKeywordsToArray(userData?.personalizationTag);
 
-  //   const checkIsSignedIn = () => {
-  //     if (isSignedIn) return true;
-  //     setOpenInput(false);
-  //     setIsOpenSignUpModal(true);
-  //     // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+  const { setIsOpenSignUpModal } = useAuthActions();
 
-  //     setModalContent(<SignUpModal />);
-  //     setIsModalOpen(true);
-  //     return false;
-  //   };
+  // const checkIsSignedIn = () => {
+  //   if (isSignedIn) return true;
+  //   setOpenInput(false);
+  //   setIsOpenSignUpModal(true);
+  //   // 기존에 contents로 보내고 searchParams를 추가해줘서 Modal이 무거운 느낌이 생겼던 것 같습니다.
+
+  //   setModalContent(<SignUpModal />);
+  //   setIsModalOpen(true);
+  //   return false;
+  // };
 
   //   const handleKeyDown = (
   //     event: KeyboardEvent<HTMLInputElement>,
@@ -86,6 +89,27 @@ const MainSearchbar = () => {
   //       }
   //     }
   //   };
+
+  const handleRouteChangeKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>,
+    currentInput: string,
+  ) => {
+    // if (!checkIsSignedIn()) {
+    //   return;
+    // }
+
+    if (event.key === 'Enter') {
+      if (
+        data &&
+        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+          currentInput
+      ) {
+        // 엔터 키가 눌렸을 때 실행할 동작
+
+        router.push(`/keyword/${currentInput}`);
+      }
+    }
+  };
 
   return (
     <div className="relative mx-auto mb-[108px] w-[630px]">
@@ -110,16 +134,16 @@ const MainSearchbar = () => {
             startTransition(() => handleInput(e.currentTarget.value));
           }}
           // ref={searchInputRef}
-          //   onKeyDown={(e) => {
-          //     handleKeyDown(e, e.currentTarget.value);
-          //   }}
+          onKeyDown={(e) => {
+            handleRouteChangeKeyDown(e, e.currentTarget.value);
+          }}
         />
 
         {isFocused && (
           <SvgComp
             icon="SearchIcon"
             size={16}
-            className="ml-auto [&_path]:fill-[#F0516D]"
+            className="ml-auto cursor-pointer [&_path]:fill-[#F0516D]"
           />
         )}
       </div>
@@ -143,6 +167,10 @@ const MainSearchbar = () => {
                     //     return;
                     //   }}
                     key={item}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      router.push(`/keyword/${item.replace('*', '')}`);
+                    }}
                   >
                     <SvgComp
                       icon="BorderSearchIcon"
@@ -155,10 +183,6 @@ const MainSearchbar = () => {
                       //   console.log('check');
                       //   router.push(`/keyword/${item.replace('*', '')}`);
                       // }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
-                      }}
                     />
                     <span
                       dangerouslySetInnerHTML={{
@@ -169,10 +193,6 @@ const MainSearchbar = () => {
                             '<span style="font-weight: bold; ">$1</span>',
                           ),
                       }}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        router.push(`/keyword/${item.replace('*', '')}`);
-                      }}
                     />
                   </div>
                 );
@@ -182,7 +202,7 @@ const MainSearchbar = () => {
               <p className="text-grey500 text-[14px]">두디스 추천 검색어</p>
 
               <div className="mt-[20px] flex flex-wrap gap-[10px]  ">
-                {isSignedIn &&
+                {isSignedIn ? (
                   keyword.map((item) => (
                     <div
                       className="border-grey400 rounded-[40px] border px-[10px] py-[7px] text-[14px] font-bold"
@@ -190,7 +210,14 @@ const MainSearchbar = () => {
                     >
                       {item}
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className="flex flex-grow justify-center">
+                    <p className="text-grey700 text-[14px] font-bold">
+                      간편 로그인으로 취향에 맞는 키워드를 추천받으세요.
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           )}

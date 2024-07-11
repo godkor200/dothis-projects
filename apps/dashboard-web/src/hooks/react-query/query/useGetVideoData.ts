@@ -45,7 +45,7 @@ const useGetVideoData = (
           search: keyword!,
         },
         ...queryOptions,
-        enabled: !!data && !!relword,
+        enabled: (queryOptions?.enabled ?? false) && !!data && !!relword,
       };
     }),
   });

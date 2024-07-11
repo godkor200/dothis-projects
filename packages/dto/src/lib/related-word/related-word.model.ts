@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zodDeepPick } from './utils';
-import { zSearchKeyword } from '../common.model';
+import { dataObject, zSearchKeyword } from '../common.model';
 import { zSuccessBase } from '../success.response.zod';
 import { zCreateWeeklyKeywordsListSourceSchema } from '../hits';
 
@@ -45,14 +45,16 @@ export const zAutoCompleteWords = z.object({
 export const zDeleteRelWords = z.object({
   deleteRelWords: z.array(z.string()).describe('사자'),
 });
-export const zGetKeywordInformationRes =
+export const zGetKeywordInformationRes = dataObject(
   zCreateWeeklyKeywordsListSourceSchema.pick({
     ranking: true,
     keyword: true,
     category: true,
     competitive: true,
     changes: true,
-  });
+    lastRanking: true,
+  }),
+);
 export type zRankingArray = z.TypeOf<typeof zRankingArray>;
 
 export type TRankRes = z.TypeOf<typeof zRankRes>;

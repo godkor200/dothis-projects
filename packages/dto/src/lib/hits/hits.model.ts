@@ -24,7 +24,7 @@ export const zDailyViews = dataObject(z.array(zDailyViewData));
 export const zCreateWeeklyKeywordsListSourceSchema = z
   .object({
     id: z.number().int().positive().describe('조회수의 고유 식별자'),
-    ranking: z.number().int().positive().nullable().describe('조회수의 순위'),
+    ranking: z.number().int().positive().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
     weekly_views: z.number().int().positive().describe('주간 조회수'),
@@ -113,7 +113,6 @@ export const zExpectedViewsArr = z.array(zExpectedViewsData);
 export const zExpectedViews = z.object({
   data: zExpectedViewsArr,
 });
-
 // 각 추천 키워드 객체의 구조 정의
 export const zKeywordSchema = z.object({
   recommendedKeyword: z.string().describe('키워드'),
@@ -124,7 +123,7 @@ export const zKeywordSchema = z.object({
   month: z.number().describe('수집 월'),
   day: z.number().describe('수집 일'),
 });
-export const zKeywordThisWeeklyRes = z.array(zKeywordSchema);
+export const zKeywordThisWeeklyRes = dataObject(z.array(zKeywordSchema));
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
 
 export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;

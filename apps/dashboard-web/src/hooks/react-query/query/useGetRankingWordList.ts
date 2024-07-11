@@ -29,16 +29,17 @@ const useGetRankingWordList = (
 
   const isTokenRequired = useIsTokenRequired();
 
-  const queryResults = apiClient(1).relatedWords.rankingRelatedWords.useQueries(
+  const queryResults = apiClient(2).relatedWords.rankingRelatedWords.useQueries(
     {
       queries: keyword.map((keyword) => {
         return {
           queryKey: RANK_RELATIONWORD_KEY.list([{ keyword }]),
           params: { search: keyword },
           ...queryOptions,
-          enabled:
-            isTokenRequired !== null && keyword.length > 0 && !userLoading,
-          retry: 3,
+
+          // isTokenRequired !== null &&
+          enabled: keyword.length > 0 && !userLoading,
+
           select(data) {
             return data;
           },
@@ -46,6 +47,7 @@ const useGetRankingWordList = (
       }),
     },
   );
+
   const requiredQueryResults = queryResults as DeepRequired<
     typeof queryResults
   >;
@@ -84,6 +86,8 @@ const useGetRankingWordList = (
 
   const isError = requiredQueryResults.every((query) => query.isError);
 
+  const isErrorList = requiredQueryResults.map((query) => query.isError);
+
   const isErrorKeyword = requiredQueryResults
     .map((item, index) => (item.isError === true ? keywordArray[index] : null))
     .filter(Boolean);
@@ -91,6 +95,7 @@ const useGetRankingWordList = (
   return {
     isLoading,
     isError,
+    isErrorList,
     isErrorKeyword,
     data: sortArray.map((item) => ({
       relword: item.word,
