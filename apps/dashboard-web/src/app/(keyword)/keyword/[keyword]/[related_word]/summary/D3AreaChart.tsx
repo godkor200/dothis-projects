@@ -124,9 +124,16 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
     const yAxisCallback = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
     ) => {
+      const yMin = y.domain()[0];
+      const yMax = y.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
       return g
         .attr('transform', `translate(0, 0)`)
-        .call(D3.axisLeft(y).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
     };
 
     svg
