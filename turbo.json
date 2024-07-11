@@ -4,12 +4,22 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "build:api": {
+    "build:server:api": {
       "dependsOn": [
         "@dothis/dto#build"
       ]
     },
-    "build:dashboard": {
+    "build:server:api-prod": {
+      "dependsOn": [
+        "@dothis/dto#build"
+      ]
+    },
+    "build:external-sales-api": {
+      "dependsOn": [
+        "@dothis/dto#build"
+      ]
+    },
+    "build:server:dashboard": {
       "dependsOn": ["^build"],
       "env": ["OPENAI_API_KEY", "NAVER_API_ID", "NAVER_API_PWD"]
     },
@@ -121,7 +131,7 @@
       "cache": false,
       "outputs": ["dist/**/*"]
     },
-    "start:dev-scheduler": {
+    "start:dev-external-sales-api": {
       "cache": false,
       "outputs": ["dist/**/*"]
     },

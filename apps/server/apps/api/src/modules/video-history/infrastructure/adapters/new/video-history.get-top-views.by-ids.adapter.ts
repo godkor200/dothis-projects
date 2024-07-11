@@ -30,7 +30,9 @@ export class VideoHistoryGetTopViewsByIdsAdapter
     for (const category of Object.keys(videos)) {
       let categoryQueryParts = [];
       const videoGroup = videos[category];
-
+      if (videoGroup.length === 0) {
+        continue; // 비디오 그룹의 길이가 0이면 넘긴다.
+      }
       for (const { cluster, videoId } of videoGroup) {
         const currDate = DateUtil.currentDate();
         const tableName = CacheNameMapper.getVideoHistoryCacheName(
@@ -42,7 +44,7 @@ export class VideoHistoryGetTopViewsByIdsAdapter
 
         const categoryQueryPart = `
           SELECT 
-            '${category}' AS category,  -- 카테고리명을 포함시킨다.
+            '${category}' AS search,
             vd.video_id, 
             vd.video_title, 
             vh.video_views, 
@@ -59,21 +61,21 @@ export class VideoHistoryGetTopViewsByIdsAdapter
 
       queryComponents.push(`(
         SELECT 
-            '${category}' AS category,
+            '${category}' AS search,
             video_id, 
             video_title, 
             video_views, 
             channel_name, 
             TO_CHAR(VIDEO_PUBLISHED, 'YYYY-MM-DD HH24:MI:SS') AS video_published 
         FROM (
-          ${categoryQueryParts.join(' UNION ALL ')}
+          ${categoryQueryParts.join(' UNION ')}
         ) AS category_combined
         ORDER BY video_views DESC
         LIMIT 1
       )`);
     }
 
-    return queryComponents.join(' UNION ALL ');
+    return queryComponents.join(' UNION ');
   }
 
   async execute(dao: VideoHistoryGetTopViewsByIdsDao): Promise<TIssueTodayRes> {
@@ -90,7 +92,6 @@ export class VideoHistoryGetTopViewsByIdsAdapter
       const query = this.igniteService.createDistributedJoinQuery(queryString);
       const result = await client.query(query);
       const resArr = await result.getAll();
-      console.log(resArr);
       return IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString);
     } catch (e) {
       console.error(e);

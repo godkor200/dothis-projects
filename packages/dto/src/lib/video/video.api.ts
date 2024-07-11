@@ -28,7 +28,6 @@ export const videoApi = c.router({
     query: findVideoBySearchKeyword,
     responses: {
       200: zVideoResponse,
-      ...zErrResBase,
     },
     summary: '이그 나이트 태스트용',
     description: '이그 나이트 태스트용',
