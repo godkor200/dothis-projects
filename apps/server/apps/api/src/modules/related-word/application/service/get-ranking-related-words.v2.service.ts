@@ -107,7 +107,7 @@ export class GetRankingRelatedWordsV2Service {
           console.timeEnd('비디오 dao 시간 converter');
           console.time('채널 히스토리 조회 시간');
           const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
-            channelIds: Object.values(unwrapData).flat(),
+            channelIds: unwrapData,
           });
           const channelHistoryPromise =
             this.getChannelHistoryByChannelId.execute(channelHistoryDao);
