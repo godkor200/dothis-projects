@@ -28,7 +28,7 @@ const Page = ({
         href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
       >
-        분석 {'[더보기]'}
+        분석
       </Link>
 
       {/* <Component /> */}
