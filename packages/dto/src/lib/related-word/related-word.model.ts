@@ -45,7 +45,8 @@ export const zAutoCompleteWords = z.object({
 export const zDeleteRelWords = z.object({
   deleteRelWords: z.array(z.string()).describe('사자'),
 });
-export const zGetKeywordInformationRes = dataObject(
+
+export const zGetKeywordInformationSchema =
   zCreateWeeklyKeywordsListSourceSchema.pick({
     ranking: true,
     keyword: true,
@@ -53,7 +54,10 @@ export const zGetKeywordInformationRes = dataObject(
     competitive: true,
     changes: true,
     lastRanking: true,
-  }),
+  });
+
+export const zGetKeywordInformationRes = dataObject(
+  zGetKeywordInformationSchema,
 );
 export type zRankingArray = z.TypeOf<typeof zRankingArray>;
 
