@@ -12,7 +12,12 @@ export type TChannelHistoryByChannelIdRes = Result<
 export interface IChannelHistoryByChannelIdRes
   extends Pick<
     ChannelHistoryLatestDayTupleRes,
-    'channelId' | 'channelSubscribers' | 'channelAverageViews'
+    | 'channelId'
+    | 'channelSubscribers'
+    | 'channelAverageViews'
+    | 'day'
+    | 'month'
+    | 'year'
   > {}
 
 export interface ChannelHistoryByChannelIdOutboundPort {
