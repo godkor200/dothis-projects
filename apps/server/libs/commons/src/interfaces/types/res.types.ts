@@ -27,7 +27,7 @@ export interface IRes<T = undefined> {
 export class UserRes extends UserDto {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
-export type VideoCountRes = z.infer<typeof zVideoCountRes>;
+export type VideoCountRes = z.infer<typeof zVideoCountRes.shape.data>;
 
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),

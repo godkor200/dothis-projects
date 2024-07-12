@@ -150,7 +150,25 @@
     "typeorm-revert": {
       "cache": false,
       "outputs": ["dist/**/*"]
+    },
+
+    "typeorm-create:ex-api": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-run:ex-api": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-generate:ex-api": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
+    },
+    "typeorm-revert:ex-api": {
+      "cache": false,
+      "outputs": ["dist/**/*"]
     }
+
   },
   "globalEnv": [
     "DATABASE_URL",

@@ -10,7 +10,7 @@ import {
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
-import { externalApiRouter, zTokenExpired } from '@dothis/dto';
+import { externalApiRouter } from '@dothis/dto';
 import { TPostRequestChannelIdRes } from '@ExternalApps/feature/channel/commands/post-req-channel-id.command';
 import {
   IRes,

@@ -126,7 +126,10 @@ export class CacheNameMapper {
     return `${this.BASE_VIDEO_DATA_TABLE}_${this.transformCluster(cluster)}`;
   }
 
-  static getChannelHistoryCacheName(year: string, month: string): string {
+  static getChannelHistoryCacheName(
+    year: string | number,
+    month: string | number,
+  ): string {
     // referenceDate를 가져옴
     const { finalYear, finalMonth } = this.getReferenceDate(year, month);
 

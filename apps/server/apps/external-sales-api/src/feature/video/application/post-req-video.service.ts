@@ -16,12 +16,13 @@ export class PostReqVideoService implements PostReqVideoInboundPort {
   async execute(command: PostRequestVideoDto): Promise<TPostRequestVideoRes> {
     try {
       const res = await this.requestVideoRepository.insert({
+        userId: '1', //FIXME: 임시
         videoId: command.videoId,
-        userId: command.userId,
         usersClientId: command.usersClientId,
-        isShorts: command.publicFlag ? 1 : 0,
-        publicFlag: command.publicFlag ? 1 : 0, //허브 안에서 공개/비공개 설정
-        createDate: new Date(),
+        isShorts: command.isShorts ? 1 : 0,
+        managerId: command.managerId,
+        operatorId: command.operatorId,
+        vodId: command.vodId,
         updateDate: new Date(),
       });
       return Ok(res.success);
