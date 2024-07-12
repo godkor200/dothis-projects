@@ -2,7 +2,7 @@ import { c } from '../contract';
 import {
   zClusterSpecificCombinedData,
   zCombinedViewsData,
-  zDailyViews,
+  zDailyViewsData,
   zExpectedViews,
   zKeywordThisWeeklyRes,
   zWeeklyKeywordsList,
@@ -31,7 +31,7 @@ export const hitsApi = c.router({
     pathParams: zClusterNumber,
     query: findVideoBySearchKeyword,
     responses: {
-      200: zSuccessBase.merge(zDailyViews),
+      200: zSuccessBase.merge(zDailyViewsData),
       ...zErrResBase,
     },
     summary: '일일 조회수를 가져옵니다',
@@ -43,7 +43,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${dailyApiUrl}`,
     query: findVideoBySearchKeyword,
     responses: {
-      200: zSuccessBase.merge(zDailyViews),
+      200: zSuccessBase.merge(zDailyViewsData),
       ...zErrResBase,
     },
     summary: '일일 조회수를 가져옵니다',
@@ -57,7 +57,7 @@ export const hitsApi = c.router({
     pathParams: zClusterNumber,
     query: findVideoBySearchKeyword,
     responses: {
-      200: zDailyViews,
+      200: zDailyViewsData,
       ...zErrResBase,
     },
     summary: '일일 조회수를 가져옵니다',

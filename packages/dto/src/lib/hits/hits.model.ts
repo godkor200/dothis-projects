@@ -7,7 +7,7 @@ import {
 } from '../common.model';
 import { zChannelHistoryModel } from '../channel-history';
 
-export const zDailyViewData = z.object({
+export const zDailyViewSchema = z.object({
   date: z.string(),
 
   uniqueVideoCount: z
@@ -21,7 +21,9 @@ export const zDailyViewData = z.object({
   increaseViews: z.number().describe('비디오 조회수'),
 });
 
-export const zDailyViews = dataObject(z.array(zDailyViewData));
+export const zDailyViews = z.array(zDailyViewSchema);
+
+export const zDailyViewsData = dataObject(zDailyViews);
 
 /**
  * weekly-view models
