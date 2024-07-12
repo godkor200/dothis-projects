@@ -28,7 +28,7 @@ const Page = ({
         href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}
         className="text-[20px] font-bold"
       >
-        분석 {'[더보기]'}
+        분석
       </Link>
 
       {/* <Component /> */}
@@ -108,11 +108,16 @@ const Page = ({
       </div>
 
       <div>
-        <BoxFrame>
-          <MediaRank
-            baseKeyword={baseKeyword}
-            relatedKeyword={relatedKeyword}
-          />
+        <BoxFrame isPositionProperty={true}>
+          <div className="flex max-h-[330px] flex-col">
+            <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+              <p>주간 조회수 상승 순위</p>
+            </div>
+            <MediaRank
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
+          </div>
         </BoxFrame>
       </div>
     </div>

@@ -12,21 +12,21 @@ export const zVideoSection = z.enum([
   '500000이상',
 ]);
 
-export const zAccVideoModel = dataObject(
-  z.object({
-    section: z.array(
-      z.object({
-        gte: z.number(),
-        lte: z.number(),
-        max: z.number().nullable(),
-        section: zVideoSection,
-        number: z.number(),
-      }),
-    ),
-    userSection: z.string(),
-    videoTotal: z.number(),
-  }),
-);
+export const zAccVideoSchema = z.object({
+  section: z.array(
+    z.object({
+      gte: z.number(),
+      lte: z.number(),
+      max: z.number().nullable(),
+      section: zVideoSection,
+      number: z.number(),
+    }),
+  ),
+  userSection: z.string(),
+  videoTotal: z.number(),
+});
+
+export const zAccVideoModel = dataObject(zAccVideoSchema);
 
 export const zVideo = z.object({
   channelId: z.string(),
@@ -52,25 +52,26 @@ export const zVideoRes = z.object({
   total: z.number(),
   data: z.array(zVideo),
 });
-export const zVideoPublishCountData = dataObject(
-  z.array(
-    z.object({
-      date: z
-        .string()
-        .refine(
-          (dateString) => {
-            // 날짜 형식 검증 (YYYYMMDD)
-            return /^\d{4}\d{2}\d{2}$/.test(dateString);
-          },
-          {
-            message: '날짜는 YYYYMMDD 형식이어야 합니다.',
-          },
-        )
-        .describe('영상 발행 날짜'),
-      number: z.number().describe('해당 날짜의 영상수').default(0),
-    }),
-  ),
+
+export const zVideoPublishCountSchema = z.array(
+  z.object({
+    date: z
+      .string()
+      .refine(
+        (dateString) => {
+          // 날짜 형식 검증 (YYYYMMDD)
+          return /^\d{4}\d{2}\d{2}$/.test(dateString);
+        },
+        {
+          message: '날짜는 YYYYMMDD 형식이어야 합니다.',
+        },
+      )
+      .describe('영상 발행 날짜'),
+    number: z.number().describe('해당 날짜의 영상수').default(0),
+  }),
 );
+
+export const zVideoPublishCountData = dataObject(zVideoPublishCountSchema);
 
 export const zVideoModel = dataObject(zVideoRes);
 
