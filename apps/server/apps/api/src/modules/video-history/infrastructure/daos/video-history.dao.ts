@@ -1,6 +1,9 @@
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
-import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import {
+  VideoCacheReturnType,
+  VideosMultiRelatedWordsCacheType,
+} from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { DateUtil } from '@Libs/commons/src/utils/date.util';
 
@@ -48,18 +51,24 @@ export class GetVideoHistoryMultipleByIdV2Dao {
 }
 export class GetChannelHistoryByChannelIdV2Dao {
   channelIds: string[];
+  from?: string;
+  to?: string;
 
   constructor(props: {
-    channelIds: Record<string, VideoCacheReturnType[]> | VideoCacheReturnType[];
+    channelIds: VideosMultiRelatedWordsCacheType | VideoCacheReturnType[];
+    from?: string;
+    to?: string;
   }) {
     this.channelIds = !Array.isArray(props.channelIds)
       ? RedisResultMapper.createChannelIds(props.channelIds)
       : props.channelIds.map((e) => e.channelId);
+    this.from = props.from;
+    this.to = props.to;
   }
 }
 export class GetVideoHistoryMultipleByIdAndRelatedWordsDao {
   videoIds: Record<string, string[]>;
-  constructor(props: { videoIds: Record<string, VideoCacheReturnType[]> }) {
+  constructor(props: { videoIds: VideosMultiRelatedWordsCacheType }) {
     this.videoIds = RedisResultMapper.createVideoIds(
       RedisResultMapper.groupByCluster(Object.values(props.videoIds).flat()),
     );

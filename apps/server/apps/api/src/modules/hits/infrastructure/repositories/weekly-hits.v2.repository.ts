@@ -130,6 +130,7 @@ export class WeeklyHitsV2Repository
         .limit(Number(dao.limit));
 
       const results = await queryBuilder.getRawMany();
+
       if (!results.length) return Err(new WeeklyViewsError());
       return Ok(results);
     } catch (e) {
