@@ -34,6 +34,10 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     totalDailyView: totalIncreaseViews,
   });
 
+  const competitionRate = (totalIncreaseViews / totalVideoCount).toFixed(1);
+  const formattedCompetitionRate =
+    parseFloat(competitionRate).toLocaleString('ko-KR');
+
   return (
     <div>
       {score}
@@ -43,7 +47,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
         <span className="text-primary500">
           {isNaN(totalIncreaseViews / totalVideoCount)
             ? 0
-            : totalIncreaseViews / totalVideoCount}
+            : formattedCompetitionRate}
         </span>
       </p>
     </div>
