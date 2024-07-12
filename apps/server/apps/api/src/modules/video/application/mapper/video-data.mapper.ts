@@ -17,18 +17,26 @@ export class VideoDataMapper {
     console.timeEnd('사전 매핑 생성 시간');
     return videoIdToChannelMap;
   }
+
   private static channelIdToAverageViewsMapping(
     channelHistories: IChannelHistoryByChannelIdRes[],
   ) {
     console.time('채널 히스토리 사전 매핑 생성 시간');
-    const channelIdToAverageViewsMap: { [channelId: string]: number } = {};
+    const channelIdToAverageViewsMap: {
+      [channelId: string]: Record<string, number>;
+    } = {};
     channelHistories.forEach((channelHistory) => {
-      channelIdToAverageViewsMap[channelHistory.channelId] =
+      const dateKey = `${channelHistory.year}-${channelHistory.month}-${channelHistory.day}`;
+      if (!channelIdToAverageViewsMap[channelHistory.channelId]) {
+        channelIdToAverageViewsMap[channelHistory.channelId] = {};
+      }
+      channelIdToAverageViewsMap[channelHistory.channelId][dateKey] =
         channelHistory.channelAverageViews;
     });
     console.timeEnd('채널 히스토리 사전 매핑 생성 시간');
     return channelIdToAverageViewsMap;
   }
+
   static mergeVideoData(
     videoCache: VideoCacheRecord,
     videoHistories: GetRelatedVideoAndVideoHistory[],
@@ -38,30 +46,36 @@ export class VideoDataMapper {
 
     // 1. Cache를 사전 매핑으로 변환
     const videoIdToChannelMap = this.videoIdToChannelMapping(videoCache);
-
-    // 2. 채널 히스토리를 사전 매핑으로 변환
     // 2. 채널 히스토리가 있을 경우에만 사전 매핑으로 변환
     if (channelHistories) {
       const channelIdToAverageViewsMap =
         this.channelIdToAverageViewsMapping(channelHistories);
+
       // 3. 비디오 히스토리를 매핑
       console.time('비디오 히스토리 매핑 시간');
       videoHistories.forEach((videoHistory) => {
         const channelId = videoIdToChannelMap[videoHistory.videoId];
-
-        const channelAverageViews = channelIdToAverageViewsMap[channelId];
-        if (channelAverageViews !== undefined) {
+        const dateKey = `${videoHistory.year}-${videoHistory.month}-${videoHistory.day}`;
+        if (
+          channelIdToAverageViewsMap[channelId] &&
+          channelIdToAverageViewsMap[channelId][dateKey] !== undefined
+        ) {
+          const channelAverageViews =
+            channelIdToAverageViewsMap[channelId][dateKey];
           const newVideo = {
             ...videoHistory,
             channelAverageViews,
           };
+
           videos.push(newVideo);
         }
       });
       console.timeEnd('비디오 히스토리 매핑 시간');
-      return videos;
     }
+
+    return videos;
   }
+
   static mergeVideoByRelateWords(
     videoCache: VideoCacheRecord,
     channelHistories: IChannelHistoryByChannelIdRes[],
@@ -95,8 +109,13 @@ export class VideoDataMapper {
             const videoHistory = videoHistoriesMap.get(video.videoId);
             if (videoHistory) {
               const channelId = videoIdToChannelMap[video.videoId];
-              const channelAverageViews = channelIdToAverageViewsMap[channelId];
-              if (channelAverageViews !== undefined) {
+              const dateKey = `${videoHistory.year}-${videoHistory.month}-${videoHistory.day}`;
+              if (
+                channelIdToAverageViewsMap[channelId] &&
+                channelIdToAverageViewsMap[channelId][dateKey] !== undefined
+              ) {
+                const channelAverageViews =
+                  channelIdToAverageViewsMap[channelId][dateKey];
                 return {
                   ...videoHistory,
                   channelAverageViews,
@@ -112,6 +131,7 @@ export class VideoDataMapper {
       // 6. Store the video list for the current keyword
       keywordToVideosMap[keyword] = videosForKeyword;
     }
+
     console.timeEnd('mergeVideoByRelateWords 시간');
 
     return keywordToVideosMap;
