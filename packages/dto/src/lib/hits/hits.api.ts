@@ -1,13 +1,12 @@
 import { c } from '../contract';
 import {
-  zClusterSpecificCombinedData,
   zCombinedViewsData,
   zDailyViewsData,
   zExpectedViews,
   zKeywordThisWeeklyRes,
-  zWeeklyKeywordsList,
-  zSuccessRate,
-  zCombinedViewsDataResponse,
+  zWeeklyKeywordsListWithTotalData,
+  zSuccessRateData,
+  zClusterSpecificCombinedData,
 } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
@@ -69,7 +68,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${weeklyApiUrl}-list`,
     query: zGetWeeklyViewsQuery,
     responses: {
-      200: zWeeklyKeywordsList,
+      200: zWeeklyKeywordsListWithTotalData,
       ...zErrResBase,
     },
     summary: '주간 키워드 리스트를 가져옵니다',
@@ -80,7 +79,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${weeklyApiUrl}-list`,
     query: zGetWeeklyViewsQuery,
     responses: {
-      200: zWeeklyKeywordsList,
+      200: zWeeklyKeywordsListWithTotalData,
       ...zErrResBase,
     },
     summary:
@@ -106,7 +105,7 @@ export const hitsApi = c.router({
     query: zFindVideoBySearchKeyword,
     pathParams: zClusterNumberMulti,
     responses: {
-      200: zSuccessRate,
+      200: zSuccessRateData,
       ...zErrResBase,
     },
     summary: '관련어, 연관어 영상들의 성공확률을 가져옵니다',
@@ -118,7 +117,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${weeklyApiUrl}-list/search`,
     query: zGetWeeklyViewsBySomeQuery,
     responses: {
-      200: zWeeklyKeywordsList,
+      200: zWeeklyKeywordsListWithTotalData,
       ...zErrResBase,
     },
     summary: '주간 키워드를 필터링해서 가져옵니다.',
@@ -141,7 +140,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}`,
     query: zFindVideoBySearchKeyword,
     responses: {
-      200: zCombinedViewsDataResponse,
+      200: zClusterSpecificCombinedData,
       ...zErrResBase,
     },
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',

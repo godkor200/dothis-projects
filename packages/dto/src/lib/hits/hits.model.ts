@@ -74,11 +74,17 @@ export const SortOrderQuery = Object.keys(
 export const zWeeklyKeywordsListSourceSchema =
   zCreateWeeklyKeywordsListSourceSchema;
 
-export const zWeeklyKeywordsListArray = z.array(
+export const zWeeklyKeywordsList = z.array(
   zCreateWeeklyKeywordsListSourceSchema,
 );
-export const zWeeklyKeywordsList = dataObject(
-  zTotalData.merge(dataObject(zWeeklyKeywordsListArray)),
+
+export const zWeeklyKeywordsListData = dataObject(zWeeklyKeywordsList);
+
+export const zWeeklyKeywordsListWithTotal = zTotalData.merge(
+  zWeeklyKeywordsListData,
+);
+export const zWeeklyKeywordsListWithTotalData = dataObject(
+  zWeeklyKeywordsListWithTotal,
 );
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
@@ -106,11 +112,14 @@ export const zCombinedViewsData = z.object({
 export const zCombinedViewsDataResponse = dataObject(
   zClustersObject(z.array(zCombinedViewsData)),
 );
+
+export const zClusterSpecificCombinedSchema = z.object({
+  clusterNumber: z.number().nullable(),
+  data: z.array(zCombinedViewsData),
+});
+
 export const zClusterSpecificCombinedData = dataObject(
-  z.object({
-    clusterNumber: z.number().nullable(),
-    data: zCombinedViewsData,
-  }),
+  zClusterSpecificCombinedSchema,
 );
 
 export const zExpectedViewsData = z.object({
@@ -120,12 +129,12 @@ export const zExpectedViewsData = z.object({
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
 
-export const zSuccessRateData = z.object({
+export const zSuccessRateSchema = z.object({
   totalVideoCount: z.number(),
   countAboveAverage: z.number(),
 });
 
-export const zSuccessRate = dataObject(zSuccessRateData);
+export const zSuccessRateData = dataObject(zSuccessRateSchema);
 
 export const zExpectedViewsArr = z.array(zExpectedViewsData);
 
