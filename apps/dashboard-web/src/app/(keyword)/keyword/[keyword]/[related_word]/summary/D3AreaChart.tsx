@@ -285,19 +285,19 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
           tooltip2.html(
             `<div>
                 <div style="display:flex; align-items:center;">
-                  <div  style="border:2px solid ${'#FDE7EB'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                  <div  style="border:2px solid ${'#F0516D'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
                   <p style="color: #E4E4E7; font-size: 14px;
                   font-style: normal;
                   font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                    currentAreaData.value[0]
-                  }~${currentAreaData.value[1]}</p>
+                    currentAreaData.value[1]
+                  }</p>
                   <p style="color: #A1A1AA; font-size: 12px;
                   font-style: normal;
-                  font-weight: 500; "> ${`예측 조회수`} </p>
+                  font-weight: 500; "> ${`최대 조회수`} </p>
                 </div>
 
                 <div style="display:flex; align-items:center;">
-                  <div  style="border:2px solid ${'#FDE7EB'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                  <div  style="border:2px solid ${'#F0516D'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
                   <p style="color: #E4E4E7; font-size: 14px;
                   font-style: normal;
                   font-weight: 700; flex-basis: 30%; margin-right:8px;">${
@@ -305,8 +305,21 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
                   }</p>
                   <p style="color: #A1A1AA; font-size: 12px;
                   font-style: normal;
-                  font-weight: 500; "> ${`기대조회수`} </p>
+                  font-weight: 500; "> ${`평균 조회수`} </p>
                 </div>
+
+                           <div style="display:flex; align-items:center;">
+                  <div  style="border:2px solid ${'#F0516D'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                  <p style="color: #E4E4E7; font-size: 14px;
+                  font-style: normal;
+                  font-weight: 700; flex-basis: 30%; margin-right:8px;">${
+                    currentAreaData.value[0]
+                  }</p>
+                  <p style="color: #A1A1AA; font-size: 12px;
+                  font-style: normal;
+                  font-weight: 500; "> ${`최소 조회수`} </p>
+                </div>
+
 
               </div>`,
           );
