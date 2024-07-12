@@ -37,7 +37,7 @@ const WeeklyKeyword = () => {
                   <span className="whitespace-nowrap text-[12px] text-[#F00]">
                     {Math.abs(item.changes) > 9_999
                       ? 'NEW'
-                      : Math.abs(item.changes)}
+                      : Math.abs(item.changes).toLocaleString('ko-kr')}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-b-[8px]  border-x-transparent border-b-[#F00]"></span>
                 </div>
@@ -45,7 +45,7 @@ const WeeklyKeyword = () => {
                 <div className="flex items-center justify-center">
                   <span className="text-[12px] text-[#3183FF]">
                     {' '}
-                    {Math.abs(item.changes)}
+                    {Math.abs(item.changes).toLocaleString('ko-kr')}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-t-[8px]  border-x-transparent border-t-[#3183FF]"></span>
                 </div>
