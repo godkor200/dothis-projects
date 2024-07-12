@@ -39,6 +39,7 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
 
   const { data: weeklyVideo } = useGetWeeklyVideo();
 
+  console.log(weeklyVideo);
   const [keywordMap, setKeywordMap] = useState<
     Map<string, (typeof rankingRelatedWord)[number]>
   >(new Map());
