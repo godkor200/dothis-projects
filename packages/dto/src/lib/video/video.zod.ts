@@ -183,13 +183,15 @@ export const zTodayIssueVideos = dataObject(
     })
     .merge(z.object({ category: z.string().describe('키워드') })),
 );
-export const zTodayIssueVideo = zVideo.pick({
-  videoId: true,
-  videoTitle: true,
-  channelName: true,
-  videoViews: true,
-  videoPublished: true,
-});
+export const zTodayIssueVideo = dataObject(
+  zVideo.pick({
+    videoId: true,
+    videoTitle: true,
+    channelName: true,
+    videoViews: true,
+    videoPublished: true,
+  }),
+);
 
 // 타입 추출
 export type TFindPerformanceLengthRes = z.infer<
