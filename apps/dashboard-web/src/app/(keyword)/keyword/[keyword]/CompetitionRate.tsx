@@ -42,7 +42,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     <div>
       {score}
 
-      <p className="text-grey600 mt-2 text-center font-[500]">
+      <p className="text-grey600 mt-2 whitespace-nowrap text-center font-[500]">
         연관 영상의 조회수 평균{' '}
         <span className="text-primary500">
           {isNaN(totalIncreaseViews / totalVideoCount)
