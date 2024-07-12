@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 
 import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
@@ -12,11 +13,13 @@ const WeeklyKeyword = () => {
     <ul className="flex flex-col gap-[15px] font-[500]">
       {data?.map((item, i) => (
         <Link
-          href={`/keyword/${item.recommendedKeyword}/${
-            item.topAssociatedWord
-              ? `${item.topAssociatedWord.split(',')[0]}/analysis`
-              : ''
-          }`}
+          href={
+            `/keyword/${item.recommendedKeyword}/${
+              item.topAssociatedWord
+                ? `${item.topAssociatedWord.split(',')[0]}/analysis`
+                : ''
+            }` as Route
+          }
           key={item.recommendedKeyword}
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
