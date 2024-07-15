@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import type { NewsResponse, ServerResponse } from '@/types/news';
+import type { NewsResponse } from '@/types/news';
 import {
   formatNewsFormMediaProps,
   formatYoutubeForMediaProps,
@@ -14,6 +14,8 @@ import {
 import useGetSingleNews from './useGetSingleNews';
 import useGetSingleVideo from './useGetSingleVideo';
 import useGetVideoData from './useGetVideoData';
+import useGetWeeklyTrendKeyword from './useGetWeeklyTrendKeyword';
+import useGetWeeklyVideo from './useGetWeeklyVideo';
 
 // 랜덤 요소 생성 함수
 interface PaginationQuery {
@@ -27,8 +29,8 @@ interface DateQuery {
 }
 
 interface KeywordQuery {
-  searchKeyword: string;
-  relatedkeyword: string | null;
+  searchKeyword?: string;
+  relatedkeyword?: string | null;
 }
 
 export const useGetRandomMedia = ({
@@ -37,36 +39,64 @@ export const useGetRandomMedia = ({
   index,
   searchKeyword,
   relatedkeyword,
+  setIndexNumber,
 }: {
   mediaCategory: string;
   index: number;
+  setIndexNumber: React.Dispatch<React.SetStateAction<number>>;
 } & PaginationQuery &
   KeywordQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
-  const { data: youtubeData, isError: youtubeIsError } = useGetSingleVideo(
-    {
-      searchKeyword: searchKeyword,
-      relatedkeyword: relatedkeyword,
-      page,
-      extraQueryKey: index,
-    },
-    {
-      enabled: mediaCategory === 'youtube',
-    },
-  );
+  const { data: weeklyVideo } = useGetWeeklyVideo();
+
+  const youtubeData = relatedkeyword
+    ? weeklyVideo?.filter(
+        (item) =>
+          item.search === searchKeyword && item.related === relatedkeyword,
+      )[0]
+    : undefined;
+
+  const youtubeVideoIsError =
+    relatedkeyword &&
+    weeklyVideo?.filter(
+      (item) =>
+        item.search === searchKeyword && item.related === relatedkeyword,
+    )?.[0].videoId === null
+      ? true
+      : false;
+
+  // const { data: youtubeData, isError: youtubeIsError } = useGetSingleVideo(
+  //   {
+  //     searchKeyword: searchKeyword!,
+  //     relatedkeyword: relatedkeyword ?? null,
+  //     page,
+  //     extraQueryKey: index,
+  //   },
+  //   {
+  //     enabled: mediaCategory === 'youtube' || newsRef.current,
+  //   },
+  // );
 
   const { data: newsData, isError: newsIsError } = useGetSingleNews(
     {
-      searchKeyword: searchKeyword,
-      relatedkeyword: relatedkeyword,
+      searchKeyword: searchKeyword!,
+      relatedkeyword: relatedkeyword ?? null,
       page,
       queryKeyIndex: index,
     },
     {
-      enabled: mediaCategory === 'news',
+      enabled: mediaCategory === 'news' || youtubeVideoIsError,
     },
   );
+
+  useEffect(() => {
+    if (youtubeVideoIsError && newsIsError) {
+      setIndexNumber((prev) => {
+        return prev + 1;
+      });
+    }
+  }, [youtubeVideoIsError, newsIsError]);
 
   useEffect(() => {
     if (youtubeData) {
@@ -80,6 +110,10 @@ export const useGetRandomMedia = ({
   const mediaResult = useMemo(
     () =>
       mediaCategory === 'youtube'
+        ? youtubeVideoIsError
+          ? newsData && formatNewsFormMediaProps(newsData)
+          : youtubeData && formatYoutubeForMediaProps(youtubeData)
+        : newsIsError
         ? youtubeData && formatYoutubeForMediaProps(youtubeData)
         : newsData && formatNewsFormMediaProps(newsData),
     [youtubeData, newsData],
@@ -90,7 +124,7 @@ export const useGetRandomMedia = ({
     fetchTime,
     searchKeyword,
     relatedkeyword,
-    mediaCategory,
+    mediaCategory: youtubeVideoIsError ? 'youtube' : 'news',
   };
 };
 
