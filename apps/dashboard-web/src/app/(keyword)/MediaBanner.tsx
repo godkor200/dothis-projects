@@ -178,8 +178,8 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
     .slice(0, 3)
     .sort((a, b) => {
       // 먼저 mediaCategory를 내림차순으로 정렬
-      if (a.mediaCategory > b.mediaCategory) return -1;
-      if (a.mediaCategory < b.mediaCategory) return 1;
+      // if (a.mediaCategory > b.mediaCategory) return -1;
+      // if (a.mediaCategory < b.mediaCategory) return 1;
       // mediaCategory가 같으면 fetchTime을 오름차순으로 정렬
       return a.fetchTime - b.fetchTime;
     });
