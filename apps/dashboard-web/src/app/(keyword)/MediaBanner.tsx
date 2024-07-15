@@ -33,13 +33,14 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
 
   const [sliceNumber, setSliceNumber] = useState(mediaCount);
 
+  const [indexNumber, setIndexNumber] = useState(mediaCount);
+
   // const { data } = useGetWeeklyKeyword({ limit: 5 });
 
   const { data } = useGetWeeklyTrendKeyword();
 
   const { data: weeklyVideo } = useGetWeeklyVideo();
 
-  console.log(weeklyVideo);
   const [keywordMap, setKeywordMap] = useState<
     Map<string, (typeof rankingRelatedWord)[number]>
   >(new Map());
@@ -107,33 +108,62 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
 
   // 해당 useQuery 라이프사이클에서 혼동이 왔음 (select문이 해당 fetch를 성공했을 경우 한번만 출력되길 바랬는데, 안되네)
   const firstMedia = useGetRandomMedia({
-    searchKeyword: result[0]?.keyword ?? undefined,
-    relatedkeyword: result[0]?.relword ?? undefined,
+    searchKeyword: data ? data[0].recommendedKeyword : undefined,
+    relatedkeyword: data ? data[0].topAssociatedWord.split(',')[0] : undefined,
     mediaCategory: randomOptios[0],
     page: getCategoryOrder(randomOptios[0], 0),
     index: 1,
+    setIndexNumber,
   });
   /**
    * index 프로퍼티, (category가 다른데, queryKey 중복이 일어나는걸 방지 )
    */
 
   const secondMedia = useGetRandomMedia({
-    searchKeyword: result[1]?.keyword ?? undefined,
-    relatedkeyword: result[1]?.relword ?? undefined,
+    searchKeyword: data ? data[1].recommendedKeyword : undefined,
+    relatedkeyword: data ? data[1].topAssociatedWord.split(',')[0] : undefined,
     mediaCategory: randomOptios[1],
     page: getCategoryOrder(randomOptios[1], 1),
     index: 2,
+    setIndexNumber,
   });
 
   const thirdMedia = useGetRandomMedia({
-    searchKeyword: result[2]?.keyword ?? undefined,
-    relatedkeyword: result[2]?.relword ?? undefined,
+    searchKeyword: data ? data[2].recommendedKeyword : undefined,
+    relatedkeyword: data ? data[2].topAssociatedWord.split(',')[0] : undefined,
     mediaCategory: randomOptios[2],
     page: getCategoryOrder(randomOptios[2], 2),
     index: 3,
+    setIndexNumber,
   });
 
-  const results = [firstMedia, secondMedia, thirdMedia]
+  const fourthMedia = useGetRandomMedia({
+    searchKeyword:
+      data && indexNumber > 3 ? data[3].recommendedKeyword : undefined,
+    relatedkeyword:
+      data && indexNumber > 3
+        ? data[3].topAssociatedWord.split(',')[0]
+        : undefined,
+    mediaCategory: randomOptios[2],
+    page: getCategoryOrder(randomOptios[2], 2),
+    index: 4,
+    setIndexNumber,
+  });
+
+  const fifth = useGetRandomMedia({
+    searchKeyword:
+      data && indexNumber > 4 ? data[4].recommendedKeyword : undefined,
+    relatedkeyword:
+      data && indexNumber > 4
+        ? data[4].topAssociatedWord.split(',')[0]
+        : undefined,
+    mediaCategory: randomOptios[2],
+    page: getCategoryOrder(randomOptios[2], 2),
+    index: 5,
+    setIndexNumber,
+  });
+
+  const results = [firstMedia, secondMedia, thirdMedia, fourthMedia, fifth]
     .filter(
       (
         media,
@@ -145,7 +175,14 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
         mediaCategory: string;
       } => media.mediaResult !== undefined,
     )
-    .sort((a, b) => a.fetchTime! - b.fetchTime!);
+    .slice(0, 3)
+    .sort((a, b) => {
+      // 먼저 mediaCategory를 내림차순으로 정렬
+      if (a.mediaCategory > b.mediaCategory) return -1;
+      if (a.mediaCategory < b.mediaCategory) return 1;
+      // mediaCategory가 같으면 fetchTime을 오름차순으로 정렬
+      return a.fetchTime - b.fetchTime;
+    });
 
   // console.log(results);
 
