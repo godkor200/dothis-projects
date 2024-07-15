@@ -24,21 +24,36 @@ interface News_Hilight {
 }
 
 export const formatYoutubeForMediaProps = (
-  data: ClientInferResponseBody<
-    typeof apiRouter.video.getVideoPageV2,
-    200
-  >['data']['data'][number],
+  data:
+    | ClientInferResponseBody<
+        typeof apiRouter.video.getVideoPageV2,
+        200
+      >['data']['data'][number]
+    | ClientInferResponseBody<
+        typeof apiRouter.video.getIssueToday,
+        200
+      >['data'][number],
 ): MediaProps => {
   const compactNumber = new Intl.NumberFormat('ko', {
     notation: 'compact',
   });
+
+  let uploadDate: string;
+  if ('year' in data && 'month' in data && 'day' in data) {
+    // apiRouter.video.getVideoPageV2의 데이터 타입일 경우
+    uploadDate = data.videoPublished
+      ? data.videoPublished
+      : dayjs(`${data.year}-${data.month}-${data.day}`).format('YYYY-MM-DD');
+  } else {
+    // apiRouter.video.getIssueToday의 데이터 타입일 경우
+    uploadDate = data.videoPublished;
+  }
+
   return {
     title: data.videoTitle,
     provider: data.channelName,
     element: `조회수 ${compactNumber.format(data.videoViews)}`,
-    uploadDate: dayjs(`${data.year}-${data.month}-${data.day}`).format(
-      'YYYY-MM-DD',
-    ),
+    uploadDate: uploadDate,
     image: externalYouTubeImageLoader(data.videoId),
     link: data.videoId,
   };
