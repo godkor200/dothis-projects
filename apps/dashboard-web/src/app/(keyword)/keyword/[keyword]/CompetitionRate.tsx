@@ -107,7 +107,7 @@ export function sumIncreaseViewsV2(
 
 // uniqueVideoCount 값을 모두 더하는 함수
 export function sumVideoCount(
-  data: (
+  data:
     | {
         date: string;
         uniqueVideoCount: number;
@@ -115,21 +115,12 @@ export function sumVideoCount(
         increaseLikes: number;
         increaseViews: number;
       }[]
-    | undefined
-  )[],
+    | undefined,
 ) {
-  return data.reduce((total, nestedArray) => {
-    if (nestedArray) {
-      return (
-        total +
-        nestedArray.reduce(
-          (subtotal, item) => subtotal + item.uniqueVideoCount,
-          0,
-        )
-      );
-    }
-    return total;
-  }, 0 as number);
+  if (data) {
+    return data?.reduce((total, item) => total + item.uniqueVideoCount, 0);
+  }
+  return 0;
 }
 
 export function sumVideoCountV2(

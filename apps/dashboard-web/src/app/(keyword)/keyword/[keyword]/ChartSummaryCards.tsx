@@ -37,7 +37,7 @@ const ChartSummaryCards = ({
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCountV2(videoUploadCount);
+  const totalVideoCount = sumVideoCount(dailyViewData);
 
   //   검색량 코드
   const searchRatio = useSearchRatioFormatterD3({
