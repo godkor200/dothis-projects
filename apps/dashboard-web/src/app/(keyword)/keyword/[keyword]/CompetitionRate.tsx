@@ -16,14 +16,9 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     keyword,
   });
 
-  const { data: videoUploadCount } = useGetVideoUploadCount({
-    keyword,
-    relword: null,
-  });
-
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCountV2(videoUploadCount);
+  const totalVideoCount = sumVideoCount(dailyViewData);
 
   const copetitionScore = getCompetitionScore({
     totalDailyView: totalIncreaseViews,
@@ -35,7 +30,8 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     totalDailyView: totalIncreaseViews,
   });
 
-  const competitionRate = (totalIncreaseViews / totalVideoCount).toFixed(1);
+  const competitionRate = (totalIncreaseViews / totalVideoCount).toFixed(0);
+
   const formattedCompetitionRate =
     parseFloat(competitionRate).toLocaleString('ko-KR');
 
@@ -43,21 +39,23 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     <div>
       {score}
 
-      <CustomTooltipComponent
-        title={
-          '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
-        }
-        tooltipOptions={{ side: 'bottom', sideOffset: 15, align: 'end' }}
-      >
-        <p className="text-grey600 mt-2 cursor-pointer whitespace-nowrap text-center font-[500]">
-          연관 영상의 조회수 평균{' '}
-          <span className="text-primary500">
-            {isNaN(totalIncreaseViews / totalVideoCount)
-              ? 0
-              : formattedCompetitionRate}
-          </span>
-        </p>
-      </CustomTooltipComponent>
+      {dailyViewData && (
+        <CustomTooltipComponent
+          title={
+            '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
+          }
+          tooltipOptions={{ side: 'bottom', sideOffset: 15, align: 'end' }}
+        >
+          <p className="text-grey600 mt-2 cursor-pointer whitespace-nowrap text-center font-[500]">
+            연관 영상의 조회수 평균{' '}
+            <span className="text-primary500">
+              {isNaN(totalIncreaseViews / totalVideoCount)
+                ? 0
+                : formattedCompetitionRate}
+            </span>
+          </p>
+        </CustomTooltipComponent>
+      )}
     </div>
   );
 };
