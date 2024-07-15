@@ -183,14 +183,26 @@ export const zTodayIssueVideos = dataObject(
     })
     .merge(z.object({ category: z.string().describe('키워드') })),
 );
-export const zTodayIssueVideo = dataObject(
-  zVideo.pick({
-    videoId: true,
-    videoTitle: true,
-    channelName: true,
-    videoViews: true,
-    videoPublished: true,
-  }),
+
+export const zTodayIssueVideoSchema = zVideo.pick({
+  videoId: true,
+  videoTitle: true,
+  channelName: true,
+  videoViews: true,
+  videoPublished: true,
+});
+
+export const zTodayIssueVideoExtendsSchema = zTodayIssueVideoSchema.extend({
+  search: z.string(),
+  related: z.string(),
+});
+
+export const zTodayIssueVideoExtendedList = z.array(
+  zTodayIssueVideoExtendsSchema,
+);
+
+export const zTodayIssueVideoExtendedData = dataObject(
+  zTodayIssueVideoExtendedList,
 );
 
 // 타입 추출
