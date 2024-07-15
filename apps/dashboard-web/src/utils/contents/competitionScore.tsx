@@ -72,7 +72,7 @@ export const convertCompetitionScoreFormatToHTML = ({
   } else if (competitionScore >= 0) {
     return <CompetitionTag color="chip-red">{`공급 과잉`}</CompetitionTag>;
   }
-  return <CompetitionTag color="grey600">{`분석중`}</CompetitionTag>;
+  return <CompetitionTag color="grey600">{`분석 중`}</CompetitionTag>;
 };
 
 /**
