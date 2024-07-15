@@ -13,7 +13,7 @@ import {
   zVideoCountRes,
   zVideoDetails,
   zVideoModel,
-  zWeeklyKeywordsList,
+  zWeeklyKeywordsListWithTotalData,
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 import { UserDto } from '@Libs/commons/src/interfaces/types/dto.types';
@@ -27,7 +27,7 @@ export interface IRes<T = undefined> {
 export class UserRes extends UserDto {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
-export type VideoCountRes = z.infer<typeof zVideoCountRes>;
+export type VideoCountRes = z.infer<typeof zVideoCountRes.shape.data>;
 
 export class RelWordsEntity extends createZodDto(
   extendApi(zResWordsPickData),
@@ -48,7 +48,7 @@ export class ChannelAnalysisRes extends createZodDto(
   extendApi(zChannelAnalysis),
 ) {}
 export class WeeklyKeywordsRes extends createZodDto(
-  extendApi(zWeeklyKeywordsList),
+  extendApi(zWeeklyKeywordsListWithTotalData),
 ) {}
 export class WeeklyKeywordsListSchema extends createZodDto(
   extendApi(zWeeklyKeywordsListSourceSchema),
@@ -65,7 +65,7 @@ export class GetProbabilityResultType extends createZodDto(
   extendApi(zGetProbabilityRes),
 ) {}
 export class GetWeeklyKeywordsListResType extends createZodDto(
-  extendApi(zWeeklyKeywordsList),
+  extendApi(zWeeklyKeywordsListWithTotalData),
 ) {}
 
 export interface TTsRestRes<T> {

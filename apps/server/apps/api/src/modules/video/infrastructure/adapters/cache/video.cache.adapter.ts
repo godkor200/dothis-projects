@@ -57,6 +57,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
       } else {
         finalResults = filteredByDateRange;
       }
+      if (!finalResults.length) return Err(new VideoNotFoundError());
 
       console.log(
         `search:${dao.search},related:${dao.related}`,

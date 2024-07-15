@@ -1,5 +1,5 @@
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
-import { ChannelModel, zChannelData } from '@dothis/dto';
+import { ChannelModel, zChannelSchema } from '@dothis/dto';
 import { DataSource, Repository } from 'typeorm';
 import { ZodObject } from 'zod';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,7 +11,7 @@ export class ChannelDataRepository
   implements ChannelDataRepositoryPort
 {
   protected tableName = 'channel_data';
-  protected schema: ZodObject<any> = zChannelData;
+  protected schema: ZodObject<any> = zChannelSchema;
 
   @InjectRepository(ChannelEntity, 'onPromisesMysql')
   protected readonly repository: Repository<ChannelEntity>;

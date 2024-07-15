@@ -62,14 +62,14 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
 
   if (isLoading) {
     return (
-      <div>
+      <div className="flex flex-1">
         <BoxLoadingComponent
           classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
         />
-        <div className="flex justify-between gap-[24px] shadow ">
+        <div className="flex flex-1 justify-between gap-[24px]  ">
           {Array.from({ length: 5 }).map((item, i) => (
             <div
-              className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid"
+              className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid shadow"
               key={i}
             >
               <div className="relative flex aspect-video items-center justify-center overflow-hidden">

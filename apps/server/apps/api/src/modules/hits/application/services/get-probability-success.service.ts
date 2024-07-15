@@ -45,7 +45,11 @@ export class GetProbabilitySuccessService
         const channelIds = videos.map((video) => video.channelId);
 
         const channelHistoryResult =
-          await this.getChannelHistoryByChannelId.execute({ channelIds });
+          await this.getChannelHistoryByChannelId.execute({
+            channelIds,
+            from: dto.from,
+            to: dto.to,
+          });
 
         if (channelHistoryResult.isOk()) {
           const channelHistories = channelHistoryResult.unwrap();

@@ -18,9 +18,9 @@ export class PostRequestChannelService implements PostReqChannelInboundPort {
   ): Promise<TPostRequestChannelIdRes> {
     try {
       const res = await this.requestChannelRepository.insert({
+        userId: '1', //FIXME: 임시
         channelId: command.channelId,
-        clientId: command.clientId,
-        publicFlag: command.isPublicFlag ? 1 : 0, //허브 안에서 공개/비공개 설정
+        usersClientId: command.usersClientId,
         updateDate: new Date(),
       });
 

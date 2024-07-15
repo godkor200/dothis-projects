@@ -84,6 +84,8 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
           this.videoHistoryService.execute(videoHistoryDao);
         const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
           channelIds: videoCacheResultUnwrap,
+          from: videoCacheDao.from,
+          to: videoCacheDao.to,
         });
         const channelHistoryResultPromise =
           this.channelHistoryService.execute(channelHistoryDao);
