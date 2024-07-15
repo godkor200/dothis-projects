@@ -35,62 +35,52 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
 
   const [indexNumber, setIndexNumber] = useState(mediaCount);
 
-  // const { data } = useGetWeeklyKeyword({ limit: 5 });
-
   const { data } = useGetWeeklyTrendKeyword();
 
   const { data: weeklyVideo } = useGetWeeklyVideo();
 
-  const [keywordMap, setKeywordMap] = useState<
-    Map<string, (typeof rankingRelatedWord)[number]>
-  >(new Map());
+  // const [keywordMap, setKeywordMap] = useState<
+  //   Map<string, (typeof rankingRelatedWord)[number]>
+  // >(new Map());
 
-  const topKeywordList = data
-    ?.map((data) => data.recommendedKeyword)
-    .slice(0, sliceNumber);
+  // const topKeywordList = data
+  //   ?.map((data) => data.recommendedKeyword)
+  //   .slice(0, sliceNumber);
 
-  const {
-    data: rankingRelatedWord,
-    isError,
-    isErrorList,
-  } = useGetRankingWordList(topKeywordList || [], {
-    onError(err) {},
-  });
-
-  useEffect(() => {
-    setSliceNumber(
-      mediaCount + isErrorList.filter((isError) => isError === true).length,
-    );
-  }, [isErrorList]);
-
-  const hasMedia = useRef(new Map());
-
-  // console.log(keywordMap.has('한국'));
-  // 정해진 인덱스읙 개념을 주입해서 넣어줘야함
-  const getFirstOccurrences = useCallback(
-    (arr: typeof rankingRelatedWord): typeof rankingRelatedWord => {
-      arr.forEach((item) => {
-        if (!hasMedia.current.has(item.keyword)) {
-          // console.log(keywordMap.has(item.keyword));
-          // console.log(item);
-          hasMedia.current.set(item.keyword, item);
-        }
-      });
-
-      return Array.from(hasMedia.current.values());
-    },
-    [JSON.stringify(rankingRelatedWord)],
-  );
+  // const {
+  //   data: rankingRelatedWord,
+  //   isError,
+  //   isErrorList,
+  // } = useGetRankingWordList(topKeywordList || [], {
+  //   onError(err) {},
+  // });
 
   // useEffect(() => {
-  //   const result = getFirstOccurrences(rankingRelatedWord);
+  //   setSliceNumber(
+  //     mediaCount + isErrorList.filter((isError) => isError === true).length,
+  //   );
+  // }, [isErrorList]);
 
-  //   console.log(result);
-  // }, [JSON.stringify(rankingRelatedWord)]);
-  const result = getFirstOccurrences(rankingRelatedWord);
+  // const hasMedia = useRef(new Map());
 
-  // console.log(keywordMap);
-  // console.log(result);
+  // // console.log(keywordMap.has('한국'));
+  // // 정해진 인덱스읙 개념을 주입해서 넣어줘야함
+  // const getFirstOccurrences = useCallback(
+  //   (arr: typeof rankingRelatedWord): typeof rankingRelatedWord => {
+  //     arr.forEach((item) => {
+  //       if (!hasMedia.current.has(item.keyword)) {
+  //         // console.log(keywordMap.has(item.keyword));
+  //         // console.log(item);
+  //         hasMedia.current.set(item.keyword, item);
+  //       }
+  //     });
+
+  //     return Array.from(hasMedia.current.values());
+  //   },
+  //   [JSON.stringify(rankingRelatedWord)],
+  // );
+
+  // const result = getFirstOccurrences(rankingRelatedWord);
 
   const getCategoryOrder = (category: MediaCategory, index: number) => {
     if (category === 'youtube') {
