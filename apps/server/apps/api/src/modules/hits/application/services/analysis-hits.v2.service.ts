@@ -23,6 +23,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 
 /**
  * 시퀀스
@@ -69,7 +70,9 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
       );
 
       if (videoCacheResult.isOk()) {
-        const videoCacheResultUnwrap = videoCacheResult.unwrap();
+        const videoCacheResultUnwrap = RedisResultMapper.groupByCluster(
+          RedisResultMapper.toObjects(videoCacheResult.unwrap()),
+        );
 
         if (!Object.values(videoCacheResultUnwrap).length) {
           return Err(new VideoNotFoundError());
