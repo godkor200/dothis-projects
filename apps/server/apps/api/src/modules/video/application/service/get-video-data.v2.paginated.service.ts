@@ -14,6 +14,8 @@ import { Err, Ok } from 'oxide.ts';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
+import { VideoFetchHelper } from '@Apps/modules/video/application/service/helpers/video.fetch.helper';
 
 export class GetVideoDataV2PaginatedService
   implements GetVideoDataPageV2ServiceInboundPort
@@ -43,13 +45,21 @@ export class GetVideoDataV2PaginatedService
         .map((e) => e.trim());
 
       const videoCacheDao = new GetVideoCacheDao({ ...dto, relatedCluster });
+
       const videoCacheResult = await this.videoCacheService.execute(
         videoCacheDao,
       );
 
       if (videoCacheResult.isOk()) {
         const { from, to, order, sort, page, limit } = dto;
-        const videoCacheResultUnwrap = videoCacheResult.unwrap();
+        const withinRange = VideoFetchHelper.isDateWithinRange(
+          videoCacheResult.unwrap(),
+          from,
+          to,
+        );
+        const videoCacheResultUnwrap = RedisResultMapper.groupByCluster(
+          RedisResultMapper.toObjects(withinRange),
+        );
         const videoPaginatedDao = new VideoNoKeywordPaginatedDao({
           videoIds: videoCacheResultUnwrap,
           from,
@@ -61,14 +71,14 @@ export class GetVideoDataV2PaginatedService
         });
 
         const res = await this.videoPaginatedService.execute(videoPaginatedDao);
+
         if (res.isOk()) {
           return Ok({
-            total: Object.values(videoCacheResultUnwrap).reduce(
-              (acc, current) => acc + current.length,
-              0,
-            ),
+            total: withinRange.length,
             data: res.unwrap(),
           });
+        } else {
+          return Err(res.unwrapErr());
         }
       }
     } catch (e) {
