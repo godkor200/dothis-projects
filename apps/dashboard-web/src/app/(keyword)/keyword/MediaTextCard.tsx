@@ -74,7 +74,7 @@ const MediaTextCard = ({ keyword }: { keyword: string }) => {
             key={media.title}
             className="flex flex-1 flex-col justify-between"
           >
-            <p className="line-clamp-2 ">{media.title}</p>
+            <p className="line-clamp-2">{media.title}</p>
             <MediaDigestSummary
               element={media.element}
               provider={media.provider}
