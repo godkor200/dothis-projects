@@ -1,11 +1,11 @@
-import { PostReqVideoInboundPort } from '@ExternalApps/feature/video/domain/port/post-req-video.inbound.port';
+import { PostReqVideoInboundPort } from '@ExternalApps/feature/crawl-queue/video/domain/port/post-req-video.inbound.port';
 import { Inject } from '@nestjs/common';
-import { REQUEST_VIDEO_REPOSITORY_DI_TOKEN } from '@ExternalApps/feature/video/video.di-token.constants';
-import { PostRequestVideoDto } from '@ExternalApps/feature/video/application/dto/post-req-video.dto';
-import { TPostRequestVideoRes } from '@ExternalApps/feature/video/application/commands/post-req-video.command';
-import { ReqVideoOutboundPort } from '@ExternalApps/feature/video/domain/port/post-req-video.outbound.port';
+import { REQUEST_VIDEO_REPOSITORY_DI_TOKEN } from '@ExternalApps/feature/crawl-queue/video/video.di-token.constants';
+import { PostRequestVideoDto } from '@ExternalApps/feature/crawl-queue/video/application/dto/post-req-video.dto';
+import { TPostRequestVideoRes } from '@ExternalApps/feature/crawl-queue/video/application/commands/post-req-video.command';
+import { ReqVideoOutboundPort } from '@ExternalApps/feature/crawl-queue/video/domain/port/post-req-video.outbound.port';
 import { Err, Ok } from 'oxide.ts';
-import { VideoDuplicateException } from '@ExternalApps/feature/video/domain/events/errors/video.error';
+import { VideoDuplicateException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 
 export class PostReqVideoService implements PostReqVideoInboundPort {
   constructor(
@@ -18,11 +18,12 @@ export class PostReqVideoService implements PostReqVideoInboundPort {
       const res = await this.requestVideoRepository.insert({
         userId: '1', //FIXME: 임시
         videoId: command.videoId,
-        usersClientId: command.usersClientId,
-        isShorts: command.isShorts ? 1 : 0,
+        usersClientId: command.clientId,
+        isShorts: 1,
         managerId: command.managerId,
         operatorId: command.operatorId,
         vodId: command.vodId,
+        shortformId: command.shortformId,
         updateDate: new Date(),
       });
       return Ok(res.success);

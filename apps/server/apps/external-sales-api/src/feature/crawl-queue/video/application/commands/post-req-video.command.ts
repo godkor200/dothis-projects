@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
-import { POST_REQUEST_VIDEO_SERVICE_TOKEN } from '@ExternalApps/feature/video/video.di-token.constants';
-import { PostReqVideoInboundPort } from '@ExternalApps/feature/video/domain/port/post-req-video.inbound.port';
+import { POST_REQUEST_VIDEO_SERVICE_TOKEN } from '@ExternalApps/feature/crawl-queue/video/video.di-token.constants';
+import { PostReqVideoInboundPort } from '@ExternalApps/feature/crawl-queue/video/domain/port/post-req-video.inbound.port';
 import { Result } from 'oxide.ts';
-import { PostRequestVideoDto } from '@ExternalApps/feature/video/application/dto/post-req-video.dto';
-import { VideoDuplicateException } from '@ExternalApps/feature/video/domain/events/errors/video.error';
+import { PostRequestVideoDto } from '@ExternalApps/feature/crawl-queue/video/application/dto/post-req-video.dto';
+import { VideoDuplicateException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 export type TPostRequestVideoRes = Result<boolean, VideoDuplicateException>;
 @CommandHandler(PostRequestVideoDto)
 export class PostReqVideoCommandHandler

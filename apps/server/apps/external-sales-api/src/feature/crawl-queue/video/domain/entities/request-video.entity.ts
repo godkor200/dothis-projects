@@ -67,6 +67,14 @@ export class RequestVideoEntity {
   })
   vodId: string;
 
+  @Column({
+    name: 'shortform_id',
+    length: 30,
+    nullable: true,
+    comment: '라이브러리 식별 아이디',
+  })
+  shortformId: string;
+
   @UpdateDateColumn({
     name: 'update_date',
     type: 'timestamp',

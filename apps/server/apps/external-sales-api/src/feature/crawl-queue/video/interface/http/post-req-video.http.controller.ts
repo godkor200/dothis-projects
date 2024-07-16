@@ -18,16 +18,16 @@ import {
 import {
   PostRequestVideoDto,
   PostReqVideoBody,
-} from '@ExternalApps/feature/video/application/dto/post-req-video.dto';
+} from '@ExternalApps/feature/crawl-queue/video/application/dto/post-req-video.dto';
 import { match } from 'oxide.ts';
-import { TPostRequestVideoRes } from '@ExternalApps/feature/video/application/commands/post-req-video.command';
+import { TPostRequestVideoRes } from '@ExternalApps/feature/crawl-queue/video/application/commands/post-req-video.command';
 import {
   IRes,
   TokenExpired,
   TTsRestRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { JwtAccessGuard } from '@Libs/commons/src';
-import { VideoDuplicateException } from '@ExternalApps/feature/video/domain/events/errors/video.error';
+import { VideoDuplicateException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 import { SuccessBase } from '@Apps/modules/story-board/application/dtos';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { extendApi } from '@anatine/zod-openapi';
@@ -41,7 +41,7 @@ class VideoErrDuplicateException extends createZodDto(
 ) {}
 
 @Controller()
-@ApiTags('비디오')
+@ApiTags('크롤링 될 영상 정보')
 export class PostReqVideoHttpController {
   constructor(private readonly commandBus: CommandBus) {}
 

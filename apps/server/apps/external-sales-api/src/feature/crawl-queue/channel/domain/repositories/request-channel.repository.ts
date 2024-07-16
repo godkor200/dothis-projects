@@ -1,5 +1,5 @@
-import { ReqChannelOutboundPort } from '@ExternalApps/feature/channel/domain/port/post-req-channel.outbound.port';
-import { RequestChannelsEntity } from '@ExternalApps/feature/channel/domain/entities/request-channels.entity';
+import { ReqChannelOutboundPort } from '@ExternalApps/feature/crawl-queue/channel/domain/port/post-req-channel.outbound.port';
+import { RequestChannelsEntity } from '@ExternalApps/feature/crawl-queue/channel/domain/entities/request-channels.entity';
 import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { TRequestChannelModel } from '@dothis/dto';
 import { InjectRepository } from '@nestjs/typeorm';

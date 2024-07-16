@@ -3,7 +3,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import {
   PostRequestChannelIdDto,
   PostRequestChannelNameBody,
-} from '@ExternalApps/feature/channel/application/dto/post-req-channel-id.dto';
+} from '@ExternalApps/feature/crawl-queue/channel/application/dto/post-req-channel-id.dto';
 import { match } from 'oxide.ts';
 import {
   nestControllerContract,
@@ -11,7 +11,7 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { externalApiRouter } from '@dothis/dto';
-import { TPostRequestChannelIdRes } from '@ExternalApps/feature/channel/commands/post-req-channel-id.command';
+import { TPostRequestChannelIdRes } from '@ExternalApps/feature/crawl-queue/channel/application/commands/post-req-channel-id.command';
 import {
   IRes,
   TokenExpired,
@@ -27,7 +27,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAccessGuard } from '@Libs/commons/src';
-import { ChannelDuplicateException } from '@ExternalApps/feature/channel/domain/events/errors/channel.error';
+import { ChannelDuplicateException } from '@ExternalApps/feature/crawl-queue/channel/domain/events/errors/channel.error';
 import { SuccessBase } from '@Apps/modules/story-board/application/dtos';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { extendApi } from '@anatine/zod-openapi';
@@ -39,7 +39,7 @@ class ChannelErrDuplicateException extends createZodDto(
   extendApi(responses[409]),
 ) {}
 @Controller()
-@ApiTags('채널')
+@ApiTags('크롤링 될 채널 정보')
 export class PostReqChannelHttpController {
   constructor(private readonly commandBus: CommandBus) {}
   @ApiOperation({
