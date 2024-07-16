@@ -11,7 +11,7 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
-import { externalApiRouter, zAuthRes } from '@dothis/dto';
+import { externalApiRouter } from '@dothis/dto';
 import {
   ApiBearerAuth,
   ApiInternalServerErrorResponse,
