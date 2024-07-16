@@ -1,14 +1,14 @@
 import { Module, Provider } from '@nestjs/common';
-import { PostReqChannelHttpController } from '@ExternalApps/feature/channel/interfaces/http/post-req-channel.http.controller';
+import { PostReqChannelHttpController } from '@ExternalApps/feature/crawl-queue/channel/interfaces/http/post-req-channel.http.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { PostRequestChannelIdCommand } from '@ExternalApps/feature/channel/commands/post-req-channel-id.command';
-import { PostRequestChannelService } from '@ExternalApps/feature/channel/application/service/post-req-channel.service';
+import { PostRequestChannelIdCommand } from '@ExternalApps/feature/crawl-queue/channel/application/commands/post-req-channel-id.command';
+import { PostRequestChannelService } from '@ExternalApps/feature/crawl-queue/channel/application/service/post-req-channel.service';
 import {
   POST_REQUEST_CHANNEL_SERVICE_TOKEN,
   REQUEST_CHANNEL_REPOSITORY_DI_TOKEN,
-} from '@ExternalApps/feature/channel/channel.di-token.constants';
-import { RequestChannelsEntityModule } from '@ExternalApps/feature/channel/domain/entities/request-channels.entity.module';
-import { RequestChannelRepository } from '@ExternalApps/feature/channel/domain/repositories/request-channel.repository';
+} from '@ExternalApps/feature/crawl-queue/channel/channel.di-token.constants';
+import { RequestChannelsEntityModule } from '@ExternalApps/feature/crawl-queue/channel/domain/entities/request-channels.entity.module';
+import { RequestChannelRepository } from '@ExternalApps/feature/crawl-queue/channel/domain/repositories/request-channel.repository';
 import { PassportModule } from '@nestjs/passport';
 import { AtStrategy } from '@Libs/commons/src';
 const controllers = [PostReqChannelHttpController];
