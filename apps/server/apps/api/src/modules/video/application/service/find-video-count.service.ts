@@ -13,6 +13,7 @@ import { Err, Ok } from 'oxide.ts';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 
 export class FindVideoCountService
   implements findVideoCountByDateServiceInboundPort
@@ -76,11 +77,15 @@ export class FindVideoCountService
       const cache = await this.videoCacheService.execute(dao);
 
       if (cache.isOk()) {
-        const result = this.countVideosByDate(cache.unwrap(), dto.from, dto.to);
+        const cacheUnwrap = cache.unwrap();
+        const grouped = RedisResultMapper.groupByCluster(
+          RedisResultMapper.toObjects(cacheUnwrap),
+        );
+        const result = this.countVideosByDate(grouped, dto.from, dto.to);
         if (!result.length) {
           return Ok(null);
         }
-        return Ok(this.countVideosByDate(cache.unwrap(), dto.from, dto.to));
+        return Ok(this.countVideosByDate(grouped, dto.from, dto.to));
       }
     } catch (e) {
       return Err(e);
