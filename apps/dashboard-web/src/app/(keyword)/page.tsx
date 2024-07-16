@@ -2,11 +2,12 @@ import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ErrorBoundary from '@/components/common/Error/ErrorBoundary';
+import SystemError from '@/components/common/Error/SystemError';
 import Footer from '@/components/common/Layout/Footer';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 
 import AdsBanner from './AdsBanner';
-import App from './ErrorTest';
 import MainSearchbar from './MainSearchbar';
 import MediaBanner from './MediaBanner';
 import WeeklyKeyword from './WeeklyKeyword';
@@ -51,15 +52,18 @@ const Page = () => {
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
                 오늘의 이슈{' '}
               </p>
-              <MediaBanner randomOptios={randomMediaCategoryList} />
+              <ErrorBoundary fallback={<SystemError />}>
+                <MediaBanner randomOptios={randomMediaCategoryList} />
+              </ErrorBoundary>
             </div>
 
             <div className="ml-auto min-w-[300px] flex-grow px-[12px]">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
                 금주의 이슈 키워드
               </p>
-
-              <WeeklyKeyword />
+              <ErrorBoundary fallback={<SystemError />}>
+                <WeeklyKeyword />
+              </ErrorBoundary>
               {/* 
             <ul className="flex flex-col gap-[15px]">
               {mock_weeklyKeywordRank.map((item, i) => (
