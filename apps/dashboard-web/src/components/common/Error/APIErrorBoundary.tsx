@@ -1,3 +1,4 @@
+import type { ClassValue } from 'clsx';
 import { useState } from 'react';
 
 import ApiErrorComponent from '../Charts/ApiErrorComponent ';
@@ -5,12 +6,14 @@ import ApiErrorComponent from '../Charts/ApiErrorComponent ';
 interface ErrorHandlingComponentProps {
   refetchCallback: () => void;
   hasError: boolean;
+  classname?: ClassValue;
   children: React.ReactNode;
 }
 
 const APIErrorBoundary = ({
   refetchCallback,
   hasError,
+  classname,
   children,
 }: ErrorHandlingComponentProps) => {
   const [retryCount, setRetryCount] = useState(0);
@@ -20,9 +23,13 @@ const APIErrorBoundary = ({
     setRetryCount((prev) => prev + 1);
   };
 
+  console.log(retryCount);
+
   if (retryCount > 3 && hasError) {
     return (
-      <div className="flex flex-1 items-center justify-center text-center text-[20px] font-bold">
+      <div
+        className={`flex flex-1 items-center justify-center text-center text-[20px] font-bold ${classname}`}
+      >
         <h2>
           데이터를 불러오는 데 문제가 발생했습니다.
           <br />
@@ -35,7 +42,7 @@ const APIErrorBoundary = ({
   }
 
   if (hasError) {
-    return <ApiErrorComponent refetch={refetchHandle} />;
+    return <ApiErrorComponent refetch={refetchHandle} classname={classname} />;
   }
 
   return <>{children}</>;
