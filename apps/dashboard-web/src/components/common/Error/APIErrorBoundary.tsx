@@ -23,8 +23,6 @@ const APIErrorBoundary = ({
     setRetryCount((prev) => prev + 1);
   };
 
-  console.log(retryCount);
-
   if (retryCount > 3 && hasError) {
     return (
       <div
