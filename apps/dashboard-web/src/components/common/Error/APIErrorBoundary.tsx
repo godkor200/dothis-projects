@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-
-import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
-import { cn } from '@/utils/cn';
+import { useState } from 'react';
 
 import ApiErrorComponent from '../Charts/ApiErrorComponent ';
 
