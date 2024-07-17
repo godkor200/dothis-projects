@@ -48,21 +48,23 @@ export const useGetRandomMedia = ({
   KeywordQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
-  const { data: weeklyVideo } = useGetWeeklyVideo();
+  const { data: weeklyVideo, isError } = useGetWeeklyVideo();
 
-  const youtubeData = relatedkeyword
-    ? weeklyVideo?.filter(
-        (item) =>
-          item.search === searchKeyword && item.related === relatedkeyword,
-      )[0]
-    : undefined;
+  const youtubeData =
+    relatedkeyword || searchKeyword
+      ? weeklyVideo?.filter(
+          (item) =>
+            item.search === searchKeyword && item.related === relatedkeyword,
+        )[0]
+      : undefined;
 
   const youtubeVideoIsError =
-    relatedkeyword &&
-    weeklyVideo?.filter(
-      (item) =>
-        item.search === searchKeyword && item.related === relatedkeyword,
-    )?.[0].videoId === null
+    ((relatedkeyword || searchKeyword) &&
+      weeklyVideo?.filter(
+        (item) =>
+          item.search === searchKeyword && item.related === relatedkeyword,
+      )?.[0].videoId === null) ||
+    isError
       ? true
       : false;
 
