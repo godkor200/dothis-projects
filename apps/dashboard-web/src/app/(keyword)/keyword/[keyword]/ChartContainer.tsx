@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import D3Axis from '@/components/common/Charts/D3Axis';
 import APIErrorBoundary from '@/components/common/Error/APIErrorBoundary';
 import APILoadingBoundary from '@/components/common/Error/APILoadingBoundary';
@@ -18,8 +16,6 @@ const ChartContainer = ({
   keyword: string;
   relatedKeyword: string | null;
 }) => {
-  const [errorCount, setErrorCount] = useState(0);
-
   const {
     isLoading: dailyViewLoading,
     isError: dailyViewError,
@@ -52,8 +48,6 @@ const ChartContainer = ({
     if (dailyViewError) dailViewRefetch();
     if (naverSearchError) naverSearchRefetch();
     if (videoError) videoRefetch();
-
-    setErrorCount((prev) => prev + 1);
   };
 
   // if (errorCount > 3 && (dailyViewError || naverSearchError || videoError)) {
