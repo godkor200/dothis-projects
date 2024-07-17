@@ -1,6 +1,16 @@
-const ApiErrorComponent = ({ refetch }: { refetch: () => void }) => {
+import type { ClassValue } from 'clsx';
+
+const ApiErrorComponent = ({
+  refetch,
+  classname,
+}: {
+  refetch: () => void;
+  classname: ClassValue;
+}) => {
   return (
-    <div className="flex flex-1  flex-grow flex-col items-center justify-center gap-[20px]">
+    <div
+      className={`flex flex-1  flex-grow flex-col items-center justify-center gap-[20px] ${classname}`}
+    >
       <h2 className="text-grey900 text-center text-[20px] font-bold">
         데이터를 불러오는 데 실패했습니다. <br /> 다시 시도해주시기 바랍니다.
       </h2>
