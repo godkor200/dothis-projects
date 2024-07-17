@@ -24,7 +24,6 @@ const Page = () => {
   const randomMediaCategoryList = Array.from({ length: 3 }, () =>
     Math.random() < 0.5 ? 'news' : 'youtube',
   );
-  throw new Error('tes');
 
   return (
     <>
