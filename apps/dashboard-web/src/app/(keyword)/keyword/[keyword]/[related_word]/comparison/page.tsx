@@ -48,7 +48,7 @@ const Page = ({
                 />
               </div>
             </BoxFrame>
-            <BoxFrame></BoxFrame>
+
             <BoxFrame>
               <div>
                 <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
