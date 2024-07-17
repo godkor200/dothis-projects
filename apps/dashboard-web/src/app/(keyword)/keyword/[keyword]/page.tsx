@@ -11,6 +11,7 @@ import MediaTextContainer from '../MediaTextContainer';
 import ChartContainer from './ChartContainer';
 import ChartSummaryCards from './ChartSummaryCards';
 import CircleForceChart from './CircleForceChart';
+import CircleForceContainer from './CircleForceContainer';
 import CompetitionRate from './CompetitionRate';
 import KeywordRank from './KeywordRank';
 import MainCluster from './MainCluster';
@@ -92,8 +93,10 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     연관 소재
                   </p>{' '}
                   <ErrorBoundary fallback={<SystemError />}>
-                    <CircleForceChart keyword={keyword} />{' '}
-                    <D3Chart keyword={keyword} />
+                    <CircleForceContainer
+                      baseKeyword={keyword}
+                      relatedKeyword={null}
+                    />
                   </ErrorBoundary>
                   <p className="text-primary300 absolute bottom-4 right-5 text-[14px]">
                     * 키워드를 선택해주세요
