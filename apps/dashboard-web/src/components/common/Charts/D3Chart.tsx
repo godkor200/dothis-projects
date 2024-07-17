@@ -204,17 +204,12 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
     }
   }, [ref, width, JSON.stringify(data)]);
 
-  if (isError) {
-    return <ApiErrorComponent refetch={refetch} />;
-  }
+  // if (isError) {
+  //   return <ApiErrorComponent refetch={refetch} />;
+  // }
 
   return (
     <>
-      {isLoading && (
-        <BoxLoadingComponent
-          classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
-        />
-      )}
       <div className="App [&_svg]:overflow-visible">
         <div id="my_dataviz" ref={ref}></div>
       </div>
