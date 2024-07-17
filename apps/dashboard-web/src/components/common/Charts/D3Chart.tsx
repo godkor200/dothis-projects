@@ -4,11 +4,7 @@ import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
-import { cn } from '@/utils/cn';
-
-import ApiErrorComponent from './ApiErrorComponent ';
 
 interface TransactionData {
   title: string;
