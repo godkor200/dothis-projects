@@ -5,7 +5,7 @@ const ApiErrorComponent = ({
   classname,
 }: {
   refetch: () => void;
-  classname: ClassValue;
+  classname?: ClassValue;
 }) => {
   return (
     <div
