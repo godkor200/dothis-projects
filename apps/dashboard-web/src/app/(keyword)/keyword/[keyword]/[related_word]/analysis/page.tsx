@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
 import D3Axis from '@/components/common/Charts/D3Axis';
+import ErrorBoundary from '@/components/common/Error/ErrorBoundary';
+import SystemError from '@/components/common/Error/SystemError';
 import TooltipComponent from '@/components/common/Tooltip/Tooltip';
 import { cn } from '@/utils/cn';
 
@@ -38,10 +40,12 @@ const Page = ({
             <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
               <p> 조회수 예측</p>
             </div>{' '}
-            <PredictedView
-              baseKeyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
+            <ErrorBoundary fallback={<SystemError />}>
+              <PredictedView
+                baseKeyword={baseKeyword}
+                relatedKeyword={relatedKeyword}
+              />
+            </ErrorBoundary>
           </div>
         </BoxFrame>
         <div className="grid grid-cols-[repeat(2,minmax(300px,1fr))] gap-[20px]">
@@ -51,10 +55,12 @@ const Page = ({
                 소재 전망
               </p>
               <div className="flex flex-grow  flex-col items-center justify-center">
-                <OutlookChart
-                  baseKeyword={baseKeyword}
-                  relatedkeyword={relatedKeyword}
-                />
+                <ErrorBoundary fallback={<SystemError />}>
+                  <OutlookChart
+                    baseKeyword={baseKeyword}
+                    relatedkeyword={relatedKeyword}
+                  />
+                </ErrorBoundary>
               </div>
             </div>
           </BoxFrame>
@@ -63,11 +69,12 @@ const Page = ({
               <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
                 성공 확률
               </p>
-
-              <SuccessProbability
-                baseKeyword={baseKeyword}
-                relatedKeyword={relatedKeyword}
-              />
+              <ErrorBoundary fallback={<SystemError />}>
+                <SuccessProbability
+                  baseKeyword={baseKeyword}
+                  relatedKeyword={relatedKeyword}
+                />
+              </ErrorBoundary>
             </div>
           </BoxFrame>
         </div>
@@ -84,10 +91,12 @@ const Page = ({
                 }
               />
             </div>
-            <ChartContainer
-              keyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
+            <ErrorBoundary fallback={<SystemError />}>
+              <ChartContainer
+                keyword={baseKeyword}
+                relatedKeyword={relatedKeyword}
+              />
+            </ErrorBoundary>
           </div>
         </BoxFrame>
 
@@ -98,10 +107,12 @@ const Page = ({
               <TooltipComponent title={''} />
             </div>
 
-            <AreaChartContainer
-              baseKeyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
+            <ErrorBoundary fallback={<SystemError />}>
+              <AreaChartContainer
+                baseKeyword={baseKeyword}
+                relatedKeyword={relatedKeyword}
+              />
+            </ErrorBoundary>
             {/* <D3Axis keyword={baseKeyword} relatedKeyword={relatedKeyword} /> */}
           </div>
         </BoxFrame>
@@ -113,10 +124,12 @@ const Page = ({
             <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
               <p>주간 조회수 상승 순위</p>
             </div>
-            <MediaRank
-              baseKeyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
+            <ErrorBoundary fallback={<SystemError />}>
+              <MediaRank
+                baseKeyword={baseKeyword}
+                relatedKeyword={relatedKeyword}
+              />
+            </ErrorBoundary>
           </div>
         </BoxFrame>
       </div>

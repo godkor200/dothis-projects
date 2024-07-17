@@ -99,19 +99,28 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
   // 해당 useQuery 라이프사이클에서 혼동이 왔음 (select문이 해당 fetch를 성공했을 경우 한번만 출력되길 바랬는데, 안되네)
   const firstMedia = useGetRandomMedia({
     searchKeyword: data ? data[0].recommendedKeyword : undefined,
-    relatedkeyword: data ? data[0].topAssociatedWord.split(',')[0] : undefined,
+    relatedkeyword: data
+      ? data[0].topAssociatedWord
+        ? data[0].topAssociatedWord.split(',')[0]
+        : undefined
+      : undefined,
     mediaCategory: randomOptios[0],
     page: getCategoryOrder(randomOptios[0], 0),
     index: 1,
     setIndexNumber,
   });
+
   /**
    * index 프로퍼티, (category가 다른데, queryKey 중복이 일어나는걸 방지 )
    */
 
   const secondMedia = useGetRandomMedia({
     searchKeyword: data ? data[1].recommendedKeyword : undefined,
-    relatedkeyword: data ? data[1].topAssociatedWord.split(',')[0] : undefined,
+    relatedkeyword: data
+      ? data[1].topAssociatedWord
+        ? data[1].topAssociatedWord.split(',')[0]
+        : undefined
+      : undefined,
     mediaCategory: randomOptios[1],
     page: getCategoryOrder(randomOptios[1], 1),
     index: 2,
@@ -120,7 +129,11 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
 
   const thirdMedia = useGetRandomMedia({
     searchKeyword: data ? data[2].recommendedKeyword : undefined,
-    relatedkeyword: data ? data[2].topAssociatedWord.split(',')[0] : undefined,
+    relatedkeyword: data
+      ? data[2].topAssociatedWord
+        ? data[2].topAssociatedWord.split(',')[0]
+        : undefined
+      : undefined,
     mediaCategory: randomOptios[2],
     page: getCategoryOrder(randomOptios[2], 2),
     index: 3,
@@ -132,7 +145,9 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
       data && indexNumber > 3 ? data[3].recommendedKeyword : undefined,
     relatedkeyword:
       data && indexNumber > 3
-        ? data[3].topAssociatedWord.split(',')[0]
+        ? data[3].topAssociatedWord
+          ? data[3].topAssociatedWord.split(',')[0]
+          : undefined
         : undefined,
     mediaCategory: randomOptios[2],
     page: getCategoryOrder(randomOptios[2], 2),
@@ -145,7 +160,9 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
       data && indexNumber > 4 ? data[4].recommendedKeyword : undefined,
     relatedkeyword:
       data && indexNumber > 4
-        ? data[4].topAssociatedWord.split(',')[0]
+        ? data[4].topAssociatedWord
+          ? data[4].topAssociatedWord.split(',')[0]
+          : undefined
         : undefined,
     mediaCategory: randomOptios[2],
     page: getCategoryOrder(randomOptios[2], 2),
