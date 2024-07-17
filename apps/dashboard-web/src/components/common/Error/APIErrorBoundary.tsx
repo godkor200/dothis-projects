@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
 import { cn } from '@/utils/cn';
@@ -18,6 +18,11 @@ const APIErrorBoundary = ({
 }: ErrorHandlingComponentProps) => {
   const [retryCount, setRetryCount] = useState(0);
 
+  const refetchHandle = () => {
+    refetchCallback();
+    setRetryCount((prev) => prev + 1);
+  };
+
   if (retryCount > 3 && hasError) {
     return (
       <div className="flex flex-1 items-center justify-center text-center text-[20px] font-bold">
@@ -31,11 +36,6 @@ const APIErrorBoundary = ({
       </div>
     );
   }
-
-  const refetchHandle = () => {
-    refetchCallback();
-    setRetryCount((prev) => prev + 1);
-  };
 
   if (hasError) {
     return <ApiErrorComponent refetch={refetchHandle} />;
