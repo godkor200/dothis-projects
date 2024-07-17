@@ -61,7 +61,7 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
     return (
       <div>
         <BoxLoadingComponent
-          classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
+          classname={cn('absolute top-0 right-3 w-[60px] h-[60px]')}
         />
         <div className="flex justify-between gap-[24px] ">
           {Array.from({ length: 3 }).map((item, i) => (
