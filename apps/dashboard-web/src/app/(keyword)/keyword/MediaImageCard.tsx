@@ -5,7 +5,6 @@ import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import ApiErrorComponent from '@/components/common/Charts/ApiErrorComponent ';
 import APIErrorBoundary from '@/components/common/Error/APIErrorBoundary';
 import APILoadingBoundary from '@/components/common/Error/APILoadingBoundary';
 import SvgComp from '@/components/common/SvgComp';
@@ -13,15 +12,8 @@ import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import MediaDigestSummary from '@/components/MainContents/MediaArticles/MediaDigestSummary';
 import useGetVideoDataInfinityQuery from '@/hooks/react-query/query/useGetVideoDataInfinityQuery';
 import { useSelectedWord } from '@/store/selectedWordStore';
-import { cn } from '@/utils/cn';
-import {
-  externaImageLoader,
-  externalYouTubeImageLoader,
-  getMainImage,
-} from '@/utils/imagesUtil';
+import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 import { handleImageError } from '@/utils/imagesUtil';
-
-import BoxLoadingComponent from './BoxLoadingComponent';
 
 const MediaImageCard = ({ keyword }: { keyword: string }) => {
   const selectedWord = useSelectedWord();
