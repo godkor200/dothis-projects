@@ -24,6 +24,10 @@ export interface IRes<T = undefined> {
   data?: T | any;
 }
 
+export interface IResWithItem<T = undefined> {
+  success: boolean;
+  item?: T | any;
+}
 export class UserRes extends UserDto {}
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
