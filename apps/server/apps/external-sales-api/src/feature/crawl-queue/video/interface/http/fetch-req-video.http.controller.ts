@@ -27,7 +27,6 @@ import {
 import { JwtAccessGuard } from '@Libs/commons/src';
 import { externalApiRouter } from '@dothis/dto';
 import {
-  IRes,
   IResWithItem,
   TokenExpired,
   TTsRestRes,
