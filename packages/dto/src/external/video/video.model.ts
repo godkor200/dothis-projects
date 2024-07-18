@@ -13,4 +13,5 @@ export const zRequestVideoSchema = z.object({
   manager_id: z.string().max(30).describe('관리자 식별 아이디'),
   operator_id: z.string().max(30).describe('운영자 식별 아이디'),
   vod_id: z.string().max(30).describe('라이브러리 식별 아이디'),
+  shortform_id: z.string().max(30).describe('숏폼 식별 아이디'),
 });
