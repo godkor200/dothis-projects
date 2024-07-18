@@ -16,12 +16,22 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   const { relatedKeywordList, setRelatedKeywordList } =
     useSelectedKeywordContext('RelatedKeywordList');
 
-  const sortedRelatedKeywordList = relatedKeywordList.sort((a, b) =>
-    data ? data.indexOf(a) - data.indexOf(b) : 0,
-  );
-  const selectedListcolors = ['green', 'blue'];
+  const sortedRelatedKeywordList = relatedKeywordList.sort((a, b) => {
+    if (!data || data.indexOf(a) === data.indexOf(b)) {
+      return 0;
+    }
 
-  console.log(data?.find((keyword) => keyword === '가족'));
+    // nulls sort after anything else
+    if (data.indexOf(a) === -1) {
+      return 1;
+    }
+    if (data.indexOf(b) === -1) {
+      return -1;
+    }
+
+    return data.indexOf(a) < data.indexOf(b) ? -1 : 1;
+  });
+  const selectedListcolors = ['green', 'blue'];
 
   return (
     <div className="border-grey200 grid  grid-rows-[56px_repeat(3,74px)] border-b-2">
@@ -51,6 +61,7 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
                 'border-0': index === selectSize - 1,
               },
             )}
+            key={index + item}
           >
             <p>
               {data?.indexOf(item) !== -1
