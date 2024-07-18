@@ -1,6 +1,5 @@
 import { QueryBus } from '@nestjs/cqrs';
 import {
-  ConflictException,
   Controller,
   NotFoundException,
   Query,
@@ -44,7 +43,7 @@ import {
 } from '@ExternalApps/feature/crawl-queue/video/domain/port/fetch-req-video.inbound.port';
 const c = nestControllerContract(externalApiRouter.video);
 const { getReqVideos } = c;
-const { summary, responses, description } = getReqVideos;
+const { summary, description } = getReqVideos;
 @Controller()
 @ApiTags('크롤링 될 영상 정보')
 export class FetchReqVideoHttpController {

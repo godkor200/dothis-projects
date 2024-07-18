@@ -34,7 +34,7 @@ import { extendApi } from '@anatine/zod-openapi';
 import { createZodDto } from '@anatine/zod-nestjs';
 const c = nestControllerContract(externalApiRouter.video);
 const { postReqVideo } = c;
-const { summary, responses, description } = postReqVideo;
+const { summary, description } = postReqVideo;
 
 class VideoErrDuplicateException extends createZodDto(
   extendApi(zChannelErrConflict),
