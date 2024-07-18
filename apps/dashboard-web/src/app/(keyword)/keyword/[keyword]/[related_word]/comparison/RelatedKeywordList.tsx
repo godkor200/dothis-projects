@@ -43,6 +43,7 @@ const RelatedKeywordList = ({
             : '';
           return (
             <li
+              key={index}
               className={cn(
                 'flex  items-center  px-[38px] w-[300px] cursor-pointer  text-grey900',
                 {
