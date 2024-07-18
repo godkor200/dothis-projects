@@ -21,7 +21,7 @@ export type VideosMultiRelatedWordsCacheType = Record<
   VideoCacheReturnType[]
 >;
 
-export type VideoCacheAdapterRes = Result<VideoCacheRecord, VideoNotFoundError>;
+export type VideoCacheAdapterRes = Result<string[], VideoNotFoundError>;
 export type VideosMultiRelatedWordsCacheTypeResult = Result<
   VideosMultiRelatedWordsCacheType,
   TableNotFoundException | VideoNotFoundError

@@ -4,7 +4,6 @@ import {
   VideoCacheOutboundPorts,
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { appGlobalConfig } from '@Apps/config/app/config/app.global';
 import { Redis } from 'ioredis';
@@ -48,7 +47,6 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
             to,
             dao.relatedCluster,
           );
-
         const intersectionResults = filteredByDateRange.filter((item) =>
           filteredRelatedResults.includes(item),
         );
@@ -59,18 +57,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
       }
       if (!finalResults.length) return Err(new VideoNotFoundError());
 
-      console.log(
-        `search:${dao.search},related:${dao.related}`,
-        `[Final Results Count]: ${finalResults.length}`,
-        `[Final Results]:`,
-        finalResults,
-      );
-
-      return Ok(
-        RedisResultMapper.groupByCluster(
-          RedisResultMapper.toObjects(finalResults),
-        ),
-      );
+      return Ok(finalResults);
     } catch (e) {
       return Err(e);
     }
