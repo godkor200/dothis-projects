@@ -5,6 +5,10 @@ docker build -t external-sales-api -f ~/Desktop/project/dothis/apps/server/apps/
 echo '로그인'
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com
 echo '태깅'
-docker tag dothis-external-sales-api:latest 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com/dothis-external-sales-api:latest
+docker tag external-sales-api:latest 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com/dothis-external-sales-api:latest
 echo 'ECR push'
 docker push 505558602960.dkr.ecr.ap-northeast-2.amazonaws.com/dothis-external-sales-api:latest
+
+# 현재 시각 출력
+echo '현재 시각:'
+date
