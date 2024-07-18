@@ -18,12 +18,14 @@ const APIErrorBoundary = ({
 }: ErrorHandlingComponentProps) => {
   const [retryCount, setRetryCount] = useState(0);
 
+  const isApiError = retryCount > 2;
+
   const refetchHandle = () => {
     refetchCallback();
     setRetryCount((prev) => prev + 1);
   };
 
-  if (retryCount > 3 && hasError) {
+  if (isApiError && hasError) {
     return (
       <div
         className={`flex flex-1 items-center justify-center text-center text-[20px] font-bold ${classname}`}
