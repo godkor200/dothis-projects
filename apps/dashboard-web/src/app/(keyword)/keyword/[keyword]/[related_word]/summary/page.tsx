@@ -145,6 +145,7 @@ const SummaryTab = ({
                           'text-[#818CF8]': blue === item,
                         },
                       )}
+                      key={item}
                     >
                       <span className="bg-grey200 h-[24px] w-[24px] rounded-[4px] text-center ">
                         {index + 1}
