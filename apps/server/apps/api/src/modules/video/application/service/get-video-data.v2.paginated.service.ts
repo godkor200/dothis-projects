@@ -32,13 +32,19 @@ export class GetVideoDataV2PaginatedService
   ) {}
 
   async execute(dto: GetVideoPaginatedPageSortDto): Promise<TGetVideoPage> {
+    console.time('execute');
     try {
+      console.time('findOneByKeyword');
       const keywordInfo = await this.relWordsRepository.findOneByKeyword(
         dto.search,
       );
+      console.timeEnd('findOneByKeyword');
+
       if (keywordInfo.isErr()) {
+        console.timeEnd('execute');
         return Err(new KeywordsNotFoundError());
       }
+
       const keywordInfoUnwrap = keywordInfo.unwrap();
       const relatedCluster = keywordInfoUnwrap.cluster
         .split(',')
@@ -46,17 +52,23 @@ export class GetVideoDataV2PaginatedService
 
       const videoCacheDao = new GetVideoCacheDao({ ...dto, relatedCluster });
 
+      console.time('videoCacheService.execute');
       const videoCacheResult = await this.videoCacheService.execute(
         videoCacheDao,
       );
+      console.timeEnd('videoCacheService.execute');
 
       if (videoCacheResult.isOk()) {
         const { from, to, order, sort, page, limit } = dto;
+
+        console.time('isDateWithinRange');
         const withinRange = VideoFetchHelper.isDateWithinRange(
           videoCacheResult.unwrap(),
           from,
           to,
         );
+        console.timeEnd('isDateWithinRange');
+
         const videoCacheResultUnwrap = RedisResultMapper.groupByCluster(
           RedisResultMapper.toObjects(withinRange),
         );
@@ -70,18 +82,23 @@ export class GetVideoDataV2PaginatedService
           page,
         });
 
+        console.time('videoPaginatedService.execute');
         const res = await this.videoPaginatedService.execute(videoPaginatedDao);
+        console.timeEnd('videoPaginatedService.execute');
 
         if (res.isOk()) {
+          console.timeEnd('execute');
           return Ok({
             total: withinRange.length,
             data: res.unwrap(),
           });
         } else {
+          console.timeEnd('execute');
           return Err(res.unwrapErr());
         }
       }
     } catch (e) {
+      console.timeEnd('execute');
       return Err(e);
     }
   }
