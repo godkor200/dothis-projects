@@ -1,7 +1,6 @@
 import {
   Param,
   Controller,
-  ConflictException,
   NotFoundException,
   UseGuards,
   Query,
@@ -43,7 +42,7 @@ import { JwtAccessGuard } from '@Libs/commons/src';
 import { TDelRequestVideoRes } from '@ExternalApps/feature/crawl-queue/video/domain/port/delete-req-video.inbound.port';
 const c = nestControllerContract(externalApiRouter.video);
 const { deleteReqVideo } = c;
-const { summary, responses, description } = deleteReqVideo;
+const { summary, description } = deleteReqVideo;
 
 @Controller()
 @ApiTags('크롤링 될 영상 정보')
