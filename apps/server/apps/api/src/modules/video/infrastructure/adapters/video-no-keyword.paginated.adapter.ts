@@ -62,7 +62,7 @@ export class VideoNoKeywordPaginatedAdapter
       limit,
       sort = 'video_views',
       page,
-      order,
+      order = 'ASC',
     } = dao;
     const queryString = this.queryString(videoIds, from, to);
 
