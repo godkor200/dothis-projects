@@ -14,6 +14,7 @@ import { VideoAggregateUtils } from '@Apps/modules/video/application/service/hel
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 
 export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
   constructor(
@@ -39,7 +40,7 @@ export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
         .split(',')
         .map((e) => e.trim());
 
-      const VideoDao = new GetVideoCacheDao({
+      const videoDao = new GetVideoCacheDao({
         search: props.search,
         related: props.related,
         from: props.from,
@@ -47,14 +48,20 @@ export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
         relatedCluster,
       });
 
-      const videoCacheResult = await this.videoCacheService.execute(VideoDao);
+      const videoCacheResult = await this.videoCacheService.execute(videoDao);
+
       if (videoCacheResult.isOk()) {
-        const videoCacheResultUnwrap = videoCacheResult.unwrap();
+        const videoCacheResultUnwrapped = RedisResultMapper.toObjects(
+          videoCacheResult.unwrap(),
+        );
+        const groupedVideoCacheResult = RedisResultMapper.groupByCluster(
+          videoCacheResultUnwrapped,
+        );
 
         const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
-          videoIds: videoCacheResultUnwrap,
-          from: VideoDao.from,
-          to: VideoDao.to,
+          videoIds: groupedVideoCacheResult,
+          from: videoDao.from,
+          to: videoDao.to,
         });
 
         const videoHistoryResult = await this.videoHistoryService.execute(
