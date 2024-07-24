@@ -181,6 +181,36 @@ export const handleDailyViewDataD3 = (
   return result;
 };
 
+export const handleDailyViewListD3 = (
+  {
+    data,
+    keyword,
+  }: { data: CombineExpectedView[] | undefined; keyword: string },
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+
+  data?.forEach((item, index) => {
+    if (item) {
+      const date = item.date;
+
+      const views = item.increaseViews;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.abs(Math.floor(views));
+      }
+    }
+  });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
 export const handleDailyVideoCount = (
   data: (DailyView | undefined)[],
   { startDate, endDate }: { startDate: string; endDate: string },
