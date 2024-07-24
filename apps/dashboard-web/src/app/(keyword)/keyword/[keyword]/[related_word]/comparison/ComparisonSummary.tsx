@@ -4,6 +4,7 @@ import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWor
 import type { TKeywords } from '@/types/common';
 import { cn } from '@/utils/cn';
 
+import ComparisonSummaryCard from './ComparisonSummaryCard';
 import { useSelectedKeywordContext } from './SelectedKeywordProvider';
 
 const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
@@ -31,6 +32,7 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
     return data.indexOf(a) < data.indexOf(b) ? -1 : 1;
   });
+
   const selectedListcolors = ['green', 'blue'];
 
   return (
@@ -43,35 +45,32 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
         <p>영상 수</p>
         <p>검색량 변화</p>
         <p>경쟁 강도</p>
-        <p>구독자 10만 이상 채널</p>
       </div>
 
       {sortedRelatedKeywordList.map((item, index) => {
         const color =
-          item === relatedKeyword ? 'red' : selectedListcolors.shift();
+          item === relatedKeyword
+            ? 'red'
+            : selectedListcolors.length > 0
+            ? (selectedListcolors.shift() as 'blue' | 'green') // Assuming the other colors are blue and green
+            : 'blue';
 
         return (
-          <div
-            className={cn(
-              ' grid grid-cols-[40px_minmax(180px,1fr)_repeat(2,110px)_repeat(3,100px)_minmax(140px,1fr)] items-center gap-[10px] text-center text-[14px] text-grey900 font-[500]  border-b-2 border-grey200',
-              {
-                'bg-[#d2ffef]': color === 'green',
-                'bg-[#d7dbfa]': color === 'blue',
-                'bg-primary100': color === 'red',
-                'border-0': index === selectSize - 1,
-              },
-            )}
-            key={index + item}
-          >
-            <p>
-              {data?.indexOf(item) !== -1
+          <ComparisonSummaryCard
+            baseKeyword={baseKeyword}
+            relatedKeyword={item}
+            rank={
+              data?.indexOf(item) !== -1
                 ? data?.indexOf(item)
                   ? data?.indexOf(item) + 1
                   : 1
-                : '-'}
-            </p>
-            <p>{item}</p>
-          </div>
+                : '-'
+            }
+            color={color}
+            index={index}
+            selectSize={selectSize}
+            key={index}
+          />
         );
       })}
 
