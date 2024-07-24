@@ -25,3 +25,18 @@ body {
 .price {
   font-weight: bold;
 }
+
+.red {
+  stroke: #f0516d;
+}
+
+.blue {
+  stroke: #818cf8;
+}
+.green {
+  stroke: #34d399;
+}
+
+.unknown {
+  stroke: black;
+}
