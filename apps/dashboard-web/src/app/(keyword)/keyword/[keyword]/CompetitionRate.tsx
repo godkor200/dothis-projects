@@ -95,6 +95,16 @@ export function sumIncreaseViewsV2(
         increaseLikes: number;
         increaseViews: number;
       }[]
+    | {
+        date: string;
+        maxPerformance: number;
+        increaseViews: number;
+        expectedHits: number;
+        minPerformance: number;
+        uniqueVideoCount?: number | undefined;
+        increaseComments?: number | undefined;
+        increaseLikes?: number | undefined;
+      }[]
     | undefined,
 ) {
   if (data) {
@@ -113,10 +123,23 @@ export function sumVideoCount(
         increaseLikes: number;
         increaseViews: number;
       }[]
+    | {
+        date: string;
+        maxPerformance: number;
+        increaseViews: number;
+        expectedHits: number;
+        minPerformance: number;
+        uniqueVideoCount?: number;
+        increaseComments?: number;
+        increaseLikes?: number;
+      }[]
     | undefined,
 ) {
   if (data) {
-    return data?.reduce((total, item) => total + item.uniqueVideoCount, 0);
+    return data?.reduce(
+      (total, item) => total + (item.uniqueVideoCount ?? 0),
+      0,
+    );
   }
   return 0;
 }
