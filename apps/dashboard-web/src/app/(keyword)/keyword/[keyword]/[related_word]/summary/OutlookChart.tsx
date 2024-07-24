@@ -11,7 +11,7 @@ import {
 } from '@/utils/dailyView/common';
 import { getNaver_FluctuationRate } from '@/utils/naver-search/common';
 
-import useXAxis from './useXAxis';
+import useXAxis from './useXAxes';
 
 interface DataItem {
   date: number;
