@@ -9,13 +9,24 @@ import {
   useState,
 } from 'react';
 
+import {
+  useDailyViewList,
+  useExpectedViewList,
+  useSearchRatioFormmaterListD3,
+  useUploadVideoCountFormatterListD3,
+} from '@/hooks/contents/useChartFormatter';
+import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
+import type { TKeywords } from '@/types/common';
 import { cn } from '@/utils/cn';
 
+import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider';
 import useD3 from './useD3';
-import useD3Bar from './useD3Bar';
-import useD3Line from './useD3Line';
-import useXAxis from './useXAxis';
-import useYAxis from './useYAxis';
+import useD3Bars from './useD3Bars';
+import useD3Lines from './useD3Lines';
+import useDailyViewQueries from './useDailyViewQueries';
+import useNaverSearchQueries from './useNaverSearchQueries';
+import useXAxes from './useXAxes';
+import useYAxes from './useYAxes';
 
 const summaryChartList = [
   { label: '조회수', value: 'views' },
@@ -27,16 +38,24 @@ const summaryChartList = [
 export interface DataItem {
   date: string;
   value: number; // value 속성의 타입을 number로 명시
-  color: string;
+  // color: string;
 }
 
-const SummaryChart = () => {
+const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   const selectRef = useRef<HTMLDivElement>(null);
 
   const [element, setElement] = useState(null);
 
   const [summaryChartType, setSummaryChartType] =
     useState<(typeof summaryChartList)[number]['value']>('views');
+
+  // const viewsDatta = useViewsQuery();
+
+  // const performanceData = useperformanceQuery();
+
+  // const searchRatioData = usesearchRatioQuery();
+
+  // const videoCountData = usevideoCountQuery();
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
     const getDimensions = () => {
@@ -118,8 +137,103 @@ const SummaryChart = () => {
     { date: '2024-05-06', value: 22, color: '#818CF8' },
   ]);
 
+  const lineData = [
+    [
+      { date: '2024-05-01', value: 222, color: '#F0516D' },
+      { date: '2024-05-02', value: 311, color: '#F0516D' },
+      { date: '2024-05-03', value: 290, color: '#F0516D' },
+      { date: '2024-05-04', value: 288, color: '#F0516D' },
+      { date: '2024-05-05', value: 230, color: '#F0516D' },
+      { date: '2024-05-06', value: 222, color: '#F0516D' },
+    ],
+    [
+      { date: '2024-05-01', value: 50, color: '#34D399' },
+      { date: '2024-05-02', value: 60, color: '#34D399' },
+      { date: '2024-05-03', value: 40, color: '#34D399' },
+      { date: '2024-05-04', value: 28, color: '#34D399' },
+      { date: '2024-05-05', value: 34, color: '#34D399' },
+      { date: '2024-05-06', value: 21, color: '#34D399' },
+    ],
+    [
+      { date: '2024-05-01', value: 60, color: '#818CF8' },
+      { date: '2024-05-02', value: 15, color: '#818CF8' },
+      { date: '2024-05-03', value: 26, color: '#818CF8' },
+      { date: '2024-05-04', value: 34, color: '#818CF8' },
+      { date: '2024-05-05', value: 31, color: '#818CF8' },
+      { date: '2024-05-06', value: 22, color: '#818CF8' },
+    ],
+  ];
+
+  const [mockLine, setMockLine] = useState([
+    [
+      { date: '2024-07-15', value: 222 },
+      { date: '2024-07-16', value: 311 },
+      { date: '2024-07-17', value: 290 },
+      { date: '2024-07-18', value: 288 },
+      { date: '2024-07-19', value: 230 },
+      { date: '2024-07-20', value: 222 },
+      { date: '2024-07-21', value: 222 },
+    ],
+    [
+      { date: '2024-07-15', value: 50 },
+      { date: '2024-07-16', value: 60 },
+      { date: '2024-07-17', value: 40 },
+      { date: '2024-07-18', value: 28 },
+      { date: '2024-07-19', value: 34 },
+      { date: '2024-07-20', value: 21 },
+      { date: '2024-07-21', value: 21 },
+    ],
+    [
+      { date: '2024-07-15', value: 60 },
+      { date: '2024-07-16', value: 15 },
+      { date: '2024-07-17', value: 26 },
+      { date: '2024-07-18', value: 34 },
+      { date: '2024-07-19', value: 31 },
+      { date: '2024-07-20', value: 22 },
+      { date: '2024-07-21', value: 22 },
+    ],
+  ]);
+
+  const keywordList = ['파워', '서울', '대구'];
+  // const mockList = [
+  //   {
+  //     data: [
+  //       { date: '2024-05-01', value: 222, color: '#F0516D' },
+  //       { date: '2024-05-02', value: 311, color: '#F0516D' },
+  //       { date: '2024-05-03', value: 290, color: '#F0516D' },
+  //       { date: '2024-05-04', value: 288, color: '#F0516D' },
+  //       { date: '2024-05-05', value: 230, color: '#F0516D' },
+  //       { date: '2024-05-06', value: 222, color: '#F0516D' },
+  //     ],
+  //     keyword: '대구',
+  //   },
+  //   {
+  //     data: [
+  //       { date: '2024-05-01', value: 50, color: '#34D399' },
+  //       { date: '2024-05-02', value: 60, color: '#34D399' },
+  //       { date: '2024-05-03', value: 40, color: '#34D399' },
+  //       { date: '2024-05-04', value: 28, color: '#34D399' },
+  //       { date: '2024-05-05', value: 34, color: '#34D399' },
+  //       { date: '2024-05-06', value: 21, color: '#34D399' },
+  //     ],
+  //     keyword: '파워',
+  //   },
+  //   {
+  //     data: [
+  //       { date: '2024-05-01', value: 60, color: '#818CF8' },
+  //       { date: '2024-05-02', value: 15, color: '#818CF8' },
+  //       { date: '2024-05-03', value: 26, color: '#818CF8' },
+  //       { date: '2024-05-04', value: 34, color: '#818CF8' },
+  //       { date: '2024-05-05', value: 31, color: '#818CF8' },
+  //       { date: '2024-05-06', value: 22, color: '#818CF8' },
+  //     ],
+  //     keyword: '서울',
+  //   },
+  // ];
+
   const { width } = useDimensions(selectRef);
-  const height = 220;
+
+  const height = 324;
   const marginTop = 0;
   const marginRight = 20;
   const marginBottom = 30;
@@ -133,6 +247,72 @@ const SummaryChart = () => {
     marginBottom,
     marginLeft,
   };
+
+  const { relatedKeywordList, setRelatedKeywordList } =
+    useSelectedKeywordContext('RelatedKeywordList');
+
+  const {
+    data: rankingList,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetRankingRelWords(baseKeyword);
+
+  const sortedRelatedKeywordList = relatedKeywordList.sort((a, b) => {
+    if (!rankingList || rankingList.indexOf(a) === rankingList.indexOf(b)) {
+      return 0;
+    }
+
+    // nulls sort after anything else
+    if (rankingList.indexOf(a) === -1) {
+      return 1;
+    }
+    if (rankingList.indexOf(b) === -1) {
+      return -1;
+    }
+
+    return rankingList.indexOf(a) < rankingList.indexOf(b) ? -1 : 1;
+  });
+
+  const { chartDataList, keywordList: testKeywordList } = useDailyViewList({
+    baseKeyword,
+    relatedKeywords: sortedRelatedKeywordList,
+  });
+
+  const { chartDataList: naverChartDataList, keywordList: naverKeywordList } =
+    useSearchRatioFormmaterListD3({
+      baseKeyword,
+      relatedKeywords: sortedRelatedKeywordList,
+    });
+
+  const {
+    chartDataList: expectedViewChartList,
+    keywordList: expectedKeywordList,
+  } = useExpectedViewList({
+    baseKeyword,
+    relatedKeywords: sortedRelatedKeywordList,
+  });
+
+  const {
+    chartDataList: uploadVideoChartList,
+    keywordList: uploadVideoKeywordList,
+  } = useUploadVideoCountFormatterListD3({
+    baseKeyword,
+    relatedKeywords: sortedRelatedKeywordList,
+  });
+
+  const dataMap = {
+    views: mockLine.slice(0, sortedRelatedKeywordList.length),
+    performance: expectedViewChartList,
+    searchRatio: naverChartDataList,
+    videoCount: uploadVideoChartList,
+  };
+
+  const currentData = dataMap[summaryChartType];
+
+  const selectedListcolors = ['green', 'blue'];
+
+  const updateSelectedColors = ['green', 'blue'];
 
   const svgRef = useRef<SVGSVGElement | null>(null); // SVG 엘리먼트의 ref 추가
 
@@ -158,158 +338,159 @@ const SummaryChart = () => {
     .attr('width', width)
     .attr('height', height);
 
-  const { y, yAxisRef } = useYAxis({
+  const { y, yAxisRef } = useYAxes({
     chartSelector: chart,
-    data: data,
+    data: currentData,
     dimensions,
     styleMethod(selection) {
       selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
     },
   });
 
-  const { y: y2 } = useYAxis({
+  const { x, xAxisRef } = useXAxes({
     chartSelector: chart,
-    data: data2,
-    dimensions,
-    styleMethod(selection) {
-      selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
-    },
-  });
-
-  const { y: y3 } = useYAxis({
-    chartSelector: chart,
-    data: data3,
-    dimensions,
-    styleMethod(selection) {
-      selection.attr('stroke-dasharray', '5, 5').style('opacity', 0.2);
-    },
-  });
-
-  const { x, xAxisRef } = useXAxis({
-    chartSelector: chart,
-    data: data,
+    data: currentData[0],
     dimensions,
   });
 
-  const { x: x2, xAxisRef: xAxisRef2 } = useXAxis({
-    chartSelector: chart,
-    data: data2,
-    dimensions,
-  });
+  const chartColorSchema = {
+    red: '#F0516D',
+    blue: '#818CF8',
+    green: '#34D399',
+    unknown: '#000',
+  };
 
-  const { x: x3, xAxisRef: xAxisRef3 } = useXAxis({
+  const line = useD3Lines({
     chartSelector: chart,
-    data: data3,
-    dimensions,
-  });
-
-  const line = useD3Line({
-    chartSelector: chart,
-    data: data,
+    data: currentData,
     dimensions,
     xScale: x,
     yScale: y,
-    styleMethod(selection) {
-      selection.style('stroke', '#F0516D');
+    styleMethod(selection, index, isUpdate) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : isUpdate
+          ? updateSelectedColors.length > 0
+            ? (updateSelectedColors.shift() as 'blue' | 'green')
+            : 'unknown'
+          : selectedListcolors.length > 0
+          ? (selectedListcolors.shift() as 'blue' | 'green')
+          : 'unknown';
+
+      // console.log(
+      //   sortedRelatedKeywordList[index],
+      //   relatedKeyword,
+      //   chartColorSchema[color],
+      // );
+
+      selection.classed('red blue green unknown', false);
+      selection.attr('stroke', chartColorSchema[color]);
     },
     title: '일일조회수',
+    keywordList: sortedRelatedKeywordList,
   });
 
-  const line2 = useD3Line({
-    chartSelector: chart,
-    data: data2,
-    dimensions,
-    xScale: x2,
-    yScale: y2,
-    styleMethod(selection) {
-      selection.style('stroke', '#818CF8');
-    },
-    title: '영상수',
-  });
+  const xOffset = [-10, 0, 10]; // Offsets for each dataset index
 
-  const line3 = useD3Line({
+  const bar = useD3Bars({
     chartSelector: chart,
-    data: data3,
-    dimensions,
-    xScale: x3,
-    yScale: y3,
-    styleMethod(selection) {
-      selection.style('stroke', '#34D399');
-    },
-    title: '검색량',
-  });
-
-  const bar = useD3Bar({
-    chartSelector: chart,
-    data: data,
+    data: currentData,
     dimensions,
     xScale: x,
     yScale: y,
     title: '일일조회수',
-    styleMethod(selection) {
-      selection.attr('rx', 0);
-      selection.attr('fill', '#F0516D');
+    styleMethods: [
+      (selection) => {
+        selection.style('fill', '#F0516D');
+        selection.attr('rx', 0);
+      },
+      (selection) => {
+        selection.style('fill', '#4CAF50');
+        selection.attr('rx', 0);
+      },
+      (selection) => {
+        selection.attr('fill', '#818CF8');
+        selection.attr('rx', 0);
+      },
+      // Add more style functions as needed
+    ],
+
+    xPositionMethod(xScale, data, index) {
+      return (
+        (xScale(data.date) as number) + xScale.bandwidth() / 2 + xOffset[index]
+      );
     },
   });
 
-  const bar2 = useD3Bar({
-    chartSelector: chart,
-    data: data2,
-    dimensions,
-    xScale: x2,
-    yScale: y2,
-    xPositionMethod(xScale, data) {
-      return (xScale(data.date) as number) + xScale.bandwidth() / 2 - 10;
-    },
-    styleMethod(selection) {
-      selection.attr('rx', 0);
-      selection.attr('fill', '#818CF8');
-    },
-    title: '영상수',
-  });
+  // const bar2 = useD3Bar({
+  //   chartSelector: chart,
+  //   data: data2,
+  //   dimensions,
+  //   xScale: x2,
+  //   yScale: y2,
+  //   xPositionMethod(xScale, data) {
+  //     return (xScale(data.date) as number) + xScale.bandwidth() / 2 - 10;
+  //   },
+  //   styleMethod(selection) {
+  //     selection.attr('rx', 0);
+  //     selection.attr('fill', '#818CF8');
+  //   },
+  //   title: '영상수',
+  // });
 
-  const bar3 = useD3Bar({
-    chartSelector: chart,
-    data: data3,
-    dimensions,
-    xScale: x3,
-    yScale: y3,
-    xPositionMethod(xScale, data) {
-      return (xScale(data.date) as number) + xScale.bandwidth() / 2 + 10;
-    },
-    styleMethod(selection) {
-      selection.attr('rx', 0);
-      selection.attr('fill', '#34D399');
-    },
-    title: '검색량',
-  });
+  // const bar3 = useD3Bar({
+  //   chartSelector: chart,
+  //   data: data3,
+  //   dimensions,
+  //   xScale: x3,
+  //   yScale: y3,
+  //   xPositionMethod(xScale, data) {
+  //     return (xScale(data.date) as number) + xScale.bandwidth() / 2 + 10;
+  //   },
+  //   styleMethod(selection) {
+  //     selection.attr('rx', 0);
+  //     selection.attr('fill', '#34D399');
+  //   },
+  //   title: '검색량',
+  // });
 
   useEffect(() => {
     chart.selectAll('*').remove();
+  }, [width]);
 
+  useEffect(() => {
+    yAxisRef.current?.remove();
+    xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
-    xAxisRef2.current?.render();
-    xAxisRef3.current?.render();
-  }, [width, xAxisRef, yAxisRef]);
+  }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
-      bar2.current?.render();
-      bar3.current?.render();
+      // bar2.current?.render();
+      // bar3.current?.render();
       line.current?.remove();
-      line2.current?.remove();
-      line3.current?.remove();
+      // line2.current?.remove();
+      // line3.current?.remove();
     } else {
       bar.current?.remove();
-      bar2.current?.remove();
-      bar3.current?.remove();
+      // bar2.current?.remove();
+      // bar3.current?.remove();
       line.current?.render();
-      line2.current?.render();
-      line3.current?.render();
+      // line2.current?.render();
+      // line3.current?.render();
     }
-  }, [width, data, data2, data3, summaryChartType]);
+  }, [
+    width,
+    data,
+    data2,
+    data3,
+    summaryChartType,
+    currentData,
+    relatedKeywordList,
+  ]);
 
   const [number, setNumber] = useState([2, 4, 5, 6, 7]);
   return (
@@ -329,9 +510,80 @@ const SummaryChart = () => {
 
               if (item.value === 'videoCount') {
                 line.current?.remove();
-                line2.current?.remove();
-                line3.current?.remove();
+                // line2.current?.remove();
+                // line3.current?.remove();
               } else {
+                setMockLine([
+                  [
+                    { date: '2024-07-15', value: 222 },
+                    { date: '2024-07-16', value: 311 },
+                    { date: '2024-07-17', value: 290 },
+                    { date: '2024-07-18', value: 288 },
+                    { date: '2024-07-19', value: 230 },
+                    { date: '2024-07-20', value: 222 },
+                    { date: '2024-07-21', value: 222 },
+                  ],
+                  [
+                    {
+                      date: '2024-07-15',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-16',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-17',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-18',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-19',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-20',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-21',
+                      value: Math.random() * 100,
+                    },
+                  ],
+                  [
+                    {
+                      date: '2024-07-15',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-16',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-17',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-18',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-19',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-20',
+                      value: Math.random() * 100,
+                    },
+                    {
+                      date: '2024-07-21',
+                      value: Math.random() * 100,
+                    },
+                  ],
+                ]);
                 setData([
                   {
                     date: '2024-05-01',
