@@ -163,7 +163,7 @@ const GNBSearchbar = () => {
             ?.filter((item) => item.endsWith('*'))
             .slice(0, 5)
             .map((item) => (
-              <div className="flex cursor-pointer px-[30px]">
+              <div className="flex cursor-pointer px-[30px]" key={item}>
                 <SvgComp
                   icon="BorderSearchIcon"
                   size={24}

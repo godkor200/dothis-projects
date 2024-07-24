@@ -145,6 +145,7 @@ const SummaryTab = ({
                           'text-[#818CF8]': blue === item,
                         },
                       )}
+                      key={item}
                     >
                       <span className="bg-grey200 h-[24px] w-[24px] rounded-[4px] text-center ">
                         {index + 1}
@@ -162,7 +163,10 @@ const SummaryTab = ({
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
               키워드 분석 결과 비교
             </p>
-            <SummaryChart />
+            <SummaryChart
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+            />
           </div>
         </BoxFrame>
       </div>

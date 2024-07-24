@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Dispatch, SetStateAction } from 'react';
@@ -37,7 +38,10 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
       <div className="mr-[66px] flex items-center gap-[53px]">
         <Link href={'/'}>
           <div className="my-[24px] ml-[28px] flex cursor-pointer items-center gap-[8px]">
-            <SvgComp icon="SideLogo" size={30} />
+            {/* <SvgComp icon="SideLogo" size={30} /> */}
+            <div className="relative h-[32px] w-[27px]">
+              <Image src={'/RefactLogo.png'} fill={true} alt="mainlogo" />
+            </div>
             <SvgComp icon="LogoTitle" width={100} height={40} />
           </div>
         </Link>

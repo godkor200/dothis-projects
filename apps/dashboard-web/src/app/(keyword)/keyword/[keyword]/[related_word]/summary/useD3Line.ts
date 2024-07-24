@@ -9,8 +9,8 @@ import {
 } from 'react';
 
 import type { DataItem } from './SummaryChart';
-import useXAxis from './useXAxis';
-import useYAxis from './useYAxis';
+import useXAxis from './useXAxes';
+import useYAxis from './useYAxes';
 
 interface LineRef {
   //   line: D3.Line<DataItem>;
