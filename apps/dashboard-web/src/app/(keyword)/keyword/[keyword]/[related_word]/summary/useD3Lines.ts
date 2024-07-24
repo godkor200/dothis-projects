@@ -89,9 +89,15 @@ const useD3Line = ({
         //   }
         // }
         // Collect all elements with class name containing 'line-'
+
+        chartSelector.selectAll("[class*='line-']").interrupt();
+
+        chartSelector.selectAll('.to-remove').remove();
+
         chartSelector.selectAll("[class*='line-']").each(function () {
           const line = D3.select(this);
           const lineClass = line.attr('class');
+
           // console.log(lineClass);
 
           // Determine if the class should be removed based on keywordList
@@ -103,8 +109,18 @@ const useD3Line = ({
           );
 
           if (shouldRemove) {
-            line.remove();
-            // line.transition().duration(200).style('opacity', 0).remove(); // Remove the element
+            // line.remove();
+            line
+              .classed('to-remove', true)
+              .transition()
+              .duration(200)
+              .style('opacity', 0)
+              .on('end', function () {
+                // transition이 끝난 후 요소 제거
+                if (line.classed('to-remove')) {
+                  line.remove();
+                }
+              }); // Remove the element
           }
         });
 
