@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
 
+import useDailyViewQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useDailyViewQueries';
+import useNaverSearchQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useNaverSearchQueries';
+import useVideoUploadCountQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useVideoUploadCountQueries';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import {
   formatToApexChart,
@@ -8,6 +11,7 @@ import {
   handleDailyVideoCountD3,
   handleDailyViewData,
   handleDailyViewDataD3,
+  handleDailyViewListD3,
   handleExpectedViewAreaD3,
   handleExpectedViewD3,
   handleNaverSearchRatio,
@@ -85,6 +89,34 @@ export const useSearchRatioFormatterD3 = ({
   );
 };
 
+export const useSearchRatioFormmaterListD3 = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const queryResults = useNaverSearchQueries({ baseKeyword, relatedKeywords });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: queryResults.map((query) =>
+        handleNaverSearchRatioD3(query.data?.results, {
+          startDate,
+          endDate,
+        }),
+      ),
+      keywordList: queryResults.map(
+        (query) => query.data?.results[0].keywords[1],
+      ),
+    }),
+    [JSON.stringify(queryResults)],
+  );
+};
+
 export const useUploadVideoCountFormatterD3 = ({
   keyword,
   relword,
@@ -107,6 +139,32 @@ export const useUploadVideoCountFormatterD3 = ({
         endDate,
       }),
     [JSON.stringify(videoUploadCount)],
+  );
+};
+
+export const useUploadVideoCountFormatterListD3 = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const { data } = useVideoUploadCountQueries({
+    baseKeyword,
+    relatedKeywords,
+  });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: data.map((query) =>
+        handleVideoUploadCountD3(query.data, { startDate, endDate }),
+      ),
+      keywordList: data.map((query) => query.keyword),
+    }),
+    [JSON.stringify(data)],
   );
 };
 
@@ -200,6 +258,56 @@ export const useDailyViewV2 = ({
   return useMemo(
     () => handleDailyViewDataD3(dailyViewData, { startDate, endDate }),
     [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyViewList = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const { data } = useDailyViewQueries({
+    baseKeyword,
+    relatedKeywords,
+  });
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: data.map((item) =>
+        handleDailyViewListD3(item, { startDate, endDate }),
+      ),
+      keywordList: data.map((item) => item.keyword),
+    }),
+    [JSON.stringify(data)],
+  );
+};
+
+export const useExpectedViewList = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const { data } = useDailyViewQueries({
+    baseKeyword,
+    relatedKeywords,
+  });
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: data.map((item) =>
+        handleExpectedViewD3(item.data, { startDate, endDate }),
+      ),
+      keywordList: data.map((item) => item.keyword),
+    }),
+    [JSON.stringify(data)],
   );
 };
 
