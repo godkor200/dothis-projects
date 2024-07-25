@@ -1,18 +1,20 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import LoginFrame from '@/components/Auth/LoginFrame';
-import Modal from '@/components/common/Modal/Modal';
+import MembershipModalFrame from '@/components/Membership/MembershipModalFrame';
 import { useModalActions } from '@/store/modalStore';
 
 const Page = () => {
   const { setIsRouterModalOpen, setModalContent } = useModalActions();
 
+  const router = useRouter();
+
   useEffect(() => {
     setIsRouterModalOpen(true);
 
-    setModalContent(<LoginFrame hasDismissButton />);
+    setModalContent(<MembershipModalFrame hasDismissButton />);
   }, []);
   return null;
 };
