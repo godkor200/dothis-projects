@@ -69,29 +69,26 @@ const useD3Line = ({
       render: () => {
         if (!xScale || !yScale) return; // Ensure scales are defined before rendering
 
-        // if (prevData.length > data.length) {
-        //   for (let i = data.length; i < prevData.length; i++) {
-        //     chartSelector
-        //       .selectAll(`.line-${i}`)
-        //       .transition()
-        //       .duration(500)
-        //       .style('opacity', 0)
-        //       .remove();
-        //   }
-        // }
-        // Collect all elements with class name containing 'line-'
-
+        /**
+         *  요소가 완전히 remove 되기 전에 재생성 시도 시 버그로 인한 코드 추가
+         *
+         * @bug 제거 시 transition이 존재함 -> 그로 인해 transition이 끝나기전에 재생성 시 remove가 안되어있음
+         * @interrupt interrupt면 적용되어있는 transintion 종료
+         * @remove 제거되어야할 요소 즉시 제거
+         */
         chartSelector.selectAll("[class*='line-']").interrupt();
 
         chartSelector.selectAll('.to-remove').remove();
 
+        /**
+         * 제거 플로우 주입
+         *
+         * @description prefix가 line으로 시작하는 class 찾아 keywordList 에 없는 요소 제거
+         */
         chartSelector.selectAll("[class*='line-']").each(function () {
           const line = D3.select(this);
           const lineClass = line.attr('class');
 
-          // console.log(lineClass);
-
-          // Determine if the class should be removed based on keywordList
           const shouldRemove = keywordList.every(
             (keyword) =>
               !lineClass
@@ -100,7 +97,6 @@ const useD3Line = ({
           );
 
           if (shouldRemove) {
-            // line.remove();
             line
               .classed('to-remove', true)
               .transition()
@@ -186,12 +182,6 @@ const useD3Line = ({
           // return prevData[reverseIndex] !== undefined
           //   ? JSON.stringify(data[index]) === JSON.stringify(prevData[index])
           //   : false;
-          // 배열이 존재하는지 확인하는 함수
-
-          // console.log(prevData);
-          // console.log(dataSet);
-          // console.log(arrayExists(prevData, dataSet));
-          // prevData.length - 1;
 
           // 키워드에 대한 line이 있을 경우 transition 조절할 필요가 있겠음.
           // enter도 아래 update transition 코드를 관통하는 점 유의해야함
