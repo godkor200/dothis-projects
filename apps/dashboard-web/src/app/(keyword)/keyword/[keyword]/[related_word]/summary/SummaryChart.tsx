@@ -34,6 +34,10 @@ export interface DataItem {
 }
 
 const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
+  const enterSelectedListcolors = ['green', 'blue'];
+
+  const updateSelectedColors = ['green', 'blue'];
+
   const selectRef = useRef<HTMLDivElement>(null);
 
   const [summaryChartType, setSummaryChartType] =
@@ -118,10 +122,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
   const currentData = dataMap[summaryChartType];
 
-  const selectedListcolors = ['green', 'blue'];
-
-  const updateSelectedColors = ['green', 'blue'];
-
   const svgRef = useRef<SVGSVGElement | null>(null); // SVG 엘리먼트의 ref 추가
 
   // let svg: D3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
@@ -182,8 +182,8 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           ? updateSelectedColors.length > 0
             ? (updateSelectedColors.shift() as 'blue' | 'green')
             : 'unknown'
-          : selectedListcolors.length > 0
-          ? (selectedListcolors.shift() as 'blue' | 'green')
+          : enterSelectedListcolors.length > 0
+          ? (enterSelectedListcolors.shift() as 'blue' | 'green')
           : 'unknown';
 
       selection.classed('red blue green unknown', false);
