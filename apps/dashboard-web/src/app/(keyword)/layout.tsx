@@ -8,15 +8,18 @@ import Top from './Top';
 const Layout = ({
   children,
   login,
+  membership,
 }: {
   children: React.ReactNode;
   login: React.ReactNode;
+  membership: React.ReactNode;
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
     <>
       <>{login}</>
+      <>{membership}</>
       <div className="relative">
         <Top
           isSidebarOpen={isSidebarOpen}
