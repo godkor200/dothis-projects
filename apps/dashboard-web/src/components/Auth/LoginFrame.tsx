@@ -44,6 +44,7 @@ const LoginFrame = ({ hasDismissButton }: { hasDismissButton?: boolean }) => {
             iconName={iconName}
             aria-label={title}
             boderColor={colorSchemeName}
+            key={title}
           />
         );
       })}

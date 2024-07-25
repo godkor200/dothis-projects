@@ -71,7 +71,8 @@ const retrievePosts = async ({
         },
       ],
       hilight: 200,
-      return_from: page || 1,
+      return_from: 0,
+      // page || 1,
       // 페이지네이션을 위해 25개로 수정하였습니다.
       return_size: 1,
       fields: [
@@ -135,7 +136,7 @@ const useGetSingleNews = <T extends any = ServerResponse<NewsResponse>>(
           to,
           limit,
           page,
-          queryKeyIndex,
+          // queryKeyIndex,
         },
       ]),
     ],

@@ -126,7 +126,7 @@ export const useGetRandomMedia = ({
     fetchTime,
     searchKeyword,
     relatedkeyword,
-    mediaCategory: youtubeVideoIsError ? 'youtube' : 'news',
+    mediaCategory: youtubeVideoIsError ? 'news' : 'youtube',
   };
 };
 
