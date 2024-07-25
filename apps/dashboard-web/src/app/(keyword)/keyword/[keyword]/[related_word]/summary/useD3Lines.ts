@@ -112,6 +112,12 @@ const useD3Line = ({
         });
 
         data.forEach((dataSet, index, arr) => {
+          /**
+           * Line을 그릴 데이터와 이전 데이터를 비교해서 이미 존재 데이터인지 아닌지 체크
+           * @param dataArray  prevData입니다
+           * @param target Line을 그릴 target
+           * @returns boolean
+           */
           const arrayExists = (
             dataArray: typeof prevData,
             target: (typeof prevData)[number],
@@ -126,6 +132,7 @@ const useD3Line = ({
                 ),
             );
           };
+
           const y = yScale[index];
 
           const line = D3.line<DataItem>()
@@ -150,48 +157,23 @@ const useD3Line = ({
             .call((selection) => {
               styleMethod && styleMethod(selection, index, false);
             })
-            // .attr(
-            //   'stroke',
-            //   index === arr.length - 1
-            //     ? 'red'
-            //     : index === arr.length - 2
-            //     ? 'green'
-            //     : 'blue',
-            // )
             .attr('stroke-width', 3)
             .style('stroke-linecap', 'round')
-            .attr('d', initialLine) // Initial path for transition
+            .attr('d', initialLine) // Initial path for transition (트랜지션을 위한 초기화 path 지정)
             .transition() // Start transition
             .ease(D3.easeCubicOut)
             .duration(600)
-
             .attr('d', line); // Final path after transition
-          // .call((selection) => {
-          //   console.log('isenter');
-          //   if (true) {
-          //     selection.attr('d', initialLine).transition().duration(1000);
-          //   }
-          // })
-          // .attr('d', line)
-          // .style('opacity', 1.0);
 
           path.call(
             (selection) => styleMethod && styleMethod(selection, index, true),
           );
 
-          // return prevData[reverseIndex] !== undefined
-          //   ? JSON.stringify(data[index]) === JSON.stringify(prevData[index])
-          //   : false;
-
-          // 키워드에 대한 line이 있을 경우 transition 조절할 필요가 있겠음.
-          // enter도 아래 update transition 코드를 관통하는 점 유의해야함
+          // enter도 아래 update transition 코드를 관통하는 점 유의해야함 (연관어 추가 시 initial path 로 Line이 추가되고 api response를 받아오면 update 플로우 적용)
 
           if (arrayExists(prevData, dataSet)) {
             // path.attr('d', line);
           } else {
-            // chartSelector
-            //   .selectAll(`.line-${keywordList[index]}`)
-            //   .data([dataSet])
             path
               .interrupt()
               .transition()
@@ -206,11 +188,6 @@ const useD3Line = ({
               });
           }
           // if (JSON.stringify(prevData[index]) !== JSON.stringify(data[index])) {
-          //   if (
-          //     true
-          //     // JSON.stringify(prevData[prevData.length - 1]) !==
-          //     // JSON.stringify(data[data.length - 1])
-          //   ) {
           //     path
           //       .transition()
           //       .duration(500)
@@ -222,7 +199,6 @@ const useD3Line = ({
           //           .duration(500)
           //           .attr('d', line);
           //       });
-          //   }
           // }
         });
       },
@@ -230,13 +206,10 @@ const useD3Line = ({
         data.forEach((_, index) => {
           chartSelector
             .selectAll(`.line-${keywordList[index]}`)
-            // .on('end', (selection) => {
-            //   selection
             .transition()
             .duration(1000)
             .style('opacity', 0)
             .remove();
-          // });
         });
       },
     }),
