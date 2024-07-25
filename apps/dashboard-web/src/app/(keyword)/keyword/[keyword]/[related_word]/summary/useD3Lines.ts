@@ -1,14 +1,7 @@
 import './styles.css';
 
 import * as D3 from 'd3';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useImperativeHandle, useRef } from 'react';
 
 interface DataItem {
   date: string;
@@ -70,8 +63,6 @@ const useD3Line = ({
   const lineRef = useRef<LineRef | null>(null);
   const prevData = usePrevious(data);
 
-  const colorList = ['green', 'blue'];
-  const colorList2 = ['green', 'blue'];
   useImperativeHandle(
     lineRef,
     () => ({
@@ -155,7 +146,6 @@ const useD3Line = ({
             .selectAll(`.line-${keywordList[index]}`)
             .data([dataSet]);
 
-          console.time(`${keywordList[index]}`);
           path
             .enter()
             .append('path')
@@ -163,8 +153,6 @@ const useD3Line = ({
             .attr('class', `line-${keywordList[index]}`)
             .call((selection) => {
               styleMethod && styleMethod(selection, index, false);
-
-              console.time(`${keywordList[index]}`);
             })
             // .attr(
             //   'stroke',
@@ -190,7 +178,7 @@ const useD3Line = ({
           // })
           // .attr('d', line)
           // .style('opacity', 1.0);
-          console.timeEnd(`${keywordList[index]}`);
+
           path.call(
             (selection) => styleMethod && styleMethod(selection, index, true),
           );
@@ -207,7 +195,7 @@ const useD3Line = ({
 
           // 키워드에 대한 line이 있을 경우 transition 조절할 필요가 있겠음.
           // enter도 아래 update transition 코드를 관통하는 점 유의해야함
-          console.log(keywordList[index]);
+
           if (arrayExists(prevData, dataSet)) {
             // path.attr('d', line);
           } else {
