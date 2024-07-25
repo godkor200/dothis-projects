@@ -1,13 +1,7 @@
 'use client';
 
 import * as D3 from 'd3';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   useDailyViewList,
@@ -16,15 +10,13 @@ import {
   useUploadVideoCountFormatterListD3,
 } from '@/hooks/contents/useChartFormatter';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
+import useDimensions from '@/hooks/useDimenstions';
 import type { TKeywords } from '@/types/common';
 import { cn } from '@/utils/cn';
 
 import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider';
-import useD3 from './useD3';
 import useD3Bars from './useD3Bars';
 import useD3Lines from './useD3Lines';
-import useDailyViewQueries from './useDailyViewQueries';
-import useNaverSearchQueries from './useNaverSearchQueries';
 import useXAxes from './useXAxes';
 import useYAxes from './useYAxes';
 
@@ -44,192 +36,8 @@ export interface DataItem {
 const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const [element, setElement] = useState(null);
-
   const [summaryChartType, setSummaryChartType] =
     useState<(typeof summaryChartList)[number]['value']>('views');
-
-  // const viewsDatta = useViewsQuery();
-
-  // const performanceData = useperformanceQuery();
-
-  // const searchRatioData = usesearchRatioQuery();
-
-  // const videoCountData = usevideoCountQuery();
-
-  const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
-    const getDimensions = () => {
-      return {
-        width: targetRef.current ? targetRef.current.offsetWidth : 0,
-        height: targetRef.current ? targetRef.current.offsetHeight : 0,
-      };
-    };
-
-    const [dimensions, setDimensions] = useState(getDimensions);
-
-    const handleResize = () => {
-      setDimensions(getDimensions());
-    };
-
-    useEffect(() => {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useLayoutEffect(() => {
-      handleResize();
-    }, []);
-
-    return dimensions;
-  };
-
-  // const data: DataItem[] = [
-  //   { date: '2024-05-01', value: 222, color: 'red' },
-  //   { date: '2024-05-02', value: 311, color: 'orange' },
-  //   { date: '2024-05-03', value: 290, color: 'yellow' },
-  //   { date: '2024-05-04', value: 288, color: 'green' },
-  //   { date: '2024-05-05', value: 230, color: 'blue' },
-  //   { date: '2024-05-06', value: 222, color: 'indigo' },
-  // ];
-
-  // const data2: DataItem[] = [
-  //   { date: '2024-05-01', value: 50, color: 'red' },
-  //   { date: '2024-05-02', value: 60, color: 'orange' },
-  //   { date: '2024-05-03', value: 40, color: 'yellow' },
-  //   { date: '2024-05-04', value: 28, color: 'green' },
-  //   { date: '2024-05-05', value: 34, color: 'blue' },
-  //   { date: '2024-05-06', value: 21, color: 'indigo' },
-  // ];
-
-  // const data3: DataItem[] = [
-  //   { date: '2024-05-01', value: 60, color: '#818CF8' },
-  //   { date: '2024-05-02', value: 15, color: '#818CF8' },
-  //   { date: '2024-05-03', value: 26, color: '#818CF8' },
-  //   { date: '2024-05-04', value: 34, color: '#818CF8' },
-  //   { date: '2024-05-05', value: 31, color: '#818CF8' },
-  //   { date: '2024-05-06', value: 22, color: '#818CF8' },
-  // ];
-
-  const [data, setData] = useState([
-    { date: '2024-05-01', value: 222, color: 'red' },
-    { date: '2024-05-02', value: 311, color: 'orange' },
-    { date: '2024-05-03', value: 290, color: 'yellow' },
-    { date: '2024-05-04', value: 288, color: 'green' },
-    { date: '2024-05-05', value: 230, color: 'blue' },
-    { date: '2024-05-06', value: 222, color: 'indigo' },
-  ]);
-
-  const [data2, setData2] = useState([
-    { date: '2024-05-01', value: 50, color: 'red' },
-    { date: '2024-05-02', value: 60, color: 'orange' },
-    { date: '2024-05-03', value: 40, color: 'yellow' },
-    { date: '2024-05-04', value: 28, color: 'green' },
-    { date: '2024-05-05', value: 34, color: 'blue' },
-    { date: '2024-05-06', value: 21, color: 'indigo' },
-  ]);
-
-  const [data3, setData3] = useState([
-    { date: '2024-05-01', value: 60, color: '#818CF8' },
-    { date: '2024-05-02', value: 15, color: '#818CF8' },
-    { date: '2024-05-03', value: 26, color: '#818CF8' },
-    { date: '2024-05-04', value: 34, color: '#818CF8' },
-    { date: '2024-05-05', value: 31, color: '#818CF8' },
-    { date: '2024-05-06', value: 22, color: '#818CF8' },
-  ]);
-
-  const lineData = [
-    [
-      { date: '2024-05-01', value: 222, color: '#F0516D' },
-      { date: '2024-05-02', value: 311, color: '#F0516D' },
-      { date: '2024-05-03', value: 290, color: '#F0516D' },
-      { date: '2024-05-04', value: 288, color: '#F0516D' },
-      { date: '2024-05-05', value: 230, color: '#F0516D' },
-      { date: '2024-05-06', value: 222, color: '#F0516D' },
-    ],
-    [
-      { date: '2024-05-01', value: 50, color: '#34D399' },
-      { date: '2024-05-02', value: 60, color: '#34D399' },
-      { date: '2024-05-03', value: 40, color: '#34D399' },
-      { date: '2024-05-04', value: 28, color: '#34D399' },
-      { date: '2024-05-05', value: 34, color: '#34D399' },
-      { date: '2024-05-06', value: 21, color: '#34D399' },
-    ],
-    [
-      { date: '2024-05-01', value: 60, color: '#818CF8' },
-      { date: '2024-05-02', value: 15, color: '#818CF8' },
-      { date: '2024-05-03', value: 26, color: '#818CF8' },
-      { date: '2024-05-04', value: 34, color: '#818CF8' },
-      { date: '2024-05-05', value: 31, color: '#818CF8' },
-      { date: '2024-05-06', value: 22, color: '#818CF8' },
-    ],
-  ];
-
-  const [mockLine, setMockLine] = useState([
-    [
-      { date: '2024-07-15', value: 222 },
-      { date: '2024-07-16', value: 311 },
-      { date: '2024-07-17', value: 290 },
-      { date: '2024-07-18', value: 288 },
-      { date: '2024-07-19', value: 230 },
-      { date: '2024-07-20', value: 222 },
-      { date: '2024-07-21', value: 222 },
-    ],
-    [
-      { date: '2024-07-15', value: 50 },
-      { date: '2024-07-16', value: 60 },
-      { date: '2024-07-17', value: 40 },
-      { date: '2024-07-18', value: 28 },
-      { date: '2024-07-19', value: 34 },
-      { date: '2024-07-20', value: 21 },
-      { date: '2024-07-21', value: 21 },
-    ],
-    [
-      { date: '2024-07-15', value: 60 },
-      { date: '2024-07-16', value: 15 },
-      { date: '2024-07-17', value: 26 },
-      { date: '2024-07-18', value: 34 },
-      { date: '2024-07-19', value: 31 },
-      { date: '2024-07-20', value: 22 },
-      { date: '2024-07-21', value: 22 },
-    ],
-  ]);
-
-  const keywordList = ['파워', '서울', '대구'];
-  // const mockList = [
-  //   {
-  //     data: [
-  //       { date: '2024-05-01', value: 222, color: '#F0516D' },
-  //       { date: '2024-05-02', value: 311, color: '#F0516D' },
-  //       { date: '2024-05-03', value: 290, color: '#F0516D' },
-  //       { date: '2024-05-04', value: 288, color: '#F0516D' },
-  //       { date: '2024-05-05', value: 230, color: '#F0516D' },
-  //       { date: '2024-05-06', value: 222, color: '#F0516D' },
-  //     ],
-  //     keyword: '대구',
-  //   },
-  //   {
-  //     data: [
-  //       { date: '2024-05-01', value: 50, color: '#34D399' },
-  //       { date: '2024-05-02', value: 60, color: '#34D399' },
-  //       { date: '2024-05-03', value: 40, color: '#34D399' },
-  //       { date: '2024-05-04', value: 28, color: '#34D399' },
-  //       { date: '2024-05-05', value: 34, color: '#34D399' },
-  //       { date: '2024-05-06', value: 21, color: '#34D399' },
-  //     ],
-  //     keyword: '파워',
-  //   },
-  //   {
-  //     data: [
-  //       { date: '2024-05-01', value: 60, color: '#818CF8' },
-  //       { date: '2024-05-02', value: 15, color: '#818CF8' },
-  //       { date: '2024-05-03', value: 26, color: '#818CF8' },
-  //       { date: '2024-05-04', value: 34, color: '#818CF8' },
-  //       { date: '2024-05-05', value: 31, color: '#818CF8' },
-  //       { date: '2024-05-06', value: 22, color: '#818CF8' },
-  //     ],
-  //     keyword: '서울',
-  //   },
-  // ];
 
   const { width } = useDimensions(selectRef);
 
@@ -302,7 +110,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   });
 
   const dataMap = {
-    views: mockLine.slice(0, sortedRelatedKeywordList.length),
+    views: chartDataList,
     performance: expectedViewChartList,
     searchRatio: naverChartDataList,
     videoCount: uploadVideoChartList,
@@ -378,12 +186,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           ? (selectedListcolors.shift() as 'blue' | 'green')
           : 'unknown';
 
-      // console.log(
-      //   sortedRelatedKeywordList[index],
-      //   relatedKeyword,
-      //   chartColorSchema[color],
-      // );
-
       selection.classed('red blue green unknown', false);
       selection.attr('stroke', chartColorSchema[color]);
     },
@@ -423,38 +225,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     },
   });
 
-  // const bar2 = useD3Bar({
-  //   chartSelector: chart,
-  //   data: data2,
-  //   dimensions,
-  //   xScale: x2,
-  //   yScale: y2,
-  //   xPositionMethod(xScale, data) {
-  //     return (xScale(data.date) as number) + xScale.bandwidth() / 2 - 10;
-  //   },
-  //   styleMethod(selection) {
-  //     selection.attr('rx', 0);
-  //     selection.attr('fill', '#818CF8');
-  //   },
-  //   title: '영상수',
-  // });
-
-  // const bar3 = useD3Bar({
-  //   chartSelector: chart,
-  //   data: data3,
-  //   dimensions,
-  //   xScale: x3,
-  //   yScale: y3,
-  //   xPositionMethod(xScale, data) {
-  //     return (xScale(data.date) as number) + xScale.bandwidth() / 2 + 10;
-  //   },
-  //   styleMethod(selection) {
-  //     selection.attr('rx', 0);
-  //     selection.attr('fill', '#34D399');
-  //   },
-  //   title: '검색량',
-  // });
-
   useEffect(() => {
     chart.selectAll('*').remove();
   }, [width]);
@@ -469,35 +239,17 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   useEffect(() => {
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
-      // bar2.current?.render();
-      // bar3.current?.render();
+
       line.current?.remove();
-      // line2.current?.remove();
-      // line3.current?.remove();
     } else {
       bar.current?.remove();
-      // bar2.current?.remove();
-      // bar3.current?.remove();
-      line.current?.render();
-      // line2.current?.render();
-      // line3.current?.render();
-    }
-  }, [
-    width,
-    data,
-    data2,
-    data3,
-    summaryChartType,
-    currentData,
-    relatedKeywordList,
-  ]);
 
-  const [number, setNumber] = useState([2, 4, 5, 6, 7]);
+      line.current?.render();
+    }
+  }, [width, summaryChartType, currentData, relatedKeywordList]);
+
   return (
     <div className="flex gap-[20px]">
-      {/* <LineChar2t /> */}
-      {/* <LineChart data={number} width={width} height={height} /> */}
-      {/* <button onClick={() => yAxis.current?.render()}>안녕 테스트</button> */}
       <ul className="flex w-[100px] shrink-0 flex-col gap-[20px] text-center text-[20px] font-bold">
         {summaryChartList.map((item) => (
           <li
@@ -512,175 +264,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
                 line.current?.remove();
                 // line2.current?.remove();
                 // line3.current?.remove();
-              } else {
-                setMockLine([
-                  [
-                    { date: '2024-07-15', value: 222 },
-                    { date: '2024-07-16', value: 311 },
-                    { date: '2024-07-17', value: 290 },
-                    { date: '2024-07-18', value: 288 },
-                    { date: '2024-07-19', value: 230 },
-                    { date: '2024-07-20', value: 222 },
-                    { date: '2024-07-21', value: 222 },
-                  ],
-                  [
-                    {
-                      date: '2024-07-15',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-16',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-17',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-18',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-19',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-20',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-21',
-                      value: Math.random() * 100,
-                    },
-                  ],
-                  [
-                    {
-                      date: '2024-07-15',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-16',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-17',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-18',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-19',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-20',
-                      value: Math.random() * 100,
-                    },
-                    {
-                      date: '2024-07-21',
-                      value: Math.random() * 100,
-                    },
-                  ],
-                ]);
-                setData([
-                  {
-                    date: '2024-05-01',
-                    value: Math.random() * 100,
-                    color: 'red',
-                  },
-                  {
-                    date: '2024-05-02',
-                    value: Math.random() * 100,
-                    color: 'orange',
-                  },
-                  {
-                    date: '2024-05-03',
-                    value: Math.random() * 100,
-                    color: 'yellow',
-                  },
-                  {
-                    date: '2024-05-04',
-                    value: Math.random() * 100,
-                    color: 'green',
-                  },
-                  {
-                    date: '2024-05-05',
-                    value: Math.random() * 100,
-                    color: 'blue',
-                  },
-                  {
-                    date: '2024-05-06',
-                    value: Math.random() * 100,
-                    color: 'indigo',
-                  },
-                ]);
-                setData2([
-                  {
-                    date: '2024-05-01',
-                    value: Math.random() * 100,
-                    color: 'red',
-                  },
-                  {
-                    date: '2024-05-02',
-                    value: Math.random() * 100,
-                    color: 'orange',
-                  },
-                  {
-                    date: '2024-05-03',
-                    value: Math.random() * 100,
-                    color: 'yellow',
-                  },
-                  {
-                    date: '2024-05-04',
-                    value: Math.random() * 100,
-                    color: 'green',
-                  },
-                  {
-                    date: '2024-05-05',
-                    value: Math.random() * 100,
-                    color: 'blue',
-                  },
-                  {
-                    date: '2024-05-06',
-                    value: Math.random() * 100,
-                    color: 'indigo',
-                  },
-                ]);
-
-                setData3([
-                  {
-                    date: '2024-05-01',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                  {
-                    date: '2024-05-02',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                  {
-                    date: '2024-05-03',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                  {
-                    date: '2024-05-04',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                  {
-                    date: '2024-05-05',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                  {
-                    date: '2024-05-06',
-                    value: Math.random() * 100,
-                    color: '#818CF8',
-                  },
-                ]);
               }
             }}
           >
@@ -689,7 +272,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
         ))}
       </ul>
       <>
-        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다.. 흠.. 왜그러지  */}
+        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다.   */}
         <div
           className="grid flex-grow grid-cols-1 [&_svg]:overflow-visible"
           id="summary-chart"
