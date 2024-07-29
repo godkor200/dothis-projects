@@ -38,7 +38,7 @@ const Page = () => {
           <div className="mb-[52px] flex">
             <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
-                오늘의 이슈{' '}
+                금주의 이슈{' '}
               </p>
               <ErrorBoundary fallback={<SystemError />}>
                 <MediaBanner />
