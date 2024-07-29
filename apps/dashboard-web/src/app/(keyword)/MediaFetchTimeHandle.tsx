@@ -26,7 +26,6 @@ const MediaFetchTimeHanlde = ({
   setMediaErrorCount,
   setFetchTimeMediaList,
 }: Props) => {
-  console.log(visibleMediaCount, mediaErrorCount, currentIndex);
   const randomMedia = useGetRandomMedia({
     searchKeyword:
       visibleMediaCount + mediaErrorCount > currentIndex
