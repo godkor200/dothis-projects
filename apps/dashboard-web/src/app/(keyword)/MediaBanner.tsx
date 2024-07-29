@@ -16,172 +16,48 @@ import { cn } from '@/utils/cn';
 import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 import type { MediaProps } from '@/utils/media/mediaFormat';
 
+import MediaCard from './MediaCard';
+import MediaFetchTimeHanlde from './MediaFetchTimeHandle';
+
 type MediaCategory = 'youtube' | 'news';
 
-interface Props {
-  randomOptios: MediaCategory[];
-}
+export type MediaList = {
+  baseKeyword: string;
+  mediaData: MediaProps;
+  mediaType: MediaCategory;
+  fetchTime: number;
+};
 
-const MediaBanner = ({ randomOptios: test }: Props) => {
+const MediaBanner = () => {
   const mediaCount = 3;
 
-  const randomRef = useRef(
+  const randomMediaTypeRef = useRef(
     Array.from({ length: 3 }, () => (Math.random() < 0.5 ? 'news' : 'youtube')),
   );
 
-  const randomOptios = randomRef.current;
+  const randomMediaTypeList = randomMediaTypeRef.current;
 
-  const [sliceNumber, setSliceNumber] = useState(mediaCount);
+  const [mediaErrorCount, setMediaErrorCount] = useState(0);
 
-  const [indexNumber, setIndexNumber] = useState(mediaCount);
+  const [fechTimeMediaList, setFetchTimeMediaList] = useState<MediaList[]>([]);
 
-  const { data } = useGetWeeklyTrendKeyword();
+  const { data: weeklyKeywordsData } = useGetWeeklyTrendKeyword();
 
-  const { data: weeklyVideo } = useGetWeeklyVideo();
+  const weeklyKeywordList = useMemo(
+    () =>
+      weeklyKeywordsData?.flatMap(
+        ({ recommendedKeyword, topAssociatedWord }, index) => ({
+          baseKeyword: recommendedKeyword,
+          relatedKeyword: topAssociatedWord
+            ? topAssociatedWord.split(',')[0] ?? ''
+            : '',
+          mediaType: (randomMediaTypeList[index] ?? 'youtube') as MediaCategory,
+        }),
+      ),
+    [JSON.stringify(weeklyKeywordsData)],
+  );
 
-  // const [keywordMap, setKeywordMap] = useState<
-  //   Map<string, (typeof rankingRelatedWord)[number]>
-  // >(new Map());
-
-  // const topKeywordList = data
-  //   ?.map((data) => data.recommendedKeyword)
-  //   .slice(0, sliceNumber);
-
-  // const {
-  //   data: rankingRelatedWord,
-  //   isError,
-  //   isErrorList,
-  // } = useGetRankingWordList(topKeywordList || [], {
-  //   onError(err) {},
-  // });
-
-  // useEffect(() => {
-  //   setSliceNumber(
-  //     mediaCount + isErrorList.filter((isError) => isError === true).length,
-  //   );
-  // }, [isErrorList]);
-
-  // const hasMedia = useRef(new Map());
-
-  // // console.log(keywordMap.has('한국'));
-  // // 정해진 인덱스읙 개념을 주입해서 넣어줘야함
-  // const getFirstOccurrences = useCallback(
-  //   (arr: typeof rankingRelatedWord): typeof rankingRelatedWord => {
-  //     arr.forEach((item) => {
-  //       if (!hasMedia.current.has(item.keyword)) {
-  //         // console.log(keywordMap.has(item.keyword));
-  //         // console.log(item);
-  //         hasMedia.current.set(item.keyword, item);
-  //       }
-  //     });
-
-  //     return Array.from(hasMedia.current.values());
-  //   },
-  //   [JSON.stringify(rankingRelatedWord)],
-  // );
-
-  // const result = getFirstOccurrences(rankingRelatedWord);
-
-  const getCategoryOrder = (category: MediaCategory, index: number) => {
-    if (category === 'youtube') {
-      const youtubeIndex = randomOptios
-        .slice(0, index + 1)
-        .filter((cat) => cat === 'youtube').length;
-      return youtubeIndex;
-    } else {
-      const newsIndex = randomOptios
-        .slice(0, index + 1)
-        .filter((cat) => cat === 'news').length;
-      return newsIndex;
-    }
-  };
-
-  // 해당 useQuery 라이프사이클에서 혼동이 왔음 (select문이 해당 fetch를 성공했을 경우 한번만 출력되길 바랬는데, 안되네)
-  const firstMedia = useGetRandomMedia({
-    searchKeyword: data ? data[0].recommendedKeyword : undefined,
-    relatedkeyword: data
-      ? data[0].topAssociatedWord
-        ? data[0].topAssociatedWord.split(',')[0]
-        : undefined
-      : undefined,
-    mediaCategory: randomOptios[0],
-    page: getCategoryOrder(randomOptios[0], 0),
-    index: 1,
-    setIndexNumber,
-  });
-
-  /**
-   * index 프로퍼티, (category가 다른데, queryKey 중복이 일어나는걸 방지 )
-   */
-
-  const secondMedia = useGetRandomMedia({
-    searchKeyword: data ? data[1].recommendedKeyword : undefined,
-    relatedkeyword: data
-      ? data[1].topAssociatedWord
-        ? data[1].topAssociatedWord.split(',')[0]
-        : undefined
-      : undefined,
-    mediaCategory: randomOptios[1],
-    page: getCategoryOrder(randomOptios[1], 1),
-    index: 2,
-    setIndexNumber,
-  });
-
-  const thirdMedia = useGetRandomMedia({
-    searchKeyword: data ? data[2].recommendedKeyword : undefined,
-    relatedkeyword: data
-      ? data[2].topAssociatedWord
-        ? data[2].topAssociatedWord.split(',')[0]
-        : undefined
-      : undefined,
-    mediaCategory: randomOptios[2],
-    page: getCategoryOrder(randomOptios[2], 2),
-    index: 3,
-    setIndexNumber,
-  });
-
-  const fourthMedia = useGetRandomMedia({
-    searchKeyword:
-      data && indexNumber > 3 ? data[3].recommendedKeyword : undefined,
-    relatedkeyword:
-      data && indexNumber > 3
-        ? data[3].topAssociatedWord
-          ? data[3].topAssociatedWord.split(',')[0]
-          : undefined
-        : undefined,
-    mediaCategory: randomOptios[2],
-    page: getCategoryOrder(randomOptios[2], 2),
-    index: 4,
-    setIndexNumber,
-  });
-
-  const fifth = useGetRandomMedia({
-    searchKeyword:
-      data && indexNumber > 4 ? data[4].recommendedKeyword : undefined,
-    relatedkeyword:
-      data && indexNumber > 4
-        ? data[4].topAssociatedWord
-          ? data[4].topAssociatedWord.split(',')[0]
-          : undefined
-        : undefined,
-    mediaCategory: randomOptios[2],
-    page: getCategoryOrder(randomOptios[2], 2),
-    index: 5,
-    setIndexNumber,
-  });
-
-  const results = [firstMedia, secondMedia, thirdMedia, fourthMedia, fifth]
-    .filter(
-      (
-        media,
-      ): media is {
-        mediaResult: MediaProps;
-        fetchTime: number;
-        searchKeyword: string;
-        relatedkeyword: string;
-        mediaCategory: string;
-      } => media.mediaResult !== undefined,
-    )
+  const sortedFetchTimeMediaList = fechTimeMediaList
     .slice(0, 3)
     .sort((a, b) => {
       // 먼저 mediaCategory를 내림차순으로 정렬
@@ -191,90 +67,52 @@ const MediaBanner = ({ randomOptios: test }: Props) => {
       return a.fetchTime - b.fetchTime;
     });
 
-  // console.log(results);
-
-  // console.log(firstMedia);
-  // console.log(time);
-
-  // console.log(randomOptios);
-  // 해당 부분 코드에 대해서 의심이 있음. map으로써 custom hook을 실행하는 것인데, 이렇게 하면 useMemo useCallback은 hook rule 위배로 인하여 불가능한 구조이고 해당 컴포넌트가 리렌더링이 일어날 때마다 지속적인 생성이 되지않을까 걱정
-
-  // 해당 부분 useGetRandomMedia가 렌더링마다 실행되어서 마지막 데이터가 load될 때 리렌더링 일어남  (그로인해 sort가 정확하지 않음)
-
-  /**
-   * 아래 코드는 반복문에서 hook을 사용해서 hookrule 위배
-   * const hookResults = result.length
-    ? result.map(({ keyword, relword }, index, array) => {
-        if (randomOptios[index] === 'youtube') {
-          const youtubeIndex = randomOptios
-            .slice(0, index + 1)
-            .filter((cat) => cat === 'youtube').length;
-
-          return useGetRandomMedia({
-            searchKeyword: keyword,
-            relatedkeyword: relword,
-            mediaCategory: randomOptios[index],
-            page: youtubeIndex,
-            index: index,
-          });
-        } else {
-          const newsIndex = randomOptios
-            .slice(0, index + 1)
-            .filter((cat) => cat === 'news').length;
-
-          return useGetRandomMedia({
-            searchKeyword: keyword,
-            relatedkeyword: relword,
-            mediaCategory: randomOptios[index],
-            page: newsIndex,
-            index,
-          });
-        }
-      })
-    : [];
-
-  console.log(hookResults);
-   */
-
-  // .filter(
-  //   (media): media is { mediaResult: MediaProps; fetchTime: number } =>
-  //     media.mediaResult !== undefined,
-  // );
-  // .sort((a, b) => a.fetchTime! - b.fetchTime!);
-
-  // console.log(hookResults.length && hookResults[0].fetchTime);
-
   const emptyMediaLength = useMemo(
-    () => 3 - results.length,
-    [JSON.stringify(results)],
+    () => 3 - sortedFetchTimeMediaList.length,
+    [JSON.stringify(sortedFetchTimeMediaList)],
   );
 
   return (
-    <div className="flex justify-between gap-[20px] ">
-      {results?.map(
-        (
-          { mediaResult, searchKeyword, relatedkeyword, mediaCategory },
-          index,
-          array,
-        ) =>
-          mediaResult && (
-            <SelectedMediaCard
-              key={mediaResult.title + index}
-              mediaType={mediaCategory}
-              title={mediaResult.title}
-              provider={mediaResult.provider}
-              element={mediaResult.element}
-              uploadDate={mediaResult.uploadDate}
-              image={mediaResult.image}
-              link={mediaResult.link}
+    <>
+      <div>
+        {weeklyKeywordList?.map(
+          ({ baseKeyword, relatedKeyword, mediaType }, index) => (
+            <MediaFetchTimeHanlde
+              baseKeyword={baseKeyword}
+              relatedKeyword={relatedKeyword}
+              mediaType={mediaType}
+              currentIndex={index}
+              mediaErrorCount={mediaErrorCount}
+              visibleMediaCount={mediaCount}
+              setFetchTimeMediaList={setFetchTimeMediaList}
+              setMediaErrorCount={setMediaErrorCount}
+              key={index}
             />
           ),
-      )}
+        )}
+      </div>
+      <div className="flex justify-between gap-[20px] ">
+        {sortedFetchTimeMediaList?.map(
+          ({ mediaData, mediaType, fetchTime }, index, array) =>
+            mediaData && (
+              <SelectedMediaCard
+                key={mediaData.title + index}
+                mediaType={mediaType}
+                title={mediaData.title}
+                provider={mediaData.provider}
+                element={mediaData.element}
+                uploadDate={mediaData.uploadDate}
+                image={mediaData.image}
+                link={mediaData.link}
+              />
+            ),
+        )}
 
-      {Array.from({ length: emptyMediaLength }).map((_, i) => (
-        <SelectedMediaCard.skeleton key={i} />
-      ))}
-    </div>
+        {Array.from({ length: emptyMediaLength }).map((_, i) => (
+          <SelectedMediaCard.skeleton key={i} />
+        ))}
+      </div>
+    </>
   );
 };
 
