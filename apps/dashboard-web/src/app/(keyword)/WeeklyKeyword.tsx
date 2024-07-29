@@ -13,13 +13,7 @@ const WeeklyKeyword = () => {
     <ul className="flex flex-col gap-[15px] font-[500]">
       {data?.map((item, i) => (
         <Link
-          href={
-            `/keyword/${item.recommendedKeyword}/${
-              item.topAssociatedWord
-                ? `${item.topAssociatedWord.split(',')[0]}/analysis`
-                : ''
-            }` as Route
-          }
+          href={`/keyword/${item.recommendedKeyword}` as Route}
           key={item.recommendedKeyword}
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
