@@ -49,7 +49,7 @@ const retrievePosts = async ({
     access_key: 'eb75ee2e-b1f6-4ada-a964-9bf94c5a2f26',
     argument: {
       query: {
-        title: relatedKeyword ?? keyword,
+        title: keyword ?? relatedKeyword,
         // relatedKeyword
         // ? `${keyword} AND ${relatedKeyword}`
         // : `${keyword}`,
