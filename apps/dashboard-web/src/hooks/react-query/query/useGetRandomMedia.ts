@@ -101,10 +101,16 @@ export const useGetRandomMedia = ({
   }, [youtubeVideoIsError, newsIsError]);
 
   useEffect(() => {
-    if (youtubeData) {
+    if (
+      (mediaCategory === 'youtube' && youtubeData) ||
+      (newsIsError && youtubeData)
+    ) {
       setFetchTime(new Date().getTime());
     }
-    if (newsData) {
+    if (
+      (mediaCategory === 'news' && newsData) ||
+      (youtubeVideoIsError && newsData)
+    ) {
       setFetchTime(new Date().getTime());
     }
   }, [JSON.stringify(youtubeData), JSON.stringify(newsData)]);
@@ -118,7 +124,7 @@ export const useGetRandomMedia = ({
         : newsIsError
         ? youtubeData && formatYoutubeForMediaProps(youtubeData)
         : newsData && formatNewsFormMediaProps(newsData),
-    [youtubeData, newsData],
+    [youtubeData, newsData, newsIsError, youtubeVideoIsError],
   );
 
   return {
@@ -126,7 +132,9 @@ export const useGetRandomMedia = ({
     fetchTime,
     searchKeyword,
     relatedkeyword,
-    mediaCategory: youtubeVideoIsError ? 'news' : 'youtube',
+    mediaCategory: youtubeVideoIsError
+      ? 'news'
+      : ('youtube' as 'youtube' | 'news'),
   };
 };
 
