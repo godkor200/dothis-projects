@@ -13,18 +13,6 @@ import MediaBanner from './MediaBanner';
 import WeeklyKeyword from './WeeklyKeyword';
 
 const Page = () => {
-  const mock_weeklyKeywordRank = [
-    { label: '아이돌', lastWeek: 4 },
-    { label: '먹방', lastWeek: 8 },
-    { label: '애니메이션', lastWeek: 2 },
-    { label: '영화', lastWeek: 3 },
-    { label: '게임', lastWeek: 5 },
-  ];
-
-  const randomMediaCategoryList = Array.from({ length: 3 }, () =>
-    Math.random() < 0.5 ? 'news' : 'youtube',
-  );
-
   return (
     <>
       <div className="px-[66px]">
@@ -53,7 +41,7 @@ const Page = () => {
                 오늘의 이슈{' '}
               </p>
               <ErrorBoundary fallback={<SystemError />}>
-                <MediaBanner randomOptios={randomMediaCategoryList} />
+                <MediaBanner />
               </ErrorBoundary>
             </div>
 
