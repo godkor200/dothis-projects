@@ -1,22 +1,12 @@
 'use client';
-import dayjs from 'dayjs';
-import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { useMemo, useRef, useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
-import type { MediaDigestData } from '@/components/MainContents/MediaArticles';
 import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedMediaCard';
-import { useGetRandomMedia } from '@/hooks/react-query/query/useGetRandomMedia';
-import useGetRankingWordList from '@/hooks/react-query/query/useGetRankingWordList';
-import useGetWeeklyKeyword from '@/hooks/react-query/query/useGetWeeklyKeyword';
 import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
-import useGetWeeklyVideo from '@/hooks/react-query/query/useGetWeeklyVideo';
-import { useSelectedWord } from '@/store/selectedWordStore';
-import { cn } from '@/utils/cn';
-import { externaImageLoader, getMainImage } from '@/utils/imagesUtil';
 import type { MediaProps } from '@/utils/media/mediaFormat';
 
-import MediaCard from './MediaCard';
 import MediaFetchTimeHanlde from './MediaFetchTimeHandle';
 
 type MediaCategory = 'youtube' | 'news';
