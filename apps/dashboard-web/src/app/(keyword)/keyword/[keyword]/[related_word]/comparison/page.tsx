@@ -40,7 +40,7 @@ const Page = ({
             <BoxFrame>
               <div>
                 <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-                  키워드 분석 결과 비교
+                  키워드 비교
                 </p>
                 <ComparisonSummary
                   baseKeyword={baseKeyword}
@@ -52,7 +52,7 @@ const Page = ({
             <BoxFrame>
               <div>
                 <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
-                  키워드 분석 결과 비교
+                  소재 분석 결과 비교
                 </p>
                 <SummaryChart
                   baseKeyword={baseKeyword}
