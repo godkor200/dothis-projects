@@ -77,7 +77,7 @@ const RelatedKeywordList = ({
               >
                 {index + 1}
               </span>
-              <span className="flex-1 text-center text-[20px] font-bold">
+              <span className="flex-1 text-center text-[14px] font-bold">
                 {item}
               </span>
             </li>

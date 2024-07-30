@@ -250,7 +250,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
   return (
     <div className="flex gap-[20px]">
-      <ul className="flex w-[100px] shrink-0 flex-col gap-[20px] text-center text-[20px] font-bold">
+      <ul className="flex w-[100px] shrink-0 flex-col gap-[20px] text-center text-[16px] font-bold">
         {summaryChartList.map((item) => (
           <li
             className={cn('cursor-pointer', {
