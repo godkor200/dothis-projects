@@ -194,7 +194,6 @@ export const zTodayIssueVideoSchema = zVideo.pick({
 
 export const zTodayIssueVideoExtendsSchema = zTodayIssueVideoSchema.extend({
   search: z.string(),
-  related: z.string(),
 });
 
 export const zTodayIssueVideoExtendedList = z.array(
