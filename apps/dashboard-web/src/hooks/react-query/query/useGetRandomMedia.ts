@@ -52,18 +52,13 @@ export const useGetRandomMedia = ({
 
   const youtubeData =
     relatedkeyword || searchKeyword
-      ? weeklyVideo?.filter(
-          (item) =>
-            item.search === searchKeyword && item.related === relatedkeyword,
-        )[0]
+      ? weeklyVideo?.filter((item) => item.search === searchKeyword)[0]
       : undefined;
 
   const youtubeVideoIsError =
     ((relatedkeyword || searchKeyword) &&
-      weeklyVideo?.filter(
-        (item) =>
-          item.search === searchKeyword && item.related === relatedkeyword,
-      )?.[0].videoId === null) ||
+      weeklyVideo?.filter((item) => item.search === searchKeyword)?.[0]
+        .videoId === null) ||
     isError
       ? true
       : false;
