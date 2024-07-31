@@ -16,6 +16,7 @@ import { cn } from '@/utils/cn';
 
 import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider';
 import useD3Bars from './useD3Bars';
+import useD3HoverLine from './useD3HoverLine';
 import useD3Lines from './useD3Lines';
 import useXAxes from './useXAxes';
 import useYAxes from './useYAxes';
@@ -225,6 +226,24 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     },
   });
 
+  // Tooltip 및 hover 섹션
+  const tooltip2 = D3.select('#tooltip2')
+    .style('position', 'absolute')
+    // .style('top', '-999px')
+    // .style('left', '-999px')
+    .style('display', 'none')
+    .style('min-width', '150px')
+    .style('background-color', '#3F3F46')
+    .style('padding', '9px 6px')
+    .style('border-radius', '10px');
+
+  const { hoverLineGroup, lineHoverRef } = useD3HoverLine({
+    chartSelector: chart,
+    data: currentData[0],
+    dimensions,
+    xScale: x,
+  });
+
   useEffect(() => {
     chart.selectAll('*').remove();
   }, [width]);
@@ -245,6 +264,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
       bar.current?.remove();
 
       line.current?.render();
+      lineHoverRef.current?.render();
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 
@@ -271,14 +291,15 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           </li>
         ))}
       </ul>
-      <>
-        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다.   */}
+      <div className="relative flex-grow">
+        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다. 이전 relative 박스가 있기전에    */}
         <div
-          className="grid flex-grow grid-cols-1 [&_svg]:overflow-visible"
+          className="grid grid-cols-1 [&_svg]:overflow-visible"
           id="summary-chart"
           ref={selectRef}
         ></div>
-      </>
+        <div id="tooltip2" className="z-[500]"></div>{' '}
+      </div>
     </div>
   );
 };
