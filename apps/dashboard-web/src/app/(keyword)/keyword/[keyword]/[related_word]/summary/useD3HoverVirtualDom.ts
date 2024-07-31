@@ -97,7 +97,6 @@ const useD3HoverVirtualDom = ({
 
           hoverLinesSelector
             .filter((d) => {
-              console.log(d);
               return d.date === i.date;
             })
             .style('opacity', 1);
