@@ -38,12 +38,12 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
 
   const lineHoverRef = useRef<LineRef | null>(null);
 
-  const hoverLineGroup = chartSelector
-    .append('g')
-    .attr('class', 'hover-line-group')
-    .selectAll('rect')
-    .data(data);
-
+  const hoverLineGroupRef = useRef<D3.Selection<
+    SVGRectElement,
+    DataItem,
+    SVGGElement,
+    unknown
+  > | null>(null);
   //   console.log(hoverLineGroup.empty());
   //   if (hoverLineGroup.empty()) {
   //     chartSelector.append('g').attr('class', 'hover-line-group');
@@ -55,7 +55,11 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
       render: () => {
         if (!xScale) return;
 
-        hoverLineGroup
+        hoverLineGroupRef.current = chartSelector
+          .append('g')
+          .attr('class', 'hover-rect-group')
+          .selectAll('rect')
+          .data(data)
           .enter()
           .append('rect')
           .attr(
@@ -69,13 +73,19 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
           .style('opacity', 0);
       },
       remove: () => {
-        hoverLineGroup.transition().duration(1000).style('opacity', 0).remove();
+        if (hoverLineGroupRef.current) {
+          hoverLineGroupRef.current
+            .transition()
+            .duration(1000)
+            .style('opacity', 0)
+            .remove();
+        }
       },
     }),
     [width, data],
   );
 
-  return { lineHoverRef, hoverLineGroup };
+  return { lineHoverRef, hoverLineGroup: hoverLineGroupRef.current };
 };
 
 export default useD3HoverLine;
