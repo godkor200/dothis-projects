@@ -129,7 +129,7 @@ const useD3HoverVirtualDom = ({
                                 )}</p>
                                 <p style="color: #A1A1AA; font-size: 12px;
                                 font-style: normal;
-                                font-weight: 500; "> ${`일일조회수`} </p>
+                                font-weight: 500; white-space:nowrap;"> ${`일일조회수`} </p>
                             </div>`;
                   })
                   .join('')}
