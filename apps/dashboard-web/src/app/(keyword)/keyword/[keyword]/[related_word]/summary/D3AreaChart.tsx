@@ -207,6 +207,9 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
         // D3.pointer(e): 특정 요소(target element)를 기준으로 한 상대적인 좌표입니다.  <--> 기존에는 pageX pageY로 진행해서 relative에 따른 차이가 보였음
         const [mouseX, mouseY] = D3.pointer(e);
 
+        const formatNumber = (number: number) =>
+          number > 0.1 ? number.toFixed(1) : 0.1;
+
         tooltip2
           .transition()
           .duration(0)
@@ -219,26 +222,37 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
               <div  style="border:2px solid ${'#FDE7EB'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
               <p style="color: #E4E4E7; font-size: 14px;
               font-style: normal;
-              font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                currentAreaData.value[0]
-              }~${currentAreaData.value[1]}</p>
+              font-weight: 700; flex-basis: 30%; margin-right:8px;">${formatNumber(
+                currentAreaData.value[1],
+              )}</p>
               <p style="color: #A1A1AA; font-size: 12px;
               font-style: normal;
-              font-weight: 500; "> ${`예측 조회수`} </p>
+              font-weight: 500; "> ${`최대 조회수`} </p>
             </div>
 
             <div style="display:flex; align-items:center;">
               <div  style="border:2px solid ${'#FDE7EB'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
               <p style="color: #E4E4E7; font-size: 14px;
               font-style: normal;
-              font-weight: 700; flex-basis: 30%; margin-right:8px;">${
-                currentExpectedData.value
-              }</p>
+              font-weight: 700; flex-basis: 30%; margin-right:8px;">${formatNumber(
+                currentExpectedData.value,
+              )}</p>
               <p style="color: #A1A1AA; font-size: 12px;
               font-style: normal;
-              font-weight: 500; "> ${`기대조회수`} </p>
+              font-weight: 500; "> ${`평균 조회수`} </p>
             </div>
 
+                 <div style="display:flex; align-items:center;">
+              <div  style="border:2px solid ${'#FDE7EB'}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+              <p style="color: #E4E4E7; font-size: 14px;
+              font-style: normal;
+              font-weight: 700; flex-basis: 30%; margin-right:8px;">${formatNumber(
+                currentAreaData.value[0],
+              )}</p>
+              <p style="color: #A1A1AA; font-size: 12px;
+              font-style: normal;
+              font-weight: 500; "> ${`최소 조회수`} </p>
+            </div>
           </div>`,
           )
           .style('transform', `translate(${mouseX + 30}px, ${mouseY + 30}px)`) //리플로우 및 애니메이션과 결합될 여지를 남겨두고 transform으로 조절
