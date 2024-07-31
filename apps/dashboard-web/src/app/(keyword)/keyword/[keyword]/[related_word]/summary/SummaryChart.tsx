@@ -16,6 +16,7 @@ import { cn } from '@/utils/cn';
 
 import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider';
 import useD3Bars from './useD3Bars';
+import useD3HoverDots from './useD3HoverDots';
 import useD3HoverLine from './useD3HoverLine';
 import useD3Lines from './useD3Lines';
 import useXAxes from './useXAxes';
@@ -38,6 +39,10 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   const enterSelectedListcolors = ['green', 'blue'];
 
   const updateSelectedColors = ['green', 'blue'];
+
+  const dotSelectedColors = ['green', 'blue'];
+
+  const updateDotSelectedColors = ['green', 'blue'];
 
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -244,6 +249,31 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xScale: x,
   });
 
+  const { dotRef } = useD3HoverDots({
+    chartSelector: chart,
+    data: currentData,
+    dimensions,
+    xScale: x,
+    yScale: y,
+    styleMethod(selection, index, isUpdate) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : isUpdate
+          ? updateDotSelectedColors.length > 0
+            ? (updateDotSelectedColors.shift() as 'blue' | 'green')
+            : 'unknown'
+          : dotSelectedColors.length > 0
+          ? (dotSelectedColors.shift() as 'blue' | 'green')
+          : 'unknown';
+
+      selection.classed('red blue green unknown', false);
+      selection.attr('stroke', chartColorSchema[color]);
+    },
+    summaryChartType,
+    keywordList: sortedRelatedKeywordList,
+  });
+
   useEffect(() => {
     chart.selectAll('*').remove();
   }, [width]);
@@ -256,6 +286,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
+    // dotRef.current?.remove();
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
 
@@ -265,6 +296,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
       line.current?.render();
       lineHoverRef.current?.render();
+      dotRef.current?.render();
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 
