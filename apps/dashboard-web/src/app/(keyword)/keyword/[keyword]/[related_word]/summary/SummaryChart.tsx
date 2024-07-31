@@ -275,7 +275,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     keywordList: sortedRelatedKeywordList,
   });
 
-  const tooltopColorlist = ['green', 'blue'];
   const { hoverVirtualRef } = useD3HoverVirtualDom({
     chartSelector: chart,
     data: currentData,
