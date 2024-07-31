@@ -91,7 +91,7 @@ const ComparisonSummaryCard = ({
     >
       <p>{rank}</p>
       <p>{relatedKeyword}</p>
-      <p>{predictedView}</p>
+      <p>{predictedView.toFixed(0)}</p>
       <p>{Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr')}</p>
       <p>{Number(totalVideoCount).toLocaleString('ko-kr')}</p>
       <p>
