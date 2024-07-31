@@ -16,6 +16,9 @@ import { cn } from '@/utils/cn';
 
 import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider';
 import useD3Bars from './useD3Bars';
+import useD3HoverDots from './useD3HoverDots';
+import useD3HoverLine from './useD3HoverLine';
+import useD3HoverVirtualDom from './useD3HoverVirtualDom';
 import useD3Lines from './useD3Lines';
 import useXAxes from './useXAxes';
 import useYAxes from './useYAxes';
@@ -37,6 +40,10 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   const enterSelectedListcolors = ['green', 'blue'];
 
   const updateSelectedColors = ['green', 'blue'];
+
+  const dotSelectedColors = ['green', 'blue'];
+
+  const updateDotSelectedColors = ['green', 'blue'];
 
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -225,6 +232,68 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     },
   });
 
+  // Tooltip 및 hover 섹션
+  const tooltip = D3.select('#tooltip2')
+    .style('position', 'absolute')
+    // .style('top', '-999px')
+    // .style('left', '-999px')
+    .style('display', 'none')
+    .style('min-width', '150px')
+    .style('background-color', '#3F3F46')
+    .style('padding', '9px 6px')
+    .style('border-radius', '10px');
+
+  const { hoverLineGroup, lineHoverRef } = useD3HoverLine({
+    chartSelector: chart,
+    data: currentData[0],
+    dimensions,
+    xScale: x,
+  });
+
+  const { dotRef, dotListSelector } = useD3HoverDots({
+    chartSelector: chart,
+    data: currentData,
+    dimensions,
+    xScale: x,
+    yScale: y,
+    styleMethod(selection, index, isUpdate) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : isUpdate
+          ? updateDotSelectedColors.length > 0
+            ? (updateDotSelectedColors.shift() as 'blue' | 'green')
+            : 'unknown'
+          : dotSelectedColors.length > 0
+          ? (dotSelectedColors.shift() as 'blue' | 'green')
+          : 'unknown';
+
+      selection.classed('red blue green unknown', false);
+      selection.attr('stroke', chartColorSchema[color]);
+    },
+    summaryChartType,
+    keywordList: sortedRelatedKeywordList,
+  });
+
+  const { hoverVirtualRef } = useD3HoverVirtualDom({
+    chartSelector: chart,
+    data: currentData,
+    dimensions,
+    xScale: x,
+    dotsSelector: dotListSelector,
+    hoverLinesSelector: hoverLineGroup,
+    tooltip,
+    tooltipColorCallback(index, colorList) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : colorList.length > 0
+          ? (colorList.shift() as 'blue' | 'green')
+          : 'unknown';
+      return chartColorSchema[color];
+    },
+  });
+
   useEffect(() => {
     chart.selectAll('*').remove();
   }, [width]);
@@ -234,17 +303,20 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
+    lineHoverRef.current?.render();
   }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
+    // dotRef.current?.remove();
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
 
       line.current?.remove();
     } else {
       bar.current?.remove();
-
       line.current?.render();
+      dotRef.current?.render();
+      hoverVirtualRef.current?.render();
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 
@@ -271,14 +343,15 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           </li>
         ))}
       </ul>
-      <>
-        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다.   */}
+      <div className="relative flex-grow">
+        {/* grid cols 넣으니깐 부모에 반응형적으로 자식이 제어가 된다. 이전 relative 박스가 있기전에    */}
         <div
-          className="grid flex-grow grid-cols-1 [&_svg]:overflow-visible"
+          className="grid grid-cols-1 [&_svg]:overflow-visible"
           id="summary-chart"
           ref={selectRef}
         ></div>
-      </>
+        <div id="tooltip2" className="z-[500]"></div>{' '}
+      </div>
     </div>
   );
 };

@@ -20,9 +20,6 @@ const WeeklyKeyword = () => {
             <p className="text-grey500">{i + 1}</p>
             <p className="text-grey700 flex-grow text-[16px]">
               {item.recommendedKeyword}{' '}
-              {item.topAssociatedWord
-                ? item.topAssociatedWord.split(',')[0]
-                : ''}
             </p>
             <div className="ml-auto h-[20px] w-[20px]">
               {Math.sign(item.changes) === 0 ? (
