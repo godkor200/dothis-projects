@@ -568,7 +568,7 @@ const D3Axis = ({
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
                   dataReady[0].color
-                }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px; white-space:nowrap;" ></div>
                 <p style="color: #E4E4E7; font-size: 14px;
                 font-style: normal;
                 font-weight: 700; flex-basis: 30%; margin-right:8px;">${d1.value.toLocaleString(
@@ -576,7 +576,7 @@ const D3Axis = ({
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`일일조회수`} </p>
+                font-weight: 500; white-space:nowrap; "> ${`일일조회수`} </p>
               </div>
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
@@ -589,7 +589,7 @@ const D3Axis = ({
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`검색량`} </p>
+                font-weight: 500; white-space:nowrap;"> ${`검색량`} </p>
               </div>
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
@@ -602,7 +602,7 @@ const D3Axis = ({
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`발행 영상 수`} </p>
+                font-weight: 500; white-space:nowrap; "> ${`발행 영상 수`} </p>
               </div>
             </div>`,
           )
