@@ -38,7 +38,11 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
 
   const lineHoverRef = useRef<LineRef | null>(null);
 
-  const hoverLineGroup = chartSelector.select('.hover-line-group');
+  const hoverLineGroup = chartSelector
+    .append('g')
+    .attr('class', 'hover-line-group')
+    .selectAll('rect')
+    .data(data);
 
   //   console.log(hoverLineGroup.empty());
   //   if (hoverLineGroup.empty()) {
@@ -51,11 +55,7 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
       render: () => {
         if (!xScale) return;
 
-        chartSelector
-          .append('g')
-          .attr('class', 'hover-line-group')
-          .selectAll('rect')
-          .data(data)
+        hoverLineGroup
           .enter()
           .append('rect')
           .attr(
