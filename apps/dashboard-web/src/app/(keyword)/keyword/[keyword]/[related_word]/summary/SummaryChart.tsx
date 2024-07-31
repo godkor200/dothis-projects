@@ -18,6 +18,7 @@ import { useSelectedKeywordContext } from '../comparison/SelectedKeywordProvider
 import useD3Bars from './useD3Bars';
 import useD3HoverDots from './useD3HoverDots';
 import useD3HoverLine from './useD3HoverLine';
+import useD3HoverVirtualDom from './useD3HoverVirtualDom';
 import useD3Lines from './useD3Lines';
 import useXAxes from './useXAxes';
 import useYAxes from './useYAxes';
@@ -232,7 +233,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   });
 
   // Tooltip 및 hover 섹션
-  const tooltip2 = D3.select('#tooltip2')
+  const tooltip = D3.select('#tooltip2')
     .style('position', 'absolute')
     // .style('top', '-999px')
     // .style('left', '-999px')
@@ -249,7 +250,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xScale: x,
   });
 
-  const { dotRef } = useD3HoverDots({
+  const { dotRef, dotListSelector } = useD3HoverDots({
     chartSelector: chart,
     data: currentData,
     dimensions,
@@ -274,6 +275,26 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     keywordList: sortedRelatedKeywordList,
   });
 
+  const tooltopColorlist = ['green', 'blue'];
+  const { hoverVirtualRef } = useD3HoverVirtualDom({
+    chartSelector: chart,
+    data: currentData,
+    dimensions,
+    xScale: x,
+    dotsSelector: dotListSelector,
+    hoverLinesSelector: hoverLineGroup,
+    tooltip,
+    tooltipColorCallback(index, colorList) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : colorList.length > 0
+          ? (colorList.shift() as 'blue' | 'green')
+          : 'unknown';
+      return chartColorSchema[color];
+    },
+  });
+
   useEffect(() => {
     chart.selectAll('*').remove();
   }, [width]);
@@ -283,6 +304,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
+    lineHoverRef.current?.render();
   }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
@@ -293,10 +315,9 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
       line.current?.remove();
     } else {
       bar.current?.remove();
-
       line.current?.render();
-      lineHoverRef.current?.render();
       dotRef.current?.render();
+      hoverVirtualRef.current?.render();
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 
