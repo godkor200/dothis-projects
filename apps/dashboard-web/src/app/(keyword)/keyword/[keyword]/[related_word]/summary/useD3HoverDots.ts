@@ -109,7 +109,7 @@ const useD3HoverDots = ({
             styleMethod && styleMethod(selection, index, false);
           })
           .attr('stroke-width', '4px')
-          .style('opacity', 1)
+          .style('opacity', 0)
           .style('z-index', 9999)
           .attr('r', 5)
           .attr('cx', function (d) {
