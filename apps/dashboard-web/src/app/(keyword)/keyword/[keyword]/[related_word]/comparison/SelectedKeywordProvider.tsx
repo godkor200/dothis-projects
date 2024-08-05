@@ -14,7 +14,7 @@ export const useSelectedKeywordContext = (componentName: string) => {
 
   if (context === null) {
     throw new Error(
-      `${componentName}에 상위 <OpenFilterContextProvider>가 존재하지 않습니다.`,
+      `${componentName}에 상위 <SelectedKeywordProvider>가 존재하지 않습니다.`,
     );
   }
   return context;
