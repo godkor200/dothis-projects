@@ -18,11 +18,12 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCount(dailyViewData);
+  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount ?? 1;
+  // const totalVideoCount = sumVideoCount(dailyViewData);
 
   const copetitionScore = getCompetitionScore({
     totalDailyView: totalIncreaseViews,
-    videoCount: totalVideoCount,
+    videoCount: competitionVideoCount,
   });
 
   const score = convertCompetitionScoreFormatToHTML({
@@ -30,7 +31,9 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     totalDailyView: totalIncreaseViews,
   });
 
-  const competitionRate = (totalIncreaseViews / totalVideoCount).toFixed(0);
+  const competitionRate = (totalIncreaseViews / competitionVideoCount).toFixed(
+    0,
+  );
 
   const formattedCompetitionRate =
     parseFloat(competitionRate).toLocaleString('ko-KR');
@@ -49,7 +52,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
           <p className="text-grey600 mt-2 cursor-pointer whitespace-nowrap text-center font-[500]">
             연관 영상의 조회수 평균{' '}
             <span className="text-primary500">
-              {isNaN(totalIncreaseViews / totalVideoCount)
+              {isNaN(totalIncreaseViews / competitionVideoCount)
                 ? 0
                 : formattedCompetitionRate}
             </span>
