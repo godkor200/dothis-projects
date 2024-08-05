@@ -6,6 +6,7 @@ import { cn } from '@/utils/cn';
 
 import BoxFrame from '../../../BoxFrame';
 import ChartContainer from '../../ChartContainer';
+import SelectedKeywordProvider from '../comparison/SelectedKeywordProvider';
 import Counter from '../Rolling';
 import AreaChartContainer from './AreaChartContainer';
 import D3AreaChart from './D3AreaChart';
@@ -163,10 +164,12 @@ const SummaryTab = ({
             <p className="text-grey600 mb-[30px] text-[14px] font-[500]">
               키워드 분석 결과 비교
             </p>
-            <SummaryChart
-              baseKeyword={baseKeyword}
-              relatedKeyword={relatedKeyword}
-            />
+            <SelectedKeywordProvider relatedKeyword={relatedKeyword}>
+              <SummaryChart
+                baseKeyword={baseKeyword}
+                relatedKeyword={relatedKeyword}
+              />
+            </SelectedKeywordProvider>
           </div>
         </BoxFrame>
       </div>
