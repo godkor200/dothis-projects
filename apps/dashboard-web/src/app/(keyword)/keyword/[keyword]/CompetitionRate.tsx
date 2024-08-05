@@ -42,7 +42,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
       {dailyViewData && (
         <CustomTooltipComponent
           title={
-            '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
+            '발행된 영상의 수와 조회수를 비교해 계산한 영상들의 평균 조회수입니다. \n 경쟁강도가 좋아도 평균조회수가 낮다면 좋은 결과를 예상하기 어렵습니다.'
           }
           tooltipOptions={{ side: 'bottom', sideOffset: 15, align: 'end' }}
         >
