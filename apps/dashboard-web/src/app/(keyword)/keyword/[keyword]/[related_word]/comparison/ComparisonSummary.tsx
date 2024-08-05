@@ -15,7 +15,7 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
   //   const relatedKeywordList = data?.slice(0, 10);
   const { relatedKeywordList, setRelatedKeywordList } =
-    useSelectedKeywordContext('RelatedKeywordList');
+    useSelectedKeywordContext('ComparisonSummary');
 
   const sortedRelatedKeywordList = relatedKeywordList.sort((a, b) => {
     if (!data || data.indexOf(a) === data.indexOf(b)) {
