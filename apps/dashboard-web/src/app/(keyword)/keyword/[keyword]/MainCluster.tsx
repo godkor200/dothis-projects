@@ -1,23 +1,30 @@
 'use client';
 
 import { clustersCategories } from '@/constants/clusterCategories';
-import useGetRelWords from '@/hooks/react-query/query/useGetRelWords';
+import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 
 const MainCluster = ({ keyword }: { keyword: string }) => {
-  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
+  const { representativeCategoryNumber } = useGetDailyViewV2({
+    keyword: keyword,
+    relword: null,
+  });
 
-  const clusterData = getRelatedClusterArray();
+  const formattedCluster = parseInt(
+    representativeCategoryNumber ?? '0',
+    10,
+  ).toString();
 
   const extractValue = (str: string) => {
     if (!str) return '분석중';
 
     const parts = str.split('>');
+
     return parts[parts.length - 1].trim(); // `>` 뒤의 부분 반환
   };
 
   return (
     <>
-      {extractValue(clustersCategories[clusterData[0]]) || (
+      {extractValue(clustersCategories[formattedCluster]) || (
         <span className="text-grey600">분석중</span>
       )}
     </>
