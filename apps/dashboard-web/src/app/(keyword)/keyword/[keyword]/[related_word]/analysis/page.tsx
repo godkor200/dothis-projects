@@ -86,7 +86,7 @@ const Page = ({
               <p>콘텐츠 추이</p>
               <TooltipComponent
                 title={
-                  '검색한 키워드가 포함된 영상들이 획득한 조회수의 합계와 영상이 발행된 횟수를 나타냅니다. \n 같은 기간 동안 변화한 검색량과 비교해 콘텐츠의 수요와 공급을 예측하세요.'
+                  '일주일 동안 발생한 조회수의 합계와 분석된 영상의 수를 나타냅니다.  \n 검색량의 변화와 비교해 콘텐츠의 수요와 공급을 예측하세요.'
                 }
               />
             </div>
@@ -103,7 +103,11 @@ const Page = ({
           <div className="flex h-full flex-col">
             <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
               <p>조회수 성과</p>
-              <TooltipComponent title={''} />
+              <TooltipComponent
+                title={
+                  '이 주제를 다룬 채널의 평균 조회수보다 몇 배의 조회수를 얻었는지 계산합니다. \n 평균 성과가 높다면 누가 다뤄도 높은 조회수가 예상되고, 반대로 평균 성과가 \n 낮다면 누가 다뤄도 낮은 조회수가 예상되는 키워드라는 의미입니다.'
+                }
+              />
             </div>
 
             <ErrorBoundary fallback={<SystemError />}>
