@@ -68,7 +68,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   };
 
   const { relatedKeywordList, setRelatedKeywordList } =
-    useSelectedKeywordContext('RelatedKeywordList');
+    useSelectedKeywordContext('SummaryChart');
 
   const {
     data: rankingList,
