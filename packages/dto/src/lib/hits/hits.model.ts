@@ -25,6 +25,14 @@ export const zDailyViews = z.array(zDailyViewSchema);
 
 export const zDailyViewsData = dataObject(zDailyViews);
 
+const zRepresentativeCategorySchema = z.object({
+  representativeCategory: z.string(),
+});
+
+export const zDailyViewsDataWithCategory = zDailyViewsData.merge(
+  zRepresentativeCategorySchema,
+);
+
 /**
  * weekly-view models
  */

@@ -2,6 +2,7 @@ import { c } from '../contract';
 import {
   zCombinedViewsData,
   zDailyViewsData,
+  zDailyViewsDataWithCategory,
   zExpectedViews,
   zKeywordThisWeeklyRes,
   zWeeklyKeywordsListWithTotalData,
@@ -42,7 +43,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${dailyApiUrl}`,
     query: findVideoBySearchKeyword,
     responses: {
-      200: zSuccessBase.merge(zDailyViewsData),
+      200: zSuccessBase.merge(zDailyViewsDataWithCategory),
       ...zErrResBase,
     },
     summary: '일일 조회수를 가져옵니다',
