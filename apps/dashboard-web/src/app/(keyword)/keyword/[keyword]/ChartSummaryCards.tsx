@@ -21,8 +21,7 @@ const ChartSummaryCards = ({
   keyword: string;
   relatedKeyword: string | null;
 }) => {
-  // 조회수 합계 및 영상 수 코드
-  //   const dailViewData = useDailyView({ keyword: keyword, relword: keyword });
+  // 조회수 합계
 
   const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
     keyword,
@@ -31,7 +30,9 @@ const ChartSummaryCards = ({
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCount(dailyViewData);
+  // 경쟁 영상 수
+  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount;
+  // const totalVideoCount = sumVideoCount(dailyViewData);
 
   //   검색량 코드
   const searchRatio = useSearchRatioFormatterD3({
@@ -65,7 +66,7 @@ const ChartSummaryCards = ({
     },
     {
       title: '경쟁 영상 수',
-      value: Number(totalVideoCount).toLocaleString('ko-kr'),
+      value: Number(competitionVideoCount).toLocaleString('ko-kr'),
     },
   ];
 
