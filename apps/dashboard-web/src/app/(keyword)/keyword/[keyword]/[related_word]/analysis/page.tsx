@@ -14,7 +14,6 @@ import MediaRank from '../summary/MediaRank';
 import OutlookChart from '../summary/OutlookChart';
 import PredictedView from '../summary/PredictedView';
 import SuccessProbability from '../summary/SuccessProbability';
-import SummaryChart from '../summary/SummaryChart';
 
 const Page = ({
   params,
