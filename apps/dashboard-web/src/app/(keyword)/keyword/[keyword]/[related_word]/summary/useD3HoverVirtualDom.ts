@@ -67,6 +67,27 @@ const useD3HoverVirtualDom = ({
     return chartSelector.select<SVGGElement>('.hover-virtual-rect-group');
   };
 
+  const tooltipContent = (
+    data: DataItem,
+    index: number,
+    colorList: string[],
+  ) => {
+    return `<div style="display:flex; align-items:center;"> 
+              <div  style="border:2px solid ${tooltipColorCallback(
+                index,
+                colorList,
+              )}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                <p style="color: #E4E4E7; font-size: 14px;
+                  font-style: normal;
+                  font-weight: 700; flex-basis: 30%; margin-right:8px;">${data.value.toLocaleString(
+                    'ko-kr',
+                  )}</p>
+                <p style="color: #A1A1AA; font-size: 12px;
+                font-style: normal;
+                font-weight: 500; white-space:nowrap;"> ${`일일조회수`} </p>
+              </div>`;
+  };
+
   useImperativeHandle(hoverVirtualRef, () => ({
     render: ({ handleSelectHoverCircle, handleSelectHoverLines }) => {
       if (!xScale) return;
@@ -126,26 +147,14 @@ const useD3HoverVirtualDom = ({
           const [mouseX, mouseY] = D3.pointer(e);
 
           tooltip.transition().duration(0).style('display', 'block');
+
           const colorList = ['green', 'blue'];
           tooltip
             .html(
               `<div>  
                 ${bisectArray
                   .map((d, index) => {
-                    return `<div style="display:flex; align-items:center;"> 
-                                <div  style="border:2px solid ${tooltipColorCallback(
-                                  index,
-                                  colorList,
-                                )}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
-                                <p style="color: #E4E4E7; font-size: 14px;
-                                font-style: normal;
-                                font-weight: 700; flex-basis: 30%; margin-right:8px;">${d.value.toLocaleString(
-                                  'ko-kr',
-                                )}</p>
-                                <p style="color: #A1A1AA; font-size: 12px;
-                                font-style: normal;
-                                font-weight: 500; white-space:nowrap;"> ${`일일조회수`} </p>
-                            </div>`;
+                    return tooltipContent(d, index, colorList);
                   })
                   .join('')}
             </div>`,
@@ -217,20 +226,7 @@ const useD3HoverVirtualDom = ({
               `<div>  
               ${bisectArray
                 .map((d, index) => {
-                  return `<div style="display:flex; align-items:center;"> 
-                              <div  style="border:2px solid ${tooltipColorCallback(
-                                index,
-                                colorList,
-                              )}; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
-                              <p style="color: #E4E4E7; font-size: 14px;
-                              font-style: normal;
-                              font-weight: 700; flex-basis: 30%; margin-right:8px;">${d.value.toLocaleString(
-                                'ko-kr',
-                              )}</p>
-                              <p style="color: #A1A1AA; font-size: 12px;
-                              font-style: normal;
-                              font-weight: 500; white-space:nowrap;"> ${`일일조회수`} </p>
-                          </div>`;
+                  return tooltipContent(d, index, colorList);
                 })
                 .join('')}
           </div>`,
