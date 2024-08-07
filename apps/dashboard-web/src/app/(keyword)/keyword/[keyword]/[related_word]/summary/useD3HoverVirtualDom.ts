@@ -19,7 +19,7 @@ interface LineRef<T> {
       D3.BaseType,
       unknown
     >;
-    hoverLinesSelectorHandle: () => D3.Selection<
+    handleSelectHoverLines: () => D3.Selection<
       SVGRectElement,
       T,
       D3.BaseType,
@@ -76,7 +76,7 @@ const useD3HoverVirtualDom = ({
   > | null>(null);
 
   useImperativeHandle(hoverVirtualRef, () => ({
-    render: ({ handleSelectHoverCircle, hoverLinesSelectorHandle }) => {
+    render: ({ handleSelectHoverCircle, handleSelectHoverLines }) => {
       if (!xScale) return;
 
       let hoverLineGroup = chartSelector.select<SVGGElement>(
@@ -92,7 +92,7 @@ const useD3HoverVirtualDom = ({
 
       const hoverDotsSelector = handleSelectHoverCircle();
 
-      const hoverLinesSelector = hoverLinesSelectorHandle();
+      const hoverLinesSelector = handleSelectHoverLines();
 
       hoverLineGroup
         .selectAll('rect')
