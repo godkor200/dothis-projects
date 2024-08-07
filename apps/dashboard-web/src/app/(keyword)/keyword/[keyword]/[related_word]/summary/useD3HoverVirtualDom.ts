@@ -61,19 +61,11 @@ const useD3HoverVirtualDom = ({
 
   const hoverVirtualRef = useRef<LineRef<DataItem> | null>(null);
 
-  //   console.log(hoverLineGroup.empty());
-  //   if (hoverLineGroup.empty()) {
-  //     chartSelector.append('g').attr('class', 'hover-line-group');
-  //   }
-
   const timeSeriesData = data[0];
 
-  const hoverVirtualDomRef = useRef<D3.Selection<
-    SVGRectElement,
-    DataItem,
-    SVGGElement,
-    unknown
-  > | null>(null);
+  const handleSelectHoverVirtualDom = () => {
+    return chartSelector.select<SVGGElement>('.hover-virtual-rect-group');
+  };
 
   useImperativeHandle(hoverVirtualRef, () => ({
     render: ({ handleSelectHoverCircle, handleSelectHoverLines }) => {
@@ -164,22 +156,12 @@ const useD3HoverVirtualDom = ({
         .on('mousemove', function (e, i) {
           const [mouseX, mouseY] = D3.pointer(e);
 
-          return (
-            tooltip
-              // .style(
-              //   'transform',
-              //   `translate(${mouseX}px, ${mouseY}px)`,
-              // );
-              .style('top', mouseY + convertRemToPixels(-1.6) + 'px')
-              .style('left', mouseX + convertRemToPixels(2) + 'px')
-          );
+          return tooltip
+
+            .style('top', mouseY + convertRemToPixels(-1.6) + 'px')
+            .style('left', mouseX + convertRemToPixels(2) + 'px');
         })
         .on('mouseout', (e) => {
-          //   console.log('oout');
-
-          //   console.log(chartSelector.selectAll('circle'));
-          //   console.log(dotsSelector);
-
           //   데이터가 정상적으로 로드되지 않았을 때 dotsSelector도 존재하지 않아서 mouseout circle 이벤트 효과가 기대했던대로 동작하지 않는 버그가 존재 --> 그로인해 dotsSelector 비어있을 경우 (즉 데이터가 불러오지 못했을 경우 해당 chart 안에 circle을 전부 지워버리도록 코드 추가 (hover 시에 circle에 class를 추가하는 방식도 고려해볼 수 있음 -지울 때 circle 범위를 축소시키기 위해))
 
           /**
@@ -197,17 +179,13 @@ const useD3HoverVirtualDom = ({
           hoverLinesSelector.style('opacity', 0);
 
           tooltip.transition().duration(0);
-          tooltip
-            // .style('left', '-999px')
-            // .style('top', '-999px')
-            .style('display', 'none');
+          tooltip.style('display', 'none');
         });
     },
     remove: () => {
-      // if (hoverVirtualDomRef.current) {
-      //   hoverVirtualDomRef.current.remove();
-      // }
-      chartSelector.select<SVGGElement>('.hover-virtual-rect-group').remove();
+      const hoverVirtualDomSelector = handleSelectHoverVirtualDom();
+
+      hoverVirtualDomSelector.remove();
     },
   }));
 
