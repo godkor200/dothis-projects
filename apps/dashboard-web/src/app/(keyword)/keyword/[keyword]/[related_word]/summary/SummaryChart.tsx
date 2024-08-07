@@ -243,12 +243,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     .style('padding', '9px 6px')
     .style('border-radius', '10px');
 
-  const {
-    hoverLineGroup,
-    lineHoverRef,
-    hoverLineSelector,
-    hoverLinesSelectorHandle,
-  } = useD3HoverLine({
+  const { lineHoverRef, hoverLinesSelectorHandle } = useD3HoverLine({
     chartSelector: chart,
     data: currentData[0],
     dimensions,
