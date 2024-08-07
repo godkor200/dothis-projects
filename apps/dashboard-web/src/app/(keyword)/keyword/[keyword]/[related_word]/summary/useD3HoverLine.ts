@@ -38,7 +38,7 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
 
   const lineHoverRef = useRef<LineRef | null>(null);
 
-  const hoverLinesSelectorHandle = () => {
+  const handleSelectHoverLines = () => {
     return chartSelector
       .selectAll('.hover-rect-group')
       .selectAll<SVGRectElement, DataItem>('rect');
@@ -71,7 +71,7 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
     },
 
     remove: () => {
-      const hoverLinesSelector = hoverLinesSelectorHandle();
+      const hoverLinesSelector = handleSelectHoverLines();
 
       hoverLinesSelector.remove();
     },
@@ -79,7 +79,7 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
 
   return {
     lineHoverRef,
-    hoverLinesSelectorHandle,
+    handleSelectHoverLines,
   };
 };
 

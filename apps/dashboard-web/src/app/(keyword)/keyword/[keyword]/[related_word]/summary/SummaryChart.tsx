@@ -243,7 +243,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     .style('padding', '9px 6px')
     .style('border-radius', '10px');
 
-  const { lineHoverRef, hoverLinesSelectorHandle } = useD3HoverLine({
+  const { lineHoverRef, handleSelectHoverLines } = useD3HoverLine({
     chartSelector: chart,
     data: currentData[0],
     dimensions,
@@ -319,7 +319,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
       dotRef.current?.render();
       hoverVirtualRef.current?.render({
         handleSelectHoverCircle,
-        hoverLinesSelectorHandle,
+        handleSelectHoverLines,
       });
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
