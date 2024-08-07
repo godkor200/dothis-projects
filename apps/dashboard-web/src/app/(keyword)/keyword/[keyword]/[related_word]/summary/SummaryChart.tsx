@@ -243,14 +243,19 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     .style('padding', '9px 6px')
     .style('border-radius', '10px');
 
-  const { hoverLineGroup, lineHoverRef } = useD3HoverLine({
+  const {
+    hoverLineGroup,
+    lineHoverRef,
+    hoverLineSelector,
+    hoverLinesSelectorHandle,
+  } = useD3HoverLine({
     chartSelector: chart,
     data: currentData[0],
     dimensions,
     xScale: x,
   });
 
-  const { dotRef, dotListSelector } = useD3HoverDots({
+  const { dotRef, hoverDotsSelectorHandle } = useD3HoverDots({
     chartSelector: chart,
     data: currentData,
     dimensions,
@@ -280,7 +285,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     data: currentData,
     dimensions,
     xScale: x,
-    dotsSelector: dotListSelector,
+
     hoverLinesSelector: hoverLineGroup,
     tooltip,
     tooltipColorCallback(index, colorList) {
@@ -292,6 +297,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           : 'unknown';
       return chartColorSchema[color];
     },
+    hoverTest: hoverLineSelector,
   });
 
   useEffect(() => {
@@ -303,20 +309,26 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
-    lineHoverRef.current?.render();
+    // lineHoverRef.current?.render();
   }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
     // dotRef.current?.remove();
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
-
+      lineHoverRef.current?.remove();
       line.current?.remove();
+      hoverVirtualRef.current?.remove();
     } else {
+      lineHoverRef.current?.render();
       bar.current?.remove();
       line.current?.render();
+
       dotRef.current?.render();
-      hoverVirtualRef.current?.render();
+      hoverVirtualRef.current?.render({
+        hoverDotsSelectorHandle,
+        hoverLinesSelectorHandle,
+      });
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 
