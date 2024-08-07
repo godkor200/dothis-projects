@@ -52,7 +52,7 @@ const useD3HoverDots = ({
     dimensions;
   const dotRef = useRef<DotRef | null>(null);
 
-  const hoverDotsSelectorHandle = () => {
+  const handleSelectHoverCircle = () => {
     return chartSelector.selectAll<SVGCircleElement, DataItem>('.node');
   };
 
@@ -134,12 +134,12 @@ const useD3HoverDots = ({
       });
     },
     remove: () => {
-      const hoverDotsSelector = hoverDotsSelectorHandle();
+      const hoverDotsSelector = handleSelectHoverCircle();
       hoverDotsSelector.remove();
     },
   }));
 
-  return { dotRef, hoverDotsSelectorHandle };
+  return { dotRef, handleSelectHoverCircle };
 };
 
 export default useD3HoverDots;
