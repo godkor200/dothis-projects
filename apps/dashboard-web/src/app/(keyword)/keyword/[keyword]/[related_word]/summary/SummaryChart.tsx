@@ -285,8 +285,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     data: currentData,
     dimensions,
     xScale: x,
-
-    hoverLinesSelector: hoverLineGroup,
     tooltip,
     tooltipColorCallback(index, colorList) {
       const color: 'red' | 'blue' | 'green' | 'unknown' =
@@ -297,7 +295,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           : 'unknown';
       return chartColorSchema[color];
     },
-    hoverTest: hoverLineSelector,
   });
 
   useEffect(() => {
