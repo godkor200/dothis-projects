@@ -255,7 +255,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xScale: x,
   });
 
-  const { dotRef, hoverDotsSelectorHandle } = useD3HoverDots({
+  const { dotRef, handleSelectHoverCircle } = useD3HoverDots({
     chartSelector: chart,
     data: currentData,
     dimensions,
@@ -326,7 +326,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
       dotRef.current?.render();
       hoverVirtualRef.current?.render({
-        hoverDotsSelectorHandle,
+        handleSelectHoverCircle,
         hoverLinesSelectorHandle,
       });
     }
