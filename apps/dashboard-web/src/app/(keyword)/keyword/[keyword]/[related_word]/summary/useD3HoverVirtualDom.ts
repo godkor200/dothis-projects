@@ -10,9 +10,22 @@ import {
 
 import type { DataItem } from './SummaryChart';
 
-interface LineRef {
+interface LineRef<T> {
   //   line: D3.Line<DataItem>;
-  render: () => void;
+  render: (selectorFn: {
+    handleSelectHoverCircle: () => D3.Selection<
+      SVGCircleElement,
+      T,
+      D3.BaseType,
+      unknown
+    >;
+    hoverLinesSelectorHandle: () => D3.Selection<
+      SVGRectElement,
+      T,
+      D3.BaseType,
+      unknown
+    >;
+  }) => void;
   remove: () => void;
 }
 
@@ -30,14 +43,8 @@ interface Props {
   data: DataItem[][];
   dimensions: Dimensions;
   xScale: D3.ScaleBand<string> | undefined;
-  hoverLinesSelector: D3.Selection<
-    SVGRectElement,
-    DataItem,
-    SVGGElement,
-    unknown
-  > | null;
+
   tooltip: D3.Selection<D3.BaseType, unknown, HTMLElement, any>;
-  dotsSelector: D3.Selection<D3.BaseType, unknown, D3.BaseType, unknown>;
   tooltipColorCallback: (index: number, colorList: string[]) => void;
 }
 
@@ -46,15 +53,13 @@ const useD3HoverVirtualDom = ({
   data,
   dimensions,
   xScale,
-  hoverLinesSelector,
   tooltip,
-  dotsSelector,
   tooltipColorCallback,
 }: Props) => {
   const { width, height, marginTop, marginRight, marginBottom, marginLeft } =
     dimensions;
 
-  const hoverVirtualRef = useRef<LineRef | null>(null);
+  const hoverVirtualRef = useRef<LineRef<DataItem> | null>(null);
 
   //   console.log(hoverLineGroup.empty());
   //   if (hoverLineGroup.empty()) {
@@ -63,12 +68,33 @@ const useD3HoverVirtualDom = ({
 
   const timeSeriesData = data[0];
 
-  useImperativeHandle(hoverVirtualRef, () => ({
-    render: () => {
-      if (!xScale || !hoverLinesSelector) return;
+  const hoverVirtualDomRef = useRef<D3.Selection<
+    SVGRectElement,
+    DataItem,
+    SVGGElement,
+    unknown
+  > | null>(null);
 
-      chartSelector
-        .append('g')
+  useImperativeHandle(hoverVirtualRef, () => ({
+    render: ({ handleSelectHoverCircle, hoverLinesSelectorHandle }) => {
+      if (!xScale) return;
+
+      let hoverLineGroup = chartSelector.select<SVGGElement>(
+        '.hover-virtual-rect-group',
+      );
+      if (hoverLineGroup.empty()) {
+        // If it doesn't exist, create it
+
+        hoverLineGroup = chartSelector
+          .append('g')
+          .attr('class', 'hover-virtual-rect-group');
+      }
+
+      const hoverDotsSelector = handleSelectHoverCircle();
+
+      const hoverLinesSelector = hoverLinesSelectorHandle();
+
+      hoverLineGroup
         .selectAll('rect')
         .data(timeSeriesData)
         .enter()
@@ -96,13 +122,10 @@ const useD3HoverVirtualDom = ({
           });
 
           hoverLinesSelector
-            .filter((d) => {
-              return d.date === i.date;
-            })
+            .filter((d, item) => (d as DataItem).date === i.date)
             .style('opacity', 1);
 
-          chartSelector
-            .selectAll('circle')
+          hoverDotsSelector
             .filter((d, item) => (d as DataItem).date === i.date)
             .style('opacity', 1);
 
@@ -152,7 +175,22 @@ const useD3HoverVirtualDom = ({
           );
         })
         .on('mouseout', (e) => {
-          dotsSelector.style('opacity', 0);
+          //   console.log('oout');
+
+          //   console.log(chartSelector.selectAll('circle'));
+          //   console.log(dotsSelector);
+
+          //   데이터가 정상적으로 로드되지 않았을 때 dotsSelector도 존재하지 않아서 mouseout circle 이벤트 효과가 기대했던대로 동작하지 않는 버그가 존재 --> 그로인해 dotsSelector 비어있을 경우 (즉 데이터가 불러오지 못했을 경우 해당 chart 안에 circle을 전부 지워버리도록 코드 추가 (hover 시에 circle에 class를 추가하는 방식도 고려해볼 수 있음 -지울 때 circle 범위를 축소시키기 위해))
+
+          /**
+           * dotsSelector.empty로 구성했을 경우 두 번째 이상으로 활성된 circle에 대해서는 또 대응을 하지 못한다. 첫 번째로 가져온 연관어에 대해서는 데이터를 불러와서 empty 조건에 넘어가지 못함
+           *
+           */
+          //   if (dotsSelector.empty()) {
+          // chartSelector.selectAll('circle').style('opacity', 0);
+          // }
+
+          hoverDotsSelector.style('opacity', 0);
 
           D3.select(e.target).transition().attr('r', 2);
 
@@ -165,7 +203,12 @@ const useD3HoverVirtualDom = ({
             .style('display', 'none');
         });
     },
-    remove: () => {},
+    remove: () => {
+      // if (hoverVirtualDomRef.current) {
+      //   hoverVirtualDomRef.current.remove();
+      // }
+      chartSelector.select<SVGGElement>('.hover-virtual-rect-group').remove();
+    },
   }));
 
   return { hoverVirtualRef };
