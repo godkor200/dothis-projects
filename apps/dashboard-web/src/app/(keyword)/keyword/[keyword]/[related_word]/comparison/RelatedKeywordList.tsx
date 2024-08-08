@@ -52,7 +52,10 @@ const RelatedKeywordList = ({
                   'text-primary600': color === 'red',
                 },
               )}
-              onClick={() =>
+              onClick={() => {
+                if (relatedKeyword === item) {
+                  return;
+                }
                 setRelatedKeywordList((prev) => {
                   if (prev.includes(item)) {
                     return prev.filter((keyword) => keyword !== item);
@@ -62,8 +65,8 @@ const RelatedKeywordList = ({
                     return [...prev, item];
                   }
                   return prev;
-                })
-              }
+                });
+              }}
             >
               <span
                 className={cn(
