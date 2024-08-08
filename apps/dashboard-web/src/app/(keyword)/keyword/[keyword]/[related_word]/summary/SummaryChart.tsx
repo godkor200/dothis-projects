@@ -45,6 +45,10 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
   const updateDotSelectedColors = ['green', 'blue'];
 
+  const enterSelectedBarColors = ['green', 'blue'];
+
+  const updateSelectedBarColors = ['green', 'blue'];
+
   const selectRef = useRef<HTMLDivElement>(null);
 
   const [summaryChartType, setSummaryChartType] =
@@ -209,27 +213,28 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xScale: x,
     yScale: y,
     title: '일일조회수',
-    styleMethods: [
-      (selection) => {
-        selection.style('fill', '#F0516D');
-        selection.attr('rx', 0);
-      },
-      (selection) => {
-        selection.style('fill', '#4CAF50');
-        selection.attr('rx', 0);
-      },
-      (selection) => {
-        selection.attr('fill', '#818CF8');
-        selection.attr('rx', 0);
-      },
-      // Add more style functions as needed
-    ],
+    styleMethod(selection, index, isUpdate) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : isUpdate
+          ? updateSelectedBarColors.length > 0
+            ? (updateSelectedBarColors.shift() as 'blue' | 'green')
+            : 'unknown'
+          : enterSelectedBarColors.length > 0
+          ? (enterSelectedBarColors.shift() as 'blue' | 'green')
+          : 'unknown';
+
+      selection.classed('red blue green unknown', false);
+      selection.attr('fill', chartColorSchema[color]);
+    },
 
     xPositionMethod(xScale, data, index) {
       return (
         (xScale(data.date) as number) + xScale.bandwidth() / 2 + xOffset[index]
       );
     },
+    keywordList: sortedRelatedKeywordList,
   });
 
   // Tooltip 및 hover 섹션
