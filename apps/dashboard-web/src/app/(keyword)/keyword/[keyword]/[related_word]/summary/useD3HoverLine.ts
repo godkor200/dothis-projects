@@ -38,54 +38,49 @@ const useD3HoverLine = ({ chartSelector, data, dimensions, xScale }: Props) => {
 
   const lineHoverRef = useRef<LineRef | null>(null);
 
-  const hoverLineGroupRef = useRef<D3.Selection<
-    SVGRectElement,
-    DataItem,
-    SVGGElement,
-    unknown
-  > | null>(null);
-  //   console.log(hoverLineGroup.empty());
-  //   if (hoverLineGroup.empty()) {
-  //     chartSelector.append('g').attr('class', 'hover-line-group');
-  //   }
+  const handleSelectHoverLines = () => {
+    return chartSelector
+      .selectAll('.hover-rect-group')
+      .selectAll<SVGRectElement, DataItem>('rect');
+  };
 
-  useImperativeHandle(
-    lineHoverRef,
-    () => ({
-      render: () => {
-        if (!xScale) return;
+  useImperativeHandle(lineHoverRef, () => ({
+    render: () => {
+      if (!xScale) return;
 
-        hoverLineGroupRef.current = chartSelector
+      let hoverLineGroup =
+        chartSelector.select<SVGGElement>('.hover-rect-group');
+      if (hoverLineGroup.empty()) {
+        // If it doesn't exist, create it
+        hoverLineGroup = chartSelector
           .append('g')
-          .attr('class', 'hover-rect-group')
-          .selectAll('rect')
-          .data(data)
-          .enter()
-          .append('rect')
-          .attr(
-            'x',
-            (d) => (xScale(d?.date) as number) + xScale.bandwidth() / 2,
-          )
-          .attr('y', marginTop)
-          .attr('width', 1)
-          .attr('height', height - marginBottom - marginTop)
-          .attr('fill', '#A1A1AA')
-          .style('opacity', 0);
-      },
-      remove: () => {
-        if (hoverLineGroupRef.current) {
-          hoverLineGroupRef.current
-            .transition()
-            .duration(1000)
-            .style('opacity', 0)
-            .remove();
-        }
-      },
-    }),
-    [width, data],
-  );
+          .attr('class', 'hover-rect-group');
+      }
 
-  return { lineHoverRef, hoverLineGroup: hoverLineGroupRef.current };
+      hoverLineGroup
+        .selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('x', (d) => (xScale(d?.date) as number) + xScale.bandwidth() / 2)
+        .attr('y', marginTop)
+        .attr('width', 1)
+        .attr('height', height - marginBottom - marginTop)
+        .attr('fill', '#A1A1AA')
+        .style('opacity', 0);
+    },
+
+    remove: () => {
+      const hoverLinesSelector = handleSelectHoverLines();
+
+      hoverLinesSelector.remove();
+    },
+  }));
+
+  return {
+    lineHoverRef,
+    handleSelectHoverLines,
+  };
 };
 
 export default useD3HoverLine;

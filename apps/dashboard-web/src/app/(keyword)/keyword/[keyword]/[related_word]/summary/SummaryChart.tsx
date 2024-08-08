@@ -45,6 +45,10 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
 
   const updateDotSelectedColors = ['green', 'blue'];
 
+  const enterSelectedBarColors = ['green', 'blue'];
+
+  const updateSelectedBarColors = ['green', 'blue'];
+
   const selectRef = useRef<HTMLDivElement>(null);
 
   const [summaryChartType, setSummaryChartType] =
@@ -209,27 +213,28 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xScale: x,
     yScale: y,
     title: '일일조회수',
-    styleMethods: [
-      (selection) => {
-        selection.style('fill', '#F0516D');
-        selection.attr('rx', 0);
-      },
-      (selection) => {
-        selection.style('fill', '#4CAF50');
-        selection.attr('rx', 0);
-      },
-      (selection) => {
-        selection.attr('fill', '#818CF8');
-        selection.attr('rx', 0);
-      },
-      // Add more style functions as needed
-    ],
+    styleMethod(selection, index, isUpdate) {
+      const color: 'red' | 'blue' | 'green' | 'unknown' =
+        sortedRelatedKeywordList[index] === relatedKeyword
+          ? 'red'
+          : isUpdate
+          ? updateSelectedBarColors.length > 0
+            ? (updateSelectedBarColors.shift() as 'blue' | 'green')
+            : 'unknown'
+          : enterSelectedBarColors.length > 0
+          ? (enterSelectedBarColors.shift() as 'blue' | 'green')
+          : 'unknown';
+
+      selection.classed('red blue green unknown', false);
+      selection.attr('fill', chartColorSchema[color]);
+    },
 
     xPositionMethod(xScale, data, index) {
       return (
         (xScale(data.date) as number) + xScale.bandwidth() / 2 + xOffset[index]
       );
     },
+    keywordList: sortedRelatedKeywordList,
   });
 
   // Tooltip 및 hover 섹션
@@ -243,14 +248,14 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     .style('padding', '9px 6px')
     .style('border-radius', '10px');
 
-  const { hoverLineGroup, lineHoverRef } = useD3HoverLine({
+  const { lineHoverRef, handleSelectHoverLines } = useD3HoverLine({
     chartSelector: chart,
     data: currentData[0],
     dimensions,
     xScale: x,
   });
 
-  const { dotRef, dotListSelector } = useD3HoverDots({
+  const { dotRef, handleSelectHoverCircle } = useD3HoverDots({
     chartSelector: chart,
     data: currentData,
     dimensions,
@@ -280,8 +285,6 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     data: currentData,
     dimensions,
     xScale: x,
-    dotsSelector: dotListSelector,
-    hoverLinesSelector: hoverLineGroup,
     tooltip,
     tooltipColorCallback(index, colorList) {
       const color: 'red' | 'blue' | 'green' | 'unknown' =
@@ -303,20 +306,26 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
     xAxisRef.current?.remove();
     yAxisRef.current?.render();
     xAxisRef.current?.render();
-    lineHoverRef.current?.render();
+    // lineHoverRef.current?.render();
   }, [width, xAxisRef, yAxisRef, summaryChartType]);
 
   useEffect(() => {
     // dotRef.current?.remove();
     if (summaryChartType === 'videoCount') {
       bar.current?.render();
-
+      lineHoverRef.current?.remove();
       line.current?.remove();
+      hoverVirtualRef.current?.remove();
     } else {
+      lineHoverRef.current?.render();
       bar.current?.remove();
       line.current?.render();
+
       dotRef.current?.render();
-      hoverVirtualRef.current?.render();
+      hoverVirtualRef.current?.render({
+        handleSelectHoverCircle,
+        handleSelectHoverLines,
+      });
     }
   }, [width, summaryChartType, currentData, relatedKeywordList]);
 

@@ -76,6 +76,7 @@ const useD3Line = ({
          * @interrupt interrupt면 적용되어있는 transintion 종료
          * @remove 제거되어야할 요소 즉시 제거
          */
+
         chartSelector.selectAll("[class*='line-']").interrupt();
 
         chartSelector.selectAll('.to-remove').remove();
@@ -173,6 +174,7 @@ const useD3Line = ({
 
           if (arrayExists(prevData, dataSet)) {
             // path.attr('d', line);
+            path.style('opacity', 1);
           } else {
             path
               .interrupt()
@@ -184,7 +186,8 @@ const useD3Line = ({
                   .transition()
                   .ease(D3.easeCubicOut)
                   .duration(800)
-                  .attr('d', line);
+                  .attr('d', line)
+                  .style('opacity', 1);
               });
           }
           // if (JSON.stringify(prevData[index]) !== JSON.stringify(data[index])) {
@@ -207,13 +210,13 @@ const useD3Line = ({
           chartSelector
             .selectAll(`.line-${keywordList[index]}`)
             .transition()
-            .duration(1000)
+            .duration(400)
             .style('opacity', 0)
             .remove();
         });
       },
     }),
-    [width, data, JSON.stringify(data) === JSON.stringify(prevData)],
+    [width, data],
   );
 
   return lineRef;
