@@ -50,7 +50,9 @@ const ComparisonSummaryCard = ({
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData?.data.data);
 
-  const totalVideoCount = sumVideoCount(dailyViewData?.data.data);
+  const competitionVideoCount =
+    dailyViewData?.data.data.at(-1)?.uniqueVideoCount ?? 0;
+  // const totalVideoCount = sumVideoCount(dailyViewData?.data.data);
 
   //   검색량 코드
   const searchRatio = useSearchRatioFormatterD3({
@@ -68,7 +70,7 @@ const ComparisonSummaryCard = ({
 
   const copetitionScore = getCompetitionScore({
     totalDailyView: totalIncreaseViews,
-    videoCount: totalVideoCount,
+    videoCount: competitionVideoCount,
   });
 
   const score = convertCompetitionScoreFormatToHTML({
@@ -93,7 +95,7 @@ const ComparisonSummaryCard = ({
       <p>{relatedKeyword}</p>
       <p>{predictedView.toFixed(0)}</p>
       <p>{Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr')}</p>
-      <p>{Number(totalVideoCount).toLocaleString('ko-kr')}</p>
+      <p>{Number(competitionVideoCount).toLocaleString('ko-kr')}</p>
       <p>
         {searchRatioLoading
           ? '...'
