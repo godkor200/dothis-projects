@@ -57,7 +57,7 @@ const useGetTrendingKeywords = (
       query: {
         limit: isSignedIn ? String(lastIndex_ID ? 30 : 300) : String(10),
         from: date,
-        last: lastIndex_ID,
+
         order: order,
         sort: sort === 'rank' ? 'keyword' : sort,
       },
