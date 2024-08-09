@@ -8,6 +8,7 @@ import {
   zWeeklyKeywordsListWithTotalData,
   zSuccessRateData,
   zClusterSpecificCombinedData,
+  zWeeklyKeywordsDataWithPaginationRes,
 } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
@@ -80,7 +81,7 @@ export const hitsApi = c.router({
     path: `${viewApiUrl}${weeklyApiUrl}-list`,
     query: zGetWeeklyViewsQuery,
     responses: {
-      200: zWeeklyKeywordsListWithTotalData,
+      200: zWeeklyKeywordsDataWithPaginationRes,
       ...zErrResBase,
     },
     summary:
