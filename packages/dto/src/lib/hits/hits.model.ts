@@ -36,6 +36,21 @@ export const zDailyViewsDataWithCategory = zDailyViewsData.merge(
 /**
  * weekly-view models
  */
+
+export const zWeeklyKeywordSchema = z.object({
+  ranking: z.number(),
+  keyword: z.string(),
+  category: z.string(),
+  weeklyViews: z.number(),
+  videoCount: z.number(),
+  competitive: z.number(),
+  megaChannel: z.number(),
+  lastRanking: z.number(),
+  year: z.number(),
+  month: z.number(),
+  day: z.number(),
+});
+
 export const zCreateWeeklyKeywordsListSourceSchema = z
   .object({
     id: z.number().int().positive().describe('조회수의 고유 식별자'),
@@ -94,6 +109,21 @@ export const zWeeklyKeywordsListWithTotal = zTotalData.merge(
 export const zWeeklyKeywordsListWithTotalData = dataObject(
   zWeeklyKeywordsListWithTotal,
 );
+
+export const zWeeklyKeywordsPaginationSchema = z.object({
+  count: z.number(),
+  limit: z.number(),
+  page: z.number(),
+});
+
+export const zWeeklyKeywordsData = dataObject(zWeeklyKeywordSchema);
+
+export const zWeeklyKeywordsDataWithPagination =
+  zWeeklyKeywordsPaginationSchema.merge(zWeeklyKeywordsData);
+
+export const zWeeklyKeywordsDataWithPaginationRes = z.object({
+  body: zWeeklyKeywordsDataWithPagination,
+});
 
 export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
 
