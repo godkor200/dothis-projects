@@ -1,6 +1,8 @@
 import type { colors } from '@dothis/theme/dashboard/colors';
 import type { Route } from 'next';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { BaseURL } from '@/constants/dev';
 import type { SVGIconType } from '@/constants/oauth';
@@ -15,10 +17,16 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const LoginButton = ({ iconName, boderColor, ...buttonProps }: Props) => {
+  const searchParams = useSearchParams();
+
+  const loginEntryPoint = searchParams?.get('previous_url');
   return (
     <Link
       className="mb-[12px] block w-[400px] "
       href={(BaseURL + '/v1/auth/google-login') as Route}
+      onClick={() => {
+        localStorage.setItem('loginEntryPoint', loginEntryPoint as string);
+      }}
     >
       <div
         className={cn('rounded-[10px] border border-grey400 py-[20px]', {
