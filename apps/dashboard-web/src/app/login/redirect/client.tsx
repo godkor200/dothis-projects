@@ -1,6 +1,7 @@
 'use client';
 
 import { setCookie } from 'cookies-next';
+import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -9,6 +10,8 @@ import { isProduction } from '@/constants/dev';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useAuthActions } from '@/store/authStore';
 import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
+
+import { useLoginEntryPointContext } from '../LoginEntryPointContext';
 
 const isServer = typeof window === 'undefined';
 
@@ -26,6 +29,8 @@ const Client = ({
   const router = useRouter();
   const { setIsSignedIn, setIsTokenRequired } = useAuthActions();
 
+  const { loginEntryPoint } = useLoginEntryPointContext('LoginRedirectPage');
+
   if (!isProduction && accessToken) {
     setCookie('accessToken', `Bearer ${accessToken}`);
   }
@@ -42,7 +47,7 @@ const Client = ({
           return;
         }
 
-        router.replace('/');
+        router.replace(loginEntryPoint as Route);
       } else {
         throw new Error('로그인이 정상적으로 진행되지 않았습니다.');
       }

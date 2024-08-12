@@ -17,6 +17,7 @@ import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import { useModalActions } from '@/store/modalStore';
 import { convertKeywordsToArray, isHashKeyword } from '@/utils/keyword';
 
+import { useLoginEntryPointContext } from '../LoginEntryPointContext';
 import { CheckBox } from './style';
 
 const TERMS_OPTIONS: {
@@ -46,6 +47,8 @@ const TERMS_OPTIONS: {
 
 const Page = () => {
   const { data: userData } = useGetUserInfo();
+
+  const { loginEntryPoint } = useLoginEntryPointContext('LoginTermstPage');
 
   const { mutate } = useSignUpTermsMutation();
 
@@ -90,7 +93,7 @@ const Page = () => {
             return;
           }
 
-          router.replace('/');
+          router.replace(loginEntryPoint as Route);
         },
       },
     );
