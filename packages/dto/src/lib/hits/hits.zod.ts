@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 const zWeeklyViewKeywordCategoryQuery = z.object({
   keywords: z.string().optional(),
-  categoryNumbers: z.number().optional(),
+  categoryNumbers: z.string().optional(),
 });
 
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
