@@ -6,9 +6,16 @@ import {
 } from '../common.model';
 import { zSortWeeklyViews } from './hits.model';
 import { z } from 'zod';
+
+const zWeeklyViewKeywordCategoryQuery = z.object({
+  keywords: z.string().optional(),
+  categoryNumbers: z.string().optional(),
+});
+
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
   .merge(zDateQuery.pick({ from: true }))
-  .merge(zSortWeeklyViews);
+  .merge(zSortWeeklyViews)
+  .merge(zWeeklyViewKeywordCategoryQuery);
 
 export const zWeeklyHitsPathQuery = zKeywordsMulti.merge(zCategoryNumberMulti);
 export const zGetWeeklyViewsBySomeQuery = zDateQuery

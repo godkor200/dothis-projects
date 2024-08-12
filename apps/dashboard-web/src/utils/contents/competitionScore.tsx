@@ -2,6 +2,28 @@ import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 
 import { cn } from '../cn';
 
+/**
+ * 범위를 기준으로 사용하려고 했을 때 코드
+ */
+// const rangeMap = {
+//   "1-10": "Value for range 1-10",
+//   "11-20": "Value for range 11-20",
+//   "21-30": "Value for range 21-30",
+// };
+
+// // 특정 숫자가 어떤 범위에 속하는지 찾기
+// function findRangeValue(num) {
+//   for (let range in rangeMap) {
+//     const [start, end] = range.split('-').map(Number);
+//     if (num >= start && num <= end) {
+//       return rangeMap[range];
+//     }
+//   }
+//   return null;
+// }
+
+// console.log(findRangeValue(15)); // "Value for range 11-20"
+
 export const convertCompetitionScoreFormat = (
   competitionScore: number | undefined,
 ) => {
@@ -23,7 +45,7 @@ export const convertCompetitionScoreFormat = (
   return '파악중';
 };
 
-const CompetitionTag = ({
+export const CompetitionTag = ({
   children,
   color,
 }: {
@@ -35,6 +57,83 @@ const CompetitionTag = ({
       {children}
     </p>
   );
+};
+
+/**
+ * className을 주고 싶었지만, 전처리 단계에서 생성하는 tailwind 특성 상 동적으로 넣을 수 없음 따라서 inline 태그에 주입하기위한 text 색상을 주입
+ * @param param0
+ * @returns
+ */
+export const convertCompetitionFormat = ({
+  competitionScore,
+  totalDailyView,
+  videoCount = 1000,
+}: {
+  competitionScore: number | undefined;
+  totalDailyView: number;
+  videoCount?: number;
+}) => {
+  if (
+    competitionScore === undefined ||
+    competitionScore === 0 ||
+    totalDailyView === 0
+  ) {
+    return {
+      color: '#71717A',
+      content: '분석중',
+    };
+  }
+
+  if (totalDailyView < 1_000_000) {
+    return {
+      color: '#FF647D',
+      backgroundColor: '#FEF3F5',
+      content: '수요 부족',
+    };
+  }
+
+  if (competitionScore > 20) {
+    return {
+      color: '#7DD3FC',
+      backgroundColor: '#DDEBF1',
+      content: '블루오션',
+    };
+  } else if (competitionScore > 5) {
+    if (videoCount > 1000) {
+      return {
+        color: '#7DD3FC',
+        backgroundColor: '#DDEBF1',
+        content: '수요 폭발',
+      };
+    }
+    return {
+      color: '#22C55E',
+      backgroundColor: '#E7FFF0',
+      content: '공급 부족',
+    };
+  } else if (competitionScore > 1) {
+    return {
+      color: '#22C55E',
+      backgroundColor: '#E7FFF0',
+      content: '양호',
+    };
+  } else if (competitionScore > 0.1) {
+    return {
+      color: '#F59E0B',
+      backgroundColor: '#FFF6DB',
+      content: '경쟁 과열',
+    };
+  } else if (competitionScore >= 0) {
+    return {
+      color: '#FF647D',
+      backgroundColor: '#FEF3F5',
+      content: '공급 과잉',
+    };
+  }
+  return {
+    color: '#71717A',
+    content: '분석중',
+  };
 };
 
 export const convertCompetitionScoreFormatToHTML = ({
@@ -55,7 +154,7 @@ export const convertCompetitionScoreFormatToHTML = ({
   }
 
   if (totalDailyView < 1_000_000) {
-    return <CompetitionTag color="chip-red">{`수요부족`}</CompetitionTag>;
+    return <CompetitionTag color="chip-red">{`수요 부족`}</CompetitionTag>;
   }
 
   if (competitionScore > 20) {

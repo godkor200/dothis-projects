@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type { KeyboardEvent } from 'react';
 import { useEffect, useRef, useState, useTransition } from 'react';
@@ -116,7 +117,9 @@ const MainSearchbar = () => {
     <div className="relative mx-auto mb-[108px] w-[630px]">
       <div className="border-primary200 flex w-full items-center rounded-[40px] border px-[30px] py-[14px]">
         {isFocused ? (
-          <SvgComp icon="SideLogo" size={24} className="mr-[24px]" />
+          <div className="relative mr-[24px] h-[24px] w-[27px]">
+            <Image src={'/RefactLogo.png'} fill={true} alt="mainlogo" />
+          </div>
         ) : (
           <SvgComp
             icon="SearchIcon"

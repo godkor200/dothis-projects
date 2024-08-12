@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 
 import type { SVGType } from '@/components/common/SvgComp';
 import SvgComp from '@/components/common/SvgComp';
+import usePathNameList from '@/hooks/usePathNameList';
 import useQueryString from '@/hooks/useQueryString';
 import { useIsRouterModalOpen } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
@@ -62,7 +63,11 @@ const DashboardList = ({
 
   const { createUrlWithQueryString } = useQueryString();
 
-  const INTERCEPTING_ROUTE_OPTIONS: Route[] = ['/membership', '/login'];
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
+    '/membership',
+    '/login',
+    '/rank',
+  ];
 
   const isInterceptingRoute = (targetLink: Route) =>
     INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
@@ -94,7 +99,17 @@ const DashboardList = ({
                   isInterceptingRoute(currentPath as Route)
                     ? isCurrentIntercepting
                       ? item.active.includes(
-                          searchParams?.get('previous_url') as Route,
+                          searchParams
+                            ?.get('previous_url')
+                            ?.split('/')
+                            .filter(Boolean).length
+                            ? (`/${
+                                searchParams
+                                  ?.get('previous_url')
+                                  ?.split('/')
+                                  .filter(Boolean)[0]
+                              }` as Route)
+                            : `/`,
                         )
                       : item.active.includes(
                           `/${pathName?.split('/')[1]}` as Route,
@@ -117,15 +132,19 @@ const DashboardList = ({
 };
 
 const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
-  const pathName = usePathname();
-
   const searchParams = useSearchParams();
 
-  const currentPath = `/${pathName?.split('/')[1]}`;
+  const pathNameList = usePathNameList();
+
+  const currentPath = pathNameList?.length ? `/${pathNameList[0]}` : '/';
 
   const { createUrlWithQueryString } = useQueryString();
 
-  const INTERCEPTING_ROUTE_OPTIONS: Route[] = ['/membership', '/login'];
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
+    '/membership',
+    '/login',
+    '/rank',
+  ];
 
   const isInterceptingRoute = (targetLink: Route) =>
     INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
@@ -154,12 +173,20 @@ const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
                 isInterceptingRoute(currentPath as Route)
                   ? isCurrentIntercepting
                     ? item.active.includes(
-                        searchParams?.get('previous_url') as Route,
+                        searchParams
+                          ?.get('previous_url')
+                          ?.split('/')
+                          .filter(Boolean).length
+                          ? (`/${
+                              searchParams
+                                ?.get('previous_url')
+                                ?.split('/')
+                                .filter(Boolean)[0]
+                            }` as Route)
+                          : `/`,
                       )
-                    : item.active.includes(
-                        `/${pathName?.split('/')[1]}` as Route,
-                      )
-                  : item.active.includes(`/${pathName?.split('/')[1]}` as Route)
+                    : item.active.includes(currentPath as Route)
+                  : item.active.includes(currentPath as Route)
               }
               key={item.title}
             >
@@ -181,7 +208,7 @@ interface SideMenus {
 
 const SIDE_MENUS: SideMenus[] = [
   {
-    title: '콘텐츠 소재',
+    title: '키워드 분석',
     icon: 'SideMain',
     link: '/',
     active: ['/', '/keyword' as Route, '%2F' as Route],
@@ -193,10 +220,10 @@ const SIDE_MENUS: SideMenus[] = [
     active: ['/channel'],
   },
   {
-    title: '인기 키워드 분석',
+    title: '주간 트렌드',
     icon: 'SideTrend',
-    link: '/trendingsearches',
-    active: ['/trendingsearches'],
+    link: '/rank',
+    active: ['/rank'],
   },
 ];
 

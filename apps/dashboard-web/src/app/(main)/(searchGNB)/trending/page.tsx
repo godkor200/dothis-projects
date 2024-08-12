@@ -38,7 +38,7 @@ const TrendingPage = () => {
   const { setIsModalOpen, setModalContent } = useModalActions();
 
   const [sortingParams, setSortingParams] = useState<SortParamsState>({
-    sort: 'weekly_views',
+    sort: 'weeklyViews',
     order: 'desc',
   });
 
@@ -95,7 +95,7 @@ const TrendingPage = () => {
   };
 
   const sortByTableKey = (key: Weekly_Sort_Key) => {
-    if (key === 'rank' || key === 'category') {
+    if (key === 'ranking' || key === 'category') {
       return;
     }
     setSortingParams((prev) => {
@@ -157,7 +157,7 @@ const TrendingPage = () => {
                       'text-grey500 before:bg-grey00 relative mx-auto w-fit cursor-pointer text-center text-[14px] font-bold ',
                       {
                         ' before:absolute before:right-[-12px] before:top-1/2  before:mt-[-9px]  before:block before:h-0 before:w-0 before:border-4 before:border-transparent before:border-b-[#bfbfbf] after:absolute after:right-[-12px] after:top-1/2 after:mt-[1px] after:block after:h-0 after:w-0 after:border-4 after:border-transparent after:border-t-[#bfbfbf]':
-                          key !== 'rank' && key !== 'category',
+                          key !== 'ranking' && key !== 'category',
                         'before:border-b-[#000]':
                           sortingParams.sort === key &&
                           sortingParams.order === 'asc',

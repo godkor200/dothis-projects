@@ -46,9 +46,11 @@ const Page = () => {
             </div>
 
             <div className="ml-auto min-w-[300px] flex-grow px-[12px]">
-              <p className="text-grey700 mb-[30px] text-[14px] font-bold">
-                금주의 이슈 키워드
-              </p>
+              <Link href={'/rank'}>
+                <p className="text-grey700 mb-[30px] text-[14px] font-bold">
+                  금주의 이슈 키워드 {'['}더 보기{']'}
+                </p>
+              </Link>
               <ErrorBoundary fallback={<SystemError />}>
                 <WeeklyKeyword />
               </ErrorBoundary>
