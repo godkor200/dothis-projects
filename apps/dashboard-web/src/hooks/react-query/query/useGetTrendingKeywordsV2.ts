@@ -22,6 +22,27 @@ export const videoKeys = {
 
 export type Weekly_Sort_Key = (typeof WEEKLY_SORT_OPTION)[number]['key'];
 
+type SnakeCase<T> = T extends `${infer A}${infer R}`
+  ? Uppercase<A> extends A
+    ? `_${Lowercase<A>}${SnakeCase<R>}`
+    : `${A}${SnakeCase<R>}`
+  : '';
+
+type SnakeCaseKeys = {
+  [K in Weekly_Sort_Key]: SnakeCase<K>;
+};
+
+const convertSortQuery: SnakeCaseKeys = {
+  category: 'category',
+  competitive: 'competitive',
+  keyword: 'keyword',
+  lastRanking: 'last_ranking',
+  megaChannel: 'mega_channel',
+  ranking: 'ranking',
+  videoCount: 'video_count',
+  weeklyViews: 'weekly_views',
+};
+
 const useGetTrendingKeywordsV2 = (
   {
     startDate,
@@ -29,7 +50,7 @@ const useGetTrendingKeywordsV2 = (
     selectOptions,
     sort,
     order,
-  }: Partial<SortingQuery<Weekly_Sort_Key>> & TrendingQuery,
+  }: SortingQuery<Weekly_Sort_Key> & TrendingQuery,
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordListWithPagingV2
   >,
@@ -46,6 +67,10 @@ const useGetTrendingKeywordsV2 = (
         isSignedIn,
         sort,
         order,
+        keywords: keywordList.length ? keywordList.join(',') : undefined,
+        category: selectOptions
+          .map((item) => item.value.toString().padStart(2, '0'))
+          .join(','),
       },
     ]),
 
@@ -56,9 +81,12 @@ const useGetTrendingKeywordsV2 = (
       query: {
         limit: isSignedIn ? String(30) : String(30),
         from: date,
-
-        order: 'asc',
-        sort: 'ranking',
+        categoryNumbers: selectOptions
+          .map((item) => item.value.toString().padStart(2, '0'))
+          .join(','),
+        keywords: keywordList.length ? keywordList.join(',') : undefined,
+        order: order,
+        sort: convertSortQuery[sort],
         page: String(1),
       },
     }),
