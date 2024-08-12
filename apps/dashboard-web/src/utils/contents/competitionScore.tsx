@@ -53,11 +53,7 @@ export const CompetitionTag = ({
   color: string;
 }) => {
   return (
-    <p
-      className={cn(
-        `text-[16px] font-bold text-center bg-${color} bg-opacity-20 text-${color} `,
-      )}
-    >
+    <p className={cn(`text-[20px] font-bold text-center text-${color} `)}>
       {children}
     </p>
   );
