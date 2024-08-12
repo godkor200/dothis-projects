@@ -59,7 +59,7 @@ const useGetTrendingKeywords = (
         from: date,
 
         order: order,
-        sort: sort === 'rank' ? 'keyword' : sort,
+        sort: sort === 'ranking' ? 'keyword' : sort,
       },
     }),
     {
