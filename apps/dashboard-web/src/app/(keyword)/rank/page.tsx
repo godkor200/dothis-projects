@@ -78,21 +78,17 @@ const Page = () => {
       sort: sortingParams.sort,
     });
 
-  const handleFetchNextPage = () => {
-    if (!isSignedIn) {
-      // setIsOpenSignUpModal(true);
-
-      setModalContent(<LoginFrame hasDismissButton />);
-
-      setIsRouterModalOpen(true);
-      return;
+  const handleFetchNextPage = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => {
+    if (isSignedIn) {
+      event.preventDefault();
+      fetchNextPageWithCheck();
     }
 
     // if(basic){
     // 회원 레벨 조건
     // }
-
-    fetchNextPageWithCheck();
   };
 
   const fetchNextPageWithCheck = () => {
@@ -334,7 +330,16 @@ const Page = () => {
                         {item.megaChannel?.toLocaleString('ko-kr')}
                       </div>
                       <div className="invisible group-hover:visible">
-                        <Link href={'/login'}>
+                        <Link
+                          href={'/login'}
+                          onClick={(event) => {
+                            if (isSignedIn) {
+                              event.preventDefault();
+
+                              router.push(`/keyword/${item.keyword}`);
+                            }
+                          }}
+                        >
                           <DesignButton theme="outlined" size="S">
                             자세히
                           </DesignButton>
@@ -344,15 +349,16 @@ const Page = () => {
                   );
                 })}
 
-                {(hasNextPage || true) && (
+                {hasNextPage && (
                   <div className="flex justify-center py-[42px]">
-                    <DesignButton
-                      theme="outlined"
-                      size="L"
-                      onClick={handleFetchNextPage}
+                    <Link
+                      href={'/login'}
+                      onClick={(event) => handleFetchNextPage(event)}
                     >
-                      더보기
-                    </DesignButton>
+                      <DesignButton theme="outlined" size="L">
+                        더보기
+                      </DesignButton>
+                    </Link>
                   </div>
                 )}
               </ul>
