@@ -62,14 +62,17 @@ const TrendingFilter = ({
           <Button key={item} $active={true}>
             {item.replace('#', '').replace('*', '')}
 
-            <SvgComp
-              icon="KeywordDelete"
-              size="1rem"
-              onClick={(event) => {
-                event.stopPropagation();
-                handleDeleteKeyword(item);
-              }}
-            />
+            <div className="group/remove">
+              <SvgComp
+                icon="KeywordDelete"
+                size="1rem"
+                className="group-hover/remove:[&_path]:stroke-white"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteKeyword(item);
+                }}
+              />
+            </div>
             {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
           </Button>
         ))}
