@@ -9,6 +9,7 @@ import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelDa
 import type { TKeywords } from '@/types/common';
 import { cn } from '@/utils/cn';
 import {
+  convertCompetitionFormat,
   convertCompetitionScoreFormatToHTML,
   getCompetitionScore,
 } from '@/utils/contents/competitionScore';
@@ -72,10 +73,10 @@ const ComparisonSummaryCard = ({
     totalDailyView: totalIncreaseViews,
     videoCount: competitionVideoCount,
   });
-
-  const score = convertCompetitionScoreFormatToHTML({
+  const competitionConfig = convertCompetitionFormat({
     competitionScore: copetitionScore,
     totalDailyView: totalIncreaseViews,
+    videoCount: competitionVideoCount,
   });
 
   return (
@@ -106,7 +107,18 @@ const ComparisonSummaryCard = ({
             100 +
             '%'}
       </p>
-      <div>{score}</div>
+      <div>
+        {' '}
+        <span
+          style={{
+            color: competitionConfig.color,
+            backgroundColor: competitionConfig.backgroundColor,
+          }}
+          className="rounded-8 px-[10px] py-[6px]"
+        >
+          {competitionConfig.content}
+        </span>
+      </div>
       <Link href={`/keyword/${baseKeyword}/${relatedKeyword}/analysis`}>
         <button className="rounded-8 border-primary500 bg-primary50 text-primary500 h-[32px] w-[88px]  border text-[14px] font-[500]">
           자세히
