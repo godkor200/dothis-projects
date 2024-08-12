@@ -26,9 +26,12 @@ const LoginEntryPointProvider = ({
   initialLoginEntryPoint: string;
   children: React.ReactNode;
 }) => {
-  const localStorageLoginEntryPoint = localStorage.getItem('loginEntryPoint');
+  const localStorageLoginEntryPoint =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('loginEntryPoint')
+      : null;
 
-  const [loginEntryPoint, setLoginEntryPoint] = useState(
+  const [loginEntryPoint, setLoginEntryPoint] = useState<string | null>(
     localStorageLoginEntryPoint,
   );
 
