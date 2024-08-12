@@ -181,7 +181,7 @@ interface SideMenus {
 
 const SIDE_MENUS: SideMenus[] = [
   {
-    title: '콘텐츠 소재',
+    title: '키워드 분석',
     icon: 'SideMain',
     link: '/',
     active: ['/', '/keyword' as Route, '%2F' as Route],
@@ -193,10 +193,10 @@ const SIDE_MENUS: SideMenus[] = [
     active: ['/channel'],
   },
   {
-    title: '인기 키워드 분석',
+    title: '주간 트렌드',
     icon: 'SideTrend',
-    link: '/trendingsearches',
-    active: ['/trendingsearches'],
+    link: '/rank',
+    active: ['/rank'],
   },
 ];
 
