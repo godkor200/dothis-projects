@@ -203,14 +203,17 @@ const Page = () => {
                       <Button key={item} $active={true}>
                         {item.replace('#', '').replace('*', '')}
 
-                        <SvgComp
-                          icon="KeywordDelete"
-                          size="1rem"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleDeleteKeyword(item);
-                          }}
-                        />
+                        <div className="group/remove">
+                          <SvgComp
+                            icon="KeywordDelete"
+                            size="1rem"
+                            className="group-hover/remove:[&_path]:stroke-white"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleDeleteKeyword(item);
+                            }}
+                          />
+                        </div>
                         {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
                       </Button>
                     </li>
@@ -221,15 +224,17 @@ const Page = () => {
                       <button className="bg-chip-blueBg rounded-8 relative flex shrink-0 items-center gap-[8px] px-[20px] py-[8px] text-[14px] text-[#818cf8] shadow-[0_0_0_2px_rgba(129,140,248,0.6)] ">
                         {item.label.replace('#', '').replace('*', '')}
 
-                        <SvgComp
-                          icon="KeywordDelete"
-                          size="1rem"
-                          className="[&_path]:fill-[#818cf8] [&_path]:stroke-[#818cf8]"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleDeleteCategory(item);
-                          }}
-                        />
+                        <div className="group/remove">
+                          <SvgComp
+                            icon="KeywordDelete"
+                            size="1rem"
+                            className="[&_path]:fill-[#818cf8] [&_path]:stroke-[#818cf8] group-hover/remove:[&_path]:stroke-white"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleDeleteCategory(item);
+                            }}
+                          />
+                        </div>
                       </button>
                       {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
                       {/* </Button> */}
