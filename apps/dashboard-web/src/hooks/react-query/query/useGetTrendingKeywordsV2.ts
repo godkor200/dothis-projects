@@ -29,7 +29,7 @@ const useGetTrendingKeywordsV2 = (
     selectOptions,
     sort,
     order,
-  }: SortingQuery<Weekly_Sort_Key> & TrendingQuery,
+  }: Partial<SortingQuery<Weekly_Sort_Key>> & TrendingQuery,
   queryOptions?: UseInfiniteQueryOptions<
     typeof apiRouter.hits.getWeeklyKeywordListWithPagingV2
   >,
@@ -54,7 +54,7 @@ const useGetTrendingKeywordsV2 = (
      */
     ({ pageParam = 0 }) => ({
       query: {
-        limit: isSignedIn ? String(30) : String(10),
+        limit: isSignedIn ? String(30) : String(30),
         from: date,
 
         order: 'asc',
