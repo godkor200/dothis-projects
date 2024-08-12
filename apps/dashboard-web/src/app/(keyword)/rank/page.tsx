@@ -21,7 +21,11 @@ import useGetTrendingKeywordsV2 from '@/hooks/react-query/query/useGetTrendingKe
 import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
-import { convertCompetitionScoreFormat } from '@/utils/contents/competitionScore';
+import {
+  CompetitionTag,
+  convertCompetitionFormat,
+  convertCompetitionScoreFormat,
+} from '@/utils/contents/competitionScore';
 
 import { useOpenFilterContext } from './OpenFilterContext';
 import { useTrendingQueryContext } from './TrendingQueryContext';
@@ -30,18 +34,22 @@ type SortParamsState = {
   sort: Weekly_Sort_Key;
   order: 'asc' | 'desc';
 };
+
+type UseGetTrendingKeywordsV2Data = ReturnType<
+  typeof useGetTrendingKeywordsV2
+>['data'];
+
 const Page = () => {
   const { trendingQueryOption, setTrendingQueryOption } =
-    useTrendingQueryContext('trendingPage');
+    useTrendingQueryContext('RankPage');
 
-  const { openFilter, setOpenFilter } = useOpenFilterContext('SearchGNB');
-
-  const [lastId, setLastId] = useState<string | undefined>('');
+  const { openFilter, setOpenFilter } = useOpenFilterContext('RankPage');
 
   // const { setIsModalOpen, setModalContent } = useModalActions();
-  const { setIsRouterModalOpen, setModalContent } = useModalActions();
+  const { setIsRouterModalOpen, setModalContent, setIsModalOpen } =
+    useModalActions();
   const [sortingParams, setSortingParams] = useState<SortParamsState>({
-    sort: 'weekly_views',
+    sort: 'weeklyViews',
     order: 'desc',
   });
 
@@ -52,7 +60,7 @@ const Page = () => {
   const [keywordList, setKeywordList] = useState<string[]>([]);
 
   const [startDate, setStartDate] = useState(
-    dayjs().startOf('week').subtract(1, 'week').add(1, 'day'),
+    dayjs().startOf('week').subtract(2, 'week').add(1, 'day'),
   );
 
   const isSignedIn = useIsSignedIn();
@@ -75,6 +83,7 @@ const Page = () => {
       // setIsOpenSignUpModal(true);
 
       setModalContent(<LoginFrame hasDismissButton />);
+
       setIsRouterModalOpen(true);
       return;
     }
@@ -92,12 +101,62 @@ const Page = () => {
     }
   };
 
+  const sortData = (
+    data: UseGetTrendingKeywordsV2Data,
+    sortingParams: SortParamsState,
+  ) => {
+    if (!data) return;
+
+    const { sort, order } = sortingParams;
+
+    const sortedData = [...data].sort((a, b) => {
+      let compareA = a[sort];
+      let compareB = b[sort];
+
+      // 숫자형, 문자형 데이터 모두를 비교하기 위해 일반적인 비교 함수를 사용
+      if (typeof compareA === 'number' && typeof compareB === 'number') {
+        return order === 'asc' ? compareA - compareB : compareB - compareA;
+      } else if (typeof compareA === 'string' && typeof compareB === 'string') {
+        return order === 'asc'
+          ? compareA.localeCompare(compareB)
+          : compareB.localeCompare(compareA);
+      } else {
+        return 0; // 다른 경우의 비교 로직 추가 가능
+      }
+    });
+
+    return sortedData;
+  };
+
+  // 데이터 정렬
+  const sortedData = sortData(data, sortingParams);
+
   const handleDeleteKeyword = (keyword: string) => {
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
+
+    setTrendingQueryOption((prev) => ({
+      ...prev,
+      keywordList: prev.keywordList.filter((item) => item !== keyword),
+    }));
+  };
+
+  const handleDeleteCategory = (categoryOption: {
+    value: number;
+    label: string;
+  }) => {
+    setSelectOptions((prev) =>
+      prev.filter((item) => item.value !== categoryOption.value),
+    );
+    setTrendingQueryOption((prev) => ({
+      ...prev,
+      selectOptions: prev.selectOptions.filter(
+        (item) => item.value !== categoryOption.value,
+      ),
+    }));
   };
 
   const sortByTableKey = (key: Weekly_Sort_Key) => {
-    if (key === 'rank' || key === 'category') {
+    if (key === 'ranking' || key === 'category') {
       return;
     }
     setSortingParams((prev) => {
@@ -127,7 +186,7 @@ const Page = () => {
 
               <div
                 className={cn(
-                  'rounded-8 border-grey400 ml-[20px] flex h-[52px] w-[52px] items-center justify-center border cursor-pointer',
+                  'rounded-8 border-grey400  flex h-[52px] w-[52px] items-center justify-center border cursor-pointer',
                   { '[&_path]:stroke-[#F0516D] bg-primary100': openFilter },
                 )}
                 onClick={() => setOpenFilter((prev) => !prev)}
@@ -137,11 +196,11 @@ const Page = () => {
             </div>
             {(!!trendingQueryOption.keywordList.length ||
               !!trendingQueryOption.selectOptions.length) && (
-              <div className="mx-auto flex max-w-[1342px] items-center gap-[20px]  p-[24px]">
+              <div className="flex  items-center gap-[20px]  py-[24px]">
                 <h3 className="text-grey600 font-bold">검색 키워드</h3>
                 <ul className="flex items-center gap-[10px]">
                   {trendingQueryOption.keywordList.map((item) => (
-                    <li>
+                    <li key={item}>
                       <Button key={item} $active={true}>
                         {item.replace('#', '').replace('*', '')}
 
@@ -157,19 +216,41 @@ const Page = () => {
                       </Button>
                     </li>
                   ))}
+                  {trendingQueryOption.selectOptions.map((item) => (
+                    <li key={item.value}>
+                      {/* <Button key={item.value} $active={true}> */}
+                      <button className="bg-chip-blueBg rounded-8 relative flex shrink-0 items-center gap-[8px] px-[20px] py-[8px] text-[14px] text-[#818cf8] shadow-[0_0_0_2px_rgba(129,140,248,0.6)] ">
+                        {item.label.replace('#', '').replace('*', '')}
+
+                        <SvgComp
+                          icon="KeywordDelete"
+                          size="1rem"
+                          className="[&_path]:fill-[#818cf8] [&_path]:stroke-[#818cf8]"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleDeleteCategory(item);
+                          }}
+                        />
+                      </button>
+                      {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
+                      {/* </Button> */}
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
-            <div className="bg-grey00 rounded-8 p-5 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
-              <div className="grid grid-cols-[2fr_5fr_3fr_3fr_4fr_3fr_3fr_2fr] gap-[12px] py-[18px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
+            <div className="bg-grey00 rounded-8 min-w-[1050px] px-5 pt-5 shadow-[inset_0_0_0_2px_rgb(228,228,231)]">
+              <div className="grid grid-cols-[1fr_4fr_3fr_3fr_minmax(160px,4fr)_3fr_3fr_3fr_2fr] gap-[12px] py-[18px] pl-[18px] shadow-[inset_0_-1px_0_0_#d4d4d8]">
                 {WEEKLY_SORT_OPTION.map(({ label, key }) => (
                   <div
                     key={key}
                     className={cn(
-                      'text-grey500 before:bg-grey00 relative mx-auto w-fit cursor-pointer text-center text-[14px] font-bold ',
+                      'text-grey500 before:bg-grey00 relative mx-auto w-fit cursor-pointer text-center text-[14px] font-bold',
                       {
                         ' before:absolute before:right-[-12px] before:top-1/2  before:mt-[-9px]  before:block before:h-0 before:w-0 before:border-4 before:border-transparent before:border-b-[#bfbfbf] after:absolute after:right-[-12px] after:top-1/2 after:mt-[1px] after:block after:h-0 after:w-0 after:border-4 after:border-transparent after:border-t-[#bfbfbf]':
-                          key !== 'rank' && key !== 'category',
+                          key !== 'ranking' &&
+                          key !== 'category' &&
+                          key !== 'competitive',
                         'before:border-b-[#000]':
                           sortingParams.sort === key &&
                           sortingParams.order === 'asc',
@@ -188,11 +269,25 @@ const Page = () => {
               </div>
               <ul>
                 {data?.map((item, index, arr) => {
+                  const competitionConfig = convertCompetitionFormat({
+                    competitionScore: item.competitive,
+                    totalDailyView: item.weeklyViews,
+                    videoCount: item.videoCount,
+                  });
+
+                  const formattedCluster = parseInt(
+                    item.category ?? '0',
+                    10,
+                  ).toString();
+                  const repCategory = extractValue(
+                    clustersCategories[formattedCluster],
+                  );
+
                   return (
                     <li
                       key={index}
                       className={cn(
-                        'grid grid-cols-[2fr_5fr_3fr_3fr_4fr_3fr_3fr_2fr] pl-[18px] items-center gap-[12px] group',
+                        'grid grid-cols-[1fr_4fr_3fr_3fr_minmax(160px,4fr)_3fr_3fr_3fr_2fr] pl-[18px] items-center gap-[12px] group font-[500]',
                         {
                           'shadow-[inset_0_-2px_0_0_#f4f4f5]':
                             index !== arr.length - 1 || hasNextPage,
@@ -204,21 +299,36 @@ const Page = () => {
                           {Number(item.ranking)}
                         </div>
                       </div>
-                      <div className="text-grey700 py-[26px] text-center text-[14px] ">
+                      <div className="text-grey700 truncate py-[26px] text-center text-[14px]">
                         {item.keyword}
                       </div>
-                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                      <div className="text-grey600 py-[26px]  text-center text-[14px]  ">
                         {Number(item.weeklyViews)?.toLocaleString('ko-kr')}
                       </div>
-                      <div className="text-grey700 py-[26px]  text-center text-[14px]  font-bold">
+                      <div className="text-grey600 py-[26px]  text-center text-[14px]  ">
                         {item.videoCount?.toLocaleString('ko-kr')}
                       </div>
-                      <div className="text-grey700 py-[26px]  text-center text-[14px] font-bold ">
-                        {clustersCategories[item.category]}
+                      <div className="text-grey700    w-full py-[26px] text-center text-[14px] font-[400]">
+                        {clustersCategories[formattedCluster] && (
+                          <button className="border-grey500  text-grey900 max-w-[160px] truncate rounded-[4px] border  px-5 py-[6px]">
+                            {repCategory}
+                          </button>
+                        )}
                         {/* clustersCategories 갱신필요 */}
                       </div>
-                      <div className="text-grey700 py-[26px] text-center text-[14px]  font-bold">
-                        {convertCompetitionScoreFormat(item.competitive)}
+                      <div className="text-grey700 py-[26px] text-center text-[14px]  ">
+                        <span
+                          style={{
+                            color: competitionConfig.color,
+                            backgroundColor: competitionConfig.backgroundColor,
+                          }}
+                          className="rounded-8 px-[10px] py-[6px]"
+                        >
+                          {competitionConfig.content}
+                        </span>
+                      </div>
+                      <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
+                        {item.lastRanking?.toLocaleString('ko-kr')}
                       </div>
                       <div className="text-grey700 py-[26px] text-center text-[14px] font-bold ">
                         {item.megaChannel?.toLocaleString('ko-kr')}
@@ -268,3 +378,11 @@ const Page = () => {
 };
 
 export default Page;
+
+const extractValue = (str: string) => {
+  if (!str) return;
+
+  const parts = str.split('>');
+
+  return parts[parts.length - 1].trim(); // `>` 뒤의 부분 반환
+};
