@@ -5,6 +5,7 @@ import { Button as DesignButton } from 'dashboard-storybook/src/components/Butto
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import LoginFrame from '@/components/Auth/LoginFrame';
@@ -40,6 +41,8 @@ type UseGetTrendingKeywordsV2Data = ReturnType<
 >['data'];
 
 const Page = () => {
+  const pathName = usePathname();
+
   const { trendingQueryOption, setTrendingQueryOption } =
     useTrendingQueryContext('RankPage');
 
@@ -331,7 +334,7 @@ const Page = () => {
                       </div>
                       <div className="invisible group-hover:visible">
                         <Link
-                          href={'/login'}
+                          href={`/login?previous_url=${pathName}`}
                           onClick={(event) => {
                             if (isSignedIn) {
                               event.preventDefault();
@@ -352,7 +355,7 @@ const Page = () => {
                 {hasNextPage && (
                   <div className="flex justify-center py-[42px]">
                     <Link
-                      href={'/login'}
+                      href={`/login?previous_url=${pathName}`}
                       onClick={(event) => handleFetchNextPage(event)}
                     >
                       <DesignButton theme="outlined" size="L">
