@@ -24,8 +24,6 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
 
   const pathName = usePathname();
 
-  const currentPath = `/${pathName?.split('/')[1]}`;
-
   return (
     <div
       className={cn(
@@ -94,7 +92,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
             </div>
           </>
         ) : (
-          <Link href={`/login?previous_url=${currentPath}`}>
+          <Link href={`/login?previous_url=${pathName}`}>
             <div className="text-grey700 rounded-8 bg-primary100  px-[52px]  py-[13px] text-[14px] font-bold">
               로그인
             </div>
