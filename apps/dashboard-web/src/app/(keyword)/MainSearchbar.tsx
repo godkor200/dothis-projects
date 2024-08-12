@@ -155,52 +155,49 @@ const MainSearchbar = () => {
       {isFocused && (
         <div className="border-primary200  bg-grey00 absolute z-10 mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border px-[30px] py-[20px]">
           {!!data?.length ? (
-            data
-              ?.filter((item) => item.endsWith('*'))
-              .slice(0, 5)
-              .map((item) => {
-                const regex = new RegExp(`(${input})`, 'gi');
-                return (
-                  <div
-                    className="text-grey900 flex cursor-pointer items-center text-[16px]"
-                    //   onClick={() => {
-                    //     if (!checkIsSignedIn()) {
-                    //       return;
-                    //     }
-                    //     createSearchwordMutate(item.replace('*', ''));
-                    //     return;
-                    //   }}
-                    key={item}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      router.push(`/keyword/${item.replace('*', '')}`);
-                    }}
-                  >
-                    <SvgComp
-                      icon="BorderSearchIcon"
-                      size={24}
-                      className="mr-[24px]"
-                      // onClick={(e) => {
-                      //   e.preventDefault();
-                      //   e.stopPropagation();
+            data.slice(0, 5).map((item) => {
+              const regex = new RegExp(`(${input})`, 'gi');
+              return (
+                <div
+                  className="text-grey900 flex cursor-pointer items-center text-[16px]"
+                  //   onClick={() => {
+                  //     if (!checkIsSignedIn()) {
+                  //       return;
+                  //     }
+                  //     createSearchwordMutate(item.replace('*', ''));
+                  //     return;
+                  //   }}
+                  key={item}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    router.push(`/keyword/${item.replace('*', '')}`);
+                  }}
+                >
+                  <SvgComp
+                    icon="BorderSearchIcon"
+                    size={24}
+                    className="mr-[24px]"
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   e.stopPropagation();
 
-                      //   console.log('check');
-                      //   router.push(`/keyword/${item.replace('*', '')}`);
-                      // }}
-                    />
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: item
-                          .replace('*', '')
-                          .replace(
-                            regex,
-                            '<span style="font-weight: bold; ">$1</span>',
-                          ),
-                      }}
-                    />
-                  </div>
-                );
-              })
+                    //   console.log('check');
+                    //   router.push(`/keyword/${item.replace('*', '')}`);
+                    // }}
+                  />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: item
+                        .replace('*', '')
+                        .replace(
+                          regex,
+                          '<span style="font-weight: bold; ">$1</span>',
+                        ),
+                    }}
+                  />
+                </div>
+              );
+            })
           ) : (
             <>
               <p className="text-grey500 text-[14px]">두디스 추천 검색어</p>
