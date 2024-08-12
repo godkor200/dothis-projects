@@ -51,7 +51,7 @@ const MultiSelector = ({ selectOptions, setSelectOptions }: Props) => {
           return 'bg-grey00 !text-[#818cf8] !bg-chip-blueBg !rounded-8 !py-[8px] !pl-[20px]';
         },
         multiValueRemove: (props) => {
-          return 'bg-grey00 hover:!bg-grey00  text-[#818cf8] !bg-chip-blueBg !rounded-r-8 hover:!bg-chip-blueBg !pr-[20px] !pl-[8px]   group/remove ';
+          return ' text-[#818cf8] !bg-chip-blueBg !rounded-r-8 hover:!bg-chip-blueBg !pr-[20px] !pl-[8px] group/remove ';
           // 한가지의 className으로 group과 grouphover를 동시에 사용할 수 없음 ([&_path]:group-hover/remove:stroke-[#fff]) - 자식 css 제어하려고 시도했지만 실패
         },
         valueContainer: (props) => {
