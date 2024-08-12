@@ -3,6 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
+import GNBSearchbar from '@/app/(keyword)/GNBSearchbar';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -54,6 +55,8 @@ const TrendingFilter = ({
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
       <SearchBar setKeywordList={handleSetKeywordList} />
+      {/* <GNBSearchbar /> */}
+      {/* 자동완성 api 테스트 가능할 때 변경 예정 */}
 
       <p className="text-grey600 mb-[20px] mt-[80px] font-bold">검색 키워드</p>
 
