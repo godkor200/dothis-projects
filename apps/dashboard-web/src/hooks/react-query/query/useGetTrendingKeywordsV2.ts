@@ -77,26 +77,32 @@ const useGetTrendingKeywordsV2 = (
     /**
      * 저희는 pageParam의 대한 정보를 api 요청할 때 보내고 있지는않아서
      */
-    ({ pageParam = 0 }) => ({
-      query: {
-        limit: isSignedIn ? String(30) : String(30),
-        from: date,
-        categoryNumbers: selectOptions
-          .map((item) => item.value.toString().padStart(2, '0'))
-          .join(','),
-        keywords: keywordList.length ? keywordList.join(',') : undefined,
-        order: order,
-        sort: convertSortQuery[sort],
-        page: String(1),
-      },
-    }),
+    ({ pageParam = 0 }) => {
+      return {
+        query: {
+          limit: isSignedIn ? String(30) : String(30),
+          from: date,
+          categoryNumbers: selectOptions
+            .map((item) => item.value.toString().padStart(2, '0'))
+            .join(','),
+          keywords: keywordList.length ? keywordList.join(',') : undefined,
+          order: order,
+          sort: convertSortQuery[sort],
+          page: pageParam + 1,
+        },
+      };
+    },
     {
       ...queryOptions,
       getNextPageParam: (lastPage, allPages) => {
-        // return lastPage.body.data.length < 10 || allPages.length > 4
-        //   ? false
-        //   : true;
-        return true;
+        const dataCount = allPages.reduce((total, item) => {
+          return total + item.body.body.limit * item.body.body.page;
+        }, 0);
+
+        const maxDataCount = lastPage.body.body.count;
+
+        const hasNextPage = dataCount < maxDataCount;
+        return hasNextPage ? allPages.length : false;
       },
     },
   );
