@@ -37,7 +37,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
         <Link href={'/'}>
           <div className="my-[24px] ml-[28px] flex cursor-pointer items-center gap-[8px]">
             {/* <SvgComp icon="SideLogo" size={30} /> */}
-            <div className="relative h-[32px] w-[27px]">
+            <div className="relative h-[32px] w-[32px]">
               <Image src={'/RefactLogo.png'} fill={true} alt="mainlogo" />
             </div>
             <SvgComp icon="LogoTitle" width={100} height={40} />
