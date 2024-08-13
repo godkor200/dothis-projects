@@ -6,4 +6,9 @@ import { DeleteReqVideoDao } from '@ExternalApps/feature/crawl-queue/video/infra
 export interface ReqVideoOutboundPort
   extends RepositoryPort<RequestVideoEntity> {
   deleteByVodIdEtc(dao: DeleteReqVideoDao): Promise<boolean>;
+
+  findOneByWebHookUrlAndMatchToken(
+    url: string,
+    token: string,
+  ): Promise<boolean>;
 }

@@ -58,9 +58,12 @@ import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/reposi
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 import { SearchTermCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/search-term.cache';
 import { KoreanAutocompleteCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/korean-autocomplete.cache';
+import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/os/video-history.os.adapter';
+import { VideoMultiRelatedWordsCacheAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import { VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 
 const controllers = [
-  FindRelHttpV1Controller,
+  // FindRelHttpV1Controller,
   UpdateAutoCompleteWordsHttpController,
   GetRankingRelatedWordsHttpController,
   FindSearchKeywordHttpController,
@@ -82,6 +85,10 @@ const repositories: Provider[] = [
   {
     provide: CHANNEL_HISTORY_IGNITE_DI_TOKEN,
     useClass: ChannelHistoryBaseAdapter,
+  },
+  {
+    provide: VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN,
+    useClass: VideoMultiRelatedWordsCacheAdapter,
   },
   {
     provide: RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
@@ -115,6 +122,7 @@ const repositories: Provider[] = [
   FindSearchTermService,
   FindAutoCompleteQueryHandler,
   RankingRelatedWordAggregateService,
+  VideoHistoryOsAdapter,
 ];
 
 const handler = [

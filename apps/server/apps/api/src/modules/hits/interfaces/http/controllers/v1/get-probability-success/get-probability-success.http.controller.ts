@@ -54,20 +54,9 @@ export class GetProbabilitySuccessHttpController {
   @ApiOkResponse({
     type: GetProbabilityResultType,
   })
-  @ApiParam({
-    name: 'clusterNumber',
-    type: String,
-    required: true,
-    description: '클러스터 번호 단일, 멀티 둘다 가능',
-    example: '4, 93, 14, 13, 57, 5, 43, 1, 10, 45',
-  })
-  async execute(
-    @Param(ParseArrayPipe) param: IParamsInterface,
-    @Query() query: GetProbabilitySuccessQuery,
-  ) {
-    return tsRestHandler(getProbabilitySuccess, async ({ params, query }) => {
+  async execute(@Query() query: GetProbabilitySuccessQuery) {
+    return tsRestHandler(getProbabilitySuccess, async ({ query }) => {
       const dto = new GetProbabilitySuccessDto({
-        clusterNumber: param.clusterNumber,
         ...query,
       });
       const result: TGetProbabilityRes = await this.queryBus.execute(dto);

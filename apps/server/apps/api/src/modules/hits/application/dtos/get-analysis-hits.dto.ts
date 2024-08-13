@@ -31,7 +31,6 @@ export class GetAnalysisHitsQuery extends createZodDto(
 }
 
 export class GetAnalysisHitsDto extends GetAnalysisHitsQuery {
-  readonly clusterNumber: string[];
   /**
    * GetAnalysisHitsDto 정의:
    *

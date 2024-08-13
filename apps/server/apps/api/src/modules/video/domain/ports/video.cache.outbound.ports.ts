@@ -10,7 +10,7 @@ export type VideoCacheReturnType = {
   publishedDate: string;
   videoId: string;
   cluster: string;
-  channelId?: string;
+  channelId: string;
 };
 
 export interface VideoCacheOutboundPorts {

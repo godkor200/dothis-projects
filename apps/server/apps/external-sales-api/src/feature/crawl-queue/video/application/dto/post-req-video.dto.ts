@@ -1,9 +1,9 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { requestVideoBody } from '@dothis/dto';
+import { zRequestVideoBody } from '@dothis/dto';
 
 export class PostReqVideoBody extends createZodDto(
-  extendApi(requestVideoBody),
+  extendApi(zRequestVideoBody),
 ) {}
 
 export class PostRequestVideoDto extends PostReqVideoBody {

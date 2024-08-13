@@ -1,16 +1,9 @@
-import {
-  Controller,
-  HttpStatus,
-  NotFoundException,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, NotFoundException, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FindKeywordTagByUserCommand } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import {
   ApiBearerAuth,
   ApiHeaders,
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,

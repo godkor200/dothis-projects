@@ -67,5 +67,5 @@ export interface ITodayIssue
     'videoId' | 'videoTitle' | 'videoPublished' | 'videoViews' | 'channelName'
   > {
   search: string;
-  related: string;
+  related?: string;
 }

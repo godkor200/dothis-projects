@@ -1,7 +1,5 @@
 import {
   GetVideoViewsMatchingSearchOnSpecificDateDao,
-  RelatedVideoAndCountByDayDao,
-  RelatedVideoAndVideoHistoryDao,
   SearchRelationVideoAndHistoryDao,
   SearchRelationVideoDao,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
@@ -12,7 +10,6 @@ import {
   GetAdsInfoResDao,
   GetRelatedLastVideoAndVideoHistory,
   GetRelatedLastVideoAndVideoHistoryEach,
-  GetRelatedVideoChannelHistoryDao,
   GetRelatedVideoHistory,
   GetVideoAdsTopHitsDao,
   GetVideoAndChannelViewsByDateAndKeywordsDao,
@@ -21,7 +18,6 @@ import {
 import {
   CountByDayRes,
   GetVideoAndChannelViewsByDateAndKeywordsRes,
-  GetVideoViewsMatchingSearchOnSpecificDateRes,
   IVideoSchema,
   TVideoRes,
 } from '@Apps/modules/video/infrastructure/daos/video.res';
@@ -30,14 +26,11 @@ import {
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
 
-import { TGetRelatedVideoChannelHistoryRes } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
 import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 import { GetAdsRelatedTopHitsRes } from '@dothis/dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
-import { VideoNoKeywordPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video-no-keyword.paginated.adapter';
 import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 const IgniteClient = require('apache-ignite-client');
 const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
@@ -109,11 +102,7 @@ export interface IGetRelatedLastVideoHistory {
     dao: GetRelatedLastVideoAndVideoHistory,
   ): Promise<TGetRelatedVideoAnalyticsData>;
 }
-export interface IGetRelatedVideoChannelHistoryOutboundPort {
-  execute(
-    dao: GetRelatedVideoChannelHistoryDao,
-  ): Promise<TGetRelatedVideoChannelHistoryRes>;
-}
+
 export interface IGetVideoAdsInfoAdapterOutboundPort {
   execute(dao: GetAdsInfoResDao): Promise<TFindAdsInfoRes>;
 }

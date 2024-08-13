@@ -68,12 +68,21 @@ export class GetChannelHistoryByChannelIdV2Dao {
 }
 export class GetVideoHistoryMultipleByIdAndRelatedWordsDao {
   videoIds: Record<string, string[]>;
-  constructor(props: { videoIds: VideosMultiRelatedWordsCacheType }) {
+  from?: string;
+  to?: string;
+  constructor(props: {
+    videoIds: VideosMultiRelatedWordsCacheType;
+    from?: string;
+    to?: string;
+  }) {
     this.videoIds = RedisResultMapper.createVideoIds(
       RedisResultMapper.groupByCluster(Object.values(props.videoIds).flat()),
     );
+    this.from = props.from;
+    this.to = props.to;
   }
 }
+
 export class VideoNoKeywordPaginatedDao {
   videoIds: Record<string, string[]>;
   from: string;
@@ -81,7 +90,7 @@ export class VideoNoKeywordPaginatedDao {
   sort: string;
   order: TSqlParam;
   limit: string;
-  page: string;
+  page?: string;
 
   constructor(props: {
     videoIds: Record<string, VideoCacheReturnType[]>;

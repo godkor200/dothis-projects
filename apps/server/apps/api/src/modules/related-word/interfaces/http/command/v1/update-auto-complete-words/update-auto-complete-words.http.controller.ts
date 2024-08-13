@@ -4,13 +4,7 @@ import { UpdateAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/ap
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import {
-  ApiConflictResponse,
-  ApiInternalServerErrorResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { summary, responses, description } = c.updateAutoCompleteWords;
 

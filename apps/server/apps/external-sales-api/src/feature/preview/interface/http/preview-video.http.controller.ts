@@ -1,5 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
 import {
+  BadRequestException,
   Controller,
   NotFoundException,
   Param,
@@ -22,8 +23,10 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
 import {
+  InvalidYoutubeUrlException,
   VideoErrNotFound,
   VideoNotFoundException,
 } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
@@ -42,10 +45,11 @@ const c = nestControllerContract(externalApiRouter.video);
 const { previewVideo } = c;
 
 const { summary, responses, description } = previewVideo;
-
+@ApiTags('비디오')
 @Controller()
 export class PreviewVideoHttpController {
   constructor(private queryBus: QueryBus) {}
+
   @TsRestHandler(previewVideo)
   @UseGuards(JwtAccessGuard)
   @ApiOperation({
@@ -69,6 +73,9 @@ export class PreviewVideoHttpController {
         Err: (err) => {
           if (err instanceof VideoNotFoundException) {
             throw new NotFoundException(err.message);
+          }
+          if (err instanceof InvalidYoutubeUrlException) {
+            throw new BadRequestException(err.message);
           }
           throw err;
         },

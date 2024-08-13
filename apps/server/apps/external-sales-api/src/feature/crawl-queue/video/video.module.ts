@@ -15,6 +15,22 @@ import { DeleteReqVideoHttpController } from '@ExternalApps/feature/crawl-queue/
 import { DeleteReqVideoService } from '@ExternalApps/feature/crawl-queue/video/application/service/delete-req-video.service';
 import { FetchReqVideoHttpController } from '@ExternalApps/feature/crawl-queue/video/interface/http/fetch-req-video.http.controller';
 import { FetchReqVideoService } from '@ExternalApps/feature/crawl-queue/video/application/service/fetch-req-video.service';
+import {
+  CHANNEL_DATA_REPOSITORY_DI_TOKEN,
+  CHANNEL_HISTORY_REPOSITORY_DI_TOKEN,
+} from '@ExternalApps/feature/channel/channel-data.di-token.constants';
+import { ChannelDataRepository } from '@ExternalApps/feature/channel/infrastructure/repositories/channel-data.repository';
+import {
+  VIDEO_DATA_REPOSITORY_DI_TOKEN,
+  VIDEO_HISTORY_REPOSITORY_DI_TOKEN,
+} from '@ExternalApps/feature/video/video-data.di-token.constants';
+import { VideoDataRepository } from '@ExternalApps/feature/video/infrastructure/repositories/video-data.repository';
+import { ChannelHistoryRepository } from '@ExternalApps/feature/channel/infrastructure/repositories/channel-history.repository';
+import { VideoHistoryRepository } from '@ExternalApps/feature/video/infrastructure/repositories/video-history.repository';
+import { HttpModule } from '@nestjs/axios';
+import { VideoDataEntityModule } from '@ExternalApps/feature/video/domain/entities/video-data-shorts.module';
+import { ChannelDataEntityModule } from '@ExternalApps/feature/video/domain/entities';
+
 
 const controllers = [
   PostReqVideoHttpController,
@@ -30,10 +46,27 @@ const service: Provider[] = [
   DeleteReqVideoService,
   FetchReqVideoService,
 ];
-const repository: Provider[] = [
+
+const repositories: Provider[] = [
   {
     provide: REQUEST_VIDEO_REPOSITORY_DI_TOKEN,
     useClass: RequestVideoRepository,
+  },
+  {
+    provide: CHANNEL_DATA_REPOSITORY_DI_TOKEN,
+    useClass: ChannelDataRepository,
+  },
+  {
+    provide: VIDEO_DATA_REPOSITORY_DI_TOKEN,
+    useClass: VideoDataRepository,
+  },
+  {
+    provide: CHANNEL_HISTORY_REPOSITORY_DI_TOKEN,
+    useClass: ChannelHistoryRepository,
+  },
+  {
+    provide: VIDEO_HISTORY_REPOSITORY_DI_TOKEN,
+    useClass: VideoHistoryRepository,
   },
 ];
 const strategies: Provider[] = [AtStrategy];
@@ -41,10 +74,13 @@ const strategies: Provider[] = [AtStrategy];
 @Module({
   imports: [
     CqrsModule,
+    HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    VideoDataEntityModule,
+    ChannelDataEntityModule,
     RequestVideoEntityModule,
   ],
   controllers,
-  providers: [...command, ...repository, ...service, ...strategies],
+  providers: [...command, ...repositories, ...service, ...strategies],
 })
 export class VideoModule {}

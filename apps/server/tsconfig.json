@@ -22,6 +22,12 @@
       ],
       "@ts-rest/core/src": [
         "../../packages/dto/node_modules/@ts-rest/core/src"
+      ],
+      "@app/common": [
+        "libs/common/src"
+      ],
+      "@app/common/*": [
+        "libs/common/src/*"
       ]
     }
   },

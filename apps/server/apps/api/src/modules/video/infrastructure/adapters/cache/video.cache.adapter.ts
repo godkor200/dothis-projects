@@ -21,7 +21,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
   ) {}
 
   async execute(dao: GetVideoCacheDao): Promise<VideoCacheAdapterRes> {
-    const { search, related, from, to } = dao;
+    const { search, related, from, to, relatedCluster } = dao;
 
     try {
       const searchResults = await this.redisClient.smembers(search);
@@ -31,7 +31,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
         searchResults,
         from,
         to,
-        dao.relatedCluster,
+        relatedCluster || null,
       );
 
       let finalResults: string[];
@@ -45,7 +45,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
             relatedResults,
             from,
             to,
-            dao.relatedCluster,
+            relatedCluster || null,
           );
         const intersectionResults = filteredByDateRange.filter((item) =>
           filteredRelatedResults.includes(item),
@@ -55,6 +55,7 @@ export class VideoCacheAdapter implements VideoCacheOutboundPorts {
       } else {
         finalResults = filteredByDateRange;
       }
+
       if (!finalResults.length) return Err(new VideoNotFoundError());
 
       return Ok(finalResults);

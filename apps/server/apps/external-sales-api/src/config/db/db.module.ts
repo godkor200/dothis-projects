@@ -9,5 +9,16 @@ export const typeOrmConfigAsync: TypeOrmModuleAsyncOptions = {
   inject: [ConfigService],
   name: 'default',
 };
-@Module({ imports: [TypeOrmModule.forRootAsync(typeOrmConfigAsync)] })
+export const typeOrmConfigSubAsync: TypeOrmModuleAsyncOptions = {
+  imports: [MySqlConfigModule],
+  useClass: TypeOrmConfigService,
+  inject: [ConfigService],
+  name: 'onPromisesMysql',
+};
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
+    TypeOrmModule.forRootAsync(typeOrmConfigSubAsync),
+  ],
+})
 export class DatabaseModules {}

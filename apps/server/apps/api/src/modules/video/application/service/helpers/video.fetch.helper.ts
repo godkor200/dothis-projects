@@ -7,7 +7,7 @@ export class VideoFetchHelper {
     items: string[],
     from: string,
     to: string,
-    relatedClusters: string[],
+    relatedClusters?: string[],
   ): string[] {
     return items.filter((item) => {
       const [publishDate, , , clusterNumber] = item.split(':');
@@ -16,10 +16,23 @@ export class VideoFetchHelper {
         0,
         4,
       )}-${publishDate.slice(4, 6)}-${publishDate.slice(6, 8)}`;
-      return (
-        DateUtil.isWithinOneYear(formattedPublishDate, from, to) &&
-        this.whetherRelatedCluster(relatedClusters, clusterNumber)
+      // 날짜가 범위 내에 존재하는지 확인
+      const isDateInRange = DateUtil.isWithinOneYear(
+        formattedPublishDate,
+        from,
+        to,
       );
+
+      // 관련 클러스터가 있는 경우 클러스터 번호도 확인
+      if (relatedClusters && relatedClusters.length > 0) {
+        return (
+          isDateInRange &&
+          this.whetherRelatedCluster(relatedClusters, clusterNumber)
+        );
+      }
+
+      // 관련 클러스터가 없는 경우 날짜만 확인
+      return isDateInRange;
     });
   }
 

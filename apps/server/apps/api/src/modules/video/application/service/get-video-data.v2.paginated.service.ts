@@ -1,6 +1,6 @@
 import { GetVideoDataPageV2ServiceInboundPort } from '@Apps/modules/video/domain/ports/get-video-data-page.service.inbound.port';
 import { GetVideoPaginatedPageSortDto } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
-import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
+import { TGetVideoPage } from '@Apps/modules/video/application/queries/v2/find-video-page.query-handler';
 import { Inject } from '@nestjs/common';
 import {
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
@@ -10,13 +10,16 @@ import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.
 import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { IGetVideoVideoNoKeywordPaginatedOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import { Err, Ok } from 'oxide.ts';
+import { Err, Ok, Result } from 'oxide.ts';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
 import { VideoFetchHelper } from '@Apps/modules/video/application/service/helpers/video.fetch.helper';
 
+/**
+ * FIXME: page를 옵셔널로 해서 페이지네이션을 안하도록 수정
+ */
 export class GetVideoDataV2PaginatedService
   implements GetVideoDataPageV2ServiceInboundPort
 {

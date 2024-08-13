@@ -59,23 +59,23 @@ export class GetRankingRelatedWordsV2Service {
     query: GetRankingRelatedWordsV2Dto,
   ): Promise<TGetRankingRelatedWordsRes> {
     try {
-      /**
-       * 캐시 먼저 검색
-       */
-      const cache = await this.getRankingCacheService.execute({
-        key: query.search,
-      });
-
-      if (!cache.isErr()) {
-        return Ok({
-          keyword: query.search,
-          ranking: cache.unwrap().map((e) => ({
-            word: e.word,
-            sortFigure: e.sortFigure,
-            expectedViews: e.expectedViews,
-          })),
-        });
-      }
+      // /**
+      //  * 캐시 먼저 검색
+      //  */
+      // const cache = await this.getRankingCacheService.execute({
+      //   key: query.search,
+      // });
+      //
+      // if (!cache.isErr()) {
+      //   return Ok({
+      //     keyword: query.search,
+      //     ranking: cache.unwrap().map((e) => ({
+      //       word: e.word,
+      //       sortFigure: e.sortFigure,
+      //       expectedViews: e.expectedViews,
+      //     })),
+      //   });
+      // }
       const relWordsEntity = await this.relWordsRepository.findOneByKeyword(
         query.search,
       );
@@ -103,7 +103,7 @@ export class GetRankingRelatedWordsV2Service {
             new GetVideoHistoryMultipleByIdAndRelatedWordsDao({
               videoIds: unwrapData,
             });
-          console.log('videoHistoryDao', unwrapData);
+
           console.timeEnd('비디오 dao 시간 converter');
           console.time('채널 히스토리 조회 시간');
           const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
@@ -112,6 +112,7 @@ export class GetRankingRelatedWordsV2Service {
           const channelHistoryPromise =
             this.getChannelHistoryByChannelId.execute(channelHistoryDao);
           console.timeEnd('채널 히스토리 조회 시간');
+
           console.time('비디오 히스토리 조회 시간');
           const videoHistoryPromise =
             this.videoHistoryAdapter.execute(videoHistoryDao);
@@ -127,6 +128,7 @@ export class GetRankingRelatedWordsV2Service {
               channelHistoryResult.unwrap(),
               videoHistoryResult.unwrap(),
             );
+
             const cul =
               RankingRelatedWordAggregateService.analyzeRelatedWordStatistics(
                 res,
@@ -134,7 +136,6 @@ export class GetRankingRelatedWordsV2Service {
             const ranking = cul.map((e) => ({
               word: e.word,
               sortFigure: e.sortFigures,
-              expectedViews: e.expectedViews,
             }));
 
             await this.setRankingCacheService.execute({

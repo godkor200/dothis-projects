@@ -55,18 +55,22 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     order: 'ASC' | 'DESC',
   ): Promise<Paginated<E>> {
     try {
-      const offsetNumber = (Number(params.page) - 1) * Number(params.limit);
+      // params.page가 정의되지 않으면 1로 기본값 설정
+      const pageNumber = params.page ? Number(params.page) : 1;
+      const limitNumber = Number(params.limit);
+      const offsetNumber = (pageNumber - 1) * limitNumber;
+
       const [data, count] = await this.repository
         .createQueryBuilder(this.tableName)
         .where({ ...where })
-        .limit(Number(params.limit))
+        .limit(limitNumber)
         .offset(offsetNumber)
         .getManyAndCount();
 
       return new Paginated({
         count,
-        limit: Number(params.limit),
-        page: Number(params.page),
+        limit: limitNumber,
+        page: pageNumber,
         data,
       });
     } catch (e) {

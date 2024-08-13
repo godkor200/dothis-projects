@@ -11,6 +11,7 @@ import {
 } from './related-word.model';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
+import { zWord } from './related-word.zod';
 
 export const searchWordBaseApiUrl = '/search-word';
 export const relWordsApiUrl = '/related-word';
@@ -54,10 +55,22 @@ export const relatedWordsApi = c.router({
       200: zAutoCompleteWords,
       ...zErrResBase,
     },
-    pathParams: z.object({ word: z.string() }),
+    pathParams: zWord,
     summary: '자동완성 단어를 가져옵니다.',
     description:
-      '자동완성 단어를 가져옵니다. 뒤에 * 붙어있는 단어는 완전단어로 우리 디비에 탐색어로 등록되있는 단어를 뜻합니다.',
+      '자동완성 단어를 가져옵니다. 사용자의 사용빈도가 많은순으로 업데이트 됩니다.',
+  },
+
+  incrementScoreWords: {
+    method: 'POST',
+    path: `/auto-complete/increment-score`,
+    responses: {
+      200: zAutoCompleteWords,
+      ...zErrResBase,
+    },
+    body: zWord,
+    summary: '자동완성 단어의 사용빈도를 업데이트',
+    description: '자동완성 단어의 사용빈도를 업데이트 합니다.',
   },
   rankingRelatedWords: {
     method: 'GET',

@@ -6,7 +6,6 @@ import cacheConfig from '@Apps/config/cache/config/cache.env';
 import appConfig from '@Apps/config/app/config/app.env';
 import awsConfig from '@Apps/config/aws/config/aws.env';
 import igniteConfig from '@Apps/config/ignite/config/ignite.env';
-
 import { TypeormModule } from 'apps/api/src/config/database/database.module';
 import { RequestContextModule } from 'nestjs-request-context';
 import { HeathApiController } from 'apps/api/src/health.controller';

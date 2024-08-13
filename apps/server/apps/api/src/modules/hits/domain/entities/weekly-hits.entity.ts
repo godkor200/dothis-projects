@@ -2,13 +2,14 @@ import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'weekly_views' })
 export class WeeklyHitsEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ name: 'ranking', type: 'int', nullable: true })
+  @PrimaryColumn({ name: 'ranking', type: 'int' })
   ranking: number;
 
-  @Column({ name: 'keyword', type: 'varchar', length: 30, nullable: true })
+  @PrimaryColumn({
+    name: 'keyword',
+    type: 'varchar',
+    length: 30,
+  })
   keyword: string;
 
   @Column({ name: 'category', type: 'varchar', length: 30, nullable: true })
@@ -35,6 +36,6 @@ export class WeeklyHitsEntity {
   @PrimaryColumn({ name: 'MONTH', type: 'int' })
   month: number;
 
-  @Column({ name: 'DAY', type: 'int' })
+  @PrimaryColumn({ name: 'DAY', type: 'int' })
   day: number;
 }

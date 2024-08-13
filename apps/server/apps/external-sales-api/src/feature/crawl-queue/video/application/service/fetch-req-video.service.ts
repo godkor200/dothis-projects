@@ -34,12 +34,13 @@ export class FetchReqVideoService implements FetchReqVideoInbound {
       if (!res.count) return Err(new VideoNotFoundException());
       const mapper: FetchReqVideoRes = res.data.map((e) => ({
         clientId: e.usersClientId,
-        videoId: e.videoId,
+        videoUrl: e.videoId,
         managerId: e.managerId,
         vodId: e.vodId,
         operatorId: e.operatorId,
         shortformId: e.shortformId,
         updateDate: e.updateDate,
+        webhookUrl: e.webhookUrl,
       }));
       return Ok(mapper);
     } catch (e) {

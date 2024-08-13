@@ -4,26 +4,18 @@ import {
 } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
 import { GetAnalysisHitsV2Dto } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
 import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
-import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Inject } from '@nestjs/common';
 import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-import {
-  GetChannelHistoryByChannelIdV2Dao,
-  GetVideoHistoryMultipleByIdV2Dao,
-} from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { Err, Ok } from 'oxide.ts';
-import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
 import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
-import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
+import { VideoDataServiceHelper } from '@Apps/common/helpers/get-video-data.helper';
 
 /**
  * 시퀀스
@@ -36,6 +28,8 @@ import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
  * 5/5과 5/6일을 뺴서 5/6일을 계산하기 떄문
  */
 export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
+  private readonly dataHelper: VideoDataServiceHelper;
+
   constructor(
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
@@ -45,114 +39,71 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
     private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
     @Inject(CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN)
     private readonly channelHistoryService: ChannelHistoryByChannelIdOutboundPort,
-  ) {}
+  ) {
+    this.dataHelper = new VideoDataServiceHelper(
+      relWordsRepository,
+      videoCacheService,
+      videoHistoryService,
+      channelHistoryService,
+    );
+  }
 
   async execute(dto: GetAnalysisHitsV2Dto): Promise<TAnalysisHitsServiceRes> {
     try {
-      const keywordInfo = await this.relWordsRepository.findOneByKeyword(
+      const relatedCluster = await this.dataHelper.getKeywordClusters(
         dto.search,
       );
-      if (keywordInfo.isErr()) {
-        return Err(new KeywordsNotFoundError());
-      }
-      const keywordInfoUnwrap = keywordInfo.unwrap();
-      const relatedCluster = keywordInfoUnwrap.cluster
-        .split(',')
-        .map((e) => e.trim());
+      const relatedClusterUnwrap = relatedCluster.unwrap();
 
-      const videoCacheDao = new GetVideoCacheDao({
-        ...dto,
-        relatedCluster,
-      });
+      const mergedVideoHistory =
+        await this.dataHelper.getVideoCacheAndHistories(
+          relatedClusterUnwrap,
+          dto,
+        );
+      if (mergedVideoHistory.isOk()) {
+        const mergedVideoHistoryUnwrap = mergedVideoHistory.unwrap();
+        if (dto.separation) {
+          const groupDataByCluster = VideoAggregateUtils.groupBy(
+            mergedVideoHistoryUnwrap,
+            (history) => history.videoCluster,
+          );
+          const result = Object.entries(groupDataByCluster).map(
+            ([clusterNumber, clusterData]) => {
+              const metrics =
+                VideoAggregateHelper.calculateMetrics(clusterData);
 
-      const videoCacheResult = await this.videoCacheService.execute(
-        videoCacheDao,
-      );
-
-      if (videoCacheResult.isOk()) {
-        const videoCacheResultUnwrap = RedisResultMapper.groupByCluster(
-          RedisResultMapper.toObjects(videoCacheResult.unwrap()),
+              return {
+                clusterNumber: Number(clusterNumber),
+                data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+                  dto.from,
+                  dto.to,
+                  metrics,
+                ),
+              };
+            },
+          );
+          return Ok({ success: true, data: result });
+        }
+        const dateGroupedData = VideoAggregateUtils.groupDataByDate(
+          mergedVideoHistoryUnwrap,
+        );
+        const metrics = VideoAggregateHelper.calculateMetrics(
+          Object.values(dateGroupedData).flat(),
         );
 
-        if (!Object.values(videoCacheResultUnwrap).length) {
-          return Err(new VideoNotFoundError());
-        }
-        const videoHistoryDao = new GetVideoHistoryMultipleByIdV2Dao({
-          videoIds: videoCacheResultUnwrap,
-          from: videoCacheDao.from,
-          to: videoCacheDao.to,
+        return Ok({
+          success: true,
+          data: {
+            clusterNumber: null,
+            data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+              dto.from,
+              dto.to,
+              metrics,
+            ),
+          },
         });
-
-        const videoHistoryResultPromise =
-          this.videoHistoryService.execute(videoHistoryDao);
-        const channelHistoryDao = new GetChannelHistoryByChannelIdV2Dao({
-          channelIds: videoCacheResultUnwrap,
-          from: videoCacheDao.from,
-          to: videoCacheDao.to,
-        });
-        const channelHistoryResultPromise =
-          this.channelHistoryService.execute(channelHistoryDao);
-        const [videoHistoryResult, channelHistoryResult] = await Promise.all([
-          videoHistoryResultPromise,
-          channelHistoryResultPromise,
-        ]);
-        if (videoHistoryResult.isOk() && channelHistoryResult.isOk()) {
-          const videoHistories = videoHistoryResult.unwrap();
-
-          const channelHistories = channelHistoryResult.unwrap();
-
-          const mergedVideoHistory = VideoDataMapper.mergeVideoData(
-            videoCacheResultUnwrap,
-            videoHistories,
-            channelHistories,
-          );
-
-          if (dto.separation) {
-            const groupDataByCluster = VideoAggregateUtils.groupBy(
-              mergedVideoHistory,
-              (history) => history.videoCluster,
-            );
-            const result = Object.entries(groupDataByCluster).map(
-              ([clusterNumber, clusterData]) => {
-                const metrics =
-                  VideoAggregateHelper.calculateMetrics(clusterData);
-
-                return {
-                  clusterNumber: Number(clusterNumber),
-                  data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
-                    dto.from,
-                    dto.to,
-                    metrics,
-                  ),
-                };
-              },
-            );
-            return Ok({ success: true, data: result });
-          }
-          const dateGroupedData =
-            VideoAggregateUtils.groupDataByDate(mergedVideoHistory);
-          const metrics = VideoAggregateHelper.calculateMetrics(
-            Object.values(dateGroupedData).flat(),
-          );
-
-          return Ok({
-            success: true,
-            data: {
-              clusterNumber: null,
-              data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
-                dto.from,
-                dto.to,
-                metrics,
-              ),
-            },
-          });
-        }
-        if (videoHistoryResult.isErr()) {
-          return Err(videoHistoryResult.unwrapErr());
-        }
-        return Err(channelHistoryResult.unwrapErr());
       }
-      return Err(videoCacheResult.unwrapErr());
+      return Err(mergedVideoHistory.unwrapErr());
     } catch (e) {
       return Err(e);
     }

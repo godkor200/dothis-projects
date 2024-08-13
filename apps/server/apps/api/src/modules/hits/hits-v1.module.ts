@@ -4,6 +4,7 @@ import { GetDailyHitsV1QueryHandler } from '@Apps/modules/hits/application/queri
 import { GetDailyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-daily-hits/get-daily-hits.v1.http.controller';
 import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application/services/calculate-daily-hits.service';
 import {
+  VIDEO_CACHE_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
@@ -11,9 +12,7 @@ import { VideoAggregateService } from '@Apps/modules/video/application/service/h
 import {
   ANALYSIS_HITS_SERVICE_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
-  EXPECTED_HITS_SERVICE_DI_TOKEN,
   GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
-  HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
   PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
   VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
   VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
@@ -27,12 +26,8 @@ import { WeeklyHitsService } from '@Apps/modules/hits/application/services/weekl
 import { GetWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
 import { WeeklyHitsRepository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.repository';
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
-import { ExpectedHitsService } from '@Apps/modules/hits/application/services/expected-hits.v1.service';
-import { ExpectedViewsV1QueryHandler } from '@Apps/modules/hits/application/queries/expected-views.v1.query-handler';
-import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
-import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
+
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
-import { ExpectedHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/expected-hits/expected-hits.v1.http.controller';
 import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v2.repository';
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 import { GetProbabilitySuccessHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-probability-success/get-probability-success.http.controller';
@@ -53,13 +48,21 @@ import { AnalysisHitsService } from '@Apps/modules/hits/application/services/ana
 import { GetWeeklyKeywordQueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-keyword.query-handler';
 import { GetWeeklyKeywordService } from '@Apps/modules/hits/application/services/get-weekly-keyword.service';
 import { GetWeeklyKeywordHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-weekly-keyword/get-weekly-keyword.http.controller';
+import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
+import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
+import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
+import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-multiple-by-id.adapter';
+import {
+  ChannelHistoryAggregateService
+} from "@Apps/modules/channel-history/application/service/channel-history.aggregate.service";
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
   GetDailyHitsV1QueryHandler,
   GetWeeklyHitsV1QueryHandler,
   VideoAggregateService,
-  ExpectedViewsV1QueryHandler,
   GetProbabilitySuccessQueryHandler,
   GetSomeWeeklyHitsV1QueryHandler,
   AnalysisHitsV1QueryHandler,
@@ -70,7 +73,6 @@ const service: Provider[] = [
     provide: DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
     useClass: CalculateDailyHitsMetricsService,
   },
-  { provide: EXPECTED_HITS_SERVICE_DI_TOKEN, useClass: ExpectedHitsService },
   { provide: WEEKLY_VIEWS_SERVICE_DI_TOKEN, useClass: WeeklyHitsService },
   {
     provide: PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
@@ -91,7 +93,6 @@ const service: Provider[] = [
   ChannelHistoryAggregateService,
 ];
 const controllers = [
-  ExpectedHitsV1HttpController,
   GetDailyHitsV1HttpController,
   GetProbabilitySuccessHttpController,
   GetSomeWeeklyHitsV1HttpController,
@@ -105,10 +106,6 @@ const repositories: Provider[] = [
     useClass: VideoHistoryListAdapter,
   },
   { provide: VIDEO_COUNT_DAY_IGNITE_DI_TOKEN, useClass: VideoCountDayAdapter },
-  {
-    provide: HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN,
-    useClass: VideoChannelHistoryAdapter,
-  },
   { provide: WEEKLY_VIEWS_REPOSITORY_DI_TOKEN, useClass: WeeklyHitsRepository },
   {
     provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
@@ -130,11 +127,33 @@ const repositories: Provider[] = [
     provide: CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
     useClass: ChannelHistoryByChannelIdAdapter,
   },
+  {
+    provide: RELWORDS_DI_TOKEN.FIND_ONE,
+    useClass: RelatedWordsRepository,
+  },
+  {
+    provide: VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN,
+    useClass: VideoHistoryGetMultipleByIdV2Adapter,
+  },
+];
+const adapters: Provider[] = [
+  { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
 ];
 
 @Module({
-  imports: [CqrsModule, IgniteModule, WeeklyHitsEntityModule],
+  imports: [
+    CqrsModule,
+    IgniteModule,
+    WeeklyHitsEntityModule,
+    RelatedWordsModule,
+  ],
   controllers,
-  providers: [...commands, ...queries, ...repositories, ...service],
+  providers: [
+    ...commands,
+    ...queries,
+    ...repositories,
+    ...service,
+    ...adapters,
+  ],
 })
 export class HitsV1Module {}

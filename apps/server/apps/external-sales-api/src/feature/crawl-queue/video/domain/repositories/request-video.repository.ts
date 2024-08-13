@@ -38,4 +38,22 @@ export class RequestVideoRepository
       console.error(e);
     }
   }
+
+  async findOneByWebHookUrlAndMatchToken(
+    url: string,
+    token: string,
+  ): Promise<boolean> {
+    try {
+      const res: RequestVideoEntity[] = await this.repository
+        .createQueryBuilder(this.tableName)
+        .select(['webhook_url', 'token', 'update_date'])
+        .where({ webhookUrl: url })
+        .orderBy('update_date', 'ASC')
+        .limit(1)
+        .execute();
+      return res[0].token === token;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }

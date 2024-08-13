@@ -51,7 +51,6 @@
     "typeorm-run": "dotenv -e ./apps/server/development.env turbo typeorm-run --filter=server",
     "typeorm-generate": "dotenv -e ./apps/server/development.env turbo typeorm-generate --filter=server",
     "typeorm-revert": "dotenv -e ./apps/server/development.env turbo typeorm-revert --filter=server",
-
     "typeorm-create:ex-api": "dotenv -e ./apps/server/apps/external-sales-api/development.env -- turbo run typeorm-create:ex-api --filter=server",
     "typeorm-run:ex-api": "dotenv -e ./apps/server/apps/external-sales-api/development.env turbo typeorm-run:ex-api --filter=server",
     "typeorm-generate:ex-api": "dotenv -e ./apps/server/apps/external-sales-api/development.env turbo typeorm-generate:ex-api --filter=server",

@@ -57,7 +57,10 @@ export const zSortQuery = (enumElement: Array<string>) => {
 export const zPaginatedOffsetQuery = z
   .object({
     limit: z.string().describe('한 페이지에 표시할 데이터의 수').default('5'),
-    page: z.string().describe('현재 페이지 번호를 나타냅니다.').default('1'),
+    page: z
+      .string()
+      .optional()
+      .describe('현재 페이지 번호를 나타냅니다. optional'),
   })
   .describe('페이지네이션 쿼리 파라미터');
 
