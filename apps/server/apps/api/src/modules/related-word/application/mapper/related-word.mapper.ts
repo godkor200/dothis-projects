@@ -7,12 +7,11 @@ export class RelatedWordMapper {
     for (let i = 0; i < caches.length; i += 2) {
       const cache = caches[i];
       const score = caches[i + 1];
-      const [word, sortFigure, expectedViews] = cache.split(':');
+      const [word, sortFigure] = cache.split(':');
 
       result.push({
         word,
         sortFigure: Number(sortFigure),
-        expectedViews: Number(expectedViews),
       });
     }
 

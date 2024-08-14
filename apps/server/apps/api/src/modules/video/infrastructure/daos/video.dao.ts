@@ -60,23 +60,7 @@ export class GetRelatedLastVideoAndVideoHistory extends GetRankingRelatedWordsDt
     Object.assign(this, props);
   }
 }
-export class GetRelatedVideoChannelHistoryDao
-  extends ExpectedViewsV1Dto
-  implements Pick<IRelated, 'relatedCluster'>
-{
-  public readonly relatedCluster: string[];
-  constructor(props: ExpectedViewsV1Dto) {
-    super(props);
-    const propsClusterNumber = !Array.isArray(props.clusterNumber)
-      ? [props.clusterNumber]
-      : props.clusterNumber;
-    this.search = props.search;
-    this.related = props.related;
-    this.from = props.from;
-    this.to = props.to;
-    this.relatedCluster = propsClusterNumber;
-  }
-}
+
 export class GetAdsInfoResDao extends FindAdsInfoDto {
   public readonly relatedCluster: string[];
 
@@ -124,5 +108,5 @@ export class GetVideosMultiRelatedWordsCacheDao {
   }
 }
 export class GetVideoMultiKeywordCacheDao {
-  constructor(public search: string, public related: string) {}
+  constructor(public search: string, public related?: string) {}
 }

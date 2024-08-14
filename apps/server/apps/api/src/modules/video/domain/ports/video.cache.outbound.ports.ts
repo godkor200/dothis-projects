@@ -10,7 +10,7 @@ export type VideoCacheReturnType = {
   publishedDate: string;
   videoId: string;
   cluster: string;
-  channelId?: string;
+  channelId: string;
 };
 
 export interface VideoCacheOutboundPorts {
@@ -21,7 +21,7 @@ export type VideosMultiRelatedWordsCacheType = Record<
   VideoCacheReturnType[]
 >;
 
-export type VideoCacheAdapterRes = Result<VideoCacheRecord, VideoNotFoundError>;
+export type VideoCacheAdapterRes = Result<string[], VideoNotFoundError>;
 export type VideosMultiRelatedWordsCacheTypeResult = Result<
   VideosMultiRelatedWordsCacheType,
   TableNotFoundException | VideoNotFoundError

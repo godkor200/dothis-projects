@@ -43,10 +43,29 @@ export class DateUtil {
     return { adjustedTo, adjustedFrom };
   }
 
-  public static isWithinRange(date: string, from: string, to: string) {
+  /**
+   * 주어진 날짜가 일년 이내에 있는지 확인하는 헬퍼 함수
+   * @param date
+   * @param from
+   * @param to
+   */
+  public static isWithinOneYear(date: string, from: string, to: string) {
     return (
-      dayjs(date).isAfter(dayjs(to).subtract(1, 'year')) &&
+      dayjs(date).isAfter(dayjs(from).subtract(1, 'year')) &&
       dayjs(date).isBefore(dayjs(to).add(1, 'day'))
     );
+  }
+  /**
+   * 주어진 날짜가 기한 이내에 있는지 확인하는 헬퍼 함수
+   * @param date
+   * @param from
+   * @param to
+   */
+  public static isWithinRange(date: string, from: string, to: string) {
+    const dateToCheck = dayjs(date, 'YYYYMMDD').toDate();
+    const fromDate = dayjs(from, 'YYYYMMDD').toDate(); // 시작 날짜
+    const toDate = dayjs(to, 'YYYYMMDD').toDate();
+
+    return dateToCheck >= fromDate && dateToCheck <= toDate;
   }
 }

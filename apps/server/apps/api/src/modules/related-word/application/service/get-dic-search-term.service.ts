@@ -12,6 +12,7 @@ export class GetDicSearchTermCommandHandler {
   async execute() {
     this.logger.log('탐색어 업데이트 시작합니다.');
     const arr = await this.channelDataRepo.findAll();
+    console.log(arr);
     return arr
       .map((ev) => [...ev.tag.split(','), ...ev.keyword.split(',')])
       .flat()

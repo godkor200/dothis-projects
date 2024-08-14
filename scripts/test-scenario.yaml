@@ -1,17 +1,18 @@
 config:
-  target: 'http://dev-nginx'
+  target: 'http://dev-nginx:80'
   phases:
-    - duration: 10
-      arrivalRate: 1
+    - duration: 60  # 테스트 기간을 60초로 연장
+      arrivalRate: 5  # 매 초 5명의 가상 사용자 도착
   defaults:
     headers:
       accept: application/json
+  http:
+    timeout: 60  # 타임아웃 설정 (초)
 
 scenarios:
-  - flow:
+  - name: "Related Word Ranking Test"
+    flow:
       - get:
-          url: "/v1/hits/daily/24%2C%2033%2C%2022%2C%2023%2C%208?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
-      - get:
-          url: "/v1/hits/expectation/0%2C1%2C2%2C3%2C4?search=%EC%84%9C%EC%9A%B8&related=%EB%8C%80%EA%B5%AC&from=2024-04-01&to=2024-04-10"
-      - get:
-          url: "/v1/related-word/%EC%84%9C%EC%9A%B8/ranking"
+          url: "/v2/related-word/%EC%84%9C%EC%9A%B8/ranking"
+
+

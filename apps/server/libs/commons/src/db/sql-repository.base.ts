@@ -54,19 +54,28 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
     sort: string,
     order: 'ASC' | 'DESC',
   ): Promise<Paginated<E>> {
-    const [data, total] = await this.repository
-      .createQueryBuilder(this.tableName)
-      .where({ ...where })
-      .limit(Number(params.limit))
-      .offset(Number(params.limit) * Number(params.page))
-      .orderBy(sort, order)
-      .getManyAndCount();
-    return new Paginated({
-      count: total,
-      limit: Number(params.limit),
-      page: Number(params.page),
-      data,
-    });
+    try {
+      // params.page가 정의되지 않으면 1로 기본값 설정
+      const pageNumber = params.page ? Number(params.page) : 1;
+      const limitNumber = Number(params.limit);
+      const offsetNumber = (pageNumber - 1) * limitNumber;
+
+      const [data, count] = await this.repository
+        .createQueryBuilder(this.tableName)
+        .where({ ...where })
+        .limit(limitNumber)
+        .offset(offsetNumber)
+        .getManyAndCount();
+
+      return new Paginated({
+        count,
+        limit: limitNumber,
+        page: pageNumber,
+        data,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async findOneById(id: string): Promise<E> {

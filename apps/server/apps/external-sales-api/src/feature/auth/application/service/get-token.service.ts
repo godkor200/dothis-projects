@@ -22,7 +22,7 @@ export class GetTokenService implements GetTokenInboundPort {
         return Err(new UnauthorizedErr());
       }
       return Ok({
-        accessToken: this.jwtService.sign({ secret: key }, { expiresIn: '1y' }),
+        accessToken: this.jwtService.sign({ secret: key }, { expiresIn: '5y' }),
       });
     } catch (error) {
       return Err(error);

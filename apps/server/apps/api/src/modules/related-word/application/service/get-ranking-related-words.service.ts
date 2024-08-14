@@ -9,7 +9,10 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { IGetRelatedLastVideoHistory } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import { GetRelatedLastVideoAndVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import {
+  GetRelatedLastVideoAndVideoHistory,
+  GetVideosMultiRelatedWordsCacheDao,
+} from '@Apps/modules/video/infrastructure/daos/video.dao';
 import {
   CacheDoesNotFoundException,
   ComplexQueryException,
@@ -21,6 +24,11 @@ import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/err
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/os/video-history.os.adapter';
+import { GetVideoHistoryMultipleByIdAndRelatedWordsDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
+import { VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VideosMultiRelatedWordsCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
@@ -45,6 +53,11 @@ export class GetRankingRelatedWordsService
 
     @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
     private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
+
+    @Inject(VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN)
+    private readonly videoCache: VideosMultiRelatedWordsCacheOutboundPorts,
+
+    private readonly videoHistoryRepository: VideoHistoryOsAdapter,
   ) {}
 
   /**
@@ -71,31 +84,44 @@ export class GetRankingRelatedWordsService
           .map((item) => item.trim())
           .slice(0, 5);
 
-        const dao = new GetRelatedLastVideoAndVideoHistory({
-          search: query.search,
-          relatedWords,
+        const dao = new GetVideosMultiRelatedWordsCacheDao({
+          words: relatedWords,
           relatedCluster,
         });
+        console.time('videoCache');
+        const videoCache = await this.videoCache.execute(dao);
+        console.timeEnd('videoCache');
 
-        const data = await this.getRelatedVideoHistory.execute(dao);
+        if (videoCache.isOk()) {
+          const videoUnwrapData = videoCache.unwrap();
 
-        if (data.isOk()) {
-          const unwrapData = data.unwrap();
-
-          const res = RankingRelatedWordAggregateService.calculateWordStats(
-            relatedWords,
-            unwrapData,
+          const videoHistoryDao =
+            new GetVideoHistoryMultipleByIdAndRelatedWordsDao({
+              videoIds: videoUnwrapData,
+            });
+          console.time('histories');
+          const histories = await this.videoHistoryRepository.execute(
+            videoHistoryDao,
           );
-          return Ok({
-            keyword: query.search,
-            ranking: res.map((e) => ({
-              word: e.word,
-              sortFigure: e.sortFigures,
-              expectedViews: e.expectedViews,
-            })),
-          });
+          console.timeEnd('histories');
+
+          if (histories.isOk()) {
+            const unwrapData = histories.unwrap();
+
+            const res = RankingRelatedWordAggregateService.calculateWordStatsOs(
+              videoUnwrapData,
+              unwrapData.items,
+            );
+            return Ok({
+              keyword: query.search,
+              ranking: res.map((e) => ({
+                word: e.word,
+                sortFigure: e.sortFigures,
+              })),
+            });
+          }
+          return Err(histories.unwrapErr());
         }
-        return Err(data.unwrapErr());
       }
       return Err(relWordsEntity.unwrapErr());
     } catch (e) {

@@ -42,7 +42,7 @@ const repositories: Provider[] = [
   controllers: [...httpControllers],
   imports: [
     CqrsModule,
-    KafkaModule,
+    // KafkaModule,
     PassportModule,
     UserEntityModule,
     JwtModule.register({

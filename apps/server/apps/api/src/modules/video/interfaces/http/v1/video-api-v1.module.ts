@@ -5,7 +5,6 @@ import {
   VIDEO_ADS_INFO_IGNITE_DI_TOKEN,
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
-  VIDEO_COUNT_GET_SERVICE_DI_TOKEN,
   VIDEO_ENTIRE_CLUSTER_IGNITE_DI_TOKEN,
   VIDEO_ENTIRE_COUNT_IGNITE_DI_TOKEN,
   VIDEO_GET_ACCUMULATE_IGNITE_DI_TOKEN,
@@ -13,7 +12,6 @@ import {
   VIDEO_GET_ADS_TOP_HITS_IGNITE_DI_TOKEN,
   VIDEO_GET_ADS_TOP_HITS_SERVICE_DI_TOKEN,
   VIDEO_GET_TODAY_ISSUE_SERVICE_DI_TOKEN,
-  VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
   VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN,
   VIDEO_MULTI_KEYWORD_WORDS_ADAPTER_DI_TOKEN,
@@ -31,11 +29,8 @@ import {
 } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/application/service/channel-history.service.module';
 import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
-import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
 import { FindIndividualVideoInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
-import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http/v1/find-video-paging/find-video-page.http.controller';
 import { FindIndividualVideoInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-individual-video-info/find-individual-video-info.http.controller';
-import { GetVideoDataPageService } from '@Apps/modules/video/application/service/get-video-data.paginated.service';
 import { FindIndividualVideoInfoService } from '@Apps/modules/video/application/service/find-individual-video-info.service';
 import { ChannelHistoryBaseAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.base.adapter';
 import {
@@ -48,7 +43,6 @@ import {
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
 import { VideoEntireCountAdapter } from '@Apps/modules/video/infrastructure/adapters/video.entire-count.adapter';
 import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
-import { VideoChannelHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-history.adapter';
 import { VideoPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video.paginated.adapter';
 import { VideoListAdapterEntireCluster } from '@Apps/modules/video/infrastructure/adapters/video.video-list.adapter';
 import { FindAccumulateVideosV1HttpController } from '@Apps/modules/video/interfaces/http/v1/find-accumulate-videos/find-accumulate-videos.http.controller';
@@ -90,7 +84,6 @@ import { GetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructu
 import { SetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.set-today-issue.cache.adapter';
 
 const controllers = [
-  FindVideoPageHttpController,
   FindIndividualVideoInfoHttpController,
   FindAccumulateVideosV1HttpController,
   FindAdsInfoHttpController,
@@ -102,8 +95,6 @@ const controllers = [
 const commandHandlers: Provider[] = [];
 
 const queryHandlers: Provider[] = [
-  GetVideoDataPageService,
-  FindVideoPageQueryHandler,
   FindAccumulateVideosV1QueryHandler,
   FindIndividualVideoInfoQueryHandler,
   FindAdsInfoQueryHandler,
@@ -113,10 +104,6 @@ const queryHandlers: Provider[] = [
 ];
 const service: Provider[] = [
   { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
-  {
-    provide: VIDEO_GET_VIDEO_DATA_PAGE_SERVICE_DI_TOKEN,
-    useClass: GetVideoDataPageService,
-  },
   {
     provide: VIDEO_INDIVIDUAL_GET_VIDEO_SERVICE_DI_TOKEN,
     useClass: FindIndividualVideoInfoService,
@@ -194,10 +181,6 @@ const adapters: Provider[] = [
   {
     provide: VIDEO_HISTORY_IGNITE_DI_TOKEN,
     useClass: VideoHistorySingleDuoAdapter,
-  },
-  {
-    provide: DATE_SPECIFIC_HISTORY_REPOSITORY_DI_TOKEN,
-    useClass: VideoChannelHistoryAdapter,
   },
   {
     provide: VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,

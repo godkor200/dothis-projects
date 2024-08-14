@@ -53,7 +53,6 @@ export const zWeeklyKeywordSchema = z.object({
 
 export const zCreateWeeklyKeywordsListSourceSchema = z
   .object({
-    id: z.number().int().positive().describe('조회수의 고유 식별자'),
     ranking: z.number().int().positive().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),

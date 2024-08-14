@@ -44,7 +44,7 @@ export class ChannelAndHistoryJoinAdapter
                                      ON cd.channel_id = ch.channel_id
                                      WHERE cd.channel_id = '${channelId}'
                                      AND ch.DAY = (SELECT MAX(DAY) FROM ${joinTableName})`;
-
+      console.log(queries);
       const query = this.igniteService.createDistributedJoinQuery(queries);
       const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);

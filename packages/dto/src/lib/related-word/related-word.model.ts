@@ -19,13 +19,15 @@ export const zRelWords = z.object({
   }),
 });
 export const zRanking = z.object({
-  expectedViews: z.number().describe('기대조회수'),
   sortFigure: z.number().describe('연관어 정렬 수치'),
   word: z.string().describe('연관어'),
 });
 export const zRankingArray = z.array(zRanking);
+export const zObjectExpectedViews = z.object({ expectedViews: z.number() });
+export const zRankingArrayOmitWord = zRanking
+  .omit({ word: true })
+  .merge(zObjectExpectedViews);
 
-export const zRankingArrayOmitWord = zRanking.omit({ word: true });
 export const zRankRel = z.object({
   data: z.object({
     keyword: z.string(),

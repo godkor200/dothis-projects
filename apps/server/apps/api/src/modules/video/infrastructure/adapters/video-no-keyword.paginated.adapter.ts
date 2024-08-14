@@ -62,7 +62,7 @@ export class VideoNoKeywordPaginatedAdapter
       limit,
       sort = 'video_views',
       page,
-      order,
+      order = 'ASC',
     } = dao;
     const queryString = this.queryString(videoIds, from, to);
 
@@ -72,13 +72,14 @@ export class VideoNoKeywordPaginatedAdapter
       );
 
       const pageSize = Number(limit);
-      const currentPage = Number(page);
-      const query = this.igniteService.createDistributedJoinQuery(
-        `(${queryString}) ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${
-          (currentPage - 1) * pageSize
-        };`,
-      );
+      const offset = page ? `OFFSET ${(Number(page) - 1) * pageSize}` : '';
 
+      const query = this.igniteService.createDistributedJoinQuery(
+        `(${queryString}) ORDER BY ${sort} ${order} LIMIT ${pageSize} ${offset};`,
+      );
+      console.log(
+        `(${queryString}) ORDER BY ${sort} ${order} LIMIT ${pageSize} ${offset};`,
+      );
       const cache = await this.igniteService.getClient().getCache(tableName);
       const result = await cache.query(query);
       const resArr = await result.getAll();

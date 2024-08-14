@@ -26,9 +26,8 @@ export class UpdateAutoCompleteWordsCommandHandler
     try {
       if (searchTerm.isOk()) {
         const searchTermUnwrapped = searchTerm.unwrap();
-        const res = await this.koreanAutocompleteCache.addWords(
-          searchTermUnwrapped,
-        );
+        const res =
+          await this.koreanAutocompleteCache.addWords(searchTermUnwrapped);
         console.log(`Search result: ${res}`);
         return true;
       }

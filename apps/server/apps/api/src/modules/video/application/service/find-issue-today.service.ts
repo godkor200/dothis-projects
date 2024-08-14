@@ -16,6 +16,8 @@ import { IVideoHistoryGetTopViewsByIdsOutboundPort } from '@Apps/modules/video-h
 import { SetVideoTodayIssueCacheOutboundPort } from '@Apps/modules/related-word/domain/ports/set-video-today-issue.cache.outbound.port';
 import { GetVideoTodayIssueCacheOutboundPort } from '@Apps/modules/related-word/domain/ports/get-video-today-issue.cache.outbound.port';
 import { TodayIssueMapper } from '@Apps/modules/video/application/mapper/today-issue.mapper';
+import { TimeUnit } from '@Apps/modules/video/infrastructure/adapters/cache/video.muti-keyword.cache.adapter';
+import { VideoCacheReturnType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 
 /**
  * fix: 키워드 5개로 고치기
@@ -38,6 +40,34 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
     @Inject(RedisCacheAdapterTokens.REDIS_CLIENT_GET_TODAY_ISSUE_DI_TOKEN)
     private readonly getVideoTodayIssueCacheAdapter: GetVideoTodayIssueCacheOutboundPort,
   ) {}
+  private filterDuplicateVideos(
+    videoData: Record<string, VideoCacheReturnType[]>,
+  ): Record<string, VideoCacheReturnType[]> {
+    // 중복 확인을 위한 Set
+    const uniqueVideoIds = new Set<string>();
+
+    // 중복이 제거된 결과를 저장할 객체
+    const filteredResult: Record<string, VideoCacheReturnType[]> = {};
+
+    // 각 키에 대해 반복
+    for (const key in videoData) {
+      const videos = videoData[key];
+      const uniqueVideos: VideoCacheReturnType[] = [];
+
+      // 중복 제거
+      for (const video of videos) {
+        if (!uniqueVideoIds.has(video.videoId)) {
+          uniqueVideoIds.add(video.videoId);
+          uniqueVideos.push(video);
+        }
+      }
+
+      // 중복이 제거된 비디오 배열을 결과 객체에 저장
+      filteredResult[key] = uniqueVideos;
+    }
+
+    return filteredResult;
+  }
 
   async execute(): Promise<TIssueTodayRes> {
     try {
@@ -50,13 +80,7 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
         const topThreeUnwrap = topThree.unwrap();
         const videoMultiKeywordCacheRes: GetVideoMultiKeywordCacheDao[] =
           topThreeUnwrap.map((item) => {
-            const firstTopAssociatedWord = item.topAssociatedWord
-              .split(',')[0]
-              .trim();
-            return new GetVideoMultiKeywordCacheDao(
-              item.recommendedKeyword,
-              firstTopAssociatedWord,
-            );
+            return new GetVideoMultiKeywordCacheDao(item.recommendedKeyword);
           });
 
         const cache = await this.getVideoTodayIssueCacheAdapter.execute(
@@ -67,29 +91,32 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
           return Ok(cache.unwrap());
         }
 
-        const VideoMultiKeywordCacheRes =
-          await this.videoMultiKeywordCache.execute(videoMultiKeywordCacheRes);
+        const videoCacheRes = await this.videoMultiKeywordCache.execute(
+          videoMultiKeywordCacheRes,
+          TimeUnit.WEEK,
+          1,
+        );
 
-        if (VideoMultiKeywordCacheRes.isOk()) {
-          const videoMultiKeywordCacheResUnwrap =
-            VideoMultiKeywordCacheRes.unwrap();
+        if (videoCacheRes.isOk()) {
+          const videoMultiKeywordCacheResUnwrap = videoCacheRes.unwrap();
 
           const res = await this.videoHistoryGetTopViewsByIdsAdapter.execute({
-            videos: videoMultiKeywordCacheResUnwrap,
+            videos: this.filterDuplicateVideos(videoMultiKeywordCacheResUnwrap),
           });
+
           if (res.isOk()) {
             const videoHistoryGetTopViewsUnwrap = res.unwrap();
-
             const result = TodayIssueMapper.mergeResults(
               videoMultiKeywordCacheRes,
               videoHistoryGetTopViewsUnwrap,
             );
 
             await this.setVideoTodayIssueCacheAdapter.execute(result);
-
             return Ok(result);
           }
+          return Err(res.unwrapErr());
         }
+        return Err(videoCacheRes.unwrapErr());
       }
       return Err(topThree.unwrapErr());
     } catch (e) {

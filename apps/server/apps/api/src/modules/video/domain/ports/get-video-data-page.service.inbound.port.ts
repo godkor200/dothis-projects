@@ -2,7 +2,7 @@ import {
   GetVideoPaginatedPageDto,
   GetVideoPaginatedPageSortDto,
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
-import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
+import { TGetVideoPage } from '@Apps/modules/video/application/queries/v2/find-video-page.query-handler';
 
 export interface GetVideoDataPageServiceInboundPort {
   execute(props: GetVideoPaginatedPageDto): Promise<TGetVideoPage>;
