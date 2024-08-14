@@ -68,6 +68,8 @@ const Page = () => {
 
   const isSignedIn = useIsSignedIn();
 
+  const isEnableRouterScroll = isSignedIn;
+
   const { setIsOpenSignUpModal } = useAuthActions();
 
   const router = useRouter();
@@ -347,6 +349,7 @@ const Page = () => {
                               router.push(`/keyword/${item.keyword}`);
                             }
                           }}
+                          scroll={isEnableRouterScroll}
                         >
                           <DesignButton theme="outlined" size="S">
                             자세히
@@ -362,6 +365,7 @@ const Page = () => {
                     <Link
                       href={`/login?previous_url=${pathName}`}
                       onClick={(event) => handleFetchNextPage(event)}
+                      scroll={isEnableRouterScroll}
                     >
                       <DesignButton theme="outlined" size="L">
                         더보기
