@@ -2,28 +2,17 @@ import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ErrorBoundary from '@/components/common/Error/ErrorBoundary';
+import SystemError from '@/components/common/Error/SystemError';
 import Footer from '@/components/common/Layout/Footer';
 import TopBannerMediaList from '@/components/MainContents/MediaArticles/TopBannerMediaList';
 
 import AdsBanner from './AdsBanner';
-import App from './ErrorTest';
 import MainSearchbar from './MainSearchbar';
 import MediaBanner from './MediaBanner';
 import WeeklyKeyword from './WeeklyKeyword';
 
 const Page = () => {
-  const mock_weeklyKeywordRank = [
-    { label: '아이돌', lastWeek: 4 },
-    { label: '먹방', lastWeek: 8 },
-    { label: '애니메이션', lastWeek: 2 },
-    { label: '영화', lastWeek: 3 },
-    { label: '게임', lastWeek: 5 },
-  ];
-
-  const randomMediaCategoryList = Array.from({ length: 3 }, () =>
-    Math.random() < 0.5 ? 'news' : 'youtube',
-  );
-
   return (
     <>
       <div className="px-[66px]">
@@ -49,17 +38,22 @@ const Page = () => {
           <div className="mb-[52px] flex">
             <div className="expandSideBar:mr-[100px] mr-[50px] flex-grow">
               <p className="text-grey700 mb-[30px] text-[14px] font-bold">
-                오늘의 이슈{' '}
+                금주의 이슈{' '}
               </p>
-              <MediaBanner randomOptios={randomMediaCategoryList} />
+              <ErrorBoundary fallback={<SystemError />}>
+                <MediaBanner />
+              </ErrorBoundary>
             </div>
 
             <div className="ml-auto min-w-[300px] flex-grow px-[12px]">
-              <p className="text-grey700 mb-[30px] text-[14px] font-bold">
-                이번 주 키워드
-              </p>
-
-              <WeeklyKeyword />
+              <Link href={'/rank'}>
+                <p className="text-grey700 mb-[30px] text-[14px] font-bold">
+                  금주의 이슈 키워드 {'['}더 보기{']'}
+                </p>
+              </Link>
+              <ErrorBoundary fallback={<SystemError />}>
+                <WeeklyKeyword />
+              </ErrorBoundary>
               {/* 
             <ul className="flex flex-col gap-[15px]">
               {mock_weeklyKeywordRank.map((item, i) => (

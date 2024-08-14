@@ -7,6 +7,9 @@ import { useSearchParams } from 'next/navigation';
 
 import type { SVGType } from '@/components/common/SvgComp';
 import SvgComp from '@/components/common/SvgComp';
+import usePathNameList from '@/hooks/usePathNameList';
+import useQueryString from '@/hooks/useQueryString';
+import { useIsRouterModalOpen } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
 import * as Style from './styled';
@@ -56,43 +59,134 @@ const DashboardList = ({
 
   const searchParams = useSearchParams();
 
+  const currentPath = `/${pathName?.split('/')[1]}`;
+
+  const { createUrlWithQueryString } = useQueryString();
+
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
+    '/membership',
+    '/login',
+    '/rank',
+  ];
+
+  const isInterceptingRoute = (targetLink: Route) =>
+    INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
+
+  const handleInterCeptingRoute = (targetLink: Route) => {
+    if (isInterceptingRoute(targetLink)) {
+      return createUrlWithQueryString({
+        route: targetLink,
+        name: 'previous_url',
+        value: currentPath,
+      });
+    }
+    return targetLink;
+  };
+
+  const isRouterModalOpen = useIsRouterModalOpen();
+
+  const isCurrentIntercepting = isRouterModalOpen;
+
   return (
     <ul className="pl-[18px]">
       <p className="mb-[18px] text-[14px] font-bold">{title}</p>
       <div className="flex flex-col gap-[14px]">
-        {menuList.map((item) => (
-          <Link href={item.link} key={item.title}>
-            <Style.SideItemContainer
-              $isInActive={
-                item.active.includes(`/${pathName?.split('/')[1]}` as Route) ||
-                item.active.includes(searchParams?.get('previous_url') as Route)
-              }
-              key={item.title}
-            >
-              <SvgComp icon={item.icon} size={24} />
-              <p>{item.title}</p>
-            </Style.SideItemContainer>
-          </Link>
-        ))}
+        {menuList.map((item) => {
+          return (
+            <Link href={handleInterCeptingRoute(item.link)} key={item.title}>
+              <Style.SideItemContainer
+                $isInActive={
+                  isInterceptingRoute(currentPath as Route)
+                    ? isCurrentIntercepting
+                      ? item.active.includes(
+                          searchParams
+                            ?.get('previous_url')
+                            ?.split('/')
+                            .filter(Boolean).length
+                            ? (`/${
+                                searchParams
+                                  ?.get('previous_url')
+                                  ?.split('/')
+                                  .filter(Boolean)[0]
+                              }` as Route)
+                            : `/`,
+                        )
+                      : item.active.includes(
+                          `/${pathName?.split('/')[1]}` as Route,
+                        )
+                    : item.active.includes(
+                        `/${pathName?.split('/')[1]}` as Route,
+                      )
+                }
+                key={item.title}
+              >
+                <SvgComp icon={item.icon} size={24} />
+                <p>{item.title}</p>
+              </Style.SideItemContainer>
+            </Link>
+          );
+        })}
       </div>
     </ul>
   );
 };
 
 const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
-  const pathName = usePathname();
-
   const searchParams = useSearchParams();
 
+  const pathNameList = usePathNameList();
+
+  const currentPath = pathNameList?.length ? `/${pathNameList[0]}` : '/';
+
+  const { createUrlWithQueryString } = useQueryString();
+
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
+    '/membership',
+    '/login',
+    '/rank',
+  ];
+
+  const isInterceptingRoute = (targetLink: Route) =>
+    INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
+
+  const handleInterCeptingRoute = (targetLink: Route) => {
+    if (isInterceptingRoute(targetLink)) {
+      return createUrlWithQueryString({
+        route: targetLink,
+        name: 'previous_url',
+        value: currentPath,
+      });
+    }
+    return targetLink;
+  };
+
+  const isRouterModalOpen = useIsRouterModalOpen();
+
+  const isCurrentIntercepting = isRouterModalOpen;
   return (
     <ul className="px-[12px] pt-[39px]">
       <div className="flex flex-col gap-[14px]">
         {menuList.map((item) => (
-          <Link href={item.link} key={item.title}>
+          <Link href={handleInterCeptingRoute(item.link)} key={item.title}>
             <Style.IconItemContainer
               $isInActive={
-                item.active.includes(`/${pathName?.split('/')[1]}` as Route) ||
-                item.active.includes(searchParams?.get('previous_url') as Route)
+                isInterceptingRoute(currentPath as Route)
+                  ? isCurrentIntercepting
+                    ? item.active.includes(
+                        searchParams
+                          ?.get('previous_url')
+                          ?.split('/')
+                          .filter(Boolean).length
+                          ? (`/${
+                              searchParams
+                                ?.get('previous_url')
+                                ?.split('/')
+                                .filter(Boolean)[0]
+                            }` as Route)
+                          : `/`,
+                      )
+                    : item.active.includes(currentPath as Route)
+                  : item.active.includes(currentPath as Route)
               }
               key={item.title}
             >
@@ -114,10 +208,10 @@ interface SideMenus {
 
 const SIDE_MENUS: SideMenus[] = [
   {
-    title: '콘텐츠 소재',
+    title: '키워드 분석',
     icon: 'SideMain',
     link: '/',
-    active: ['/', '/keyword'],
+    active: ['/', '/keyword' as Route, '%2F' as Route],
   },
   {
     title: '내 채널 분석',
@@ -126,10 +220,10 @@ const SIDE_MENUS: SideMenus[] = [
     active: ['/channel'],
   },
   {
-    title: '인기 키워드 분석',
+    title: '주간 트렌드',
     icon: 'SideTrend',
-    link: '/trendingsearches',
-    active: ['/trendingsearches'],
+    link: '/rank',
+    active: ['/rank'],
   },
 ];
 

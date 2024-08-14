@@ -82,12 +82,11 @@ export function generateMetadata(
   // const previousImages = (await parent).openGraph?.images || [];
   if (keyword) {
     return {
-      // title: '두디스 - 데이터 기반 영상 기획 도구',
-      title: `${keyword} 관련 콘텐츠 분석 | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+      title: `${keyword} 관련 콘텐츠 분석 | 영상 트렌드 분석 솔루션 두디스`,
       description: `${keyword}에 대한 분석 결과입니다. ${keyword} 관련 콘텐츠의 실시간 시청자 반응을 파악하고 알맞는 콘텐츠를 기획하세요.`,
       keywords: `${keyword} 두디스, 트렌드, 키워드, 콘텐츠 분석, 유튜브 기획, 유튜브 분석`,
       openGraph: {
-        title: `${keyword} 관련 콘텐츠 분석 | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+        title: `${keyword} 관련 콘텐츠 분석 | 영상 트렌드 분석 솔루션 두디스`,
         description: `${keyword}에 대한 분석 결과입니다. ${keyword} 관련 콘텐츠의 실시간 시청자 반응을 파악하고 알맞는 콘텐츠를 기획하세요.`,
       },
     };

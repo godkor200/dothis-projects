@@ -157,23 +157,20 @@ const SearchBar = () => {
           {openInput && (
             <>
               <div className="inline-flex flex-col gap-[12px] py-10">
-                {data
-                  ?.filter((item) => item.endsWith('*'))
-                  .slice(0, 5)
-                  .map((item) => (
-                    <span
-                      className="text-grey700 cursor-pointer text-[18px]"
-                      onClick={() => {
-                        if (!checkIsSignedIn()) {
-                          return;
-                        }
-                        createSearchwordMutate(item.replace('*', ''));
+                {data?.slice(0, 5).map((item) => (
+                  <span
+                    className="text-grey700 cursor-pointer text-[18px]"
+                    onClick={() => {
+                      if (!checkIsSignedIn()) {
                         return;
-                      }}
-                    >
-                      {item.replace('*', '')}
-                    </span>
-                  ))}
+                      }
+                      createSearchwordMutate(item.replace('*', ''));
+                      return;
+                    }}
+                  >
+                    {item.replace('*', '')}
+                  </span>
+                ))}
               </div>
               <p className="text-grey500 text-[18px]">이런 단어를 찾으세요?</p>
               <div className="border-grey300 mt-[20px] flex flex-wrap gap-[10px] border-b-2 pb-[30px]  ">

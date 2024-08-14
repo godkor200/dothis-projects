@@ -81,10 +81,16 @@ apiInstance.interceptors.response.use(
     }
 
     const { data, config: originalRequest } = error.response;
+
     const statusCode = data.statusCode;
     const errorMessage = data.message;
 
-    if (isAccessTokenExpired(statusCode)) {
+    const requestUrl: string = originalRequest.url;
+
+    if (
+      isAccessTokenExpired(statusCode) &&
+      !requestUrl.includes('verify-token')
+    ) {
       await apiServer(1).auth.getVerifyToken();
 
       // 여기에 있는 getVerifyToke header data로 이쪽에서 cookie갱신을 하려했지만, ts-rest 형식이 headers는 추가가 안되는거 같다..

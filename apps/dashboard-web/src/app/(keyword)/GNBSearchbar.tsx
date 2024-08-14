@@ -99,15 +99,16 @@ const GNBSearchbar = () => {
     // }
 
     if (event.key === 'Enter') {
-      if (
-        data &&
-        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
-          currentInput
-      ) {
-        // 엔터 키가 눌렸을 때 실행할 동작
+      // if (
+      //   data &&
+      //   data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+      //     currentInput
+      // ) {
+      //   // 엔터 키가 눌렸을 때 실행할 동작
+      //   // router.push(`/keyword/${currentInput}`);
+      // }
 
-        router.push(`/keyword/${currentInput}`);
-      }
+      router.push(`/keyword/${currentInput}`);
     }
   };
 
@@ -157,43 +158,40 @@ const GNBSearchbar = () => {
         />
       </div>
       {isFocused && !!data?.length && (
-        <div className=" border-grey400 bg-grey00 absolute mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border   pt-5">
-          {data
-            ?.filter((item) => item.endsWith('*'))
-            .slice(0, 5)
-            .map((item) => (
-              <div className="flex cursor-pointer px-[30px]">
-                <SvgComp
-                  icon="BorderSearchIcon"
-                  size={24}
-                  className="mr-[16px]"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   e.stopPropagation();
+        <div className=" border-grey400 bg-grey00 absolute z-50 mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px]   border pt-5 ">
+          {data.slice(0, 5).map((item) => (
+            <div className="flex cursor-pointer px-[30px]" key={item}>
+              <SvgComp
+                icon="BorderSearchIcon"
+                size={24}
+                className="mr-[16px]"
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   e.stopPropagation();
 
-                  //   console.log('check');
-                  //   router.push(`/keyword/${item.replace('*', '')}`);
-                  // }}
-                />
-                <span
-                  className="text-grey700 text-[18px]"
-                  key={item}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    // if (!checkIsSignedIn()) {
-                    //   return;
-                    // }
-                    router.push(`/keyword/${item.replace('*', '')}`);
-                    return;
-                  }}
-                >
-                  {item.replace('*', '')}
-                </span>
-              </div>
-            ))}
+                //   console.log('check');
+                //   router.push(`/keyword/${item.replace('*', '')}`);
+                // }}
+              />
+              <span
+                className="text-grey700 text-[18px]"
+                key={item}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  // if (!checkIsSignedIn()) {
+                  //   return;
+                  // }
+                  router.push(`/keyword/${item.replace('*', '')}`);
+                  return;
+                }}
+              >
+                {item.replace('*', '')}
+              </span>
+            </div>
+          ))}
 
           <div
-            className="border-grey400 border-t-1 text-grey500 flex px-[30px] py-[15px]"
+            className="border-grey400 border-t-1 text-grey500 flex px-[30px] py-[15px] "
             onMouseDown={(e) => e.preventDefault()}
           >
             <p

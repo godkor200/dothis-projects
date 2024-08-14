@@ -36,8 +36,8 @@ const useGetNaverSearchRatio = (
   return useQuery(
     NAVER_SEARCH_RATIO_KEY.list([
       {
-        keyword,
-        relword,
+        baseKeyword: keyword,
+        relatedKeyword: relword,
         startDate,
         endDate,
       },

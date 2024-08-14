@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { dataObject } from '../common.model';
 
-export const zChannelData = z.object({
+export const zChannelSchema = z.object({
   channelId: z.string().max(48).default(''),
   channelIdPart: z.string().max(1),
   channelName: z.string().max(255).nullable(),
@@ -17,9 +17,9 @@ export const zChannelData = z.object({
   userId: z.number().int().nullable(),
 });
 
-export type ChannelModel = z.TypeOf<typeof zChannelData>;
+export type ChannelModel = z.TypeOf<typeof zChannelSchema>;
 
-export const zChannelTagsKeywordsData = zChannelData.pick({
+export const zChannelTagsKeywordsData = zChannelSchema.pick({
   channelKeywords: true,
   channelTags: true,
 });

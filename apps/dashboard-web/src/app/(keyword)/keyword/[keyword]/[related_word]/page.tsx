@@ -17,7 +17,12 @@ const Page = ({
 
   return (
     <>
-      <SummaryTab keyword={keyword} relatedWord={relatedWord} />
+      <SummaryTab
+        params={{
+          keyword: keyword,
+          related_word: relatedWord,
+        }}
+      />
     </>
   );
 };

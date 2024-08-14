@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 
 import useGetWeeklyTrendKeyword from '@/hooks/react-query/query/useGetWeeklyTrendKeyword';
@@ -9,31 +10,28 @@ const WeeklyKeyword = () => {
   const { data } = useGetWeeklyTrendKeyword();
 
   return (
-    <ul className="flex flex-col gap-[15px]">
+    <ul className="flex flex-col gap-[15px] font-[500]">
       {data?.map((item, i) => (
         <Link
-          href={`/keyword/${item.recommendedKeyword}/${
-            item.topAssociatedWord ? item.topAssociatedWord.split(',')[0] : ''
-          }`}
+          href={`/keyword/${item.recommendedKeyword}` as Route}
           key={item.recommendedKeyword}
         >
           <li key={i} className="gap-30 flex items-center p-[10px]">
             <p className="text-grey500">{i + 1}</p>
-            <p className="flex-grow">
-              {item.recommendedKeyword} <span className="text-grey500">-</span>{' '}
-              {item.topAssociatedWord
-                ? item.topAssociatedWord.split(',')[0]
-                : ''}
+            <p className="text-grey700 flex-grow text-[16px]">
+              {item.recommendedKeyword}{' '}
             </p>
-            <div className="h-[20px] w-[20px]">
+            <div className="ml-auto h-[20px] w-[20px]">
               {Math.sign(item.changes) === 0 ? (
                 <div className="text-center">
                   <span className="">-</span>
                 </div>
-              ) : Math.sign(item.changes) === -1 ? (
-                <div className="flex items-center  justify-center">
-                  <span className="text-[12px] text-[#F00]">
-                    {Math.abs(item.changes)}
+              ) : Math.sign(item.changes) === 1 ? (
+                <div className="flex items-center  justify-end">
+                  <span className="whitespace-nowrap text-[12px] text-[#F00]">
+                    {Math.abs(item.changes) > 9_999
+                      ? 'NEW'
+                      : Math.abs(item.changes).toLocaleString('ko-kr')}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-b-[8px]  border-x-transparent border-b-[#F00]"></span>
                 </div>
@@ -41,7 +39,7 @@ const WeeklyKeyword = () => {
                 <div className="flex items-center justify-center">
                   <span className="text-[12px] text-[#3183FF]">
                     {' '}
-                    {Math.abs(item.changes)}
+                    {Math.abs(item.changes).toLocaleString('ko-kr')}
                   </span>
                   <span className="h-0 w-0 border-x-[4px] border-t-[8px]  border-x-transparent border-t-[#3183FF]"></span>
                 </div>

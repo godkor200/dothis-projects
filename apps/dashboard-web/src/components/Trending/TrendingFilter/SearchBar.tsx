@@ -97,23 +97,20 @@ const SearchBar = ({ setKeywordList }: Props) => {
           {openInput && (
             <>
               <div className="inline-flex flex-col gap-[12px] py-10">
-                {data
-                  ?.filter((item) => item.endsWith('*'))
-                  .slice(0, 5)
-                  .map((item) => (
-                    <span
-                      className="text-grey700 cursor-pointer text-[18px]"
-                      onClick={() => {
-                        if (!checkIsSignedIn()) {
-                          return;
-                        }
-                        setKeywordList(item);
+                {data?.slice(0, 5).map((item) => (
+                  <span
+                    className="text-grey700 cursor-pointer text-[18px]"
+                    onClick={() => {
+                      if (!checkIsSignedIn()) {
                         return;
-                      }}
-                    >
-                      {item.replace('*', '')}
-                    </span>
-                  ))}
+                      }
+                      setKeywordList(item);
+                      return;
+                    }}
+                  >
+                    {item.replace('*', '')}
+                  </span>
+                ))}
               </div>
             </>
           )}

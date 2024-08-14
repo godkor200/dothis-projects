@@ -11,19 +11,25 @@ import {
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
 
-const D3Axis = ({ keyword }: { keyword: string }) => {
+const D3Axis = ({
+  keyword,
+  relatedKeyword,
+}: {
+  keyword: string;
+  relatedKeyword: string | null;
+}) => {
   const selectRef = useRef(null);
 
-  const datad3 = useDailyViewV2({ keyword: keyword, relword: keyword });
+  const datad3 = useDailyViewV2({ keyword: keyword, relword: relatedKeyword });
 
   const data2d3 = useSearchRatioFormatterD3({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   const data3d3 = useUploadVideoCountFormatterD3({
     keyword: keyword,
-    relword: null,
+    relword: relatedKeyword,
   });
 
   // const data3d3 = useDailyVideoCount({ keyword: keyword, relword: keyword });
@@ -72,9 +78,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
   // Reformat the data: we need an array of arrays of {x, y} tuples
   const dataReady = [
-    { name: '일일조회수', values: datad3, color: '#F0ABFC' },
+    { name: '일일조회-수', values: datad3, color: '#F0ABFC' },
     { name: '검색량', values: data2d3, color: '#FCD34D' },
-    { name: '영상수', values: data3d3, color: '#818CF8' },
+    { name: '발행-영상-수', values: data3d3, color: '#818CF8' },
   ];
 
   const useDimensions = (targetRef: React.RefObject<HTMLDivElement>) => {
@@ -181,10 +187,18 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
     const yAxisCallback = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y.domain()[0];
+      const yMax = y.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     const y2 = D3.scaleLinear()
       .domain([0, max2 === 0 ? 100 : max2])
@@ -193,10 +207,18 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
     const yAxisCallback2 = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y2.domain()[0];
+      const yMax = y2.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y2).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y2).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     const y3 = D3.scaleLinear()
       .domain([0, max3 === 0 ? 100 : max3])
@@ -205,10 +227,18 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
     const yAxisCallback3 = (
       g: D3.Selection<SVGGElement, any, HTMLElement, any>,
-    ) =>
-      g
+    ) => {
+      const yMin = y3.domain()[0];
+      const yMax = y3.domain()[1];
+
+      const yMiddle = (yMin + yMax) / 2; // 중간값 계산
+
+      return g
         .attr('transform', `translate(${marginLeft}, 0)`)
-        .call(D3.axisLeft(y3).tickSize(-width).ticks(3));
+        .call(
+          D3.axisLeft(y3).tickSize(-width).tickValues([yMin, yMiddle, yMax]),
+        );
+    };
 
     // .call((g) => g.select('#axis').remove())
     // .attr('class', 'grid');
@@ -228,10 +258,9 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
     svg
       .append('g')
       // .attr('transform', `translate(${marginLeft},0)`)
-
-      .call(yAxisCallback)
-      .call(yAxisCallback2)
       .call(yAxisCallback3)
+      .call(yAxisCallback2)
+      .call(yAxisCallback)
       .call((g: D3.Selection<SVGGElement, any, HTMLElement, any>) =>
         g.select('.domain').remove(),
       )
@@ -242,6 +271,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       .selectAll('text')
       .remove();
     // vertical bar chart
+
     svg
       .append('g')
       .selectAll('rect')
@@ -253,14 +283,13 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       .attr('width', 40)
       .attr('height', (data) => y3(0) - y3(data.value as number))
       .attr('class', 'bar-chart')
-      .attr('class', '영상수')
+      .attr('class', '발행-영상-수')
       .attr('rx', 5)
       .attr('fill', '#818CF8');
 
     const line2 = D3.line<(typeof data2d3)[number]>()
       .x((datum) => Number(x(datum.date)) + x.bandwidth() / 2)
       .y((datum) => y2(datum.value as number))
-
       .curve(D3.curveCatmullRom);
 
     const convertRemToPixels = (rem: number) => {
@@ -333,17 +362,25 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       .datum(datad3)
       .attr('fill', 'none')
       .attr('stroke', '#F0ABFC')
-      .attr('class', '일일조회수')
+      .attr('class', '일일조회-수')
       .attr('stroke-width', 5)
       .style('stroke-linecap', 'round')
       .attr('d', line);
 
-    const legendSpacing = 80;
+    const xMargin = 16;
+    const yMargin = 6;
+    const legendSpacing = 80 + xMargin * 2;
 
     const legendWidth = dataReady.length * legendSpacing;
     const legendStartX = (width - legendWidth) / 2 + 50;
 
-    svg
+    const legendBackGround = svg
+      .append('g')
+      .selectAll('rect')
+      .data(dataReady)
+      .join('rect');
+
+    const legendText = svg
       .selectAll('myLegend')
       .data(dataReady)
       .enter()
@@ -366,17 +403,42 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
       // .attr('y', 30)
       .attr('cursor', 'pointer')
       .text(function (d) {
-        return d.name;
+        return d.name.replace(/-/g, ' ');
       })
       .style('fill', function (d) {
         return d.color;
       })
       .style('font-size', 15)
       .style('border', '1px solid black')
+      .style('pointer-events', 'none');
 
+    const bbox: Record<string, DOMRect> = {};
+    legendText.each(function (d) {
+      bbox[d.name] = this.getBBox();
+    });
+
+    legendBackGround
+      .attr('fill', '#ff0000')
+      .attr('width', (d) => (bbox[d.name]?.width || 0) + 2 * xMargin)
+      .attr('height', (d) => (bbox[d.name]?.height || 0) + 2 * yMargin)
+      .attr('transform', (d, i) => {
+        const textBBox = bbox[d.name];
+        const rectX =
+          legendStartX + i * legendSpacing - textBBox.width / 2 - xMargin;
+        const rectY =
+          height - marginBottom / 3 - textBBox.height * 0.8 - yMargin;
+        return `translate(${rectX}, ${rectY})`;
+      })
+      .attr('rx', 10)
+      .attr('ry', 10)
+      .attr('fill', '#fafafa')
+      .attr('stroke', (d) => d.color)
+      .attr('stroke-width', 1)
+      .attr('cursor', 'pointer')
       .on('click', function (d, i) {
         // is the element currently visible ?
 
+        console.log(i);
         let currentOpacity: string;
         currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
         // Change the opacity: from 0 to 1 or from 1 to 0
@@ -506,7 +568,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
                   dataReady[0].color
-                }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px;" ></div>
+                }; width:8px; height:8px; border-radius:9999px; background-color:transparent; margin-right:8px; white-space:nowrap;" ></div>
                 <p style="color: #E4E4E7; font-size: 14px;
                 font-style: normal;
                 font-weight: 700; flex-basis: 30%; margin-right:8px;">${d1.value.toLocaleString(
@@ -514,7 +576,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`일일조회수`} </p>
+                font-weight: 500; white-space:nowrap; "> ${`일일조회수`} </p>
               </div>
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
@@ -527,7 +589,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`검색량`} </p>
+                font-weight: 500; white-space:nowrap;"> ${`검색량`} </p>
               </div>
               <div style="display:flex; align-items:center;"> 
                 <div  style="border:2px solid ${
@@ -540,7 +602,7 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
                 )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; "> ${`영상수`} </p>
+                font-weight: 500; white-space:nowrap; "> ${`발행 영상 수`} </p>
               </div>
             </div>`,
           )
@@ -632,7 +694,11 @@ const D3Axis = ({ keyword }: { keyword: string }) => {
 
   return (
     <div className="relative">
-      <div id="axis" className="h-[290px] w-full" ref={selectRef}></div>
+      <div
+        id="axis"
+        className="h-[290px] w-full [&_svg]:overflow-visible"
+        ref={selectRef}
+      ></div>
       <div id="tooltip2" className="z-[500]"></div>{' '}
     </div>
   );

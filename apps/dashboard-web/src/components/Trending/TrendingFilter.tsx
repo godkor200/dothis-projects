@@ -3,6 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
+import GNBSearchbar from '@/app/(keyword)/GNBSearchbar';
 import type { TrendingQuery } from '@/app/(main)/(searchGNB)/trending/TrendingQueryContext';
 import SvgComp from '@/components/common/SvgComp';
 import { Button } from '@/components/MainContents/KeywordSearch/style';
@@ -54,6 +55,8 @@ const TrendingFilter = ({
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
       <SearchBar setKeywordList={handleSetKeywordList} />
+      {/* <GNBSearchbar /> */}
+      {/* 자동완성 api 테스트 가능할 때 변경 예정 */}
 
       <p className="text-grey600 mb-[20px] mt-[80px] font-bold">검색 키워드</p>
 
@@ -62,14 +65,17 @@ const TrendingFilter = ({
           <Button key={item} $active={true}>
             {item.replace('#', '').replace('*', '')}
 
-            <SvgComp
-              icon="KeywordDelete"
-              size="1rem"
-              onClick={(event) => {
-                event.stopPropagation();
-                handleDeleteKeyword(item);
-              }}
-            />
+            <div className="group/remove">
+              <SvgComp
+                icon="KeywordDelete"
+                size="1rem"
+                className="group-hover/remove:[&_path]:stroke-white"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteKeyword(item);
+                }}
+              />
+            </div>
             {/* 여기서 X버튼으로 delete시 modal을 하나 생성하고 지우는게 좋을 듯 싶다. */}
           </Button>
         ))}

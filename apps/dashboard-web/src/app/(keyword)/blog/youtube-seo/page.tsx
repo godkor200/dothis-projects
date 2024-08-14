@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 import styles from '../blog.module.css';
 
 export const metadata: Metadata = {
-  title: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+  title: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) | 영상 트렌드 분석 솔루션 두디스`,
   description: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) 유튜브 SEO의 필요성, 유튜브 SEO에서 가장 중요한 재료`,
   keywords: `두디스, 유튜브 SEO, 유튜브 초보, 유튜브 소재 추천, 유튜브 분석, 유튜브 조회수`,
   openGraph: {
-    title: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) | 시청자 데이터 기반 콘텐츠 분석 두디스`,
+    title: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) | 영상 트렌드 분석 솔루션 두디스`,
     description: `초보 유튜버라면 꼭 챙겨야 하는 유튜브 검색엔진 최적화 (SEO) 유튜브 SEO의 필요성, 유튜브 SEO에서 가장 중요한 재료`,
   },
 };
@@ -22,7 +22,7 @@ const YoutubeSEO = () => {
         <br />
 
         <p>
-          안녕하세요! 영상 기획 어시스턴트 두디스입니다.
+          안녕하세요! 영상 트렌드 분석 솔루션 두디스입니다.
           <br />
           오늘은 어쩌면 많은 유튜버들이 간과하고 있을 ‘검색 유입'에 대해
           이야기해보려고 합니다.
@@ -221,7 +221,7 @@ const YoutubeSEO = () => {
       <br />
       <br />
       <p>
-        유튜브 영상 기획 서비스, 두디스(DOTHIS) 출시가 되었습니다! 지금 접속해서
+        영상 트렌드 분석 솔루션, 두디스(DOTHIS) 출시가 되었습니다! 지금 접속해서
         무료로 체험하세요.
         <br />
         <a href="https://dothis.kr/">https://dothis.kr/</a>

@@ -40,6 +40,13 @@ const KeywordRank = ({ keyword }: { keyword: string }) => {
               {')'}
             </span>
           )}
+          {isRankStable && (
+            <span className="flex items-center text-[16px]">
+              {'('}
+              <span>-</span>
+              {')'}
+            </span>
+          )}
         </span>
       ) : (
         <span className="text-grey600">분석중</span>

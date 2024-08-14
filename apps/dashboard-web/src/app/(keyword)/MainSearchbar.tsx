@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type { KeyboardEvent } from 'react';
 import { useEffect, useRef, useState, useTransition } from 'react';
@@ -99,15 +100,16 @@ const MainSearchbar = () => {
     // }
 
     if (event.key === 'Enter') {
-      if (
-        data &&
-        data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
-          currentInput
-      ) {
-        // 엔터 키가 눌렸을 때 실행할 동작
+      // if (
+      //   data &&
+      //   data?.filter((item) => item.endsWith('*'))[0]?.replace('*', '') ===
+      //     currentInput
+      // ) {
+      //   // 엔터 키가 눌렸을 때 실행할 동작
 
-        router.push(`/keyword/${currentInput}`);
-      }
+      //   router.push(`/keyword/${currentInput}`);
+      // }
+      router.push(`/keyword/${currentInput}`);
     }
   };
 
@@ -115,7 +117,9 @@ const MainSearchbar = () => {
     <div className="relative mx-auto mb-[108px] w-[630px]">
       <div className="border-primary200 flex w-full items-center rounded-[40px] border px-[30px] py-[14px]">
         {isFocused ? (
-          <SvgComp icon="SideLogo" size={24} className="mr-[24px]" />
+          <div className="relative mr-[24px] h-[24px] w-[27px]">
+            <Image src={'/RefactLogo.png'} fill={true} alt="mainlogo" />
+          </div>
         ) : (
           <SvgComp
             icon="SearchIcon"
@@ -151,52 +155,49 @@ const MainSearchbar = () => {
       {isFocused && (
         <div className="border-primary200  bg-grey00 absolute z-10 mt-[10px] inline-flex w-full flex-col gap-[12px] rounded-[20px] border px-[30px] py-[20px]">
           {!!data?.length ? (
-            data
-              ?.filter((item) => item.endsWith('*'))
-              .slice(0, 5)
-              .map((item) => {
-                const regex = new RegExp(`(${input})`, 'gi');
-                return (
-                  <div
-                    className="text-grey900 flex cursor-pointer items-center text-[16px]"
-                    //   onClick={() => {
-                    //     if (!checkIsSignedIn()) {
-                    //       return;
-                    //     }
-                    //     createSearchwordMutate(item.replace('*', ''));
-                    //     return;
-                    //   }}
-                    key={item}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      router.push(`/keyword/${item.replace('*', '')}`);
-                    }}
-                  >
-                    <SvgComp
-                      icon="BorderSearchIcon"
-                      size={24}
-                      className="mr-[24px]"
-                      // onClick={(e) => {
-                      //   e.preventDefault();
-                      //   e.stopPropagation();
+            data.slice(0, 5).map((item) => {
+              const regex = new RegExp(`(${input})`, 'gi');
+              return (
+                <div
+                  className="text-grey900 flex cursor-pointer items-center text-[16px]"
+                  //   onClick={() => {
+                  //     if (!checkIsSignedIn()) {
+                  //       return;
+                  //     }
+                  //     createSearchwordMutate(item.replace('*', ''));
+                  //     return;
+                  //   }}
+                  key={item}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    router.push(`/keyword/${item.replace('*', '')}`);
+                  }}
+                >
+                  <SvgComp
+                    icon="BorderSearchIcon"
+                    size={24}
+                    className="mr-[24px]"
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   e.stopPropagation();
 
-                      //   console.log('check');
-                      //   router.push(`/keyword/${item.replace('*', '')}`);
-                      // }}
-                    />
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: item
-                          .replace('*', '')
-                          .replace(
-                            regex,
-                            '<span style="font-weight: bold; ">$1</span>',
-                          ),
-                      }}
-                    />
-                  </div>
-                );
-              })
+                    //   console.log('check');
+                    //   router.push(`/keyword/${item.replace('*', '')}`);
+                    // }}
+                  />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: item
+                        .replace('*', '')
+                        .replace(
+                          regex,
+                          '<span style="font-weight: bold; ">$1</span>',
+                        ),
+                    }}
+                  />
+                </div>
+              );
+            })
           ) : (
             <>
               <p className="text-grey500 text-[14px]">두디스 추천 검색어</p>

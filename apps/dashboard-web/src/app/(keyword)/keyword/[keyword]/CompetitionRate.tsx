@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import CustomTooltipComponent from '@/components/common/Tooltip/CustomTooltip';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
@@ -15,28 +16,51 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
     keyword,
   });
 
-  const { data: videoUploadCount } = useGetVideoUploadCount({
-    keyword,
-    relword: null,
-  });
-
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
-  const totalVideoCount = sumVideoCountV2(videoUploadCount);
+  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount ?? 1;
+  // const totalVideoCount = sumVideoCount(dailyViewData);
 
   const copetitionScore = getCompetitionScore({
     totalDailyView: totalIncreaseViews,
-    videoCount: totalVideoCount,
+    videoCount: competitionVideoCount,
   });
 
-  const Score = convertCompetitionScoreFormatToHTML({
+  const score = convertCompetitionScoreFormatToHTML({
     competitionScore: copetitionScore,
     totalDailyView: totalIncreaseViews,
   });
 
-  // 결과 출력
+  const competitionRate = (totalIncreaseViews / competitionVideoCount).toFixed(
+    0,
+  );
 
-  return <>{Score}</>;
+  const formattedCompetitionRate =
+    parseFloat(competitionRate).toLocaleString('ko-KR');
+
+  return (
+    <div>
+      {score}
+
+      {dailyViewData && (
+        <CustomTooltipComponent
+          title={
+            '발행된 영상의 수와 조회수를 비교해 계산한 영상들의 평균 조회수입니다. \n 경쟁강도가 좋아도 평균조회수가 낮다면 좋은 결과를 예상하기 어렵습니다.'
+          }
+          tooltipOptions={{ side: 'bottom', sideOffset: 15, align: 'end' }}
+        >
+          <p className="text-grey600 mt-2 cursor-pointer whitespace-nowrap text-center font-[500]">
+            연관 영상의 조회수 평균{' '}
+            <span className="text-primary500">
+              {isNaN(totalIncreaseViews / competitionVideoCount)
+                ? 0
+                : formattedCompetitionRate}
+            </span>
+          </p>
+        </CustomTooltipComponent>
+      )}
+    </div>
+  );
 };
 
 export default CompetitionRate;
@@ -74,6 +98,16 @@ export function sumIncreaseViewsV2(
         increaseLikes: number;
         increaseViews: number;
       }[]
+    | {
+        date: string;
+        maxPerformance: number;
+        increaseViews: number;
+        expectedHits: number;
+        minPerformance: number;
+        uniqueVideoCount?: number | undefined;
+        increaseComments?: number | undefined;
+        increaseLikes?: number | undefined;
+      }[]
     | undefined,
 ) {
   if (data) {
@@ -84,7 +118,7 @@ export function sumIncreaseViewsV2(
 
 // uniqueVideoCount 값을 모두 더하는 함수
 export function sumVideoCount(
-  data: (
+  data:
     | {
         date: string;
         uniqueVideoCount: number;
@@ -92,21 +126,25 @@ export function sumVideoCount(
         increaseLikes: number;
         increaseViews: number;
       }[]
-    | undefined
-  )[],
+    | {
+        date: string;
+        maxPerformance: number;
+        increaseViews: number;
+        expectedHits: number;
+        minPerformance: number;
+        uniqueVideoCount?: number;
+        increaseComments?: number;
+        increaseLikes?: number;
+      }[]
+    | undefined,
 ) {
-  return data.reduce((total, nestedArray) => {
-    if (nestedArray) {
-      return (
-        total +
-        nestedArray.reduce(
-          (subtotal, item) => subtotal + item.uniqueVideoCount,
-          0,
-        )
-      );
-    }
-    return total;
-  }, 0 as number);
+  if (data) {
+    return data?.reduce(
+      (total, item) => total + (item.uniqueVideoCount ?? 0),
+      0,
+    );
+  }
+  return 0;
 }
 
 export function sumVideoCountV2(

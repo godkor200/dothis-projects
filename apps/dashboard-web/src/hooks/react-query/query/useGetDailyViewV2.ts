@@ -31,6 +31,7 @@ const useGetDailyViewV2 = ({
   return {
     ...queryResult,
     data: queryResult.data?.body.data,
+    representativeCategoryNumber: queryResult.data?.body.representativeCategory,
   };
 };
 

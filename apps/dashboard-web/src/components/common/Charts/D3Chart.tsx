@@ -4,11 +4,7 @@ import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import BoxLoadingComponent from '@/app/(keyword)/keyword/BoxLoadingComponent';
 import useGetRankingRelWords from '@/hooks/react-query/query/useGetRankingRelWords';
-import { cn } from '@/utils/cn';
-
-import ApiErrorComponent from './ApiErrorComponent ';
 
 interface TransactionData {
   title: string;
@@ -128,7 +124,7 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
             .attr('r', () => size(i.value));
         })
         .on('click', function (event, d) {
-          router.push(`/keyword/${keyword}/${d.title}/summary`);
+          router.push(`/keyword/${keyword}/${d.title}/analysis`);
         });
 
       const labels = group
@@ -204,17 +200,12 @@ const D3Chart = ({ keyword }: { keyword: string }) => {
     }
   }, [ref, width, JSON.stringify(data)]);
 
-  if (isError) {
-    return <ApiErrorComponent refetch={refetch} />;
-  }
+  // if (isError) {
+  //   return <ApiErrorComponent refetch={refetch} />;
+  // }
 
   return (
     <>
-      {isLoading && (
-        <BoxLoadingComponent
-          classname={cn('absolute top-0 right-3 w-[80px] h-[80px]')}
-        />
-      )}
       <div className="App [&_svg]:overflow-visible">
         <div id="my_dataviz" ref={ref}></div>
       </div>

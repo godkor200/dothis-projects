@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { zDateQuery, zPaginatedQuery, zSearchKeyword } from '../common.model';
+import {
+  dataObject,
+  zDateQuery,
+  zPaginatedQuery,
+  zSearchKeyword,
+} from '../common.model';
 import { zVideo, zVideoModel } from './video.model';
 
 export const zClusterQueryParams = z.object({
@@ -167,13 +172,37 @@ export const zGetPerformanceLengthRes = z
   })
   .describe('영상 길이별 조회수 및 성과 분석 결과');
 
-export const zTodayIssueVideo = zVideo.pick({
+export const zTodayIssueVideos = dataObject(
+  zVideo
+    .pick({
+      videoId: true,
+      videoTitle: true,
+      channelName: true,
+      videoViews: true,
+      videoPublished: true,
+    })
+    .merge(z.object({ category: z.string().describe('키워드') })),
+);
+
+export const zTodayIssueVideoSchema = zVideo.pick({
   videoId: true,
   videoTitle: true,
   channelName: true,
   videoViews: true,
   videoPublished: true,
 });
+
+export const zTodayIssueVideoExtendsSchema = zTodayIssueVideoSchema.extend({
+  search: z.string(),
+});
+
+export const zTodayIssueVideoExtendedList = z.array(
+  zTodayIssueVideoExtendsSchema,
+);
+
+export const zTodayIssueVideoExtendedData = dataObject(
+  zTodayIssueVideoExtendedList,
+);
 
 // 타입 추출
 export type TFindPerformanceLengthRes = z.infer<
