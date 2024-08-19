@@ -20,7 +20,10 @@ const useGetAutoCompleteWord = (
   const queryResult = apiClient(2).relatedWords.getAutoCompleteWords.useQuery(
     [AUTO_COMPLETEWORD_KEY.all, word],
     { params: { word } },
-    { enabled: !!word, ...queryOptions },
+    {
+      ...queryOptions,
+      enabled: !!word,
+    },
   );
 
   return {

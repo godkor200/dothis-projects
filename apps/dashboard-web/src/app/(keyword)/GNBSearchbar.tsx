@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 
 import SignUpModal from '@/components/common/Modal/ModalContent/SignUpModal';
 import SvgComp from '@/components/common/SvgComp';
+import useAutoCompleteWordScoreMutation from '@/hooks/react-query/mutation/useAutoCompleteWordScoreMutation';
 import { useResetKeywordMutation } from '@/hooks/react-query/mutation/useKeywordMutation';
 import {
   useCreateSearchwordMutation,
@@ -18,9 +19,11 @@ import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { useModalActions } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
-const GNBSearchbar = () => {
-  const router = useRouter();
+interface Props {
+  callback: ({ selectedWord }: { selectedWord: string }) => void;
+}
 
+const GNBSearchbar = ({ callback }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -39,6 +42,8 @@ const GNBSearchbar = () => {
   const { data: userData } = useGetUserInfo();
 
   const { data } = useGetAutoCompleteWord(searchInput);
+
+  const { mutate: autoCompleteWordMutate } = useAutoCompleteWordScoreMutation();
 
   const handleInput = useDebounce((input) => setSearchInput(input), 200, [
     searchInput,
@@ -75,6 +80,10 @@ const GNBSearchbar = () => {
     [],
   );
 
+  const updateAutoCompleteWordMutate = (word: string) => {
+    autoCompleteWordMutate(word);
+  };
+
   //로그인 유도 시퀀스
 
   const { setIsOpenSignUpModal } = useAuthActions();
@@ -108,7 +117,8 @@ const GNBSearchbar = () => {
       //   // router.push(`/keyword/${currentInput}`);
       // }
 
-      router.push(`/keyword/${currentInput}`);
+      updateAutoCompleteWordMutate(currentInput);
+      callback({ selectedWord: currentInput });
     }
   };
 
@@ -181,7 +191,8 @@ const GNBSearchbar = () => {
                   // if (!checkIsSignedIn()) {
                   //   return;
                   // }
-                  router.push(`/keyword/${item.replace('*', '')}`);
+                  updateAutoCompleteWordMutate(item);
+                  callback({ selectedWord: item });
                   return;
                 }}
               >
