@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   ).toString(CryptoJS.enc.Base64);
 
   const params = {
-    hintKeywords: '만화책,기안84',
+    hintKeywords: hintKeywords ?? '',
   };
 
   const queryString = new URLSearchParams(params).toString();
