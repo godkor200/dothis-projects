@@ -37,9 +37,6 @@ const useGetSuccessRate = (
     ]),
 
     {
-      params: {
-        clusterNumber: clusters.join(','),
-      },
       query: {
         search: keyword!,
         related: relword!,
