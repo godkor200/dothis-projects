@@ -106,9 +106,9 @@ const TrendingPage = () => {
     });
   };
 
-  useEffect(() => {
-    setLastId(String(data?.at(-1)?.id));
-  }, [JSON.stringify(data)]);
+  // useEffect(() => {
+  //   setLastId(String(data?.at(-1)?.id));
+  // }, [JSON.stringify(data)]);
 
   return (
     <>
