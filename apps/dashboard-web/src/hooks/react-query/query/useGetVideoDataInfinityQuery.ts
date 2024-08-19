@@ -29,7 +29,7 @@ const useGetVideoDataInfinityQuery = (
     relword: string | null;
   },
 
-  queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPageV1>,
+  queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPage>,
 ) => {
   const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
@@ -39,7 +39,7 @@ const useGetVideoDataInfinityQuery = (
 
   const endDate = useEndDate();
 
-  const queryResults = apiClient(2).video.getVideoPageV2.useInfiniteQuery(
+  const queryResults = apiClient(2).video.getVideoPage.useInfiniteQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,

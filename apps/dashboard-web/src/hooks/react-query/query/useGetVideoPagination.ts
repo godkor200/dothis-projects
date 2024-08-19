@@ -21,13 +21,13 @@ const useGetVideoPagination = (
     relword: string | null;
   },
   lastIndex_ID?: string,
-  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPageV2>,
+  queryOptions?: UseQueryOptions<typeof apiRouter.video.getVideoPage>,
 ) => {
   const { data, getRelatedClusterArray } = useGetRelWords(keyword);
 
   const clusters = getRelatedClusterArray();
 
-  const queryResults = apiClient(2).video.getVideoPageV2.useQuery(
+  const queryResults = apiClient(2).video.getVideoPage.useQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,
