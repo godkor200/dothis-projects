@@ -22,7 +22,9 @@ export class GetVideoTodayIssueCacheAdapter
   async execute(
     dao: GetVideoMultiKeywordCacheDao[],
   ): Promise<TGetVideoTodayIssueCacheAdapterRes> {
-    const key = dao.map((e) => `${e.search}:${e.related}`).join('/');
+    const key = dao
+      .map((e) => (e.related ? `${e.search}:${e.related}` : `${e.search}`))
+      .join('/');
     try {
       const res = await this.redisClient.zrange(key, 0, -1, 'WITHSCORES');
       if (!res.length) return Err(new TodayIssueNotFoundError());

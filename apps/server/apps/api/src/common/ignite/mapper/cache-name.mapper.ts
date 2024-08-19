@@ -8,7 +8,7 @@ export class CacheNameMapper {
   static readonly BASE_VIDEO_HISTORY_TABLE = 'dothis.video_history';
   static readonly BASE_VIDEO_DATA_TABLE = 'dothis.video_data';
   static readonly BASE_CHANNEL_HISTORY_TABLE = 'dothis.channel_history';
-  static readonly BASE_CHANNEL_DATA = 'dothis.channel_data';
+  static readonly BASE_CHANNEL_DATA = 'DOTHIS.CHANNEL_DATA';
 
   /**
    * 입력된 값을 숫자로 변환할 수 있는지 확인하는 메소드

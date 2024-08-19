@@ -13,9 +13,8 @@ import {
 import { z } from 'zod';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { GetProbabilitySuccessQuery } from '@Apps/modules/hits/application/dtos/get-probability-success.dto';
-import { PickType } from '@nestjs/swagger';
-import { GetWeeklyKeywordService } from '@Apps/modules/hits/application/services/get-weekly-keyword.service';
 import { GetWeeklyKeywordDto } from '@Apps/modules/hits/application/dtos/get-weekly-keyword.dto';
+import { GetWeeklyHitsListDto } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';
 export type TWeeklyhitsSqlField = z.TypeOf<
   typeof zGetWeeklyViewsQuery.shape.sort
 >;
@@ -72,8 +71,13 @@ class BaseWeeklyViewsDao implements BaseWeeklyViewsDaoInterface {
 }
 
 export class GetWeeklyViewsDaoV2 extends BaseWeeklyViewsDao {
-  constructor(props: GetWeeklyViewsDtoV2) {
+  category: string[];
+  keywords: string[];
+
+  constructor(props: GetWeeklyHitsListDto) {
     super(props);
+    this.category = props.category;
+    this.keywords = props.keywords;
   }
 }
 // Pick 유틸리티를 사용하여 특정 속성 선택

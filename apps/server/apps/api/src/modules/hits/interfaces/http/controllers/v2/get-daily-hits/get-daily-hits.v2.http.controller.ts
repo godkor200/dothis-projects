@@ -4,6 +4,7 @@ import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -12,7 +13,7 @@ import {
   tsRestHandler,
   TsRestHandler,
 } from '@ts-rest/nest';
-import { apiRouter } from '@dothis/dto';
+import { apiRouter, zGetDailyViewsV2Res } from '@dothis/dto';
 import {
   BadReq,
   InternalServerErr,
@@ -25,9 +26,14 @@ import { match } from 'oxide.ts';
 import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { extendApi } from '@anatine/zod-openapi';
+import { createZodDto } from '@anatine/zod-nestjs';
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV2,
   g = c.getDailyViewsV2;
+
+class GetDailyViewsV2Res extends createZodDto(extendApi(zGetDailyViewsV2Res)) {}
+
 @ApiTags('조회수')
 @Controller()
 export class GetDailyHitsV2HttpController {
@@ -39,6 +45,7 @@ export class GetDailyHitsV2HttpController {
   })
   @ApiNotFoundResponse({ type: NotFound })
   @ApiBadRequestResponse({ type: BadReq })
+  @ApiOkResponse({ type: GetDailyViewsV2Res })
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
   async execute(@Query() query: FindDailyViewsV1Query) {
     return tsRestHandler(g, async ({ query }) => {

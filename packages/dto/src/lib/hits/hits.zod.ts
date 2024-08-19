@@ -4,18 +4,13 @@ import {
   zKeywordsMulti,
   zPaginatedOffsetQuery,
 } from '../common.model';
-import { zSortWeeklyViews } from './hits.model';
+import { zDailyViews, zSortWeeklyViews } from './hits.model';
 import { z } from 'zod';
-
-const zWeeklyViewKeywordCategoryQuery = z.object({
-  keywords: z.string().optional(),
-  categoryNumbers: z.string().optional(),
-});
-
+import { zSuccessBase } from '../success.response.zod';
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
   .merge(zDateQuery.pick({ from: true }))
   .merge(zSortWeeklyViews)
-  .merge(zWeeklyViewKeywordCategoryQuery);
+  .merge(zCategoryNumberMulti);
 
 export const zWeeklyHitsPathQuery = zKeywordsMulti.merge(zCategoryNumberMulti);
 export const zGetWeeklyViewsBySomeQuery = zDateQuery
@@ -34,3 +29,9 @@ export const zGetProbabilityRes = z.object({
       '평균 조회수보다 높은 조회수를 가진 비디오의 수를 나타내는 숫자 값입니다.',
     ),
 });
+const zRepresentativeCategory = z.object({
+  representativeCategory: z.string().describe('대표 카테고리 넘버'),
+});
+export const zGetDailyViewsV2Res = zSuccessBase
+  .merge(zDailyViews)
+  .merge(zRepresentativeCategory);

@@ -2,6 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   GET_RANKING_RELATED_WORD_DI_TOKEN,
+  KOREAN_AUTO_COMPLETE_DI_TOKEN,
   RANKING_V2_SERVICE_DI_TOKEN,
   RELWORDS_DI_TOKEN,
   SET_RANKING_RELATED_WORD_DI_TOKEN,
@@ -29,6 +30,9 @@ import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { VideoHistoryGetLastOneByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-last-one-by-ids.adapter';
 import { FindRankingRelatedWordAdapter } from '@Apps/modules/related-word/infrastructure/adapters/find-ranking-related-word.adapter';
 import { SetRankingRelatedWordAdapter } from '@Apps/modules/related-word/infrastructure/adapters/set-ranking-related-word.adapter';
+import { KoreanAutocompleteCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/korean-autocomplete.cache';
+import { IncrementScoreHttpController } from '@Apps/modules/related-word/interfaces/http/queries/v2/increment-score/increment-score.http.controller';
+import { IncrementScoreService } from '@Apps/modules/related-word/application/service/increment-score.service';
 
 const queryHandler = [FindAutoCompleteQueryHandler, GetRankingV2QueryHandler];
 const service = [
@@ -36,8 +40,13 @@ const service = [
     provide: RANKING_V2_SERVICE_DI_TOKEN,
     useClass: GetRankingRelatedWordsV2Service,
   },
+  IncrementScoreService,
 ];
-const controllers = [FindAutoCompleteHttpController, RankingHttpController];
+const controllers = [
+  FindAutoCompleteHttpController,
+  RankingHttpController,
+  IncrementScoreHttpController,
+];
 const repositories: Provider[] = [
   {
     provide: RELWORDS_DI_TOKEN.FIND_ONE_BY_ELASTICACHE,
@@ -72,6 +81,10 @@ const adapter: Provider[] = [
   {
     provide: SET_RANKING_RELATED_WORD_DI_TOKEN,
     useClass: SetRankingRelatedWordAdapter,
+  },
+  {
+    provide: KOREAN_AUTO_COMPLETE_DI_TOKEN,
+    useClass: KoreanAutocompleteCache,
   },
 ];
 @Module({

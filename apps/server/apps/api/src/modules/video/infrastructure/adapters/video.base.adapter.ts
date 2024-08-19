@@ -1,5 +1,3 @@
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
-import { ConfigService } from '@nestjs/config';
 import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
 import { DateFormatter } from '@Libs/commons/src/utils/videos.date-formatter';
 /**

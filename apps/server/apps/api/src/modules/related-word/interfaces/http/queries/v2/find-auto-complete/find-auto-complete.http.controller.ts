@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { nestControllerContract, TsRest, TsRestRequest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
@@ -6,9 +6,6 @@ import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/appl
 
 import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
 import {
-  ApiConflictResponse,
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,

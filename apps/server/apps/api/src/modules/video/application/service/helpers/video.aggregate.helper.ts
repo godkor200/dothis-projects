@@ -1,5 +1,5 @@
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
+
 import {
   IIncreaseData,
   IIncreaseHits,
@@ -9,7 +9,10 @@ import {
 import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { PredictedViews, VideoPrediction } from '@dothis/dto';
-import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
+import {
+  IFindVideoHistoryResponse,
+  IVideoHistory,
+} from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 /**
  * 비디오 데이터를 집계하고 통계를 계산하는 헬퍼 클래스.

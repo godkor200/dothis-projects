@@ -57,8 +57,6 @@ export class VideoMultiRelatedWordsCacheAdapter
         return acc;
       }, {} as Record<string, VideoCacheReturnType[]>);
 
-      console.log('mappedResults', mappedResults);
-
       return Ok(mappedResults);
     } catch (e) {
       return Err(e);

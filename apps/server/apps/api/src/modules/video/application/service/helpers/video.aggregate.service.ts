@@ -1,9 +1,11 @@
-import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
+import {
+  IFindVideoHistoryResponse,
+  IVideoHistory,
+} from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { IIncreaseData } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoPrediction, PredictedViews } from '@dothis/dto';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { IFindVideoHistoryResponse } from '@Apps/modules/video-history/application/service/find-video-history.service';
 import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 

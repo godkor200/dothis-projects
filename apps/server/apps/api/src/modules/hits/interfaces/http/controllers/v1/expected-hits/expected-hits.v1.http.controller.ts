@@ -27,7 +27,7 @@ import {
   TTsRestRes,
 } from '@Libs/commons/src/interfaces/types/res.types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
-import { TExpectedViewsV1QueryHandlerRes } from '@Apps/modules/hits/application/queries/expected-views.v1.query-handler';
+
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 const { summary, description } = getExpectedViews;
@@ -59,11 +59,11 @@ export class ExpectedHitsV1HttpController {
         clusterNumber: params.clusterNumber,
         ...query,
       });
-      const result: TExpectedViewsV1QueryHandlerRes =
+      const result: any =
         await this.queryBus.execute(arg);
 
       return match<
-        TExpectedViewsV1QueryHandlerRes,
+        any,
         TTsRestRes<IRes<TExpectedViewsRes>>
       >(result, {
         Ok: (result) => ({

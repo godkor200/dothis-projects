@@ -6,8 +6,6 @@ export * from './video.ads.top-hits.adapter';
 export * from './video.base.adapter';
 // video.channel-average-views.adapter.ts: 채널 평균 조회수 조회
 export * from './video.channel-average-views.adapter';
-// video.channel-history.adapter.ts: 채널 이력 조회
-export * from './video.channel-history.adapter';
 // video.count-day.adapter.ts: 일자별 비디오 수 조회
 export * from './video.count-day.adapter';
 // video.entire-count.adapter.ts: 전체 비디오 수 조회

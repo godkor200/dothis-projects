@@ -6,8 +6,6 @@ export class ParseArrayPipe implements PipeTransform {
     value: Record<string, unknown>,
     metadata: ArgumentMetadata,
   ): Record<string, unknown> {
-    console.log('ParseArrayPipe', value, metadata);
-
     // 배열로 변환하지 않을 키 목록
     const noArrayKeys = ['order', 'page', 'limit'];
 

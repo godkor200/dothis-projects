@@ -37,19 +37,7 @@ export const videoApi = c.router({
     summary: '이그 나이트 태스트용',
     description: '이그 나이트 태스트용',
   },
-  getVideoPageV1: {
-    method: 'GET',
-    path: `${videoBaseApiUrl}/:clusterNumber`,
-    pathParams: zClusterNumberMulti,
-    query: zPaginatedIgniteQueryParams,
-    responses: {
-      200: zVideoModel,
-      ...zErrResBase,
-    },
-    summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
-    description: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
-  },
-  getVideoPageV2: {
+  getVideoPage: {
     method: 'GET',
     path: `${videoBaseApiUrl}`,
     query: zPaginatedIgniteQuerySort,
@@ -57,8 +45,9 @@ export const videoApi = c.router({
       200: zVideoModel,
       ...zErrResBase,
     },
-    summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다. v2',
-    description: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
+    summary: '관련어와 탐색어를 기준으로 비디오를 가져옵니다.',
+    description:
+      '관련어와 탐색어를 기준으로 비디오를 가져옵니다. page는 옵셔널로 페이지가 없다면 페이지네이션 기능으로 불러오지 않습니다.',
   },
   getVideoAdsInfo: {
     method: 'GET',

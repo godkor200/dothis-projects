@@ -67,37 +67,80 @@ export class WeeklyHitsV2Repository
     dao: GetWeeklyViewsDaoV2,
   ): Promise<TPaginatedWeeklyHitsV2Res> {
     try {
-      const { from, limit, page, sort = 'ranking', order = 'asc' } = dao;
+      const {
+        from,
+        limit,
+        category,
+        page = 1,
+        sort = 'ranking',
+        order = 'asc',
+        keywords,
+      } = dao;
+      console.log(dao);
       const { year, month, day } = this.parseFrom(from);
 
+      // 페이지 번호가 유효하지 않거나 정의되지 않았다면 기본값을 설정
+      const parsedPage =
+        !isNaN(Number(page)) && Number(page) > 0 ? Number(page) : 1;
+      const offset = (parsedPage - 1) * Number(limit);
+      const sortField = Array.isArray(sort) ? sort[0] : sort;
+      // 쿼리 빌더 생성
       const queryBuilder = this.repository
         .createQueryBuilder(this.tableName)
         .where(`${this.tableName}.YEAR = :year`, { year: Number(year) })
         .andWhere(`${this.tableName}.MONTH = :month`, { month: Number(month) })
         .andWhere(`${this.tableName}.DAY = :day`, { day: Number(day) })
         .limit(Number(limit))
-        .offset((Number(page) - 1) * Number(limit));
+        .offset(offset);
+      // category 배열을 순회하여 각 요소에 대해 LIKE 조건 추가
+      if (Array.isArray(category) && category.length > 0) {
+        const categoryConditions = category
+          .map(
+            (cat, index) => `${this.tableName}.category LIKE :category${index}`,
+          )
+          .join(' OR ');
+        queryBuilder.andWhere(
+          `(${categoryConditions})`,
+          Object.fromEntries(
+            category.map((cat, index) => [`category${index}`, `${cat}%`]),
+          ),
+        );
+      }
+      if (Array.isArray(keywords) && keywords.length > 0) {
+        // Create the IN condition
+        queryBuilder.andWhere(
+          `${this.tableName}.keyword IN (:...keywords)`,
+          { keywords: keywords.map((cat) => `${cat}`) }, // Array of keywords with wildcard
+        );
+      }
 
       // orderBy 적용
-      if (sort && order) {
-        const fieldValue = typeof sort === 'boolean' ? 'id' : sort; // `true`일 경우 'id'로 대체
+      if (sortField && order) {
+        // 기본 정렬 필드 확인
+        const fieldValue =
+          typeof sortField === 'boolean' ? 'ranking' : sortField;
+        // 정렬 실행
         queryBuilder.orderBy(fieldValue, order.toUpperCase() as 'ASC' | 'DESC');
       }
+      console.log(queryBuilder);
+      // 데이터 가져오기
       const [data, count] = await queryBuilder.getManyAndCount();
-      if (!count) return Err(new WeeklyViewsError());
+
+      if (count === 0) return Err(new WeeklyViewsError()); // 결과가 없는 경우
 
       return Ok(
         new Paginated<WeeklyHitsEntity>({
           count,
           data,
-          limit,
-          page,
+          limit: Number(limit), // 요청한 limit 값
+          page: Number(page), // 페이지 번호
         }),
       );
     } catch (e) {
       return Err(e);
     }
   }
+
   async getWeeklyKeywords(dao: GetWeeklyKeyword): Promise<TGetWeeklyKeywords> {
     const limitViews: number = 5000000; // 조회수 제한 500만
 

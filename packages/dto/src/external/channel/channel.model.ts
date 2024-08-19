@@ -23,3 +23,21 @@ export const zRequestChannelSchema = z.object({
   public_flag: z.boolean().default(false).nullish(), // tinyint(1) default 0 not null 허브 안에서 공개/비공개 설정
   update_date: z.string().nullable(), // timestamp null
 });
+
+export const zChannelDataSchema = z.object({
+  channelId: z.string().max(48).default(''),
+  channelIdPart: z.string().nonempty(),
+  channelName: z.string().max(255).nullable(),
+  channelDescription: z.string().nullable(),
+  channelTags: z.string().max(2000).nullable(),
+  mainlyUsedKeywords: z.string().max(2000).nullable(),
+  mainlyUsedTags: z.string().max(2000).nullable(),
+  channelCountry: z.string().max(100).nullable(),
+  channelLink: z.string().max(8000).nullable(),
+  channelSince: z.string().max(24).nullable(),
+  channelCluster: z.number().int().nonnegative().default(-1),
+  crawledDate: z.date().nullable(),
+  userId: z.number().int().nullable(),
+  channelThumbnail: z.string().nullable(),
+});
+export type TChannelModel = z.TypeOf<typeof zChannelDataSchema>;
