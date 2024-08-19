@@ -5,6 +5,11 @@ const requestURL = '/keywordstool';
 const reqeustMethod = 'GET';
 
 export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const queryParams = url.searchParams;
+
+  const hintKeywords = queryParams.get('baseKeyword');
+
   const timestamp = new Date().getTime();
 
   const signaturePayload = timestamp + '.' + reqeustMethod + '.' + requestURL;
@@ -15,7 +20,7 @@ export async function GET(req: Request) {
   ).toString(CryptoJS.enc.Base64);
 
   const params = {
-    hintKeywords: '이어폰',
+    hintKeywords: '만화책,기안84',
   };
 
   const queryString = new URLSearchParams(params).toString();
