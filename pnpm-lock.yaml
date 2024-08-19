@@ -25843,10 +25843,7 @@ snapshots:
 
   eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0(eslint@8.45.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.45.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.27.5)(eslint@8.45.0))(eslint@8.45.0):
     dependencies:
-<<<<<<< HEAD
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.4.2)
-=======
->>>>>>> 83fe224f5951a144f78fe12e274e9c219570ae8e
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.0.4)
