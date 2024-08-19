@@ -5,14 +5,22 @@ import axios from 'axios';
 
 import { NAVER_ADS_KEY } from '@/constants/querykey';
 
-const useGetNaverAds = () => {
-  return useQuery(NAVER_ADS_KEY.detail([{ test: 1 }]), () => queryFn(), {});
+const useGetNaverAds = ({ baseKeyword }: { baseKeyword: string }) => {
+  return useQuery(
+    NAVER_ADS_KEY.list([{ baseKeyword }]),
+    () => queryFn({ baseKeyword }),
+    {},
+  );
 };
 
 export default useGetNaverAds;
 
-const queryFn = async () => {
-  const data = await axios.get('/api/naver-ads', {});
+const queryFn = async ({ baseKeyword }: { baseKeyword: string }) => {
+  const data = await axios.get('/api/naver-ads', {
+    params: {
+      baseKeyword,
+    },
+  });
 
   return data.data;
 };
