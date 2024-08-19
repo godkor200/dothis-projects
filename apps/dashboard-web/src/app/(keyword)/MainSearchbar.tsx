@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
 import MyKeywordList from '@/components/MainContents/KeywordSearch/MyKeywordList';
+import useAutoCompleteWordScoreMutation from '@/hooks/react-query/mutation/useAutoCompleteWordScoreMutation';
 import useGetAutoCompleteWord from '@/hooks/react-query/query/useGetAutoCompleteWord';
 import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import useDebounce from '@/hooks/useDebounce';
@@ -24,6 +25,12 @@ const MainSearchbar = () => {
   const [input, setInput] = useState('');
 
   const [isPending, startTransition] = useTransition();
+
+  const { mutate: autoCompleteWordMutate } = useAutoCompleteWordScoreMutation();
+
+  const updateAutoCompleteWordMutate = (word: string) => {
+    autoCompleteWordMutate(word);
+  };
 
   useEffect(() => {
     const handleFocus = () => setIsFocused(true);
@@ -109,6 +116,7 @@ const MainSearchbar = () => {
 
       //   router.push(`/keyword/${currentInput}`);
       // }
+      updateAutoCompleteWordMutate(currentInput);
       router.push(`/keyword/${currentInput}`);
     }
   };
@@ -170,6 +178,7 @@ const MainSearchbar = () => {
                   key={item}
                   onMouseDown={(e) => {
                     e.preventDefault();
+                    updateAutoCompleteWordMutate(item);
                     router.push(`/keyword/${item.replace('*', '')}`);
                   }}
                 >

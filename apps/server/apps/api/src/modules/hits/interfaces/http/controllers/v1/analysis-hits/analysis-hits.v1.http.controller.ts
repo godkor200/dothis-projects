@@ -52,21 +52,10 @@ export class AnalysisHitsV1HttpController {
   @ApiNotFoundResponse({ type: NotFound })
   @ApiBadRequestResponse({ type: BadReq })
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
-  @ApiParam({
-    name: 'clusterNumber',
-    type: String,
-    required: true,
-    description: '클러스터 번호 단일, 멀티 둘다 가능',
-    example: '4, 93, 14, 13, 57, 5, 43, 1, 10, 45',
-  })
-  async execute(
-    @Query() query: GetAnalysisHitsQuery,
-    @Param(ParseArrayPipe) param: IParamsInterface,
-  ) {
-    return tsRestHandler(c.getAnalysisHits, async ({ query, params }) => {
+  async execute(@Query() query: GetAnalysisHitsQuery) {
+    return tsRestHandler(c.getAnalysisHits, async ({ query }) => {
       const dto = new GetAnalysisHitsDto({
         ...query,
-        clusterNumber: param.clusterNumber,
       });
       const res: TAnalysisHitsServiceRes = await this.queryBus.execute(dto);
       return match<

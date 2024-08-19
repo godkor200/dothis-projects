@@ -14,10 +14,7 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import {
-  IIgnitePagingRes,
-  IPagingRes,
-} from '@Apps/modules/video/application/dtos/find-many-video.interface';
+import { IIgnitePagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
 import {
   VideoRes,
   IRes,
@@ -29,12 +26,12 @@ import {
   GetVideoPaginatedPageSortDto,
   GetVideoPaginatedPageSortQuery,
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
-import { TGetVideoPage } from '@Apps/modules/video/application/queries/v1/find-video-page.query-handler';
+import { TGetVideoPage } from '@Apps/modules/video/application/queries/v2/find-video-page.query-handler';
 import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 const c = nestControllerContract(apiRouter.video);
-const videoPagenation = c.getVideoPageV2;
+const videoPagenation = c.getVideoPage;
 const { summary, responses, description } = videoPagenation;
 
 @ApiTags('영상')

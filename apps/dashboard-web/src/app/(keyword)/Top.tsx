@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import type { Dispatch, SetStateAction } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -23,6 +23,16 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
   const { data } = useGetUserInfo();
 
   const pathName = usePathname();
+
+  const router = useRouter();
+
+  const handleSearchBarCallback = ({
+    selectedWord,
+  }: {
+    selectedWord: string;
+  }) => {
+    router.push(`/keyword/${selectedWord}`);
+  };
 
   return (
     <div
@@ -55,7 +65,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
         />
       </div>
 
-      <GNBSearchbar />
+      <GNBSearchbar callback={handleSearchBarCallback} />
 
       <div className="ml-auto mr-[66px] flex items-center gap-[23px]">
         {isSignedIn ? (

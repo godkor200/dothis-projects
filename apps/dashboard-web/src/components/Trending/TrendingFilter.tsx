@@ -41,9 +41,9 @@ const TrendingFilter = ({
     setKeywordList((prev) => prev.filter((item) => item !== keyword));
   };
 
-  const handleSetKeywordList = (keyword: string) => {
+  const handleSetKeywordList = ({ selectedWord }: { selectedWord: string }) => {
     setKeywordList((prev) =>
-      prev.indexOf(keyword) !== -1 ? prev : [...prev, keyword],
+      prev.indexOf(selectedWord) !== -1 ? prev : [...prev, selectedWord],
     );
   };
 
@@ -54,8 +54,10 @@ const TrendingFilter = ({
     >
       <p className="text-grey600 mb-[20px] font-bold">검색 키워드 </p>
 
-      <SearchBar setKeywordList={handleSetKeywordList} />
-      {/* <GNBSearchbar /> */}
+      <div className="flex justify-center">
+        <GNBSearchbar callback={handleSetKeywordList} />
+      </div>
+
       {/* 자동완성 api 테스트 가능할 때 변경 예정 */}
 
       <p className="text-grey600 mb-[20px] mt-[80px] font-bold">검색 키워드</p>

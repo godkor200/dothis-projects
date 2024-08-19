@@ -13,6 +13,14 @@ export type TVideoMultiKeywordCacheRes = Result<
   Record<string, VideoCacheReturnType[]>,
   VideoNotFoundError
 >;
+
+// TimeUnit enum 정의
+export enum TimeUnit {
+  DAY = 'day',
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year',
+}
 @Injectable()
 export class VideoMultiKeywordCacheAdapter
   implements VideoMultiKeywordCacheOutboundPorts
@@ -24,18 +32,24 @@ export class VideoMultiKeywordCacheAdapter
     private readonly redisClient: Redis,
   ) {}
 
-  private isWithinRange(date: string, from: string, to: string): boolean {
+  private isWithinRange(
+    date: string,
+    to: string,
+    unit: TimeUnit = TimeUnit.YEAR, // enum 사용
+    value: number = 1,
+  ): boolean {
+    const from = dayjs(to).subtract(value, unit); // `to`로부터 `unit`을 빼서 `from` 계산
     return (
-      dayjs(date).isAfter(dayjs(from).subtract(1, 'year')) &&
-      dayjs(date).isBefore(dayjs(to).add(1, 'day'))
+      dayjs(date).isAfter(from) && dayjs(date).isBefore(dayjs(to).add(1, 'day'))
     );
   }
   async execute(
     daos: GetVideoMultiKeywordCacheDao[],
+    unit: TimeUnit = TimeUnit.YEAR, // enum 사용, 기본값은 'year'
+    value: number = 1, // 단위에 추가될 값 (기본값은 1)
   ): Promise<TVideoMultiKeywordCacheRes> {
     try {
       const today = dayjs().format('YYYY-MM-DD');
-      const fromOneYearAgo = dayjs().subtract(1, 'year').format('YYYY-MM-DD');
 
       let intersectionResults: Record<string, VideoCacheReturnType[]> = {};
 
@@ -61,7 +75,7 @@ export class VideoMultiKeywordCacheAdapter
 
         const filteredByDateRangeSearch = searchResults.filter((item) => {
           const [publishDate] = item.split(':');
-          return this.isWithinRange(publishDate, fromOneYearAgo, today);
+          return this.isWithinRange(publishDate, today, unit, value);
         });
 
         if (related) {
@@ -70,7 +84,7 @@ export class VideoMultiKeywordCacheAdapter
 
           const filteredByDateRangeRelated = relatedResults.filter((item) => {
             const [publishDate] = item.split(':');
-            return this.isWithinRange(publishDate, fromOneYearAgo, today);
+            return this.isWithinRange(publishDate, today, unit, value);
           });
 
           // 교집합 계산
@@ -79,6 +93,11 @@ export class VideoMultiKeywordCacheAdapter
           );
           intersectionResults[search] =
             RedisResultMapper.toObjects(intersection);
+        } else {
+          // 관련 검색어가 없는 경우
+          intersectionResults[search] = RedisResultMapper.toObjects(
+            filteredByDateRangeSearch,
+          );
         }
       }
 

@@ -12,6 +12,7 @@ import {
   TableNotFoundException,
 } from '@Libs/commons/src/exceptions/exceptions';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
+import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 export interface GetProbabilityRes {
   totalVideoCount: number;
@@ -24,6 +25,7 @@ export type TGetProbabilityRes = Result<
   | TableNotFoundException
   | CacheDoesNotFoundException
   | ChannelHistoryNotFoundError
+  | KeywordsNotFoundError
 >;
 
 @QueryHandler(GetProbabilitySuccessDto)

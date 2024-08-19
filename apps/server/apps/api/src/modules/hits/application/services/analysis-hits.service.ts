@@ -3,33 +3,62 @@ import {
   TAnalysisHitsServiceRes,
 } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
 import { GetAnalysisHitsDto } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
-import { IGetRelatedVideoChannelHistoryOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { Inject } from '@nestjs/common';
-import { HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import { Err, Ok } from 'oxide.ts';
-import { GetRelatedVideoChannelHistoryDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
+
+import { KeywordServiceHelper } from '@Apps/common/helpers/get-video-data.helper';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
+import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 
 /**
  * api: 데일리뷰와 기대조회수 병합
+ *
  */
 export class AnalysisHitsService implements AnalysisHitsServiceInboundPort {
+  private readonly dataHelper: KeywordServiceHelper;
   constructor(
-    @Inject(HITS_VIDEO_CHANNEL_HISTORY_IGNITE_DI_TOKEN)
-    private readonly getRelatedVideoChannelHistory: IGetRelatedVideoChannelHistoryOutboundPort,
-  ) {}
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+
+    @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
+    private readonly videoCacheService: VideoCacheOutboundPorts,
+  ) {
+    this.dataHelper = new KeywordServiceHelper(relWordsRepository);
+  }
   async execute(dto: GetAnalysisHitsDto): Promise<TAnalysisHitsServiceRes> {
     try {
-      const dao = new GetRelatedVideoChannelHistoryDao(dto);
+      const relatedCluster = await this.dataHelper.getClusters(dto.search);
+      const relatedClusterUnwrap = relatedCluster.unwrap();
+      const videoCacheDao = new GetVideoCacheDao({
+        ...dto,
+        relatedCluster: relatedClusterUnwrap,
+      });
 
-      const data = await this.getRelatedVideoChannelHistory.execute(dao);
+      const videoCacheResult = await this.videoCacheService.execute(
+        videoCacheDao,
+      );
 
-      if (data.isOk()) {
-        const dataUnwrap = data.unwrap();
-        const metrics = VideoAggregateHelper.calculateMetrics(dataUnwrap);
-        return Ok({ success: true, data: metrics });
+      if (videoCacheResult.isOk()) {
+        const videos = RedisResultMapper.groupByCluster(
+          RedisResultMapper.toObjects(videoCacheResult.unwrap()),
+        );
+        if (!Object.values(videos).flat().length) {
+          return Err(new VideoNotFoundError());
+        }
+
+        console.log(videos);
       }
-      return Err(data.unwrapErr());
+
+      // if (data.isOk()) {
+      //   const dataUnwrap = data.unwrap();
+      //   const metrics = VideoAggregateHelper.calculateMetrics(dataUnwrap);
+        return Ok({ success: true, data: [] });
+
     } catch (err) {
       return Err(err);
     }

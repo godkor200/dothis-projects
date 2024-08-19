@@ -15,6 +15,10 @@ export default registerAs('redis', () => ({
     node: process.env.REDIS_ON_PROMISE_NODE,
   },
 
+  onPromise_db_2: {
+    node: process.env.REDIS_ON_PROMISE_NODE_TWO,
+  },
+
   ranking: {
     node: process.env.REDIS_RANKING_NODE,
   },

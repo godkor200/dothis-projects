@@ -8,10 +8,10 @@ import {
 import { ConfigService } from '@nestjs/config';
 const IgniteClient = require('apache-ignite-client');
 const IgniteClientConfiguration = IgniteClient.IgniteClientConfiguration;
-let count = 0;
+
 const SqlFieldsQuery = IgniteClient.SqlFieldsQuery;
 @Injectable({ scope: Scope.DEFAULT })
-export class IgniteService implements OnModuleInit, OnModuleDestroy {
+export class IgniteService {
   public static client: typeof IgniteClient;
   private connectionState: 'connected' | 'disconnected' | 'error' =
     'disconnected';
@@ -19,11 +19,11 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
   private readonly logger: Logger = new Logger(IgniteService.name);
 
   constructor(private configService: ConfigService) {
-    // Create a new Ignite client instance.
-    if (!IgniteService.client) {
-      // 클라이언트 인스턴스가 없을 때만 새로 생성
-      IgniteService.client = new IgniteClient(this.onStateChanged.bind(this));
-    }
+    //    Create a new Ignite client instance.
+    // if (!IgniteService.client) {
+    //   // 클라이언트 인스턴스가 없을 때만 새로 생성
+    //   IgniteService.client = new IgniteClient(this.onStateChanged.bind(this));
+    // }
   }
   public getClient(): typeof IgniteClient {
     return IgniteService.client;
@@ -47,31 +47,42 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  private async checkConnectionPeriodically(interval: number) {
-    setInterval(async () => {
-      const isHealthy = await this.healthCheck();
-
-      if (!isHealthy) {
-        this.logger.log('health Check failed, Attempting to reconnect....');
-        await this.connectWithRetry(30000, 10);
-      }
-    }, interval);
-  }
+  // private async checkConnectionPeriodically(interval: number) {
+  //   setInterval(async () => {
+  //     const isHealthy = await this.healthCheck();
+  //
+  //     if (!isHealthy) {
+  //       this.logger.log('health Check failed, Attempting to reconnect....');
+  //       await this.connectWithRetry(30000, 10);
+  //     }
+  //   }, interval);
+  // }
 
   public createDistributedJoinQuery(sqlQuery: string) {
     return new SqlFieldsQuery(sqlQuery)
       .setDistributedJoins(true)
       .setLazy(false);
   }
-  private async connect() {
+  public async connect() {
+    if (this.connectionState === 'connected') {
+      // 이미 연결되어 있는 경우 연결을 다시 시도하지 않습니다.
+      return;
+    }
+
     const endpoint1 = this.configService.get<string>('ignite.IGNITE_ENDPOINT1');
     const username = this.configService.get<string>('ignite.IGNITE_USER_NAME');
     const password = this.configService.get<string>('ignite.IGNITE_PASSWORD');
     const igniteClientConfiguration = new IgniteClientConfiguration(endpoint1)
       .setUserName(username)
       .setPassword(password);
-    // Ignite 서버에 연결 시도
-    await this.getClient().connect(igniteClientConfiguration);
+
+    try {
+      IgniteService.client = new IgniteClient(this.onStateChanged.bind(this));
+      await this.getClient().connect(igniteClientConfiguration);
+    } catch (err) {
+      this.logger.error(`Failed to connect to Ignite server: ${err.message}`);
+      throw err; // 연결 오류가 발생하면 호출자에게 예외를 전달합니다.
+    }
   }
   /*
    * ignite 재시도 로직
@@ -105,15 +116,15 @@ export class IgniteService implements OnModuleInit, OnModuleDestroy {
     }
   }
   // NestJS hook that is called after the module is initialized.
-  async onModuleInit(): Promise<void> {
-    try {
-      await this.connect();
-    } catch (error) {
-      console.error('초기 Ignite 연결 실패. 재시도 중...');
-    } finally {
-      await this.checkConnectionPeriodically(30000); // 30초 마다 헬크체크를 보냄
-    }
-  }
+  // async onModuleInit(): Promise<void> {
+  //   try {
+  //     // await this.connect();
+  //   } catch (error) {
+  //     console.error('초기 Ignite 연결 실패. 재시도 중...');
+  //   } finally {
+  //     await this.checkConnectionPeriodically(30000); // 30초 마다 헬크체크를 보냄
+  //   }
+  // }
 
   // NestJS hook that is called before the module is destroyed.
   async onModuleDestroy(): Promise<void> {

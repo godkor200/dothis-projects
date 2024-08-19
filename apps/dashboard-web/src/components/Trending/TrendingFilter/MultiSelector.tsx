@@ -60,6 +60,9 @@ const MultiSelector = ({ selectOptions, setSelectOptions }: Props) => {
         menuList: (props) => {
           return 'py-10 text-prinmary500';
         },
+        indicatorsContainer: (props) => {
+          return 'cursor-pointer';
+        },
       }}
       // 아... 이래서 isFocus가 있엇구나..
       options={clustersCategoriesOptions}

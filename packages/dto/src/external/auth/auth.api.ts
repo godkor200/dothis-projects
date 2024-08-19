@@ -11,6 +11,6 @@ export const externalAuthApi = c.router({
     pathParams: zGetAuthParams,
     responses: { 200: zSuccessBase, ...zErrResBase },
     summary: '두디스 api access-token을 가져옵니다.',
-    description: '두디스 api access-token을 가져옵니다.',
+    description: '두디스 api access-token을 가져옵니다. 기간은 1년입니다.',
   },
 });

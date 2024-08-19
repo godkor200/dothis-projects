@@ -4,80 +4,74 @@ import {
   GetProbabilityRes,
   TGetProbabilityRes,
 } from '@Apps/modules/hits/application/queries/get-probability-success.query-handler';
-import { IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { Inject } from '@nestjs/common';
-import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
-import { GetVideoViewsMatchingSearchOnSpecificDateDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { Err, Ok } from 'oxide.ts';
-import { GetVideoViewsMatchingSearchOnSpecificDateRes } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
+import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
+import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
+import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VideoDataServiceHelper } from '@Apps/common/helpers/get-video-data.helper';
 
 export class GetProbabilitySuccessService
   implements GetProbabilitySuccessInboundPort
 {
-  /**
-   * 1. 한번의 쿼리로는 지금 현행상태에서는 느림
-   * @param getVideoAndChannelViewsByDateAndKeywords VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN
-   */
+  private readonly dataHelper: VideoDataServiceHelper;
+
   constructor(
-    @Inject(VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN)
-    private readonly getVideoViewsMatchingSearchOnSpecificDate: IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort,
+    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
+    private readonly relWordsRepository: RelatedWordsRepositoryPort,
+
+    @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
+    private readonly videoCacheService: VideoCacheOutboundPorts,
+
+    @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
+    private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
 
     @Inject(CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN)
-    private readonly getChannelHistoryByChannelId: ChannelHistoryByChannelIdOutboundPort,
-  ) {}
+    private readonly channelHistoryService: ChannelHistoryByChannelIdOutboundPort,
+  ) {
+    this.dataHelper = new VideoDataServiceHelper(
+      relWordsRepository,
+      videoCacheService,
+      videoHistoryService,
+      channelHistoryService,
+    );
+  }
 
   async execute(dto: GetProbabilitySuccessDto): Promise<TGetProbabilityRes> {
     try {
-      const videoDataDao = new GetVideoViewsMatchingSearchOnSpecificDateDao({
-        relatedCluster: dto.clusterNumber,
-        ...dto,
-      });
+      const relatedCluster = await this.dataHelper.getKeywordClusters(
+        dto.search,
+      );
+      const relatedClusterUnwrap = relatedCluster.unwrap();
 
-      const videoDataResult =
-        await this.getVideoViewsMatchingSearchOnSpecificDate.execute<GetVideoViewsMatchingSearchOnSpecificDateRes>(
-          videoDataDao,
+      const mergedVideoHistory =
+        await this.dataHelper.getVideoCacheAndHistories(
+          relatedClusterUnwrap,
+          dto,
         );
+      if (mergedVideoHistory.isOk()) {
+        const mergedVideoHistoryUnwrap = mergedVideoHistory.unwrap();
 
-      if (videoDataResult.isOk()) {
-        const videos = videoDataResult.unwrap();
-        const channelIds = videos.map((video) => video.channelId);
+        let countAboveAverage = 0;
+        mergedVideoHistoryUnwrap.forEach((item) => {
+          if (item.videoViews > item.channelAverageViews) {
+            countAboveAverage++;
+          }
+        });
+        const successProbability: GetProbabilityRes = {
+          totalVideoCount: Object.values(mergedVideoHistoryUnwrap).flat()
+            .length,
+          countAboveAverage: countAboveAverage,
+        };
 
-        const channelHistoryResult =
-          await this.getChannelHistoryByChannelId.execute({
-            channelIds,
-            from: dto.from,
-            to: dto.to,
-          });
-
-        if (channelHistoryResult.isOk()) {
-          const channelHistories = channelHistoryResult.unwrap();
-          let countAboveAverage = 0;
-          let totalVideoCount = videos.length;
-
-          videos.forEach((video) => {
-            const channelAverageViews =
-              channelHistories.find(
-                (channel) => channel.channelId === video.channelId,
-              )?.channelAverageViews || 0;
-            if (video.videoViews > channelAverageViews) {
-              countAboveAverage++;
-            }
-          });
-
-          const successProbability: GetProbabilityRes = {
-            totalVideoCount: totalVideoCount,
-            countAboveAverage: countAboveAverage,
-          };
-
-          // 결과값으로 총 비디오 갯수와 평균 이상인 비디오의 갯수를 리턴
-          return Ok({ success: true, data: successProbability });
-        }
-        return Err(channelHistoryResult.unwrapErr());
+        // 결과값으로 총 비디오 갯수와 평균 이상인 비디오의 갯수를 리턴
+        return Ok({ success: true, data: successProbability });
       }
-      // 결과를 찾을 수 없거나 오류가 발생한 경우에 대한 처리
-      return Err(videoDataResult.unwrapErr());
     } catch (e) {
       return Err(e);
     }

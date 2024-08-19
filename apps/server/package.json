@@ -31,8 +31,6 @@
     "typeorm-run:prod": "npm run typeorm-prod migration:run -- -d apps/api/src/typeorm.config.ts",
     "typeorm-generate:prod": "npm run typeorm-prod -- -d apps/api/src/typeorm.config.ts migration:generate apps/api/src/migrations/migration",
     "typeorm-revert:prod": "npm run typeorm-prod -- -d apps/api/src/typeorm.config.ts migration:revert",
-
-
     "typeorm-create:ex-api": "npm run typeorm -- migration:create apps/external-sales-api/src/migrations/migration",
     "typeorm-run:ex-api": "npm run typeorm migration:run -- -d apps/external-sales-api/src/typeorm.config.ts",
     "typeorm-generate:ex-api": "npm run typeorm -- -d apps/external-sales-api/src/typeorm.config.ts migration:generate apps/external-sales-api/src/migrations/migration",
@@ -45,6 +43,7 @@
     "@dothis/tsconfig": "workspace:*",
     "@googleapis/youtube": "^8.0.2",
     "@liaoliaots/nestjs-redis": "^9.0.5",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "10.3.8",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "10.3.8",
@@ -56,7 +55,7 @@
     "@nestjs/schedule": "^2.2.3",
     "@nestjs/swagger": "^7.3.1",
     "@nestjs/typeorm": "^10.0.2",
-    "@opensearch-project/opensearch": "^2.8.0",
+    "@opensearch-project/opensearch": "^2.11.0",
     "@ts-rest/core": "^3.33.0",
     "@ts-rest/nest": "^3.33.0",
     "@ts-rest/open-api": "^3.33.0",

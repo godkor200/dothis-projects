@@ -89,4 +89,8 @@ export const validationSchema = Joi.object({
   REDIS_ON_PROMISE_NODE: Joi.number()
     .required()
     .description('Redis on promise 서버의 접속할 node number 입니다.'),
+
+  REDIS_ON_PROMISE_NODE_TWO: Joi.number()
+    .required()
+    .description('Redis on promise db 2 서버의 접속할 node number 입니다.'),
 });

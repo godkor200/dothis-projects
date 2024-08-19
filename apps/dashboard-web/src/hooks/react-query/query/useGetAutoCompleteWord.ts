@@ -17,10 +17,13 @@ const useGetAutoCompleteWord = (
     typeof apiRouter.relatedWords.getAutoCompleteWords
   >,
 ) => {
-  const queryResult = apiClient(1).relatedWords.getAutoCompleteWords.useQuery(
+  const queryResult = apiClient(2).relatedWords.getAutoCompleteWords.useQuery(
     [AUTO_COMPLETEWORD_KEY.all, word],
     { params: { word } },
-    { enabled: !!word, ...queryOptions },
+    {
+      ...queryOptions,
+      enabled: !!word,
+    },
   );
 
   return {

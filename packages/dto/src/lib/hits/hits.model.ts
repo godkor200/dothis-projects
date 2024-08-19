@@ -6,6 +6,11 @@ import {
   zClustersObject,
 } from '../common.model';
 import { zChannelHistoryModel } from '../channel-history';
+import { zSuccessBase } from '../success.response.zod';
+
+/**
+ * getDailyViewsV2 models
+ */
 
 export const zDailyViewSchema = z.object({
   date: z.string(),
@@ -21,39 +26,16 @@ export const zDailyViewSchema = z.object({
   increaseViews: z.number().describe('비디오 조회수'),
 });
 
-export const zDailyViews = z.array(zDailyViewSchema);
-
-export const zDailyViewsData = dataObject(zDailyViews);
-
-const zRepresentativeCategorySchema = z.object({
+export const zRepresentativeCategorySchema = z.object({
   representativeCategory: z.string(),
 });
 
-export const zDailyViewsDataWithCategory = zDailyViewsData.merge(
-  zRepresentativeCategorySchema,
-);
-
 /**
- * weekly-view models
+ * getWeeklyKeywordListWithPagingV1 models
  */
-
-export const zWeeklyKeywordSchema = z.object({
-  ranking: z.number(),
-  keyword: z.string(),
-  category: z.string(),
-  weeklyViews: z.number(),
-  videoCount: z.number(),
-  competitive: z.number(),
-  megaChannel: z.number(),
-  lastRanking: z.number(),
-  year: z.number(),
-  month: z.number(),
-  day: z.number(),
-});
 
 export const zCreateWeeklyKeywordsListSourceSchema = z
   .object({
-    id: z.number().int().positive().describe('조회수의 고유 식별자'),
     ranking: z.number().int().positive().describe('조회수의 순위'),
     keyword: z.string().max(30).describe('탐색어'),
     category: z.string().max(30).describe('연관어'),
@@ -90,25 +72,23 @@ export const zCreateWeeklyKeywordsListSourceSchema = z
       .describe('조회수 레코드의 일'),
   })
   .strict();
-export const SortOrderQuery = Object.keys(
-  zCreateWeeklyKeywordsListSourceSchema.shape,
-);
 
-export const zWeeklyKeywordsListSourceSchema =
-  zCreateWeeklyKeywordsListSourceSchema;
-
-export const zWeeklyKeywordsList = z.array(
-  zCreateWeeklyKeywordsListSourceSchema,
-);
-
-export const zWeeklyKeywordsListData = dataObject(zWeeklyKeywordsList);
-
-export const zWeeklyKeywordsListWithTotal = zTotalData.merge(
-  zWeeklyKeywordsListData,
-);
-export const zWeeklyKeywordsListWithTotalData = dataObject(
-  zWeeklyKeywordsListWithTotal,
-);
+/**
+ * getWeeklyKeywordListWithPagingV2 models
+ */
+export const zWeeklyKeywordSchema = z.object({
+  ranking: z.number(),
+  keyword: z.string(),
+  category: z.string(),
+  weeklyViews: z.number(),
+  videoCount: z.number(),
+  competitive: z.number(),
+  megaChannel: z.number(),
+  lastRanking: z.number(),
+  year: z.number(),
+  month: z.number(),
+  day: z.number(),
+});
 
 export const zWeeklyKeywordsPaginationSchema = z.object({
   count: z.number(),
@@ -116,50 +96,17 @@ export const zWeeklyKeywordsPaginationSchema = z.object({
   page: z.number(),
 });
 
-export const zWeeklyKeywordsData = dataObject(zWeeklyKeywordSchema);
+/**
+ * getWeeklyKeywordSome models
+ */
 
-export const zWeeklyKeywordsDataWithPagination =
-  zWeeklyKeywordsPaginationSchema.merge(zWeeklyKeywordsData);
+// 스키마 는 getWeeklyKeywordListWithPagingV1와 동일
 
-export const zWeeklyKeywordsDataWithPaginationRes = z.object({
-  body: zWeeklyKeywordsDataWithPagination,
-});
+/**
+ * getExpectedViews models
+ */
 
-export type DailyViewModel = z.TypeOf<typeof zDailyViews>;
-
-export const zSortWeeklyViews = zSortQuery(SortOrderQuery);
-export type WeeklyHitsModel = z.TypeOf<typeof zWeeklyKeywordsListSourceSchema>;
-
-export const zCombinedViewsData = z.object({
-  date: z.string().describe('날짜, yyyy-mm-dd 형식을 권장'),
-  // 일일 조회수 데이터
-  uniqueVideoCount: z
-    .number()
-    .optional()
-    .describe('해당하는 날짜의 산정 비디오수'),
-  increaseComments: z.number().optional().describe('비디오 코멘트 수 증가분'),
-  increaseLikes: z.number().optional().describe('비디오 좋아요 수 증가분'),
-  increaseViews: z.number().describe('비디오 조회수 증가분'),
-
-  // 기대 조회수 데이터
-  expectedHits: z.number().describe('기대 조회수'),
-  maxPerformance: z.number().describe('최대 성능'),
-  minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
-});
-
-export const zCombinedViewsDataResponse = dataObject(
-  zClustersObject(z.array(zCombinedViewsData)),
-);
-
-export const zClusterSpecificCombinedSchema = z.object({
-  clusterNumber: z.number().nullable(),
-  data: z.array(zCombinedViewsData),
-});
-
-export const zClusterSpecificCombinedData = dataObject(
-  zClusterSpecificCombinedSchema,
-);
-
+// Schema 접미사로 바꾸고싶음
 export const zExpectedViewsData = z.object({
   date: z.string().describe('yyyy-mm-dd 형식'),
   expectedHits: z.number().describe('기대 조회수'),
@@ -167,19 +114,33 @@ export const zExpectedViewsData = z.object({
   minPerformance: z.number().min(0).describe('최소 성능 (0 이상)'),
 });
 
-export const zSuccessRateSchema = z.object({
-  totalVideoCount: z.number(),
-  countAboveAverage: z.number(),
+/**
+ * getAnalysisHitsV2  models
+ */
+
+export const zCombinedViewsSchema = zDailyViewSchema.merge(zExpectedViewsData);
+
+/**
+ * getProbabilitySuccess models
+ */
+
+export const zGetProbabilityRes = z.object({
+  totalVideoCount: z
+    .number()
+    .describe('전체 비디오의 수를 나타내는 숫자 값입니다.'),
+  countAboveAverage: z
+    .number()
+    .describe(
+      '평균 조회수보다 높은 조회수를 가진 비디오의 수를 나타내는 숫자 값입니다.',
+    ),
 });
 
-export const zSuccessRateData = dataObject(zSuccessRateSchema);
+export const zSuccessRateSchema = zGetProbabilityRes;
 
-export const zExpectedViewsArr = z.array(zExpectedViewsData);
+/**
+ * getKeywordThisWeekly models
+ */
 
-export const zExpectedViews = z.object({
-  data: zExpectedViewsArr,
-});
-// 각 추천 키워드 객체의 구조 정의
 export const zKeywordSchema = z.object({
   recommendedKeyword: z.string().describe('키워드'),
   topAssociatedWord: z.string().describe('1등 연관어'),
@@ -191,16 +152,7 @@ export const zKeywordSchema = z.object({
   changes: z.number(),
 });
 
-export const zKeywordThisWeeklyList = z.array(zKeywordSchema);
-
-export const zKeywordThisWeeklyRes = dataObject(zKeywordThisWeeklyList);
-
+/**
+ * ETC
+ */
 export type ChannelHistoryModel = z.TypeOf<typeof zChannelHistoryModel>;
-
-export type TExpectedViewsRes = z.TypeOf<typeof zExpectedViews>;
-
-export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
-
-export type TAnalysisViewsRes = z.TypeOf<typeof zClusterSpecificCombinedData>;
-
-export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;

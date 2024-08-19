@@ -1,8 +1,11 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
-import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
+
+import {
+  ChannelDataEntity,
+  VideoDataShortsEntity,
+} from '@ExternalApps/feature/video/domain/entities';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -27,7 +30,6 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
           entities: [
             __dirname + './**/**/**/**/**/*.entities.ts',
             __dirname + './**/**/**/**/*.entity.ts',
-            WeeklyHitsEntity,
           ],
           autoLoadEntities: true,
           migrations: [__dirname + '../../migrations/*.ts'],
@@ -41,7 +43,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
           password: this.configService.get('db.ONPROMISES_MYSQL_ROOT_PASSWORD'),
           database: this.configService.get('db.ONPROMISES_DB_SCHEMA'),
           logging: true,
-          entities: [ChannelEntity],
+          entities: [ChannelDataEntity, VideoDataShortsEntity],
           autoLoadEntities: true,
           synchronize: false,
         };

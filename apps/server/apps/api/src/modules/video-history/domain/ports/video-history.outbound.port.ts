@@ -19,6 +19,9 @@ import {
   IVideoSchema,
 } from '@Apps/modules/video/infrastructure/daos/video.res';
 import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
+import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/os/video-history.os.adapter';
+import { VideosMultiRelatedWordsCacheType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
   extends DateData {
@@ -77,4 +80,23 @@ export interface IGetVideoHistoryLastOneByIdsOutboundPort {
 
 export interface IVideoHistoryGetTopViewsByIdsOutboundPort {
   execute(dao: VideoHistoryGetTopViewsByIdsDao): Promise<TIssueTodayRes>;
+}
+export type IVideoHistoryResult = {
+  video_views: number;
+  channel_average_views: null | number;
+  video_id: string;
+  video_performance: number;
+};
+export type TVideoHistoryOsAdapterResult = Result<
+  {
+    total: { value: number; relation: string };
+    items: IVideoHistoryResult[];
+  },
+  any
+>;
+
+export interface IVideoHistoryOsAdapterOutboundPort {
+  execute(
+    dao: GetVideoHistoryMultipleByIdAndRelatedWordsDao,
+  ): Promise<TVideoHistoryOsAdapterResult>;
 }
