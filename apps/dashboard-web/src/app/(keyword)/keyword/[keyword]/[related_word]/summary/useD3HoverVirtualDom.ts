@@ -1,12 +1,5 @@
 import * as D3 from 'd3';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useImperativeHandle, useRef } from 'react';
 
 import type { DataItem } from './SummaryChart';
 
@@ -46,6 +39,7 @@ interface Props {
 
   tooltip: D3.Selection<D3.BaseType, unknown, HTMLElement, any>;
   tooltipColorCallback: (index: number, colorList: string[]) => void;
+  keywordList: string[];
 }
 
 const useD3HoverVirtualDom = ({
@@ -55,6 +49,7 @@ const useD3HoverVirtualDom = ({
   xScale,
   tooltip,
   tooltipColorCallback,
+  keywordList,
 }: Props) => {
   const { width, height, marginTop, marginRight, marginBottom, marginLeft } =
     dimensions;
@@ -84,7 +79,9 @@ const useD3HoverVirtualDom = ({
                   )}</p>
                 <p style="color: #A1A1AA; font-size: 12px;
                 font-style: normal;
-                font-weight: 500; white-space:nowrap;"> ${`일일조회수`} </p>
+                font-weight: 500; white-space:nowrap;"> ${
+                  keywordList[index]
+                } </p>
               </div>`;
   };
 

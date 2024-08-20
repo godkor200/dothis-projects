@@ -295,6 +295,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
           : 'unknown';
       return chartColorSchema[color];
     },
+    keywordList: sortedRelatedKeywordList,
   });
 
   useEffect(() => {

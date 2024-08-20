@@ -9,6 +9,7 @@ import type { SVGType } from '@/components/common/SvgComp';
 import SvgComp from '@/components/common/SvgComp';
 import usePathNameList from '@/hooks/usePathNameList';
 import useQueryString from '@/hooks/useQueryString';
+import { useIsSignedIn } from '@/store/authStore';
 import { useIsRouterModalOpen } from '@/store/modalStore';
 import { cn } from '@/utils/cn';
 
@@ -63,11 +64,9 @@ const DashboardList = ({
 
   const { createUrlWithQueryString } = useQueryString();
 
-  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
-    '/membership',
-    '/login',
-    '/rank',
-  ];
+  const isSignedIn = useIsSignedIn();
+
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = ['/membership', '/login'];
 
   const isInterceptingRoute = (targetLink: Route) =>
     INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
@@ -83,6 +82,10 @@ const DashboardList = ({
     return targetLink;
   };
 
+  const isEnableRouterScroll = (targetLink: Route) => {
+    return isInterceptingRoute(targetLink) && !isSignedIn ? false : true;
+  };
+
   const isRouterModalOpen = useIsRouterModalOpen();
 
   const isCurrentIntercepting = isRouterModalOpen;
@@ -93,7 +96,11 @@ const DashboardList = ({
       <div className="flex flex-col gap-[14px]">
         {menuList.map((item) => {
           return (
-            <Link href={handleInterCeptingRoute(item.link)} key={item.title}>
+            <Link
+              href={handleInterCeptingRoute(item.link)}
+              key={item.title}
+              scroll={isEnableRouterScroll(item.link)}
+            >
               <Style.SideItemContainer
                 $isInActive={
                   isInterceptingRoute(currentPath as Route)
@@ -140,11 +147,9 @@ const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
 
   const { createUrlWithQueryString } = useQueryString();
 
-  const INTERCEPTING_ROUTE_OPTIONS: Route[] = [
-    '/membership',
-    '/login',
-    '/rank',
-  ];
+  const isSignedIn = useIsSignedIn();
+
+  const INTERCEPTING_ROUTE_OPTIONS: Route[] = ['/membership', '/login'];
 
   const isInterceptingRoute = (targetLink: Route) =>
     INTERCEPTING_ROUTE_OPTIONS.includes(targetLink);
@@ -160,6 +165,10 @@ const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
     return targetLink;
   };
 
+  const isEnableRouterScroll = (targetLink: Route) => {
+    return isInterceptingRoute(targetLink) && !isSignedIn ? false : true;
+  };
+
   const isRouterModalOpen = useIsRouterModalOpen();
 
   const isCurrentIntercepting = isRouterModalOpen;
@@ -167,7 +176,11 @@ const IconList = ({ menuList }: { menuList: SideMenus[] }) => {
     <ul className="px-[12px] pt-[39px]">
       <div className="flex flex-col gap-[14px]">
         {menuList.map((item) => (
-          <Link href={handleInterCeptingRoute(item.link)} key={item.title}>
+          <Link
+            href={handleInterCeptingRoute(item.link)}
+            key={item.title}
+            scroll={isEnableRouterScroll(item.link)}
+          >
             <Style.IconItemContainer
               $isInActive={
                 isInterceptingRoute(currentPath as Route)

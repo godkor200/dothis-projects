@@ -55,8 +55,6 @@ const MembershipModalFrame = ({
 
   const searchParams = useSearchParams();
 
-  console.log(searchParams?.get('payment'));
-
   return (
     <div className="border-grey400 relative mx-auto flex w-[600px] flex-col  items-center rounded-[30px] border bg-white px-[100px] ">
       {hasDismissButton && (
