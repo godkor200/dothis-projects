@@ -1,7 +1,4 @@
-import {
-  KeywordRes,
-  RelWordsEntity,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { KeywordRes, RelWordsEntity } from '@Libs/types';
 
 export interface FindRelatedWordOutboundPort {
   findOneByKeyword: (option: string) => Promise<RelWordsEntity>;

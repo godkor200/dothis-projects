@@ -26,10 +26,11 @@ import { getApiResponse } from '@ExternalApps/feature/preview/application/dto/pr
 import { lastValueFrom } from 'rxjs';
 import { VideoToObject } from '@ExternalApps/feature/video/application/helpers/video.mapper';
 import { WebhookUrlTokenMismatchException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/webhook-response-failed.exception';
+import { HttpUtils } from '@ExternalApps/utils/http.utils';
 
 export class PostReqVideoService implements PostReqVideoInboundPort {
   constructor(
-    private readonly httpService: HttpService,
+    private readonly httpUtils: HttpUtils,
 
     @Inject(REQUEST_VIDEO_REPOSITORY_DI_TOKEN)
     private readonly requestVideoRepository: ReqVideoOutboundPort,
@@ -48,9 +49,6 @@ export class PostReqVideoService implements PostReqVideoInboundPort {
   ) {}
 
   async execute(command: PostRequestVideoDto): Promise<TPostRequestVideoRes> {
-    const apiUrl =
-      'https://vc2nqcxgphxrixcizq2jfqdsei0mytqt.lambda-url.ap-northeast-2.on.aws/video_channel_info'; // 실제 API 엔드포인트로 변경 필요
-
     try {
       const now = new Date();
       const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC+9 (한국 시간)
@@ -84,13 +82,11 @@ export class PostReqVideoService implements PostReqVideoInboundPort {
         token,
       });
 
-
-      const data = await lastValueFrom(this.httpService.get<getApiResponse>('http://dothis2.iptime.org:8002/video-channel-info/' + videoId));
-
-      const responseData = data.data;
+      const response = await this.httpUtils.fetchData(videoId);
+      const responseData = response;
       if (responseData.message === 'SUCCESS') {
         // 데이터를 원하는 형식으로 매핑
-        const { video_data, channel_data } = data.data.data;
+        const { video_data, channel_data } = response.data;
         const videoPublished = new Date(video_data.video_published);
         const monthPublished = videoPublished.getMonth() + 1;
         // 비디오 데이터 삽입 시도

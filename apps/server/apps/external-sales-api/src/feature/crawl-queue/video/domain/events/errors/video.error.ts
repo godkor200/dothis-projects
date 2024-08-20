@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { zVideoErrNotFound } from '@dothis/dto';

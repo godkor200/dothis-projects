@@ -14,10 +14,10 @@ import {
 } from '@Apps/modules/related-word/application/dtos/get-page-by-keyword.dto';
 import { GetPageByKeywordResult } from '@Apps/modules/related-word/application/queries/get-page-by-keyword.query-handler';
 import { match } from 'oxide.ts';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { Controller, NotFoundException, Param } from '@nestjs/common';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { getPageBySearchKeyword } = c;

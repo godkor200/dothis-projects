@@ -3,7 +3,7 @@ import {
   GetVideosMultiRelatedWordsCacheDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { Result } from 'oxide.ts';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 export type VideoCacheRecord = Record<string, VideoCacheReturnType[]>;
 export type VideoCacheReturnType = {

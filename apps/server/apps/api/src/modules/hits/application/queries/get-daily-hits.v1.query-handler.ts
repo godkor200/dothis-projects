@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { ICalculateDailyHitsMetricsServiceInboundPort } from '@Apps/modules/hits/domain/ports/daily-hits-service.inbound.port';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { Inject } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { FindDailyViewsV1Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';

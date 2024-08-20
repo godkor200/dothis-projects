@@ -1,10 +1,10 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { TRecentStoryBoardModel, zStoryBoardSchema } from '@dothis/dto';
 import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board.outbound';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Paginated } from '@Libs/commons/src';
+import { Paginated } from '@Libs/commons';
 import {
   FindOneStoryBoardDao,
   StoryBoardDao,

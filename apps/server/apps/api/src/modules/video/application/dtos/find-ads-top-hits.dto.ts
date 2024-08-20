@@ -1,7 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { zGetAdsRelatedTopHits } from '@dothis/dto';
-import { IGetVideoClusterInterface } from '@Libs/commons/src/interfaces/types/dto.types';
+import { IGetVideoClusterInterface } from '@Libs/types';
 
 export class FindAdsTopHitsQuery extends createZodDto(
   extendApi(zGetAdsRelatedTopHits),

@@ -6,7 +6,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { tsRestHandler, TsRestHandler } from '@ts-rest/nest';
 import { RelatedWordModel, relatedWordsApi } from '@dothis/dto';
 import {
@@ -27,8 +27,7 @@ import { match } from 'oxide.ts';
 
 import { TDeleteRelWordsCommandHandlerRes } from './delete-rel-words.command-handler';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
-import { JwtAccessGuard } from '@Libs/commons/src';
-import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
+import { JwtAccessGuard, IsAdminGuard } from '@Libs/oauth';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 @ApiTags('연관어')

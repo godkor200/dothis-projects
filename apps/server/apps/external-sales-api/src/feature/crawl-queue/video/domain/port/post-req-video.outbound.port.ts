@@ -1,4 +1,4 @@
-import { RepositoryPort } from '@Libs/commons/src';
+import { RepositoryPort } from '@Libs/commons';
 import { RequestVideoEntity } from '@ExternalApps/feature/crawl-queue/video/domain/entities/request-video.entity';
 
 import { DeleteReqVideoDao } from '@ExternalApps/feature/crawl-queue/video/infrastructure/dao/delete-req-video.dao';

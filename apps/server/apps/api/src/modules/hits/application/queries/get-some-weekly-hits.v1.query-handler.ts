@@ -1,9 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetSomeWeeklyHitsDto } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';
-import {
-  IRes,
-  WeeklyKeywordsRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, WeeklyKeywordsRes } from '@Libs/types';
 import { Result } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 import { Inject } from '@nestjs/common';

@@ -8,7 +8,7 @@ import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/chan
 import { IGetChannelHistoryLatestTupleByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
 import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
 import { Err, Ok } from 'oxide.ts';
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { DateUtil } from '@Libs/commons/utils/date.util';
 import { IGetOneVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 
 export class FindIndividualVideoInfoService

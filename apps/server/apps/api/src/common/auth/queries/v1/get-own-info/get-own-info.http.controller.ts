@@ -16,16 +16,17 @@ import {
 } from '@nestjs/common';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter, USER_AUTH, zOwnInfo, zVideoModel } from '@dothis/dto';
-import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetOwnInfoQuery } from '@Apps/common/auth/interfaces/get-own-info.interface';
 import { User as UserEntity } from '@Apps/modules/user/domain/user.entity';
-import { UserRes, IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TDecodePayload } from '@Libs/types';
 import { match, Result } from 'oxide.ts';
 import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { extendApi } from '@anatine/zod-openapi';
 import { createZodDto } from '@anatine/zod-nestjs';
+import { JwtAccessGuard } from '@Libs/oauth';
 const { getOwnInfo } = nestControllerContract(apiRouter.auth);
 const { summary, description } = getOwnInfo;
 export class OwnInfoRes extends createZodDto(extendApi(zOwnInfo)) {}

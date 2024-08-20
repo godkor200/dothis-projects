@@ -4,7 +4,7 @@ import { nestControllerContract, TsRest, TsRestRequest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { FindAutoCompleteWordsCommandDto } from '@Apps/modules/related-word/application/dtos/auto-complete-words.dto';
 
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import {
   ApiOkResponse,
   ApiOperation,

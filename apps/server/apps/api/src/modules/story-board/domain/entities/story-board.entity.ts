@@ -8,7 +8,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 import { User } from '@Apps/modules/user/domain/user.entity';
-import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
+import { IdBaseDateEntityAbstract } from '@Libs/commons';
 import { StoryBoardOverviewEntity } from '@Apps/modules/story-board/domain/entities/story-board-overview.entity';
 
 @Entity({ name: 'story_board' })

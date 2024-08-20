@@ -14,11 +14,7 @@ import {
 } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import {
-  IRes,
-  RelWordsRankingRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, RelWordsRankingRes, TTsRestRes } from '@Libs/types';
 import {
   GetRankingRelatedWordsDto,
   GetRankingRelatedWordsParams,

@@ -5,7 +5,7 @@ import {
   VideosMultiRelatedWordsCacheType,
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { DateUtil } from '@Libs/commons/utils/date.util';
 
 export interface IGetVideoHistoryDao
   extends Pick<GetRelatedVideoAndVideoHistory, 'videoId'> {

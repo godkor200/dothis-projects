@@ -1,5 +1,5 @@
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { User } from '../domain/user.entity';
 import { Injectable } from '@nestjs/common';
 import { zUserModel, TUserModel } from '@dothis/dto';

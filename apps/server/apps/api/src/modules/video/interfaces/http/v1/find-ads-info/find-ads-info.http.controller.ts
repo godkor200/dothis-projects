@@ -20,14 +20,10 @@ import {
 } from '@Apps/modules/video/application/dtos/find-ads-info.dtos';
 import { match } from 'oxide.ts';
 import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
-import {
-  FindAdsInfoRes,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { FindAdsInfoRes, IRes, TTsRestRes } from '@Libs/types';
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 const c = nestControllerContract(apiRouter.video);

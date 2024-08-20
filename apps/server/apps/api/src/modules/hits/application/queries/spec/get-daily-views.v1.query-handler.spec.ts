@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended';
 import { FindDailyViewsQuery } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { RequestContextService } from '@Libs/commons/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { VideoQueryHandlerOutboundPort } from '@Apps/modules/video/domain/ports/video.query-handler.outbound.port';
 

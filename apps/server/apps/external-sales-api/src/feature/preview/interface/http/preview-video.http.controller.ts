@@ -16,7 +16,7 @@ import {
   PreviewVideoParam,
   ReviewVideoResponse,
 } from '@ExternalApps/feature/preview/application/dto/preview-video.dto';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import {
   ApiBearerAuth,
   ApiInternalServerErrorResponse,
@@ -35,10 +35,7 @@ import {
   PreviewVideoDto,
   PreviewVideoRes,
 } from '@ExternalApps/feature/preview/domain/port/preview-video.inbound.port';
-import {
-  IResWithItem,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IResWithItem, TTsRestRes } from '@Libs/types';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 
 const c = nestControllerContract(externalApiRouter.video);

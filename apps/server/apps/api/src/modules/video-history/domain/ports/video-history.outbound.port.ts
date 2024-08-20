@@ -9,17 +9,14 @@ import {
   GetVideoHistoryMultipleByIdAndRelatedWordsDao,
   VideoHistoryGetTopViewsByIdsDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-import {
-  ComplexQueryException,
-  TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
 import {
   DateData,
   ITodayIssue,
   IVideoSchema,
-} from '@Apps/modules/video/infrastructure/daos/video.res';
+} from '@Apps/modules/video/application/dtos/video.res';
 import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
-import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/os/video-history.os.adapter';
+import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.os.adapter';
 import { VideosMultiRelatedWordsCacheType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 

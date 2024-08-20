@@ -6,16 +6,16 @@ import { GetAnalysisHitsV2Dto } from '@Apps/modules/hits/application/dtos/get-an
 import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { Inject } from '@nestjs/common';
 import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
-import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
-import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
+
 import { Err, Ok } from 'oxide.ts';
 import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { VideoDataServiceHelper } from '@Apps/common/helpers/get-video-data.helper';
+import {
+  KeywordServiceHelper,
+  VideoDataServiceHelper,
+} from '@Apps/common/helpers/get-video-data.helper';
 
 /**
  * 시퀀스
@@ -34,25 +34,14 @@ export class AnalysisHitsV2Service implements AnalysisHitsServiceV2InboundPort {
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
-    private readonly videoCacheService: VideoCacheOutboundPorts,
-    @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
-    private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
-    @Inject(CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN)
-    private readonly channelHistoryService: ChannelHistoryByChannelIdOutboundPort,
+    private readonly videoCacheService: VideoCacheOutboundPorts, // @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN) // private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort, // @Inject(CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN) // private readonly channelHistoryService: ChannelHistoryByChannelIdOutboundPort,
   ) {
-    this.dataHelper = new VideoDataServiceHelper(
-      relWordsRepository,
-      videoCacheService,
-      videoHistoryService,
-      channelHistoryService,
-    );
+    this.dataHelper = new KeywordServiceHelper(relWordsRepository);
   }
 
   async execute(dto: GetAnalysisHitsV2Dto): Promise<TAnalysisHitsServiceRes> {
     try {
-      const relatedCluster = await this.dataHelper.getKeywordClusters(
-        dto.search,
-      );
+      const relatedCluster = await this.dataHelper.getClusters(dto.search);
       const relatedClusterUnwrap = relatedCluster.unwrap();
 
       const mergedVideoHistory =

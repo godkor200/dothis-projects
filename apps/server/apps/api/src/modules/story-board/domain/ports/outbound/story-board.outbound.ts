@@ -1,4 +1,4 @@
-import { Paginated, RepositoryPort } from '@Libs/commons/src';
+import { Paginated, RepositoryPort } from '@Libs/commons';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 
 import {

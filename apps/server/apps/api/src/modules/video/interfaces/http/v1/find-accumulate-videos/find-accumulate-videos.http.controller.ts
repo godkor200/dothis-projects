@@ -13,7 +13,7 @@ import {
   FindAccumulateQuery,
   FindAccumulateVideosV1Dto,
 } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { match } from 'oxide.ts';
 import {
   IFindAccumulateVideoWithOutUserSection,

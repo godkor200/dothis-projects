@@ -6,10 +6,10 @@ import {
   InternalServerErrorException,
   UseGuards,
 } from '@nestjs/common';
-import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
+import { JwtAccessGuard } from '@Libs/oauth';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { PutEnvDtos } from '@Apps/modules/user/dtos/put-env.dtos';
 import { match, Result } from 'oxide.ts';
@@ -23,6 +23,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { IsAdminGuard } from '@Libs/oauth/guards';
+import { User } from '@Libs/commons';
 const c = nestControllerContract(apiRouter.user);
 const { putAdminUserEnv } = c;
 const { responses, description, summary } = putAdminUserEnv;

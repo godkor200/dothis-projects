@@ -11,7 +11,7 @@ import { match } from 'oxide.ts';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { GetKeywordInformationResult } from '@Apps/modules/related-word/application/queries/get-keyword-information.query-handler';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { getKeywordInformation } = c;
 

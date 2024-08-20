@@ -14,16 +14,14 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAccessGuard, TDecodePayload, User } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { GetAnalyzeMyChannel } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { match } from 'oxide.ts';
-import {
-  ChannelAnalysisRes,
-  IRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { ChannelAnalysisRes, IRes, TDecodePayload } from '@Libs/types';
+import { User } from '@Libs/commons';
 
 const { analyzeChannel } = nestControllerContract(apiRouter.channel);
 

@@ -1,4 +1,4 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { TRequestVideoModel, zRequestVideoSchema } from '@dothis/dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';

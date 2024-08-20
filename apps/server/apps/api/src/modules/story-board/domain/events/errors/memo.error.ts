@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 
 export class MemoNotExistsError extends ExceptionBase {
   static readonly message = 'The memo does not exist';

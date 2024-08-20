@@ -1,5 +1,5 @@
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { DateData } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { DateData } from '@Apps/modules/video/application/dtos/video.res';
 
 import {
   IIncreaseHits,
@@ -16,14 +16,17 @@ export class VideoAggregateUtils {
     array: T[],
     key: (item: T) => K,
   ): Record<K, T[]> {
-    return array.reduce((result, currentValue) => {
-      const groupKey = key(currentValue);
-      if (!result[groupKey]) {
-        result[groupKey] = [];
-      }
-      result[groupKey].push(currentValue);
-      return result;
-    }, {} as Record<K, T[]>);
+    return array.reduce(
+      (result, currentValue) => {
+        const groupKey = key(currentValue);
+        if (!result[groupKey]) {
+          result[groupKey] = [];
+        }
+        result[groupKey].push(currentValue);
+        return result;
+      },
+      {} as Record<K, T[]>,
+    );
   }
   /**
    * 클러스터 별로 구룹화 되지 않은 배열을 그룹회
@@ -181,13 +184,16 @@ export class VideoAggregateUtils {
     const getRandomInRange = VideoAggregateUtils.getRandomInRange;
     const getRandomIntInRange = VideoAggregateUtils.getRandomIntInRange;
 
-    const minMaxValues = dataKeys.reduce((acc, key) => {
-      const values = calculatedData.map((data) => data[key] as number);
-      const min = Math.min(...values);
-      const max = Math.max(...values);
-      acc[key] = { min, max };
-      return acc;
-    }, {} as Record<keyof IIncreaseHits, { min: number; max: number }>);
+    const minMaxValues = dataKeys.reduce(
+      (acc, key) => {
+        const values = calculatedData.map((data) => data[key] as number);
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        acc[key] = { min, max };
+        return acc;
+      },
+      {} as Record<keyof IIncreaseHits, { min: number; max: number }>,
+    );
 
     const fakeData: IIncreaseHits = {
       date,
@@ -229,13 +235,16 @@ export class VideoAggregateUtils {
   ): IIncreaseHitsData {
     const getRandomIntInRange = VideoAggregateUtils.getRandomIntInRange;
 
-    const minMaxValues = dataKeys.reduce((acc, key) => {
-      const values = calculatedData.map((data) => data[key] as number);
-      const min = Math.min(...values);
-      const max = Math.max(...values);
-      acc[key] = { min, max };
-      return acc;
-    }, {} as Record<keyof IIncreaseHitsData, { min: number; max: number }>);
+    const minMaxValues = dataKeys.reduce(
+      (acc, key) => {
+        const values = calculatedData.map((data) => data[key] as number);
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        acc[key] = { min, max };
+        return acc;
+      },
+      {} as Record<keyof IIncreaseHitsData, { min: number; max: number }>,
+    );
 
     const fakeData: IIncreaseHitsData = {
       date,

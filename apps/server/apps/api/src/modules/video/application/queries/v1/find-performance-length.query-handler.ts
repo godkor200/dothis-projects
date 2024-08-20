@@ -4,8 +4,8 @@ import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domai
 import {
   CacheDoesNotFoundException,
   TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+} from '@Libs/commons';
+import { IRes } from '@Libs/types';
 import { Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { VIDEO_PERFORMANCE_LENGTH_GET_VIDEO_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';

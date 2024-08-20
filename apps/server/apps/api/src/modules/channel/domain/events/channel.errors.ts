@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 
 export class ChannelNotFoundError extends ExceptionBase {
   static readonly message = 'Channel not found';

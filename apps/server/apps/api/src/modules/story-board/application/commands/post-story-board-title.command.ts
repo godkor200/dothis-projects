@@ -5,7 +5,7 @@ import { RECENT_STORY_BOARD_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/
 import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board.outbound';
 import { Err, Ok, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors/story.error';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 export type TPostStoryBoardTitleCommandRes = Result<
   IRes<boolean>,
   StoryNotExistsError | InternalServerErrorException

@@ -21,11 +21,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import {
-  ExpectedViewsData,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { ExpectedViewsData, IRes, TTsRestRes } from '@Libs/types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 
 import { ClusterNumberMulti } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
@@ -59,13 +55,9 @@ export class ExpectedHitsV1HttpController {
         clusterNumber: params.clusterNumber,
         ...query,
       });
-      const result: any =
-        await this.queryBus.execute(arg);
+      const result: any = await this.queryBus.execute(arg);
 
-      return match<
-        any,
-        TTsRestRes<IRes<TExpectedViewsRes>>
-      >(result, {
+      return match<any, TTsRestRes<IRes<TExpectedViewsRes>>>(result, {
         Ok: (result) => ({
           status: 200,
           body: {

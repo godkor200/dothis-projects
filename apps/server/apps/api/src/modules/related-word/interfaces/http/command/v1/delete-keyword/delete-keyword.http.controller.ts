@@ -5,11 +5,9 @@ import {
 } from '@Apps/modules/related-word/application/dtos/delete-keyword.dto';
 import { InternalServerErr } from '@Apps/modules/related-word/application/dtos/delete-rel-words.dto';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
-import { JwtAccessGuard } from '@Libs/commons/src';
-import { IsAdminGuard } from '@Libs/commons/src/oauth/guards/is-admin.guard';
+import { IsAdminGuard, JwtAccessGuard } from '@Libs/oauth/guards';
 import { relatedWordsApi } from '@dothis/dto';
 import {
-  Body,
   Controller,
   NotFoundException,
   Param,
@@ -26,7 +24,7 @@ import {
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { TDeleteKeyWordCommandHandlerRes } from '@Apps/modules/related-word/application/command/delete-keyword.command-handler';
 
 @ApiTags('탐색어')

@@ -12,11 +12,7 @@ import {
 } from '@ts-rest/nest';
 import { externalApiRouter } from '@dothis/dto';
 import { TPostRequestChannelIdRes } from '@ExternalApps/feature/crawl-queue/channel/application/commands/post-req-channel-id.command';
-import {
-  IRes,
-  TokenExpired,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TokenExpired, TTsRestRes } from '@Libs/types';
 import {
   ApiBearerAuth,
   ApiConflictResponse,
@@ -26,7 +22,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import { ChannelDuplicateException } from '@ExternalApps/feature/crawl-queue/channel/domain/events/errors/channel.error';
 import { SuccessBase } from '@Apps/modules/story-board/application/dtos';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';

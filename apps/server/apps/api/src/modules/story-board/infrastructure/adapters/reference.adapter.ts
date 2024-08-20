@@ -1,4 +1,4 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { ReferenceEntity } from '@Apps/modules/story-board/domain/entities/reference.entity';
 import { ReferenceOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/reference.outbound';
 import { TReferenceModel, zReferenceSchema } from '@dothis/dto';

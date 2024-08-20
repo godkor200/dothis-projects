@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 
 export class RelatedWordsNotFoundError extends ExceptionBase {
   static readonly message = 'The relwords could not be found.';

@@ -12,15 +12,16 @@ import {
 import { match, Result } from 'oxide.ts';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 
 import {
   ChannelKeywordOrtagDtos,
   ResultChannelKeywordTag,
 } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
+import { JwtAccessGuard } from '@Libs/oauth';
 const c = nestControllerContract(apiRouter.user);
 const { summary, responses, description } = c.getUserKeyword;
 

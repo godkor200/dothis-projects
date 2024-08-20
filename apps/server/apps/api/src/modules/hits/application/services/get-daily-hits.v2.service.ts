@@ -28,10 +28,10 @@ export class GetDailyHitsV2Service implements DailyHitsServiceInboundPort {
 
     @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
     private readonly videoCacheService: VideoCacheOutboundPorts,
-
-    @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
-    private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
-  ) {
+  ) //
+  // @Inject(VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN)
+  // private readonly videoHistoryService: IGetVideoHistoryGetMultipleByIdV2OutboundPort,
+  {
     this.dataHelper = new KeywordServiceHelper(relWordsRepository);
   }
   private findClusterWithMostValues(

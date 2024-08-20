@@ -23,7 +23,7 @@ import { FindDailyViewsV1Query } from '@Apps/modules/hits/application/dtos/find-
 import { FindDailyViewsV2Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
 import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
 import { match } from 'oxide.ts';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { extendApi } from '@anatine/zod-openapi';

@@ -3,10 +3,10 @@ import {
   PaginatedQueryParams,
   RepositoryPort,
   updateObject,
-} from '@Libs/commons/src/ddd/repository.port';
+} from '@Libs/commons/db';
 import { ZodObject } from 'zod';
 import { DataSource, Repository } from 'typeorm';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 
 export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
   protected constructor(private dataSource: DataSource) {}

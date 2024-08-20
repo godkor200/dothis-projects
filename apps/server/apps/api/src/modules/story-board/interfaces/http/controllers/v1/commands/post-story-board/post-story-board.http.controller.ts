@@ -17,14 +17,14 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 import {
   nestControllerContract,
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
 import { apiRouter, TPostStoryBoardBody } from '@dothis/dto';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
@@ -63,6 +63,7 @@ import { TOverviewRes } from '@Apps/modules/story-board/application/commands/pos
 import { TPostStoryBoardReferenceRes } from '@Apps/modules/story-board/application/commands/post-reference.command';
 import { TPostMemoCommand } from '@Apps/modules/story-board/application/commands/post-memo.command';
 import { TCreateStoryBoardCommandRes } from '@Apps/modules/story-board/application/commands/create-story-board.command';
+import { JwtAccessGuard } from '@Libs/oauth';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const {
@@ -108,9 +109,8 @@ export class PostStoryBoardHttpV1Controller {
   ) {
     const arg = new RecentStoryBoardCreateDto(userInfo);
     return tsRestHandler(createStoryBoard, async () => {
-      const result: TCreateStoryBoardCommandRes = await this.commandBus.execute(
-        arg,
-      );
+      const result: TCreateStoryBoardCommandRes =
+        await this.commandBus.execute(arg);
       return match<
         TCreateStoryBoardCommandRes,
         TTsRestRes<IRes<StoryBoardEntity>>
@@ -145,9 +145,8 @@ export class PostStoryBoardHttpV1Controller {
         body,
       });
 
-      const result: TStoryBoardDraftRes = await this.commandBus.execute(
-        command,
-      );
+      const result: TStoryBoardDraftRes =
+        await this.commandBus.execute(command);
       return match<TStoryBoardDraftRes, TTsRestRes<IRes<boolean>>>(result, {
         Ok: (result) => ({
           status: 201,
@@ -285,9 +284,8 @@ export class PostStoryBoardHttpV1Controller {
   ) {
     return tsRestHandler(addStoryBoardReference, async ({ params, body }) => {
       const command = new PostStoryBoardReferenceDto({ ...params, body });
-      const result: TPostStoryBoardReferenceRes = await this.commandBus.execute(
-        command,
-      );
+      const result: TPostStoryBoardReferenceRes =
+        await this.commandBus.execute(command);
       return match<TPostStoryBoardReferenceRes, TTsRestRes<IRes<boolean>>>(
         result,
         {

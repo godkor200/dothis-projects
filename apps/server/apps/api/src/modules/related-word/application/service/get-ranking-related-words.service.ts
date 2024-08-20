@@ -1,10 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TRankRes } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
-import {
-  RELWORDS_DI_TOKEN,
-  RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE,
-} from '@Apps/modules/related-word/related-words.enum.di-token.constant';
+import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { Err, Ok, Result } from 'oxide.ts';
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
@@ -17,18 +14,17 @@ import {
   CacheDoesNotFoundException,
   ComplexQueryException,
   TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+} from '@Libs/commons';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
 import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
-import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/os/video-history.os.adapter';
+import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.os.adapter';
 import { GetVideoHistoryMultipleByIdAndRelatedWordsDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideosMultiRelatedWordsCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
-import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 
 export type TGetRankingRelatedWordsRes = Result<
   TRankRes,
@@ -50,9 +46,6 @@ export class GetRankingRelatedWordsService
   constructor(
     @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
     private readonly relWordsRepository: RelatedWordsRepositoryPort,
-
-    @Inject(RELATED_WORD_TOKEN_GET_VIDEO_HISTORY_MULTIPLE)
-    private readonly getRelatedVideoHistory: IGetRelatedLastVideoHistory,
 
     @Inject(VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN)
     private readonly videoCache: VideosMultiRelatedWordsCacheOutboundPorts,

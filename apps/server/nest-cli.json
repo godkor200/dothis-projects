@@ -30,11 +30,29 @@
     },
     "common": {
       "type": "library",
-      "root": "libs/common",
+      "root": "libs/commons",
       "entryFile": "index",
-      "sourceRoot": "libs/common/src",
+      "sourceRoot": "libs/commons/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/common/tsconfig.lib.json"
+        "tsConfigPath": "libs/commons/tsconfig.lib.json"
+      }
+    },
+    "oauth": {
+      "type": "library",
+      "root": "libs/oauth",
+      "entryFile": "index",
+      "sourceRoot": "libs/oauth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/oauth/tsconfig.lib.json"
+      }
+    },
+    "types": {
+      "type": "library",
+      "root": "libs/types",
+      "entryFile": "index",
+      "sourceRoot": "libs/types/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/types/tsconfig.lib.json"
       }
     }
   }

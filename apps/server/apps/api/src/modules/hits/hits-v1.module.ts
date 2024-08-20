@@ -14,8 +14,6 @@ import {
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
   PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
-  VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
-  VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V1_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
@@ -27,21 +25,16 @@ import { GetWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/quer
 import { WeeklyHitsRepository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.repository';
 import { VideoCountDayAdapter } from '@Apps/modules/video/infrastructure/adapters/video.count-day.adapter';
 
-import { VideoHistoryListAdapter } from '@Apps/modules/video/infrastructure/adapters/video.history-list.adapter';
+import { VideoHistoryGetListByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-list-by-ids.adapter';
 import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v2.repository';
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 import { GetProbabilitySuccessHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-probability-success/get-probability-success.http.controller';
 import { GetProbabilitySuccessQueryHandler } from '@Apps/modules/hits/application/queries/get-probability-success.query-handler';
 import { GetProbabilitySuccessService } from '@Apps/modules/hits/application/services/get-probability-success.service';
-import { VideoChannelAverageViewsAdapter } from '@Apps/modules/video/infrastructure/adapters/video.channel-average-views.adapter';
-import { VideoLastHistoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.last-history.adapter';
-import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
-import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/channel-history.by-channel-id.adapter';
 import { GetSomeWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-some-weekly-hits.v1.query-handler';
 import { SomeWeeklyHitsService } from '@Apps/modules/hits/application/services/some-weekly-hits.service';
 import { WeeklyHitsV1Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v1.repository';
 import { GetSomeWeeklyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-some-weekly-hits/get-some-weekly-hits.v1.http.controller';
-import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { AnalysisHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/analysis-hits/analysis-hits.v1.http.controller';
 import { AnalysisHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v1.query-handler';
 import { AnalysisHitsService } from '@Apps/modules/hits/application/services/analysis-hits.service';
@@ -52,11 +45,11 @@ import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
 import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
+import { ChannelHistoryAggregateService } from '@Apps/modules/channel-history/application/service/channel-history.aggregate.service';
 import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-multiple-by-id.adapter';
-import {
-  ChannelHistoryAggregateService
-} from "@Apps/modules/channel-history/application/service/channel-history.aggregate.service";
+import { MockGetChannelHistoryListAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/__mock__/get-channel-history-list.adapter.mock';
+import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
+import { MockGetChannelHistoryByIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/__mock__/get-channel-history-by-id.adapter.mock';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -103,7 +96,7 @@ const repositories: Provider[] = [
   WeeklyHitsRepository,
   {
     provide: VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryListAdapter,
+    useClass: VideoHistoryGetListByIdsAdapter,
   },
   { provide: VIDEO_COUNT_DAY_IGNITE_DI_TOKEN, useClass: VideoCountDayAdapter },
   { provide: WEEKLY_VIEWS_REPOSITORY_DI_TOKEN, useClass: WeeklyHitsRepository },
@@ -115,38 +108,26 @@ const repositories: Provider[] = [
     provide: WEEKLY_VIEWS_REPOSITORY_V1_DI_TOKEN,
     useClass: WeeklyHitsV1Repository,
   },
-  {
-    provide: VIDEO_CHANNEL_AVERG_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
-    useClass: VideoChannelAverageViewsAdapter,
-  },
-  {
-    provide: VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
-    useClass: VideoLastHistoryAdapter,
-  },
-  {
-    provide: CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
-    useClass: ChannelHistoryByChannelIdAdapter,
-  },
+
   {
     provide: RELWORDS_DI_TOKEN.FIND_ONE,
     useClass: RelatedWordsRepository,
   },
-  {
-    provide: VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryGetMultipleByIdV2Adapter,
-  },
 ];
 const adapters: Provider[] = [
   { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
+  {
+    provide: VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN,
+    useClass: MockGetChannelHistoryListAdapter,
+  },
+  {
+    provide: CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
+    useClass: MockGetChannelHistoryByIdAdapter,
+  },
 ];
 
 @Module({
-  imports: [
-    CqrsModule,
-    IgniteModule,
-    WeeklyHitsEntityModule,
-    RelatedWordsModule,
-  ],
+  imports: [CqrsModule, WeeklyHitsEntityModule, RelatedWordsModule],
   controllers,
   providers: [
     ...commands,

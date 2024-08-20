@@ -1,4 +1,4 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { TMembershipModel, zMembershipModel } from '@dothis/dto';
 import { Injectable } from '@nestjs/common';

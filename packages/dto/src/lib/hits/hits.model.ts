@@ -202,4 +202,4 @@ export type TExpectedViewsArr = z.TypeOf<typeof zExpectedViewsArr>;
 
 export type TAnalysisViewsRes = z.TypeOf<typeof zClusterSpecificCombinedData>;
 
-export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;
+export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyList>;

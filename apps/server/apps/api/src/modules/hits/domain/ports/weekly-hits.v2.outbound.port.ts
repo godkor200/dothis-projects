@@ -2,7 +2,7 @@ import {
   GetWeeklyKeyword,
   GetWeeklyViewsDaoV2,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { Paginated, RepositoryPort } from '@Libs/commons/src';
+import { Paginated, RepositoryPort } from '@Libs/commons';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { Result } from 'oxide.ts';
 

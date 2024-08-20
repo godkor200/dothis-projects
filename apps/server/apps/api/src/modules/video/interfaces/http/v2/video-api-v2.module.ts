@@ -17,11 +17,10 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { FindVideoPageHttpController } from '@Apps/modules/video/interfaces/http/v2/find-video-paging/find-video-page.http.controller';
 import { FindVideoPageQueryHandler } from '@Apps/modules/video/application/queries/v2/find-video-page.query-handler';
 import { GetVideoDataV2PaginatedService } from '@Apps/modules/video/application/service/get-video-data.v2.paginated.service';
-import { VideoNoKeywordPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video-no-keyword.paginated.adapter';
-import { IgniteModule } from '@Apps/common/ignite/ignite.module';
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { RelatedWordsRepository } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository';
 import { RelatedWordsModule } from '@Apps/modules/related-word/infrastructure/repositories/entity/related_words.entity.module';
+import { VideoNoKeywordPaginatedAdapter } from '@Apps/modules/video/infrastructure/adapters/video.no-keyword.paginated.adapter';
 
 const controllers = [
   FindVideosCountHttpController,
@@ -44,10 +43,6 @@ const service: Provider[] = [
     provide: VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN,
     useClass: VideoMultiRelatedWordsCacheAdapter,
   },
-  {
-    provide: VIDEO_CACHE_PAGINAED_ADAPTER_DI_TOKEN,
-    useClass: VideoNoKeywordPaginatedAdapter,
-  },
 ];
 const adapters: Provider[] = [
   { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
@@ -55,9 +50,13 @@ const adapters: Provider[] = [
     provide: RELWORDS_DI_TOKEN.FIND_ONE,
     useClass: RelatedWordsRepository,
   },
+  {
+    provide: VIDEO_CACHE_PAGINAED_ADAPTER_DI_TOKEN,
+    useClass: VideoNoKeywordPaginatedAdapter,
+  },
 ];
 @Module({
-  imports: [CqrsModule, IgniteModule, RelatedWordsModule],
+  imports: [CqrsModule, RelatedWordsModule],
   controllers,
   providers: [...service, ...queryHandlers, ...adapters],
 })

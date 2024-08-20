@@ -1,4 +1,4 @@
-import { RelWordsRankingRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { RelWordsRankingRes } from '@Libs/types';
 
 export class RelatedWordMapper {
   static toObject(caches: string[]): RelWordsRankingRes[] {

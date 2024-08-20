@@ -10,7 +10,7 @@ import {
 import { ReferenceEntity } from './reference.entity';
 import { MemoEntity } from './memo.entity';
 
-import { IdBaseDateEntityAbstract } from '@Libs/commons/src/abstract/db.base-entity.abstract';
+import { IdBaseDateEntityAbstract } from '@Libs/commons/abstract/db.base-entity.abstract';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 
 @Entity({ name: 'story_board_overview' })

@@ -23,13 +23,9 @@ import {
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import { externalApiRouter } from '@dothis/dto';
-import {
-  IResWithItem,
-  TokenExpired,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IResWithItem, TokenExpired, TTsRestRes } from '@Libs/types';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import {
   VideoErrNotFound,

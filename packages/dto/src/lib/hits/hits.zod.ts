@@ -4,7 +4,7 @@ import {
   zKeywordsMulti,
   zPaginatedOffsetQuery,
 } from '../common.model';
-import { zDailyViews, zSortWeeklyViews } from './hits.model';
+import { zDailyViewsData, zSortWeeklyViews } from './hits.model';
 import { z } from 'zod';
 import { zSuccessBase } from '../success.response.zod';
 export const zGetWeeklyViewsQuery = zPaginatedOffsetQuery
@@ -33,5 +33,5 @@ const zRepresentativeCategory = z.object({
   representativeCategory: z.string().describe('대표 카테고리 넘버'),
 });
 export const zGetDailyViewsV2Res = zSuccessBase
-  .merge(zDailyViews)
+  .merge(zDailyViewsData)
   .merge(zRepresentativeCategory);

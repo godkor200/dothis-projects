@@ -1,8 +1,4 @@
-import {
-  DocumentBuilder,
-  SwaggerCustomOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { DocumentBuilder } from '@nestjs/swagger';
 
 export const config = new DocumentBuilder()
   .setTitle('DOTHIS API')

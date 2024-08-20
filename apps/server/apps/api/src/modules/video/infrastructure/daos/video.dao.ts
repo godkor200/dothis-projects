@@ -4,7 +4,6 @@ import { GetVideoPaginatedPageDto } from '@Apps/modules/video/application/dtos/f
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
-import { ExpectedViewsV1Dto } from '@Apps/modules/hits/application/dtos/expected-hits.dtos';
 import { FindAdsInfoDto } from '@Apps/modules/video/application/dtos/find-ads-info.dtos';
 import { FindAdsTopHitsDto } from '@Apps/modules/video/application/dtos/find-ads-top-hits.dto';
 import { GetAnalysisHitsQuery } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
@@ -108,5 +107,8 @@ export class GetVideosMultiRelatedWordsCacheDao {
   }
 }
 export class GetVideoMultiKeywordCacheDao {
-  constructor(public search: string, public related?: string) {}
+  constructor(
+    public search: string,
+    public related?: string,
+  ) {}
 }

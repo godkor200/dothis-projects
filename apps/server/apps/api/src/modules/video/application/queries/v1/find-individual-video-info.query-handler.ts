@@ -6,12 +6,9 @@ import { VideoDetailsModel } from '@dothis/dto';
 import { Result } from 'oxide.ts';
 
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { FindIndividualVideoInboundPort } from '@Apps/modules/video/domain/ports/find-individual-video.inbound.port';
-import {
-  ComplexQueryException,
-  TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 
 export type TVideoIndividualRes = Result<

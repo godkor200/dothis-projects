@@ -7,7 +7,7 @@ import { VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN } from '@Apps/modules/hits/
 
 import { IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { GetVideoViewsMatchingSearchOnSpecificDateDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/application/dtos/video.res';
 
 /**
  * - 기획 내용

@@ -7,7 +7,7 @@ import {
   zClusterNumber,
   zClusterNumberMulti,
 } from '@dothis/dto';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
+import { IParamsInterface } from '@Libs/commons/abstract/applications.abstract';
 
 export class ClusterNumberMulti extends createZodDto(
   extendApi(zClusterNumberMulti),

@@ -6,10 +6,10 @@ import {
   Logger,
   NestInterceptor,
 } from '@nestjs/common';
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { RequestContextService } from '@Libs/commons/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { catchError, tap, throwError } from 'rxjs';
-import { ApiErrorResponse } from '@Libs/commons/api-error.response';
+import { ApiErrorResponse } from '../api-error.response';
 @Injectable()
 export class ExceptionInterceptor implements NestInterceptor {
   private readonly logger: Logger = new Logger(ExceptionInterceptor.name);

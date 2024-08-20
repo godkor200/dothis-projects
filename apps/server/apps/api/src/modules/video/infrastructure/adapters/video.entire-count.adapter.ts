@@ -1,14 +1,10 @@
-import { VideoBaseAdapter } from '@Apps/modules/video/infrastructure/adapters/video.base.adapter';
 import { GetVideoDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import {
   IGetRelatedVideosEntireCountOutBoundPort,
   TRelatedEntireCount,
 } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { Err, Ok } from 'oxide.ts';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
-import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
+import { TableNotFoundException } from '@Libs/commons';
 import { Injectable } from '@nestjs/common';
 
 /**
@@ -18,33 +14,13 @@ import { Injectable } from '@nestjs/common';
  */
 @Injectable()
 export class VideoEntireCountAdapter
-  extends VideoBaseAdapter
   implements IGetRelatedVideosEntireCountOutBoundPort
 {
-  constructor(private readonly igniteService: IgniteService) {
-    super();
-  }
   async execute(dao: GetVideoDao): Promise<TRelatedEntireCount> {
     const { search, related, from, to, clusterNumber } = dao;
-    const queryString = this.getClusterQueryString(
-      [`vd.video_id`],
-      search,
-      from,
-      to,
-      clusterNumber,
-      related,
-    );
 
-    const tableName = CacheNameMapper.getVideoDataCacheName(clusterNumber[0]);
     try {
-      const query = this.igniteService.createDistributedJoinQuery(
-        `SELECT COUNT(*) FROM (` + queryString + `) AS subquery`,
-      );
-      const cache = await this.igniteService.getClient().getCache(tableName);
-      const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) return Err(new VideoNotFoundError());
-      return Ok(resArr);
+      return Ok([]);
     } catch (e) {
       if (e.message.includes('Table')) {
         return Err(new TableNotFoundException(e.message));

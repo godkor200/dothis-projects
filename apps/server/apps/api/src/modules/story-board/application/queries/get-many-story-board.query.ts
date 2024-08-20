@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetManyStoryBoardDto } from 'apps/api/src/modules/story-board/application/dtos';
-import { Paginated } from '@Libs/commons/src';
+import { Paginated } from '@Libs/commons';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors';

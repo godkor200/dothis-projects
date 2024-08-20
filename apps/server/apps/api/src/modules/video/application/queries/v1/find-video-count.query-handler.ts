@@ -1,5 +1,5 @@
 import { Result } from 'oxide.ts';
-import { VideoCountRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { VideoCountRes } from '@Libs/types';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindVideoCountDto } from '@Apps/modules/video/application/dtos/find-video-count.dto';
 import { Inject } from '@nestjs/common';

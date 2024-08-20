@@ -6,10 +6,7 @@ import { GetVideoPaginatedPageSortDto } from '@Apps/modules/video/application/dt
 import { Inject } from '@nestjs/common';
 import { VIDEO_GET_PAGENATION_SERVICE_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { GetVideoDataPageV2ServiceInboundPort } from '@Apps/modules/video/domain/ports/get-video-data-page.service.inbound.port';
-import {
-  ComplexQueryException,
-  TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 export type TGetVideoPage = Result<

@@ -20,26 +20,26 @@ export class GetOwnInfoQueryHandler
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepositoryPort,
-
-    @Inject(CHANNEL_DATA_REPOSITORY)
-    private readonly channelRepository: ChannelRepositoryPort,
   ) {}
   async execute(query: GetOwnInfoQuery): Promise<TOwnInfoRes> {
     const user = await this.userRepository.findOneWithRelations(query.index);
     if (!user) return Err(new UserNotFoundError());
-    const channelInfo = await this.channelRepository.findOneByChannelId(
-      user.channelId,
-    );
-    if (!channelInfo)
-      return Ok({ ...user, dateSignIn: user.dateSignIn, channel: null });
-    return Ok({
-      ...user,
-      dateSignIn: user.dateSignIn,
-      channel: {
-        ...channelInfo,
-        keyword: channelInfo.keyword.split(',').map((e) => e.trim()),
-        channelTags: channelInfo.channelTags.split(',').map((e) => e.trim()),
-      },
-    });
+    /**
+     * FIXME: os 채널 데이터에서 가져오기
+     */
+    // const channelInfo = await this.channelRepository.findOneByChannelId(
+    //   user.channelId,
+    // );
+
+    return Ok({ ...user, dateSignIn: user.dateSignIn, channel: null });
+    // return Ok({
+    //   ...user,
+    //   dateSignIn: user.dateSignIn,
+    //   channel: {
+    //     ...channelInfo,
+    //     keyword: channelInfo.keyword.split(',').map((e) => e.trim()),
+    //     channelTags: channelInfo.channelTags.split(',').map((e) => e.trim()),
+    //   },
+    // });
   }
 }

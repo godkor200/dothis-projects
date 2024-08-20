@@ -29,7 +29,7 @@ import {
 } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
 import { TAnalysisHitsServiceRes } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
 import { match } from 'oxide.ts';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';

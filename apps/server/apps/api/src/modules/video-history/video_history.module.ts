@@ -1,10 +1,10 @@
 import { Module, Provider } from '@nestjs/common';
 
-import { AwsModule } from '@Apps/common/aws/aws.module';
+import { OpensearchCoreModule } from '@Apps/common/opensearch/core.module';
 
 const queryHandlers: Provider[] = [];
 @Module({
-  imports: [AwsModule],
+  imports: [OpensearchCoreModule],
   providers: [...queryHandlers],
 })
 export class VideoHistoryApiModule {}

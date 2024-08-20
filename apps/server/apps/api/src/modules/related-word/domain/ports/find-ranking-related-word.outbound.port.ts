@@ -1,5 +1,5 @@
 import { Result } from 'oxide.ts';
-import { RelWordsRankingRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { RelWordsRankingRes } from '@Libs/types';
 import { RankingRelatedWordErrors } from '@Apps/modules/related-word/domain/errors/ranking-related-word.errors';
 
 export type FindRankingRelatedWordOutboundPortRes = Result<

@@ -17,17 +17,26 @@
       "@ExternalApps/*": [
         "./apps/external-sales-api/src/*"
       ],
-      "@Libs/*": [
-        "./libs/*"
-      ],
       "@ts-rest/core/src": [
         "../../packages/dto/node_modules/@ts-rest/core/src"
       ],
-      "@app/common": [
-        "libs/common/src"
+      "@Libs/commons": [
+        "libs/commons/src"
       ],
-      "@app/common/*": [
-        "libs/common/src/*"
+      "@Libs/commons/*": [
+        "libs/commons/src/*"
+      ],
+      "@Libs/oauth": [
+        "libs/oauth/src"
+      ],
+      "@Libs/oauth/*": [
+        "libs/oauth/src/*"
+      ],
+      "@Libs/types": [
+        "libs/types/src"
+      ],
+      "@Libs/types/*": [
+        "libs/types/src/*"
       ]
     }
   },
@@ -41,7 +50,8 @@
   "include": [
     "./",
     "../../packages/dto/**/*",
-    "jest.config.js"
+    "jest.config.js",
+    "./libs/**/*"
   ],
   "references": [
     {

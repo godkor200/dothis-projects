@@ -14,7 +14,7 @@ import {
 
 import { match, Result } from 'oxide.ts';
 import { TIncrementScoreResult } from '@Apps/modules/related-word/application/service/increment-score.service';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 const c = nestControllerContract(apiRouter.relatedWords);
 const { incrementScoreWords } = c;
 const { summary, description } = incrementScoreWords;

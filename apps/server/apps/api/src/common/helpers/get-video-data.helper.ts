@@ -12,10 +12,7 @@ import { IGetVideoHistoryGetMultipleByIdV2OutboundPort } from '@Apps/modules/vid
 import { ChannelHistoryByChannelIdOutboundPort } from '@Apps/modules/channel-history/domain/ports/channel-history.outbound.port';
 import { VideoDataMapper } from '@Apps/modules/video/application/mapper/video-data.mapper';
 import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
-import {
-  ComplexQueryException,
-  TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 

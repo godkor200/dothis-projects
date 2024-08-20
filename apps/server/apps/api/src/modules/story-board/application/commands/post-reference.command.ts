@@ -5,7 +5,7 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { REFERENCE_DI_TOKEN_CONSTANT } from '@Apps/modules/story-board/reference.di-token.constant';
 import { ReferenceOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/reference.outbound';
 import { ReferNotExistsError } from '@Apps/modules/story-board/domain/events/errors';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 export type TPostStoryBoardReferenceRes = Result<
   IRes<boolean>,
   ReferNotExistsError | InternalServerErrorException

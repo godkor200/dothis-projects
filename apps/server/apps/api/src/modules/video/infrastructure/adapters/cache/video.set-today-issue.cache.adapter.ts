@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SetVideoTodayIssueCacheOutboundPort } from '@Apps/modules/related-word/domain/ports/set-video-today-issue.cache.outbound.port';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { Redis } from 'ioredis';
-import { ITodayIssue } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { ITodayIssue } from '@Apps/modules/video/application/dtos/video.res';
 
 @Injectable()
 export class SetVideoTodayIssueCacheAdapter

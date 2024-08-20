@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 
 export class WeeklyViewsError extends ExceptionBase {
   static readonly message = 'The weekly-hits data could not be found.';

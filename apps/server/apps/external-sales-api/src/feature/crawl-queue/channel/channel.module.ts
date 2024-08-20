@@ -10,7 +10,7 @@ import {
 import { RequestChannelsEntityModule } from '@ExternalApps/feature/crawl-queue/channel/domain/entities/request-channels.entity.module';
 import { RequestChannelRepository } from '@ExternalApps/feature/crawl-queue/channel/domain/repositories/request-channel.repository';
 import { PassportModule } from '@nestjs/passport';
-import { AtStrategy } from '@Libs/commons/src';
+import { AtStrategy } from '@Libs/oauth';
 const controllers = [PostReqChannelHttpController];
 const commands: Provider[] = [PostRequestChannelIdCommand];
 const service: Provider[] = [

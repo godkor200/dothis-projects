@@ -1,4 +1,4 @@
-import { RepositoryPort } from '@Libs/commons/src/ddd/repository.port';
+import { RepositoryPort } from '@Libs/commons';
 import { User } from '../domain/user.entity';
 
 export interface UserRepositoryPort extends RepositoryPort<User> {

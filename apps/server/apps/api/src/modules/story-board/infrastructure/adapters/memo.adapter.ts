@@ -1,5 +1,5 @@
 import { MemoEntity } from '@Apps/modules/story-board/domain/entities/memo.entity';
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { TMemoModel, zMemoSchema } from '@dothis/dto';
 import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';

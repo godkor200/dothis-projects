@@ -20,23 +20,20 @@ import {
   GetVideoAndChannelViewsByDateAndKeywordsRes,
   IVideoSchema,
   TVideoRes,
-} from '@Apps/modules/video/infrastructure/daos/video.res';
+} from '@Apps/modules/video/application/dtos/video.res';
 import {
   CacheDoesNotFoundException,
   TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+} from '@Libs/commons';
 
-import { TGetRelatedVideoAnalyticsData } from '@Apps/modules/video/infrastructure/adapters/video.history-multiple.adapter';
 import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 import { GetAdsRelatedTopHitsRes } from '@dothis/dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
-const IgniteClient = require('apache-ignite-client');
-const IllegalStateError = IgniteClient.Errors.IllegalStateError;
 
 export type TRelatedVideoAndHistoryRes = Result<
   GetRelatedVideoHistory[],
-  VideoNotFoundError | VideoHistoryNotFoundError | typeof IllegalStateError
+  VideoNotFoundError | VideoHistoryNotFoundError | TableNotFoundException
 >;
 export type TRelatedVideos = Result<
   IVideoSchema[],
@@ -98,9 +95,7 @@ export interface IGetRelatedLastVideoHistoryEach {
   ): Promise<TGetRelatedLastVideoAndVideoHistory>;
 }
 export interface IGetRelatedLastVideoHistory {
-  execute(
-    dao: GetRelatedLastVideoAndVideoHistory,
-  ): Promise<TGetRelatedVideoAnalyticsData>;
+  execute(dao: GetRelatedLastVideoAndVideoHistory): Promise<any>;
 }
 
 export interface IGetVideoAdsInfoAdapterOutboundPort {

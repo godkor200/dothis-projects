@@ -6,7 +6,7 @@ import { HttpModule } from '@nestjs/axios';
 
 import { ChannelDataEntityModule } from '@ExternalApps/feature/video/domain/entities';
 import { VideoDataEntityModule } from '@ExternalApps/feature/video/domain/entities/video-data-shorts.module';
-
+import { HttpUtils } from '@ExternalApps/utils/http.utils';
 
 const controllers = [PreviewVideoHttpController];
 const repositories: Provider[] = [];
@@ -18,6 +18,6 @@ const repositories: Provider[] = [];
     VideoDataEntityModule,
   ],
   controllers,
-  providers: [PreviewVideoService, ...repositories],
+  providers: [PreviewVideoService, HttpUtils, ...repositories],
 })
 export class PreviewModule {}

@@ -21,7 +21,7 @@ import {
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { apiRouter } from '@dothis/dto';
 import {
   GetOneStoryBoardDto,
@@ -33,7 +33,7 @@ import {
   StoryNotExistsError,
 } from '@Apps/modules/story-board/domain/events/errors/story.error';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 
 import { TGetOneStoryBoardRes } from '@Apps/modules/story-board/application/queries/get-one-story-board.query';
@@ -41,6 +41,7 @@ import { InternalServerErr } from '@Apps/common/auth/domain/event/auth.error';
 
 import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
 import { StoryBoardCreateRes } from '@Apps/modules/story-board/domain/events/response';
+import { JwtAccessGuard } from '@Libs/oauth';
 
 const c = nestControllerContract(apiRouter.storyBoard);
 const { getOneStoryBoard } = c;

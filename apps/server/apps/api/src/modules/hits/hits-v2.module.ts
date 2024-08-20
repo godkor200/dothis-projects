@@ -16,11 +16,6 @@ import { AnalysisHitsV2Controller } from '@Apps/modules/hits/interfaces/http/con
 import { VideoCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.cache.adapter';
 import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { AnalysisHitsV2QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v2.query-handler';
-import { VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
-import { VideoHistoryGetMultipleByIdV2Adapter } from '@Apps/modules/video-history/infrastructure/adapters/new/video-history.get-multiple-by-id.adapter';
-import { IgniteModule } from '@Apps/common/ignite/ignite.module';
-import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
-import { ChannelHistoryByChannelIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters';
 import { GetDailyHitsV2HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v2/get-daily-hits/get-daily-hits.v2.http.controller';
 import { GetDailyHitsV2Service } from '@Apps/modules/hits/application/services/get-daily-hits.v2.service';
 import { GetDailyHitsV2QueryHandler } from '@Apps/modules/hits/application/queries/get-daliy-hits.v2.query-handler';
@@ -56,25 +51,12 @@ const repository: Provider[] = [
   },
   { provide: VIDEO_CACHE_ADAPTER_DI_TOKEN, useClass: VideoCacheAdapter },
   {
-    provide: VIDEO_HISTORY_GET_LIST_ADAPTER_IGNITE_DI_TOKEN,
-    useClass: VideoHistoryGetMultipleByIdV2Adapter,
-  },
-  {
-    provide: CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN,
-    useClass: ChannelHistoryByChannelIdAdapter,
-  },
-  {
     provide: RELWORDS_DI_TOKEN.FIND_ONE,
     useClass: RelatedWordsRepository,
   },
 ];
 @Module({
-  imports: [
-    CqrsModule,
-    IgniteModule,
-    WeeklyHitsEntityModule,
-    RelatedWordsModule,
-  ],
+  imports: [CqrsModule, WeeklyHitsEntityModule, RelatedWordsModule],
   controllers,
   providers: [...service, ...query, ...repository],
 })

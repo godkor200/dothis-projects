@@ -7,7 +7,7 @@ import { GET_KEYWORD_INFO_SERVICE } from '@Apps/modules/related-word/keyword.di-
 import { TGetKeywordInformationRes } from '@dothis/dto';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 import { Result } from 'oxide.ts';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 
 export type GetKeywordInformationResult = Result<
   IRes<TGetKeywordInformationRes>,

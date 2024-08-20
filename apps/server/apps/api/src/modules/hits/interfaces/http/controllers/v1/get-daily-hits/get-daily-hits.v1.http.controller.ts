@@ -25,11 +25,11 @@ import {
   InternalServerErr,
   NotFound,
 } from '@Apps/modules/hits/domain/events/errors/hits.errors';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { IIncreaseHitsData } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/abstract/applications.abstract';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
 import { getDailyHitsV1Ok } from '@Apps/modules/hits/application/types/daily-hits.res-types';
 
 const c = nestControllerContract(apiRouter.hits);

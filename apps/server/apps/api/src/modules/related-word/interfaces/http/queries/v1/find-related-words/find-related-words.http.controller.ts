@@ -9,10 +9,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import {
-  RelWordsEntity,
-  IRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { RelWordsEntity, IRes } from '@Libs/types';
 import { match, Result } from 'oxide.ts';
 import {
   GetRelatedWordsDto,

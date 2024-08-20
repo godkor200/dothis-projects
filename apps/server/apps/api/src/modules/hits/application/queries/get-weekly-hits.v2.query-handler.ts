@@ -2,10 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Result } from 'oxide.ts';
 import { Inject } from '@nestjs/common';
 import { WEEKLY_VIEWS_SERVICE_V2_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
-import {
-  IRes,
-  WeeklyKeywordsRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, WeeklyKeywordsRes } from '@Libs/types';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 import { WeeklyHitsV2InboundPort } from '@Apps/modules/hits/domain/ports/weekly-hits.v2.inbound.port';
 import { GetWeeklyHitsListDto } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';

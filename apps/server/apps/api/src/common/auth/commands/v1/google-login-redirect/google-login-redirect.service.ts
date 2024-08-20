@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@Apps/modules/user/domain/user.entity';
 import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-login-redirect.interface';
 import { Err, Ok, Result } from 'oxide.ts';
-import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
+import { InternalServerErrorException } from '@Libs/commons';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 
 @CommandHandler(UserInfoCommandDto)

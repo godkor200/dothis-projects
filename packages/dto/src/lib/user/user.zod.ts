@@ -9,4 +9,4 @@ export const zOwnInfoSchema = zUserModel.shape.data.merge(
 
 export const zOwnInfo = dataObject(zOwnInfoSchema);
 
-export type TOwnInfoRes = z.TypeOf<typeof zOwnInfo>;
+export type TOwnInfoRes = z.TypeOf<typeof zOwnInfoSchema>;
