@@ -15,11 +15,13 @@ import {
   handleDailyViewListD3,
   handleExpectedViewAreaD3,
   handleExpectedViewD3,
+  handleNaverSearchCountD3,
   handleNaverSearchRatio,
   handleNaverSearchRatioD3,
   handleScopePerformanceData,
   handleVideoUploadCountD3,
 } from '@/utils/contents/chart';
+import { calculateNormalizedSearchCount } from '@/utils/naver-search/common';
 
 import useGetDailyExpectedView from '../react-query/query/useGetDailyExpectedView';
 import useGetDailyView from '../react-query/query/useGetDailyView';
@@ -119,7 +121,7 @@ export const useSearchRatioFormmaterListD3 = ({
   );
 };
 
-export const useSearchCountFormmaterList = ({
+export const useSearchCountFormmaterD3 = ({
   baseKeyword,
   relatedKeyword,
 }: TKeywords) => {
@@ -132,6 +134,35 @@ export const useSearchCountFormmaterList = ({
 
   const startDate = useStartDate();
   const endDate = useEndDate();
+
+  const createSearchCountArgs = ({
+    totalSearchRatio,
+    totalQcCount,
+  }: {
+    totalSearchRatio: number;
+    totalQcCount: number;
+  }) => {
+    return (dailyRatio: number) => {
+      return calculateNormalizedSearchCount({
+        dailyRatio,
+        totalQcCount,
+        totalRatio: totalSearchRatio,
+      });
+    };
+  };
+
+  return useMemo(
+    () =>
+      handleNaverSearchCountD3(
+        dailyRatioList,
+        createSearchCountArgs({ totalQcCount, totalSearchRatio }),
+        {
+          startDate,
+          endDate,
+        },
+      ),
+    [JSON.stringify(dailyRatioList)],
+  );
 };
 
 export const useUploadVideoCountFormatterD3 = ({
