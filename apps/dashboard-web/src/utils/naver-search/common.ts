@@ -51,4 +51,6 @@ export const calculateNormalizedSearchCount = ({
   dailyRatio: number;
   totalRatio: number;
   totalQcCount: number;
-}) => (dailyRatio / totalRatio) * totalQcCount;
+}) => {
+  return (dailyRatio / totalRatio ?? 1) * totalQcCount;
+};
