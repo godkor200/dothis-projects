@@ -4,6 +4,7 @@ import useDailyViewQueries from '@/app/(keyword)/keyword/[keyword]/[related_word
 import useNaverSearchQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useNaverSearchQueries';
 import useVideoUploadCountQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useVideoUploadCountQueries';
 import { useEndDate, useStartDate } from '@/store/dateStore';
+import type { TKeywords } from '@/types/common';
 import {
   formatToApexChart,
   handleAveragePerformanceData,
@@ -26,6 +27,7 @@ import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
+import useNaverDataHandler from './useNaverDataHandler';
 
 /**
  *
@@ -115,6 +117,21 @@ export const useSearchRatioFormmaterListD3 = ({
     }),
     [JSON.stringify(queryResults)],
   );
+};
+
+export const useSearchCountFormmaterList = ({
+  baseKeyword,
+  relatedKeyword,
+}: TKeywords) => {
+  //해당 부분에 이제 ads 및 searchRatio api 불러오고 계산 하고 메모이제이션 실행
+  // 중요한 그래프에 맞는 데이터를 구하도록 실행
+  //또한 해당 값들은(합산퍼센트  및 총 월단위 데이터) 계산 쓰일 수 있으니 hook으로 해당 값들을 구해오는 코드를 만들어주자
+
+  const { dailyRatioList, totalSearchRatio, totalQcCount } =
+    useNaverDataHandler({ baseKeyword, relatedKeyword });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
 };
 
 export const useUploadVideoCountFormatterD3 = ({
