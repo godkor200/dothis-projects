@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetNaverAds from '@/hooks/react-query/query/useGetNaverAds';
 
+import ChartSummaryCards from '../keyword/[keyword]/ChartSummaryCards';
+
 const Check = () => {
   const [inpValue, setInpValue] = useState('');
 
@@ -12,6 +14,7 @@ const Check = () => {
     baseKeyword: '기안84',
     relatedKeyword: null,
   });
+
   console.log(test);
   return (
     <div>
@@ -21,6 +24,7 @@ const Check = () => {
         value={inpValue}
         onChange={(event) => setInpValue(event.target.value)}
       />
+      <ChartSummaryCards keyword="기안84" relatedKeyword={null} />
     </div>
   );
 };
