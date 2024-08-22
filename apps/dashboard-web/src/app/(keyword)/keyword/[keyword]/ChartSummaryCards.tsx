@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchRatioFormatterD3 } from '@/hooks/contents/useChartFormatter';
+import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 1;
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
@@ -35,9 +35,9 @@ const ChartSummaryCards = ({
   // const totalVideoCount = sumVideoCount(dailyViewData);
 
   //   검색량 코드
-  const searchRatio = useSearchRatioFormatterD3({
-    keyword: keyword,
-    relword: relatedKeyword,
+  const searchRatio = useSearchCountFormmaterD3({
+    baseKeyword: keyword,
+    relatedKeyword: relatedKeyword,
   });
 
   const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
