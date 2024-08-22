@@ -5,6 +5,7 @@ import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 1;
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
 import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
+import { sumSearchCount } from '@/utils/naver-search/common';
 
 import ChartSummaryItem from './ChartSummaryItem';
 import {
@@ -31,7 +32,7 @@ const ChartSummaryCards = ({
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
 
   // 경쟁 영상 수
-  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount;
+  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount ?? 0;
   // const totalVideoCount = sumVideoCount(dailyViewData);
 
   //   검색량 코드
@@ -45,8 +46,17 @@ const ChartSummaryCards = ({
     relword: relatedKeyword,
   });
 
+  const totalSearchCount = sumSearchCount(searchRatio);
+
   const first_searchRatio = searchRatio[0];
   const last_searchRatio = searchRatio[searchRatio.length - 1];
+  const changeSearchRatio =
+    Math.floor(
+      ((((last_searchRatio.value || 0) as number) /
+        Number(first_searchRatio.value || 1)) as number) * 100,
+    ) -
+    100 +
+    '%';
 
   const SummaryList = [
     {
@@ -54,15 +64,8 @@ const ChartSummaryCards = ({
       value: Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr'),
     },
     {
-      title: '검색량 변동',
-      value: searchRatioLoading
-        ? '분석중'
-        : Math.floor(
-            ((((last_searchRatio.value || 0) as number) /
-              Number(first_searchRatio.value || 1)) as number) * 100,
-          ) -
-          100 +
-          '%',
+      title: '검색량',
+      value: totalSearchCount.toLocaleString('ko-kr'),
     },
     {
       title: '경쟁 영상 수',
