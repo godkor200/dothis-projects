@@ -1,7 +1,36 @@
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+
 import type {
   NaverAPI_Response,
   NaverAPI_Results,
 } from '@/hooks/react-query/query/useGetNaverSearchRatio';
+
+dayjs.extend(isSameOrAfter);
+
+export function filterResultsWeeklyDate(
+  response: NaverAPI_Response | undefined,
+  targetDate: string,
+): NaverAPI_Response | undefined {
+  if (!response) {
+    return undefined;
+  }
+  const filteredResults = response?.results.map((result) => {
+    const filteredData = result.data.filter((item) => {
+      return dayjs(item.period).isSameOrAfter(dayjs(targetDate));
+    });
+
+    return {
+      ...result,
+      data: filteredData,
+    };
+  });
+
+  return {
+    ...response,
+    results: filteredResults,
+  };
+}
 
 export const getNaver_FluctuationRate = (
   data: NaverAPI_Response | undefined,
