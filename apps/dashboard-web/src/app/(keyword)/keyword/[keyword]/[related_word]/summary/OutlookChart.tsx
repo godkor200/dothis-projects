@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
+import useGetNaverSearchRatioWeekly from '@/hooks/react-query/query/useGetNaverSearchRatio_Weekly';
 import {
   getDailyView_FluctuationRate,
   getSumDailyView,
@@ -300,7 +301,7 @@ const OutlookChart = ({
 
   const svgRef = useRef<SVGSVGElement | null>(null); // SVG 엘리먼트의 ref 추가
 
-  const { data: naverSearchData } = useGetNaverSearchRatio({
+  const { data: naverSearchData } = useGetNaverSearchRatioWeekly({
     keyword: baseKeyword,
     relword: relatedkeyword,
   });
