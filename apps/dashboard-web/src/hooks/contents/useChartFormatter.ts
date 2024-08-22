@@ -26,6 +26,7 @@ import { calculateNormalizedSearchCount } from '@/utils/naver-search/common';
 import useGetDailyExpectedView from '../react-query/query/useGetDailyExpectedView';
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
+import useGetNaverAds from '../react-query/query/useGetNaverAds';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
@@ -129,8 +130,18 @@ export const useSearchCountFormmaterD3 = ({
   // 중요한 그래프에 맞는 데이터를 구하도록 실행
   //또한 해당 값들은(합산퍼센트  및 총 월단위 데이터) 계산 쓰일 수 있으니 hook으로 해당 값들을 구해오는 코드를 만들어주자
 
+  const { data: naverSearchRatioData } = useGetNaverSearchRatio({
+    keyword: baseKeyword,
+    relword: relatedKeyword,
+  });
+
+  const { data: naverAdsData } = useGetNaverAds({
+    baseKeyword,
+    relatedKeyword,
+  });
+
   const { dailyRatioList, totalSearchRatio, totalQcCount } =
-    useNaverDataHandler({ baseKeyword, relatedKeyword });
+    useNaverDataHandler({ naverSearchRatioData, naverAdsData });
 
   const startDate = useStartDate();
   const endDate = useEndDate();
@@ -161,7 +172,7 @@ export const useSearchCountFormmaterD3 = ({
           endDate,
         },
       ),
-    [JSON.stringify(dailyRatioList)],
+    [JSON.stringify(naverSearchRatioData), JSON.stringify(naverAdsData)],
   );
 };
 
