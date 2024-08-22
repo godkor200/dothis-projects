@@ -13,6 +13,7 @@ import {
   convertCompetitionScoreFormatToHTML,
   getCompetitionScore,
 } from '@/utils/contents/competitionScore';
+import { sumSearchCount } from '@/utils/naver-search/common';
 
 import { sumIncreaseViewsV2, sumVideoCount } from '../../CompetitionRate';
 
@@ -66,6 +67,8 @@ const ComparisonSummaryCard = ({
     relword: relatedKeyword,
   });
 
+  const totalSearchCount = sumSearchCount(searchRatio);
+
   const first_searchRatio = searchRatio[0];
   const last_searchRatio = searchRatio[searchRatio.length - 1];
 
@@ -97,16 +100,7 @@ const ComparisonSummaryCard = ({
       <p>{predictedView.toFixed(0)}</p>
       <p>{Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr')}</p>
       <p>{Number(competitionVideoCount).toLocaleString('ko-kr')}</p>
-      <p>
-        {searchRatioLoading
-          ? '...'
-          : Math.floor(
-              ((((last_searchRatio.value || 0) as number) /
-                Number(first_searchRatio.value || 1)) as number) * 100,
-            ) -
-            100 +
-            '%'}
-      </p>
+      <p>{totalSearchCount}</p>
       <div>
         {' '}
         <span
