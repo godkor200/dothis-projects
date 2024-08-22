@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
-import { useSearchRatioFormatterD3 } from '@/hooks/contents/useChartFormatter';
+import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
@@ -56,9 +56,9 @@ const ComparisonSummaryCard = ({
   // const totalVideoCount = sumVideoCount(dailyViewData?.data.data);
 
   //   검색량 코드
-  const searchRatio = useSearchRatioFormatterD3({
-    keyword: baseKeyword,
-    relword: relatedKeyword,
+  const searchRatio = useSearchCountFormmaterD3({
+    baseKeyword: baseKeyword,
+    relatedKeyword: relatedKeyword,
   });
 
   const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
