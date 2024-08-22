@@ -496,8 +496,6 @@ export const handleNaverSearchCountD3 = (
     }
   });
 
-  console.log(dateBasedDataSet);
-
   const result = createDateTimeD3(dateBasedDataSet);
 
   return result;
