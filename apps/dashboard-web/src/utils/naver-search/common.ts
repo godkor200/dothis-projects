@@ -32,6 +32,18 @@ export function filterResultsWeeklyDate(
   };
 }
 
+export const sumSearchCount = (
+  data: {
+    date: string;
+    value: number;
+  }[],
+) => {
+  if (data) {
+    return data?.reduce((total, item) => total + item.value, 0);
+  }
+  return 0;
+};
+
 export const getNaver_FluctuationRate = (
   data: NaverAPI_Response | undefined,
 ) => {
