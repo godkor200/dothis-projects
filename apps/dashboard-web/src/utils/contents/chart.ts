@@ -472,6 +472,37 @@ export const handleNaverSearchRatioD3 = (
   return result;
 };
 
+export const handleNaverSearchCountD3 = (
+  data: NaverAPI_Results['data'] | undefined,
+  calculateNormalizedSearchCount: (dailyRatio: number) => number,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.period;
+
+      const views = item.ratio;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.floor(
+          calculateNormalizedSearchCount(Number(views)),
+        );
+      }
+    }
+  });
+
+  console.log(dateBasedDataSet);
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
 /**
  * getExpectedView api의 response로 받아온 5개 cluster의 data를 param으로 전달받아서 병합하여 같은 날짜의 expected_views의 평균을 구하는 함수
  * @param data getExpectedView api의 response에서 flat으로 펼쳐준 형식으로 받는다.
