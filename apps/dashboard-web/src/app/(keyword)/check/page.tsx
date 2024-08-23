@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
+import useGetNaverAdsQueries from '@/hooks/contents/useGetNaverAdsQueries';
 import useGetNaverAds from '@/hooks/react-query/query/useGetNaverAds';
 
 import ChartSummaryCards from '../keyword/[keyword]/ChartSummaryCards';
@@ -15,7 +16,13 @@ const Check = () => {
     relatedKeyword: null,
   });
 
+  const good = useGetNaverAdsQueries({
+    baseKeyword: '',
+    relatedKeywords: ['기안84', '마우스'],
+  });
+
   console.log(test);
+  console.log(good);
   return (
     <div>
       checkPage
