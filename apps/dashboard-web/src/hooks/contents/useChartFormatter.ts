@@ -30,6 +30,7 @@ import useGetNaverAds from '../react-query/query/useGetNaverAds';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
+import useGetNaverAdsQueries from './useGetNaverAdsQueries';
 import useNaverDataHandler from './useNaverDataHandler';
 
 /**
@@ -119,6 +120,71 @@ export const useSearchRatioFormmaterListD3 = ({
       ),
     }),
     [JSON.stringify(queryResults)],
+  );
+};
+
+export const useSearchCountFormmaterListD3 = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const queryResults = useNaverSearchQueries({ baseKeyword, relatedKeywords });
+
+  const naverAdsQueryResults = useGetNaverAdsQueries({
+    baseKeyword,
+    relatedKeywords,
+  });
+
+  // 각각의 키워드에 대해 검색 수를 계산하는 함수
+  const createSearchCountArgs = ({
+    totalSearchRatio,
+    totalQcCount,
+  }: {
+    totalSearchRatio: number;
+    totalQcCount: number;
+  }) => {
+    return (dailyRatio: number) => {
+      return calculateNormalizedSearchCount({
+        dailyRatio,
+        totalQcCount,
+        totalRatio: totalSearchRatio,
+      });
+    };
+  };
+
+  const naverDataConfigs = queryResults.map(
+    ({ data: naverSearchRatioData }, index) => {
+      const { data: naverAdsData } = naverAdsQueryResults[index];
+
+      return useNaverDataHandler({ naverSearchRatioData, naverAdsData });
+    },
+  );
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: queryResults.map((query, index) => {
+        const { dailyRatioList, totalSearchRatio, totalQcCount } =
+          naverDataConfigs[index];
+
+        return handleNaverSearchCountD3(
+          dailyRatioList,
+          createSearchCountArgs({ totalQcCount, totalSearchRatio }),
+          {
+            startDate,
+            endDate,
+          },
+        );
+      }),
+      keywordList: queryResults.map(
+        (query) => query.data?.results[0].keywords[1],
+      ),
+    }),
+    [JSON.stringify(queryResults), JSON.stringify(naverAdsQueryResults)],
   );
 };
 
