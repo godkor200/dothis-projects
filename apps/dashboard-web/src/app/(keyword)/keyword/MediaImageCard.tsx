@@ -15,7 +15,13 @@ import { useSelectedWord } from '@/store/selectedWordStore';
 import { externalYouTubeImageLoader } from '@/utils/imagesUtil';
 import { handleImageError } from '@/utils/imagesUtil';
 
-const MediaImageCard = ({ keyword }: { keyword: string }) => {
+const MediaImageCard = ({
+  keyword,
+  size,
+}: {
+  keyword: string;
+  size: number;
+}) => {
   const selectedWord = useSelectedWord();
 
   const {
@@ -57,11 +63,14 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
       refetchCallback={refetch}
       classname="flex min-h-[350px] items-center"
     >
-      <APILoadingBoundary isLoading={isLoading} loadingComponent={<Skeleton />}>
+      <APILoadingBoundary
+        isLoading={isLoading}
+        loadingComponent={<Skeleton size={size} />}
+      >
         <div>
           <div className="flex justify-between gap-[24px] ">
             {mediaDigestData
-              ?.slice(0, 3)
+              ?.slice(0, size)
               ?.map(
                 (
                   { element, image, link, provider, title, uploadDate },
@@ -111,10 +120,10 @@ const MediaImageCard = ({ keyword }: { keyword: string }) => {
 
 export default MediaImageCard;
 
-const Skeleton = () => {
+const Skeleton = ({ size }: { size: number }) => {
   return (
     <div className="flex justify-between gap-[24px] ">
-      {Array.from({ length: 3 }).map((item, i) => (
+      {Array.from({ length: size }).map((item, i) => (
         <div
           className="rounded-10 border-grey300 max-w-[480px] flex-1 cursor-pointer overflow-hidden border border-solid"
           key={i}
