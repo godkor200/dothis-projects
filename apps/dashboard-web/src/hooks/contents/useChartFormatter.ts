@@ -4,6 +4,7 @@ import useDailyViewQueries from '@/app/(keyword)/keyword/[keyword]/[related_word
 import useNaverSearchQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useNaverSearchQueries';
 import useVideoUploadCountQueries from '@/app/(keyword)/keyword/[keyword]/[related_word]/summary/useVideoUploadCountQueries';
 import { useEndDate, useStartDate } from '@/store/dateStore';
+import type { TKeywords } from '@/types/common';
 import {
   formatToApexChart,
   handleAveragePerformanceData,
@@ -14,18 +15,23 @@ import {
   handleDailyViewListD3,
   handleExpectedViewAreaD3,
   handleExpectedViewD3,
+  handleNaverSearchCountD3,
   handleNaverSearchRatio,
   handleNaverSearchRatioD3,
   handleScopePerformanceData,
   handleVideoUploadCountD3,
 } from '@/utils/contents/chart';
+import { calculateNormalizedSearchCount } from '@/utils/naver-search/common';
 
 import useGetDailyExpectedView from '../react-query/query/useGetDailyExpectedView';
 import useGetDailyView from '../react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '../react-query/query/useGetDailyViewV2';
+import useGetNaverAds from '../react-query/query/useGetNaverAds';
 import useGetNaverSearchRatio from '../react-query/query/useGetNaverSearchRatio';
 import useGetPerformanceData from '../react-query/query/useGetPerformanceData';
 import useGetVideoUploadCount from '../react-query/query/useGetVideoUploadCount';
+import useGetNaverAdsQueries from './useGetNaverAdsQueries';
+import useNaverDataHandler from './useNaverDataHandler';
 
 /**
  *
@@ -114,6 +120,125 @@ export const useSearchRatioFormmaterListD3 = ({
       ),
     }),
     [JSON.stringify(queryResults)],
+  );
+};
+
+export const useSearchCountFormmaterListD3 = ({
+  baseKeyword,
+  relatedKeywords,
+}: {
+  baseKeyword: string;
+  relatedKeywords: string[];
+}) => {
+  const queryResults = useNaverSearchQueries({ baseKeyword, relatedKeywords });
+
+  const naverAdsQueryResults = useGetNaverAdsQueries({
+    baseKeyword,
+    relatedKeywords,
+  });
+
+  // 각각의 키워드에 대해 검색 수를 계산하는 함수
+  const createSearchCountArgs = ({
+    totalSearchRatio,
+    totalQcCount,
+  }: {
+    totalSearchRatio: number;
+    totalQcCount: number;
+  }) => {
+    return (dailyRatio: number) => {
+      return calculateNormalizedSearchCount({
+        dailyRatio,
+        totalQcCount,
+        totalRatio: totalSearchRatio,
+      });
+    };
+  };
+
+  const naverDataConfigs = queryResults.map(
+    ({ data: naverSearchRatioData }, index) => {
+      const { data: naverAdsData } = naverAdsQueryResults[index];
+
+      return useNaverDataHandler({ naverSearchRatioData, naverAdsData });
+    },
+  );
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  return useMemo(
+    () => ({
+      chartDataList: queryResults.map((query, index) => {
+        const { dailyRatioList, totalSearchRatio, totalQcCount } =
+          naverDataConfigs[index];
+
+        return handleNaverSearchCountD3(
+          dailyRatioList,
+          createSearchCountArgs({ totalQcCount, totalSearchRatio }),
+          {
+            startDate,
+            endDate,
+          },
+        );
+      }),
+      keywordList: queryResults.map(
+        (query) => query.data?.results[0].keywords[1],
+      ),
+    }),
+    [JSON.stringify(queryResults), JSON.stringify(naverAdsQueryResults)],
+  );
+};
+
+export const useSearchCountFormmaterD3 = ({
+  baseKeyword,
+  relatedKeyword,
+}: TKeywords) => {
+  //해당 부분에 이제 ads 및 searchRatio api 불러오고 계산 하고 메모이제이션 실행
+  // 중요한 그래프에 맞는 데이터를 구하도록 실행
+  //또한 해당 값들은(합산퍼센트  및 총 월단위 데이터) 계산 쓰일 수 있으니 hook으로 해당 값들을 구해오는 코드를 만들어주자
+
+  const { data: naverSearchRatioData } = useGetNaverSearchRatio({
+    keyword: baseKeyword,
+    relword: relatedKeyword,
+  });
+
+  const { data: naverAdsData } = useGetNaverAds({
+    baseKeyword,
+    relatedKeyword,
+  });
+
+  const { dailyRatioList, totalSearchRatio, totalQcCount } =
+    useNaverDataHandler({ naverSearchRatioData, naverAdsData });
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  const createSearchCountArgs = ({
+    totalSearchRatio,
+    totalQcCount,
+  }: {
+    totalSearchRatio: number;
+    totalQcCount: number;
+  }) => {
+    return (dailyRatio: number) => {
+      return calculateNormalizedSearchCount({
+        dailyRatio,
+        totalQcCount,
+        totalRatio: totalSearchRatio,
+      });
+    };
+  };
+
+  return useMemo(
+    () =>
+      handleNaverSearchCountD3(
+        dailyRatioList,
+        createSearchCountArgs({ totalQcCount, totalSearchRatio }),
+        {
+          startDate,
+          endDate,
+        },
+      ),
+    [JSON.stringify(naverSearchRatioData), JSON.stringify(naverAdsData)],
   );
 };
 

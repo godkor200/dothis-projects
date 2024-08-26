@@ -5,11 +5,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
+import { useStartDate } from '@/store/dateStore';
 import {
   getDailyView_FluctuationRate,
   getSumDailyView,
 } from '@/utils/dailyView/common';
-import { getNaver_FluctuationRate } from '@/utils/naver-search/common';
+import {
+  filterResultsWeeklyDate,
+  getNaver_FluctuationRate,
+} from '@/utils/naver-search/common';
 
 import useXAxis from './useXAxes';
 
@@ -305,7 +309,14 @@ const OutlookChart = ({
     relword: relatedkeyword,
   });
 
-  const naverFluctuationRate = getNaver_FluctuationRate(naverSearchData);
+  const startDate = useStartDate();
+
+  const weeklyNaverSearchData = filterResultsWeeklyDate(
+    naverSearchData,
+    startDate,
+  );
+
+  const naverFluctuationRate = getNaver_FluctuationRate(weeklyNaverSearchData);
 
   const naverOutlook = getOutlook(naverFluctuationRate);
 

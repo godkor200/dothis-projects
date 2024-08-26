@@ -20,7 +20,7 @@ export type NaverAPI_Results = {
   data: Array<{ period: string; ratio: string }>;
 };
 
-const useGetNaverSearchRatio = (
+const useGetNaverSearchRatioWeekly = (
   {
     keyword,
     relword,
@@ -32,7 +32,7 @@ const useGetNaverSearchRatio = (
 ): UseQueryResult<NaverAPI_Response> => {
   const endDate = useEndDate();
 
-  const startDate = dayjs(endDate).subtract(29, 'day').format('YYYY-MM-DD');
+  const startDate = useStartDate();
 
   return useQuery(
     NAVER_SEARCH_RATIO_KEY.list([
@@ -57,7 +57,7 @@ const useGetNaverSearchRatio = (
   );
 };
 
-export default useGetNaverSearchRatio;
+export default useGetNaverSearchRatioWeekly;
 
 const queryFn = async ({
   keyword,

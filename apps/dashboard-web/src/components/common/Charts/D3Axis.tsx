@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import {
   useDailyViewV2,
-  useSearchRatioFormatterD3,
+  useSearchCountFormmaterD3,
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
 
@@ -22,9 +22,9 @@ const D3Axis = ({
 
   const datad3 = useDailyViewV2({ keyword: keyword, relword: relatedKeyword });
 
-  const data2d3 = useSearchRatioFormatterD3({
-    keyword: keyword,
-    relword: relatedKeyword,
+  const data2d3 = useSearchCountFormmaterD3({
+    baseKeyword: keyword,
+    relatedKeyword: relatedKeyword,
   });
 
   const data3d3 = useUploadVideoCountFormatterD3({

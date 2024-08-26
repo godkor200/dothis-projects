@@ -43,7 +43,7 @@ const ComparisonSummary = ({ baseKeyword, relatedKeyword }: TKeywords) => {
         <p>기대조회 수</p>
         <p>일일조회 수</p>
         <p>영상 수</p>
-        <p>검색량 변화</p>
+        <p>검색량</p>
         <p>경쟁 강도</p>
       </div>
 
