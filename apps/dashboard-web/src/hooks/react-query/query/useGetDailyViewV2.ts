@@ -13,7 +13,7 @@ const useGetDailyViewV2 = ({
 
   const endDate = useEndDate();
 
-  const queryResult = apiClient(2).hits.getDailyViewsV2.useQuery(
+  const queryResult = apiClient(1).hits.getDailyViewsV2.useQuery(
     DAILYVIEW_KEY.list([{ keyword, relword, startDate, endDate }]),
     {
       query: {
