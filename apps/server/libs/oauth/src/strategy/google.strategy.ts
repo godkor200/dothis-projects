@@ -31,6 +31,12 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       ],
     });
   }
+  authorizationParams(): { [key: string]: string } {
+    return {
+      access_type: 'offline',
+      prompt: 'consent',
+    };
+  }
 
   async validate(
     accessToken: string,
@@ -38,6 +44,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ) {
+    console.log(accessToken, refreshToken, profile);
     const { id, name, emails, photos } = profile;
     // YouTube Data API 호출
     const response = await axios.get(
