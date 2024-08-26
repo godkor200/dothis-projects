@@ -1,11 +1,4 @@
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-import SvgComp from '@/components/common/SvgComp';
-
 import SummaryTab from './summary/page';
-import { tabList } from './tabList';
-import TabNav from './TabNav';
 
 const Page = ({
   params,

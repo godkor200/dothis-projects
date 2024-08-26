@@ -1,7 +1,9 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 
 import SvgComp from '@/components/common/SvgComp';
 
+import { tabList } from './tabList';
 import TabNav from './TabNav';
 
 const Layout = ({
@@ -37,7 +39,10 @@ const Layout = ({
         </div>
       </div>
 
-      <TabNav keyword={keyword} relatedWord={relatedWord} />
+      <TabNav
+        tabList={tabList}
+        baseRoute={`/keyword/${keyword}/${relatedWord}` as Route}
+      />
 
       {children}
     </div>

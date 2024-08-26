@@ -12,3 +12,10 @@ export const tabList = [
   { title: '비교', link: 'comparison' },
   { title: '인사이트', link: 'insight' },
 ] as const;
+
+export const channelTabList = [
+  { title: '개요', link: 'summary' },
+  { title: '채널 분석', link: 'channel-analysis' },
+  { title: '경쟁 분석', link: 'competitive-analysis' },
+  { title: '영상 진단', link: 'video-assessment' },
+];
