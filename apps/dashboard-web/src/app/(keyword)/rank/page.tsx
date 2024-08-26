@@ -63,7 +63,7 @@ const Page = () => {
   const [keywordList, setKeywordList] = useState<string[]>([]);
 
   const [startDate, setStartDate] = useState(
-    dayjs().startOf('week').subtract(2, 'week').add(1, 'day'),
+    dayjs().startOf('week').subtract(1, 'week'),
   );
 
   const isSignedIn = useIsSignedIn();

@@ -59,7 +59,7 @@ const useGetTrendingKeywordsV2 = (
 
   const isSignedIn = useIsSignedIn();
   const queryResults = apiClient(
-    2,
+    1,
   ).hits.getWeeklyKeywordListWithPagingV2.useInfiniteQuery(
     TRENDING_KEYWORD_KEY.list([
       {
