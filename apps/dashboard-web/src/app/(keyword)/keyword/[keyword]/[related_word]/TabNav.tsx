@@ -29,7 +29,7 @@ const TabNav = <T extends ReadonlyArray<TabItem>>({
   return (
     <div className="border-grey400 flex  gap-[50px] border-b-4">
       {tabList.map((item) => (
-        <Link href={`${baseRoute}/${item.link}`} key={item.link}>
+        <Link href={`${baseRoute}/${item.link}` as Route} key={item.link}>
           <div
             className={cn(
               'mb-[-4px] w-[100px] border-b-4 border-grey400 pb-2 text-center font-bold',
