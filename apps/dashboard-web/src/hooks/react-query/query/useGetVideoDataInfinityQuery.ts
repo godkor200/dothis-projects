@@ -6,7 +6,6 @@ import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
 import type { DeepRequired } from './common';
-import useGetRelWords from './useGetRelWords';
 
 export const videoKeys = {
   video: ['video'],
@@ -31,10 +30,6 @@ const useGetVideoDataInfinityQuery = (
 
   queryOptions?: UseInfiniteQueryOptions<typeof apiRouter.video.getVideoPage>,
 ) => {
-  const { data, getRelatedClusterArray } = useGetRelWords(keyword);
-
-  const clusters = getRelatedClusterArray();
-
   const startDate = useStartDate();
 
   const endDate = useEndDate();
@@ -72,7 +67,7 @@ const useGetVideoDataInfinityQuery = (
           : true;
       },
 
-      enabled: !!data && !!keyword,
+      enabled: !!keyword,
     },
   );
 
