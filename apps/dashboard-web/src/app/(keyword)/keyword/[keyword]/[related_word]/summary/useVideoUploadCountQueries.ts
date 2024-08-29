@@ -13,7 +13,7 @@ const useVideoUploadCountQueries = ({
 
   const endDate = useEndDate();
 
-  const queryResults = apiClient(2).video.getVideoCount.useQueries({
+  const queryResults = apiClient(1).video.getVideoCount.useQueries({
     queries: relatedKeywords.map((relatedKeyword) => ({
       queryKey: UPLOAD_VIDEO_COUNT_KEY.list([
         { keyword: baseKeyword, relword: relatedKeyword, startDate, endDate },
