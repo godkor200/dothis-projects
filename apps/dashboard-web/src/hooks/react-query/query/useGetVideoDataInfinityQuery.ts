@@ -39,7 +39,7 @@ const useGetVideoDataInfinityQuery = (
 
   const endDate = useEndDate();
 
-  const queryResults = apiClient(2).video.getVideoPage.useInfiniteQuery(
+  const queryResults = apiClient(1).video.getVideoPage.useInfiniteQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,
