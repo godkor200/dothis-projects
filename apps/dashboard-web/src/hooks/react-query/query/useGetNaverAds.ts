@@ -42,6 +42,7 @@ const queryFn = async ({
       baseKeyword,
     },
   });
+  console.log(data);
 
   return data.data;
 };
