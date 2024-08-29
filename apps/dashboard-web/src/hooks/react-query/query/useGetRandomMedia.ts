@@ -57,6 +57,7 @@ export const useGetRandomMedia = ({
 
   const youtubeVideoIsError =
     ((relatedkeyword || searchKeyword) &&
+      weeklyVideo?.length &&
       weeklyVideo?.filter((item) => item.search === searchKeyword)?.[0]
         .videoId === null) ||
     isError
