@@ -93,7 +93,9 @@ export class OpensearchModule {
 
     return options.map((option) => ({
       provide: getOpensearchClientToken(option.clientName),
-      useValue: new OpensearchClient(option),
+      useValue: new OpensearchClient({
+        ...option,
+      }),
     }));
   }
 }

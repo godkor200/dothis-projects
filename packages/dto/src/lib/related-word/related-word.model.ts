@@ -29,12 +29,10 @@ export const zRankingArrayOmitWord = zRanking
   .merge(zObjectExpectedViews);
 
 export const zRankRel = z.object({
-  data: z.object({
-    keyword: z.string(),
-    ranking: zRankingArray,
-  }),
+  keyword: z.string(),
+  ranking: zRankingArray,
 });
-export const zRankRes = zRankRel.shape.data;
+export const zRankRes = zRankRel;
 export const zKeywordsCopy = zRelWords.pick({ data: true }).shape.data.shape
   .keyword;
 export const zKeywords = zodDeepPick(zRelWords, 'data.keyword');

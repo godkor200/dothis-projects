@@ -60,6 +60,12 @@ interface IIncreaseHits
   minPerformance: number;
 }
 
+interface IIncreaseHitsPickViews
+  extends Pick<IIncreaseHitsData, 'increaseViews' | 'date'> {}
+export interface IIncreaseDailyViews {
+  representativeCategory: number;
+  data: IIncreaseHitsPickViews[];
+}
 interface IIncreaseSetVideoIds extends IIncreaseHits {
   videoIds: Set<string>;
 }

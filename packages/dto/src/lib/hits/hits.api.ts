@@ -15,11 +15,11 @@ import {
   zGetWeeklyKeywordListWithPagingV1Res,
   zGetWeeklyKeywordListWithPagingV2Res,
   zExpectedViews,
-  zClusterSpecificCombinedData,
   zGetProbabilitySuccessRes,
   zGetWeeklyViewsBySomeQuery,
   zGetWeeklyViewsQuery,
   zKeywordThisWeeklyRes,
+  zAnalysedVideoLengthRes,
 } from './hits.zod';
 
 export const expectedHitsApiUrl = '/expectation';
@@ -137,7 +137,7 @@ export const hitsApi = c.router({
     },
     summary: '관련어, 연관어 영상들의 성공확률을 가져옵니다',
     description:
-      '탐색어(keyword),연관어(relationKeyword), 날짜(from,to)로 성공 확률을 가져옵니다.',
+      '탐색어(keyword),연관어(relationKeyword), 날짜(from, to)로 성공 확률을 가져옵니다.',
   },
 
   getAnalysisHits: {
@@ -148,19 +148,6 @@ export const hitsApi = c.router({
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to) 로 일일조회수, 기대 조회수를 출력합니다.',
-  },
-
-  getAnalysisHitsV2: {
-    method: 'GET',
-    path: `${viewApiUrl}`,
-    query: zFindVideoBySearchKeyword,
-    responses: {
-      200: zClusterSpecificCombinedData,
-      ...zErrResBase,
-    },
-    summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
-    description:
-      '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to), 클러스터분리(separation)로 일일조회수,기대 조회수를 출력합니다.',
   },
 
   getKeywordThisWeekly: {
@@ -182,5 +169,18 @@ export const hitsApi = c.router({
       '    - 추출한 키워드의 연관어 1번 추출\n' +
       '    - 해당 키워드, 연관어1번, 변동량 표시\n' +
       '    - 클릭 시 해당 키워드 + 연관어 분석 페이지로 이동',
+  },
+  getVideoDurationAnalysis: {
+    method: 'GET',
+    path: `${viewApiUrl}/analysis/video-length`,
+    query: findVideoBySearchKeyword,
+    responses: {
+      200: zSuccessBase.merge(zAnalysedVideoLengthRes),
+      ...zErrResBase,
+    },
+    summary:
+      '키워드 기반으로 영상 길이 구간별 조회수 및 성과 집계를 가져옵니다',
+    description:
+      '검색어(keyword)를 기반으로 전날 영상에 대해 각 영상 길이 구간별 조회수의 합과 성과의 평균을 계산하여 반환합니다.',
   },
 });

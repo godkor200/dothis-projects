@@ -4,11 +4,8 @@ import {
 } from '@ExternalApps/feature/preview/domain/port/preview-video.inbound.port';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Err, Ok } from 'oxide.ts';
-import { HttpService } from '@nestjs/axios';
 import { VideoToObject } from '@ExternalApps/feature/video/application/helpers/video.mapper';
 import { InvalidYoutubeUrlException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
-import { getApiResponse } from '@ExternalApps/feature/preview/application/dto/preview.response.type';
-import { lastValueFrom } from 'rxjs';
 import { HttpUtils } from '@ExternalApps/utils/http.utils';
 
 @QueryHandler(PreviewVideoDto)

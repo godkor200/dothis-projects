@@ -1,4 +1,4 @@
-import { getApiResponse } from '@ExternalApps/feature/preview/application/dto/preview.response.type';
+import { fetchDataApiResponse } from '@ExternalApps/feature/preview/application/dto/preview.response.type';
 import { TVideoVideoResponse } from '@dothis/dto';
 import { ICrawledVideoRepositoryRes } from '@ExternalApps/feature/crawler/domain/port/crawled-video.repository.port';
 import { TPreviewVideoOmitRes } from '@ExternalApps/feature/preview/domain/port/preview-video.inbound.port';
@@ -59,7 +59,7 @@ export class VideoToObject {
     };
   }
 
-  static mapApiResponseData(data: getApiResponse): TPreviewVideoOmitRes {
+  static mapApiResponseData(data: fetchDataApiResponse): TPreviewVideoOmitRes {
     const { input_data, data: nestedData, crawled_date } = data;
     const { video_data, channel_data } = nestedData;
 

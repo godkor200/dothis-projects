@@ -54,10 +54,6 @@ const adapter: Provider[] = [
     provide: KOREAN_AUTO_COMPLETE_DI_TOKEN,
     useClass: KoreanAutocompleteCache,
   },
-  {
-    provide: VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN,
-    useClass: VideoMultiRelatedWordsCacheAdapter,
-  },
 ];
 @Module({
   imports: [CqrsModule, ConfigModule, RelatedWordsModule],

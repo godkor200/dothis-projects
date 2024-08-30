@@ -4,8 +4,6 @@ import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.port';
 import { Err, Ok, Result } from 'oxide.ts';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { ChannelRepositoryPort } from '@Apps/modules/channel/domain/ports/channel.repository.port';
 import { UserNotFoundError } from '@Apps/common/auth/domain/event/auth.error';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { TOwnInfoRes as TOwnInfo } from '@dothis/dto';

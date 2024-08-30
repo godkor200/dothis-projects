@@ -20,14 +20,15 @@ import {
   NotFound,
 } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import { FindDailyViewsV1Query } from '@Apps/modules/hits/application/dtos/find-daily-views.dtos';
-import { FindDailyViewsV2Dto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
-import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.v1.query-handler';
+import { FindDailyViewsDto } from '@Apps/modules/hits/application/dtos/find-daily-view.v1.dto';
+import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily-hits.query-handler';
 import { match } from 'oxide.ts';
 import { IRes, TTsRestRes } from '@Libs/types';
-import { IIncreaseHitsData } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
+
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { extendApi } from '@anatine/zod-openapi';
 import { createZodDto } from '@anatine/zod-nestjs';
+import { IIncreaseHitsData } from '@Apps/modules/hits/application/types/daily-hits.res-types';
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getDailyViewsV2,
   g = c.getDailyViewsV2;
@@ -49,7 +50,7 @@ export class GetDailyHitsV2HttpController {
   @ApiInternalServerErrorResponse({ type: InternalServerErr })
   async execute(@Query() query: FindDailyViewsV1Query) {
     return tsRestHandler(g, async ({ query }) => {
-      const dto = new FindDailyViewsV2Dto(query);
+      const dto = new FindDailyViewsDto(query);
 
       const res: TFindDailyView = await this.queryBus.execute(dto);
       return match<TFindDailyView, TTsRestRes<IRes<IIncreaseHitsData[]>>>(res, {

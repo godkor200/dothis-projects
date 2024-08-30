@@ -13,6 +13,7 @@ export class MockGetRelatedVideo
   ): Promise<TGetRelatedVideoRes> {
     return Ok([
       {
+        channelId: 'dwdwd',
         videoId: 'video_one',
         videoViews: 0,
         videoLikes: 0,

@@ -122,7 +122,7 @@ export class WeeklyHitsV2Repository
         // 정렬 실행
         queryBuilder.orderBy(fieldValue, order.toUpperCase() as 'ASC' | 'DESC');
       }
-      console.log(queryBuilder);
+
       // 데이터 가져오기
       const [data, count] = await queryBuilder.getManyAndCount();
 

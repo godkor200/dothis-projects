@@ -19,7 +19,6 @@ import {
   CountByDayRes,
   GetVideoAndChannelViewsByDateAndKeywordsRes,
   IVideoSchema,
-  TVideoRes,
 } from '@Apps/modules/video/application/dtos/video.res';
 import {
   CacheDoesNotFoundException,
@@ -29,7 +28,6 @@ import {
 import { TFindAdsInfoRes } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
 import { GetAdsRelatedTopHitsRes } from '@dothis/dto';
 import { GetRelatedVideoAndVideoHistory } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
-import { VideoNoKeywordPaginatedDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 
 export type TRelatedVideoAndHistoryRes = Result<
   GetRelatedVideoHistory[],
@@ -49,10 +47,7 @@ export type TGetRelatedLastVideoAndVideoHistory = Result<
   | TableNotFoundException
   | CacheDoesNotFoundException
 >;
-export type TGetVideoWithChannelInfo = Result<
-  IVideoSchema,
-  VideoNotFoundError | TableNotFoundException
->;
+
 export type TRelatedVideosCountByDay = Result<
   CountByDayRes[],
   VideoHistoryNotFoundError | TableNotFoundException
@@ -110,10 +105,7 @@ export interface IGetVideoAndChannelViewsByDateAndKeywordsOutboundPort {
   ): Promise<TGetVideoAndChannelViewsByDateAndKeywordsRes>;
 }
 export interface IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort {
-  execute<T>(
+  execute<T extends unknown[]>(
     dao: GetVideoViewsMatchingSearchOnSpecificDateDao,
   ): Promise<TGetVideoViewsMatchingSearchOnSpecificDateRes<T>>;
-}
-export interface IGetVideoVideoNoKeywordPaginatedOutboundPort {
-  execute(dao: VideoNoKeywordPaginatedDao): Promise<TVideoRes>;
 }

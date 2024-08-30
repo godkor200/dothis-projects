@@ -1,7 +1,13 @@
-import { ChannelKeywordOrtagDtos } from '@Apps/modules/user/dtos/channel-keywordOrtag.dtos';
+import { Result } from 'oxide.ts';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
+type res = {
+  channelId: string;
+  channelName: string;
+  channelDescription: string;
+  channelTags: string;
+};
+export type ChannelAdapterOutboundResult = Result<res[], ChannelNotFoundError>;
 
-export interface ChannelAdapterPort {
-  findChannelTagOrKeyword: (
-    channelId: string,
-  ) => Promise<ChannelKeywordOrtagDtos>;
+export interface ChannelAdapterOutboundPort {
+  execute(ids: string[]): Promise<ChannelAdapterOutboundResult>;
 }

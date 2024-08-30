@@ -43,6 +43,10 @@ export const zClusterSeparationQuery = z.object({
  */
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
 
+export const findVideoBySearchKeywordPickToDate = zSearchKeyword.merge(
+  zDateQuery.pick({ to: true }),
+);
+
 export const zFindVideoBySearchKeyword = findVideoBySearchKeyword.merge(
   zClusterSeparationQuery,
 );

@@ -11,12 +11,12 @@ export interface DateData {
   day: number;
 }
 
-export interface IVideoSchema extends DateData {
+export interface IVideoSchema {
   videoId: string;
   channelId: string;
   videoTitle: string;
   videoDescription: string;
-  videoTags: string;
+  videoTags: string[];
   videoDuration: number;
   videoPublished: Date;
   videoCategory: string;

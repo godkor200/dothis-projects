@@ -2,7 +2,6 @@ import { FindIndividualVideoInboundPort } from '@Apps/modules/video/domain/ports
 import { FindIndividualVideoInfoV1Dto } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
 import { Inject } from '@nestjs/common';
-import { VideoAggregateService } from '@Apps/modules/video/application/service/helpers/video.aggregate.service';
 import { FindIndividualVideoInfoV1Dao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { CHANNEL_HISTORY_LATEST_TUPLE_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { IGetChannelHistoryLatestTupleByVideoAdapter } from '@Apps/modules/channel-history/infrastructure/repositories/database/channel-history.outbound.port';
@@ -10,6 +9,7 @@ import { VIDEO_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/video-history/video
 import { Err, Ok } from 'oxide.ts';
 import { DateUtil } from '@Libs/commons/utils/date.util';
 import { IGetOneVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
 
 export class FindIndividualVideoInfoService
   implements FindIndividualVideoInboundPort
@@ -20,8 +20,6 @@ export class FindIndividualVideoInfoService
 
     @Inject(VIDEO_HISTORY_IGNITE_DI_TOKEN)
     private readonly videoHistoryPort: IGetOneVideoHistoryOutboundPort,
-
-    private readonly videoAggregateService: VideoAggregateService,
   ) {}
 
   /**
@@ -74,22 +72,22 @@ export class FindIndividualVideoInfoService
       lastHistory.videoComments,
       lastHistory.videoLikes,
     );
-    const dailyViewIncrease =
-      VideoAggregateService.calculateIncreaseByIgnite(videoHistory);
-    const estimatedTotalViews = VideoAggregateService.getVideoPrediction(
-      videoPublished,
-      dailyViewIncrease,
-    );
+    // const dailyViewIncrease =
+    //   VideoAggregateHelper.calculateIncreaseByIgnite(videoHistory);
+    // const estimatedTotalViews = VideoAggregateHelper.getVideoPrediction(
+    //   videoPublished,
+    //   dailyViewIncrease,
+    // );
 
     return Ok({
       success: true,
       data: {
-        videoTags,
-        videoPerformance: { expectedViews, participationRate },
-        videoPrediction: estimatedTotalViews,
+        videoTags: '',
+        videoPerformance: { expectedViews: 0, participationRate: 0 },
+        videoPrediction: 0,
         channelPerformance: {
-          subscribers: channelSubscribers,
-          averageViews: channelAverageViews,
+          subscribers: 0,
+          averageViews: 0,
         },
       },
     });

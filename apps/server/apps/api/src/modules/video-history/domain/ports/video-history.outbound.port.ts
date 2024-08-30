@@ -6,19 +6,13 @@ import {
   IGetVideoHistoryDao,
   IGetVideoHistoryGetMultipleByIdDao,
   GetVideoHistoryMultipleByIdV2Dao,
-  GetVideoHistoryMultipleByIdAndRelatedWordsDao,
   VideoHistoryGetTopViewsByIdsDao,
+  RecentVideoHistoryDao,
+  RangeVideoHistoryDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
-import {
-  DateData,
-  ITodayIssue,
-  IVideoSchema,
-} from '@Apps/modules/video/application/dtos/video.res';
+import { DateData } from '@Apps/modules/video/application/dtos/video.res';
 import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
-import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.os.adapter';
-import { VideosMultiRelatedWordsCacheType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 
 export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
   extends DateData {
@@ -69,31 +63,44 @@ export interface IGetVideoHistoryGetMultipleByIdOutboundPort {
 export interface IGetVideoHistoryGetMultipleByIdV2OutboundPort {
   execute(dao: GetVideoHistoryMultipleByIdV2Dao): Promise<TGetVideoHistoryRes>;
 }
-export interface IGetVideoHistoryLastOneByIdsOutboundPort {
-  execute(
-    dao: GetVideoHistoryMultipleByIdAndRelatedWordsDao,
-  ): Promise<TGetVideoHistoryRes>;
-}
 
 export interface IVideoHistoryGetTopViewsByIdsOutboundPort {
   execute(dao: VideoHistoryGetTopViewsByIdsDao): Promise<TIssueTodayRes>;
 }
-export type IVideoHistoryResult = {
+export type TRecentVideoHistoryResult = {
   video_views: number;
   channel_average_views: null | number;
   video_id: string;
   video_performance: number;
 };
-export type TVideoHistoryOsAdapterResult = Result<
-  {
-    total: { value: number; relation: string };
-    items: IVideoHistoryResult[];
-  },
+
+export type VideoHistorySearchResult<T> = {
+  total: { value: number; relation: string };
+  items: T[];
+};
+
+export type VideoHistoryAdapterResult = Result<
+  VideoHistorySearchResult<TRecentVideoHistoryResult>,
   any
 >;
 
-export interface IVideoHistoryOsAdapterOutboundPort {
-  execute(
-    dao: GetVideoHistoryMultipleByIdAndRelatedWordsDao,
-  ): Promise<TVideoHistoryOsAdapterResult>;
+export interface IRecentVideoHistoryOutboundPort {
+  execute(dao: RecentVideoHistoryDao): Promise<VideoHistoryAdapterResult>;
+}
+export type TRangeVideoHistoryResult = {
+  video_views: number;
+  channel_average_views: null | number;
+  video_id: string;
+  video_performance: number;
+  video_cluster: number;
+  year_c: string;
+  month_c: string;
+  day_c: string;
+};
+export type VideoHistoryRangeAdapterResult = Result<
+  VideoHistorySearchResult<TRangeVideoHistoryResult>,
+  any
+>;
+export interface IRangeVideoHistoryOutboundPort {
+  execute(dao: RangeVideoHistoryDao): Promise<VideoHistoryRangeAdapterResult>;
 }

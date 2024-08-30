@@ -1,3 +1,6 @@
+import { createZodDto } from '@anatine/zod-nestjs';
+import { getApiResponse } from '@Libs/types';
+
 export interface InputData {
   video_id: string;
 }
@@ -45,10 +48,7 @@ export interface CrawledData {
   channel_data: ChannelData;
 }
 
-export interface getApiResponse {
-  code: number;
-  message: string;
+export interface fetchDataApiResponse extends getApiResponse<CrawledData> {
   input_data: InputData;
   crawled_date: string;
-  data: CrawledData;
 }

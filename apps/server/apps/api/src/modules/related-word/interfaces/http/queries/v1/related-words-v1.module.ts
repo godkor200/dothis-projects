@@ -22,11 +22,6 @@ import { ChannelHistoryServiceModule } from '@Apps/modules/channel-history/appli
 import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { FindDicTermImplement } from '@Apps/modules/related-word/infrastructure/adapters/find-dic-term.implement';
 import { SetDicTermImplement } from '@Apps/modules/related-word/infrastructure/adapters/set-dic-term.implement';
-import {
-  CHANNEL_DATA_REPOSITORY,
-  CHANNEL_TERM,
-} from '@Apps/modules/channel/channel-data.di-token.constants';
-import { GetDicSearchTermCommandHandler } from '@Apps/modules/related-word/application/service/get-dic-search-term.service';
 import { FindSearchTermService } from '@Apps/modules/related-word/application/service/find-search-term.service';
 import { SetDicTermHandler } from '@Apps/modules/related-word/application/service/set-search-term.service';
 import { ChannelEntityModule } from '@Apps/modules/channel/infrastucture/entities/channel.entity.module';
@@ -40,6 +35,8 @@ import { GetPageByKeywordService } from '@Apps/modules/related-word/application/
 import {
   GET_KEYWORD_INFO_SERVICE,
   GET_PAGE_BY_KEYWORD_SERVICE,
+  GET_RELATE_WORDS_API_DI_TOKEN,
+  LATEST_VIDEO_HISTORY_ADAPTER,
 } from '@Apps/modules/related-word/keyword.di-token.constant';
 import { GetKeywordInformationHttpController } from '@Apps/modules/related-word/interfaces/http/queries/v1/get-keyword-information/get-keyword-information.http.controller';
 import { GetKeywordInformationService } from '@Apps/modules/related-word/application/service/get-keyword-information.service';
@@ -49,10 +46,11 @@ import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/reposi
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 import { SearchTermCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/search-term.cache';
 import { KoreanAutocompleteCache } from '@Apps/modules/related-word/infrastructure/repositories/cache/korean-autocomplete.cache';
-import { VideoHistoryOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.os.adapter';
-import { VideoMultiRelatedWordsCacheAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import { VideoHistoryRecentOsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.recent.os.adapter';
 import { VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { MockGetChannelDataAdapter } from '@Apps/modules/channel/infrastucture/adapters/__mock__/get-channel-data.adapter.mock';
+import { GetRelatedWordAdapter } from '@Apps/modules/related-word/infrastructure/adapters/get-related-word.adapter';
+import { HttpModule } from '@nestjs/axios';
+import { VideoMultiRelatedWordsCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video-multi-related-words.cache.adapter';
 
 const controllers = [
   UpdateAutoCompleteWordsHttpController,
@@ -84,10 +82,7 @@ const repositories: Provider[] = [
     provide: CACHE_SET_DIC_TERM,
     useClass: SetDicTermImplement,
   },
-  {
-    provide: CHANNEL_TERM,
-    useClass: GetDicSearchTermCommandHandler,
-  },
+
   {
     provide: WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
     useClass: WeeklyHitsV2Repository,
@@ -96,13 +91,21 @@ const repositories: Provider[] = [
     provide: KOREAN_AUTO_COMPLETE_DI_TOKEN,
     useClass: KoreanAutocompleteCache,
   },
-  SetDicTermHandler,
+  //SetDicTermHandler,
   FindSearchTermService,
   RankingRelatedWordAggregateService,
-  VideoHistoryOsAdapter,
-  { provide: CHANNEL_DATA_REPOSITORY, useClass: MockGetChannelDataAdapter },
+  VideoHistoryRecentOsAdapter,
 ];
-
+const adapters: Provider[] = [
+  {
+    provide: GET_RELATE_WORDS_API_DI_TOKEN,
+    useClass: GetRelatedWordAdapter,
+  },
+  {
+    provide: LATEST_VIDEO_HISTORY_ADAPTER,
+    useClass: VideoHistoryRecentOsAdapter,
+  },
+];
 const handler = [
   GetPageByKeywordQueryHandler,
   FindRelatedWordsQueryHandler,
@@ -122,6 +125,7 @@ const service: Provider[] = [
 @Module({
   imports: [
     CqrsModule,
+    HttpModule,
     OpensearchCoreModule,
     RelatedWordsModule,
     ChannelHistoryServiceModule,
@@ -129,6 +133,6 @@ const service: Provider[] = [
     WeeklyHitsEntityModule,
   ],
   controllers,
-  providers: [...repositories, ...service, ...handler],
+  providers: [...repositories, ...service, ...handler, ...adapters],
 })
 export class RelatedWordsV1Module {}

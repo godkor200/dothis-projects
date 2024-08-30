@@ -61,6 +61,22 @@ export const validationSchema = Joi.object({
     .required()
     .description('OpenSearch 클러스터의 노드 주소입니다.'),
 
+  OPENSEARCH_NODE_TWO: Joi.string()
+    .required()
+    .description('OpenSearch 클러스터의 노드 주소입니다.'),
+
+  OPENSEARCH_NODE_THREE: Joi.string()
+    .required()
+    .description('OpenSearch 클러스터의 노드 주소입니다.'),
+
+  OPENSEARCH_ID: Joi.string()
+    .required()
+    .description('OpenSearch 클러스터의 사용자 정보 입니다.'),
+
+  OPENSEARCH_PW: Joi.string()
+    .required()
+    .description('OpenSearch 클러스터의 사용자 정보 입니다.'),
+
   REDIS_ON_PROMISE_PORT: Joi.number().required(),
   REDIS_ON_PROMISE_HOSTNAME: Joi.string().description(
     'Redis on promise 서버의 호스트 이름입니다.',

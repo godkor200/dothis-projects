@@ -13,7 +13,7 @@ import {
   zVideoCountRes,
   zVideoDetails,
   zVideoModel,
-  zWeeklyKeywordsListWithTotalData,
+  zKeywordThisWeeklyList,
   zWeeklyKeywordsListSourceSchema,
 } from '@dothis/dto';
 
@@ -27,6 +27,11 @@ export interface IRes<T = undefined> {
 export interface IResWithItem<T = undefined> {
   success: boolean;
   item?: T | any;
+}
+export interface getApiResponse<T> {
+  code: number;
+  message: string;
+  data: T;
 }
 
 export class VideoRes extends createZodDto(extendApi(zVideoModel)) {}
@@ -51,7 +56,7 @@ export class ChannelAnalysisRes extends createZodDto(
   extendApi(zChannelAnalysis),
 ) {}
 export class WeeklyKeywordsRes extends createZodDto(
-  extendApi(zWeeklyKeywordsListWithTotalData),
+  extendApi(zKeywordThisWeeklyList),
 ) {}
 export class WeeklyKeywordsListSchema extends createZodDto(
   extendApi(zWeeklyKeywordsListSourceSchema),
@@ -68,7 +73,7 @@ export class GetProbabilityResultType extends createZodDto(
   extendApi(zGetProbabilityRes),
 ) {}
 export class GetWeeklyKeywordsListResType extends createZodDto(
-  extendApi(zWeeklyKeywordsListWithTotalData),
+  extendApi(zKeywordThisWeeklyList),
 ) {}
 
 export interface TTsRestRes<T> {
