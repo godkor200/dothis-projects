@@ -1,4 +1,4 @@
-import { RepositoryPort } from '@Libs/commons/src';
+import { RepositoryPort } from '@Libs/commons';
 import { MemoEntity } from '@Apps/modules/story-board/domain/entities/memo.entity';
 import { PostMemoDao } from '@Apps/modules/story-board/infrastructure/daos/memo.dao';
 

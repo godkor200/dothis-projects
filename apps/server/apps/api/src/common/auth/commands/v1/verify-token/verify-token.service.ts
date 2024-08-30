@@ -10,7 +10,7 @@ import { UserRepositoryPort } from '@Apps/modules/user/database/user.repository.
 import { JwtService } from '@nestjs/jwt';
 import { Err, Ok } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
-import { TDecodePayload } from '@Libs/commons/src';
+import { TDecodePayload } from '@Libs/types';
 
 export class TokenDto {
   userInfo: IUserInfo;

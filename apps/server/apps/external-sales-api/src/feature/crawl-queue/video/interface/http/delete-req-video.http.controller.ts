@@ -32,13 +32,9 @@ import {
   VideoErrNotFound,
   VideoNotFoundException,
 } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
-import {
-  IRes,
-  TokenExpired,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TokenExpired, TTsRestRes } from '@Libs/types';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import { TDelRequestVideoRes } from '@ExternalApps/feature/crawl-queue/video/domain/port/delete-req-video.inbound.port';
 const c = nestControllerContract(externalApiRouter.video);
 const { deleteReqVideo } = c;

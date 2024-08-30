@@ -1,16 +1,16 @@
-import { WeeklyHitsInboundPort } from '@Apps/modules/hits/domain/ports/weekly-hits.inbound.port';
-import { GetWeeklyViewsDto } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
-import { GetWeeklyViewsDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
+import { WeeklyHitsV2InboundPort } from '@Apps/modules/hits/domain/ports/weekly-hits.inbound.port';
+import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.query-handler';
 import { Inject } from '@nestjs/common';
-import { WeeklyHitsOutboundPort } from '@Apps/modules/hits/domain/ports/weekly-views.outbound.port';
-import { WEEKLY_VIEWS_REPOSITORY_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+import { WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+import { WeeklyHitsV2OutboundPort } from '@Apps/modules/hits/domain/ports/weekly-hits.v2.outbound.port';
+import { GetWeeklyViewsDaoV2 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 import { Err, Ok } from 'oxide.ts';
+import { GetWeeklyHitsListDto } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';
 
-export class WeeklyHitsService implements WeeklyHitsInboundPort {
+export class WeeklyHitsService implements WeeklyHitsV2InboundPort {
   constructor(
-    @Inject(WEEKLY_VIEWS_REPOSITORY_DI_TOKEN)
-    private readonly weeklyHitsRepository: WeeklyHitsOutboundPort,
+    @Inject(WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN)
+    private readonly weeklyHitsRepository: WeeklyHitsV2OutboundPort,
   ) {}
 
   private getNearestMonday(date: Date): string {
@@ -20,21 +20,29 @@ export class WeeklyHitsService implements WeeklyHitsInboundPort {
     return nearestMonday.toISOString().slice(0, 10); // convert to 'yyyy-mm-dd'
   }
 
-  async getPagination(dto: GetWeeklyViewsDto): Promise<TGetWeeklyHitsRes> {
-    const dao = new GetWeeklyViewsDao({
+  async execute(dto: GetWeeklyHitsListDto): Promise<TGetWeeklyHitsRes> {
+    const dao = new GetWeeklyViewsDaoV2({
       ...dto,
-      from: this.getNearestMonday(new Date(dto.from)),
+      from: dto.from,
     });
+    try {
+      const result =
+        await this.weeklyHitsRepository.getPaginatedWeeklyHitsByKeywordAndCount(
+          dao,
+        );
+      if (result.isOk()) {
+        const unwrap = result.unwrap();
 
-    const list =
-      await this.weeklyHitsRepository.getPaginatedWeeklyHitsByKeyword(dao);
-    const total = await this.weeklyHitsRepository.getWeeklyHitsCount(dao);
-    if (list.isOk() && total.isOk()) {
-      return Ok({
-        success: true,
-        data: { total: total.unwrap(), data: list.unwrap() },
-      });
+        return Ok({
+          success: true,
+          body: {
+            ...unwrap,
+          },
+        });
+      }
+      return Err(result.unwrapErr());
+    } catch (e) {
+      return Err(e);
     }
-    return Err(list.unwrapErr());
   }
 }

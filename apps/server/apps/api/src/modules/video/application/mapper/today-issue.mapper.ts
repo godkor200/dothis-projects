@@ -1,4 +1,4 @@
-import { ITodayIssue } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { ITodayIssue } from '@Apps/modules/video/application/dtos/video.res';
 import { GetVideoMultiKeywordCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
 
 export class TodayIssueMapper {

@@ -8,7 +8,6 @@ import {
   GetWeeklyKeyword,
   GetWeeklyViewsDaoV2,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { WeeklyHitsModel, zWeeklyKeywordsListSourceSchema } from '@dothis/dto';
 import { ZodObject } from 'zod';
@@ -16,7 +15,8 @@ import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
-import { Paginated } from '@Libs/commons/src';
+import { Paginated } from '@Libs/commons';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 
 export class WeeklyHitsV2Repository
   extends SqlRepositoryBase<WeeklyHitsEntity, WeeklyHitsModel>
@@ -76,7 +76,7 @@ export class WeeklyHitsV2Repository
         order = 'asc',
         keywords,
       } = dao;
-      console.log(dao);
+
       const { year, month, day } = this.parseFrom(from);
 
       // 페이지 번호가 유효하지 않거나 정의되지 않았다면 기본값을 설정
@@ -122,7 +122,7 @@ export class WeeklyHitsV2Repository
         // 정렬 실행
         queryBuilder.orderBy(fieldValue, order.toUpperCase() as 'ASC' | 'DESC');
       }
-      console.log(queryBuilder);
+
       // 데이터 가져오기
       const [data, count] = await queryBuilder.getManyAndCount();
 

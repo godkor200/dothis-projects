@@ -20,7 +20,7 @@ import { match } from 'oxide.ts';
 import { QueryBus } from '@nestjs/cqrs';
 import { apiRouter, TKeywordThisWeeklyRes } from '@dothis/dto';
 import { TGetWeeklyKeywordRes } from '@Apps/modules/hits/application/queries/get-weekly-keyword.query-handler';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
 const c = nestControllerContract(apiRouter.hits);
 const { getKeywordThisWeekly } = c;

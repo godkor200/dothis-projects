@@ -5,7 +5,9 @@ import {
   VideosMultiRelatedWordsCacheType,
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { DateUtil } from '@Libs/commons/utils/date.util';
+import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
+import { GetAnalysisHitsDto } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
 
 export interface IGetVideoHistoryDao
   extends Pick<GetRelatedVideoAndVideoHistory, 'videoId'> {
@@ -66,50 +68,22 @@ export class GetChannelHistoryByChannelIdV2Dao {
     this.to = props.to;
   }
 }
-export class GetVideoHistoryMultipleByIdAndRelatedWordsDao {
-  videoIds: Record<string, string[]>;
-  from?: string;
-  to?: string;
-  constructor(props: {
-    videoIds: VideosMultiRelatedWordsCacheType;
-    from?: string;
-    to?: string;
-  }) {
-    this.videoIds = RedisResultMapper.createVideoIds(
-      RedisResultMapper.groupByCluster(Object.values(props.videoIds).flat()),
-    );
-    this.from = props.from;
-    this.to = props.to;
+export class RecentVideoHistoryDao extends GetRankingRelatedWordsDto {
+  relatedWord: string;
+
+  constructor(props: { search: string; relatedWord: string }) {
+    super(props);
+    this.relatedWord = props.relatedWord;
   }
 }
 
-export class VideoNoKeywordPaginatedDao {
-  videoIds: Record<string, string[]>;
-  from: string;
-  to: string;
-  sort: string;
-  order: TSqlParam;
-  limit: string;
-  page?: string;
-
-  constructor(props: {
-    videoIds: Record<string, VideoCacheReturnType[]>;
-    from: string;
-    to: string;
-    sort: string;
-    order: TSqlParam;
-    limit: string;
-    page: string;
-  }) {
-    this.videoIds = RedisResultMapper.createVideoIds(props.videoIds);
-    this.from = props.from;
-    this.to = props.to;
-    this.sort = props.sort;
-    this.order = props.order;
-    this.limit = props.limit;
-    this.page = props.page;
+export class RangeVideoHistoryDao extends GetAnalysisHitsDto {
+  constructor(props: GetAnalysisHitsDto) {
+    super(props);
+    Object.assign(this, props);
   }
 }
+
 export class VideoHistoryGetTopViewsByIdsDao {
   constructor(public videos: Record<string, VideoCacheReturnType[]>) {}
 }

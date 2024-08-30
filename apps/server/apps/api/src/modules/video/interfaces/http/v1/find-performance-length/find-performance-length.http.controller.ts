@@ -30,12 +30,12 @@ import {
 } from '@Apps/modules/video/application/dtos/find-performance-length.dto';
 import { match } from 'oxide.ts';
 
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { TFindPerformanceLengthResult } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/abstract/applications.abstract';
 
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getPerformanceByVideoLength;

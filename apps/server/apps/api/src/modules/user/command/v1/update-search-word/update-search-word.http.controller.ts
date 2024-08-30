@@ -15,11 +15,12 @@ import {
 } from '@nestjs/swagger';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { UpdateSearchWordDto } from '@Apps/modules/user/dtos/update-search-word.dto';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { match, Result } from 'oxide.ts';
+import { JwtAccessGuard } from '@Libs/oauth';
 const c = nestControllerContract(apiRouter.user);
 const { putSearchWord } = c;
 const { responses, description, summary } = putSearchWord;

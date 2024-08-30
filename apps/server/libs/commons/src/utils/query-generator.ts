@@ -1,4 +1,4 @@
-import { DateFormatterRes } from '@Libs/commons/src/utils/videos.date-formatter';
+import { DateFormatterRes } from '@Libs/commons/utils/videos.date-formatter';
 
 export class QueryGenerator {
   static generateUnionQuery(

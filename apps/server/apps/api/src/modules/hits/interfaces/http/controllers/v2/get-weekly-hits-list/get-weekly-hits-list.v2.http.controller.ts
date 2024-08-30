@@ -13,19 +13,12 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import {
-  IRes,
-  TTsRestRes,
-  WeeklyKeywordsRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
-import {
-  GetWeeklyViewsDtoV2,
-  GetWeeklyViewsQuery,
-} from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
+import { IRes, TTsRestRes, WeeklyKeywordsRes } from '@Libs/types';
+
 import { match, Result } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
-import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.query-handler';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
 import {
   GetWeeklyHitsListDto,
   GetWeeklyHitsListQueryInterface,

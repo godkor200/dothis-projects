@@ -2,8 +2,8 @@ import { DeleteRelWordsCommandDto } from '@Apps/modules/related-word/application
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 
 import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { InternalServerErrorException } from '@Libs/commons/src/exceptions/exceptions';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { InternalServerErrorException } from '@Libs/commons';
+import { IRes } from '@Libs/types';
 import { RelatedWordModel } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';

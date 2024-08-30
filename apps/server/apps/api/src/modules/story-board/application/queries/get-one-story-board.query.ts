@@ -7,7 +7,7 @@ import { StoryBoardOutboundPort } from '@Apps/modules/story-board/domain/ports/o
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors/story.error';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { FindOneStoryBoardDao } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 
 export type TGetOneStoryBoardRes = Result<
   IRes<StoryBoardEntity>,

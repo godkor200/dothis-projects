@@ -27,7 +27,6 @@ export class FindInfluentialListService
    * @param dao
    */
   constructor(
-    @Inject(FIND_CHANNEL_PROFILE_IGNITE_DI_TOKEN)
     private readonly influentialChannelProfileAdapter: InfluentialChannelProfileOutboundPort,
   ) {}
   async execute(dto: FindInfluentialListDto): Promise<TFindInfluentialListRes> {

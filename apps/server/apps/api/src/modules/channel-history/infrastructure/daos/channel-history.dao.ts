@@ -1,6 +1,6 @@
 import { Result } from 'oxide.ts';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { FindAccumulateVideosV1Dto } from '@Apps/modules/video/application/dtos/find-accumulate-videos.dtos';
 
 export interface ChannelHistoryLatestDayTupleRes {

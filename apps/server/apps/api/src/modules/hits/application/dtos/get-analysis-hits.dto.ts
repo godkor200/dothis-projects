@@ -45,9 +45,6 @@ export class GetAnalysisHitsDto extends GetAnalysisHitsQuery {
    *
    * to: string
    * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
-   *
-   * clusterNumber: string[]
-   * - 클러스터 번호. pathParams를 통해 제공되어야 함.
    */
   constructor(props: GetAnalysisHitsDto) {
     super(props);

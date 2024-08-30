@@ -6,13 +6,13 @@ import {
   IPagingRes,
   IVideo,
 } from '@Apps/modules/video/application/dtos/find-many-video.interface';
-import { ScrollApiError } from '@Apps/common/aws/domain/aws.os.error';
+import { ScrollApiError } from '@Apps/common/opensearch/domain/aws.os.error';
 
 import {
   FindDailyViewsV3Dao,
   FindVideosDao,
 } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { IdocRes } from '@Apps/common/aws/interface/os.res.interface';
+import { IdocRes } from '@Apps/common/opensearch/interface/os.res.interface';
 import { SearchRelationVideoDao } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
 
 export interface VideoQueryHandlerOutboundPort {

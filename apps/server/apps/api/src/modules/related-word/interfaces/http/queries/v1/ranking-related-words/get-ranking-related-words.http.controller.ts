@@ -6,7 +6,12 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Controller, NotFoundException, Param } from '@nestjs/common';
+import {
+  Controller,
+  NotFoundException,
+  InternalServerErrorException,
+  Param,
+} from '@nestjs/common';
 import {
   nestControllerContract,
   tsRestHandler,
@@ -14,17 +19,16 @@ import {
 } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import {
-  IRes,
-  RelWordsRankingRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, RelWordsRankingRes, TTsRestRes } from '@Libs/types';
 import {
   GetRankingRelatedWordsDto,
   GetRankingRelatedWordsParams,
 } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { TGetRankingRelatedWordsRes } from '@Apps/modules/related-word/application/service/get-ranking-related-words.service';
-import { RelatedWordsNotFoundError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
+import {
+  ExternalAiServerError,
+  RelatedWordsNotFoundError,
+} from '@Apps/modules/related-word/domain/errors/related-words.errors';
 
 const c = nestControllerContract(apiRouter.relatedWords);
 const { rankingRelatedWords } = c;
@@ -66,7 +70,9 @@ export class GetRankingRelatedWordsHttpController {
               err instanceof VideoNotFoundError
             )
               throw new NotFoundException(err.message);
-
+            if (err instanceof ExternalAiServerError) {
+              throw new InternalServerErrorException(err.message);
+            }
             throw err;
           },
         },

@@ -1,7 +1,7 @@
 import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { RelWordsEntity } from '@Libs/commons/src/interfaces/types/res.types';
+import { RelWordsEntity } from '@Libs/types';
 import { Err, Ok, Result } from 'oxide.ts';
 
 import { GetRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/find-related-words.request.dto';

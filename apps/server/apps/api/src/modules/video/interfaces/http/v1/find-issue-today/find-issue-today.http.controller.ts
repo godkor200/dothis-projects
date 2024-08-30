@@ -15,13 +15,13 @@ import {
 import { FinishedIssueTodayDto } from '@Apps/modules/video/application/dtos/find-issue-today.dto';
 import { match } from 'oxide.ts';
 import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import {
   ITodayIssue,
   TodayIssueVideo,
-} from '@Apps/modules/video/infrastructure/daos/video.res';
+} from '@Apps/modules/video/application/dtos/video.res';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { apiRouter } from '@dothis/dto';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';

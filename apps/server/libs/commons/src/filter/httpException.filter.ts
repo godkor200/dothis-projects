@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { MessageBuilder } from 'minimal-discord-webhook-node';
-import { sendWebhook } from '@Libs/commons/src/utils/hooks';
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { sendWebhook } from '@Libs/commons/utils/hooks';
+import { RequestContextService } from '@Libs/commons/application/context/AppRequestContext';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';

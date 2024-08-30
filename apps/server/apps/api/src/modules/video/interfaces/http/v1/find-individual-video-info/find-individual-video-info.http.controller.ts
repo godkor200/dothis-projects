@@ -27,14 +27,10 @@ import {
   tsRestHandler,
 } from '@ts-rest/nest';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import {
-  VideoInfoRes,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { VideoInfoRes, IRes, TTsRestRes } from '@Libs/types';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { TVideoIndividualRes } from '@Apps/modules/video/application/queries/v1/find-individual-video-info.query-handler';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getIndividualVideo;
 

@@ -1,4 +1,4 @@
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
+import { ExceptionBase } from '@Libs/commons';
 
 export class RankingRelatedWordErrors extends ExceptionBase {
   static readonly message = "Can't find a related word ranking in CashMemory";

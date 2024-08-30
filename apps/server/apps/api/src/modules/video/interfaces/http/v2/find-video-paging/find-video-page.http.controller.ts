@@ -15,11 +15,7 @@ import {
 } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { IIgnitePagingRes } from '@Apps/modules/video/application/dtos/find-many-video.interface';
-import {
-  VideoRes,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { VideoRes, IRes, TTsRestRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { match } from 'oxide.ts';
 import {
@@ -27,7 +23,7 @@ import {
   GetVideoPaginatedPageSortQuery,
 } from '@Apps/modules/video/application/dtos/find-video-paging.req.dto';
 import { TGetVideoPage } from '@Apps/modules/video/application/queries/v2/find-video-page.query-handler';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 const c = nestControllerContract(apiRouter.video);

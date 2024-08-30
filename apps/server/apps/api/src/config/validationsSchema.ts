@@ -60,21 +60,22 @@ export const validationSchema = Joi.object({
   OPENSEARCH_NODE: Joi.string()
     .required()
     .description('OpenSearch 클러스터의 노드 주소입니다.'),
-  IGNITE_ENDPOINT1: Joi.string()
+
+  OPENSEARCH_NODE_TWO: Joi.string()
     .required()
-    .description('Apache Ignite 서비스의 엔드포인트1 주소입니다.'),
-  IGNITE_ENDPOINT2: Joi.string()
+    .description('OpenSearch 클러스터의 노드 주소입니다.'),
+
+  OPENSEARCH_NODE_THREE: Joi.string()
     .required()
-    .description('Apache Ignite 서비스의 엔드포인트2 주소입니다.'),
-  IGNITE_ENDPOINT3: Joi.string()
+    .description('OpenSearch 클러스터의 노드 주소입니다.'),
+
+  OPENSEARCH_ID: Joi.string()
     .required()
-    .description('Apache Ignite 서비스의 엔드포인트3 주소입니다.'),
-  IGNITE_USER_NAME: Joi.string()
+    .description('OpenSearch 클러스터의 사용자 정보 입니다.'),
+
+  OPENSEARCH_PW: Joi.string()
     .required()
-    .description('Apache Ignite 서비스에 접속할 사용자 이름입니다.'),
-  IGNITE_PASSWORD: Joi.string()
-    .required()
-    .description('Apache Ignite 서비스 접속을 위한 비밀번호입니다.'),
+    .description('OpenSearch 클러스터의 사용자 정보 입니다.'),
 
   REDIS_ON_PROMISE_PORT: Joi.number().required(),
   REDIS_ON_PROMISE_HOSTNAME: Joi.string().description(

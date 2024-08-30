@@ -19,7 +19,7 @@ import {
   GetSomeWeeklyHitsDto,
   GetSomeWeeklyHitsQueryInterface,
 } from '@Apps/modules/hits/application/dtos/get-some-weekly-hits.dto';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
 import { TGetSomeWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-some-weekly-hits.v1.query-handler';
 import { match } from 'oxide.ts';
 import {
@@ -27,7 +27,7 @@ import {
   IRes,
   TTsRestRes,
   WeeklyKeywordsRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+} from '@Libs/types';
 const c = nestControllerContract(apiRouter.hits);
 const { getWeeklyKeywordSome } = c;
 const { summary, description } = getWeeklyKeywordSome;

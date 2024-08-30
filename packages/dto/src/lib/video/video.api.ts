@@ -3,14 +3,11 @@ import {
   zAccVideoModel,
   zVideoModel,
   zVideoPublishCountData,
-  zVideoResponse,
 } from './video.model';
 import { zErrResBase } from '../error.response.zod';
 import {
   zClusterNumberMulti,
-  zPaginatedIgniteQueryParams,
   zPaginatedIgniteQuerySort,
-  zTotalData,
 } from '../common.model';
 import {
   findVideoBySearchKeyword,
@@ -27,16 +24,6 @@ import {
 export const videoBaseApiUrl = '/video';
 
 export const videoApi = c.router({
-  getVideoTest: {
-    method: 'GET',
-    path: `${videoBaseApiUrl}/test`,
-    query: findVideoBySearchKeyword,
-    responses: {
-      200: zVideoResponse,
-    },
-    summary: '이그 나이트 태스트용',
-    description: '이그 나이트 태스트용',
-  },
   getVideoPage: {
     method: 'GET',
     path: `${videoBaseApiUrl}`,

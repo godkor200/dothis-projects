@@ -2,19 +2,23 @@ import {
   GetWeeklyKeyword,
   GetWeeklyViewsDaoV2,
 } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { Paginated, RepositoryPort } from '@Libs/commons/src';
+import { Paginated, RepositoryPort } from '@Libs/commons';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { Result } from 'oxide.ts';
 
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
-import { TGetKeywordInformationRes, TKeywordThisWeeklyRes } from '@dothis/dto';
+import {
+  TGetKeywordInformationRes,
+  TKeywordThisWeeklyList,
+  TKeywordThisWeeklyRes,
+} from '@dothis/dto';
 export type TPaginatedWeeklyHitsV2Res = Result<
   Paginated<WeeklyHitsEntity>,
   WeeklyViewsError
 >;
 
 export type TGetWeeklyKeywords = Result<
-  TKeywordThisWeeklyRes,
+  TKeywordThisWeeklyList,
   WeeklyViewsError
 >;
 

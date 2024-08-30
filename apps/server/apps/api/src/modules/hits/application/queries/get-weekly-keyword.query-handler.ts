@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetWeeklyKeywordDto } from '@Apps/modules/hits/application/dtos/get-weekly-keyword.dto';
 import { Result } from 'oxide.ts';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { TKeywordThisWeeklyRes } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
 import { GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';

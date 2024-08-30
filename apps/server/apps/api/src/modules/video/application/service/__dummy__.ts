@@ -1,7 +1,7 @@
 import { IVideoHistory } from '@Apps/modules/video/application/dtos/find-video.os.res';
 import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
 import { TGetVideoViewsMatchingSearchOnSpecificDateRes } from '@Apps/modules/video/domain/ports/video.outbound.port';
-import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/application/dtos/video.res';
 import { Ok } from 'oxide.ts';
 export type TData = Pick<
   GetRelatedVideoHistory,

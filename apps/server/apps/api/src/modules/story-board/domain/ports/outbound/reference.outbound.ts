@@ -1,4 +1,4 @@
-import { RepositoryPort } from '@Libs/commons/src';
+import { RepositoryPort } from '@Libs/commons';
 import { ReferenceEntity } from '@Apps/modules/story-board/domain/entities/reference.entity';
 import { PostReferenceDao } from '@Apps/modules/story-board/infrastructure/daos/reference.dao';
 

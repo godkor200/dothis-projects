@@ -1,4 +1,4 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db';
 import { WeeklyHitsEntity } from '@Apps/modules/hits/domain/entities/weekly-hits.entity';
 import { WeeklyHitsModel, zWeeklyKeywordsListSourceSchema } from '@dothis/dto';
 import {
@@ -11,7 +11,7 @@ import { GetSomeWeeklyViewsDao } from '@Apps/modules/hits/infrastructure/daos/hi
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
-import { Paginated } from '@Libs/commons/src';
+import { Paginated } from '@Libs/commons';
 
 export class WeeklyHitsV1Repository
   extends SqlRepositoryBase<WeeklyHitsEntity, WeeklyHitsModel>

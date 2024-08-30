@@ -1,14 +1,12 @@
 import { GetOwnInfoHttpController } from '@Apps/common/auth/queries/v1/get-own-info/get-own-info.http.controller';
 import { Module, Provider } from '@nestjs/common';
-import { AtStrategy } from '@Libs/commons/src';
+import { AtStrategy } from '@Libs/oauth';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserEntityModule } from '@Apps/modules/user/domain/user.entity.module';
 import { JwtModule } from '@nestjs/jwt';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepository } from '@Apps/modules/user/database/user.repository';
 import { GetOwnInfoQueryHandler } from '@Apps/common/auth/queries/v1/get-own-info/get-own-info.query-handler';
-import { CHANNEL_DATA_REPOSITORY } from '@Apps/modules/channel/channel-data.di-token.constants';
-import { ChannelDataRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-data.repository';
 
 const strategies: Provider[] = [AtStrategy];
 
@@ -18,10 +16,6 @@ const queryHandlers: Provider[] = [GetOwnInfoQueryHandler];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
-  {
-    provide: CHANNEL_DATA_REPOSITORY,
-    useClass: ChannelDataRepository,
-  },
 ];
 @Module({
   controllers: [...httpControllers],

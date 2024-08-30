@@ -6,7 +6,7 @@ import { FIND_CHANNEL_EXTEND_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/chann
 import { AnalyzeChannelDao } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
 import { ChannelAndExtendHistoryOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
 import { Inject } from '@nestjs/common';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 export type TAnalyzeChannelRes = Result<
   ChannelAnalysisRes,

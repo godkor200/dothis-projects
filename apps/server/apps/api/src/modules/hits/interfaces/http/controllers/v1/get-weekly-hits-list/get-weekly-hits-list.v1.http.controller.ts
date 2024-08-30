@@ -18,14 +18,14 @@ import {
   IRes,
   TTsRestRes,
   WeeklyKeywordsRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+} from '@Libs/types';
 import {
   GetWeeklyViewsDto,
   GetWeeklyViewsQuery,
 } from '@Apps/modules/hits/application/dtos/get-weekly-views-list.dto';
 import { match } from 'oxide.ts';
 import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly-views.error';
-import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.v1.query-handler';
+import { TGetWeeklyHitsRes } from '@Apps/modules/hits/application/queries/get-weekly-hits.query-handler';
 
 const c = nestControllerContract(apiRouter.hits);
 const { getWeeklyKeywordListWithPaging } = c;

@@ -1,4 +1,4 @@
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { RequestContextService } from '@Libs/commons';
 
 export interface SerializedException {
   message: string;

@@ -3,7 +3,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { CommandBus } from '@nestjs/cqrs';
 import { CookieOptions, Request, Response } from 'express';
 import { apiRouter, USER_AUTH } from '@dothis/dto';
-import { Cookies, TDecodePayload, User } from '@Libs/commons/src';
+import { Cookies, User } from '@Libs/commons';
 import { TokenDto } from '@Apps/common/auth/commands/v1/verify-token/verify-token.service';
 import {
   ApiForbiddenResponse,
@@ -15,11 +15,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TDecodePayload } from '@Libs/types';
 import { ITokenRes } from '@Apps/common/auth/interfaces/get-own-info.interface';
 import { match, Result } from 'oxide.ts';
 import { UnauthorizedExceptionError } from '@Apps/common/auth/domain/event/auth.error';
-import { TokenExpired } from '@Libs/commons/src/interfaces/types/res.types';
+import { TokenExpired } from '@Libs/types';
 
 const { getVerifyToken } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getVerifyToken;

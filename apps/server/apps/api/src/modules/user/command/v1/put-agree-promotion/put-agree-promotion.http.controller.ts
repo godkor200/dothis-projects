@@ -7,8 +7,8 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { User } from '@Libs/commons';
+import { IRes } from '@Libs/types';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -25,6 +25,7 @@ import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { match, Result } from 'oxide.ts';
+import { JwtAccessGuard } from '@Libs/oauth';
 const c = nestControllerContract(apiRouter.user);
 const { putAgreePromotion } = c;
 const { responses, description, summary } = putAgreePromotion;

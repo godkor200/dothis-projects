@@ -5,7 +5,7 @@ import { Ok, Result } from 'oxide.ts';
 import { StoryNotExistsError } from '@Apps/modules/story-board/domain/events/errors/story.error';
 import { StoryBoardDetailOutboundPort } from '@Apps/modules/story-board/domain/ports/outbound/story-board-details.outbound';
 import { STORY_BOARD_DETAIL_DO_TOKEN_CONSTANT } from '@Apps/modules/story-board/story-board-details.di-token.constant';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 export type TOverviewRes = Result<
   IRes<boolean>,
   StoryNotExistsError | InternalServerErrorException

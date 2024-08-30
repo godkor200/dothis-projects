@@ -1,9 +1,9 @@
 import {
   GetRelatedVideoAndVideoHistoryPickChannelAverageViews,
   IRelatedVideoAnalyticsData,
-  IVideoHistoryResult,
+  TRecentVideoHistoryResult,
+  VideoHistorySearchResult,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
-import { VideosMultiRelatedWordsCacheType } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 
 interface ICalculateWordStatsRes {
   // `word`: 분석 대상이 되는 연관 단어입니다.
@@ -159,38 +159,26 @@ export class RankingRelatedWordAggregateService {
    * @param stats: 탐색어와 연관어와 관련된 동영상들에 관한 채널평균조회수, 비디오 조회수 데이터
    */
   static calculateWordStatsOs(
-    videoData: VideosMultiRelatedWordsCacheType,
-    stats: IVideoHistoryResult[],
+    videoData: VideoHistorySearchResult<TRecentVideoHistoryResult>,
   ) {
-    return Object.entries(videoData).map(([word, videos]) => {
-      let count = 0;
-      let totalViews = 0;
-      let totalPerformance = 0;
+    const count = videoData.total.value;
+    const items = videoData.items;
+    let totalViews = 0;
+    let totalPerformance = 0;
+    items.forEach((video) => {
+      const videoPerformance = video.channel_average_views
+        ? video.video_views / (video.channel_average_views || 1)
+        : video.video_performance; // 평균 조회수가 없는 경우 1로 나눔
 
-      videos.forEach((video) => {
-        const matchedStats = stats.find((s) => s.video_id === video.videoId);
-        if (matchedStats) {
-          const videoPerformance = matchedStats.channel_average_views
-            ? matchedStats.video_views /
-              (matchedStats.channel_average_views || 1)
-            : matchedStats.video_performance; // 평균 조회수가 없는 경우 1로 나눔
-
-          count++;
-          totalViews += matchedStats.video_views;
-          totalPerformance += videoPerformance;
-        }
-      });
-
-      const videoPerformanceAvg = count > 0 ? totalPerformance / count : 0;
-      const sortFigures = (videoPerformanceAvg * totalViews) / (count || 1);
-
-      return {
-        word,
-        count,
-        totalViews,
-        relatedKeywordPerformance: videoPerformanceAvg,
-        sortFigures: sortFigures > 0 ? sortFigures : 0,
-      };
+      totalViews += video.video_views;
+      totalPerformance += videoPerformance;
     });
+
+    const videoPerformanceAvg = count > 0 ? totalPerformance / count : 0;
+    const sortFigures = (videoPerformanceAvg * totalViews) / (count || 1);
+
+    return {
+      sortFigures: sortFigures > 0 ? sortFigures : 0,
+    };
   }
 }

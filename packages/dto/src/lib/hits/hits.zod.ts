@@ -140,7 +140,15 @@ export const zGetProbabilitySuccessRes = dataObject(zSuccessRateSchema);
  */
 
 export const zKeywordThisWeeklyList = z.array(zKeywordSchema);
-
+export const zVideoLengthRange = z.object({
+  key: z.string(),
+  from: z.number().nullable(),
+  to: z.number().nullable(),
+  docCount: z.number(),
+  totalVideoViews: z.number(),
+  averagePerformance: z.number().nullable(), // Nullable average performance
+});
 export const zKeywordThisWeeklyRes = dataObject(zKeywordThisWeeklyList);
-
+export const zAnalysedVideoLengthRes = dataObject(zVideoLengthRange);
+export type TKeywordThisWeeklyList = z.TypeOf<typeof zKeywordThisWeeklyList>;
 export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;

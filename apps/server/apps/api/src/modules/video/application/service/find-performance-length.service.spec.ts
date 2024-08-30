@@ -2,7 +2,7 @@ import { FindPerformanceLengthService } from '@Apps/modules/video/application/se
 import { mock } from 'jest-mock-extended';
 import { IGetVideoViewsMatchingSearchOnSpecificDateOutboundPort } from '@Apps/modules/video/domain/ports/video.outbound.port';
 import { FindPerformanceLengthDto } from '@Apps/modules/video/application/dtos/find-performance-length.dto';
-import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { GetVideoViewsPerformanceMatchingSearchOnSpecificDate } from '@Apps/modules/video/application/dtos/video.res';
 import { performanceLengthTestData } from '@Apps/modules/video/application/service/__dummy__';
 
 const mockIGetVideoViewsMatchingSearchOnSpecificDateOutboundPort =

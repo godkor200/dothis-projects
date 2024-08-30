@@ -12,7 +12,7 @@ import {
   CompleteVideoShortsBody,
   CompleteVideoShortsDto,
 } from '@ExternalApps/feature/crawler/application/dto/complete.dto';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { CompleteVideoShortsResponse } from '@ExternalApps/feature/crawler/domain/port/video-shorts.complete.inbound.port';
 import { VideoNotFoundException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 const c = nestControllerContract(externalApiRouter.crawler);
@@ -24,7 +24,6 @@ export class CompleteVideosController {
   @ApiExcludeEndpoint()
   @TsRestHandler(completeVideos)
   async execute(@Body() body: CompleteVideoShortsBody) {
-    console.log(body);
     return tsRestHandler(completeVideos, async ({ body }) => {
       const res: CompleteVideoShortsResponse = await this.commandBus.execute(
         new CompleteVideoShortsDto(body),

@@ -1,4 +1,7 @@
-import { HitList, OsRes } from '@Apps/common/aws/interface/os.res.interface';
+import {
+  HitList,
+  OsRes,
+} from '@Apps/common/opensearch/interface/os.res.interface';
 
 export interface IFindVideoHistoryResponse {
   video_id: string;

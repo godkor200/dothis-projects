@@ -6,8 +6,8 @@ import { RouterModule } from '@nestjs/core';
 @Module({
   imports: [
     VideoApiV1Module,
-    RouterModule.register([{ path: 'v1', module: VideoApiV1Module }]),
     VideoApiV2Module,
+    RouterModule.register([{ path: 'v1', module: VideoApiV1Module }]),
     RouterModule.register([{ path: 'v2', module: VideoApiV2Module }]),
   ],
 })

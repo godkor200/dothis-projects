@@ -1,4 +1,4 @@
-import { IVideoSchema } from '@Apps/modules/video/infrastructure/daos/video.res';
+import { IVideoSchema } from '@Apps/modules/video/application/dtos/video.res';
 import { IFindVideoHistoryResponse } from '@Apps/modules/video/application/dtos/find-video.os.res';
 
 /**

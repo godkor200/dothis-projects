@@ -1,11 +1,8 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { match, Result } from 'oxide.ts';
-import {
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import { ExceptionBase } from '@Libs/commons/src/exceptions/exception.base';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { InternalServerErrorException } from '@nestjs/common';
+import { ExceptionBase } from './exception.base';
+import { IRes } from '@Libs/types';
 
 export class CommandExecutor {
   private commandBus: CommandBus;

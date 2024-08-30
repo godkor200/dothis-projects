@@ -68,4 +68,14 @@ export class DateUtil {
 
     return dateToCheck >= fromDate && dateToCheck <= toDate;
   }
+
+  public static getIndexFromDate(
+    dateStr: string = new Date().toISOString(),
+  ): string {
+    const date = new Date(dateStr);
+    const start = new Date(date.getUTCFullYear(), 3, 1);
+    const diff = date.getTime() - start.getTime();
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+    return `.ds-video_history-${String(dayOfYear).padStart(6, '0')}`;
+  }
 }

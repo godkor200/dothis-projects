@@ -5,12 +5,12 @@ import { GetProbabilitySuccessInboundPort } from '@Apps/modules/hits/domain/port
 
 import { Inject } from '@nestjs/common';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { PROBABILITY_SUCCESS_SERVICE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
 import {
   CacheDoesNotFoundException,
   TableNotFoundException,
-} from '@Libs/commons/src/exceptions/exceptions';
+} from '@Libs/commons';
 import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
 import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
 

@@ -1,7 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { extendApi } from '@anatine/zod-openapi';
 import { zClusterNumberMulti, zFindAccumulateQuery } from '@dothis/dto';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
+import { IParamsInterface } from '@Libs/commons/abstract/applications.abstract';
 export class FindPerformanceLengthQuery extends createZodDto(
   extendApi(zFindAccumulateQuery),
 ) {}

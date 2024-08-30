@@ -13,11 +13,7 @@ import {
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import {
-  IRes,
-  TTsRestRes,
-  VideoCountRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes, VideoCountRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
 import {
@@ -25,7 +21,7 @@ import {
   FindVideoCountQuery,
 } from '@Apps/modules/video/application/dtos/find-video-count.dto';
 import { match } from 'oxide.ts';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { TFindVideoCount } from '@Apps/modules/video/application/queries/v1/find-video-count.query-handler';
 

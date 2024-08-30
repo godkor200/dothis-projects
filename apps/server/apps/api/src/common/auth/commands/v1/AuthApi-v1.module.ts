@@ -5,7 +5,7 @@ import {
   Provider,
 } from '@nestjs/common';
 import { UserEntityModule } from '@Apps/modules/user/domain/user.entity.module';
-import { GoogleStrategy, AtStrategy } from '@Libs/commons/src/oauth/strategy';
+import { GoogleStrategy, AtStrategy } from 'libs/oauth/src/strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { GoogleLoginHttpController } from '@Apps/common/auth/commands/v1/google-login/google-login.http.controller';
 import { GoogleLoginRedirectHttpController } from '@Apps/common/auth/commands/v1/google-login-redirect/google-login-redirect.http.controller';
@@ -19,7 +19,7 @@ import { PassportModule } from '@nestjs/passport';
 import { CookieValidationMiddleware } from '@Apps/common/auth/middleware/cookie.middleware';
 import { LogoutCommandHandler } from '@Apps/common/auth/commands/v1/logout/logout.command-handler';
 import { LogoutHttpController } from '@Apps/common/auth/commands/v1/logout/logout.http.controller';
-import { KafkaModule } from '@Apps/common/kafka/kafka.module';
+
 const httpControllers = [
   GoogleLoginHttpController,
   GoogleLoginRedirectHttpController,

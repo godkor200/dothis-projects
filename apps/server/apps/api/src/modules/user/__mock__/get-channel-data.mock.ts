@@ -1,10 +1,6 @@
-import {
-  Paginated,
-  PaginatedQueryParams,
-  updateObject,
-} from '@Libs/commons/src';
+import { Paginated, PaginatedQueryParams, updateObject } from '@Libs/commons';
 import { ChannelDataRepositoryPort } from '@Apps/modules/channel/domain/ports/channel-data.repository.port';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 
 export class ChannelDataMock implements ChannelDataRepositoryPort {

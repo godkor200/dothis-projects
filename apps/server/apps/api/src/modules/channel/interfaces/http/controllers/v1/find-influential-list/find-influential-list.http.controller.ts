@@ -14,8 +14,8 @@ import {
 import { match } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { TFindInfluentialListRes } from '@Apps/modules/channel/application/queries/find-influential-list.query-handler';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
+import { IRes, TTsRestRes } from '@Libs/types';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
 const { getInfluentialList } = nestControllerContract(apiRouter.channel);
 const { summary, responses, description } = getInfluentialList;
 

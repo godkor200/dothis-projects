@@ -5,60 +5,75 @@ import {
 import { GetAnalysisHitsDto } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
 import { Inject } from '@nestjs/common';
 import { Err, Ok } from 'oxide.ts';
-
-import { KeywordServiceHelper } from '@Apps/common/helpers/get-video-data.helper';
-import { RELWORDS_DI_TOKEN } from '@Apps/modules/related-word/related-words.enum.di-token.constant';
-import { RelatedWordsRepositoryPort } from '@Apps/modules/related-word/infrastructure/repositories/db/rel-words.repository.port';
-import { GetVideoCacheDao } from '@Apps/modules/video/infrastructure/daos/video.dao';
-import { RedisResultMapper } from '@Apps/common/redis/mapper/to-object.mapper';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { VIDEO_CACHE_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
-import { VideoCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
+import { GET_VIDEO_HISTORY_RANGE_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
+import { IRangeVideoHistoryOutboundPort } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { VideoAggregateHelper } from '@Apps/modules/video/application/service/helpers/video.aggregate.helper';
+import dayjs from 'dayjs';
+import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
 
 /**
  * api: 데일리뷰와 기대조회수 병합
  *
  */
 export class AnalysisHitsService implements AnalysisHitsServiceInboundPort {
-  private readonly dataHelper: KeywordServiceHelper;
   constructor(
-    @Inject(RELWORDS_DI_TOKEN.FIND_ONE)
-    private readonly relWordsRepository: RelatedWordsRepositoryPort,
-
-    @Inject(VIDEO_CACHE_ADAPTER_DI_TOKEN)
-    private readonly videoCacheService: VideoCacheOutboundPorts,
-  ) {
-    this.dataHelper = new KeywordServiceHelper(relWordsRepository);
-  }
+    @Inject(GET_VIDEO_HISTORY_RANGE_DI_TOKEN)
+    private readonly videoHistoryRange: IRangeVideoHistoryOutboundPort,
+  ) {}
   async execute(dto: GetAnalysisHitsDto): Promise<TAnalysisHitsServiceRes> {
+    const { from, to, separation } = dto;
+    // from 날짜의 전날을 계산
+    const adjustedFrom = dayjs(from).subtract(1, 'day').format('YYYY-MM-DD');
+
+    const adjustedDto = { ...dto, from: adjustedFrom };
     try {
-      const relatedCluster = await this.dataHelper.getClusters(dto.search);
-      const relatedClusterUnwrap = relatedCluster.unwrap();
-      const videoCacheDao = new GetVideoCacheDao({
-        ...dto,
-        relatedCluster: relatedClusterUnwrap,
-      });
-
-      const videoCacheResult = await this.videoCacheService.execute(
-        videoCacheDao,
-      );
-
-      if (videoCacheResult.isOk()) {
-        const videos = RedisResultMapper.groupByCluster(
-          RedisResultMapper.toObjects(videoCacheResult.unwrap()),
-        );
-        if (!Object.values(videos).flat().length) {
-          return Err(new VideoNotFoundError());
+      const histories = await this.videoHistoryRange.execute(adjustedDto);
+      if (histories.isOk()) {
+        const historiesUnwrap = histories.unwrap();
+        if (!separation) {
+          const metrics = VideoAggregateHelper.calculateMetrics(
+            historiesUnwrap.items,
+          );
+          return Ok({
+            success: true,
+            data: [
+              {
+                clusterNumber: null,
+                data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+                  dto.from,
+                  dto.to,
+                  metrics,
+                ),
+              },
+            ],
+          });
         }
+        const clusterMap = historiesUnwrap.items.reduce((map, item) => {
+          const cluster = item.video_cluster;
+          if (!map[cluster]) {
+            map[cluster] = [];
+          }
+          map[cluster].push(item);
+          return map;
+        }, {} as Record<number, any[]>);
 
-        console.log(videos);
+        // 각 클러스터에 대해 Metrics 계산
+        const clusterData = Object.entries(clusterMap).map(
+          ([cluster, items]) => {
+            const metrics = VideoAggregateHelper.calculateMetrics(items);
+            return {
+              clusterNumber: parseInt(cluster, 10),
+              data: VideoAggregateUtils.generateDailyFakeViewsAndExpectedViews(
+                dto.from,
+                dto.to,
+                metrics,
+              ),
+            };
+          },
+        );
+
+        return Ok({ success: true, data: clusterData });
       }
-
-      // if (data.isOk()) {
-      //   const dataUnwrap = data.unwrap();
-      //   const metrics = VideoAggregateHelper.calculateMetrics(dataUnwrap);
-        return Ok({ success: true, data: [] });
-
     } catch (err) {
       return Err(err);
     }

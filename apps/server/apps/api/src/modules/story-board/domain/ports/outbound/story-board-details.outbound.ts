@@ -1,4 +1,4 @@
-import { RepositoryPort } from '@Libs/commons/src';
+import { RepositoryPort } from '@Libs/commons';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { StoryBoardOverviewEntity } from '@Apps/modules/story-board/domain/entities/story-board-overview.entity';
 

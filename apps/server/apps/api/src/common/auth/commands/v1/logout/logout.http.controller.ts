@@ -7,7 +7,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAccessGuard, User } from '@Libs/commons/src';
+import { User } from '@Libs/commons';
 import {
   ApiBearerAuth,
   ApiHeaders,
@@ -23,8 +23,9 @@ import { LogoutDto } from '@Apps/common/auth/commands/v1/logout/logout.command-h
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { nestControllerContract, TsRest } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
-import { IRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes } from '@Libs/types';
 import { Response } from 'express';
+import { JwtAccessGuard } from '@Libs/oauth';
 const c = nestControllerContract(apiRouter.auth);
 const { logout } = c;
 const { responses, description, summary } = logout;

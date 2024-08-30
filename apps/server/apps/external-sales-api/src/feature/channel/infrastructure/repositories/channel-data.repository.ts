@@ -1,4 +1,4 @@
-import { SqlRepositoryBase } from '@Libs/commons/src/db/sql-repository.base';
+import { SqlRepositoryBase } from '@Libs/commons/db/sql-repository.base';
 import { ChannelDataEntity } from '@ExternalApps/feature/video/domain/entities';
 import { TChannelModel, zChannelDataSchema } from '@dothis/dto';
 import { ChannelDataRepositoryPort } from '@ExternalApps/feature/channel/domain/port/channel-data.repository.port';

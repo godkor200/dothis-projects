@@ -5,7 +5,7 @@ import {
   TInfluentialChannelRes,
 } from '@dothis/dto';
 import { NotFoundException } from '@nestjs/common';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { GetAnalyzeMyChannel } from '@Apps/modules/channel/application/dtos/analyze-channel.interface';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 

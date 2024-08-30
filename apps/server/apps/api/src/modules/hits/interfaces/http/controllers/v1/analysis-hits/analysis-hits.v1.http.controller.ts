@@ -11,15 +11,12 @@ import {
   GetAnalysisHitsDto,
   GetAnalysisHitsQuery,
 } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import {
@@ -31,7 +28,7 @@ import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.erro
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 import { TAnalysisHitsServiceRes } from '@Apps/modules/hits/domain/ports/analysis-hits.service.inbound.port';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, TTsRestRes } from '@Libs/types';
 import { AnalysisHitsOk } from '@Apps/modules/hits/application/types/analysis.res-types';
 const c = nestControllerContract(apiRouter.hits);
 const { summary, description } = c.getAnalysisHits;

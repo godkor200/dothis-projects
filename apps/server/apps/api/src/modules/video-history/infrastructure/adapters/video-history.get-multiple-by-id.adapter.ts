@@ -1,25 +1,14 @@
-import { VideoHistoryBaseAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.base.adapter';
 import {
   IGetVideoHistoryGetMultipleByIdOutboundPort,
   TGetVideoHistoryRes,
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { IGetVideoHistoryGetMultipleByIdDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { Err, Ok } from 'oxide.ts';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-
-import { CacheNameMapper } from '@Apps/common/ignite/mapper/cache-name.mapper';
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
-import { IgniteResultToObjectMapper } from '@Apps/common/ignite/mapper';
-import { IgniteService } from '@Apps/common/ignite/service/ignite.service';
 import { Injectable } from '@nestjs/common';
 @Injectable()
 export class VideoHistoryGetMultipleByIdAdapter
-  extends VideoHistoryBaseAdapter
   implements IGetVideoHistoryGetMultipleByIdOutboundPort
 {
-  constructor(private readonly igniteService: IgniteService) {
-    super();
-  }
   /**
    * 비디오 아이디를 여러개 받아서 여러 비디오의 히스토리를 리턴
    * @param dao
@@ -27,42 +16,8 @@ export class VideoHistoryGetMultipleByIdAdapter
   async execute(
     dao: IGetVideoHistoryGetMultipleByIdDao,
   ): Promise<TGetVideoHistoryRes> {
-    const { videoIds, clusterNumber } = dao;
-
-    const { year, month } = DateUtil.currentDate();
-    const tableName = CacheNameMapper.getVideoHistoryCacheName(
-      clusterNumber[0],
-      year,
-      month,
-    );
-
-    const queryUnion = clusterNumber.map((cluster) => {
-      const tableName = CacheNameMapper.getVideoHistoryCacheName(
-        cluster,
-        year,
-        month,
-      );
-
-      return `SELECT vh.video_id, vh.video_views, vh.DAY FROM ${tableName} vh WHERE vh.video_id in (${
-        "'" + videoIds.join(`', '`) + "'"
-      })`;
-    });
-    let queryString: string;
-    if (clusterNumber.length > 1) {
-      queryString = queryUnion.join(' UNION ');
-    } else {
-      queryString = queryUnion[0];
-    }
     try {
-      const cache = await this.igniteService.getClient().getCache(tableName);
-      const query = this.igniteService.createDistributedJoinQuery(queryString);
-      const result = await cache.query(query);
-      const resArr = await result.getAll();
-      if (!resArr.length) return Err(new VideoHistoryNotFoundError());
-
-      return Ok(
-        IgniteResultToObjectMapper.mapResultToObjects(resArr, queryString),
-      );
+      return Ok([]);
     } catch (e) {
       return Err(e); // 호출자에게 에러 정보 반환
     }

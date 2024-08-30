@@ -9,7 +9,7 @@ import {
 import { PostReqVideoService } from '@ExternalApps/feature/crawl-queue/video/application/service/post-req-video.service';
 import { RequestVideoRepository } from '@ExternalApps/feature/crawl-queue/video/domain/repositories/request-video.repository';
 import { RequestVideoEntityModule } from '@ExternalApps/feature/crawl-queue/video/domain/entities/request-video.entity.module';
-import { AtStrategy } from '@Libs/commons/src';
+
 import { PassportModule } from '@nestjs/passport';
 import { DeleteReqVideoHttpController } from '@ExternalApps/feature/crawl-queue/video/interface/http/delete-req-video.http.controller';
 import { DeleteReqVideoService } from '@ExternalApps/feature/crawl-queue/video/application/service/delete-req-video.service';
@@ -30,7 +30,8 @@ import { VideoHistoryRepository } from '@ExternalApps/feature/video/infrastructu
 import { HttpModule } from '@nestjs/axios';
 import { VideoDataEntityModule } from '@ExternalApps/feature/video/domain/entities/video-data-shorts.module';
 import { ChannelDataEntityModule } from '@ExternalApps/feature/video/domain/entities';
-
+import { AtStrategy } from '@Libs/oauth';
+import { HttpUtils } from '@ExternalApps/utils/http.utils';
 
 const controllers = [
   PostReqVideoHttpController,
@@ -81,6 +82,12 @@ const strategies: Provider[] = [AtStrategy];
     RequestVideoEntityModule,
   ],
   controllers,
-  providers: [...command, ...repositories, ...service, ...strategies],
+  providers: [
+    ...command,
+    ...repositories,
+    ...service,
+    ...strategies,
+    HttpUtils,
+  ],
 })
 export class VideoModule {}

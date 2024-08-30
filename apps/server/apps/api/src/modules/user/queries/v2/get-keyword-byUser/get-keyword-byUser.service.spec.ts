@@ -4,7 +4,7 @@ import {
   GetUserV2CommandHandler,
 } from '@Apps/modules/user/queries/v2/get-keyword-byUser/get-keyword-byUser.service';
 import { ChannelDataRepositoryPort } from '@Apps/modules/channel/domain/ports/channel-data.repository.port';
-import { RequestContextService } from '@Libs/commons/src/application/context/AppRequestContext';
+import { RequestContextService } from '@Libs/commons/application/context/AppRequestContext';
 import { nanoid } from 'nanoid';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 

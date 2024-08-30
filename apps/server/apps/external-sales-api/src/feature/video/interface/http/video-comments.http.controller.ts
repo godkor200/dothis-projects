@@ -12,7 +12,7 @@ import {
   TsRestHandler,
 } from '@ts-rest/nest';
 import { externalApiRouter } from '@dothis/dto';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { JwtAccessGuard } from '@Libs/oauth';
 import {
   ApiBearerAuth,
   ApiExcludeEndpoint,
@@ -33,10 +33,7 @@ import {
   VideoCommentsQuery,
 } from '@ExternalApps/feature/video/application/dto/video-comments.dto';
 import { match } from 'oxide.ts';
-import {
-  IResWithItem,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { IResWithItem, TTsRestRes } from '@Libs/types';
 import { VideoCommentRes } from '@ExternalApps/feature/video/domain/port/video-comment.inbound.port';
 
 const c = nestControllerContract(externalApiRouter.video);

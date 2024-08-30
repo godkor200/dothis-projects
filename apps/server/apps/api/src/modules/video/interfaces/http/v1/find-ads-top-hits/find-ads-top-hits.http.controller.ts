@@ -20,17 +20,13 @@ import {
 } from '@Apps/modules/video/application/dtos/find-ads-top-hits.dto';
 import { match } from 'oxide.ts';
 import { TFindAdsTopHits } from '@Apps/modules/video/application/queries/v1/find-ads-top-hits.query-handler';
-import {
-  FindAdsRelatedTopHitsRes,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { FindAdsRelatedTopHitsRes, IRes, TTsRestRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { TableNotFoundException } from '@Libs/commons/src/exceptions/exceptions';
+import { TableNotFoundException } from '@Libs/commons';
 import { InternalServerErrorException } from '@nestjs/common/exceptions/internal-server-error.exception';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
+import { ParseArrayPipe } from '@Libs/commons/pipes/parse-array.pipe';
+import { IParamsInterface } from '@Libs/commons/abstract/applications.abstract';
 const c = nestControllerContract(apiRouter.video);
 const { summary, responses, description } = c.getAdvertisingRelatedVideo;
 

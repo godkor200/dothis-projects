@@ -34,12 +34,8 @@ import {
 } from '@ExternalApps/feature/crawl-queue/video/application/dto/post-req-video.dto';
 import { match } from 'oxide.ts';
 import { TPostRequestVideoRes } from '@ExternalApps/feature/crawl-queue/video/application/commands/post-req-video.command';
-import {
-  IResWithItem,
-  TokenExpired,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
-import { JwtAccessGuard } from '@Libs/commons/src';
+import { IResWithItem, TokenExpired, TTsRestRes } from '@Libs/types';
+import { JwtAccessGuard } from '@Libs/oauth';
 import {
   InvalidYoutubeUrlException,
   DuplicateException,

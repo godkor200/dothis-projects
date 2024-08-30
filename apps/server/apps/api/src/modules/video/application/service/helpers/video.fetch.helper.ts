@@ -1,4 +1,4 @@
-import { DateUtil } from '@Libs/commons/src/utils/date.util';
+import { DateUtil } from '@Libs/commons/utils/date.util';
 import { VideoCacheRecord } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import dayjs from 'dayjs';
 

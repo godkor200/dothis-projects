@@ -1,0 +1,17 @@
+import { extendApi } from '@anatine/zod-openapi';
+import { createZodDto } from '@anatine/zod-nestjs';
+import { zPaginatedIgniteQueryParams, zUserModel } from '@dothis/dto';
+import { zPaginatedSqlQueryParams } from '@dothis/dto';
+export class PaginatedSqlQueryParams extends createZodDto(
+  extendApi(zPaginatedSqlQueryParams),
+) {
+  constructor(props: PaginatedSqlQueryParams) {
+    super();
+  }
+}
+
+export class UserDto extends createZodDto(extendApi(zUserModel)) {}
+
+export interface IGetVideoClusterInterface {
+  readonly clusterNumber: string | string[];
+}

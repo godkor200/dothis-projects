@@ -7,7 +7,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginatedSqlQueryParams } from '@Libs/commons/src/interfaces/types/dto.types';
+
 import { QueryBus } from '@nestjs/cqrs';
 import {
   nestControllerContract,
@@ -15,9 +15,9 @@ import {
   TsRestHandler,
   tsRestHandler,
 } from '@ts-rest/nest';
-import { JwtAccessGuard, Paginated, User } from '@Libs/commons/src';
+import { Paginated, User } from '@Libs/commons';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
-import { IRes, TTsRestRes } from '@Libs/commons/src/interfaces/types/res.types';
+import { IRes, PaginatedSqlQueryParams, TTsRestRes } from '@Libs/types';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
 import { match } from 'oxide.ts';
 import {
@@ -39,6 +39,7 @@ import { AuthToken } from '@Apps/common/auth/domain/event/auth.event';
 
 import { InternalServerErr } from '@Apps/common/auth/domain/event/auth.error';
 import { StoryBoardCreateArrayRes } from '@Apps/modules/story-board/domain/events/response';
+import { JwtAccessGuard } from '@Libs/oauth';
 const c = nestControllerContract(apiRouter.storyBoard);
 const { getManyStoryBoard } = c;
 const { summary, description, responses } = getManyStoryBoard;

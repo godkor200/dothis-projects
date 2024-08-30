@@ -4,15 +4,10 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { Controller, NotFoundException, Param, Query } from '@nestjs/common';
-import {
-  nestControllerContract,
-  TsRestHandler,
-  tsRestHandler,
-} from '@ts-rest/nest';
+import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { apiRouter } from '@dothis/dto';
 import { match } from 'oxide.ts';
 
@@ -25,15 +20,9 @@ import {
   GetProbabilityRes,
 } from '@Apps/modules/hits/application/queries/get-probability-success.query-handler';
 
-import {
-  GetProbabilityResultType,
-  IRes,
-  TTsRestRes,
-} from '@Libs/commons/src/interfaces/types/res.types';
+import { GetProbabilityResultType, IRes, TTsRestRes } from '@Libs/types';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import { InternalServerErr } from '@Apps/modules/hits/domain/events/errors/hits.errors';
-import { ParseArrayPipe } from '@Libs/commons/src/pipes/parse-array.pipe';
-import { IParamsInterface } from '@Libs/commons/src/abstract/applications.abstract';
 const c = apiRouter.hits;
 const { getProbabilitySuccess } = c;
 const { summary, description } = getProbabilitySuccess;

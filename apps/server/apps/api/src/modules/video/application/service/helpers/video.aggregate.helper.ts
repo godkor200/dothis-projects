@@ -1,12 +1,13 @@
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
 
 import {
+  IIncreaseDailyViews,
   IIncreaseData,
   IIncreaseHits,
   IIncreaseHitsData,
   IIncreaseSetVideoIds,
 } from '@Apps/modules/video/application/service/helpers/video.aggregate.type';
-import { GetRelatedVideoAndVideoHistoryPickChannelAverageViews } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
+import { TRangeVideoHistoryResult } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { PredictedViews, VideoPrediction } from '@dothis/dto';
 import {
@@ -18,211 +19,99 @@ import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/
  * 비디오 데이터를 집계하고 통계를 계산하는 헬퍼 클래스.
  */
 export class VideoAggregateHelper {
-  /**
-   * 일일 조회 수: 각 동영상들의 날짜별 증감에 따른 합계를 구하는 집계 함수입니다.
-   * @param videoData
-   * @return {
-   *      increase_views: 일일증가 조회수
-   *      increase_likes: 일일증가 좋아요수
-   *      increase_comments: 일일증가 코맨트수
-   * }
-   */
-  static calculateIncrease(videoData: IVideoHistory[]): IIncreaseData[] {
-    let result: Record<string, IIncreaseData> = {};
-    for (let video of videoData) {
-      let videoList = video.inner_hits.video_history.hits.hits.map(
-        (hit) => hit._source,
+  // 공통 로직을 처리하는 헬퍼 함수
+  private static processVideoData(
+    groupedData: TRangeVideoHistoryResult[],
+    callback: (
+      video: TRangeVideoHistoryResult,
+      prevVideo: TRangeVideoHistoryResult | null,
+      currentData: any,
+    ) => void,
+  ): Map<
+    string,
+    {
+      date: string;
+      uniqueVideoCount: number;
+      increaseViews: number;
+      expectedHits?: number;
+      maxPerformance?: number;
+      minPerformance?: number;
+      videoIds: Set<string>;
+    }
+  > {
+    const videoHistoryMap = new Map<string, TRangeVideoHistoryResult[]>();
+
+    for (const video of groupedData) {
+      if (!videoHistoryMap.has(video.video_id)) {
+        videoHistoryMap.set(video.video_id, []);
+      }
+      videoHistoryMap.get(video.video_id)!.push(video);
+    }
+
+    const result = new Map<
+      string,
+      {
+        date: string;
+        uniqueVideoCount: number;
+        increaseViews: number;
+        expectedHits?: number;
+        maxPerformance?: number;
+        minPerformance?: number;
+        videoIds: Set<string>;
+      }
+    >();
+
+    for (const [videoId, videos] of videoHistoryMap) {
+      videos.sort(
+        (a, b) =>
+          new Date(
+            parseInt(a.year_c),
+            parseInt(a.month_c) - 1,
+            parseInt(a.day_c),
+          ).getTime() -
+          new Date(
+            parseInt(b.year_c),
+            parseInt(b.month_c) - 1,
+            parseInt(b.day_c),
+          ).getTime(),
       );
-      videoList.sort((a, b) => a.crawled_date.localeCompare(b.crawled_date));
 
-      let prevVideo: IFindVideoHistoryResponse | null = null;
-      let sumViews = 0,
-        sumLikes = 0,
-        sumComments = 0;
+      let prevVideo: TRangeVideoHistoryResult | null = null;
 
-      for (let i = 0; i < videoList.length; i++) {
-        let currentVideo = videoList[i];
-        const date = currentVideo.crawled_date.split('T')[0];
+      for (const video of videos) {
+        const { video_views, channel_average_views, year_c, month_c, day_c } =
+          video;
+        const date = `${year_c}-${month_c.padStart(2, '0')}-${day_c.padStart(
+          2,
+          '0',
+        )}`;
 
-        sumViews += currentVideo.video_views;
-        sumLikes += currentVideo.video_likes;
-        sumComments += currentVideo.video_comments;
-
-        if (prevVideo) {
-          const increaseViews =
-            currentVideo.video_views !== 0
-              ? currentVideo.video_views - prevVideo.video_views
-              : VideoAggregateUtils.calculateAverage(sumViews, i + 1);
-          const increaseLikes =
-            currentVideo.video_likes !== 0
-              ? Math.abs(currentVideo.video_likes - prevVideo.video_likes)
-              : VideoAggregateUtils.calculateAverage(sumLikes, i + 1);
-          const increaseComments =
-            currentVideo.video_comments !== 0
-              ? Math.abs(currentVideo.video_comments - prevVideo.video_comments)
-              : VideoAggregateUtils.calculateAverage(sumComments, i + 1);
-
-          if (!result[date]) {
-            result[date] = {
-              date,
-              increaseViews: 0,
-              increaseLikes: 0,
-              increaseComments: 0,
-            };
-          }
-
-          result[date].increaseViews += increaseViews;
-          result[date].increaseLikes += increaseLikes;
-          result[date].increaseComments += increaseComments;
+        if (!prevVideo || !this.isConsecutiveDay(prevVideo, video)) {
+          prevVideo = video_views !== 0 ? video : null;
+          continue;
         }
 
-        prevVideo = currentVideo;
-      }
-    }
-    return Object.values(result);
-  }
-  /**
-   * opensearch 소스 데이터에 기반하여 각 비디오의 조회수, 좋아요 및 댓글 수 증가를 계산합니다.
-   * @param histories - 비디오 히스토리 응답 데이터 배열.
-   * @return {
-   *      increase_views: 일일증가 조회수
-   *      increase_likes: 일일증가 좋아요수
-   *      increase_comments: 일일증가 코맨트수
-   * }
-   */
-  static calculateIncreaseBySource(
-    histories: IFindVideoHistoryResponse[],
-  ): IIncreaseData[] {
-    let result: Record<string, IIncreaseData> = {};
-    histories.sort((a, b) => a.crawled_date.localeCompare(b.crawled_date));
-
-    let prevVideo: IFindVideoHistoryResponse | null = null;
-    let sumViews = 0,
-      sumLikes = 0,
-      sumComments = 0;
-
-    for (let i = 0; i < histories.length; i++) {
-      let history = histories[i];
-      const date = history.crawled_date.split('T')[0];
-
-      sumViews += history.video_views;
-      sumLikes += history.video_likes;
-      sumComments += history.video_comments;
-
-      if (prevVideo) {
-        const increaseViews =
-          history.video_views !== 0
-            ? history.video_views - prevVideo.video_views
-            : VideoAggregateUtils.calculateAverage(sumViews, i + 1);
-        const increaseLikes =
-          history.video_likes !== 0
-            ? Math.abs(history.video_likes - prevVideo.video_likes)
-            : VideoAggregateUtils.calculateAverage(sumLikes, i + 1);
-        const increaseComments =
-          history.video_comments !== 0
-            ? Math.abs(history.video_comments - prevVideo.video_comments)
-            : VideoAggregateUtils.calculateAverage(sumComments, i + 1);
-
-        if (!result[date]) {
-          result[date] = {
+        if (!result.has(date)) {
+          result.set(date, {
             date,
+            uniqueVideoCount: 0,
             increaseViews: 0,
-            increaseLikes: 0,
-            increaseComments: 0,
-          };
+            expectedHits: 0,
+            maxPerformance: -Infinity,
+            minPerformance: Infinity,
+            videoIds: new Set(),
+          });
         }
 
-        result[date].increaseViews += increaseViews;
-        result[date].increaseLikes += increaseLikes;
-        result[date].increaseComments += increaseComments;
-      }
+        const currentData = result.get(date);
 
-      prevVideo = history;
-    }
+        callback(video, prevVideo, currentData);
 
-    return Object.values(result);
-  }
-  /**
-   * 목적:
-   *  특정 날짜별로 조회수, 좋아요 수, 댓글 수의 증가량을 계산합니다.
-   *  날짜별로 고유 비디오 개수를 계산합니다.
-   * 주요 기능:
-   *  videoHistoryMap을 생성하여 비디오 히스토리를 정렬합니다.
-   *  각 날짜별로 조회수, 좋아요 수, 댓글 수의 증가량을 계산합니다.
-   *  각 날짜에 대해 고유 비디오 ID를 추적하여 고유 비디오 개수를 계산합니다.
-   *  최종적으로 날짜별로 증가량과 고유 비디오 개수를 반환합니다.
-   * 일일조회수
-   * @param histories
-   */
-  static calculateIncreaseByIgnite(
-    histories: GetRelatedVideoHistory[],
-  ): IIncreaseHitsData[] {
-    let result: Record<string, IIncreaseHitsData & { videoIds: Set<string> }> =
-      {};
-    const videoHistoryMap = VideoAggregateUtils.groupBy(
-      histories,
-      (history) => history.videoId,
-    );
-
-    for (let histories of Object.values(videoHistoryMap)) {
-      histories = VideoAggregateUtils.sortByDate(histories);
-
-      let prevVideo: GetRelatedVideoHistory | null = null;
-      let sumViews = 0,
-        sumLikes = 0,
-        sumComments = 0;
-
-      for (let i = 0; i < histories.length; i++) {
-        let history = histories[i];
-        const date = new Date(history.year, history.month - 1, history.day)
-          .toISOString()
-          .split('T')[0];
-
-        sumViews += history.videoViews;
-        sumLikes += history.videoLikes;
-        sumComments += history.videoComments;
-
-        if (
-          prevVideo &&
-          VideoAggregateUtils.isPreviousDay(prevVideo, history)
-        ) {
-          const { increaseViews, increaseLikes, increaseComments } =
-            VideoAggregateUtils.calculateIncreases(
-              prevVideo,
-              history,
-              sumViews,
-              sumLikes,
-              sumComments,
-              i,
-            );
-          if (!result[date]) {
-            result[date] = {
-              date,
-              increaseViews: 0,
-              increaseLikes: 0,
-              increaseComments: 0,
-              uniqueVideoCount: 0,
-              videoIds: new Set<string>(),
-            };
-          }
-
-          result[date].increaseViews += increaseViews;
-          result[date].increaseLikes += increaseLikes;
-          result[date].increaseComments += increaseComments;
-          result[date].videoIds.add(history.videoId);
-        }
-
-        prevVideo = history;
+        prevVideo = video;
       }
     }
 
-    return Object.values(result).map((data) => {
-      const { videoIds, ...rest } = data;
-      return {
-        ...rest,
-        uniqueVideoCount: videoIds.size,
-      };
-    });
+    return result;
   }
 
   /**
@@ -299,6 +188,52 @@ export class VideoAggregateHelper {
       dailyViews: predictedViews,
     };
   }
+
+  // Helper function to check if two dates are consecutive days
+  static isConsecutiveDay(
+    prev: TRangeVideoHistoryResult,
+    current: TRangeVideoHistoryResult,
+  ) {
+    const prevDate = new Date(
+      parseInt(prev.year_c),
+      parseInt(prev.month_c) - 1,
+      parseInt(prev.day_c),
+    );
+    const currentDate = new Date(
+      parseInt(current.year_c),
+      parseInt(current.month_c) - 1,
+      parseInt(current.day_c),
+    );
+    return currentDate.getTime() - prevDate.getTime() === 86400000; // Check if currentDate is exactly one day after prevDate
+  }
+
+  static calculateDailyIncreases(
+    groupedData: TRangeVideoHistoryResult[],
+  ): IIncreaseDailyViews {
+    const result = this.processVideoData(
+      groupedData,
+      (video, prevVideo, currentData) => {
+        if (prevVideo) {
+          const increaseViews = video.video_views - prevVideo.video_views;
+          currentData.increaseViews += increaseViews;
+        }
+
+        if (video.channel_average_views !== 0 && video.video_views !== 0) {
+          currentData.videoIds.add(video.video_id);
+        }
+      },
+    );
+
+    const data = Array.from(result.values()).map((data) => ({
+      date: data.date,
+      uniqueVideoCount: data.videoIds.size,
+      increaseViews: data.increaseViews,
+    }));
+    return {
+      representativeCategory: this.findLargestCluster(groupedData).videoCluster,
+      data,
+    };
+  }
   /**
    * 날짜별로 그룹화된 데이터 배열을 일일조회수 기대조회수 둘다를 계산하는 함수
    * 목적:
@@ -327,108 +262,70 @@ export class VideoAggregateHelper {
    */
 
   static calculateMetrics(
-    groupedData: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[],
+    groupedData: TRangeVideoHistoryResult[],
   ): IIncreaseHits[] {
-    // 비디오 ID를 기준으로 그룹화
-    let videoHistoryMap: {
-      [
-        videoId: string
-      ]: GetRelatedVideoAndVideoHistoryPickChannelAverageViews[];
-    } = {};
+    const result = this.processVideoData(
+      groupedData,
+      (video, prevVideo, currentData) => {
+        if (prevVideo) {
+          const increaseViews = video.video_views - prevVideo.video_views;
+          currentData.increaseViews += increaseViews;
+        }
 
-    for (let video of groupedData) {
-      if (!videoHistoryMap[video.videoId]) {
-        videoHistoryMap[video.videoId] = [];
+        if (video.channel_average_views !== 0 && video.video_views !== 0) {
+          const performance = video.video_views / video.channel_average_views;
+          currentData.expectedHits += performance;
+
+          currentData.maxPerformance = Math.max(
+            currentData.maxPerformance,
+            performance,
+          );
+          currentData.minPerformance = Math.min(
+            currentData.minPerformance,
+            performance,
+          );
+          currentData.videoIds.add(video.video_id);
+        }
+      },
+    );
+
+    return Array.from(result.values()).map((data) => ({
+      date: data.date,
+      uniqueVideoCount: data.videoIds.size,
+      increaseViews: data.increaseViews,
+      expectedHits: data.videoIds.size
+        ? data.expectedHits / data.videoIds.size
+        : 0,
+      maxPerformance: data.maxPerformance,
+      minPerformance: data.minPerformance,
+    }));
+  }
+
+  /**
+   * 제일 관련된 클러스터 찾는 메소드
+   * @param groupedData
+   */
+  static findLargestCluster(groupedData: TRangeVideoHistoryResult[]): {
+    videoCluster: number;
+    videoCount: number;
+  } {
+    const clusterMap = new Map<number, Set<string>>();
+
+    for (const video of groupedData) {
+      if (!clusterMap.has(video.video_cluster)) {
+        clusterMap.set(video.video_cluster, new Set());
       }
-      videoHistoryMap[video.videoId].push(video);
+      clusterMap.get(video.video_cluster)!.add(video.video_id);
     }
 
-    // 각 비디오별로 날짜순으로 정렬
-    for (let videoId in videoHistoryMap) {
-      videoHistoryMap[videoId].sort(
-        (a, b) =>
-          new Date(a.year, a.month - 1, a.day).getTime() -
-          new Date(b.year, b.month - 1, b.day).getTime(),
-      );
-    }
+    let largestCluster = { videoCluster: -1, videoCount: 0 };
 
-    // 날짜별로 그룹화된 데이터에 대해 증가량과 기대조회수 계산
-    let result: IIncreaseSetVideoIds[] = [];
-
-    for (let videoId in videoHistoryMap) {
-      let videos = videoHistoryMap[videoId];
-      let prevVideo: GetRelatedVideoAndVideoHistoryPickChannelAverageViews | null =
-        null;
-      let sumViews = 0;
-      let maxPerformance = -Infinity;
-      let minPerformance = Infinity;
-
-      for (let i = 0; i < videos.length; i++) {
-        const video = videos[i];
-        const { videoViews, channelAverageViews, year, month, day } = video;
-
-        const date = new Date(year, month - 1, day).toISOString().split('T')[0];
-
-        // 누락된 데이터가 있으면 해당 날짜 및 이전 날짜 계산을 건너뜀
-        if (
-          !prevVideo ||
-          !VideoAggregateUtils.isPreviousDay(prevVideo, video)
-        ) {
-          prevVideo = videoViews !== 0 ? video : null;
-          continue;
-        }
-
-        if (!result[date]) {
-          result[date] = {
-            date,
-            uniqueVideoCount: 0,
-            increaseViews: 0,
-            expectedHits: 0,
-            maxPerformance,
-            minPerformance,
-            videoIds: new Set<string>(),
-          };
-        }
-
-        if (channelAverageViews !== 0 && videoViews !== 0) {
-          const performance = videoViews / channelAverageViews;
-          result[date].expectedHits += performance;
-
-          if (performance > result[date].maxPerformance) {
-            result[date].maxPerformance = performance;
-          }
-          if (performance < result[date].minPerformance) {
-            result[date].minPerformance = performance;
-          }
-          result[date].videoIds.add(video.videoId);
-        }
-
-        if (i > 0) {
-          if (videoViews !== 0) {
-            result[date].increaseViews += videoViews - prevVideo.videoViews;
-          } else {
-            const averageIncreaseViews = sumViews / (i + 1);
-            result[date].increaseViews += averageIncreaseViews;
-          }
-        } else {
-          result[date].increaseViews += videoViews;
-        }
-        sumViews += videoViews;
-        prevVideo = video;
+    for (const [clusterId, videoIds] of clusterMap) {
+      if (videoIds.size > largestCluster.videoCount) {
+        largestCluster = { videoCluster: clusterId, videoCount: videoIds.size };
       }
     }
 
-    for (let date in result) {
-      result[date].expectedHits =
-        result[date].expectedHits / result[date].videoIds.size;
-    }
-
-    return Object.values(result).map((data) => {
-      const { videoIds, ...rest } = data;
-      return {
-        ...rest,
-        uniqueVideoCount: videoIds.size,
-      };
-    });
+    return largestCluster;
   }
 }
