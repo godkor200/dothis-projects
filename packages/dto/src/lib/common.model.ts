@@ -9,8 +9,8 @@ export const zSearchKeyword = z
 
 export const zDateQuery = z
   .object({
-    from: z.string().describe('언제부터 날짜').default('2024-05-01'),
-    to: z.string().describe('까지 날짜').default('2024-05-07'),
+    from: z.string().describe('언제부터 날짜').default('2024-08-23'),
+    to: z.string().describe('까지 날짜').default('2024-08-30'),
   })
   .describe('기본 날짜 쿼리');
 

@@ -13,15 +13,15 @@ import {
 } from '@ts-rest/nest';
 import { match } from 'oxide.ts';
 import { QueryBus } from '@nestjs/cqrs';
-import { apiRouter } from '@dothis/dto'; // 실제 경로와 모듈 이름으로 대체
+import { apiRouter } from '@dothis/dto';
 import { IRes, TTsRestRes } from '@Libs/types';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error'; // 실제 에러 클래스로 대체
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import {
   GetDurationLengthDto,
   GetDurationLengthQuery,
   GetDurationLengthRes,
 } from '@Apps/modules/video/application/dtos/get-duration-length.dto';
-import { TGetDurationLengthRes } from '@Apps/modules/video/application/service/video.duration-length.service'; // 실제 DTO 파일 경로로 대체
+import { TGetDurationLengthRes } from '@Apps/modules/video/application/service/video.duration-length.service';
 
 const c = nestControllerContract(apiRouter.hits);
 const { getVideoDurationAnalysis } = c;
