@@ -148,6 +148,16 @@ export const zVideoLengthRange = z.object({
   totalVideoViews: z.number(),
   averagePerformance: z.number().nullable(), // Nullable average performance
 });
+
+export const zSubscriberRange = z.object({
+  key: z.string(),
+  from: z.number().nullable(),
+  to: z.number().nullable(),
+  docCount: z.number(),
+  totalVideoViews: z.number(),
+});
+
+export const zSubscriberViewAnalysisRes = dataObject(z.array(zSubscriberRange));
 export const zKeywordThisWeeklyRes = dataObject(zKeywordThisWeeklyList);
 export const zAnalysedVideoLengthRes = dataObject(zVideoLengthRange);
 export type TKeywordThisWeeklyList = z.TypeOf<typeof zKeywordThisWeeklyList>;

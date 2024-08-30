@@ -29,3 +29,14 @@ export class TodayIssueNotFoundError extends ExceptionBase {
     super(TodayIssueNotFoundError.message, undefined, metadata);
   }
 }
+
+export class SubscriberViewAnalysisError extends ExceptionBase {
+  static readonly message =
+    'An error occurred during subscriber view analysis.';
+
+  public readonly code = 'SUBSCRIBER_VIEW_ANALYSIS.ERROR';
+
+  constructor(metadata?: unknown) {
+    super(SubscriberViewAnalysisError.message, undefined, metadata);
+  }
+}

@@ -13,6 +13,7 @@ import {
   DAILY_HITS_SERVICE_DI_TOKEN,
   GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
   PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
+  SUBSCRIBER_VIEW_ANALYSIS_DO_TOKEN,
   VIDEO_PERFORMANCE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V1_DI_TOKEN,
@@ -57,6 +58,9 @@ import { GetDailyHitsQueryHandler } from '@Apps/modules/hits/application/queries
 import { GetDailyHitsService } from '@Apps/modules/hits/application/services/get-daily-hits.service';
 import { ScrollService } from '@Apps/common/opensearch/service/opensearch.scroll-api.service';
 import { VideoPerformanceAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import { SubscriberViewAnalysisAdapter } from '@Apps/modules/hits/infrastructure/adapters/subscriber-view-analysis.adapter';
+import { GetSubscriberViewAnalysisHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-subscriber-view-analysis.http.controller';
+import { SubscriberViewAnalysisService } from '@Apps/modules/hits/application/services/get-subscriber-view.analysis.service';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -95,15 +99,17 @@ const service: Provider[] = [
   },
   ChannelHistoryAggregateService,
   ScrollService,
+  SubscriberViewAnalysisService,
 ];
 const controllers = [
   // GetDailyHitsV1HttpController,
-  GetProbabilitySuccessHttpController,
   // GetSomeWeeklyHitsV1HttpController,
+  GetProbabilitySuccessHttpController,
   GetWeeklyKeywordHttpController,
   AnalysisHitsV1HttpController,
   GetWeeklyHitsListV2HttpController,
   GetDailyHitsV2HttpController,
+  GetSubscriberViewAnalysisHttpController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
@@ -141,6 +147,10 @@ const adapters: Provider[] = [
   {
     provide: VIDEO_PERFORMANCE_DI_TOKEN,
     useClass: VideoPerformanceAdapter,
+  },
+  {
+    provide: SUBSCRIBER_VIEW_ANALYSIS_DO_TOKEN,
+    useClass: SubscriberViewAnalysisAdapter,
   },
 ];
 

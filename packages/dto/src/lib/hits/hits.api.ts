@@ -20,6 +20,7 @@ import {
   zGetWeeklyViewsQuery,
   zKeywordThisWeeklyRes,
   zAnalysedVideoLengthRes,
+  zSubscriberViewAnalysisRes,
 } from './hits.zod';
 
 export const expectedHitsApiUrl = '/expectation';
@@ -182,5 +183,17 @@ export const hitsApi = c.router({
       '키워드 기반으로 영상 길이 구간별 조회수 및 성과 집계를 가져옵니다',
     description:
       '검색어(keyword)를 기반으로 전날 영상에 대해 각 영상 길이 구간별 조회수의 합과 성과의 평균을 계산하여 반환합니다.',
+  },
+  getSubscriberViewAnalysis: {
+    method: 'GET',
+    path: `${viewApiUrl}/analysis/subscriber-view`,
+    query: zFindVideoBySearchKeyword,
+    responses: {
+      200: zSuccessBase.merge(zSubscriberViewAnalysisRes),
+      ...zErrResBase,
+    },
+    summary: '구독자 구간별로 조회수 합계를 분석합니다.',
+    description:
+      '검색어(keyword)를 기반으로 전날 영상에 대해 각 구독자 수 구간별 조회수의 합을 계산하여 반환합니다.',
   },
 });
