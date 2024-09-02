@@ -70,4 +70,4 @@ async function generateHmacSHA256(base_str: string, secretkey: string) {
 }
 
 // Example usage
-// generateHmacSHA256(base_str, secretkey).then((hmac) => console.log(hmac));
+// generateHmacSHA256(base_str, secretkey).then((hmac) => log(hmac));
