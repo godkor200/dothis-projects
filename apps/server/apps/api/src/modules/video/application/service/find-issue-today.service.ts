@@ -5,18 +5,19 @@ import { WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN } from '@Apps/modules/hits/hits.di-
 import { WeeklyHitsV2OutboundPort } from '@Apps/modules/hits/domain/ports/weekly-hits.v2.outbound.port';
 import { Err, Ok } from 'oxide.ts';
 import { GetWeeklyKeyword } from '@Apps/modules/hits/infrastructure/daos/hits.dao';
-import { TopVideoOutboundPort } from '@Apps/modules/video/domain/ports/top-video.outbound.port';
+import {
+  TopVideoAdapterResult,
+  TopVideoOutboundPort,
+} from '@Apps/modules/video/domain/ports/top-video.outbound.port';
 import {
   TOP_VIDEO_ADAPTER_DI_TOKEN,
   VIDEO_DATA_ADAPTER_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { TopVideoDao } from '@Apps/modules/video/infrastructure/daos/top-video.dao';
 import dayjs from 'dayjs';
-
-/**
- * fix: 키워드 5개로 고치기
- * 요청한
- */
+interface ITopVideoResponse extends TopVideoAdapterResult {
+  search: string;
+}
 export class FindIssueTodayService implements FindIssueTodayInboundPort {
   constructor(
     @Inject(WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN)
@@ -37,6 +38,9 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
         const topThreeUnwrap = topThree.unwrap();
         const videoMultiKeywordCacheRes: TopVideoDao[] = topThreeUnwrap.map(
           (item) => {
+            /**
+             * 영상이 제한적이여서 탐색어로만 찾음
+             */
             return new TopVideoDao(
               item.recommendedKeyword,
               undefined,
@@ -45,34 +49,30 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             );
           },
         );
-
-        const topVideoResults = await Promise.all(
-          videoMultiKeywordCacheRes.map((videoDao) =>
-            this.topVideoAdapter.execute(videoDao),
-          ),
+        const topVideoResults: ITopVideoResponse[] = await Promise.all(
+          videoMultiKeywordCacheRes.map(async (videoDao) => {
+            const result = await this.topVideoAdapter.execute(videoDao);
+            return {
+              search: videoDao.search,
+              ...(result.isOk() ? result.unwrap().items[0] : {}),
+            };
+          }),
         );
 
         const validResults = topVideoResults
-          .filter((res) => res.isOk())
-          .map((res, index) => {
-            const videoHistoryGetTopViewsUnwrap = res.unwrap();
+          .filter((res) => res.video_id) // 필터 확인용
+          .map((res) => {
             return {
-              search: videoMultiKeywordCacheRes[index].search,
-              ...videoHistoryGetTopViewsUnwrap.items['0'],
+              search: res.search,
+              videoId: res.video_id,
+              videoTitle: res.video_title,
+              channelName: res.channel_name,
+              videoViews: res.video_views,
+              videoPublished: res.video_published,
             };
           });
 
-        if (validResults) {
-          const result = validResults.map((e) => ({
-            search: e.search,
-            videoId: e.video_id,
-            videoTitle: e.video_title,
-            channelName: e.channel_name,
-            videoViews: e.video_views,
-            videoPublished: e.video_published,
-          }));
-          return Ok(result);
-        }
+        return Ok(validResults);
       }
       return Err(topThree.unwrapErr());
     } catch (e) {
