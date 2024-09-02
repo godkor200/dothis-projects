@@ -6,6 +6,7 @@ import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetNaverAdsQueries from '@/hooks/contents/useGetNaverAdsQueries';
 import useGetNaverAds from '@/hooks/react-query/query/useGetNaverAds';
 
+import useGetDailyExpectedView from '../../../hooks/react-query/query/useGetDailyExpectedView';
 import ChartSummaryCards from '../keyword/[keyword]/ChartSummaryCards';
 
 const Check = () => {
@@ -21,8 +22,17 @@ const Check = () => {
     relatedKeywords: ['기안84', '마우스'],
   });
 
-  console.log(test);
-  console.log(good);
+  const { data } = useGetDailyExpectedView({
+    baseKeyword: '한국어',
+    relatedKeyword: '세종대왕',
+  });
+
+  console.log(data);
+
+  console.log(data?.data ? data.data[0] : '없음');
+
+  // console.log(test);
+  // console.log(good);
   return (
     <div>
       checkPage
