@@ -43,17 +43,17 @@ const ComparisonSummaryCard = ({
     useGetUserChannelData();
 
   const maxExpectedHits = dailyViewData?.data
-    ? Math.max(...dailyViewData.data.data.map((item) => item.expectedHits))
+    ? Math.max(...dailyViewData.data[0].data.map((item) => item.expectedHits))
     : 1;
 
   const predictedView =
     userChannelData?.data.averageViews ??
     GUEST_AVERAGEVIEW * (maxExpectedHits ? maxExpectedHits : 1);
 
-  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData?.data.data);
+  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData?.data[0].data);
 
   const competitionVideoCount =
-    dailyViewData?.data.data.at(-1)?.uniqueVideoCount ?? 0;
+    dailyViewData?.data[0].data.at(-1)?.uniqueVideoCount ?? 0;
   // const totalVideoCount = sumVideoCount(dailyViewData?.data.data);
 
   //   검색량 코드
