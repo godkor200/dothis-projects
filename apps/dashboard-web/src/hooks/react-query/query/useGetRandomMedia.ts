@@ -59,7 +59,7 @@ export const useGetRandomMedia = ({
     ((relatedkeyword || searchKeyword) &&
       weeklyVideo?.length &&
       weeklyVideo?.filter((item) => item.search === searchKeyword)?.[0]
-        .videoId === null) ||
+        ?.videoId === null) ||
     isError
       ? true
       : false;
