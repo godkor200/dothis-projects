@@ -37,13 +37,11 @@ const Dropzone = ({ label = '파일 추가', onFileSelect }: Props) => {
     setIsDragging(false);
     const uploadedFiles = Array.from(event.dataTransfer.files);
     onFileSelect(uploadedFiles);
-    console.log('handleDrop', uploadedFiles);
   };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = Array.from(event.target.files as FileList);
     onFileSelect(uploadedFiles);
-    console.log('handleFileSelect', uploadedFiles);
   };
 
   return (

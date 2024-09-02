@@ -21,7 +21,6 @@ const SceneControls = ({
   const addScene = () => {
     const pageRef = document.querySelector('#storyboard-detail-page');
     pageRef && pageRef.scrollTo({ top: 10000, behavior: 'smooth' });
-    console.log('pageRef', pageRef);
   };
   const createScene = () => {
     // TODO: mutate
@@ -30,13 +29,12 @@ const SceneControls = ({
 
   const deleteScene = () => {
     const checkedKeys = getCheckedSceneIds();
-    console.log('getCheckedSceneIds:', checkedKeys);
+
     // TODO: mutate
     setModalContent(
       <ConfirmModal
         message={`선택한 씬 스토리보드를 삭제하시겠습니까?\u000A삭제된 씬 스토리보드는 복구되지 않습니다.`}
         callback={() => {
-          console.log('confirmed! mutate~');
           toggleEdit();
         }}
       />,
@@ -47,13 +45,12 @@ const SceneControls = ({
   const { draggableItems } = useDraggableContext('SceneControls');
   const applyEdit = () => {
     // API에 따라서 수정되어야 함 (id리스트가 필요한지 등)
-    console.log('변경된 순서', draggableItems);
+
     // TODO: mutate
     setModalContent(
       <ConfirmModal
         message={`편집을 완료하시겠습니까?`}
         callback={() => {
-          console.log('confirmed! mutate~');
           toggleEdit();
         }}
       />,
