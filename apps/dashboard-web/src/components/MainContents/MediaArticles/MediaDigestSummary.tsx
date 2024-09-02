@@ -16,7 +16,6 @@ const MediaDigestSummary = ({
   uploadDate,
   isList,
 }: Props) => {
-  const uploadDateformat = dayjs(uploadDate).format('YYYY-MM-DD');
   return (
     <div
       className={cn('flex items-center gap-[0.5rem] ', {
@@ -56,7 +55,7 @@ const MediaDigestSummary = ({
           },
         )}
       >
-        {uploadDateformat}
+        {uploadDate}
       </span>
     </div>
   );
