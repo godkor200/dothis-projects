@@ -118,8 +118,6 @@ const D3Donut = () => {
 
       .attr('transform', (d) => `translate(${arc.centroid(d)})`)
       .call((text) => {
-        console.log(text);
-
         text
           .filter((d) => d.endAngle - d.startAngle > 0.25)
           .append('tspan')
@@ -138,7 +136,6 @@ const D3Donut = () => {
       .data(pie(data))
       .join('text')
       .attr('transform', (d) => {
-        // console.log(arc.centroid(d));
         return `translate(${arc.centroid(d)})`;
       })
       .call((text) =>

@@ -69,7 +69,6 @@ const Test = () => {
       .append('g')
       .attr('class', 'group')
       .attr('transform', ({ name }) => {
-        console.log(`yScale(${name}) : `, yScale(name));
         return `translate(0 ${yScale(name)})`;
       });
 
@@ -78,7 +77,6 @@ const Test = () => {
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', ({ count }) => {
-        console.log(`xScale(${count}) : `, xScale(count));
         return xScale(count);
       })
       .attr('height', yScale.bandwidth())
