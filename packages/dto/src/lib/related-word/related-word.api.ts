@@ -5,6 +5,7 @@ import {
   zDeleteRelWords,
   zGetKeywordInformationRes,
   zKeywords,
+  zRankingRelatedWordsRes,
   zRankRel,
   zRelWords,
   zSearch,
@@ -76,7 +77,7 @@ export const relatedWordsApi = c.router({
     method: 'GET',
     path: `${relWordsApiUrl}/:search/ranking`,
     responses: {
-      200: zRankRel,
+      200: zRankingRelatedWordsRes,
       ...zErrResBase,
     },
     pathParams: zSearch,
