@@ -39,7 +39,7 @@ const useDailyViewQueries = ({
 
   const flat = queryResults.flatMap((queryResult, index) => {
     return {
-      data: queryResult.data?.body.data.data,
+      data: queryResult.data?.body.data[0].data,
       keyword: relatedKeywords[index],
     };
   });
