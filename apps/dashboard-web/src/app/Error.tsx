@@ -13,11 +13,11 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    // console.error(error);
   }, [error]);
 
-  console.log(error.name);
-  console.log(error.message);
+  // console.log(error.name);
+  // console.log(error.message);
 
   return (
     <div className="absolute flex h-full w-full flex-col items-center justify-center">
