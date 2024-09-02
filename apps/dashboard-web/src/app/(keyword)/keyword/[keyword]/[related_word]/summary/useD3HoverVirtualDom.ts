@@ -119,8 +119,6 @@ const useD3HoverVirtualDom = ({
         .attr('fill', 'transparent')
         .raise()
         .on('mouseover', (e, i) => {
-          // console.log(e);
-
           const bisect = D3.bisector(
             (d: DataItem | (typeof timeSeriesData)[number]) => d.date,
           ).left;
@@ -192,8 +190,6 @@ const useD3HoverVirtualDom = ({
         .selectAll('rect')
         .data(timeSeriesData)
         .on('mouseover', (e, i) => {
-          // console.log(e);
-
           const bisect = D3.bisector(
             (d: DataItem | (typeof timeSeriesData)[number]) => d.date,
           ).left;

@@ -8,7 +8,6 @@ const Test = ({
   children: React.ReactNode;
 }) => {
   const [number, setNumber] = useState(0);
-  console.log(test, number);
 
   if (test) {
     return <div onClick={() => setNumber((prev) => prev + 1)}>오류가 발생</div>;

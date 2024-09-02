@@ -190,7 +190,6 @@ const MainSearchbar = () => {
                     //   e.preventDefault();
                     //   e.stopPropagation();
 
-                    //   console.log('check');
                     //   router.push(`/keyword/${item.replace('*', '')}`);
                     // }}
                   />

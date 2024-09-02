@@ -27,12 +27,6 @@ const Check = () => {
     relatedKeyword: '세종대왕',
   });
 
-  console.log(data);
-
-  console.log(data?.data ? data.data[0] : '없음');
-
-  // console.log(test);
-  // console.log(good);
   return (
     <div>
       checkPage
