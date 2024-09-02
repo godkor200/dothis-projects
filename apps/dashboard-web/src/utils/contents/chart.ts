@@ -25,9 +25,9 @@ type UploadVideoCount = ClientInferResponseBody<
 >['data'][0];
 
 type CombineExpectedView = ClientInferResponseBody<
-  typeof apiRouter.hits.getAnalysisHitsV2,
+  typeof apiRouter.hits.getAnalysisHits,
   200
->['data']['data'][number];
+>['data'][number]['data'][number];
 
 /**
  * Date에 따른 initial 구조를 생성한다.
