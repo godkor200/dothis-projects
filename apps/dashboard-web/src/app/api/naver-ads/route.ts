@@ -25,9 +25,6 @@ export async function GET(req: Request) {
 
   const queryString = new URLSearchParams(params).toString();
 
-  console.log(process.env.NAVER_ADS_SECRET_KEY);
-  console.log(process.env.NAVER_ADS_CUSTOMER_ID);
-  console.log(process.env.NAVER_ADS_ACCESS_KEY);
   const res = await fetch(`${baseURL}${requestURL}?${queryString}`, {
     method: 'GET',
     headers: {
