@@ -124,7 +124,7 @@ export const zClusterSpecificCombinedSchema = z.object({
 });
 
 export const zClusterSpecificCombinedData = dataObject(
-  zClusterSpecificCombinedSchema,
+  z.array(zClusterSpecificCombinedSchema),
 );
 
 export type TAnalysisViewsRes = z.TypeOf<typeof zClusterSpecificCombinedData>;
