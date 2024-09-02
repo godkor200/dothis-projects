@@ -47,11 +47,10 @@ const MediaImageCard = ({
 
       return {
         title: item.videoTitle,
+
         provider: item.channelName,
         element: `조회수 ${compactNumber.format(item.videoViews)}`,
-        uploadDate: dayjs(`${item.year}-${item.month}-${item.day}`).format(
-          'YYYY-MM-DD',
-        ),
+        uploadDate: dayjs(item.videoPublished).format('YYYY-MM-DD'),
         image: externalYouTubeImageLoader(item.videoId),
         link: item.videoId,
       };
