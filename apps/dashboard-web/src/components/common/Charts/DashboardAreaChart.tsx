@@ -71,8 +71,7 @@ const DashboardAreaChart = ({ series }: Props) => {
           // floating: true,
           labels: {
             // formatter(value, timestamp, opts) {
-            //   console.log(value);
-            //   console.log(dayjs(value).format('YYYY-MM-DD'));
+
             //   return dayjs(value).format('YYYY-MM-DD');
             // },
 

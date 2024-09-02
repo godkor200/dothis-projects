@@ -61,9 +61,7 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
               router.push('/auth/terms');
             }
           }
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
 
         setIsSignedIn(true);
       } catch (error) {

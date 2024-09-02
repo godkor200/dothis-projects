@@ -99,8 +99,6 @@ const ViewChart = () => {
   //   })),
   // };
 
-  // console.log(AbsDailyView);
-
   const dailyVideoCount = useDailyVideoCountFormatter({
     keyword: selectedWord.keyword,
     relword: selectedWord.relword,

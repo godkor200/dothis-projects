@@ -62,7 +62,7 @@ const useGetSingleVideo = (
       ...queryOptions,
       staleTime: Infinity,
       //   onSuccess: (data) => {
-      //     console.log(cachedData);
+
       //     if (cachedData) {
       //       queryOptions?.onSuccess?.(data);
       //     }
