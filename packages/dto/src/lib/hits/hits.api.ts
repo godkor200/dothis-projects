@@ -21,6 +21,7 @@ import {
   zKeywordThisWeeklyRes,
   zAnalysedVideoLengthRes,
   zSubscriberViewAnalysisRes,
+  zClusterSpecificCombinedData,
 } from './hits.zod';
 
 export const expectedHitsApiUrl = '/expectation';
@@ -145,7 +146,8 @@ export const hitsApi = c.router({
     method: 'GET',
     path: `${viewApiUrl}`,
     query: zFindVideoBySearchKeyword,
-    responses: { 200: zCombinedViewsSchema, ...zErrResBase },
+    responses: { 200: zClusterSpecificCombinedData, ...zErrResBase },
+
     summary: '기대조회수와 일일조회수를 합쳐서 불러옵니다.',
     description:
       '탐색어(keyword), 연관어(relationKeyword), 날짜(from,to) 로 일일조회수, 기대 조회수를 출력합니다.',
