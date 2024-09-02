@@ -343,7 +343,7 @@ export const useExpectedViewFormatter = ({
   return {
     expectedView: useMemo(
       () =>
-        handleExpectedViewD3(expectedViewData?.data.data, {
+        handleExpectedViewD3(expectedViewData?.data[0].data, {
           startDate,
           endDate,
         }),
@@ -351,7 +351,7 @@ export const useExpectedViewFormatter = ({
     ),
     expectedArea: useMemo(
       () =>
-        handleExpectedViewAreaD3(expectedViewData?.data.data, {
+        handleExpectedViewAreaD3(expectedViewData?.data[0].data, {
           startDate,
           endDate,
         }),
