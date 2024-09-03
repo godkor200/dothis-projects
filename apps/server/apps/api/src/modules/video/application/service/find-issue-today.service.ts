@@ -9,10 +9,7 @@ import {
   TopVideoAdapterResult,
   TopVideoOutboundPort,
 } from '@Apps/modules/video/domain/ports/top-video.outbound.port';
-import {
-  TOP_VIDEO_ADAPTER_DI_TOKEN,
-  VIDEO_DATA_ADAPTER_DI_TOKEN,
-} from '@Apps/modules/video/video.di-token';
+import { TOP_VIDEO_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { TopVideoDao } from '@Apps/modules/video/infrastructure/daos/top-video.dao';
 import dayjs from 'dayjs';
 interface ITopVideoResponse extends TopVideoAdapterResult {
@@ -55,7 +52,7 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             return {
               search: videoDao.search,
               ...(result.isOk() ? result.unwrap().items[0] : {}),
-            };
+            } as ITopVideoResponse;
           }),
         );
 

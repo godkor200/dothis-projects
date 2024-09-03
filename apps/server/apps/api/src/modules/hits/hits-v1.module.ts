@@ -5,6 +5,7 @@ import {
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
+  VIDEO_PUBILSHED_ADAPTER_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 
 import {
@@ -57,7 +58,10 @@ import { GetDailyHitsV2HttpController } from '@Apps/modules/hits/interfaces/http
 import { GetDailyHitsQueryHandler } from '@Apps/modules/hits/application/queries/get-daily-hits.query-handler';
 import { GetDailyHitsService } from '@Apps/modules/hits/application/services/get-daily-hits.service';
 import { ScrollService } from '@Apps/common/opensearch/service/opensearch.scroll-api.service';
-import { VideoPerformanceAdapter } from '@Apps/modules/video/infrastructure/adapters';
+import {
+  VideoPerformanceAdapter,
+  VideoPublishedAdapter,
+} from '@Apps/modules/video/infrastructure/adapters';
 import { SubscriberViewAnalysisAdapter } from '@Apps/modules/hits/infrastructure/adapters/subscriber-view-analysis.adapter';
 import { GetSubscriberViewAnalysisHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-subscriber-view-analysis.http.controller';
 import { SubscriberViewAnalysisService } from '@Apps/modules/hits/application/services/get-subscriber-view.analysis.service';
@@ -151,6 +155,10 @@ const adapters: Provider[] = [
   {
     provide: SUBSCRIBER_VIEW_ANALYSIS_DO_TOKEN,
     useClass: SubscriberViewAnalysisAdapter,
+  },
+  {
+    provide: VIDEO_PUBILSHED_ADAPTER_DI_TOKEN,
+    useClass: VideoPublishedAdapter,
   },
 ];
 

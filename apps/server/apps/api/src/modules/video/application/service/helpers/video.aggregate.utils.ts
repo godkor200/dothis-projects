@@ -4,6 +4,7 @@ import { DateData } from '@Apps/modules/video/application/dtos/video.res';
 import {
   IIncreaseHits,
   IIncreaseHitsData,
+  IIncreaseHitsPickViews,
 } from '@Apps/modules/video/application/service/helpers/video.aggregate.type';
 
 export class VideoAggregateUtils {
@@ -16,17 +17,14 @@ export class VideoAggregateUtils {
     array: T[],
     key: (item: T) => K,
   ): Record<K, T[]> {
-    return array.reduce(
-      (result, currentValue) => {
-        const groupKey = key(currentValue);
-        if (!result[groupKey]) {
-          result[groupKey] = [];
-        }
-        result[groupKey].push(currentValue);
-        return result;
-      },
-      {} as Record<K, T[]>,
-    );
+    return array.reduce((result, currentValue) => {
+      const groupKey = key(currentValue);
+      if (!result[groupKey]) {
+        result[groupKey] = [];
+      }
+      result[groupKey].push(currentValue);
+      return result;
+    }, {} as Record<K, T[]>);
   }
   /**
    * 클러스터 별로 구룹화 되지 않은 배열을 그룹회
@@ -184,16 +182,13 @@ export class VideoAggregateUtils {
     const getRandomInRange = VideoAggregateUtils.getRandomInRange;
     const getRandomIntInRange = VideoAggregateUtils.getRandomIntInRange;
 
-    const minMaxValues = dataKeys.reduce(
-      (acc, key) => {
-        const values = calculatedData.map((data) => data[key] as number);
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        acc[key] = { min, max };
-        return acc;
-      },
-      {} as Record<keyof IIncreaseHits, { min: number; max: number }>,
-    );
+    const minMaxValues = dataKeys.reduce((acc, key) => {
+      const values = calculatedData.map((data) => data[key] as number);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      acc[key] = { min, max };
+      return acc;
+    }, {} as Record<keyof IIncreaseHits, { min: number; max: number }>);
 
     const fakeData: IIncreaseHits = {
       date,
@@ -230,39 +225,28 @@ export class VideoAggregateUtils {
    */
   static generateFakeDataForDateDaily(
     date: string,
-    calculatedData: IIncreaseHitsData[],
-    dataKeys: (keyof IIncreaseHitsData)[],
-  ): IIncreaseHitsData {
+    calculatedData: IIncreaseHitsPickViews[],
+    dataKeys: (keyof IIncreaseHitsPickViews)[],
+  ): IIncreaseHitsPickViews {
     const getRandomIntInRange = VideoAggregateUtils.getRandomIntInRange;
 
-    const minMaxValues = dataKeys.reduce(
-      (acc, key) => {
-        const values = calculatedData.map((data) => data[key] as number);
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        acc[key] = { min, max };
-        return acc;
-      },
-      {} as Record<keyof IIncreaseHitsData, { min: number; max: number }>,
-    );
+    const minMaxValues = dataKeys.reduce((acc, key) => {
+      const values = calculatedData.map((data) => data[key] as number);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      acc[key] = { min, max };
+      return acc;
+    }, {} as Record<keyof IIncreaseHitsPickViews, { min: number; max: number }>);
 
-    const fakeData: IIncreaseHitsData = {
+    const fakeData: IIncreaseHitsPickViews = {
       date,
-      increaseLikes: getRandomIntInRange(
-        minMaxValues.increaseLikes.min,
-        minMaxValues.increaseLikes.max,
-      ),
-      increaseComments: getRandomIntInRange(
-        minMaxValues.increaseComments.min,
-        minMaxValues.increaseComments.max,
+      increaseViews: getRandomIntInRange(
+        minMaxValues.increaseViews.min,
+        minMaxValues.increaseViews.max,
       ),
       uniqueVideoCount: getRandomIntInRange(
         minMaxValues.uniqueVideoCount.min,
         minMaxValues.uniqueVideoCount.max,
-      ),
-      increaseViews: getRandomIntInRange(
-        minMaxValues.increaseViews.min,
-        minMaxValues.increaseViews.max,
       ),
     };
 
@@ -315,7 +299,7 @@ export class VideoAggregateUtils {
   static generateDailyFakeViews(
     startDate: string,
     endDate: string,
-    calculatedData: IIncreaseHitsData[],
+    calculatedData: IIncreaseHitsPickViews[],
   ): IIncreaseHitsData[] {
     const dates = VideoAggregateUtils.generateDateRange(startDate, endDate);
     const result = [];
@@ -328,12 +312,7 @@ export class VideoAggregateUtils {
         const fakeData = VideoAggregateUtils.generateFakeDataForDateDaily(
           date,
           calculatedData,
-          [
-            'increaseViews',
-            'increaseLikes',
-            'increaseComments',
-            'uniqueVideoCount',
-          ],
+          ['increaseViews', 'uniqueVideoCount'],
         );
         result.push(fakeData);
       }

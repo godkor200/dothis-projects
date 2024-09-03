@@ -8,6 +8,7 @@ import { getOpensearchClientToken } from '@Apps/common/opensearch/opensearch.mod
 import { Client as OpensearchClient } from '@opensearch-project/opensearch';
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import dayjs from 'dayjs';
 
 export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
   constructor(
@@ -16,6 +17,8 @@ export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
   ) {}
 
   async execute(dao: VideoPaginatedDao): Promise<VideoPaginatedResult> {
+    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
+
     const mustQueries: any[] = [
       {
         match: {
@@ -25,8 +28,8 @@ export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
       {
         range: {
           '@timestamp': {
-            gte: dao.to,
-            lte: dao.to,
+            gte: adjustedTo,
+            lte: adjustedTo,
             format: 'yyyy-MM-dd',
           },
         },

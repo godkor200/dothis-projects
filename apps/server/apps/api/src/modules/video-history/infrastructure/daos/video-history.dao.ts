@@ -83,7 +83,3 @@ export class RangeVideoHistoryDao extends GetAnalysisHitsDto {
     Object.assign(this, props);
   }
 }
-
-export class VideoHistoryGetTopViewsByIdsDao {
-  constructor(public videos: Record<string, VideoCacheReturnType[]>) {}
-}
