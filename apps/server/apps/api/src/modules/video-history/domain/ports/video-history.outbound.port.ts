@@ -1,18 +1,16 @@
 import { Result } from 'oxide.ts';
 import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 import {
-  IGetLastVideoHistoryDao,
-  IGetListVideoHistoryDao,
   IGetVideoHistoryDao,
   IGetVideoHistoryGetMultipleByIdDao,
   GetVideoHistoryMultipleByIdV2Dao,
-  VideoHistoryGetTopViewsByIdsDao,
   RecentVideoHistoryDao,
   RangeVideoHistoryDao,
 } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { ComplexQueryException, TableNotFoundException } from '@Libs/commons';
 import { DateData } from '@Apps/modules/video/application/dtos/video.res';
 import { TIssueTodayRes } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
+import { GetTopVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/get-top-video-history.dao';
 
 export interface GetRelatedVideoAndVideoHistoryPickChannelAverageViews
   extends DateData {
@@ -49,12 +47,7 @@ export interface IRelatedVideoAnalyticsData
 export interface IGetOneVideoHistoryOutboundPort {
   execute(dao: IGetVideoHistoryDao): Promise<TGetVideoHistoryRes>;
 }
-export interface IGetLastVideoHistoryOutboundPort {
-  execute(dao: IGetLastVideoHistoryDao): Promise<TGetVideoHistoryRes>;
-}
-export interface IGetListVideoHistoryOutboundPort {
-  execute(dao: IGetListVideoHistoryDao): Promise<TGetVideoHistoryRes>;
-}
+
 export interface IGetVideoHistoryGetMultipleByIdOutboundPort {
   execute(
     dao: IGetVideoHistoryGetMultipleByIdDao,
@@ -64,8 +57,8 @@ export interface IGetVideoHistoryGetMultipleByIdV2OutboundPort {
   execute(dao: GetVideoHistoryMultipleByIdV2Dao): Promise<TGetVideoHistoryRes>;
 }
 
-export interface IVideoHistoryGetTopViewsByIdsOutboundPort {
-  execute(dao: VideoHistoryGetTopViewsByIdsDao): Promise<TIssueTodayRes>;
+export interface GetTopVideoHistoryOutboundPort {
+  execute(dao: GetTopVideoHistoryDao): Promise<TIssueTodayRes>;
 }
 export type TRecentVideoHistoryResult = {
   video_views: number;

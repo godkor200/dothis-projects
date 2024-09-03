@@ -26,17 +26,11 @@ export class FindInfluentialListService
    * - 채널 목록 기본 제공 형태는 **구독자순 정렬**이며, 평균조회수순 정렬로 변경할 수 있게 요청
    * @param dao
    */
-  constructor(
-    private readonly influentialChannelProfileAdapter: InfluentialChannelProfileOutboundPort,
-  ) {}
+  constructor() {}
   async execute(dto: FindInfluentialListDto): Promise<TFindInfluentialListRes> {
     const dao = new ChannelProfileDao(dto);
     try {
-      const res = await this.influentialChannelProfileAdapter.execute(dao);
-      if (res.isOk()) {
-        return Ok({ success: true, data: res.unwrap() });
-      }
-      return Err(res.unwrapErr());
+      return Ok({ success: true, data: [] });
     } catch (e) {
       return Err(e);
     }

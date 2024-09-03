@@ -1,7 +1,14 @@
 import { c } from '../contract';
 import { zErrResBase } from '../error.response.zod';
 import { zChannelResponse } from './channel.model';
-import { zFindVideoBySearchKeywordFindChannelClusterNumberMulti } from './channel.zod';
+
+import {
+  TChannelFilterAndSortQuery,
+  TChannelListResponse,
+  zChannelFilterAndSortQuery,
+  zChannelListResponse,
+  zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
+} from './channel.zod';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
@@ -25,5 +32,17 @@ export const channelApi = c.router({
     },
     summary: '관련된 영향력있는 채널을 가져옵니다',
     description: '관련된 영향력있는 채널을 출력합니다.',
+  },
+  getChannelList: {
+    method: 'GET',
+    path: `${channelApiUrl}`,
+    query: zChannelFilterAndSortQuery,
+    responses: {
+      200: zChannelListResponse,
+      ...zErrResBase,
+    },
+    summary: '조건에 맞는 채널 리스트를 가져옵니다',
+    description:
+      '구독자 수 및 클러스터 번호에 따른 필터링을 기반으로 최대 50개의 채널 목록을 반환합니다.',
   },
 });

@@ -1,12 +1,5 @@
 import { z } from 'zod';
-import {
-  dataObject,
-  zTotalData,
-  zSortQuery,
-  zClustersObject,
-} from '../common.model';
 import { zChannelHistoryModel } from '../channel-history';
-import { zSuccessBase } from '../success.response.zod';
 
 /**
  * getDailyViewsV2 models
@@ -18,11 +11,10 @@ export const zDailyViewSchema = z.object({
   uniqueVideoCount: z
     .number()
     .describe('해당하는 날짜의 산정 비디오수(분석 영상 수)'),
-
-  increaseComments: z.number().describe('비디오 코멘트 수'),
-
-  increaseLikes: z.number().describe('비디오 좋아요 수'),
-
+  publishVideosCount: z
+    .number()
+    .nullable()
+    .describe('해당 날짜의 발행된 비디오수'),
   increaseViews: z.number().describe('비디오 조회수'),
 });
 

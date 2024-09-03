@@ -1,8 +1,8 @@
 interface IIncreaseData {
   date: string;
   increaseViews: number;
-  increaseLikes: number;
-  increaseComments: number;
+  increaseLikes?: number;
+  increaseComments?: number;
 }
 
 interface IIncreaseHitsData extends IIncreaseData {
@@ -60,8 +60,11 @@ interface IIncreaseHits
   minPerformance: number;
 }
 
-interface IIncreaseHitsPickViews
-  extends Pick<IIncreaseHitsData, 'increaseViews' | 'date'> {}
+export interface IIncreaseHitsPickViews
+  extends Pick<
+    IIncreaseHitsData,
+    'increaseViews' | 'date' | 'uniqueVideoCount'
+  > {}
 export interface IIncreaseDailyViews {
   representativeCategory: number;
   data: IIncreaseHitsPickViews[];

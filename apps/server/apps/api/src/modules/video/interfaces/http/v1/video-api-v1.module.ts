@@ -66,7 +66,7 @@ import { WeeklyHitsV2Repository } from '@Apps/modules/hits/infrastructure/reposi
 import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekly-hits.entity.module';
 import { FindIssueTodayHttpController } from '@Apps/modules/video/interfaces/http/v1/find-issue-today/find-issue-today.http.controller';
 import { VideoMultiKeywordCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.muti-keyword.cache.adapter';
-import { VideoHistoryGetTopViewsByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-top-views.by-ids.adapter';
+import { GetTopVideoHistoryAdapter } from '@Apps/modules/video-history/infrastructure/adapters/get-top-video-history.adapter';
 import { GetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.get-today-issue.cache.adapter';
 import { SetVideoTodayIssueCacheAdapter } from '@Apps/modules/video/infrastructure/adapters/cache/video.set-today-issue.cache.adapter';
 import { MockGetVideoAdsInfoAdapter } from '@Apps/modules/video/infrastructure/adapters/__mock__/get-video-ads-info.adapter.mock';
@@ -169,7 +169,7 @@ const adapters: Provider[] = [
   },
   {
     provide: VIDEO_TOP_VIEWS_ADAPTER_DI_TOKEN,
-    useClass: VideoHistoryGetTopViewsByIdsAdapter,
+    useClass: GetTopVideoHistoryAdapter,
   },
   {
     provide: RedisCacheAdapterTokens.REDIS_CLIENT_SET_TODAY_ISSUE_DI_TOKEN,

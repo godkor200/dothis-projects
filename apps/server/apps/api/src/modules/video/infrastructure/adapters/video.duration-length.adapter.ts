@@ -62,9 +62,16 @@ export class VideoDurationLengthAdapter
               range: {
                 field: 'video_duration',
                 ranges: [
-                  { from: 31, to: 90, key: '31to90' },
-                  { from: 91, to: 150, key: '91to150' },
-                  { from: 151, to: 210, key: '151to210' },
+                  { from: 0, to: 180, key: '0to3min' },
+                  { from: 180, to: 360, key: '3to6min' },
+                  { from: 360, to: 540, key: '6to9min' },
+                  { from: 540, to: 720, key: '9to12min' },
+                  { from: 720, to: 900, key: '12to15min' },
+                  { from: 900, to: 1080, key: '15to18min' },
+                  { from: 1080, to: 1260, key: '18to21min' },
+                  { from: 1260, to: 1440, key: '21to24min' },
+                  { from: 1440, to: 1620, key: '24to27min' },
+                  { from: 1620, to: 1800, key: '27to30min' },
                 ],
               },
               aggs: {

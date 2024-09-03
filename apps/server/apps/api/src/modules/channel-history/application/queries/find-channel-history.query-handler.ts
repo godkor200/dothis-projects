@@ -7,14 +7,12 @@ import {
   TFindExtendChannelHistoryListRes,
 } from '@Apps/modules/channel/infrastucture/daos/channel.dao';
 import { ChannelAndExtendHistoryOutboundPort } from '@Apps/modules/channel/domain/ports/channel-profile.outbound.port';
-import { FIND_CHANNEL_EXTEND_HISTORY_IGNITE_DI_TOKEN } from '@Apps/modules/channel/channel-data.di-token.constants';
 @QueryHandler(FindChannelInfoDto)
 export class FindChannelHistoryQueryHandler
   implements
     IQueryHandler<FindChannelInfoDto, TFindExtendChannelHistoryListRes>
 {
   constructor(
-    @Inject(FIND_CHANNEL_EXTEND_HISTORY_IGNITE_DI_TOKEN)
     private readonly channelHistory: ChannelAndExtendHistoryOutboundPort,
   ) {}
   async execute(
