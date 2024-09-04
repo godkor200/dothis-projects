@@ -19,3 +19,9 @@ export const channelTabList = [
   { title: '경쟁 분석', link: 'competitive-analysis' },
   { title: '영상 진단', link: 'video-assessment' },
 ];
+
+export const accountTabList = [
+  { title: '계정 정보', link: 'my-account' },
+  { title: '멤버쉽 관리', link: 'plans' },
+  { title: '문의하기', link: 'help' },
+];
