@@ -1,3 +1,4 @@
+import type { Placement } from '@floating-ui/react-dom';
 import {
   arrow as floatingArrow,
   autoUpdate,
@@ -62,7 +63,8 @@ const PopperProvider = ({
   isArrow: boolean;
   arrowColor: string;
 }) => {
-  const placement = side + (align !== 'center' ? '-' + align : '');
+  const placement: Placement = (side +
+    (align !== 'center' ? '-' + align : '')) as Placement;
 
   const arrowRef = useRef<HTMLSpanElement>(null);
 
