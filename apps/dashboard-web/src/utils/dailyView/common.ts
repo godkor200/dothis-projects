@@ -14,8 +14,8 @@ export const getDailyView_FluctuationRate = (data?: DailyView) => {
 
   return (
     Math.floor(
-      ((((last_searchRatio.increaseViews || 0) as number) /
-        Number(first_searchRatio.increaseViews || 1)) as number) * 100,
+      ((((last_searchRatio?.increaseViews || 0) as number) /
+        Number(first_searchRatio?.increaseViews || 1)) as number) * 100,
     ) - 100
   );
 };
