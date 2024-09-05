@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetNaverAdsQueries from '@/hooks/contents/useGetNaverAdsQueries';
-import useGetNaverAds from '@/hooks/react-query/query/useGetNaverAds';
 
 import useGetDailyExpectedView from '../../../hooks/react-query/query/useGetDailyExpectedView';
 import ChartSummaryCards from '../keyword/[keyword]/ChartSummaryCards';
