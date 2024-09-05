@@ -1,6 +1,7 @@
 import './styles.css';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import type { Route } from 'next';
 import Link from 'next/link';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -53,7 +54,7 @@ const TopAccountButton = () => {
       <DropdownMenu.Portal>
         <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
           {accountTabList.map((tab) => (
-            <Link href={`/account/${tab.link}`}>
+            <Link href={`/account/${tab.link}` as Route}>
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
                 checked={tab.link === accountTab}
