@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div className="mx-auto mt-10 max-w-[1700px] px-[66px]">
       <TabNav tabList={accountTabList} baseRoute={`/account` as Route} />
 
-      <div className="mt-[20px]">{children}</div>
+      <div className="mx-auto  mt-[20px] w-[1000px]">{children}</div>
     </div>
   );
 };
