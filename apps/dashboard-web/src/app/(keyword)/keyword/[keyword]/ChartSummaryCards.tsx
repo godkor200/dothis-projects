@@ -8,12 +8,7 @@ import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadC
 import { sumSearchCount } from '@/utils/naver-search/common';
 
 import ChartSummaryItem from './ChartSummaryItem';
-import {
-  sumIncreaseViews,
-  sumIncreaseViewsV2,
-  sumVideoCount,
-  sumVideoCountV2,
-} from './CompetitionRate';
+import { sumIncreaseViewsV2 } from './CompetitionRate';
 
 const ChartSummaryCards = ({
   keyword,
