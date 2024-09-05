@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import type { apiRouter } from '@dothis/dto';
+import type { ClientInferResponseBody } from '@ts-rest/core';
 
 import CustomTooltipComponent from '@/components/common/Tooltip/CustomTooltip';
+import type { DeepRequired } from '@/hooks/react-query/query/common';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
@@ -10,6 +12,16 @@ import {
   convertCompetitionScoreFormatToHTML,
   getCompetitionScore,
 } from '@/utils/contents/competitionScore';
+
+type DailyView = ClientInferResponseBody<
+  typeof apiRouter.hits.getDailyViewsV1,
+  200
+>['data'];
+
+type ExpectedView = ClientInferResponseBody<
+  typeof apiRouter.hits.getExpectedViews,
+  200
+>['data'];
 
 const CompetitionRate = ({ keyword }: { keyword: string }) => {
   const { data: dailyViewData } = useGetDailyViewV2({
@@ -66,18 +78,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
 export default CompetitionRate;
 
 // increaseViews 값을 모두 더하는 함수
-export function sumIncreaseViews(
-  data: (
-    | {
-        date: string;
-        uniqueVideoCount: number;
-        increaseComments: number;
-        increaseLikes: number;
-        increaseViews: number;
-      }[]
-    | undefined
-  )[],
-) {
+export function sumIncreaseViews(data: (DailyView | undefined)[]) {
   return data.reduce((total, nestedArray) => {
     if (nestedArray) {
       return (
@@ -89,27 +90,7 @@ export function sumIncreaseViews(
   }, 0 as number);
 }
 
-export function sumIncreaseViewsV2(
-  data:
-    | {
-        date: string;
-        uniqueVideoCount: number;
-        increaseComments: number;
-        increaseLikes: number;
-        increaseViews: number;
-      }[]
-    | {
-        date: string;
-        maxPerformance: number;
-        increaseViews: number;
-        expectedHits: number;
-        minPerformance: number;
-        uniqueVideoCount?: number | undefined;
-        increaseComments?: number | undefined;
-        increaseLikes?: number | undefined;
-      }[]
-    | undefined,
-) {
+export function sumIncreaseViewsV2(data: DailyView | undefined) {
   if (data) {
     return data?.reduce((total, item) => total + item.increaseViews, 0);
   }
@@ -117,27 +98,7 @@ export function sumIncreaseViewsV2(
 }
 
 // uniqueVideoCount 값을 모두 더하는 함수
-export function sumVideoCount(
-  data:
-    | {
-        date: string;
-        uniqueVideoCount: number;
-        increaseComments: number;
-        increaseLikes: number;
-        increaseViews: number;
-      }[]
-    | {
-        date: string;
-        maxPerformance: number;
-        increaseViews: number;
-        expectedHits: number;
-        minPerformance: number;
-        uniqueVideoCount?: number;
-        increaseComments?: number;
-        increaseLikes?: number;
-      }[]
-    | undefined,
-) {
+export function sumVideoCount(data: DailyView | undefined) {
   if (data) {
     return data?.reduce(
       (total, item) => total + (item.uniqueVideoCount ?? 0),
