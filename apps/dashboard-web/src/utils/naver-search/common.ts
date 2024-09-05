@@ -55,8 +55,8 @@ export const getNaver_FluctuationRate = (
 
   return (
     Math.floor(
-      ((((last_searchRatio.ratio || 0) as number) /
-        Number(first_searchRatio.ratio || 1)) as number) * 100,
+      ((((last_searchRatio?.ratio || 0) as number) /
+        Number(first_searchRatio?.ratio || 1)) as number) * 100,
     ) - 100
   );
 };

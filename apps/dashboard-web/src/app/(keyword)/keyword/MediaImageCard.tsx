@@ -29,6 +29,7 @@ const MediaImageCard = ({
     fetchNextPage,
     hasNextPage,
     isLoading,
+    error,
     isError,
     refetch,
     isFetching,
@@ -61,6 +62,9 @@ const MediaImageCard = ({
       hasError={isError}
       refetchCallback={refetch}
       classname="flex min-h-[350px] items-center"
+      statusCode={error?.status}
+      baseKeyword={keyword}
+      relatedKeyword={null}
     >
       <APILoadingBoundary
         isLoading={isLoading}

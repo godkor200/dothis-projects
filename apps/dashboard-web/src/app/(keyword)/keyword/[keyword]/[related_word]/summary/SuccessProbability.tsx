@@ -187,9 +187,9 @@ const SuccessProbability = ({ baseKeyword, relatedKeyword }: Props) => {
         `${
           data
             ? Math.floor(
-                (data?.countAboveAverage / data?.totalVideoCount !== 0
-                  ? data?.totalVideoCount
-                  : 1) * 100,
+                (data?.countAboveAverage /
+                  (data?.totalVideoCount !== 0 ? data?.totalVideoCount : 1)) *
+                  100,
               ) + '%'
             : '분석 중입니다'
         }`,

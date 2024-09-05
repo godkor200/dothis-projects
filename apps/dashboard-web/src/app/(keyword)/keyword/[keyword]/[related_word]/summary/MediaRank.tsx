@@ -31,6 +31,7 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
     fetchNextPage,
     hasNextPage,
     isLoading,
+    error,
     isError,
     refetch,
     isFetching,
@@ -71,6 +72,9 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
       hasError={isError}
       refetchCallback={refetch}
       classname="flex min-h-[350px] items-center"
+      statusCode={error?.status}
+      baseKeyword={baseKeyword}
+      relatedKeyword={relatedKeyword}
     >
       <APILoadingBoundary isLoading={isLoading} loadingComponent={<Skeleton />}>
         <div className="flex  gap-[24px] ">

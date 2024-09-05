@@ -295,10 +295,10 @@ const CustomLegend = ({ keys }: Custom) => {
               fontFamily: 'sans-serif',
               fontSize: '12px',
               fill: 'rgb(51, 51, 51)',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, .05)',
-                cursor: 'pointer',
-              },
+              // '&:hover': {
+              //   backgroundColor: 'rgba(0, 0, 0, .05)',
+              //   cursor: 'pointer',
+              // },
             }}
           >
             <div

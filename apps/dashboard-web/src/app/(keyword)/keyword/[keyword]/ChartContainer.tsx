@@ -81,6 +81,8 @@ const ChartContainer = ({
       <APIErrorBoundary
         hasError={dailyViewError || naverSearchError || videoError}
         refetchCallback={refetchCallback}
+        baseKeyword={keyword}
+        relatedKeyword={relatedKeyword}
       >
         <APILoadingBoundary
           isLoading={dailyViewLoading || naverSearchLoading || videoLoading}
