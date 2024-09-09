@@ -89,16 +89,12 @@ export async function middleware(request: NextRequest) {
 
   // 연관어 페이지 Route Protection
   if (request.nextUrl.pathname.startsWith('/keyword')) {
-    const [, , baseKeyword, relatedWord] = request.nextUrl.pathname.split('/');
+    const [, , baseKeyword, relatedWord, tab] =
+      request.nextUrl.pathname.split('/');
 
     const relatedPageRoutes = ['analysis', 'comparison', 'insight', 'summary'];
 
-    if (
-      relatedWord &&
-      !relatedPageRoutes.some((route) =>
-        request.nextUrl.pathname.endsWith(route),
-      )
-    ) {
+    if (relatedWord && !relatedPageRoutes.some((route) => tab === route)) {
       return NextResponse.redirect(
         new URL(request.nextUrl.pathname + '/analysis', request.nextUrl),
       );
