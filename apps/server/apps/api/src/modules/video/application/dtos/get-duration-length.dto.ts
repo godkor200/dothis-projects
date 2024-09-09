@@ -1,7 +1,7 @@
 // Response DTO
 import { createZodDto } from '@anatine/zod-nestjs';
 import {
-  findVideoBySearchKeywordPickToDate,
+  findVideoBySearchKeywordRecentDate,
   zAnalysedVideoLengthRes,
 } from '@dothis/dto';
 import { extendApi } from '@anatine/zod-openapi';
@@ -12,7 +12,7 @@ export class GetDurationLengthRes extends createZodDto(
 
 // Query DTO
 export class GetDurationLengthQuery extends createZodDto(
-  extendApi(findVideoBySearchKeywordPickToDate), // limit 옵션과 다른 필요한 필드를 스키마에 추가한 것으로 가정
+  extendApi(findVideoBySearchKeywordRecentDate), // limit 옵션과 다른 필요한 필드를 스키마에 추가한 것으로 가정
 ) {
   constructor(props: GetDurationLengthQuery) {
     super();

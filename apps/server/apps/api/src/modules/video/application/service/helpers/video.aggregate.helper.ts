@@ -4,17 +4,11 @@ import {
   IIncreaseDailyViews,
   IIncreaseData,
   IIncreaseHits,
-  IIncreaseHitsData,
-  IIncreaseSetVideoIds,
 } from '@Apps/modules/video/application/service/helpers/video.aggregate.type';
 import { TRangeVideoHistoryResult } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { PredictionStatus } from '@Apps/modules/video/application/dtos/find-individual-video-info.dto';
 import { PredictedViews, VideoPrediction } from '@dothis/dto';
-import {
-  IFindVideoHistoryResponse,
-  IVideoHistory,
-} from '@Apps/modules/video/application/dtos/find-video.os.res';
-import { GetRelatedVideoHistory } from '@Apps/modules/video/infrastructure/daos/video.dao';
+
 /**
  * 비디오 데이터를 집계하고 통계를 계산하는 헬퍼 클래스.
  */
@@ -209,7 +203,7 @@ export class VideoAggregateHelper {
 
   static calculateDailyIncreases(
     groupedData: TRangeVideoHistoryResult[],
-  ): IIncreaseDailyViews {
+  ): Omit<IIncreaseDailyViews, 'success'> {
     const result = this.processVideoData(
       groupedData,
       (video, prevVideo, currentData) => {
@@ -273,7 +267,10 @@ export class VideoAggregateHelper {
         }
 
         if (video.channel_average_views !== 0 && video.video_views !== 0) {
-          const performance = video.video_views / video.channel_average_views;
+          const performance: number = video.channel_average_views
+            ? video.video_views / video.channel_average_views
+            : video.video_performance;
+
           currentData.expectedHits += performance;
 
           currentData.maxPerformance = Math.max(
@@ -284,6 +281,17 @@ export class VideoAggregateHelper {
             currentData.minPerformance,
             performance,
           );
+          if (performance < 0) {
+            console.log(
+              video,
+              `
+              currentData.minPerformance : ${currentData.minPerformance}
+              performance : ${performance}
+              video.video_views : ${video.video_views},
+              video.channel_average_views : ${video.channel_average_views},
+            `,
+            );
+          }
           currentData.videoIds.add(video.video_id);
         }
       },
@@ -302,7 +310,7 @@ export class VideoAggregateHelper {
   }
 
   /**
-   * 제일 관련된 클러스터 찾는 메소드
+   * 대표카테고리 클러스터 찾는 메소드
    * @param groupedData
    */
   static findLargestCluster(groupedData: TRangeVideoHistoryResult[]): {

@@ -66,6 +66,7 @@ export interface IIncreaseHitsPickViews
     'increaseViews' | 'date' | 'uniqueVideoCount'
   > {}
 export interface IIncreaseDailyViews {
+  success: boolean;
   representativeCategory: number;
   data: IIncreaseHitsPickViews[];
 }

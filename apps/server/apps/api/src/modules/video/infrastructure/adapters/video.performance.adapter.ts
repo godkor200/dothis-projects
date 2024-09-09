@@ -1,34 +1,32 @@
-import { IVideoPerformanceOutboundPort } from '@Apps/modules/video/domain/ports/video.performance.outbound.port';
+import {
+  IVideoPerformanceOutboundPort,
+  VideoPerformanceOutboundPortResult,
+} from '@Apps/modules/video/domain/ports/video.performance.outbound.port';
 import { VideoPerformanceDao } from '@Apps/modules/video/infrastructure/daos/video.performance.dao';
 import { undefined } from 'zod';
 import { Inject } from '@nestjs/common';
 import { getOpensearchClientToken } from '@Apps/common/opensearch/opensearch.module';
 import { Client as OpensearchClient } from '@opensearch-project/opensearch';
-import dayjs from 'dayjs';
 import { Ok } from 'oxide.ts';
-import { timestamp } from 'rxjs';
+import { OpenSearchCommonHelper } from '@Apps/common/opensearch/service/helpers/common.helper';
 
 export class VideoPerformanceAdapter implements IVideoPerformanceOutboundPort {
+  private readonly openSearchHelper: OpenSearchCommonHelper;
+
   constructor(
     @Inject(getOpensearchClientToken())
     private readonly opensearchClient: OpensearchClient,
-  ) {}
+  ) {
+    this.openSearchHelper = new OpenSearchCommonHelper(this.opensearchClient);
+  }
 
-  async execute(dao: VideoPerformanceDao): Promise<any> {
-    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
+  async execute(
+    dao: VideoPerformanceDao,
+  ): Promise<VideoPerformanceOutboundPortResult> {
     const mustQueries: any[] = [
       {
         match: {
           use_text: dao.search,
-        },
-      },
-      {
-        range: {
-          '@timestamp': {
-            gte: adjustedTo,
-            lte: adjustedTo,
-            format: 'yyyy-MM-dd',
-          },
         },
       },
     ];
@@ -43,9 +41,13 @@ export class VideoPerformanceAdapter implements IVideoPerformanceOutboundPort {
     }
 
     try {
+      const { index } = await this.openSearchHelper.findLargestBackingIndex(
+        'video_history',
+      );
+
       // Count total videos matching the basic criteria
       const totalVideoCountResponse = await this.opensearchClient.count({
-        index: 'video_history',
+        index,
         body: {
           query: {
             bool: { must: mustQueries },
@@ -66,7 +68,7 @@ export class VideoPerformanceAdapter implements IVideoPerformanceOutboundPort {
       ];
 
       const countAboveAverageResponse = await this.opensearchClient.count({
-        index: 'video_history',
+        index,
         body: {
           query: {
             bool: { must: countAboveAverageQueries },
@@ -81,7 +83,5 @@ export class VideoPerformanceAdapter implements IVideoPerformanceOutboundPort {
     } catch (err) {
       console.error(err);
     }
-
-    return Promise.resolve(undefined);
   }
 }

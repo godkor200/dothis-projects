@@ -156,9 +156,15 @@ export const zSubscriberRange = z.object({
   docCount: z.number(),
   totalVideoViews: z.number(),
 });
-
+export const zWeeklyKeywordSchemaList = z.array(zWeeklyKeywordSchema);
 export const zSubscriberViewAnalysisRes = dataObject(z.array(zSubscriberRange));
 export const zKeywordThisWeeklyRes = dataObject(zKeywordThisWeeklyList);
 export const zAnalysedVideoLengthRes = dataObject(zVideoLengthRange);
 export type TKeywordThisWeeklyList = z.TypeOf<typeof zKeywordThisWeeklyList>;
 export type TKeywordThisWeeklyRes = z.TypeOf<typeof zKeywordThisWeeklyRes>;
+export type TWeeklyKeywordsWrappedData = z.TypeOf<
+  typeof zWeeklyKeywordsWrappedData
+>;
+export type TWeeklyKeywordSchemaList = z.TypeOf<
+  typeof zWeeklyKeywordSchemaList
+>;

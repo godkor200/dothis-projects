@@ -31,7 +31,6 @@ export class VideoDurationLengthService
       const res = await this.videoDurationLengthAdapter.execute({
         search: query.search,
         related: query.related,
-        to: query.to,
       });
       if (res.isOk()) {
         const resUnwrap = res.unwrap();

@@ -33,6 +33,7 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
       );
       if (topThree.isOk()) {
         const topThreeUnwrap = topThree.unwrap();
+
         const videoMultiKeywordCacheRes: TopVideoDao[] = topThreeUnwrap.map(
           (item) => {
             /**
@@ -55,7 +56,6 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             } as ITopVideoResponse;
           }),
         );
-
         const validResults = topVideoResults
           .filter((res) => res.video_id) // 필터 확인용
           .map((res) => {

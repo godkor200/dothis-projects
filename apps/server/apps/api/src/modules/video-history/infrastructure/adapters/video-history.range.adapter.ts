@@ -32,6 +32,13 @@ export class VideoHistoryRangeAdapter
           },
         },
       },
+      {
+        range: {
+          video_views: {
+            gte: 100, // video_views가 100 이상인 문서 필터링
+          },
+        },
+      },
     ];
 
     // dao.related가 있는 경우 추가

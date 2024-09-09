@@ -10,6 +10,8 @@ import { VideoAggregateHelper } from '@Apps/modules/video/application/service/he
 import { VIDEO_PUBILSHED_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideoPubilshedOutboundPort } from '@Apps/modules/video/domain/ports/video.pubilshed.outbound.port';
 import { VideoAggregateUtils } from '@Apps/modules/video/application/service/helpers/video.aggregate.utils';
+import { DAILY_VIEW_CACHE_DI_TOKEN } from '@Apps/modules/hits/hits.di-token.contants';
+import { DailyViewCachePort } from '@Apps/modules/hits/domain/ports/daily-view.cache.port';
 export class GetDailyHitsService implements DailyHitsServiceInboundPort {
   constructor(
     @Inject(GET_VIDEO_HISTORY_RANGE_DI_TOKEN)
@@ -17,6 +19,9 @@ export class GetDailyHitsService implements DailyHitsServiceInboundPort {
 
     @Inject(VIDEO_PUBILSHED_ADAPTER_DI_TOKEN)
     private readonly videoPubilshedAdapter: VideoPubilshedOutboundPort,
+
+    @Inject(DAILY_VIEW_CACHE_DI_TOKEN)
+    private readonly dailyViewsCache: DailyViewCachePort,
   ) {}
 
   async execute(dto: FindDailyViewsDto): Promise<TFindDailyView> {
