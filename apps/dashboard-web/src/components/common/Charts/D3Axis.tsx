@@ -6,6 +6,7 @@ import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import {
+  useDailyViewExpectedV2,
   useDailyViewV2,
   useSearchCountFormmaterD3,
   useUploadVideoCountFormatterD3,
@@ -14,13 +15,31 @@ import {
 const D3Axis = ({
   keyword,
   relatedKeyword,
+  expectedViews,
 }: {
   keyword: string;
   relatedKeyword: string | null;
+  expectedViews?: boolean;
 }) => {
+  const dailyVeiwEnabled = !expectedViews;
+
+  const dailyViewWithExpectedViewEnabled = expectedViews;
+
   const selectRef = useRef(null);
 
-  const datad3 = useDailyViewV2({ keyword: keyword, relword: relatedKeyword });
+  const dailyViewData = useDailyViewV2({
+    keyword: keyword,
+    relword: relatedKeyword,
+    enabled: dailyVeiwEnabled,
+  });
+
+  const viewsData = useDailyViewExpectedV2({
+    keyword: keyword,
+    relword: relatedKeyword,
+    enabled: dailyViewWithExpectedViewEnabled,
+  });
+
+  const datad3 = expectedViews ? viewsData : dailyViewData;
 
   const data2d3 = useSearchCountFormmaterD3({
     baseKeyword: keyword,
