@@ -8,30 +8,23 @@ import { getOpensearchClientToken } from '@Apps/common/opensearch/opensearch.mod
 import { Client as OpensearchClient } from '@opensearch-project/opensearch';
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import dayjs from 'dayjs';
+import { OpenSearchCommonHelper } from '@Apps/common/opensearch/service/helpers/common.helper';
 
 export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
+  private readonly openSearchHelper: OpenSearchCommonHelper;
+
   constructor(
     @Inject(getOpensearchClientToken())
     private readonly opensearchClient: OpensearchClient, // @Inject(VIDEO_HISTORY_GET_DATA_STREAM_DI_TOKEN) // private readonly videoHistoryDataStreamAdapter: VideoHistoryDataStreamOutbound,
-  ) {}
+  ) {
+    this.openSearchHelper = new OpenSearchCommonHelper(this.opensearchClient);
+  }
 
   async execute(dao: VideoPaginatedDao): Promise<VideoPaginatedResult> {
-    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
-
     const mustQueries: any[] = [
       {
         match: {
           use_text: dao.search,
-        },
-      },
-      {
-        range: {
-          '@timestamp': {
-            gte: adjustedTo,
-            lte: adjustedTo,
-            format: 'yyyy-MM-dd',
-          },
         },
       },
     ];
@@ -49,8 +42,12 @@ export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
       const currentPage = dao.page ? Number(dao.page) : 1; // page가 없을 경우 기본값 1
       const fromIndex = (currentPage - 1) * pageSize; // 시작 위치 계산
 
+      const { index } = await this.openSearchHelper.findLargestBackingIndex(
+        'video_history',
+      );
+
       const { body } = await this.opensearchClient.search({
-        index: 'video_history', // 데이터 스트림 이름을 사용
+        index,
         body: {
           query: {
             bool: {

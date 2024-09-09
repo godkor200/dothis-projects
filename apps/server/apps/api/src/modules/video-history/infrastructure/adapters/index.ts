@@ -10,3 +10,7 @@ export * from './video-history.recent.os.adapter';
  * 비디오 히스토리의 날짜를 받아 범위내 여러 듀플을 보내주는 클래스
  */
 export * from './video-history.range.adapter';
+/**
+ * 카테고리 갯수 찾는 adapter
+ */
+export * from './video-history.category.adapter';

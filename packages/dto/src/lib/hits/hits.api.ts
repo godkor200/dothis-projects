@@ -198,4 +198,17 @@ export const hitsApi = c.router({
     description:
       '검색어(keyword)를 기반으로 전날 영상에 대해 각 구독자 수 구간별 조회수의 합을 계산하여 반환합니다.',
   },
+  saveRangeDailyHits: {
+    method: 'GET',
+    path: `${viewApiUrl}/save/range-daily`,
+    query: findVideoBySearchKeyword,
+    responses: {
+      200: zSuccessBase.merge(zSubscriberViewAnalysisRes),
+      ...zErrResBase,
+    },
+    summary:
+      '데일리 뷰를 기간 파라미터 만큼 먼저 계산해서 레디스에 저장합니다.',
+    description:
+      '데일리 뷰를 기간 파라미터 만큼 먼저 계산해서 레디스에 저장합니다. 탐색어, 연관어가 없는 경우는 주간 조회수에서 top 100를 전부 저장합니다.',
+  },
 });

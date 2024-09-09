@@ -30,10 +30,12 @@ export class AnalysisHitsService implements AnalysisHitsServiceInboundPort {
       const histories = await this.videoHistoryRange.execute(adjustedDto);
       if (histories.isOk()) {
         const historiesUnwrap = histories.unwrap();
+
         if (!separation) {
           const metrics = VideoAggregateHelper.calculateMetrics(
             historiesUnwrap.items,
           );
+
           return Ok({
             success: true,
             data: [

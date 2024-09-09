@@ -8,48 +8,45 @@ import { Inject } from '@nestjs/common';
 import { getOpensearchClientToken } from '@Apps/common/opensearch/opensearch.module';
 import { Client as OpensearchClient } from '@opensearch-project/opensearch';
 import { Err, Ok } from 'oxide.ts';
-import dayjs from 'dayjs';
+import { OpenSearchCommonHelper } from '@Apps/common/opensearch/service/helpers/common.helper';
 
 export class VideoDurationLengthAdapter
   implements VideoDurationLengthOutboundPort
 {
+  private readonly openSearchHelper: OpenSearchCommonHelper;
+
   constructor(
     @Inject(getOpensearchClientToken())
     private readonly opensearchClient: OpensearchClient,
-  ) {}
+  ) {
+    this.openSearchHelper = new OpenSearchCommonHelper(this.opensearchClient);
+  }
 
   async execute(
     dao: VideoDurationLengthDao,
   ): Promise<VideoDurationLengthResult> {
-    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
+    const mustQueries: any[] = [
+      {
+        match: {
+          use_text: dao.search,
+        },
+      },
+    ];
 
+    if (dao.related) {
+      mustQueries.push({
+        match: {
+          use_text: dao.related,
+        },
+      });
+    }
     try {
-      const mustQueries: any[] = [
-        {
-          match: {
-            use_text: dao.search,
-          },
-        },
-        {
-          range: {
-            '@timestamp': {
-              gte: adjustedTo,
-              lte: adjustedTo,
-              format: 'yyyy-MM-dd',
-            },
-          },
-        },
-      ];
+      const { index } = await this.openSearchHelper.findLargestBackingIndex(
+        'video_history',
+      );
 
-      if (dao.related) {
-        mustQueries.push({
-          match: {
-            use_text: dao.related,
-          },
-        });
-      }
       const response = await this.opensearchClient.search({
-        index: 'video_history',
+        index,
         size: 0,
         body: {
           query: {

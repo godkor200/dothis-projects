@@ -4,7 +4,6 @@ import {
   VideoCacheReturnType,
   VideosMultiRelatedWordsCacheType,
 } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
-import { TSqlParam } from '@Apps/modules/story-board/infrastructure/daos/story-board.dao';
 import { DateUtil } from '@Libs/commons/utils/date.util';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
 import { GetAnalysisHitsDto } from '@Apps/modules/hits/application/dtos/get-analysis-hits.dto';
