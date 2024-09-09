@@ -12,8 +12,13 @@ import { DailyViewCachePort } from '@Apps/modules/hits/domain/ports/daily-view.c
 import { SaveRangeDailyHitsDto } from '@Apps/modules/hits/application/dtos/save-range-daily-hits.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { IRes } from '@Libs/types';
+import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
+import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
 
-export type TSaveResult = Result<IRes, any>;
+export type TSaveResult = Result<
+  IRes,
+  VideoNotFoundError | VideoHistoryNotFoundError
+>;
 
 @CommandHandler(SaveRangeDailyHitsDto)
 export class SaveRangeDailyHitsService
