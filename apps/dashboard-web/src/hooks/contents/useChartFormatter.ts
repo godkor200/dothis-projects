@@ -246,10 +246,10 @@ export const useUploadVideoCountFormatterD3 = ({
   keyword,
   relword,
 }: {
-  keyword: string | null;
+  keyword: string;
   relword: string | null;
 }) => {
-  const { data: videoUploadCount } = useGetVideoUploadCount({
+  const { data: videoUploadCount } = useGetDailyViewV2({
     keyword,
     relword,
   });
@@ -274,7 +274,12 @@ export const useUploadVideoCountFormatterListD3 = ({
   baseKeyword: string;
   relatedKeywords: string[];
 }) => {
-  const { data } = useVideoUploadCountQueries({
+  // const { data } = useVideoUploadCountQueries({
+  //   baseKeyword,
+  //   relatedKeywords,
+  // });
+
+  const { data } = useDailyViewQueries({
     baseKeyword,
     relatedKeywords,
   });
@@ -360,17 +365,57 @@ export const useExpectedViewFormatter = ({
   };
 };
 
-export const useDailyViewV2 = ({
+export const useDailyViewExpectedV2 = ({
   keyword,
   relword,
+  enabled,
 }: {
   keyword: string;
   relword: string | null;
+  enabled?: boolean;
 }) => {
-  const { data: dailyViewData } = useGetDailyViewV2({
-    keyword,
-    relword,
-  });
+  const { data: dailyViewData } = useGetDailyExpectedView(
+    {
+      baseKeyword: keyword,
+      relatedKeyword: relword,
+    },
+    { enabled },
+  );
+
+  const startDate = useStartDate();
+  const endDate = useEndDate();
+
+  // const handleDailyViewDataCallback = formatToApexChart(handleDailyViewData, {
+  //   name: '일일조회수',
+  //   type: 'line',
+  // });
+
+  return useMemo(
+    () =>
+      handleDailyViewDataD3(dailyViewData?.data[0].data, {
+        startDate,
+        endDate,
+      }),
+    [JSON.stringify(dailyViewData)],
+  );
+};
+
+export const useDailyViewV2 = ({
+  keyword,
+  relword,
+  enabled,
+}: {
+  keyword: string;
+  relword: string | null;
+  enabled?: boolean;
+}) => {
+  const { data: dailyViewData } = useGetDailyViewV2(
+    {
+      keyword,
+      relword,
+    },
+    { enabled },
+  );
 
   const startDate = useStartDate();
   const endDate = useEndDate();
