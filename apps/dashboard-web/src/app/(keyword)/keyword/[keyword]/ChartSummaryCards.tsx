@@ -3,8 +3,8 @@
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 1;
+import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
-import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
 import { sumSearchCount } from '@/utils/naver-search/common';
 
 import ChartSummaryItem from './ChartSummaryItem';
@@ -13,21 +13,41 @@ import { sumIncreaseViewsV2 } from './CompetitionRate';
 const ChartSummaryCards = ({
   keyword,
   relatedKeyword,
+  expectedViews,
 }: {
   keyword: string;
   relatedKeyword: string | null;
+  expectedViews?: boolean;
 }) => {
+  const dailyVeiwEnabled = !expectedViews;
+
+  const dailyViewWithExpectedViewEnabled = expectedViews;
+
   // 조회수 합계
 
-  const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
-    keyword,
-    relword: relatedKeyword,
-  });
+  const { data: dailyViewData, isLoading: dailyViewLoading } =
+    useGetDailyViewV2(
+      {
+        keyword,
+        relword: relatedKeyword,
+      },
+      { enabled: dailyVeiwEnabled },
+    );
 
-  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);
+  const { data: viewsData, isLoading: viewsLoading } = useGetDailyExpectedView(
+    {
+      baseKeyword: keyword,
+      relatedKeyword: relatedKeyword,
+    },
+    { enabled: dailyViewWithExpectedViewEnabled },
+  );
+
+  const baseData = expectedViews ? viewsData?.data[0].data : dailyViewData;
+
+  const totalIncreaseViews = sumIncreaseViewsV2(baseData);
 
   // 경쟁 영상 수
-  const competitionVideoCount = dailyViewData?.at(-1)?.uniqueVideoCount ?? 0;
+  const competitionVideoCount = baseData?.at(-1)?.uniqueVideoCount ?? 0;
   // const totalVideoCount = sumVideoCount(dailyViewData);
 
   //   검색량 코드
