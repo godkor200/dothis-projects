@@ -1,14 +1,20 @@
+import type { apiRouter } from '@dothis/dto';
+import type { UseQueryOptions } from '@ts-rest/react-query';
+
 import { DAILYVIEW_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
 import { apiClient } from '@/utils/api/apiClient';
 
-const useGetDailyViewV2 = ({
-  keyword,
-  relword,
-}: {
-  keyword: string;
-  relword?: string | null;
-}) => {
+const useGetDailyViewV2 = (
+  {
+    keyword,
+    relword,
+  }: {
+    keyword: string;
+    relword?: string | null;
+  },
+  queryOptions?: UseQueryOptions<typeof apiRouter.hits.getDailyViewsV2>,
+) => {
   const startDate = useStartDate();
 
   const endDate = useEndDate();
@@ -26,7 +32,11 @@ const useGetDailyViewV2 = ({
       },
     },
     {
-      enabled: !!startDate && !!endDate && !!keyword,
+      enabled:
+        (queryOptions?.enabled ?? true) &&
+        !!startDate &&
+        !!endDate &&
+        !!keyword,
     },
   );
 
