@@ -264,7 +264,7 @@ export const handleDailyVideoCountD3 = (
 };
 
 export const handleVideoUploadCountD3 = (
-  data: UploadVideoCount[] | undefined,
+  data: DailyView[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const dateBasedDataSet = initChartDateFormatter({
@@ -277,7 +277,7 @@ export const handleVideoUploadCountD3 = (
     if (item) {
       const date = item.date;
 
-      const views = item.number;
+      const views = item.publishVideosCount;
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date] += Math.floor(Number(views));
