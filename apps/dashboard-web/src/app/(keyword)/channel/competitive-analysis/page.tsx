@@ -1,10 +1,5 @@
 'use client';
 
-import type { Route } from 'next';
-
-import TabNav from '../../../../components/common/Tab/RouteTabNav';
-import BoxFrame from '../../keyword/BoxFrame';
-
 const Page = () => {
   return <>{/* <AnimatedTabs /> */}</>;
 };

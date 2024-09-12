@@ -5,7 +5,6 @@ import type { Route } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import TabNav from '../../../components/common/Tab/RouteTabNav';
 import { channelTabList } from '../keyword/[keyword]/[related_word]/tabList';
 
 let tabs = [
