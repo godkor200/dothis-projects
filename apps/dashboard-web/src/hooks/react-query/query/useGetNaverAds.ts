@@ -24,7 +24,7 @@ const useGetNaverAds = ({
   const queryKeyword = relatedKeyword ?? baseKeyword;
 
   return useQuery(
-    NAVER_ADS_KEY.list([{ baseKeyword }]),
+    NAVER_ADS_KEY.list([{ baseKeyword: queryKeyword }]),
     () => queryFn({ baseKeyword: queryKeyword }),
     {},
   );

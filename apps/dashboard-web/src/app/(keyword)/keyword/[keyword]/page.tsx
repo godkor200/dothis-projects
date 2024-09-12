@@ -83,7 +83,11 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     />
                   </div>
                   <ErrorBoundary fallback={<SystemError />}>
-                    <ChartContainer keyword={keyword} relatedKeyword={null} />
+                    <ChartContainer
+                      keyword={keyword}
+                      relatedKeyword={null}
+                      expectedViews={false}
+                    />
                   </ErrorBoundary>
                 </div>
               </BoxFrame>

@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetNaverAdsQueries from '@/hooks/contents/useGetNaverAdsQueries';
-import useGetNaverAds from '@/hooks/react-query/query/useGetNaverAds';
 
 import useGetDailyExpectedView from '../../../hooks/react-query/query/useGetDailyExpectedView';
 import ChartSummaryCards from '../keyword/[keyword]/ChartSummaryCards';
@@ -22,10 +21,13 @@ const Check = () => {
     relatedKeywords: ['기안84', '마우스'],
   });
 
-  const { data } = useGetDailyExpectedView({
-    baseKeyword: '한국어',
-    relatedKeyword: '세종대왕',
-  });
+  const { data, isLoading, isFetching } = useGetDailyExpectedView(
+    {
+      baseKeyword: '한국어',
+      relatedKeyword: '세종대왕',
+    },
+    { enabled: false },
+  );
 
   return (
     <div>
@@ -35,7 +37,7 @@ const Check = () => {
         value={inpValue}
         onChange={(event) => setInpValue(event.target.value)}
       />
-      <ChartSummaryCards keyword="기안84" relatedKeyword={null} />
+      {/* <ChartSummaryCards keyword="기안84" relatedKeyword={null} /> */}
     </div>
   );
 };

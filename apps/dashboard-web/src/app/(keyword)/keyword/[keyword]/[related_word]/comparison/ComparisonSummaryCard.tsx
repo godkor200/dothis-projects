@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
 import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
-import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
 import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelData';
 import type { TKeywords } from '@/types/common';

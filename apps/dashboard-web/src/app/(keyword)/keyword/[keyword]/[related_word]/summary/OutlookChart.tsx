@@ -3,6 +3,7 @@
 import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
 import { useStartDate } from '@/store/dateStore';
@@ -320,16 +321,20 @@ const OutlookChart = ({
 
   const naverOutlook = getOutlook(naverFluctuationRate);
 
-  const { data: dailyViewData, isLoading: viewsLoading } = useGetDailyViewV2({
-    keyword: baseKeyword,
-    relword: relatedkeyword,
-  });
+  // 해당 부분을 사용하는 Page에 맞는 query를 삽입 (여기는 Combine)
+  const { data: dailyViewData, isLoading: viewsLoading } =
+    useGetDailyExpectedView({
+      baseKeyword,
+      relatedKeyword: relatedkeyword,
+    });
 
-  const dailyViewFluctuationRate = getDailyView_FluctuationRate(dailyViewData);
+  const dailyViewFluctuationRate = getDailyView_FluctuationRate(
+    dailyViewData?.data[0].data,
+  );
 
   const dailyViewOutlook = getOutlook(dailyViewFluctuationRate);
 
-  const totalDailyView = getSumDailyView(dailyViewData);
+  const totalDailyView = getSumDailyView(dailyViewData?.data[0].data);
 
   const chart = D3.select('#outlook-chart')
     .select('svg')

@@ -7,7 +7,6 @@ import CustomTooltipComponent from '@/components/common/Tooltip/CustomTooltip';
 import type { DeepRequired } from '@/hooks/react-query/query/common';
 import useGetDailyView from '@/hooks/react-query/query/useGetDailyView';
 import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
-import useGetVideoUploadCount from '@/hooks/react-query/query/useGetVideoUploadCount';
 import {
   convertCompetitionScoreFormatToHTML,
   getCompetitionScore,
@@ -26,6 +25,7 @@ type ExpectedView = ClientInferResponseBody<
 const CompetitionRate = ({ keyword }: { keyword: string }) => {
   const { data: dailyViewData } = useGetDailyViewV2({
     keyword,
+    relword: null,
   });
 
   const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData);

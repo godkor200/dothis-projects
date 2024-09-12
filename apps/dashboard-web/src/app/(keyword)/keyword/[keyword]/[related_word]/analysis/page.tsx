@@ -94,6 +94,7 @@ const Page = ({
               <ChartContainer
                 keyword={baseKeyword}
                 relatedKeyword={relatedKeyword}
+                expectedViews={true}
               />
             </ErrorBoundary>
           </div>

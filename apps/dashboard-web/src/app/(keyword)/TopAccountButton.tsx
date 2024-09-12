@@ -54,7 +54,7 @@ const TopAccountButton = () => {
       <DropdownMenu.Portal>
         <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
           {accountTabList.map((tab) => (
-            <Link href={`/account/${tab.link}` as Route}>
+            <Link href={`/account/${tab.link}` as Route} key={tab.link}>
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
                 checked={tab.link === accountTab}
