@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 import SvgComp from '@/components/common/SvgComp';
 
+import RouteTabNav from '../../../../../components/common/Tab/RouteTabNav';
 import { tabList } from './tabList';
-import TabNav from './TabNav';
 
 const Layout = ({
   params,
@@ -39,9 +39,10 @@ const Layout = ({
         </div>
       </div>
 
-      <TabNav
+      <RouteTabNav
         tabList={tabList}
         baseRoute={`/keyword/${keyword}/${relatedWord}` as Route}
+        tabKey="relatedTab"
       />
 
       {children}
