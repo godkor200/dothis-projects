@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import ParamsTabNav from '@/components/common/Tab/ParamsTabNav';
 
-import TabNav from '../../../components/common/Tab/RouteTabNav';
+import RouteTabNav from '../../../components/common/Tab/RouteTabNav';
 import {
   channelTabList,
   tabList,
@@ -81,7 +81,7 @@ const Template = ({ children }: { children: React.ReactNode }) => {
         paramsKey="view"
       />
       <TabList />
-      <TabNav
+      <RouteTabNav
         tabList={channelTabList}
         baseRoute={`/channel` as Route}
         tabKey="channelTab"
