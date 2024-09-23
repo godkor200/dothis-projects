@@ -1,5 +1,8 @@
 import { IIncreaseDailyViews } from '@Apps/modules/video/application/service/helpers/video.aggregate.type';
-import { TDailyHitsResult } from '@Apps/modules/hits/infrastructure/repositories/daily-views.cache';
+import {
+  TDailyHitsResult,
+  TGetDailyHitsKeysResult,
+} from '@Apps/modules/hits/infrastructure/repositories/daily-views.cache';
 
 export interface DailyViewCachePort {
   saveRangeDataForDailyHits(
@@ -25,4 +28,5 @@ export interface DailyViewCachePort {
     to: string,
     related?: string,
   ): Promise<TDailyHitsResult>;
+  getKeys(part: string): Promise<TGetDailyHitsKeysResult>;
 }

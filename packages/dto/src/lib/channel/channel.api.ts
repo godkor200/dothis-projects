@@ -3,12 +3,16 @@ import { zErrResBase } from '../error.response.zod';
 import { zChannelResponse } from './channel.model';
 
 import {
-  TChannelFilterAndSortQuery,
-  TChannelListResponse,
   zChannelFilterAndSortQuery,
   zChannelListResponse,
+  zChannelNameAutocompleteQuery,
+  zChannelNameAutocompleteResponse,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
+  zGetVideoTimelineQuery,
+  zGetVideoTimelineResponse,
 } from './channel.zod';
+import { zChannelAnalysisBody } from './channel-analysis.zod';
+import { zSuccessBase } from '../success.response.zod';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
@@ -44,5 +48,40 @@ export const channelApi = c.router({
     summary: '조건에 맞는 채널 리스트를 가져옵니다',
     description:
       '구독자 수 및 클러스터 번호에 따른 필터링을 기반으로 최대 50개의 채널 목록을 반환합니다.',
+  },
+  autocompleteChannelName: {
+    method: 'GET',
+    path: `${channelApiUrl}/auto-complete/:channelName`,
+    pathParams: zChannelNameAutocompleteQuery,
+    responses: {
+      200: zChannelNameAutocompleteResponse,
+      ...zErrResBase,
+    },
+    summary: '채널 이름 자동완성',
+    description:
+      '사용자가 입력한 검색어에 기반하여 채널 이름 자동완성 기능을 제공합니다.',
+  },
+  getVideoTimeline: {
+    method: 'GET',
+    path: `${channelApiUrl}/video-timeline`,
+    query: zGetVideoTimelineQuery,
+    responses: {
+      200: zGetVideoTimelineResponse,
+      ...zErrResBase,
+    },
+    summary: '채널의 영상 타임라인 가져오기',
+    description:
+      '특정 채널의 영상 타임라인을 가져옵니다. 기본적으로 지난 365일 동안의 영상을 반환합니다.',
+  },
+  registerChannelAnalysis: {
+    method: 'POST',
+    path: `${channelApiUrl}/register-analysis`,
+    body: zChannelAnalysisBody,
+    responses: {
+      200: zSuccessBase,
+      ...zErrResBase,
+    },
+    summary: '채널 분석 정보 등록',
+    description: '특정 채널의 분석 정보를 등록합니다.',
   },
 });

@@ -27,7 +27,7 @@ const c = nestControllerContract(apiRouter.hits);
 const { getVideoDurationAnalysis } = c;
 const { summary, description } = getVideoDurationAnalysis;
 
-@ApiTags('영상 분석')
+@ApiTags('조회수 분석')
 @Controller()
 export class GetDurationLengthHttpController {
   constructor(private readonly queryBus: QueryBus) {}

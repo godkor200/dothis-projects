@@ -12,6 +12,8 @@ export type TDailyHitsResult = Result<
   VideoCacheNotFoundError
 >;
 
+export type TGetDailyHitsKeysResult = Result<string[], VideoCacheNotFoundError>;
+
 export class DailyViewsCache implements DailyViewCachePort {
   constructor(
     @InjectRedis('onPromise_node_2') private readonly redisClient: Redis,
@@ -28,7 +30,7 @@ export class DailyViewsCache implements DailyViewCachePort {
 
     for (const data of item.data) {
       await this.redisClient.hset(key, data.date, JSON.stringify(data));
-      console.log(`Data for date ${data.date} stored.`);
+      console.log(`${key} Data for date ${data.date} stored.`);
     }
   }
 
@@ -37,11 +39,15 @@ export class DailyViewsCache implements DailyViewCachePort {
     additionalItem: IIncreaseDailyViews,
   ): Promise<void> {
     const key = `daily-hits:${keyword}`;
-    const data = additionalItem.data[0];
-
-    await this.redisClient.hset(key, data.date, JSON.stringify(data));
-
-    console.log(`Updated or added data for date ${data.date}.`);
+    const data = additionalItem.data;
+    for (const item of data) {
+      await this.redisClient.hset(
+        key,
+        item.date,
+        JSON.stringify({ status: 'updated', ...item }),
+      );
+      console.log(`${key} Data for date ${item.date} Updated or added data`);
+    }
   }
 
   async getDataForDailyHits(
@@ -93,6 +99,28 @@ export class DailyViewsCache implements DailyViewCachePort {
       }
 
       return Err(new VideoCacheNotFoundError());
+    } catch (e) {
+      return Err(e);
+    }
+  }
+  async getKeys(part: string): Promise<TGetDailyHitsKeysResult> {
+    const keys: string[] = [];
+    const pattern = `*${part}*`; // part를 포함한 모든 키 검색
+    let cursor = '0';
+    try {
+      do {
+        const [nextCursor, foundKeys] = await this.redisClient.scan(
+          cursor,
+          'MATCH',
+          pattern,
+          'COUNT',
+          100,
+        );
+        cursor = nextCursor;
+        keys.push(...foundKeys);
+      } while (cursor !== '0');
+      console.log(keys);
+      return Ok(keys);
     } catch (e) {
       return Err(e);
     }

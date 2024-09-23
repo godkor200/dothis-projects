@@ -7,8 +7,7 @@ import {
 } from '@Apps/modules/video-history/domain/ports/video-history.outbound.port';
 import { RecentVideoHistoryDao } from '@Apps/modules/video-history/infrastructure/daos/video-history.dao';
 import { Err, Ok } from 'oxide.ts';
-import { DateUtil } from '@Libs/commons/utils/date.util';
-import { appGlobalConfig } from '@Apps/config/app/config/app.global';
+import { OpenSearchCommonHelper } from '@Apps/common/opensearch/service/helpers/common.helper';
 
 /**
  * 각각의 단어 별로 관련된 최신의 히스토리를 불러옴
@@ -17,18 +16,18 @@ import { appGlobalConfig } from '@Apps/config/app/config/app.global';
 export class VideoHistoryRecentOsAdapter
   implements IRecentVideoHistoryOutboundPort
 {
-  private readonly temporaryDate: string | undefined =
-    appGlobalConfig.videoHistoryPeriodConstraint;
+  private readonly openSearchHelper: OpenSearchCommonHelper;
+
   constructor(
     @Inject(getOpensearchClientToken())
     private readonly opensearchClient: OpensearchClient,
-  ) {}
+  ) {
+    this.openSearchHelper = new OpenSearchCommonHelper(this.opensearchClient);
+  }
 
   async execute(
     dao: RecentVideoHistoryDao,
   ): Promise<VideoHistoryAdapterResult> {
-    const index = DateUtil.getIndexFromDate(this.temporaryDate);
-
     // 기본 must 조건 설정
     const mustQueries: any[] = [
       {
@@ -48,6 +47,9 @@ export class VideoHistoryRecentOsAdapter
     }
 
     try {
+      const { index } = await this.openSearchHelper.findLargestBackingIndex(
+        'video_history',
+      );
       const { body } = await this.opensearchClient.search({
         index, // 데이터 스트림 이름을 사용
         body: {

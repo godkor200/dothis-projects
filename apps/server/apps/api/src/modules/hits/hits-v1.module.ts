@@ -11,6 +11,7 @@ import {
 
 import {
   ANALYSIS_HITS_SERVICE_DI_TOKEN,
+  CATEGORY_DISTRIBUTION_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   DAILY_HITS_SERVICE_DI_TOKEN,
   DAILY_VIEW_CACHE_DI_TOKEN,
@@ -73,6 +74,10 @@ import { SaveRangeDailyHitsService } from '@Apps/modules/hits/application/servic
 import { DailyViewsCache } from '@Apps/modules/hits/infrastructure/repositories/daily-views.cache';
 import { SaveRangeDailyHitsHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/save-range-daily-hits.http.controller';
 import { GetRepresentativeCategoryService } from '@Apps/modules/video/application/service/get-representative-category.service';
+import { UpdateDailyHitsService } from '@Apps/modules/hits/application/services/update-daily-hits.service';
+import { CategoryDistributionController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-hits-category.http.controller';
+import { CategoryAnalysisAdapter } from '@Apps/modules/hits/infrastructure/adapters/category-analysis.adapter';
+import { CategoryDistributionService } from '@Apps/modules/hits/application/services/category-distribution.service';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -117,6 +122,8 @@ const service: Provider[] = [
   ScrollService,
   SaveRangeDailyHitsService,
   SubscriberViewAnalysisService,
+  UpdateDailyHitsService,
+  CategoryDistributionService,
 ];
 const controllers = [
   // GetDailyHitsV1HttpController,
@@ -128,6 +135,7 @@ const controllers = [
   GetDailyHitsV2HttpController,
   GetSubscriberViewAnalysisHttpController,
   SaveRangeDailyHitsHttpController,
+  CategoryDistributionController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
@@ -177,6 +185,10 @@ const adapters: Provider[] = [
   {
     provide: DAILY_VIEW_CACHE_DI_TOKEN,
     useClass: DailyViewsCache,
+  },
+  {
+    provide: CATEGORY_DISTRIBUTION_DI_TOKEN,
+    useClass: CategoryAnalysisAdapter,
   },
 ];
 

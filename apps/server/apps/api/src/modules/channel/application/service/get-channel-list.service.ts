@@ -103,7 +103,7 @@ export class GetChannelListService
                 channel.channel_subscribers <= maxSubscribers),
           );
         }
-        const limit = dao.limit > 50 ? 50 : dao.limit;
+        const limit = Number(dao.limit) > 50 ? 50 : dao.limit;
         const sortedAndLimitedResults = filteredChannelInfoRes
           .sort((a, b) => {
             if (dto.sort === 'channel_subscribers') {
