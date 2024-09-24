@@ -40,7 +40,7 @@ const ParamsTabNav = <T extends ReadonlyArray<TabItem>>({
   const hasParams = searchParams?.has(paramsKey);
   const paramsValue = searchParams?.get(paramsKey);
   return (
-    <div className="relative  flex gap-[50px] space-x-1">
+    <div className="relative  flex gap-[50px] ">
       <div className="bg-grey400 absolute bottom-0  h-1 w-full " />
       {tabList.map((item, index, arr) => (
         <Link
@@ -54,7 +54,7 @@ const ParamsTabNav = <T extends ReadonlyArray<TabItem>>({
         >
           <button
             key={item.link}
-            className={cn('w-[100px]  pb-2 text-center font-bold relative')}
+            className={cn('min-w-[100px]  pb-2 text-center font-bold relative')}
             // style={{
             //   WebkitTapHighlightColor: 'transparent',
             // }}
