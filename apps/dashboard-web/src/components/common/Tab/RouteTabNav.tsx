@@ -31,15 +31,15 @@ const RouteTabNav = <T extends ReadonlyArray<TabItem>>({
   const currentTab = pathName ? pathName[pathName.length - 1] : null;
 
   const searchParams = useSearchParams();
-  console.log(currentTab);
+
   return (
-    <div className=" relative  flex gap-[50px] space-x-1">
+    <div className=" relative  flex gap-[50px]">
       <div className="bg-grey400 absolute bottom-0  h-1 w-full " />
       {tabList.map((item) => (
         <Link href={`${baseRoute}/${item.link}` as Route} key={item.link}>
           <button
             key={item.link}
-            className={cn('w-[100px]  pb-2 text-center font-bold relative')}
+            className={cn('min-w-[100px]  pb-2 text-center font-bold relative')}
             // style={{
             //   WebkitTapHighlightColor: 'transparent',
             // }}
