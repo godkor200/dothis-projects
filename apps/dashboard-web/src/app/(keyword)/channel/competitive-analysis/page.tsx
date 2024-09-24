@@ -1,57 +1,167 @@
 'use client';
 
-const Page = () => {
-  return <>{/* <AnimatedTabs /> */}</>;
-};
-
-export default Page;
-
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
+import type { Route } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-let tabs = [
-  { id: 'world', label: 'World' },
-  { id: 'ny', label: 'N.Y.' },
-  { id: 'business', label: 'Business' },
-  { id: 'arts', label: 'Arts' },
-  { id: 'science', label: 'Science' },
-];
+import SvgComp from '@/components/common/SvgComp';
+import ParamsTabNav from '@/components/common/Tab/ParamsTabNav';
+import { cn } from '@/utils/cn';
 
-function AnimatedTabs() {
-  let [activeTab, setActiveTab] = useState(tabs[0].id);
+import GNBSearchbar from '../../GNBSearchbar';
+import {
+  CHANNEL_COMPARISON_TAB_LIST,
+  CHANNEL_VIEW_TYPE_TAB_LIST,
+} from '../../keyword/[keyword]/[related_word]/tabList';
+import BoxFrame from '../../keyword/BoxFrame';
+import MainSearchbar from '../../MainSearchbar';
+import ChannelFilterDropdown from './ChannelFilterDropdown';
+import ContentComparison from './ContentComparison';
+import ContentView from './ContentView';
+import SearchFilterDropdown from './SearchFilterDropdown';
 
-  const router = useRouter();
-
-  const pathName = usePathname();
+const Page = () => {
   return (
-    <div className="flex space-x-1">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => {
-            setActiveTab(tab.id);
-
-            router.replace(pathName + `?mini=${tab.id}`);
-          }}
-          className={`${
-            activeTab === tab.id ? '' : 'hover:text-white/60'
-          } relative rounded-full px-3 py-1.5 text-sm font-medium text-black outline-sky-400 transition focus-visible:outline-2`}
-          style={{
-            WebkitTapHighlightColor: 'transparent',
-          }}
-        >
-          {activeTab === tab.id && (
-            <motion.span
-              layoutId="bubble"
-              className="bg-primary600 absolute inset-0 z-10 mix-blend-difference"
-              style={{ borderRadius: 9999 }}
-              transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-            />
+    <>
+      <div className="grid grid-cols-[minmax(900px,3fr),minmax(300px,1fr)] gap-[20px] pt-[20px]">
+        {/* box frame px커스텀 */}
+        <div
+          className={cn(
+            'border-grey400 rounded-10  border px-[0px] py-[20px] flex flex-col',
           )}
-          {tab.label}
-        </button>
-      ))}
-    </div>
+        >
+          <div>
+            <div className="px-[20px]">
+              <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
+                <p>모니터링 채널 추천</p>
+              </div>
+              <div className="flex ">
+                <div>
+                  <ParamsTabNav
+                    tabList={CHANNEL_VIEW_TYPE_TAB_LIST}
+                    baseRoute={`/channel` as Route}
+                    tabKey="channel-views"
+                    paramsKey="channel-views"
+                  />
+                </div>
+                <ChannelFilterDropdown />
+              </div>
+
+              <div className="border-b-1 border-grey400 font[500] text-grey600  grid grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-[20px] p-[10px] text-[14px]">
+                <div></div>
+                <div>채널명</div>
+                <div>구독자</div>
+                <div>영상 수</div>
+                <div>카테고리</div>
+                <div>주 사용 카테고리</div>
+                <div>평균 조회수</div>
+                <div>유사도</div>
+              </div>
+            </div>
+            <div className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]">
+              {Array.from({ length: 10 }).map((item, index) => (
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <div className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500]">
+                      <div className="bg-primary300 h-10 w-10 rounded-full"></div>
+                      <div>곽튜브</div>
+                      <div>200만 명</div>
+                      <div>322</div>
+                      <div>여행</div>
+                      <div className="truncate">
+                        홍콩, 미스터비스트, 여행, 한국,
+                        대만ㅁㄴㅇㄴㅁㅇㄴㅁㅇㄴㅁㅇㄴㅁㅇㄴㅁ
+                      </div>
+                      <div>1,132,877</div>
+                      <div>90%</div>
+                    </div>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className="DropdownMenuContent"
+                      sideOffset={5}
+                    >
+                      {[
+                        {
+                          title: '유튜브 채널로 이동',
+                          value: 'move_channel',
+                        },
+                        {
+                          title: '모니터링 추가',
+                          value: 'add_channel',
+                        },
+                      ].map(({ title, value }) => (
+                        <DropdownMenu.CheckboxItem
+                          className="DropdownMenuCheckboxItem"
+                          checked={value === 'channel_category'}
+                        >
+                          <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
+                            <SvgComp icon="CheckIcon" size={12} />
+                          </DropdownMenu.ItemIndicator>
+                          {title}
+                        </DropdownMenu.CheckboxItem>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+              ))}
+            </div>
+          </div>
+        </div>
+        <BoxFrame isPaddingX={true}>
+          <div>
+            <div className="px-[20px]">
+              <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
+                <p>분석채널</p>
+              </div>
+
+              <div className="border-b-1 border-grey400 font[500] text-grey600  grid grid-cols-[40px,3fr,2fr] items-center gap-[20px] p-[10px] text-[14px]">
+                <div></div>
+                <div>채널명</div>
+                <div>구독자</div>
+              </div>
+            </div>
+            <div className="custom-scroll-box h-[360px] overflow-y-scroll px-[20px]">
+              {Array.from({ length: 10 }).map((item, index) => (
+                <div className="text-grey600 grid  grid-cols-[40px,3fr,2fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500]">
+                  <div className="bg-primary300 h-10 w-10 rounded-full"></div>
+                  <div>곽튜브</div>
+                  <div>200만 명</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </BoxFrame>
+      </div>
+      <div className="my-5">
+        <ParamsTabNav
+          tabList={CHANNEL_COMPARISON_TAB_LIST}
+          baseRoute={`/channel` as Route}
+          tabKey="content-view"
+          paramsKey="content-view"
+        />
+      </div>
+      <div className="mb-5 flex items-center gap-[20px]">
+        <GNBSearchbar callback={() => {}} />
+        <SearchFilterDropdown />
+
+        <div className="border-grey400 rounded-10 ml-auto flex items-center  gap-[20px] border px-[20px] py-[8px]">
+          <p className="text-grey600 mr-[10px] text-[14px] font-[500]">
+            주요 키워드
+          </p>
+
+          {['정민', '여행'].map((item) => (
+            <div className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]">
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>{' '}
+      <ContentView />
+    </>
   );
-}
+};
+
+export default Page;
