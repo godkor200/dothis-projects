@@ -8,6 +8,8 @@ import ParamsTabNav from '@/components/common/Tab/ParamsTabNav';
 
 import RouteTabNav from '../../../components/common/Tab/RouteTabNav';
 import {
+  CHANNEL_COMPARISON_TAB_LIST,
+  CHANNEL_VIEW_TYPE_TAB_LIST,
   channelTabList,
   tabList,
 } from '../keyword/[keyword]/[related_word]/tabList';
@@ -65,22 +67,6 @@ function AnimatedTabs() {
 const Template = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative">
-      <div className="bg-primary500 h-20 w-full"></div>
-      <ParamsTabNav
-        tabList={tabList}
-        baseRoute={`/channel` as Route}
-        tabKey="channel_views"
-        paramsKey="view"
-      />
-      {/* <AnimatedTabs /> */}
-
-      <ParamsTabNav
-        tabList={tabList}
-        baseRoute={`/channel` as Route}
-        tabKey="channel_views"
-        paramsKey="view"
-      />
-      <TabList />
       <RouteTabNav
         tabList={channelTabList}
         baseRoute={`/channel` as Route}
