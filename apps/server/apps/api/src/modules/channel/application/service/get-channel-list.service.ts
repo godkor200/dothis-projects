@@ -23,6 +23,7 @@ export type TChannelListResult = Result<
 >;
 
 export type ChannelInfoMergeResult = {
+  channel_id: string;
   channel_name: string;
   channel_thumbnail: string;
   channel_cluster: number;
@@ -103,7 +104,7 @@ export class GetChannelListService
                 channel.channel_subscribers <= maxSubscribers),
           );
         }
-        const limit = dao.limit > 50 ? 50 : dao.limit;
+        const limit = Number(dao.limit) > 50 ? 50 : dao.limit;
         const sortedAndLimitedResults = filteredChannelInfoRes
           .sort((a, b) => {
             if (dto.sort === 'channel_subscribers') {
@@ -120,6 +121,7 @@ export class GetChannelListService
 
         return Ok(
           sortedAndLimitedResults.map((e) => ({
+            channelId: e.channel_id,
             channelName: e.channel_name,
             channelThumbnail: e.channel_thumbnail,
             channelCluster: e.channel_cluster,

@@ -4,6 +4,7 @@ import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';
 import {
+  dataObject,
   zClusterNumber,
   zClusterNumberMulti,
   zOnlyLimit,
@@ -21,6 +22,7 @@ import {
   zKeywordThisWeeklyRes,
   zAnalysedVideoLengthRes,
   zSubscriberViewAnalysisRes,
+  zCategoryDistributionResponse,
   zClusterSpecificCombinedData,
 } from './hits.zod';
 
@@ -210,5 +212,17 @@ export const hitsApi = c.router({
       '데일리 뷰를 기간 파라미터 만큼 먼저 계산해서 레디스에 저장합니다.',
     description:
       '데일리 뷰를 기간 파라미터 만큼 먼저 계산해서 레디스에 저장합니다. 탐색어, 연관어가 없는 경우는 주간 조회수에서 top 100를 전부 저장합니다.',
+  },
+  getCategoryDistribution: {
+    method: 'GET',
+    path: `${viewApiUrl}/analysis/category-distribution`,
+    query: findVideoBySearchKeyword,
+    responses: {
+      200: zSuccessBase.merge(zCategoryDistributionResponse),
+      ...zErrResBase,
+    },
+    summary: '각 비디오 클러스터의 카테고리 분포를 가져옵니다',
+    description:
+      '키워드와 연관어가 포함된 영상들의 카테고리 분포를 클러스터별로 계산하여 반환합니다.',
   },
 });

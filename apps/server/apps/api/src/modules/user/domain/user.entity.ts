@@ -10,6 +10,7 @@ import { Membership } from '@Apps/modules/membership/domain/membership.entity';
 import { UserInfoCommandDto } from '@Apps/common/auth/interfaces/dtos/user-info.dto';
 import { ChannelEntity } from '@Apps/modules/channel/infrastucture/entities/channel.entity';
 import { StoryBoardEntity } from '@Apps/modules/story-board/domain/entities/story-board.entity';
+import { ChannelAnalysisEntity } from '@Apps/modules/channel/infrastucture/entities/channel-analysis.entity';
 enum PLAN {
   PRO = 'PRO',
   TRIAL = 'TRIAL',
@@ -96,6 +97,12 @@ export class User {
     (RecentStoryboard) => RecentStoryboard.user,
   )
   recentStoryboards: StoryBoardEntity[];
+
+  @OneToMany(
+    () => ChannelAnalysisEntity,
+    (channelAnalysis) => channelAnalysis.user,
+  )
+  registeredChannels: ChannelAnalysisEntity[];
 
   static create(user: UserInfoCommandDto) {
     const newUser = new User();

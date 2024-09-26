@@ -156,6 +156,16 @@ export const zSubscriberRange = z.object({
   docCount: z.number(),
   totalVideoViews: z.number(),
 });
+
+export const zCategoryDistributionResponse = dataObject(
+  z.array(
+    z.object({
+      clusterNumber: z.number().int(), // 클러스터 번호
+      viewChange: z.number(), // to 날짜의 조회수에서 from 날짜의 조회수를 뺀 결과
+      videoCount: z.number().int().nonnegative(), // 해당 클러스터의 영상 수
+    }),
+  ),
+);
 export const zWeeklyKeywordSchemaList = z.array(zWeeklyKeywordSchema);
 export const zSubscriberViewAnalysisRes = dataObject(z.array(zSubscriberRange));
 export const zKeywordThisWeeklyRes = dataObject(zKeywordThisWeeklyList);

@@ -9,8 +9,22 @@ export const zSearchKeyword = z
 
 export const zDateQuery = z
   .object({
-    from: z.string().describe('언제부터 날짜').default('2024-08-23'),
-    to: z.string().describe('까지 날짜').default('2024-08-30'),
+    from: z
+      .string()
+      .regex(
+        /^\d{4}-\d{2}-\d{2}$/,
+        'Invalid from date format, expected yyyy-mm-dd',
+      )
+      .describe('언제부터 날짜')
+      .default('2024-08-23'),
+    to: z
+      .string()
+      .regex(
+        /^\d{4}-\d{2}-\d{2}$/,
+        'Invalid to date format, expected yyyy-mm-dd',
+      )
+      .describe('까지 날짜')
+      .default('2024-08-30'),
   })
   .describe('기본 날짜 쿼리');
 

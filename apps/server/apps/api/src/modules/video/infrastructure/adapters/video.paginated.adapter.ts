@@ -27,6 +27,15 @@ export class VideoPaginatedAdapter implements IGetVideoPaginatedOutboundPort {
           use_text: dao.search,
         },
       },
+      {
+        range: {
+          video_published: {
+            gte: dao.from,
+            lte: dao.to,
+            format: 'yyyy-MM-dd',
+          },
+        },
+      },
     ];
 
     if (dao.related) {

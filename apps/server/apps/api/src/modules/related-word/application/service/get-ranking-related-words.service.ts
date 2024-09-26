@@ -2,21 +2,8 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TRankRes } from '@dothis/dto';
 import { Inject } from '@nestjs/common';
 import { Err, Ok, Result } from 'oxide.ts';
-import { RankingRelatedWordAggregateService } from '@Apps/modules/related-word/application/service/ranking-related-word.aggregate.service';
 import { GetRankingRelatedWordsDto } from '@Apps/modules/related-word/application/dtos/get-ranking-related-words.dto';
-import {
-  CacheDoesNotFoundException,
-  ComplexQueryException,
-  TableNotFoundException,
-} from '@Libs/commons';
-import { VideoHistoryNotFoundError } from '@Apps/modules/video-history/domain/events/video_history.err';
-import {
-  ExternalAiServerError,
-  RelatedWordsNotFoundError,
-} from '@Apps/modules/related-word/domain/errors/related-words.errors';
-import { ChannelHistoryNotFoundError } from '@Apps/modules/channel-history/domain/events/channel_history.error';
-import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
-import { KeywordsNotFoundError } from '@Apps/modules/related-word/domain/errors/keywords.errors';
+import { ExternalAiServerError } from '@Apps/modules/related-word/domain/errors/related-words.errors';
 import { VIDEO_CACHE_MULTI_RELATE_WORDS_ADAPTER_DI_TOKEN } from '@Apps/modules/video/video.di-token';
 import { VideosMultiRelatedWordsCacheOutboundPorts } from '@Apps/modules/video/domain/ports/video.cache.outbound.ports';
 import { KeywordServiceHelper } from '@Apps/common/helpers/get-video-data.helper';

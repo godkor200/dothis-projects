@@ -8,6 +8,7 @@ import { getOpensearchClientToken } from '@Apps/common/opensearch/opensearch.mod
 import { Client as OpensearchClient } from '@opensearch-project/opensearch';
 import { DateUtil } from '@Libs/commons/utils/date.util';
 import { Err, Ok } from 'oxide.ts';
+import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 
 export class GetChannelInfoAdapter implements ChannelInfoOutboundPort {
   constructor(
@@ -50,6 +51,9 @@ export class GetChannelInfoAdapter implements ChannelInfoOutboundPort {
         (hit: any) => hit._source,
       );
 
+      if (!results.length) {
+        return Err(new ChannelNotFoundError());
+      }
       return Ok(results);
     } catch (error) {
       console.error('Error searching channel data:', error);
