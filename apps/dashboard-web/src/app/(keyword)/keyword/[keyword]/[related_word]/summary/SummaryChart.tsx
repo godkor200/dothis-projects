@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   useDailyViewList,
   useExpectedViewList,
+  useSearchCountFormmaterListD3,
   useSearchRatioFormmaterListD3,
   useUploadVideoCountFormatterListD3,
 } from '@/hooks/contents/useChartFormatter';
@@ -103,7 +104,7 @@ const SummaryChart = ({ baseKeyword, relatedKeyword }: TKeywords) => {
   });
 
   const { chartDataList: naverChartDataList, keywordList: naverKeywordList } =
-    useSearchRatioFormmaterListD3({
+    useSearchCountFormmaterListD3({
       baseKeyword,
       relatedKeywords: sortedRelatedKeywordList,
     });

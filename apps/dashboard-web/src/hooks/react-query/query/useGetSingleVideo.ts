@@ -42,7 +42,7 @@ const useGetSingleVideo = (
 
   const endDate = useEndDate();
 
-  const queryResult = apiClient(2).video.getVideoPage.useQuery(
+  const queryResult = apiClient(1).video.getVideoPage.useQuery(
     VIDEODATA_KEY.list([
       { searchKeyword, relatedkeyword, from, to, limit, page, extraQueryKey },
     ]),
@@ -62,7 +62,7 @@ const useGetSingleVideo = (
       ...queryOptions,
       staleTime: Infinity,
       //   onSuccess: (data) => {
-      //     console.log(cachedData);
+
       //     if (cachedData) {
       //       queryOptions?.onSuccess?.(data);
       //     }

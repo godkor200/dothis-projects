@@ -60,7 +60,6 @@ const D3 = () => {
       .range([height - marginBottom, marginTop]);
 
     const xAxis = (g: d3.Selection<SVGGElement, any, HTMLElement, any>) => {
-      console.log(g);
       return g
         .attr('transform', `translate(0, ${height})`)
         .attr('transform', `translate(0, ${height - marginBottom})`)

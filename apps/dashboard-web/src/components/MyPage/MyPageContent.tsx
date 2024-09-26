@@ -11,9 +11,10 @@ const MyPageContent = () => {
   const { data: userData } = useGetUserInfo();
 
   const router = useRouter();
-  const { mutate } = useLogOutMutation();
 
   const { setIsSignedIn } = useAuthActions();
+
+  const { mutate } = useLogOutMutation();
 
   const handleLogOut = () => {
     mutate(

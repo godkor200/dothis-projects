@@ -25,9 +25,9 @@ type UploadVideoCount = ClientInferResponseBody<
 >['data'][0];
 
 type CombineExpectedView = ClientInferResponseBody<
-  typeof apiRouter.hits.getAnalysisHitsV2,
+  typeof apiRouter.hits.getAnalysisHits,
   200
->['data']['data'][number];
+>['data'][number]['data'][number];
 
 /**
  * Date에 따른 initial 구조를 생성한다.
@@ -264,7 +264,7 @@ export const handleDailyVideoCountD3 = (
 };
 
 export const handleVideoUploadCountD3 = (
-  data: UploadVideoCount[] | undefined,
+  data: DailyView[] | undefined,
   { startDate, endDate }: { startDate: string; endDate: string },
 ) => {
   const dateBasedDataSet = initChartDateFormatter({
@@ -277,7 +277,7 @@ export const handleVideoUploadCountD3 = (
     if (item) {
       const date = item.date;
 
-      const views = item.number;
+      const views = item.publishVideosCount;
 
       if (dateBasedDataSet.hasOwnProperty(date)) {
         dateBasedDataSet[date] += Math.floor(Number(views));
@@ -466,6 +466,35 @@ export const handleNaverSearchRatioD3 = (
         }
       }
     });
+
+  const result = createDateTimeD3(dateBasedDataSet);
+
+  return result;
+};
+
+export const handleNaverSearchCountD3 = (
+  data: NaverAPI_Results['data'] | undefined,
+  calculateNormalizedSearchCount: (dailyRatio: number) => number,
+  { startDate, endDate }: { startDate: string; endDate: string },
+) => {
+  const dateBasedDataSet = initChartDateFormatter({
+    startDate,
+    endDate,
+    format: 'single',
+  });
+  data?.forEach((item) => {
+    if (item) {
+      const date = item.period;
+
+      const views = item.ratio;
+
+      if (dateBasedDataSet.hasOwnProperty(date)) {
+        dateBasedDataSet[date] += Math.floor(
+          calculateNormalizedSearchCount(Number(views)),
+        );
+      }
+    }
+  });
 
   const result = createDateTimeD3(dateBasedDataSet);
 

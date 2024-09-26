@@ -160,9 +160,7 @@ const useGetSingleNews = <T extends any = ServerResponse<NewsResponse>>(
       staleTime: Infinity,
 
       //   onSuccess(data) {
-      //     // console.log(cachedData);
-      //     console.log(queryClient);
-      //     console.log(cachedData);
+
       //     if (cachedData) {
       //       queryOptions?.onSuccess?.(data);
       //     }

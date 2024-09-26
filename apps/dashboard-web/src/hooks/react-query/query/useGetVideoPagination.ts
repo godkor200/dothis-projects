@@ -27,7 +27,7 @@ const useGetVideoPagination = (
 
   const clusters = getRelatedClusterArray();
 
-  const queryResults = apiClient(2).video.getVideoPage.useQuery(
+  const queryResults = apiClient(1).video.getVideoPage.useQuery(
     VIDEODATA_KEY.list([
       {
         relword: relword,

@@ -4,6 +4,7 @@ import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import useGetUserInfo from '@/hooks/react-query/query/useGetUserInfo';
 import {
   useAuthActions,
   useIsSignedIn,
@@ -53,17 +54,15 @@ function AuthProvider({ children }: StrictPropsWithChildren) {
         await apiServer(1).auth.getVerifyToken();
 
         try {
-          const data = await apiServer(1).auth.getOwnInfo();
+          const { data, statusCode } = useGetUserInfo();
 
-          if (data.status === 200) {
+          if (statusCode === 200) {
             setIsTokenRequired(false);
-            if (!data.body.data?.agreePromotion) {
+            if (!data?.agreePromotion) {
               router.push('/auth/terms');
             }
           }
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
 
         setIsSignedIn(true);
       } catch (error) {

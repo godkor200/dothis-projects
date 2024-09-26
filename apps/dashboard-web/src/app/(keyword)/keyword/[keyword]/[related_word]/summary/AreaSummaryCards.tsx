@@ -17,25 +17,25 @@ const AreaSummaryCards = ({
   });
 
   const maxExpectedHits = apiData?.data
-    ? Math.max(...apiData.data.data.map((item) => item.expectedHits)) > 0.1
-      ? Math.max(...apiData.data.data.map((item) => item.expectedHits)).toFixed(
-          1,
-        )
+    ? Math.max(...apiData.data[0].data.map((item) => item.expectedHits)) > 0.1
+      ? Math.max(
+          ...apiData.data[0].data.map((item) => item.expectedHits),
+        ).toFixed(1)
       : 0.1
     : 0;
 
   const maxAreaExpectedHits = apiData?.data
-    ? Math.max(...apiData.data.data.map((item) => item.maxPerformance)) > 0.1
+    ? Math.max(...apiData.data[0].data.map((item) => item.maxPerformance)) > 0.1
       ? Math.max(
-          ...apiData.data.data.map((item) => item.maxPerformance),
+          ...apiData.data[0].data.map((item) => item.maxPerformance),
         ).toFixed(1)
       : 0.1
     : 0;
 
   const minAreaExpectedHits = apiData?.data
-    ? Math.max(...apiData.data.data.map((item) => item.minPerformance)) > 0.1
+    ? Math.max(...apiData.data[0].data.map((item) => item.minPerformance)) > 0.1
       ? Math.max(
-          ...apiData.data.data.map((item) => item.minPerformance),
+          ...apiData.data[0].data.map((item) => item.minPerformance),
         ).toFixed(1)
       : 0.1
     : 0;

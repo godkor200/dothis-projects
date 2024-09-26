@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   // 모든 fetch 요청의 결과를 리턴합니다.
   return NextResponse.json(responseDataArray);
   // } catch (error) {
-  //   console.error(error);
+
   //   // 에러가 발생한 경우에 대한 처리
   //   return Response.json({ error: 'An error occurred' });
   // }

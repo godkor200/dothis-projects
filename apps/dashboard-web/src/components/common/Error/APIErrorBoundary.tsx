@@ -1,21 +1,29 @@
 import type { ClassValue } from 'clsx';
 import { useState } from 'react';
 
+import type { TKeywords } from '@/types/common';
+
 import ApiErrorComponent from '../Charts/ApiErrorComponent ';
+import NotFoundError from './NotFoundError';
 
 interface ErrorHandlingComponentProps {
   refetchCallback: () => void;
+
   hasError: boolean;
+  statusCode?: number;
   classname?: ClassValue;
   children: React.ReactNode;
 }
 
 const APIErrorBoundary = ({
   refetchCallback,
+  statusCode,
   hasError,
   classname,
   children,
-}: ErrorHandlingComponentProps) => {
+  baseKeyword,
+  relatedKeyword,
+}: ErrorHandlingComponentProps & TKeywords) => {
   const [retryCount, setRetryCount] = useState(0);
 
   const isApiError = retryCount > 2;
@@ -24,6 +32,17 @@ const APIErrorBoundary = ({
     refetchCallback();
     setRetryCount((prev) => prev + 1);
   };
+
+  const isNotFound = statusCode === 404;
+
+  if (isNotFound) {
+    return (
+      <NotFoundError
+        baseKeyword={baseKeyword}
+        relatedKeyword={relatedKeyword}
+      />
+    );
+  }
 
   if (isApiError && hasError) {
     return (

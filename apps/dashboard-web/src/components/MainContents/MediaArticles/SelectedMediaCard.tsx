@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ const SelectedMediaCard = ({
   link,
   mediaType,
 }: Props) => {
+  const formattedUploadDate = dayjs(uploadDate).format('YYYY-MM-DD');
   return (
     <div className="rounded-10 border-grey300 w-[320px] cursor-pointer overflow-hidden border border-solid">
       <Link
@@ -51,7 +53,7 @@ const SelectedMediaCard = ({
           <MediaDigestSummary
             provider={provider}
             element={element}
-            uploadDate={uploadDate}
+            uploadDate={formattedUploadDate}
           />
         </div>
       </Link>

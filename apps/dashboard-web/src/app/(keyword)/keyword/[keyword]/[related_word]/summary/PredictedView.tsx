@@ -19,7 +19,7 @@ const PredictedView = ({ baseKeyword, relatedKeyword }: Props) => {
     useGetUserChannelData();
 
   const maxExpectedHits = apiData?.data
-    ? Math.max(...apiData.data.data.map((item) => item.expectedHits))
+    ? Math.max(...apiData.data[0].data.map((item) => item.expectedHits))
     : 1;
 
   const predictedView =

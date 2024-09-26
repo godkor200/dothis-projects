@@ -6,25 +6,44 @@ import * as D3 from 'd3';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import {
+  useDailyViewExpectedV2,
   useDailyViewV2,
-  useSearchRatioFormatterD3,
+  useSearchCountFormmaterD3,
   useUploadVideoCountFormatterD3,
 } from '@/hooks/contents/useChartFormatter';
 
 const D3Axis = ({
   keyword,
   relatedKeyword,
+  expectedViews,
 }: {
   keyword: string;
   relatedKeyword: string | null;
+  expectedViews?: boolean;
 }) => {
+  const dailyVeiwEnabled = !expectedViews;
+
+  const dailyViewWithExpectedViewEnabled = expectedViews;
+
   const selectRef = useRef(null);
 
-  const datad3 = useDailyViewV2({ keyword: keyword, relword: relatedKeyword });
-
-  const data2d3 = useSearchRatioFormatterD3({
+  const dailyViewData = useDailyViewV2({
     keyword: keyword,
     relword: relatedKeyword,
+    enabled: dailyVeiwEnabled,
+  });
+
+  const viewsData = useDailyViewExpectedV2({
+    keyword: keyword,
+    relword: relatedKeyword,
+    enabled: dailyViewWithExpectedViewEnabled,
+  });
+
+  const datad3 = expectedViews ? viewsData : dailyViewData;
+
+  const data2d3 = useSearchCountFormmaterD3({
+    baseKeyword: keyword,
+    relatedKeyword: relatedKeyword,
   });
 
   const data3d3 = useUploadVideoCountFormatterD3({
@@ -308,7 +327,7 @@ const D3Axis = ({
     //   return x(d.month);
     // })
     // .attr('cy', function (d, i) {
-    //   console.log(d.value);
+
     //   return y(d.value);
     // })
     // .attr('r', function (d, i) {
@@ -321,8 +340,6 @@ const D3Axis = ({
     //   .call(make_y_gridlines().tickSize(-width).tickFormat(''))
     //   .attr('id', 'gridSystem');
     // .on('mouseover', (event, data) => {
-    //   console.log('Hovering over', data);
-    //   console.log(x(data.month) as number);
 
     //   tooltip.style('opacity', 1).attr('x', (d) => x(data.month) as number);
     //   // .style('top', `${event.pageY - 28}px`);
@@ -348,8 +365,6 @@ const D3Axis = ({
 
     const line = D3.line<(typeof datad3)[number]>()
       .x((datum) => {
-        // console.log(x(d.month) + x.bandwidth() / 2);
-
         return Number(x(datum.date)) + x.bandwidth() / 2;
       })
       .y((d) => {
@@ -438,7 +453,6 @@ const D3Axis = ({
       .on('click', function (d, i) {
         // is the element currently visible ?
 
-        console.log(i);
         let currentOpacity: string;
         currentOpacity = D3.selectAll('.' + i.name)?.style('opacity');
         // Change the opacity: from 0 to 1 or from 1 to 0
@@ -533,8 +547,6 @@ const D3Axis = ({
       .attr('fill', 'transparent')
       .raise()
       .on('mouseover', (e, i) => {
-        // console.log(e);
-
         const bisect = D3.bisector(
           (d: DataItem | (typeof datad3)[number]) => d.date,
         ).left;
@@ -666,7 +678,7 @@ const D3Axis = ({
     //   .range([height - marginBottom, marginTop]);
 
     // const xAxis = (g) => {
-    //   console.log(g);
+
     //   return g
     //     .attr('transform', `translate(0, ${height})`)
     //     .attr('transform', `translate(0, ${height - marginBottom})`)

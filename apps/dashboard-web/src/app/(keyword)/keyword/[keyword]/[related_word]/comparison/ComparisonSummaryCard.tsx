@@ -1,9 +1,8 @@
 import Link from 'next/link';
 
 import { GUEST_AVERAGEVIEW } from '@/constants/guest';
-import { useSearchRatioFormatterD3 } from '@/hooks/contents/useChartFormatter';
+import { useSearchCountFormmaterD3 } from '@/hooks/contents/useChartFormatter';
 import useGetDailyExpectedView from '@/hooks/react-query/query/useGetDailyExpectedView';
-import useGetDailyViewV2 from '@/hooks/react-query/query/useGetDailyViewV2';
 import useGetNaverSearchRatio from '@/hooks/react-query/query/useGetNaverSearchRatio';
 import useGetUserChannelData from '@/hooks/react-query/query/useGetUserChannelData';
 import type { TKeywords } from '@/types/common';
@@ -13,6 +12,7 @@ import {
   convertCompetitionScoreFormatToHTML,
   getCompetitionScore,
 } from '@/utils/contents/competitionScore';
+import { sumSearchCount } from '@/utils/naver-search/common';
 
 import { sumIncreaseViewsV2, sumVideoCount } from '../../CompetitionRate';
 
@@ -42,29 +42,31 @@ const ComparisonSummaryCard = ({
     useGetUserChannelData();
 
   const maxExpectedHits = dailyViewData?.data
-    ? Math.max(...dailyViewData.data.data.map((item) => item.expectedHits))
+    ? Math.max(...dailyViewData.data[0].data.map((item) => item.expectedHits))
     : 1;
 
   const predictedView =
     userChannelData?.data.averageViews ??
     GUEST_AVERAGEVIEW * (maxExpectedHits ? maxExpectedHits : 1);
 
-  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData?.data.data);
+  const totalIncreaseViews = sumIncreaseViewsV2(dailyViewData?.data[0].data);
 
   const competitionVideoCount =
-    dailyViewData?.data.data.at(-1)?.uniqueVideoCount ?? 0;
+    dailyViewData?.data[0].data.at(-1)?.uniqueVideoCount ?? 0;
   // const totalVideoCount = sumVideoCount(dailyViewData?.data.data);
 
   //   검색량 코드
-  const searchRatio = useSearchRatioFormatterD3({
-    keyword: baseKeyword,
-    relword: relatedKeyword,
+  const searchRatio = useSearchCountFormmaterD3({
+    baseKeyword: baseKeyword,
+    relatedKeyword: relatedKeyword,
   });
 
   const { isLoading: searchRatioLoading } = useGetNaverSearchRatio({
     keyword: baseKeyword,
     relword: relatedKeyword,
   });
+
+  const totalSearchCount = sumSearchCount(searchRatio);
 
   const first_searchRatio = searchRatio[0];
   const last_searchRatio = searchRatio[searchRatio.length - 1];
@@ -97,16 +99,7 @@ const ComparisonSummaryCard = ({
       <p>{predictedView.toFixed(0)}</p>
       <p>{Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr')}</p>
       <p>{Number(competitionVideoCount).toLocaleString('ko-kr')}</p>
-      <p>
-        {searchRatioLoading
-          ? '...'
-          : Math.floor(
-              ((((last_searchRatio.value || 0) as number) /
-                Number(first_searchRatio.value || 1)) as number) * 100,
-            ) -
-            100 +
-            '%'}
-      </p>
+      <p>{totalSearchCount}</p>
       <div>
         {' '}
         <span

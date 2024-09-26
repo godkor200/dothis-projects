@@ -2,6 +2,7 @@ import type { QueryOptions } from '@tanstack/query-core';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 import { NAVER_SEARCH_RATIO_KEY } from '@/constants/querykey';
 import { useEndDate, useStartDate } from '@/store/dateStore';
@@ -29,9 +30,9 @@ const useGetNaverSearchRatio = (
   },
   queryOptions?: QueryOptions,
 ): UseQueryResult<NaverAPI_Response> => {
-  const startDate = useStartDate();
-
   const endDate = useEndDate();
+
+  const startDate = dayjs(endDate).subtract(29, 'day').format('YYYY-MM-DD');
 
   return useQuery(
     NAVER_SEARCH_RATIO_KEY.list([

@@ -27,7 +27,11 @@ const useGetUserInfo = (
     typeof queryResult.data
   >;
 
-  return { ...queryResult, data: requiredQueryResult?.body.data };
+  return {
+    ...queryResult,
+    data: requiredQueryResult?.body.data,
+    statusCode: queryResult.data?.status,
+  };
 };
 
 export default useGetUserInfo;

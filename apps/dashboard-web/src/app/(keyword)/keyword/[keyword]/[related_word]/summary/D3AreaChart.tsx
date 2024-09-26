@@ -151,8 +151,6 @@ const D3AreaChart = ({ baseKeyword, relatedKeyword }: Props) => {
 
     const line = D3.line<(typeof expectedView)[number]>()
       .x((datum) => {
-        // console.log(x(d.month) + x.bandwidth() / 2);
-
         return Number(x(datum.date)) + x.bandwidth() / 2;
       })
       .y((d) => {

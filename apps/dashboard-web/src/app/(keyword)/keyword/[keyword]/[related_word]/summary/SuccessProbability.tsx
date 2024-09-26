@@ -144,7 +144,6 @@ const SuccessProbability = ({ baseKeyword, relatedKeyword }: Props) => {
 
     //   .attr('transform', (d) => `translate(${arc.centroid(d)})`)
     //   .call((text) => {
-    //     console.log(text);
 
     //     text
     //       .filter((d) => d.endAngle - d.startAngle > 0.25)
@@ -164,7 +163,7 @@ const SuccessProbability = ({ baseKeyword, relatedKeyword }: Props) => {
     //   .data(pie(data))
     //   .join('text')
     //   .attr('transform', (d) => {
-    //     // console.log(arc.centroid(d));
+
     //     return `translate(${arc.centroid(d)})`;
     //   })
     //   .call((text) =>
@@ -188,7 +187,9 @@ const SuccessProbability = ({ baseKeyword, relatedKeyword }: Props) => {
         `${
           data
             ? Math.floor(
-                (data?.countAboveAverage / data?.totalVideoCount) * 100,
+                (data?.countAboveAverage /
+                  (data?.totalVideoCount !== 0 ? data?.totalVideoCount : 1)) *
+                  100,
               ) + '%'
             : '분석 중입니다'
         }`,

@@ -22,7 +22,7 @@
 //     d3.csv(
 //       'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv',
 //       function (data) {
-//         // console.log(data);
+
 //         // Add X axis
 //         var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
 //         svg
@@ -51,7 +51,7 @@
 //         // A function that change this tooltip when the user hover a point.
 //         // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
 //         var mouseover = function (d) {
-//           console.log('test');
+
 //           tooltip.style('opacity', 1);
 //         };
 
