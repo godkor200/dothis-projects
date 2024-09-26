@@ -10,7 +10,7 @@ import { WeeklyViewsError } from '@Apps/modules/hits/domain/events/errors/weekly
 import {
   TGetKeywordInformationRes,
   TKeywordThisWeeklyList,
-  TKeywordThisWeeklyRes,
+  TWeeklyKeywordSchemaList,
 } from '@dothis/dto';
 export type TPaginatedWeeklyHitsV2Res = Result<
   Paginated<WeeklyHitsEntity>,
@@ -26,6 +26,10 @@ export type TOneKeywordRes = Result<
   TGetKeywordInformationRes,
   WeeklyViewsError
 >;
+export type TWeeklyKeywordsWrappedDataResult = Result<
+  TWeeklyKeywordSchemaList,
+  WeeklyViewsError
+>;
 export interface WeeklyHitsV2OutboundPort
   extends RepositoryPort<WeeklyHitsEntity> {
   getPaginatedWeeklyHitsByKeywordAndCount(
@@ -35,4 +39,6 @@ export interface WeeklyHitsV2OutboundPort
   getWeeklyKeywords(dao: GetWeeklyKeyword): Promise<TGetWeeklyKeywords>;
 
   getKeyword(keyword: string): Promise<TOneKeywordRes>;
+
+  getTop100LatestData(): Promise<TWeeklyKeywordsWrappedDataResult>;
 }

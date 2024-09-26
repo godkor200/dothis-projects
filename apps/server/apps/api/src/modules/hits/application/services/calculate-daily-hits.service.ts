@@ -16,9 +16,7 @@ import { TFindDailyView } from '@Apps/modules/hits/application/queries/get-daily
 export class CalculateDailyHitsMetricsService
   implements ICalculateDailyHitsMetricsServiceInboundPort
 {
-  constructor() // @Inject(VIDEO_COUNT_DAY_IGNITE_DI_TOKEN)
-  // private readonly getRelatedVideosCountByDay: IGetRelatedVideosCountByDayOutBoundPort,
-  //
+  constructor() // // private readonly getRelatedVideosCountByDay: IGetRelatedVideosCountByDayOutBoundPort, // @Inject(VIDEO_COUNT_DAY_IGNITE_DI_TOKEN)
   // @Inject(VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN)
   // private readonly getRelatedVideoAndVideoHistory: IGetRelatedVideoAndVideoHistoryOutBoundPort,
   {}
@@ -61,7 +59,7 @@ export class CalculateDailyHitsMetricsService
       //     };
       //   });
 
-      return Ok({ success: true, data: [] });
+      return Ok({ success: true, representativeCategory: 1, data: [] });
       // }
       // if (counts.isErr()) {
       //   return Err(counts.unwrapErr());

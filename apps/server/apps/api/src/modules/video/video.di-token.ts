@@ -83,3 +83,6 @@ export const RedisCacheAdapterTokens = {
     'REDIS_CLIENT_GET_TODAY_ISSUE_DI_TOKEN',
   ),
 };
+export const REPRESENTATIVE_CATEGORY_DI_TOKEN = Symbol(
+  'REPRESENTATIVE_CATEGORY_DI_TOKEN',
+);

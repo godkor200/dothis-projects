@@ -23,6 +23,7 @@ export const zInfluentialChannelRes = z.object({
   channelSubscribers: z.number().describe('채널의 구독자 수입니다.'),
   channelAverageViews: z.number().describe('채널의 평균 조회 수입니다.'),
 });
+
 export const zSortChannelInfo = zSortQuery(
   Object.keys(zInfluentialChannelRes.shape),
 );
@@ -65,6 +66,7 @@ export const zChannelFilterAndSortQuery = z.object({
     ),
 });
 export const zChannelListResponseObject = z.object({
+  channelId: z.string().describe('채널의 고유 id입니다.'),
   channelName: z.string().describe('채널의 고유 이름입니다.'),
   channelThumbnail: z.string().url().describe('채널 썸네일의 URL입니다.'),
   channelCluster: z.number().describe('채널이 속한 클러스터를 나타냅니다.'),
@@ -75,9 +77,34 @@ export const zChannelListResponseObject = z.object({
   channelSubscribers: z.number().describe('채널의 구독자 수입니다.'),
   channelAverageViews: z.number().describe('채널의 평균 조회 수입니다.'),
 });
+
+export const zChannelNameAutocompleteQuery = zInfluentialChannelRes.pick({
+  channelName: true,
+});
+
+export const zChannelNameAutocompleteResponse = z.object({
+  thumbnail: z.string().url().describe('Channel thumbnail URL'),
+  channelName: zChannelNameAutocompleteQuery.shape.channelName,
+  subscriberCount: z.number().int().nonnegative().describe('Subscriber count'),
+});
+
+export const zGetVideoTimelineQuery = zChannelId;
+export const zGetVideoTimelineResponse = z.object({
+  videoId: z.string().url(),
+  title: z.string().min(1, 'Title must not be empty'),
+  views: z.number().nonnegative('Views must be a non-negative integer'),
+  publishedDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format',
+  }),
+});
 // Define the response schema
 export const zChannelListResponse = z.array(zChannelListResponseObject);
-
+export type TChannelNameAutocompleteResponse = z.TypeOf<
+  typeof zChannelNameAutocompleteResponse
+>;
+export type TChannelVideoTimeLineResp = z.TypeOf<
+  typeof zGetVideoTimelineResponse
+>;
 export type TChannelListResponse = z.TypeOf<typeof zChannelListResponse>;
 export type TChannelFilterAndSortQuery = z.TypeOf<
   typeof zChannelFilterAndSortQuery

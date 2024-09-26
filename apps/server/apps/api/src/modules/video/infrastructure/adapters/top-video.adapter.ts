@@ -16,6 +16,7 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
     private readonly opensearchClient: OpensearchClient,
   ) {}
   async execute(dao: TopVideoDao): Promise<TopVideoResult> {
+    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
     const threeMonthsAgo = dayjs().subtract(3, 'months').format('YYYY-MM-DD');
     const mustQueries: any[] = [
       {
@@ -26,8 +27,8 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
       {
         range: {
           '@timestamp': {
-            gte: dao.to,
-            lte: dao.to,
+            gte: adjustedTo,
+            lte: adjustedTo,
             format: 'yyyy-MM-dd',
           },
         },
@@ -36,7 +37,7 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
         range: {
           video_published: {
             gte: threeMonthsAgo,
-            lte: dao.to,
+            lte: adjustedTo,
             format: 'yyyy-MM-dd', // Date format
           },
         },

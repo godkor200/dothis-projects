@@ -2,6 +2,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { Module, Provider } from '@nestjs/common';
 import { CalculateDailyHitsMetricsService } from '@Apps/modules/hits/application/services/calculate-daily-hits.service';
 import {
+  REPRESENTATIVE_CATEGORY_DI_TOKEN,
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_HISTORY_LIST_IGNITE_DI_TOKEN,
@@ -10,10 +11,13 @@ import {
 
 import {
   ANALYSIS_HITS_SERVICE_DI_TOKEN,
+  CATEGORY_DISTRIBUTION_DI_TOKEN,
   DAILY_HITS_METRICS_SERVICE_IGNITE_DI_TOKEN,
   DAILY_HITS_SERVICE_DI_TOKEN,
+  DAILY_VIEW_CACHE_DI_TOKEN,
   GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
   PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
+  REPRESENTATIVE_CATEGORY_SERVICE_DI_TOKEN,
   SUBSCRIBER_VIEW_ANALYSIS_DO_TOKEN,
   VIDEO_PERFORMANCE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_DI_TOKEN,
@@ -30,10 +34,7 @@ import { WeeklyHitsEntityModule } from '@Apps/modules/hits/domain/entities/weekl
 import { GetProbabilitySuccessHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-probability-success/get-probability-success.http.controller';
 import { GetProbabilitySuccessQueryHandler } from '@Apps/modules/hits/application/queries/get-probability-success.query-handler';
 import { GetProbabilitySuccessService } from '@Apps/modules/hits/application/services/get-probability-success.service';
-import { GetSomeWeeklyHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/get-some-weekly-hits.v1.query-handler';
-import { SomeWeeklyHitsService } from '@Apps/modules/hits/application/services/some-weekly-hits.service';
 import { WeeklyHitsV1Repository } from '@Apps/modules/hits/infrastructure/repositories/weekly-hits.v1.repository';
-import { GetSomeWeeklyHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-some-weekly-hits/get-some-weekly-hits.v1.http.controller';
 import { AnalysisHitsV1HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/analysis-hits/analysis-hits.v1.http.controller';
 import { AnalysisHitsV1QueryHandler } from '@Apps/modules/hits/application/queries/analysis-hits.v1.query-handler';
 import { AnalysisHitsService } from '@Apps/modules/hits/application/services/analysis-hits.service';
@@ -51,7 +52,10 @@ import {
 import { MockGetChannelHistoryListAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/__mock__/get-channel-history-list.adapter.mock';
 import { CHANNEL_HISTORY_BY_CHANNEL_ID_IGNITE_DI_TOKEN } from '@Apps/modules/channel-history/channel-history.di-token.constants';
 import { MockGetChannelHistoryByIdAdapter } from '@Apps/modules/channel-history/infrastructure/adapters/__mock__/get-channel-history-by-id.adapter.mock';
-import { VideoHistoryRangeAdapter } from '@Apps/modules/video-history/infrastructure/adapters';
+import {
+  VideoHistoryCategoryAdapter,
+  VideoHistoryRangeAdapter,
+} from '@Apps/modules/video-history/infrastructure/adapters';
 import { GetWeeklyHitsListV2HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v2/get-weekly-hits-list/get-weekly-hits-list.v2.http.controller';
 import { GetWeeklyHitsQueryHandler } from '@Apps/modules/hits/application/queries/get-weekly-hits.query-handler';
 import { GetDailyHitsV2HttpController } from '@Apps/modules/hits/interfaces/http/controllers/v2/get-daily-hits/get-daily-hits.v2.http.controller';
@@ -65,6 +69,15 @@ import {
 import { SubscriberViewAnalysisAdapter } from '@Apps/modules/hits/infrastructure/adapters/subscriber-view-analysis.adapter';
 import { GetSubscriberViewAnalysisHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-subscriber-view-analysis.http.controller';
 import { SubscriberViewAnalysisService } from '@Apps/modules/hits/application/services/get-subscriber-view.analysis.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { SaveRangeDailyHitsService } from '@Apps/modules/hits/application/services/save-daily-hits.service';
+import { DailyViewsCache } from '@Apps/modules/hits/infrastructure/repositories/daily-views.cache';
+import { SaveRangeDailyHitsHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/save-range-daily-hits.http.controller';
+import { GetRepresentativeCategoryService } from '@Apps/modules/video/application/service/get-representative-category.service';
+import { UpdateDailyHitsService } from '@Apps/modules/hits/application/services/update-daily-hits.service';
+import { CategoryDistributionController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-hits-category.http.controller';
+import { CategoryAnalysisAdapter } from '@Apps/modules/hits/infrastructure/adapters/category-analysis.adapter';
+import { CategoryDistributionService } from '@Apps/modules/hits/application/services/category-distribution.service';
 
 const commands: Provider[] = [];
 const queries: Provider[] = [
@@ -89,10 +102,10 @@ const service: Provider[] = [
     provide: PROBABILITY_SUCCESS_SERVICE_DI_TOKEN,
     useClass: GetProbabilitySuccessService,
   },
-  // {
-  //   provide: WEEKLY_VIEWS_SOME_SERVICE_DI_TOKEN,
-  //   useClass: SomeWeeklyHitsService,
-  // },
+  {
+    provide: REPRESENTATIVE_CATEGORY_SERVICE_DI_TOKEN,
+    useClass: GetRepresentativeCategoryService,
+  },
   {
     provide: ANALYSIS_HITS_SERVICE_DI_TOKEN,
     useClass: AnalysisHitsService,
@@ -101,9 +114,16 @@ const service: Provider[] = [
     provide: GET_WEEKLY_KEYWORD_SERVICE_DI_TOKEN,
     useClass: GetWeeklyKeywordService,
   },
+  {
+    provide: REPRESENTATIVE_CATEGORY_DI_TOKEN,
+    useClass: VideoHistoryCategoryAdapter,
+  },
   ChannelHistoryAggregateService,
   ScrollService,
+  SaveRangeDailyHitsService,
   SubscriberViewAnalysisService,
+  UpdateDailyHitsService,
+  CategoryDistributionService,
 ];
 const controllers = [
   // GetDailyHitsV1HttpController,
@@ -114,6 +134,8 @@ const controllers = [
   GetWeeklyHitsListV2HttpController,
   GetDailyHitsV2HttpController,
   GetSubscriberViewAnalysisHttpController,
+  SaveRangeDailyHitsHttpController,
+  CategoryDistributionController,
 ];
 const repositories: Provider[] = [
   WeeklyHitsRepository,
@@ -160,10 +182,23 @@ const adapters: Provider[] = [
     provide: VIDEO_PUBILSHED_ADAPTER_DI_TOKEN,
     useClass: VideoPublishedAdapter,
   },
+  {
+    provide: DAILY_VIEW_CACHE_DI_TOKEN,
+    useClass: DailyViewsCache,
+  },
+  {
+    provide: CATEGORY_DISTRIBUTION_DI_TOKEN,
+    useClass: CategoryAnalysisAdapter,
+  },
 ];
 
 @Module({
-  imports: [CqrsModule, WeeklyHitsEntityModule, RelatedWordsModule],
+  imports: [
+    CqrsModule,
+    WeeklyHitsEntityModule,
+    RelatedWordsModule,
+    ScheduleModule.forRoot(),
+  ],
   controllers,
   providers: [
     ...commands,

@@ -1,3 +1,5 @@
+import { Aggregations } from '@Apps/modules/video-history/domain/ports/video-history.category.outbound.port';
+
 export interface OsRes<T, S = undefined> {
   _index: string;
   _id: string;
@@ -91,4 +93,11 @@ export interface IIndicesServerResponse<T> {
   statusCode: number;
   headers: Headers;
   meta: Meta;
+}
+export interface SearchResponseBody<T> {
+  took: number;
+  timed_out: boolean;
+  _shards: Shards;
+  hits: Hits<T>;
+  aggregations?: Aggregations;
 }

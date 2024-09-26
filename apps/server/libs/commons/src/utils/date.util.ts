@@ -68,7 +68,14 @@ export class DateUtil {
 
     return dateToCheck >= fromDate && dateToCheck <= toDate;
   }
-
+  /**
+   * 주어진 날짜에서 일년 전의 날짜를 반환합니다.
+   * @param date 날짜 문자열
+   * @returns 일년 전 날짜 (yyyy-mm-dd 형식)
+   */
+  public static getOneYearAgo(date: string): string {
+    return dayjs(date).subtract(1, 'year').format('YYYY-MM-DD');
+  }
   public static getIndexFromDate(
     dateStr: string = new Date().toISOString(),
   ): string {

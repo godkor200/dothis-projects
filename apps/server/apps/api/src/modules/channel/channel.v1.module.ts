@@ -7,14 +7,34 @@ import { FindInfluentialListQueryHandler } from '@Apps/modules/channel/applicati
 import { ChannelListHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-channel-list.http.controller';
 import { GetChannelListService } from '@Apps/modules/channel/application/service/get-channel-list.service';
 import {
+  AUTO_CHANNEL_NAME_DI_TOKEN,
   CHANNEL_DATA_LIST_DI_TOKEN,
   CHANNEL_INFO_ADAPTER_DI_TOKEN,
+  CHANNEL_REGISTRATION,
+  TIME_LINE_TOKEN_DI_TOKEN,
 } from '@Apps/modules/channel/channel.di-token';
 import { ChannelSearchAdapter } from '@Apps/modules/channel/infrastucture/adapters';
 import { GetChannelInfoAdapter } from '@Apps/modules/channel/infrastucture/adapters/get-channel-info.adapter';
+import { GetAutoChannelNameAdapter } from '@Apps/modules/channel/infrastucture/adapters/get-auto-channel-name.adapter';
+import { GetAutoCompleteChannelNameService } from '@Apps/modules/channel/application/service/get-auto-complete-channel-name.service';
+import { ChannelAutoCompleteController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-auto-complete-channel-name.http.controller';
+import { HttpModule } from '@nestjs/axios';
+import { TimelineAdapter } from '@Apps/modules/channel/infrastucture/adapters/timeline.adapter';
+import { VideoTimelineController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-timeline.http.controller';
+import { GetTimelineService } from '@Apps/modules/channel/application/service/get-timeline.service';
+import { VideoHistoryRecentByIdAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.recent-by-id.adapter';
+import { VIDEO_HISTORY_RECENT_ID_DI_TOKEN } from '@Apps/modules/video-history/video_history.di-token';
+import { RegisterChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/post-channel-analysis.http.controller';
+import { ChannelAnalysisRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-analysis.repository';
+import { ChannelAnalysisModule } from '@Apps/modules/channel/infrastucture/entities/channel-analysis.module';
+import { RegisterChannelService } from '@Apps/modules/channel/application/service/register-channel.service';
+
 const controllers = [
   FindInfluentialListHttpController,
   ChannelListHttpController,
+  ChannelAutoCompleteController,
+  VideoTimelineController,
+  RegisterChannelHttpController,
 ];
 
 const service: Provider[] = [
@@ -23,7 +43,11 @@ const service: Provider[] = [
     useClass: FindInfluentialListService,
   },
   GetChannelListService,
+  GetAutoCompleteChannelNameService,
+  GetTimelineService,
+  RegisterChannelService,
 ];
+
 const adapter: Provider[] = [
   {
     provide: CHANNEL_DATA_LIST_DI_TOKEN,
@@ -33,10 +57,28 @@ const adapter: Provider[] = [
     provide: CHANNEL_INFO_ADAPTER_DI_TOKEN,
     useClass: GetChannelInfoAdapter,
   },
+  {
+    provide: AUTO_CHANNEL_NAME_DI_TOKEN,
+    useClass: GetAutoChannelNameAdapter,
+  },
+  {
+    provide: TIME_LINE_TOKEN_DI_TOKEN,
+    useClass: TimelineAdapter,
+  },
+  {
+    provide: VIDEO_HISTORY_RECENT_ID_DI_TOKEN,
+    useClass: VideoHistoryRecentByIdAdapter,
+  },
+  {
+    provide: CHANNEL_REGISTRATION,
+    useClass: ChannelAnalysisRepository,
+  },
 ];
+
 const queries: Provider[] = [FindInfluentialListQueryHandler];
+
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, HttpModule, ChannelAnalysisModule],
   controllers,
   providers: [...service, ...adapter, ...queries],
 })

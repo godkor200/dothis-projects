@@ -2,6 +2,7 @@ import {
   TGetWeeklyKeywords,
   TOneKeywordRes,
   TPaginatedWeeklyHitsV2Res,
+  TWeeklyKeywordsWrappedDataResult,
   WeeklyHitsV2OutboundPort,
 } from '@Apps/modules/hits/domain/ports/weekly-hits.v2.outbound.port';
 import {
@@ -178,6 +179,25 @@ export class WeeklyHitsV2Repository
       return Ok(results);
     } catch (e) {
       return Err(e);
+    }
+  }
+  // 최신 날짜의 데이터에서 상위 100개 가져오기 8월 25일 기준으로 비디오 갯수가 많은 순대로 가져옴
+  async getTop100LatestData(): Promise<TWeeklyKeywordsWrappedDataResult> {
+    try {
+      // 최신 날짜의 데이터에서 상위 100개 가져오기
+      const results = await this.repository
+        .createQueryBuilder('wv')
+        .select('wv.keyword', 'keyword')
+        .where('wv.month = :month', { month: 8 })
+        .andWhere('wv.day = :day', { day: 25 })
+        .orderBy('wv.video_count', 'DESC') // video_count가 많은 순으로 정렬
+        .limit(100)
+        .getRawMany();
+
+      if (!results.length) return Err(new WeeklyViewsError());
+      return Ok(results);
+    } catch (error) {
+      return Err(error);
     }
   }
 }
