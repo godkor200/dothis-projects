@@ -67,7 +67,7 @@ export class CategoryAnalysisAdapter implements CategoryDistributionOutbound {
             by_cluster: {
               terms: {
                 field: 'video_cluster',
-                size: 5,
+                order: { unique_video_count: 'desc' }, // unique_video_count를 기준으로 내림차순 정렬
               },
               aggs: {
                 ending_views: {
@@ -109,8 +109,8 @@ export class CategoryAnalysisAdapter implements CategoryDistributionOutbound {
                     script: 'params.endViews - params.startViews',
                   },
                 },
-                video_count: {
-                  value_count: {
+                unique_video_count: {
+                  cardinality: {
                     field: 'video_id',
                   },
                 },
@@ -125,7 +125,7 @@ export class CategoryAnalysisAdapter implements CategoryDistributionOutbound {
         response.body.aggregations.by_cluster.buckets.map((bucket) => ({
           clusterNumber: bucket.key,
           viewChange: bucket.view_change.value,
-          videoCount: bucket.video_count.value,
+          videoCount: bucket.unique_video_count.value,
         }));
 
       return Ok(aggregationResults);

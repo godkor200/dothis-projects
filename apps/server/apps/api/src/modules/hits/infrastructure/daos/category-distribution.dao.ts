@@ -2,7 +2,7 @@ import { GetCategoryDistributionDto } from '@Apps/modules/hits/application/dtos/
 
 export class CategoryDistributionDao extends GetCategoryDistributionDto {
   constructor(props: GetCategoryDistributionDto) {
-    super();
+    super(props);
     Object.assign(this, props);
   }
 }

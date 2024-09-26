@@ -28,7 +28,7 @@ export class UpdateDailyHitsService {
   ) {}
 
   @Cron('0 0 8 * * *', { timeZone: 'Asia/Seoul' }) // 한국 시각(KST)대로 매일 오전 8시에 실행
-  async handleCron(dateStr: string = '2024-09-05') {
+  async handleCron(dateStr: string) {
     const date = dateStr
       ? dayjs.tz(dateStr, 'Asia/Seoul')
       : dayjs.tz('Asia/Seoul');

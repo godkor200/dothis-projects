@@ -66,6 +66,7 @@ export const zChannelFilterAndSortQuery = z.object({
     ),
 });
 export const zChannelListResponseObject = z.object({
+  channelId: z.string().describe('채널의 고유 id입니다.'),
   channelName: z.string().describe('채널의 고유 이름입니다.'),
   channelThumbnail: z.string().url().describe('채널 썸네일의 URL입니다.'),
   channelCluster: z.number().describe('채널이 속한 클러스터를 나타냅니다.'),
