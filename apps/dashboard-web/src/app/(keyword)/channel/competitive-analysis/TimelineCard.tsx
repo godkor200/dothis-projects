@@ -184,7 +184,6 @@ const TimelineCard = ({ keyword, relword, index }: Props) => {
         return d.name.replace(/-/g, ' ');
       })
       .style('fill', function (d) {
-        console.log(d);
         return d.color;
       })
       .style('font-size', 15)

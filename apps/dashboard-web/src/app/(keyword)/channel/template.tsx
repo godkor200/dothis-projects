@@ -30,7 +30,7 @@ function AnimatedTabs() {
   const pathName = usePathname();
 
   const [, , tabname] = pathName?.split('/') ?? [];
-  console.log(tabname);
+
   return (
     <div className="gap-30 relative flex space-x-1">
       <div className="bg-grey600 absolute bottom-0  h-1 w-full " />

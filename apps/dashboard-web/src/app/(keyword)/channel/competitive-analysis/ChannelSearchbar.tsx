@@ -41,8 +41,6 @@ const ChannelSearchbar = () => {
 
   const { data } = useGetChennelAutoComplete(searchInput);
 
-  console.log(data);
-
   // const { mutate: autoCompleteWordMutate } = useAutoCompleteWordScoreMutation();
 
   const handleInput = useDebounce((input) => setSearchInput(input), 200, [

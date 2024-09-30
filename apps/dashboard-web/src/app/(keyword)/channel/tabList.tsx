@@ -13,7 +13,7 @@ const TabList = () => {
   const pathName = usePathname();
 
   const [, , tabname] = pathName?.split('/') ?? [];
-  console.log(tabname);
+
   let tabs = [
     { id: 'summary', label: 'World' },
     { id: 'channel-analysis', label: 'N.Y.' },

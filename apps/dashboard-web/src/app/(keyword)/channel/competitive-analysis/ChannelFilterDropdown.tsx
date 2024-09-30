@@ -45,8 +45,6 @@ const ChannelFilterDropdown = () => {
     subscribersRangeOptions,
   } = useChannelFilterContext('ChannelFilterDropdown');
 
-  console.log(channelCategory);
-
   return (
     <div className="ml-auto flex">
       <DropdownMenu.Root>
