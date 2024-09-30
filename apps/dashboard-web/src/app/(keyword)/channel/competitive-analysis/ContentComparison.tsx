@@ -3,14 +3,14 @@ import SelectedMediaCard from '@/components/MainContents/MediaArticles/SelectedM
 const ContentComparison = () => {
   return (
     <>
-      {['정민', '정민소'].map((item) => (
+      {['피프티피프티'].map((item) => (
         <div
           className="rounded-10 border-grey400 mb-5 flex gap-[10px] overflow-hidden border p-5"
           key={item}
         >
           <div className="flex flex-col justify-evenly">
             <div className="mb-10 flex items-center gap-[16px] ">
-              <div className="bg-primary400 h-[100px] w-[100px] rounded-full"></div>
+              <div className=" h-[100px] w-[100px] rounded-full"></div>
 
               <p className="text-grey900 font-bold">{item}</p>
             </div>
@@ -38,22 +38,6 @@ const ContentComparison = () => {
           </div>
 
           {[
-            {
-              element: '조회수 1185만',
-              image: 'https://img.youtube.com/vi/lzm-7YfBJBU/0.jpg',
-              link: 'lzm-7YfBJBU',
-              provider: 'FIFTY FIFTY Official',
-              title: 'FIFTY FIFTY (피프티피프티) ‘Starry Night’ Official MV',
-              uploadDate: '2024-08-28T15:00:00.000Z',
-            },
-            {
-              element: '조회수 1185만',
-              image: 'https://img.youtube.com/vi/lzm-7YfBJBU/0.jpg',
-              link: 'lzm-7YfBJBU',
-              provider: 'FIFTY FIFTY Official',
-              title: 'FIFTY FIFTY (피프티피프티) ‘Starry Night’ Official MV',
-              uploadDate: '2024-08-28T15:00:00.000Z',
-            },
             {
               element: '조회수 1185만',
               image: 'https://img.youtube.com/vi/lzm-7YfBJBU/0.jpg',
