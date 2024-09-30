@@ -4,18 +4,19 @@ import type { DeepRequired } from 'react-hook-form';
 
 import { CHANNEL_LIST_KEY } from '@/constants/querykey';
 import { apiClient } from '@/utils/api/apiClient';
-
 const useGetChannelList = (
-  word?: string,
-
+  {
+    channelCluster,
+    subscriberRange,
+  }: { channelCluster?: number; subscriberRange?: string },
   queryOptions?: UseQueryOptions<typeof apiRouter.channel.getChannelList>,
 ) => {
   const queryResult = apiClient(1).channel.getChannelList.useQuery(
-    [CHANNEL_LIST_KEY.all, word],
+    CHANNEL_LIST_KEY.list([{ channelCluster, subscriberRange }]),
     {
       query: {
         channelCluster,
-        channelSubscriber: '500000to999999',
+        channelSubscriber: subscriberRange,
         sort: 'channel_subscriber',
         limit: 50,
       },
