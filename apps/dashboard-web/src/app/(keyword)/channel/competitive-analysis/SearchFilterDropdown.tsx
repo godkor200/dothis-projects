@@ -61,6 +61,7 @@ const SearchFilterDropdown = () => {
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
                 checked={value === 'channel_category'}
+                key={title + value}
               >
                 <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
                   <SvgComp icon="CheckIcon" size={12} />
@@ -90,6 +91,7 @@ const SearchFilterDropdown = () => {
               <DropdownMenu.CheckboxItem
                 className="DropdownMenuCheckboxItem"
                 checked={value === 'channel_category'}
+                key={title}
               >
                 <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
                   <SvgComp icon="CheckIcon" size={12} />
