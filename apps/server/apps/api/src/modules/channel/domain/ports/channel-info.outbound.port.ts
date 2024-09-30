@@ -2,6 +2,8 @@ import { Result } from 'oxide.ts';
 import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
 
 export interface ChannelInfoResult {
+  channel_id: string;
+  channel_name: string;
   channel_total_videos: number;
   channel_total_views: number;
   channel_average_views: number;

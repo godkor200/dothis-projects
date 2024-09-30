@@ -49,7 +49,6 @@ export class GetDailyHitsService implements DailyHitsServiceInboundPort {
         const data = VideoAggregateHelper.calculateDailyIncreases(
           historiesUnwrap.items,
         );
-
         const res = VideoAggregateUtils.generateDailyFakeViews(
           dto.from,
           dto.to,

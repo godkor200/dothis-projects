@@ -8,12 +8,16 @@ import { ChannelListHttpController } from '@Apps/modules/channel/interfaces/http
 import { GetChannelListService } from '@Apps/modules/channel/application/service/get-channel-list.service';
 import {
   AUTO_CHANNEL_NAME_DI_TOKEN,
+  CHANNEL_DATA_DI_TOKEN,
   CHANNEL_DATA_LIST_DI_TOKEN,
   CHANNEL_INFO_ADAPTER_DI_TOKEN,
   CHANNEL_REGISTRATION,
   TIME_LINE_TOKEN_DI_TOKEN,
 } from '@Apps/modules/channel/channel.di-token';
-import { ChannelSearchAdapter } from '@Apps/modules/channel/infrastucture/adapters';
+import {
+  ChannelDataAdapter,
+  ChannelSearchAdapter,
+} from '@Apps/modules/channel/infrastucture/adapters';
 import { GetChannelInfoAdapter } from '@Apps/modules/channel/infrastucture/adapters/get-channel-info.adapter';
 import { GetAutoChannelNameAdapter } from '@Apps/modules/channel/infrastucture/adapters/get-auto-channel-name.adapter';
 import { GetAutoCompleteChannelNameService } from '@Apps/modules/channel/application/service/get-auto-complete-channel-name.service';
@@ -28,6 +32,9 @@ import { RegisterChannelHttpController } from '@Apps/modules/channel/interfaces/
 import { ChannelAnalysisRepository } from '@Apps/modules/channel/infrastucture/repositories/channel-analysis.repository';
 import { ChannelAnalysisModule } from '@Apps/modules/channel/infrastucture/entities/channel-analysis.module';
 import { RegisterChannelService } from '@Apps/modules/channel/application/service/register-channel.service';
+import { GetRegisteredChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/get-registered-channel.http.controller';
+import { GetRegisteredChannelService } from '@Apps/modules/channel/application/service/get-registered-channel.service';
+import { OpensearchCoreModule } from '@Apps/common/opensearch/core.module';
 
 const controllers = [
   FindInfluentialListHttpController,
@@ -35,6 +42,7 @@ const controllers = [
   ChannelAutoCompleteController,
   VideoTimelineController,
   RegisterChannelHttpController,
+  GetRegisteredChannelHttpController,
 ];
 
 const service: Provider[] = [
@@ -46,6 +54,7 @@ const service: Provider[] = [
   GetAutoCompleteChannelNameService,
   GetTimelineService,
   RegisterChannelService,
+  GetRegisteredChannelService,
 ];
 
 const adapter: Provider[] = [
@@ -72,6 +81,10 @@ const adapter: Provider[] = [
   {
     provide: CHANNEL_REGISTRATION,
     useClass: ChannelAnalysisRepository,
+  },
+  {
+    provide: CHANNEL_DATA_DI_TOKEN,
+    useClass: ChannelDataAdapter,
   },
 ];
 

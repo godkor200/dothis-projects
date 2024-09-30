@@ -9,3 +9,13 @@ export class ChannelNotFoundError extends ExceptionBase {
     super(ChannelNotFoundError.message, cause, metadata);
   }
 }
+
+export class NoRegisteredChannelsError extends ExceptionBase {
+  static readonly message = 'No registered channels available';
+
+  public readonly code = 'CHANNEL.NO_REGISTERED_CHANNELS';
+
+  constructor(cause?: Error, metadata?: unknown) {
+    super(NoRegisteredChannelsError.message, cause, metadata);
+  }
+}

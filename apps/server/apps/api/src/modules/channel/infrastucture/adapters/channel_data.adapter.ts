@@ -16,7 +16,6 @@ interface ChannelData {
   channelTotalViews: number;
 }
 
-@Injectable()
 export class ChannelDataAdapter implements ChannelAdapterOutboundPort {
   constructor(
     @Inject(getOpensearchClientToken())
@@ -44,6 +43,7 @@ export class ChannelDataAdapter implements ChannelAdapterOutboundPort {
           channelName: doc._source.channel_name,
           channelDescription: doc._source.channel_description,
           channelTags: doc._source.channel_tags,
+          channelThumbnail: doc._source.channel_thumbnail,
         }));
 
       return Ok(channelData);

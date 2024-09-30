@@ -75,6 +75,7 @@ export const zChannelListResponseObject = z.object({
     .describe('채널에서 주로 사용하는 키워드입니다.'),
   mainUsedTags: z.array(z.string()).describe('채널의 주요 태그 목록입니다.'),
   channelSubscribers: z.number().describe('채널의 구독자 수입니다.'),
+  channelTotalVideos: z.number().describe('채널의 비디오 수입니다.'),
   channelAverageViews: z.number().describe('채널의 평균 조회 수입니다.'),
 });
 
@@ -100,6 +101,7 @@ export const zAutocompleteChannelName = zChannelNameAutocompleteListData;
 
 export const zGetVideoTimelineQuery = zChannelId;
 
+export const zGetRegisterChannelIdQuery = zChannelId;
 export const zGetVideoTimelineResponse = z.object({
   videoId: z.string().url(),
   title: z.string().min(1, 'Title must not be empty'),
@@ -108,6 +110,16 @@ export const zGetVideoTimelineResponse = z.object({
     message: 'Invalid date format',
   }),
 });
+export const zRegisterChannelListResponseObject =
+  zChannelListResponseObject.pick({
+    channelId: true,
+    channelName: true,
+    channelThumbnail: true,
+    channelSubscribers: true,
+  });
+export const zRegisterChannelAnalysisResponse = z.array(
+  zRegisterChannelListResponseObject,
+);
 
 // Define the response schema
 export const zChannelListResponse = z.array(zChannelListResponseObject);
@@ -134,3 +146,7 @@ export type TAnalyzeMyChannelChannelRes = z.TypeOf<
 >;
 export type ChannelSubscriberRangeType =
   (typeof ChannelSubscriberRange)[keyof typeof ChannelSubscriberRange];
+
+export type TGetRegisteredChannelRes = z.TypeOf<
+  typeof zRegisterChannelAnalysisResponse
+>;

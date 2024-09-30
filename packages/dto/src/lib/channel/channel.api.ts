@@ -10,6 +10,7 @@ import {
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
   zGetVideoTimelineQuery,
   zGetVideoTimelineResponse,
+  zRegisterChannelAnalysisResponse,
 } from './channel.zod';
 import { zChannelAnalysisBody } from './channel-analysis.zod';
 import { zSuccessBase } from '../success.response.zod';
@@ -83,5 +84,15 @@ export const channelApi = c.router({
     },
     summary: '채널 분석 정보 등록',
     description: '특정 채널의 분석 정보를 등록합니다.',
+  },
+  getRegisterChannelAnalysis: {
+    method: 'GET',
+    path: `${channelApiUrl}/register-analysis`,
+    responses: {
+      200: zRegisterChannelAnalysisResponse, // 적절한 응답 스키마 사용
+      ...zErrResBase,
+    },
+    summary: '등록된 채널 리스트 가져오기',
+    description: '등록된 특정 채널 리스트가져옵니다.',
   },
 });

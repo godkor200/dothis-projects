@@ -27,11 +27,13 @@ export class UpdateDailyHitsService {
     private readonly dailyViewsCache: DailyViewCachePort,
   ) {}
 
-  @Cron('0 0 8 * * *', { timeZone: 'Asia/Seoul' }) // 한국 시각(KST)대로 매일 오전 8시에 실행
-  async handleCron(dateStr: string) {
+  @Cron('0 0 0 * * *', { timeZone: 'Asia/Seoul' })
+  async handleCron() {
+    const dateStr = new Date().toISOString();
     const date = dateStr
       ? dayjs.tz(dateStr, 'Asia/Seoul')
       : dayjs.tz('Asia/Seoul');
+
     const today = date.toDate();
     const yesterday = date.subtract(1, 'day').toDate();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -47,9 +49,9 @@ export class UpdateDailyHitsService {
       await Promise.all(tasks);
 
       // 로그 출력
-      console.log('Daily hits calculation completed successfully.');
+      console.log(date + ' Daily hits calculation completed successfully.');
     } catch (error) {
-      console.error('Error during daily hits calculation:', error);
+      console.error(date + ' Error during daily hits calculation:', error);
     }
   }
 

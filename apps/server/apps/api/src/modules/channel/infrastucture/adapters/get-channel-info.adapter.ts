@@ -40,6 +40,8 @@ export class GetChannelInfoAdapter implements ChannelInfoOutboundPort {
         index: 'video_history',
         body: { query: { bool: { must: mustQueries } } },
         _source: [
+          'channel_id',
+          'channel_name',
           'channel_subscribers',
           'channel_total_views',
           'channel_average_views',
