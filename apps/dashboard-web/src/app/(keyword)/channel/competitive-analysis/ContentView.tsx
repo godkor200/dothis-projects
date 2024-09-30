@@ -13,7 +13,9 @@ const ContentView = () => {
       {contentView === 'timeline' ? (
         <ContentTimeline />
       ) : contentView === 'performance' ? (
-        <div>안녕</div>
+        <div className="mx-auto mt-40 text-center font-bold">
+          서비스 준비 중입니다
+        </div>
       ) : (
         <ContentComparison />
       )}
