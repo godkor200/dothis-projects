@@ -96,7 +96,10 @@ export async function middleware(request: NextRequest) {
 
     if (relatedWord && !relatedPageRoutes.some((route) => tab === route)) {
       return NextResponse.redirect(
-        new URL(request.nextUrl.pathname + '/analysis', request.nextUrl),
+        new URL(
+          '/keyword' + `/${baseKeyword}` + `/${relatedWord}` + '/analysis',
+          request.nextUrl,
+        ),
       );
     }
   }
