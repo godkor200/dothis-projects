@@ -4,6 +4,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
 import type { Route } from 'next';
 import { usePathname, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -17,14 +18,26 @@ import {
 } from '../../keyword/[keyword]/[related_word]/tabList';
 import BoxFrame from '../../keyword/BoxFrame';
 import MainSearchbar from '../../MainSearchbar';
+import AnalysisChannelList from './AnalysisChannelList';
+import ChannelFilterContextProvider from './ChannelFilterContext';
 import ChannelFilterDropdown from './ChannelFilterDropdown';
+import ChannelList from './ChannelList';
+import ChannelSearchbar from './ChannelSearchbar';
 import ContentComparison from './ContentComparison';
 import ContentView from './ContentView';
+import RecommendedChanelList from './RecommendedChannelList';
 import SearchFilterDropdown from './SearchFilterDropdown';
 
 const Page = () => {
+  const searchParams = useSearchParams();
+
+  const channelViewType = searchParams?.get('channel-views');
   return (
     <>
+      <div className="mt-5 flex justify-center ">
+        <ChannelSearchbar />
+      </div>
+      {/* <Test></Test> */}
       <div className="grid grid-cols-[minmax(900px,3fr),minmax(300px,1fr)] gap-[20px] pt-[20px]">
         {/* box frame px커스텀 */}
         <div
@@ -33,81 +46,41 @@ const Page = () => {
           )}
         >
           <div>
-            <div className="px-[20px]">
-              <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
-                <p>모니터링 채널 추천</p>
-              </div>
-              <div className="flex ">
-                <div>
-                  <ParamsTabNav
-                    tabList={CHANNEL_VIEW_TYPE_TAB_LIST}
-                    baseRoute={`/channel` as Route}
-                    tabKey="channel-views"
-                    paramsKey="channel-views"
-                  />
+            <ChannelFilterContextProvider>
+              <div className="px-[20px]">
+                <div className="text-grey600 mb-[40px] flex gap-[10px] text-[14px] font-[500]">
+                  <p>모니터링 채널 추천</p>
                 </div>
-                <ChannelFilterDropdown />
+                <div className="flex ">
+                  <div>
+                    <ParamsTabNav
+                      tabList={CHANNEL_VIEW_TYPE_TAB_LIST}
+                      baseRoute={`/channel` as Route}
+                      tabKey="channel-views"
+                      paramsKey="channel-views"
+                    />
+                  </div>
+                  <ChannelFilterDropdown />
+                </div>
+
+                <div className="border-b-1 border-grey400 font[500] text-grey600  grid select-none grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-[20px] p-[10px] text-[14px]">
+                  <div></div>
+                  <div>채널명</div>
+                  <div className="text-center ">구독자</div>
+                  <div className="text-center">영상 수</div>
+                  <div className="text-center">카테고리</div>
+                  <div>주 사용 카테고리</div>
+                  <div className="text-center">평균 조회수</div>
+                  <div className="text-center">유사도</div>
+                </div>
               </div>
 
-              <div className="border-b-1 border-grey400 font[500] text-grey600  grid grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-[20px] p-[10px] text-[14px]">
-                <div></div>
-                <div>채널명</div>
-                <div>구독자</div>
-                <div>영상 수</div>
-                <div>카테고리</div>
-                <div>주 사용 카테고리</div>
-                <div>평균 조회수</div>
-                <div>유사도</div>
-              </div>
-            </div>
-            <div className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]">
-              {Array.from({ length: 10 }).map((item, index) => (
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger asChild>
-                    <div className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500]">
-                      <div className="bg-primary300 h-10 w-10 rounded-full"></div>
-                      <div>곽튜브</div>
-                      <div>200만 명</div>
-                      <div>322</div>
-                      <div>여행</div>
-                      <div className="truncate">
-                        홍콩, 미스터비스트, 여행, 한국,
-                        대만ㅁㄴㅇㄴㅁㅇㄴㅁㅇㄴㅁㅇㄴㅁㅇㄴㅁ
-                      </div>
-                      <div>1,132,877</div>
-                      <div>90%</div>
-                    </div>
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Portal>
-                    <DropdownMenu.Content
-                      className="DropdownMenuContent"
-                      sideOffset={5}
-                    >
-                      {[
-                        {
-                          title: '유튜브 채널로 이동',
-                          value: 'move_channel',
-                        },
-                        {
-                          title: '모니터링 추가',
-                          value: 'add_channel',
-                        },
-                      ].map(({ title, value }) => (
-                        <DropdownMenu.CheckboxItem
-                          className="DropdownMenuCheckboxItem"
-                          checked={value === 'channel_category'}
-                        >
-                          <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
-                            <SvgComp icon="CheckIcon" size={12} />
-                          </DropdownMenu.ItemIndicator>
-                          {title}
-                        </DropdownMenu.CheckboxItem>
-                      ))}
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Portal>
-                </DropdownMenu.Root>
-              ))}
-            </div>
+              {channelViewType === 'recommended-channels' ? (
+                <RecommendedChanelList />
+              ) : (
+                <ChannelList />
+              )}
+            </ChannelFilterContextProvider>
           </div>
         </div>
         <BoxFrame isPaddingX={true}>
@@ -123,15 +96,7 @@ const Page = () => {
                 <div>구독자</div>
               </div>
             </div>
-            <div className="custom-scroll-box h-[360px] overflow-y-scroll px-[20px]">
-              {Array.from({ length: 10 }).map((item, index) => (
-                <div className="text-grey600 grid  grid-cols-[40px,3fr,2fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500]">
-                  <div className="bg-primary300 h-10 w-10 rounded-full"></div>
-                  <div>곽튜브</div>
-                  <div>200만 명</div>
-                </div>
-              ))}
-            </div>
+            <AnalysisChannelList />
           </div>
         </BoxFrame>
       </div>
@@ -152,8 +117,11 @@ const Page = () => {
             주요 키워드
           </p>
 
-          {['정민', '여행'].map((item) => (
-            <div className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]">
+          {[].map((item) => (
+            <div
+              className="border-grey500 rounded-8 text-grey600 border px-[20px] py-[8px] font-[400]"
+              key={item}
+            >
               {item}
             </div>
           ))}
