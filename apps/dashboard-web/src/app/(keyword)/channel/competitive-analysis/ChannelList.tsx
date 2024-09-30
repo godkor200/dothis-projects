@@ -20,6 +20,9 @@ const ChannelList = () => {
     subscriberRange: subscriberRange?.value,
   });
 
+
+
+  
   return (
     <>
       {data?.data.map(
@@ -40,8 +43,7 @@ const ChannelList = () => {
           });
 
           return (
-            <DropdownMenu.Root key={channelId}>
-              <DropdownMenu.Trigger asChild>
+            <div>
                 <div className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500] ">
                   {channelThumbnail ? (
                     <Image
@@ -72,12 +74,8 @@ const ChannelList = () => {
                   </div>
                   <div className="text-center">90%</div>
                 </div>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content
-                  className="DropdownMenuContent"
-                  sideOffset={5}
-                >
+         
+     
                   {[
                     {
                       title: '유튜브 채널로 이동',
@@ -88,20 +86,13 @@ const ChannelList = () => {
                       value: 'add_channel',
                     },
                   ].map(({ title, value }) => (
-                    <DropdownMenu.CheckboxItem
-                      className="DropdownMenuCheckboxItem"
-                      checked={value === 'channel_category'}
-                      key={title}
-                    >
-                      <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
+        
                         <SvgComp icon="CheckIcon" size={12} />
-                      </DropdownMenu.ItemIndicator>
+         
                       {title}
-                    </DropdownMenu.CheckboxItem>
+             
                   ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
+            </div>
           );
         },
       )}
