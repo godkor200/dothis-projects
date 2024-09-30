@@ -12,7 +12,7 @@ export class ChannelAnalysisRepository
   extends SqlRepositoryBase<ChannelAnalysisEntity, TChannelAnalysisModel>
   implements ChannelAnalysisRepositoryPort
 {
-  protected tableName: string = 'channel-analysis';
+  protected tableName: string = 'channel_analysis';
   protected schema: ZodObject<any> = zChannelAnalysisEntity;
 
   @InjectRepository(ChannelAnalysisEntity)
@@ -20,5 +20,8 @@ export class ChannelAnalysisRepository
 
   constructor(dataSource: DataSource) {
     super(dataSource);
+  }
+  async findByUserId(userId: number): Promise<ChannelAnalysisEntity[]> {
+    return await this.repository.find({ where: { userId } });
   }
 }

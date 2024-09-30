@@ -223,6 +223,7 @@ export class VideoAggregateHelper {
       uniqueVideoCount: data.videoIds.size,
       increaseViews: data.increaseViews,
     }));
+
     return {
       representativeCategory: this.findLargestCluster(groupedData).videoCluster,
       data,

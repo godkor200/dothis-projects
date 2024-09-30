@@ -9,15 +9,26 @@ import { Client as OpensearchClient } from '@opensearch-project/opensearch';
 import { Err, Ok } from 'oxide.ts';
 import { VideoNotFoundError } from '@Apps/modules/video/domain/events/video.error';
 import dayjs from 'dayjs';
+import { OpenSearchCommonHelper } from '@Apps/common/opensearch/service/helpers/common.helper';
 
+/**
+ * 금주의 이슈 동영상 뽑기
+ */
 export class TopVideoAdapter implements TopVideoOutboundPort {
+  private readonly openSearchHelper: OpenSearchCommonHelper;
+
   constructor(
     @Inject(getOpensearchClientToken())
     private readonly opensearchClient: OpensearchClient,
-  ) {}
+  ) {
+    this.openSearchHelper = new OpenSearchCommonHelper(this.opensearchClient);
+  }
   async execute(dao: TopVideoDao): Promise<TopVideoResult> {
-    const adjustedTo = dayjs(dao.to).subtract(1, 'day').format('YYYY-MM-DD');
-    const threeMonthsAgo = dayjs().subtract(3, 'months').format('YYYY-MM-DD');
+    const adjustedTo = dayjs(dao.to).format('YYYY-MM-DD');
+    const sevenDaysAgo = dayjs(adjustedTo)
+      .subtract(7, 'day')
+      .format('YYYY-MM-DD');
+
     const mustQueries: any[] = [
       {
         match: {
@@ -26,17 +37,8 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
       },
       {
         range: {
-          '@timestamp': {
-            gte: adjustedTo,
-            lte: adjustedTo,
-            format: 'yyyy-MM-dd',
-          },
-        },
-      },
-      {
-        range: {
           video_published: {
-            gte: threeMonthsAgo,
+            gte: sevenDaysAgo,
             lte: adjustedTo,
             format: 'yyyy-MM-dd', // Date format
           },
@@ -51,9 +53,12 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
         },
       });
     }
+    const { index } = await this.openSearchHelper.findLargestBackingIndex(
+      'video_history',
+    );
     try {
-      const { body } = await this.opensearchClient.search({
-        index: 'video_history', // 데이터 스트림 이름을 사용
+      const resp = await this.opensearchClient.search({
+        index, // 데이터 스트림 이름을 사용
         body: {
           query: {
             bool: {
@@ -75,12 +80,12 @@ export class TopVideoAdapter implements TopVideoOutboundPort {
           'video_title',
           'video_published',
         ],
-        size: 1,
+        size: 5,
       });
 
-      if (!body.hits.total.value) return Err(new VideoNotFoundError());
+      if (!resp.body.hits.total.value) return Err(new VideoNotFoundError());
       return Ok({
-        items: body.hits.hits.map((hit) => hit._source),
+        items: resp.body.hits.hits.map((hit) => hit._source),
       });
     } catch (err) {
       console.error('Error fetching video history:', err);

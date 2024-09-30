@@ -3,7 +3,7 @@ import { User } from '@Apps/modules/user/domain/user.entity';
 import { IdBaseDateEntityAbstract } from '@Libs/commons';
 import { RegisterChannelDto } from '@Apps/modules/channel/application/dtos/register-channel.dto';
 
-@Entity('channel-analysis')
+@Entity('channel_analysis')
 export class ChannelAnalysisEntity extends IdBaseDateEntityAbstract {
   @Column({ name: 'registered_channel_id', type: 'varchar', length: 255 })
   registeredChannelId: string;

@@ -29,6 +29,7 @@ export type ChannelInfoMergeResult = {
   channel_cluster: number;
   mainly_used_keywords: string[];
   mainly_used_tags: string[];
+  channel_total_videos?: number;
   channel_subscribers?: number;
   channel_average_views?: number;
 };
@@ -129,6 +130,7 @@ export class GetChannelListService
             mainUsedTags: e.mainly_used_tags,
             channelSubscribers: e.channel_subscribers,
             channelAverageViews: e.channel_average_views,
+            channelTotalVideos: e.channel_total_videos,
           })),
         );
       }
