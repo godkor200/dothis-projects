@@ -51,6 +51,7 @@ const ParamsTabNav = <T extends ReadonlyArray<TabItem>>({
             })}` as Route
           }
           key={item.link}
+          scroll={false}
         >
           <button
             key={item.link}
