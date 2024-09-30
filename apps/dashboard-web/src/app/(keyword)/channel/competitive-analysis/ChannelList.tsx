@@ -23,7 +23,7 @@ const ChannelList = () => {
     subscriberRange: subscriberRange?.value,
   });
 
-  const { show } = useContextMenu();
+  const { show, hideAll } = useContextMenu();
 
   const onContextMenu = ({ event, id }: { event: any; id: string }): void => {
     show({
@@ -47,7 +47,7 @@ const ChannelList = () => {
   };
 
   return (
-    <>
+    <div className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]">
       {data?.data.map(
         (
           {
@@ -103,7 +103,7 @@ const ChannelList = () => {
                 <div className="text-center">90%</div>
               </div>
 
-              <Menu id={channelId + index} className="">
+              <Menu id={channelId + index}>
                 {[
                   {
                     title: '유튜브 채널로 이동',
@@ -116,9 +116,11 @@ const ChannelList = () => {
                 ].map(({ title, value }) => (
                   <Item
                     key={value}
+                    className="[&_*]:hover:!bg-primary200"
+                    // react-contexify 스타일 우선순위로 인한 important 추가 (css 파일을 별도로 만들기 대신 사용)
                     onClick={() => handleContextMenuClick(value, channelId)}
                   >
-                    <SvgComp icon="CheckIcon" size={12} />
+                    {/* <SvgComp icon="CheckIcon" size={12} /> */}
 
                     {title}
                   </Item>
@@ -128,7 +130,7 @@ const ChannelList = () => {
           );
         },
       )}
-    </>
+    </div>
   );
 };
 
