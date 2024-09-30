@@ -66,7 +66,7 @@ function AnimatedTabs() {
 
 const Template = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative">
+    <div className="relative select-none">
       <RouteTabNav
         tabList={channelTabList}
         baseRoute={`/channel` as Route}
