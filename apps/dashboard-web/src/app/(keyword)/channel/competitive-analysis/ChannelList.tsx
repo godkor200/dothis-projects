@@ -1,3 +1,5 @@
+import 'react-contexify/dist/ReactContexify.css';
+
 import Image from 'next/image';
 import { Item, Menu, useContextMenu } from 'react-contexify';
 
