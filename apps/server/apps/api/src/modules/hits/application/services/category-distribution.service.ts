@@ -35,7 +35,6 @@ export class CategoryDistributionService
 
     try {
       const res = await this.categoryAnalysisAdapter.execute(adjustedDto);
-      console.log(res);
       return Ok(res.unwrap());
     } catch (e) {
       return Err(e);

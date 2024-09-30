@@ -47,17 +47,31 @@ export class FindIssueTodayService implements FindIssueTodayInboundPort {
             );
           },
         );
+
+        const seenVideoIds = new Set<string>(); // 중복된 video_id를 추적할 집합
         const topVideoResults: ITopVideoResponse[] = await Promise.all(
           videoMultiKeywordCacheRes.map(async (videoDao) => {
             const result = await this.topVideoAdapter.execute(videoDao);
-            return {
-              search: videoDao.search,
-              ...(result.isOk() ? result.unwrap().items[0] : {}),
-            } as ITopVideoResponse;
+            const items = result.isOk() ? result.unwrap().items : [];
+
+            // 중복되지 않은 첫 번째 비디오 찾기
+            const nonDuplicateItem = items.find(
+              (item) => !seenVideoIds.has(item.video_id),
+            );
+            if (nonDuplicateItem) {
+              seenVideoIds.add(nonDuplicateItem.video_id); // 처리된 video_id를 기록
+
+              return {
+                search: videoDao.search,
+                ...nonDuplicateItem,
+              } as ITopVideoResponse;
+            }
+            return null; // 모든 항목이 중복된 경우
           }),
         );
+
         const validResults = topVideoResults
-          .filter((res) => res.video_id) // 필터 확인용
+          .filter((res) => res && res.video_id) // 필터 확인용 및 누락 처리
           .map((res) => {
             return {
               search: res.search,

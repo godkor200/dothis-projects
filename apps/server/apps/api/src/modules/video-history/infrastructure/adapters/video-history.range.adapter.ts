@@ -63,6 +63,7 @@ export class VideoHistoryRangeAdapter
           'year_c',
           'month_c',
           'day_c',
+          'video_published',
         ],
       );
 

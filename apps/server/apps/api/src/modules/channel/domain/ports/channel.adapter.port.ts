@@ -5,6 +5,7 @@ type res = {
   channelName: string;
   channelDescription: string;
   channelTags: string;
+  channelThumbnail: string;
 };
 export type ChannelAdapterOutboundResult = Result<res[], ChannelNotFoundError>;
 

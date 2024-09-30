@@ -89,6 +89,7 @@ export type TRangeVideoHistoryResult = {
   year_c: string;
   month_c: string;
   day_c: string;
+  video_published?: string;
 };
 export type VideoHistoryRangeAdapterResult = Result<
   VideoHistorySearchResult<TRangeVideoHistoryResult>,
