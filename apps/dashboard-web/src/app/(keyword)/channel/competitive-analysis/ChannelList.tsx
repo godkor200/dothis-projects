@@ -8,10 +8,18 @@ import {
 } from '@/constants/clusterCategories';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
-const ChannelList = () => {
-  const { data } = useGetChannelList();
+import { useChannelFilterContext } from './ChannelFilterContext';
 
-  console.log(data);
+const ChannelList = () => {
+  const { channelCategory, subscriberRange } =
+    useChannelFilterContext('ChannelList');
+
+  const { data } = useGetChannelList({
+    channelCluster: channelCategory?.value,
+
+    subscriberRange: subscriberRange?.value,
+  });
+
   return (
     <>
       {data?.data.map(
@@ -35,24 +43,32 @@ const ChannelList = () => {
             <DropdownMenu.Root key={channelId}>
               <DropdownMenu.Trigger asChild>
                 <div className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500] ">
-                  <Image
-                    src={channelThumbnail}
-                    width={40}
-                    height={40}
-                    alt={channelId}
-                    className="rounded-full"
-                  />
+                  {channelThumbnail ? (
+                    <Image
+                      src={channelThumbnail}
+                      width={40}
+                      height={40}
+                      alt={channelId}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <div className="bg-sky h-10 w-10 rounded-full"></div>
+                  )}
                   <div className="truncate">{channelName}</div>
                   <div className="text-center">
-                    {compactNumber.format(channelSubscribers)}
+                    {channelSubscribers
+                      ? compactNumber.format(channelSubscribers)
+                      : channelSubscribers}
                   </div>
-                  <div className="text-center">미정</div>
-                  <div className="text-center">
+                  <div className="text-center"></div>
+                  <div className="truncate text-center">
                     {clustersCategories[channelCluster]}
                   </div>
                   <div className="truncate">{mainUsedKeywords.join(',')}</div>
                   <div className="text-center">
-                    {channelAverageViews.toLocaleString('ko-kr')}
+                    {channelAverageViews
+                      ? channelAverageViews?.toLocaleString('ko-kr')
+                      : channelAverageViews}
                   </div>
                   <div className="text-center">90%</div>
                 </div>
