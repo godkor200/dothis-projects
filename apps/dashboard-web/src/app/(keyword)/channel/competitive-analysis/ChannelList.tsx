@@ -8,6 +8,7 @@ import {
   clustersCategories,
   clustersCategoriesOptions,
 } from '@/constants/clusterCategories';
+import useAddAnalysisChannel from '@/hooks/react-query/mutation/useAddAnalysisChannel';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
@@ -31,6 +32,20 @@ const ChannelList = () => {
     });
   };
 
+  const { mutate } = useAddAnalysisChannel();
+
+  const handleContextMenuClick = (
+    type: 'add_channel' | 'move_channel',
+    channelId: string,
+  ) => {
+    if (type === 'add_channel') {
+      mutate(channelId);
+      return;
+    }
+
+    console.log('유튜브 이동 ');
+  };
+
   return (
     <>
       {data?.data.map(
@@ -51,7 +66,7 @@ const ChannelList = () => {
           });
 
           return (
-            <div>
+            <div key={channelId + index}>
               <div
                 className="text-grey600 grid cursor-pointer  grid-cols-[40px,5fr,2fr,2fr,2fr,5fr,2fr,1.5fr] items-center gap-x-[20px] truncate p-[10px] text-[14px] font-[500] "
                 onClick={(e) =>
@@ -92,14 +107,17 @@ const ChannelList = () => {
                 {[
                   {
                     title: '유튜브 채널로 이동',
-                    value: 'move_channel',
+                    value: 'move_channel' as const,
                   },
                   {
                     title: '모니터링 추가',
-                    value: 'add_channel',
+                    value: 'add_channel' as const,
                   },
                 ].map(({ title, value }) => (
-                  <Item>
+                  <Item
+                    key={value}
+                    onClick={() => handleContextMenuClick(value, channelId)}
+                  >
                     <SvgComp icon="CheckIcon" size={12} />
 
                     {title}
