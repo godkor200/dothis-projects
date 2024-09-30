@@ -1,6 +1,7 @@
 import 'react-contexify/dist/ReactContexify.css';
 
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import { Item, Menu, useContextMenu } from 'react-contexify';
 
 import SvgComp from '@/components/common/SvgComp';
@@ -25,6 +26,8 @@ const ChannelList = () => {
 
   const { show, hideAll } = useContextMenu();
 
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
   const onContextMenu = ({ event, id }: { event: any; id: string }): void => {
     show({
       event,
@@ -46,8 +49,30 @@ const ChannelList = () => {
     console.log('유튜브 이동 ');
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // 드롭다운 닫기 로직을 추가 (react-contexify scroll 시 hide 이벤트는 browser event에 바인딩 되어있어서 독립적인 div overflow에 미적용 이슈)
+      hideAll();
+    };
+
+    const scrollContainer = scrollContainerRef.current;
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
   return (
-    <div className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]">
+    <div
+      className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]"
+      ref={scrollContainerRef}
+    >
       {data?.data.map(
         (
           {
