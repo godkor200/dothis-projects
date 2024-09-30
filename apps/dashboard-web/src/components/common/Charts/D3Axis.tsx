@@ -21,6 +21,7 @@ const D3Axis = ({
   relatedKeyword: string | null;
   expectedViews?: boolean;
 }) => {
+  // api 중복호출을 막기 위한 props  -> keyword 페이지에서는 dailyview만 가져오는 api  <-> relword 페이지에서는 dailyview 와 expected 통합하여 가져오는 api
   const dailyVeiwEnabled = !expectedViews;
 
   const dailyViewWithExpectedViewEnabled = expectedViews;

@@ -62,7 +62,7 @@ const CompetitionRate = ({ keyword }: { keyword: string }) => {
           tooltipOptions={{ side: 'bottom', sideOffset: 15, align: 'end' }}
         >
           <p className="text-grey600 mt-2 cursor-pointer whitespace-nowrap text-center font-[500]">
-            연관 영상의 조회수 평균{' '}
+            주간 조회수 평균{' '}
             <span className="text-primary500">
               {isNaN(totalIncreaseViews / competitionVideoCount)
                 ? 0

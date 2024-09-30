@@ -75,7 +75,7 @@ const ChartSummaryCards = ({
 
   const SummaryList = [
     {
-      title: '조회수 합계',
+      title: '주간 조회수 합계',
       value: Number(Math.floor(totalIncreaseViews)).toLocaleString('ko-kr'),
     },
     {

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { findVideoBySearchKeyword } from '../video';
-import { zClusterNumberMulti, zSortQuery } from '../common.model';
+import { dataObject, zClusterNumberMulti, zSortQuery } from '../common.model';
 
 export const ChannelSubscriberRange = {
   RANGE_1000_TO_9999: '1000to9999',
@@ -89,6 +89,16 @@ export const zChannelNameAutocompleteResponse = z.object({
   subscriberCount: z.number().int().nonnegative().describe('Subscriber count'),
 });
 
+export const zChannelNameAutocompleteList = z.array(
+  zChannelNameAutocompleteResponse,
+);
+
+export const zChannelNameAutocompleteListData = dataObject(
+  zChannelNameAutocompleteList,
+);
+
+export const zAutocompleteChannelName = zChannelNameAutocompleteListData;
+
 export const zGetVideoTimelineQuery = zChannelId;
 
 export const zGetRegisterChannelIdQuery = zChannelId;
@@ -113,6 +123,9 @@ export const zRegisterChannelAnalysisResponse = z.array(
 
 // Define the response schema
 export const zChannelListResponse = z.array(zChannelListResponseObject);
+
+export const zChannelListRes = dataObject(zChannelListResponse);
+
 export type TChannelNameAutocompleteResponse = z.TypeOf<
   typeof zChannelNameAutocompleteResponse
 >;
