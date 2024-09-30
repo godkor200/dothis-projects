@@ -101,12 +101,29 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (request.nextUrl.pathname.startsWith('/channel')) {
+    const [, , tab] = request.nextUrl.pathname.split('/');
+
+    const channelPageRoutes = [
+      'summary',
+      'channel-analysis',
+      'competitive-analysis',
+      'video-assessment',
+    ];
+
+    if (!channelPageRoutes.some((route) => tab === route)) {
+      return NextResponse.redirect(
+        new URL('/channel' + '/competitive-analysis', request.nextUrl),
+      );
+    }
+  }
+
   const response = NextResponse.next();
   return response;
 }
 
 export const config = {
-  matcher: ['/keyword/:path*', '/account/:path*'],
+  matcher: ['/keyword/:path*', '/account/:path*', '/channel/:path*'],
   // matcher: '/((?!api|_next|fonts|examples|[\\w-]+\\.\\w+).*)',
   // matcher: ['/contents', '/mypage'],
 };
