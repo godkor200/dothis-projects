@@ -1,5 +1,6 @@
 import { useQueries } from '@tanstack/react-query';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 import { NAVER_SEARCH_RATIO_KEY } from '@/constants/querykey';
 import type { NaverAPI_Response } from '@/hooks/react-query/query/useGetNaverSearchRatio';
@@ -12,9 +13,9 @@ const useNaverSearchQueries = ({
   baseKeyword: string;
   relatedKeywords: string[];
 }) => {
-  const startDate = useStartDate();
-
   const endDate = useEndDate();
+
+  const startDate = dayjs(endDate).subtract(29, 'day').format('YYYY-MM-DD');
 
   return useQueries({
     queries: relatedKeywords.map((relatedKeyword) => ({
@@ -33,6 +34,7 @@ const useNaverSearchQueries = ({
           startDate,
           endDate,
         }),
+
       enabled: !!baseKeyword && !!startDate && !!endDate && !!relatedKeyword,
     })),
   });

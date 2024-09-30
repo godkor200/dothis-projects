@@ -24,8 +24,6 @@ const useD3 = ({ chartSelector, data, width, styleMethod }: Props) => {
 
   const line = D3.line<DataItem>()
     .x((datum) => {
-      // console.log(x(d.month) + x.bandwidth() / 2);
-
       return Number(datum.date) / 2;
     })
     .y((d) => {

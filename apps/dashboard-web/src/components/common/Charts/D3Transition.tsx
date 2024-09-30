@@ -14,8 +14,7 @@
 //   const svgRef = React.useRef(null);
 
 //   React.useEffect(() => {
-//     console.log('checked');
-//     console.log(data);
+
 //     const svg = D3.select(svgRef.current);
 
 //     const xScale = D3.scaleBand()
@@ -130,7 +129,7 @@
 
 //   //       // Create a update selection: bind to the new data
 //   //       const u = svg.selectAll('.lineTest').data(data, (d: IData) => {
-//   //         console.log(d);
+
 //   //         return d.ser1;
 //   //       });
 

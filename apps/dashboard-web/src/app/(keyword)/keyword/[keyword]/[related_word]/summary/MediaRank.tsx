@@ -31,6 +31,7 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
     fetchNextPage,
     hasNextPage,
     isLoading,
+    error,
     isError,
     refetch,
     isFetching,
@@ -54,9 +55,7 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
         title: item.videoTitle,
         provider: item.channelName,
         element: `조회수 ${compactNumber.format(item.videoViews)}`,
-        uploadDate: dayjs(`${item.year}-${item.month}-${item.day}`).format(
-          'YYYY-MM-DD',
-        ),
+        uploadDate: dayjs(item.videoPublished).format('YYYY-MM-DD'),
         image: externalYouTubeImageLoader(item.videoId),
         link: item.videoId,
       };
@@ -73,6 +72,9 @@ const MediaRank = ({ baseKeyword, relatedKeyword }: Props) => {
       hasError={isError}
       refetchCallback={refetch}
       classname="flex min-h-[350px] items-center"
+      statusCode={error?.status}
+      baseKeyword={baseKeyword}
+      relatedKeyword={relatedKeyword}
     >
       <APILoadingBoundary isLoading={isLoading} loadingComponent={<Skeleton />}>
         <div className="flex  gap-[24px] ">

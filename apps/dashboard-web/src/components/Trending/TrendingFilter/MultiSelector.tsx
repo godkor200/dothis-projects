@@ -113,7 +113,7 @@ const colourStyles: StylesConfig<{ value: number; label: string }, true> = {
   }),
   multiValueRemove: (styles, { data }) => ({
     ...styles,
-    color: data,
+    // color: data,
     ':hover': {
       backgroundColor: '#555',
       color: 'white',

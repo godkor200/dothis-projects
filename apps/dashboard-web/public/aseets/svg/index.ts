@@ -31,6 +31,7 @@ export { default as SideTrendUp } from './SideBar/SideTrendUp.svg';
 export { default as SideUser } from './SideBar/SideUser.svg';
 export { default as Alert } from './System/alert.svg';
 export { default as Calendar } from './System/calendar.svg';
+export { default as CheckIcon } from './System/check.svg';
 export { default as Close } from './System/close.svg';
 export { default as Filter } from './System/filter.svg';
 export { default as Question } from './System/question.svg';

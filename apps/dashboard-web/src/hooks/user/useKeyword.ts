@@ -42,7 +42,6 @@ const useKeyword = () => {
       : [GUEST_KEYWORD[randomIndex]];
   }, [isSignedIn, data?.personalizationTag, isTokenRequired]);
 
-  // console.log(test);
   // 지금은 store 에서 임의로 useEffect상에서 접근했지만, 나중에는 미들웨어단 임의 키워드로 searchparams로 임의로 넣어주자
   // 난수는 hydrate 때문에 안됨,  cookie로 인덱스로 지정해서 시도해보았지만 불가능하였다.
 

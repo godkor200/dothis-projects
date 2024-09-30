@@ -11,6 +11,7 @@ import { useAuthActions, useIsSignedIn } from '@/store/authStore';
 import { cn } from '@/utils/cn';
 
 import GNBSearchbar from './GNBSearchbar';
+import TopAccountButton from './TopAccountButton';
 
 interface Props {
   isSidebarOpen: boolean;
@@ -86,20 +87,7 @@ const Top = ({ isSidebarOpen, setIsSidebarOpen }: Props) => {
             />
             <div className="bg-grey300 h-[40px]  w-[1px]" />
 
-            <div className="flex items-center gap-[10px]">
-              <div className="rounded-8 bg-grey200 cursor-pointer p-3">
-                <SvgComp
-                  icon="HeaderUserProfile"
-                  size={24}
-                  className="[&_path]:stroke-grey400 [&_path]:fill-grey400"
-                />
-              </div>
-
-              <div>
-                <p className="text-grey900 text-[14px]">{data?.userEmail}</p>
-                <p className="text-grey500 text-[12px]">{data?.plan}</p>
-              </div>
-            </div>
+            <TopAccountButton />
           </>
         ) : (
           <Link href={`/login?previous_url=${pathName}`}>

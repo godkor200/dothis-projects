@@ -41,9 +41,9 @@ const MediaDigestCard = ({
             width={0}
             height={0}
             alt="Picture of the author"
+            layout="fill"
             style={{
               objectFit: 'cover',
-              layout: 'fill',
               width: '132px',
               height: '100%',
             }}

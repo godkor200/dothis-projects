@@ -14,11 +14,17 @@ const CircleForceContainer = ({
   baseKeyword: string;
   relatedKeyword: string | null;
 }) => {
-  const { data, isLoading, isError, refetch } =
+  const { data, isLoading, isError, refetch, error } =
     useGetRankingRelWords(baseKeyword);
 
   return (
-    <APIErrorBoundary hasError={isError} refetchCallback={refetch}>
+    <APIErrorBoundary
+      hasError={isError}
+      refetchCallback={refetch}
+      statusCode={error?.status}
+      baseKeyword={baseKeyword}
+      relatedKeyword={relatedKeyword}
+    >
       <APILoadingBoundary isLoading={isLoading}>
         <CircleForceChart keyword={baseKeyword} />
         <D3Chart keyword={baseKeyword} />

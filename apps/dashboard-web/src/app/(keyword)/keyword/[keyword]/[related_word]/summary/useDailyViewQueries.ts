@@ -16,7 +16,7 @@ const useDailyViewQueries = ({
 
   const endDate = useEndDate();
 
-  const queryResults = apiClient(2).hits.getAnalysisHitsV2.useQueries({
+  const queryResults = apiClient(1).hits.getAnalysisHits.useQueries({
     queries: relatedKeywords.map((relatedKeyword) => {
       return {
         queryKey: COMBINE_DAILY_EXPECTED_KEY.list([
@@ -39,7 +39,7 @@ const useDailyViewQueries = ({
 
   const flat = queryResults.flatMap((queryResult, index) => {
     return {
-      data: queryResult.data?.body.data.data,
+      data: queryResult.data?.body.data[0].data,
       keyword: relatedKeywords[index],
     };
   });

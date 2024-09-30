@@ -32,6 +32,9 @@ export const zRankRel = z.object({
   keyword: z.string(),
   ranking: zRankingArray,
 });
+
+export const zRankingRelatedWordsRes = dataObject(zRankRel);
+
 export const zRankRes = zRankRel;
 export const zKeywordsCopy = zRelWords.pick({ data: true }).shape.data.shape
   .keyword;

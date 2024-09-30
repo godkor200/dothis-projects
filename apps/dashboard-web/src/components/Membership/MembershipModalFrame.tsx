@@ -130,7 +130,7 @@ const MembershipModalFrame = ({
       )}
 
       <button
-        className="bg-primary500 rounded-10 my-[20px] w-full cursor-pointer py-4 font-bold text-white focus:outline-none"
+        className="bg-primary500 rounded-10 my-[20px] w-full cursor-pointer py-4 text-center font-bold text-white focus:outline-none"
         // onClick={() => setIsPaymentpage(true)}
         onClick={() => {
           initializeModal();

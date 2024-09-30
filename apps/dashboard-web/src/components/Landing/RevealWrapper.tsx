@@ -88,7 +88,6 @@ const RevealWrapper = ({
         //if you don't pass any props
         sr.reveal(ref.current);
       } else {
-        console.warn("next-scroll doesn't apply to your element");
       }
     }
     revElement();

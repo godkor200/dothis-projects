@@ -74,11 +74,39 @@ export async function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL(`/about`, request.nextUrl));
   // }
 
+  // 계정 정보 페이지 Route Protection
+  if (request.nextUrl.pathname.startsWith('/account')) {
+    const [, , tab] = request.nextUrl.pathname.split('/');
+
+    const accountPageRoutes = ['my-account', 'plans', 'help'];
+
+    if (!accountPageRoutes.some((route) => tab === route)) {
+      return NextResponse.redirect(
+        new URL('/account' + '/my-account', request.nextUrl),
+      );
+    }
+  }
+
+  // 연관어 페이지 Route Protection
+  if (request.nextUrl.pathname.startsWith('/keyword')) {
+    const [, , baseKeyword, relatedWord, tab] =
+      request.nextUrl.pathname.split('/');
+
+    const relatedPageRoutes = ['analysis', 'comparison', 'insight', 'summary'];
+
+    if (relatedWord && !relatedPageRoutes.some((route) => tab === route)) {
+      return NextResponse.redirect(
+        new URL(request.nextUrl.pathname + '/analysis', request.nextUrl),
+      );
+    }
+  }
+
   const response = NextResponse.next();
   return response;
 }
 
 export const config = {
+  matcher: ['/keyword/:path*', '/account/:path*'],
   // matcher: '/((?!api|_next|fonts|examples|[\\w-]+\\.\\w+).*)',
   // matcher: ['/contents', '/mypage'],
 };

@@ -83,7 +83,6 @@ const GptTest = ({
       .append('rect')
       .attr('class', 'bar')
       .attr('x', (d, i) => {
-        console.log(d, i);
         return x(d.name) as number;
       })
       .attr('y', y(0))

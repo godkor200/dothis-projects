@@ -29,7 +29,7 @@ const useGetRankingWordList = (
 
   const isTokenRequired = useIsTokenRequired();
 
-  const queryResults = apiClient(2).relatedWords.rankingRelatedWords.useQueries(
+  const queryResults = apiClient(1).relatedWords.rankingRelatedWords.useQueries(
     {
       queries: keyword.map((keyword) => {
         return {

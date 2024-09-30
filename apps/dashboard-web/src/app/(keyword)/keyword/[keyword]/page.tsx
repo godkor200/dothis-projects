@@ -83,7 +83,11 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                     />
                   </div>
                   <ErrorBoundary fallback={<SystemError />}>
-                    <ChartContainer keyword={keyword} relatedKeyword={null} />
+                    <ChartContainer
+                      keyword={keyword}
+                      relatedKeyword={null}
+                      expectedViews={false}
+                    />
                   </ErrorBoundary>
                 </div>
               </BoxFrame>
@@ -115,7 +119,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
                   </p>
 
                   <ErrorBoundary fallback={<SystemError />}>
-                    <MediaImageCard keyword={keyword} />
+                    <MediaImageCard keyword={keyword} size={3} />
                   </ErrorBoundary>
                   {/* 서버 사이드 렌더링을 아직 안하고 있어서, client 사이드 api response 유무를 따지기 위해  Container를 하나 생성하였다. */}
                   <ErrorBoundary fallback={<SystemError />}>
