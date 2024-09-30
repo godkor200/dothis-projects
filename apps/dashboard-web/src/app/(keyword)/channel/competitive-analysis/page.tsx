@@ -75,7 +75,8 @@ const Page = () => {
                 </div>
               </div>
 
-              {channelViewType === 'recommended-channels' ? (
+              {channelViewType === 'recommended-channels' ||
+              !channelViewType ? (
                 <RecommendedChanelList />
               ) : (
                 <ChannelList />
