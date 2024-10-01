@@ -1,15 +1,10 @@
 import 'react-contexify/dist/ReactContexify.css';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { Item, Menu, useContextMenu } from 'react-contexify';
 
-import SvgComp from '@/components/common/SvgComp';
-import {
-  clustersCategories,
-  clustersCategoriesOptions,
-} from '@/constants/clusterCategories';
+import { clustersCategories } from '@/constants/clusterCategories';
 import useAddAnalysisChannel from '@/hooks/react-query/mutation/useAddAnalysisChannel';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
@@ -20,8 +15,6 @@ const YOUTUBE_URL = 'https://www.youtube.com';
 const ChannelList = () => {
   const { channelCategory, subscriberRange } =
     useChannelFilterContext('ChannelList');
-
-  const router = useRouter();
 
   const { data } = useGetChannelList({
     channelCluster: channelCategory?.value,
