@@ -1,6 +1,7 @@
 import 'react-contexify/dist/ReactContexify.css';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { Item, Menu, useContextMenu } from 'react-contexify';
 
@@ -14,9 +15,13 @@ import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
 
+const YOUTUBE_URL = 'https://www.youtube.com';
+
 const ChannelList = () => {
   const { channelCategory, subscriberRange } =
     useChannelFilterContext('ChannelList');
+
+  const router = useRouter();
 
   const { data } = useGetChannelList({
     channelCluster: channelCategory?.value,
@@ -46,7 +51,7 @@ const ChannelList = () => {
       return;
     }
 
-    console.log('유튜브 이동 ');
+    window.open(`${YOUTUBE_URL}/channel/${channelId}`, '_blank');
   };
 
   useEffect(() => {
@@ -68,6 +73,7 @@ const ChannelList = () => {
     };
   }, []);
 
+  console.log(data);
   return (
     <div
       className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]"
