@@ -65,7 +65,7 @@ const ChannelFilterDropdown = () => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            className="DropdownMenuContent h-80 overflow-y-scroll"
+            className="DropdownMenuContent custom-scroll-box h-80 overflow-y-scroll"
             sideOffset={5}
           >
             {clustersCategoriesOptions.map(({ label, value }) => (
