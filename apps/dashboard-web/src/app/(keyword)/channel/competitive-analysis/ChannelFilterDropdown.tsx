@@ -65,24 +65,28 @@ const ChannelFilterDropdown = () => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            className="DropdownMenuContent h-80 overflow-y-scroll"
+            className="DropdownMenuContent custom-scroll-box h-80 overflow-y-scroll"
             sideOffset={5}
           >
-            {clustersCategoriesOptions.map(({ label, value }) => (
-              <DropdownMenu.CheckboxItem
-                className="DropdownMenuCheckboxItem"
-                checked={
-                  channelCategory ? value === channelCategory.value : false
-                }
-                key={label}
-                onClick={() => setChannelCategory({ label, value })}
-              >
-                <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
-                  <SvgComp icon="CheckIcon" size={12} />
-                </DropdownMenu.ItemIndicator>
-                {label}
-              </DropdownMenu.CheckboxItem>
-            ))}
+            {clustersCategoriesOptions
+              .sort((a, b) => {
+                return a.label.localeCompare(b.label);
+              })
+              .map(({ label, value }) => (
+                <DropdownMenu.CheckboxItem
+                  className="DropdownMenuCheckboxItem"
+                  checked={
+                    channelCategory ? value === channelCategory.value : false
+                  }
+                  key={label}
+                  onClick={() => setChannelCategory({ label, value })}
+                >
+                  <DropdownMenu.ItemIndicator className="DropdownMenuItemIndicator">
+                    <SvgComp icon="CheckIcon" size={12} />
+                  </DropdownMenu.ItemIndicator>
+                  {label}
+                </DropdownMenu.CheckboxItem>
+              ))}
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>{' '}

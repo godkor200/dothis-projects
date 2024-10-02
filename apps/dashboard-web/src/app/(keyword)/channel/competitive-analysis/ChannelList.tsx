@@ -4,15 +4,13 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { Item, Menu, useContextMenu } from 'react-contexify';
 
-import SvgComp from '@/components/common/SvgComp';
-import {
-  clustersCategories,
-  clustersCategoriesOptions,
-} from '@/constants/clusterCategories';
+import { clustersCategories } from '@/constants/clusterCategories';
 import useAddAnalysisChannel from '@/hooks/react-query/mutation/useAddAnalysisChannel';
 import useGetChannelList from '@/hooks/react-query/query/useGetChannelList';
 
 import { useChannelFilterContext } from './ChannelFilterContext';
+
+const YOUTUBE_URL = 'https://www.youtube.com';
 
 const ChannelList = () => {
   const { channelCategory, subscriberRange } =
@@ -46,7 +44,7 @@ const ChannelList = () => {
       return;
     }
 
-    console.log('유튜브 이동 ');
+    window.open(`${YOUTUBE_URL}/channel/${channelId}`, '_blank');
   };
 
   useEffect(() => {
@@ -68,6 +66,7 @@ const ChannelList = () => {
     };
   }, []);
 
+  console.log(data);
   return (
     <div
       className="custom-scroll-box h-[320px] overflow-y-scroll px-[20px]"
