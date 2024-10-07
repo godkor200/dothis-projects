@@ -48,21 +48,23 @@ export const useGetRandomMedia = ({
   KeywordQuery) => {
   const [fetchTime, setFetchTime] = useState<number | null>(null);
 
-  const { data: weeklyVideo, isError } = useGetWeeklyVideo();
+  const { data: weeklyVideo, isLoading, isError } = useGetWeeklyVideo();
 
   const youtubeData =
     relatedkeyword || searchKeyword
       ? weeklyVideo?.filter((item) => item.search === searchKeyword)[0]
       : undefined;
 
-  const youtubeVideoIsError =
-    !(
-      (relatedkeyword || searchKeyword) &&
-      weeklyVideo?.length &&
-      weeklyVideo?.filter((item) => item.search === searchKeyword)?.[0]?.videoId
-    ) || isError
-      ? true
-      : false;
+  const youtubeVideoIsError = isLoading
+    ? false
+    : !(
+        (relatedkeyword || searchKeyword) &&
+        weeklyVideo?.length &&
+        weeklyVideo?.filter((item) => item.search === searchKeyword)?.[0]
+          ?.videoId
+      ) || isError
+    ? true
+    : false;
 
   // const { data: youtubeData, isError: youtubeIsError } = useGetSingleVideo(
   //   {
@@ -109,7 +111,12 @@ export const useGetRandomMedia = ({
     ) {
       setFetchTime(new Date().getTime());
     }
-  }, [JSON.stringify(youtubeData), JSON.stringify(newsData)]);
+  }, [
+    JSON.stringify(youtubeData),
+    JSON.stringify(newsData),
+    youtubeVideoIsError,
+    newsIsError,
+  ]);
 
   const mediaResult = useMemo(
     () =>
@@ -122,6 +129,8 @@ export const useGetRandomMedia = ({
         : newsData && formatNewsFormMediaProps(newsData),
     [youtubeData, newsData, newsIsError, youtubeVideoIsError],
   );
+  // console.log(searchKeyword);
+  // console.log(youtubeData);
 
   return {
     mediaResult,

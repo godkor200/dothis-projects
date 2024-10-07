@@ -96,7 +96,27 @@ export async function middleware(request: NextRequest) {
 
     if (relatedWord && !relatedPageRoutes.some((route) => tab === route)) {
       return NextResponse.redirect(
-        new URL(request.nextUrl.pathname + '/analysis', request.nextUrl),
+        new URL(
+          '/keyword' + `/${baseKeyword}` + `/${relatedWord}` + '/analysis',
+          request.nextUrl,
+        ),
+      );
+    }
+  }
+
+  if (request.nextUrl.pathname.startsWith('/channel')) {
+    const [, , tab] = request.nextUrl.pathname.split('/');
+
+    const channelPageRoutes = [
+      'summary',
+      'channel-analysis',
+      'competitive-analysis',
+      'video-assessment',
+    ];
+
+    if (!channelPageRoutes.some((route) => tab === route)) {
+      return NextResponse.redirect(
+        new URL('/channel' + '/competitive-analysis', request.nextUrl),
       );
     }
   }
@@ -106,7 +126,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/keyword/:path*', '/account/:path*'],
+  matcher: ['/keyword/:path*', '/account/:path*', '/channel/:path*'],
   // matcher: '/((?!api|_next|fonts|examples|[\\w-]+\\.\\w+).*)',
   // matcher: ['/contents', '/mypage'],
 };

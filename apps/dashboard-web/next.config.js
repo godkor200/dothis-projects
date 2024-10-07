@@ -16,7 +16,13 @@ const config = {
   // },
 
   images: {
-    domains: ['bigkinds.or.kr', 'img.youtube.com'],
+    domains: [
+      'bigkinds.or.kr',
+      'img.youtube.com',
+      'yt3.ggpht.com',
+      'yt3.googleusercontent.com',
+      // 현재 유튜브 썸네일 이미지의 가운데 주소가 계속 가변하는 형태를 보인다, 하지만 next config에서는 정규표현식이 사용불가인데,  따라서 이미지 로더를 생성해야하나 고민중
+    ],
   },
   transpilePackages: [
     '@dothis/share',

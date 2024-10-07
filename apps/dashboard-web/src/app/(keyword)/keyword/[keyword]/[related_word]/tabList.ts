@@ -25,3 +25,15 @@ export const accountTabList = [
   { title: '멤버쉽 관리', link: 'plans' },
   { title: '문의하기', link: 'help' },
 ];
+
+export const CHANNEL_VIEW_TYPE_TAB_LIST = [
+  { title: '추천 유사 채널', link: 'recommended-channels' },
+  { title: '구독자의 관심 채널', link: 'subscribers-channels' },
+  { title: '전체 채널', link: 'all-channels' },
+];
+
+export const CHANNEL_COMPARISON_TAB_LIST = [
+  { title: '콘텐츠 비교', link: 'video' },
+  { title: '영상 타임라인', link: 'timeline' },
+  { title: '활동 성과 비교', link: 'performance' },
+];

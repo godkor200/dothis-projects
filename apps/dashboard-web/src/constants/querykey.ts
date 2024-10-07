@@ -30,3 +30,8 @@ export const WEEKLY_TREND_VIDEO_KEY = createQueryKeys('weekly_trend_video');
 export const COMBINE_DAILY_EXPECTED_KEY = createQueryKeys(
   'combine_daily_expected',
 );
+
+export const CHANNEL_AUTO_COMPLETE_KEY = createQueryKeys(
+  'channel_auto_complete',
+);
+export const CHANNEL_LIST_KEY = createQueryKeys('channel_list');
