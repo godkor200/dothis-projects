@@ -8,6 +8,7 @@ import {
   InvalidYoutubeUrlException,
   DuplicateException,
   VideoNotFoundException,
+  YoutubeChannelServerErrorException,
 } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 import { TVideoVideoResponse } from '@dothis/dto';
 import { WebhookUrlTokenMismatchException } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/webhook-response-failed.exception';
@@ -18,6 +19,7 @@ export type TPostRequestVideoRes = Result<
   | InvalidYoutubeUrlException
   | WebhookUrlTokenMismatchException
   | VideoNotFoundException
+  | YoutubeChannelServerErrorException
 >;
 @CommandHandler(PostRequestVideoDto)
 export class PostReqVideoCommandHandler

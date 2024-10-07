@@ -6,6 +6,7 @@ import { Result } from 'oxide.ts';
 import {
   InvalidYoutubeUrlException,
   VideoNotFoundException,
+  YoutubeChannelServerErrorException,
 } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 
 export type TPreviewVideoOmitRes = Omit<
@@ -19,7 +20,9 @@ export class PreviewVideoRes extends createZodDto(
 
 export type TPreviewVideoRes = Result<
   TPreviewVideoOmitRes,
-  VideoNotFoundException | InvalidYoutubeUrlException
+  | VideoNotFoundException
+  | InvalidYoutubeUrlException
+  | YoutubeChannelServerErrorException
 >;
 export class PreviewVideoDto extends PreviewVideoParam {
   constructor(props: PreviewVideoParam) {

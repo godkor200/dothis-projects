@@ -32,6 +32,7 @@ export class VideoToObject {
     video_published: string,
     crawled_date: string,
   ): TPreviewVideoOmitRes {
+    console.log(video_tags);
     return {
       videoUrl: `https://www.youtube.com/shorts/${video_id}`,
       videoId: video_id,

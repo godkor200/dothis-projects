@@ -1,5 +1,4 @@
 import { c } from '../contract';
-import { zCombinedViewsSchema } from './hits.model';
 import { findVideoBySearchKeyword, zFindVideoBySearchKeyword } from '../video';
 import { zErrResBase } from '../error.response.zod';
 import { zSuccessBase } from '../success.response.zod';

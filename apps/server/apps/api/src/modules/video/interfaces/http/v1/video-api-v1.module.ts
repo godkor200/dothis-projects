@@ -215,10 +215,7 @@ const adapters: Provider[] = [
     provide: VIDEO_HISTORY_GET_DATA_STREAM_DI_TOKEN,
     useClass: GetVideoHistoryDataStream,
   },
-  {
-    provide: VIDEO_DATA_ADAPTER_DI_TOKEN,
-    useClass: VideoDataAdapter,
-  },
+
   {
     provide: CHANNEL_DATA_DI_TOKEN,
     useClass: ChannelDataAdapter,
@@ -234,6 +231,10 @@ const adapters: Provider[] = [
   {
     provide: VIDEO_DURATION_LENGTH_DO_TOKEN,
     useClass: VideoDurationLengthAdapter,
+  },
+  {
+    provide: VIDEO_DATA_ADAPTER_DI_TOKEN,
+    useClass: VideoDataAdapter,
   },
 ];
 

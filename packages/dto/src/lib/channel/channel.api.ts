@@ -8,6 +8,7 @@ import {
   zChannelNameAutocompleteQuery,
   zChannelNameAutocompleteResponse,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
+  zGetContentListQuery,
   zGetVideoTimelineQuery,
   zGetVideoTimelineResponse,
   zRegisterChannelAnalysisResponse,
@@ -94,5 +95,16 @@ export const channelApi = c.router({
     },
     summary: '등록된 채널 리스트 가져오기',
     description: '등록된 특정 채널 리스트가져옵니다.',
+  },
+  getRegisterChannelContentList: {
+    method: 'GET',
+    path: `${channelApiUrl}/content-list`,
+    query: zGetContentListQuery,
+    responses: {
+      200: zRegisterChannelAnalysisResponse, // 적절한 응답 스키마 사용
+      ...zErrResBase,
+    },
+    summary: '콘텐츠 리스트 조회',
+    description: '기준 채널 ID로 영상 콘텐츠 리스트를 조회합니다.',
   },
 });

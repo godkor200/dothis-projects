@@ -35,3 +35,13 @@ export class VideoNotFoundException extends ExceptionBase {
 export class VideoErrNotFound extends createZodDto(
   extendApi(zVideoErrNotFound),
 ) {}
+export class YoutubeChannelServerErrorException extends ExceptionBase {
+  static readonly message =
+    'Fastapi Crawling Server 서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+
+  public readonly code = 'SERVER.YOUTUBE_CHANNEL_ERROR';
+
+  constructor(metadata?: unknown) {
+    super(YoutubeChannelServerErrorException.message, undefined, metadata);
+  }
+}

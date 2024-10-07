@@ -181,15 +181,22 @@ export class WeeklyHitsV2Repository
       return Err(e);
     }
   }
-  // 최신 날짜의 데이터에서 상위 100개 가져오기 8월 25일 기준으로 비디오 갯수가 많은 순대로 가져옴
   async getTop100LatestData(): Promise<TWeeklyKeywordsWrappedDataResult> {
     try {
-      // 최신 날짜의 데이터에서 상위 100개 가져오기
+      // 최신 날짜의 데이터 가져오기
       const results = await this.repository
         .createQueryBuilder('wv')
         .select('wv.keyword', 'keyword')
-        .where('wv.month = :month', { month: 8 })
-        .andWhere('wv.day = :day', { day: 25 })
+        .where(
+          `(wv.year, wv.month, wv.day) = (
+          SELECT max(year), max(month), max(day)
+          FROM weekly_views
+          WHERE (year, month) = (
+              SELECT max(year), max(month)
+              FROM weekly_views
+          )
+      )`,
+        )
         .orderBy('wv.video_count', 'DESC') // video_count가 많은 순으로 정렬
         .limit(100)
         .getRawMany();

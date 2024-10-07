@@ -76,6 +76,7 @@ export class GetRegisteredChannelService
           // 성공적인 결과만 반환
           if (result.isOk() && channelData.isOk()) {
             const channelDataUnwrap = channelData.unwrap();
+
             const channelThumbnail = channelDataUnwrap[0].channelThumbnail;
             return {
               ...data,
@@ -97,6 +98,8 @@ export class GetRegisteredChannelService
           channelName: element.channel_name,
           channelThumbnail: element.channelThumbnail,
           channelSubscribers: element.channel_subscribers,
+          channelTotalVideos: element.channel_total_videos,
+          channelAverageViews: element.channel_total_videos,
         }));
 
       return Ok(filteredChannelInfoRes);

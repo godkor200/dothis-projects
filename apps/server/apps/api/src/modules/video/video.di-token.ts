@@ -86,3 +86,6 @@ export const RedisCacheAdapterTokens = {
 export const REPRESENTATIVE_CATEGORY_DI_TOKEN = Symbol(
   'REPRESENTATIVE_CATEGORY_DI_TOKEN',
 );
+export const VIDEO_LIST_BY_CHANNEL_ID_ADAPTER_DI_TOKEN = Symbol(
+  'VIDEO_LIST_BY_CHANNEL_ID_ADAPTER_DI_TOKEN',
+);

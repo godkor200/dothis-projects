@@ -22,9 +22,12 @@ export class PreviewVideoService
 
       // 외부 API로 HTTP GET 요청을 보내고 JSON 응답을 받아옵니다.
       const responseData = await this.httpUtils.fetchData(videoId);
-      const mappedData = VideoToObject.mapApiResponseData(responseData);
-
-      return Ok({ ...mappedData });
+      if (responseData.isOk()) {
+        const mappedData = VideoToObject.mapApiResponseData(
+          responseData.unwrap(),
+        );
+        return Ok({ ...mappedData });
+      }
     } catch (error) {
       return Err(error);
     }

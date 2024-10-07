@@ -8,6 +8,7 @@ import { Err, Ok } from 'oxide.ts';
 import {
   DuplicateException,
   InvalidYoutubeUrlException,
+  YoutubeChannelServerErrorException,
 } from '@ExternalApps/feature/crawl-queue/video/domain/events/errors/video.error';
 import {
   VIDEO_DATA_REPOSITORY_DI_TOKEN,
@@ -80,10 +81,13 @@ export class PostReqVideoService implements PostReqVideoInboundPort {
       });
 
       const response = await this.httpUtils.fetchData(videoId);
-      const responseData = response;
+      if (response.isErr()) {
+        return Err(new YoutubeChannelServerErrorException());
+      }
+      const responseData = response.unwrap();
       if (responseData.message === 'SUCCESS') {
         // 데이터를 원하는 형식으로 매핑
-        const { video_data, channel_data } = response.data;
+        const { video_data, channel_data } = responseData.data;
         const videoPublished = new Date(video_data.video_published);
         const monthPublished = videoPublished.getMonth() + 1;
         // 비디오 데이터 삽입 시도
