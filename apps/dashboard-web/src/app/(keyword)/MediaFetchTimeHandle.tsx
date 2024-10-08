@@ -55,7 +55,7 @@ const MediaFetchTimeHanlde = ({
             baseKeyword: searchKeyword!,
             mediaData: mediaResult,
             mediaType: mediaCategory,
-            fetchTime,
+            fetchTime: fetchTime,
           },
         ];
       });

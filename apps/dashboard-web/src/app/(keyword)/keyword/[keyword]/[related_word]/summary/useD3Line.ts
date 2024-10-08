@@ -35,6 +35,7 @@ interface Props {
   xScale: D3.ScaleBand<string> | undefined;
   yScale: D3.ScaleLinear<number, number, never> | undefined;
   title: string;
+  curveType?: D3.CurveFactory | D3.CurveFactoryLineOnly;
 }
 
 // 해당 Line은 X.scaleBand y.scaleLinear에 한정적인 hook이다
@@ -59,6 +60,7 @@ const useD3Line = ({
   yScale,
   styleMethod,
   title,
+  curveType,
 }: Props) => {
   const { width, height, marginTop, marginRight, marginBottom, marginLeft } =
     dimensions;
@@ -86,7 +88,7 @@ const useD3Line = ({
           .y((d) => {
             return yScale?.(d.value);
           })
-          .curve(D3.curveCatmullRom);
+          .curve(curveType ? curveType : D3.curveCatmullRom);
 
         const initialLine = D3.line<DataItem>()
           .x((datum) => {

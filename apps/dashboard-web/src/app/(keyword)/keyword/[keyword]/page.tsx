@@ -74,7 +74,7 @@ const Page = ({ params }: { params: { keyword: string } }) => {
             <div className="grid grid-cols-[repeat(2,minmax(600px,1fr))] gap-[20px]">
               <BoxFrame isPositionProperty={true}>
                 <div className="flex h-full flex-col">
-                  <div className="text-grey600 mb-[30px] flex gap-[10px] text-[14px] font-[500]">
+                  <div className="text-grey600 mb-[30px] flex items-center gap-[10px] text-[14px] font-[500]">
                     <p>콘텐츠 추이</p>
                     <TooltipComponent
                       title={

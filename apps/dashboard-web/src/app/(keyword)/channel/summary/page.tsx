@@ -10,15 +10,15 @@ const Page = () => {
 
     {
       label: '평균 조회수',
-      value: '993,244,111',
+      value: '993,247,110',
     },
     {
       label: '영상 수',
-      value: '1,233',
+      value: '1,200',
     },
     {
       label: '평균 좋아요',
-      value: '1,234',
+      value: '1,524',
     },
     {
       label: '평균 댓글',
@@ -96,7 +96,7 @@ const Page = () => {
             </div>
 
             <div className=" flex-1">
-              <MediaImageCard keyword={'여행'} size={2} />
+              <MediaImageCard keyword={'아이돌'} size={2} />
             </div>
           </div>
         </BoxFrame>
@@ -109,7 +109,7 @@ const Page = () => {
               <p>내 채널 인기 키워드</p>
             </div>
 
-            <div className="h-[250px] flex-1">=</div>
+            <div className="h-[250px] flex-1"></div>
           </div>
         </BoxFrame>
 
@@ -119,7 +119,7 @@ const Page = () => {
               <p>경쟁 채널 신규 영상 키워드</p>
             </div>
 
-            <div className="h-[250px] flex-1">=</div>
+            <div className="h-[250px] flex-1"></div>
           </div>
         </BoxFrame>
 
@@ -129,7 +129,7 @@ const Page = () => {
               <p>내 핵심 시청자의 관심 키워드</p>
             </div>
 
-            <div className="h-[250px] flex-1">=</div>
+            <div className="h-[250px] flex-1"></div>
           </div>
         </BoxFrame>
       </div>

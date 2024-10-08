@@ -3,10 +3,10 @@ import { zErrResBase } from '../error.response.zod';
 import { zChannelResponse } from './channel.model';
 
 import {
+  zAutocompleteChannelName,
   zChannelFilterAndSortQuery,
-  zChannelListResponse,
+  zChannelListRes,
   zChannelNameAutocompleteQuery,
-  zChannelNameAutocompleteResponse,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
   zGetContentListQuery,
   zGetVideoTimelineQuery,
@@ -44,7 +44,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}`,
     query: zChannelFilterAndSortQuery,
     responses: {
-      200: zChannelListResponse,
+      200: zChannelListRes,
       ...zErrResBase,
     },
     summary: '조건에 맞는 채널 리스트를 가져옵니다',
@@ -56,7 +56,7 @@ export const channelApi = c.router({
     path: `${channelApiUrl}/auto-complete/:channelName`,
     pathParams: zChannelNameAutocompleteQuery,
     responses: {
-      200: zChannelNameAutocompleteResponse,
+      200: zAutocompleteChannelName,
       ...zErrResBase,
     },
     summary: '채널 이름 자동완성',
