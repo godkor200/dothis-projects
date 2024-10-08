@@ -112,6 +112,7 @@ export const zRegisteredChannelContentsResp = z.object({
   videoTitle: z.string().nonempty('비디오 제목은 빈 문자열일 수 없습니다.'), // 비디오 제목
   videoViews: z.number().nonnegative('비디오 조회수는 음수일 수 없습니다.'), // 비디오 조회수
   videoPublished: z.date(),
+  videoUseText: z.string().nullable(),
 });
 
 export const zRegisterChannelListResponseObject =

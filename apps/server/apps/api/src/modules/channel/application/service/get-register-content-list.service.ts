@@ -35,6 +35,7 @@ export class GetRegisterContentListService
         sort,
         order,
       });
+
       if (res.isOk()) {
         const result = res.unwrap().map((ele) => {
           return {
@@ -42,6 +43,7 @@ export class GetRegisterContentListService
             videoTitle: ele.video_title,
             videoViews: ele.video_views,
             videoPublished: new Date(ele.video_published),
+            videoUseText: ele.use_text,
           };
         });
 
