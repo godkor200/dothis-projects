@@ -16,7 +16,8 @@ export class GetChannelInfoAdapter implements ChannelInfoOutboundPort {
     private readonly opensearchClient: OpensearchClient,
   ) {}
   async execute(channelId: string): Promise<TChannelInfoResult> {
-    const adjustedTo = DateUtil.getDaysAgo(3);
+    //날짜 고정
+    let adjustedTo = '2024-10-05';
 
     try {
       const mustQueries: any[] = [

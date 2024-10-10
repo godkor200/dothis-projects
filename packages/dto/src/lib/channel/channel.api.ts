@@ -5,6 +5,7 @@ import { zChannelResponse } from './channel.model';
 import {
   zAutocompleteChannelName,
   zChannelFilterAndSortQuery,
+  zChannelId,
   zChannelListRes,
   zChannelNameAutocompleteQuery,
   zFindVideoBySearchKeywordFindChannelClusterNumberMulti,
@@ -15,6 +16,7 @@ import {
 } from './channel.zod';
 import { zChannelAnalysisBody } from './channel-analysis.zod';
 import { zSuccessBase } from '../success.response.zod';
+import { z } from 'zod';
 
 const channelApiUrl = '/channel';
 export const channelApi = c.router({
@@ -106,5 +108,17 @@ export const channelApi = c.router({
     },
     summary: '콘텐츠 리스트 조회',
     description: '기준 채널 ID로 영상 콘텐츠 리스트를 조회합니다.',
+  },
+  deleteChannel: {
+    method: 'DELETE',
+    path: `${channelApiUrl}/:channelId`,
+    pathParams: zChannelId,
+    body: z.object({}),
+    responses: {
+      200: zSuccessBase, // 성공 시 반환할 응답 스키마
+      ...zErrResBase, // 에러 응답 스키마
+    },
+    summary: '채널 삭제',
+    description: '등록된 채널을 ID로 식별하여 삭제합니다.',
   },
 });

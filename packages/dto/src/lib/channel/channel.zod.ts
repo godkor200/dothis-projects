@@ -5,10 +5,9 @@ import {
   zClusterNumberMulti,
   zDateQuery,
   zSearchKeyword,
+  dataObject,
   zSortQuery,
 } from '../common.model';
-import { zChannelAnalysis } from './channel.model';
-import { dataObject, zClusterNumberMulti, zSortQuery } from '../common.model';
 
 export const ChannelSubscriberRange = {
   RANGE_1000_TO_9999: '1000to9999',
@@ -124,7 +123,7 @@ export const zRegisteredChannelContentsResp = z.object({
   videoTitle: z.string().nonempty('비디오 제목은 빈 문자열일 수 없습니다.'), // 비디오 제목
   videoViews: z.number().nonnegative('비디오 조회수는 음수일 수 없습니다.'), // 비디오 조회수
   videoPublished: z.date(),
-  videoUseText: z.string().nullable(),
+  videoUseText: z.array(z.string()),
 });
 
 export const zRegisterChannelListResponseObject =

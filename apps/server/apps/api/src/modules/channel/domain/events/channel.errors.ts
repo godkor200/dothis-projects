@@ -19,3 +19,12 @@ export class NoRegisteredChannelsError extends ExceptionBase {
     super(NoRegisteredChannelsError.message, cause, metadata);
   }
 }
+export class ChannelDuplicateError extends ExceptionBase {
+  static readonly message = 'Channel already exists';
+
+  public readonly code = 'CHANNEL.DUPLICATE';
+
+  constructor(cause?: Error, metadata?: unknown) {
+    super(ChannelDuplicateError.message, cause, metadata);
+  }
+}

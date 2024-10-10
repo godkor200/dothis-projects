@@ -24,4 +24,13 @@ export class ChannelAnalysisRepository
   async findByUserId(userId: number): Promise<ChannelAnalysisEntity[]> {
     return await this.repository.find({ where: { userId } });
   }
+
+  async checkChannel(
+    userId: number,
+    channelId: string,
+  ): Promise<ChannelAnalysisEntity[]> {
+    return await this.repository.find({
+      where: { userId, registeredChannelId: channelId },
+    });
+  }
 }

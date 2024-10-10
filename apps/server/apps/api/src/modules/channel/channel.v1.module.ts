@@ -42,6 +42,8 @@ import {
   VIDEO_LIST_BY_CHANNEL_ID_ADAPTER_DI_TOKEN,
 } from '@Apps/modules/video/video.di-token';
 import { VideoDataAdapter } from '@Apps/modules/video/infrastructure/adapters/video_data.adapter';
+import { DeleteRegisteredChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/delete-registered-channel.http.controller';
+import { DeleteRegisteredChannelService } from '@Apps/modules/channel/application/service/delete-registered-channel.service';
 
 const controllers = [
   FindInfluentialListHttpController,
@@ -51,6 +53,7 @@ const controllers = [
   RegisterChannelHttpController,
   GetRegisteredChannelHttpController,
   GetRegisterChannelContentListHttpController,
+  DeleteRegisteredChannelHttpController,
 ];
 
 const service: Provider[] = [
@@ -64,6 +67,7 @@ const service: Provider[] = [
   RegisterChannelService,
   GetRegisteredChannelService,
   GetRegisterContentListService,
+  DeleteRegisteredChannelService,
 ];
 
 const adapter: Provider[] = [

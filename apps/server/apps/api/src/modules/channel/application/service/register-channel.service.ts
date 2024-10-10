@@ -8,10 +8,16 @@ import {
 } from '@Apps/modules/channel/channel.di-token';
 import { Inject } from '@nestjs/common';
 import { ChannelAnalysisEntity } from '@Apps/modules/channel/infrastucture/entities/channel-analysis.entity';
-import { ChannelNotFoundError } from '@Apps/modules/channel/domain/events/channel.errors';
+import {
+  ChannelDuplicateError,
+  ChannelNotFoundError,
+} from '@Apps/modules/channel/domain/events/channel.errors';
 import { ChannelInfoOutboundPort } from '@Apps/modules/channel/domain/ports/channel-info.outbound.port';
 
-export type RegisterChannelResult = Result<boolean, any>;
+export type RegisterChannelResult = Result<
+  boolean,
+  ChannelDuplicateError | ChannelNotFoundError
+>;
 
 @CommandHandler(RegisterChannelDto)
 export class RegisterChannelService
@@ -34,7 +40,15 @@ export class RegisterChannelService
       if (checkChannel.isErr()) {
         return Err(new ChannelNotFoundError());
       }
+      const checkChannelDuplication =
+        await this.channelAnalysisRepository.checkChannel(
+          command.userId,
+          command.registeredChannelId,
+        );
 
+      if (checkChannelDuplication.length != 0) {
+        return Err(new ChannelDuplicateError());
+      }
       const channelAnalysisEntity = ChannelAnalysisEntity.create(command);
       const res = await this.channelAnalysisRepository.insert(
         channelAnalysisEntity,
