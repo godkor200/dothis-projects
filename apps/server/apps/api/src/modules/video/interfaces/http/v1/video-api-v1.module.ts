@@ -4,6 +4,7 @@ import {
   TOP_VIDEO_ADAPTER_DI_TOKEN,
   VIDEO_ADS_INFO_IGNITE_DI_TOKEN,
   VIDEO_CACHE_ADAPTER_DI_TOKEN,
+  VIDEO_CATEGORY_ADAPTER_DI_TOKEN,
   VIDEO_COUNT_DAY_IGNITE_DI_TOKEN,
   VIDEO_COUNT_GET_SERVICE_DI_TOKEN,
   VIDEO_DATA_ADAPTER_DI_TOKEN,
@@ -37,28 +38,15 @@ import {
   VIDEO_HISTORY_IGNITE_DI_TOKEN,
 } from '@Apps/modules/video-history/video_history.di-token';
 import { VideoHistoryGetListByIdsAdapter } from '@Apps/modules/video-history/infrastructure/adapters/video-history.get-list-by-ids.adapter';
-import { FindAccumulateVideosV1HttpController } from '@Apps/modules/video/interfaces/http/v1/find-accumulate-videos/find-accumulate-videos.http.controller';
-import { FindAccumulateVideoService } from '@Apps/modules/video/application/service/find-accumulate-video.service';
-import { FindAccumulateVideosV1QueryHandler } from '@Apps/modules/video/application/queries/v1/find-accumulate-videos.query-handler';
 import { VideoHistoryGetMultipleByIdAdapter } from '@Apps/modules/video-history/infrastructure/adapters';
-import { FindAdsInfoService } from '@Apps/modules/video/application/service/find-ads-info.service';
-import { FindAdsInfoHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-info/find-ads-info.http.controller';
-import { FindAdsInfoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-ads-info.query-handler';
-import { FindAdsTopHitsQueryHandler } from '@Apps/modules/video/application/queries/v1/find-ads-top-hits.query-handler';
-import { FindAdsTopHitsService } from '@Apps/modules/video/application/service/find-ads-top-hits.service';
-import { FindAdsTopHitsHttpController } from '@Apps/modules/video/interfaces/http/v1/find-ads-top-hits/find-ads-top-hits.http.controller';
-import { FindPerformanceLengthHttpController } from '@Apps/modules/video/interfaces/http/v1/find-performance-length/find-performance-length.http.controller';
-import { FindPerformanceLengthService } from '@Apps/modules/video/application/service/find-performance-length.service';
 import {
   VIDEO_PERFORMANCE_DI_TOKEN,
   VIDEO_VIEWS_BY_DATE_KEYWORD_IGNITE_DI_TOKEN,
   WEEKLY_VIEWS_REPOSITORY_V2_DI_TOKEN,
 } from '@Apps/modules/hits/hits.di-token.contants';
-import { FindPerformanceLengthQueryHandler } from '@Apps/modules/video/application/queries/v1/find-performance-length.query-handler';
 import {
   VideoDurationLengthAdapter,
   VideoPaginatedAdapter,
-  VideoPerformanceAdapter,
 } from '@Apps/modules/video/infrastructure/adapters';
 import { FindIssueTodayQueryHandler } from '@Apps/modules/video/application/queries/v1/find-issue-today.query-handler';
 import { FindIssueTodayService } from '@Apps/modules/video/application/service/find-issue-today.service';
@@ -95,18 +83,17 @@ import { FindVideoCountService } from '@Apps/modules/video/application/service/f
 import { FindVideoCountQueryHandler } from '@Apps/modules/video/application/queries/v1/find-video-count.query-handler';
 import { GetDurationLengthHttpController } from '@Apps/modules/hits/interfaces/http/controllers/v1/get-duration-length.http.controller';
 import { VideoDurationLengthService } from '@Apps/modules/video/application/service/video.duration-length.service';
+import { FindCategoryIssueVideoController } from '@Apps/modules/video/interfaces/http/v1/find-category-issue-video.http.controller';
+import { FindCategoryIssueVideoQueryHandler } from '@Apps/modules/video/application/queries/v1/find-category-issue-video.query-handler';
+import { VideoCategoryAdapter } from '@Apps/modules/video/infrastructure/adapters/video.category.adapter';
+import { ScrollService } from '@Apps/common/opensearch/service/opensearch.scroll-api.service';
 
 const controllers = [
-  // FindIndividualVideoInfoHttpController,
-  // FindAccumulateVideosV1HttpController,
-  // FindAdsInfoHttpController,
-  // FindAdsTopHitsHttpController,
-  // FindPerformanceLengthHttpController,
-  // FindIssueTodayHttpController,
   FindVideoPageHttpController,
   FindVideosCountHttpController,
   FindIssueTodayHttpController,
   GetDurationLengthHttpController,
+  FindCategoryIssueVideoController,
 ];
 
 const commandHandlers: Provider[] = [];
@@ -120,6 +107,7 @@ const queryHandlers: Provider[] = [
   FindVideoPageQueryHandler,
   FindIssueTodayQueryHandler,
   FindVideoCountQueryHandler,
+  FindCategoryIssueVideoQueryHandler,
 ];
 const service: Provider[] = [
   // { provide: VIDEO_ADS_INFO_IGNITE_DI_TOKEN, useClass: FindAdsInfoService },
@@ -152,6 +140,7 @@ const service: Provider[] = [
     useClass: FindVideoCountService,
   },
   VideoDurationLengthService,
+  ScrollService,
 ];
 
 const adapters: Provider[] = [
@@ -236,6 +225,7 @@ const adapters: Provider[] = [
     provide: VIDEO_DATA_ADAPTER_DI_TOKEN,
     useClass: VideoDataAdapter,
   },
+  { provide: VIDEO_CATEGORY_ADAPTER_DI_TOKEN, useClass: VideoCategoryAdapter },
 ];
 
 const repositories: Provider[] = [

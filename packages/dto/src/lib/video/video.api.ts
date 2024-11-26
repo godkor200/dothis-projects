@@ -11,6 +11,7 @@ import {
 } from '../common.model';
 import {
   findVideoBySearchKeyword,
+  zCategoryIssueVideos,
   zFindAccumulateQuery,
   zFindIndividualVideoInfoParams,
   zFindVideoBySearchKeyword,
@@ -131,8 +132,20 @@ export const videoApi = c.router({
       '    - 추천 키워드 3 + 1등 연관어가 포함된 영상\n' +
       '        - 조회수 1등 영상 반환(조회수 내림차순 정렬, limit 1)\n' +
       '    - 총 3개 영상 반환\n' +
-      '    - 미니는 일단 영상은 3개 반환 받은 후 콘텐츠 블럭에 영상 or뉴스 중 뭐를 출력할지는 각각 랜덤\n' +
+      '    - 미니는 일단 영상은 3개 반환 받은 후 콘텐츠 블럭에 영상 or 뉴스 중 뭐를 출력할지는 각각 랜덤\n' +
       '        - ex)\n' +
       '            - 영상/뉴스/뉴스 or 뉴스/영상/뉴스 or 영상/영상/영상 등',
+  },
+  getCategoryIssueVideos: {
+    method: 'GET',
+    path: `${videoBaseApiUrl}/issue/category`,
+    query: zCategoryIssueVideos,
+    responses: {
+      200: zTodayIssueVideoExtendedData, // 작성된 비디오 모델 사용
+      ...zErrResBase,
+    },
+    summary: '카테고리별 이슈 영상을 조회합니다.',
+    description:
+      '30일 전부터 어제까지의 영상 중 일일 평균 조회수(video_views/(today - video_published))가 높은 순서로 정렬하여 반환합니다.',
   },
 });

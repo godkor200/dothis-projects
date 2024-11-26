@@ -34,14 +34,20 @@ export class VideoAggregateHelper {
     }
   > {
     const videoHistoryMap = new Map<string, TRangeVideoHistoryResult[]>();
-
+    /**
+     * 1. **비디오 데이터 그룹화**:
+     *     - 입력된 비디오 데이터를 비디오 ID별로 그룹화하여 같은 ID의 비디오 기록을 한데 모은다.
+     */
     for (const video of groupedData) {
       if (!videoHistoryMap.has(video.video_id)) {
         videoHistoryMap.set(video.video_id, []);
       }
       videoHistoryMap.get(video.video_id)!.push(video);
     }
-
+    /**
+     * 2. **결과를 저장할 맵 초기화**:
+     *     - 결과를 저장할 빈 맵을 생성한다.
+     */
     const result = new Map<
       string,
       {
@@ -54,7 +60,12 @@ export class VideoAggregateHelper {
         videoIds: Set<string>;
       }
     >();
-
+    /**
+     * 3. **비디오 ID별로 반복**:
+     *     - 각 비디오 ID와 해당 비디오 목록에 대해 다음 작업을 수행한다:
+     *         - 비디오 목록을 날짜 기준으로 정렬한다.
+     *         - 이전 비디오를 추적하기 위한 변수 초기화.
+     */
     for (const [videoId, videos] of videoHistoryMap) {
       videos.sort(
         (a, b) =>
@@ -71,7 +82,12 @@ export class VideoAggregateHelper {
       );
 
       let prevVideo: TRangeVideoHistoryResult | null = null;
-
+      /**
+       * 4. **비디오 목록 반복**:
+       *     - 각 비디오에 대해 다음을 진행한다:
+       *         - 비디오의 조회수와 날짜 정보 추출.
+       *         - 날짜를 특정 형식으로 포맷팅한다.
+       */
       for (const video of videos) {
         const { video_views, channel_average_views, year_c, month_c, day_c } =
           video;
@@ -79,12 +95,20 @@ export class VideoAggregateHelper {
           2,
           '0',
         )}`;
-
+        /**
+         * 5. **연속된 날짜 확인**:
+         *     - 이전 비디오가 없거나 현재 비디오가 이전 비디오와 연속된 날짜가 아닐 경우:
+         *         - 이전 비디오를 업데이트하고 다음 비디오로 넘어간다.
+         */
         if (!prevVideo || !this.isConsecutiveDay(prevVideo, video)) {
           prevVideo = video_views !== 0 ? video : null;
           continue;
         }
-
+        /**
+         * 6. **결과에 데이터 추가**:
+         *     - 날짜별로 결과 맵이 없으면 초기값으로 새로운 항목을 생성한다.
+         *     - 호출된 콜백 함수를 통해 조회수 증가량을 계산하고 결과에 추가한다.
+         */
         if (!result.has(date)) {
           result.set(date, {
             date,
@@ -262,6 +286,7 @@ export class VideoAggregateHelper {
     const result = this.processVideoData(
       groupedData,
       (video, prevVideo, currentData) => {
+        // 이전 비디오가 있으면 일일조회수 계산
         if (prevVideo) {
           const increaseViews = video.video_views - prevVideo.video_views;
           currentData.increaseViews += increaseViews;

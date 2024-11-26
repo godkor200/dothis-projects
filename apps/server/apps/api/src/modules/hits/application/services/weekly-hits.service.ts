@@ -25,11 +25,13 @@ export class WeeklyHitsService implements WeeklyHitsV2InboundPort {
       ...dto,
       from: dto.from,
     });
-    try {
+
+
       const result =
         await this.weeklyHitsRepository.getPaginatedWeeklyHitsByKeywordAndCount(
           dao,
         );
+
       if (result.isOk()) {
         const unwrap = result.unwrap();
 
@@ -41,8 +43,6 @@ export class WeeklyHitsService implements WeeklyHitsV2InboundPort {
         });
       }
       return Err(result.unwrapErr());
-    } catch (e) {
-      return Err(e);
-    }
+
   }
 }

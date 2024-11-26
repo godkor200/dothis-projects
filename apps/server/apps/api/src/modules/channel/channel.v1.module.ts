@@ -8,6 +8,7 @@ import { ChannelListHttpController } from '@Apps/modules/channel/interfaces/http
 import { GetChannelListService } from '@Apps/modules/channel/application/service/get-channel-list.service';
 import {
   AUTO_CHANNEL_NAME_DI_TOKEN,
+  CHANNEL_DATA_BY_ELEMENT_DI_TOKEN,
   CHANNEL_DATA_DI_TOKEN,
   CHANNEL_DATA_LIST_DI_TOKEN,
   CHANNEL_INFO_ADAPTER_DI_TOKEN,
@@ -44,6 +45,7 @@ import {
 import { VideoDataAdapter } from '@Apps/modules/video/infrastructure/adapters/video_data.adapter';
 import { DeleteRegisteredChannelHttpController } from '@Apps/modules/channel/interfaces/http/controllers/v1/delete-registered-channel.http.controller';
 import { DeleteRegisteredChannelService } from '@Apps/modules/channel/application/service/delete-registered-channel.service';
+import { ChannelDataByElementAdapter } from '@Apps/modules/channel/infrastucture/adapters/channel_data_by_element.adapter';
 
 const controllers = [
   FindInfluentialListHttpController,
@@ -106,6 +108,10 @@ const adapter: Provider[] = [
   {
     provide: VIDEO_DATA_ADAPTER_DI_TOKEN,
     useClass: VideoDataAdapter,
+  },
+  {
+    provide: CHANNEL_DATA_BY_ELEMENT_DI_TOKEN,
+    useClass: ChannelDataByElementAdapter,
   },
 ];
 

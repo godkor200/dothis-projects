@@ -92,7 +92,7 @@ export abstract class SqlRepositoryBase<E, M> implements RepositoryPort<E> {
       .into(this.tableName)
       .values(entity)
       .execute();
-
+    console.log(res);
     return { success: res.raw['affectedRows'] > 0 };
   }
 

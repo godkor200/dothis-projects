@@ -44,6 +44,7 @@ export class GetRegisterContentListService
             videoViews: ele.video_views,
             videoPublished: new Date(ele.video_published),
             videoUseText: ele.use_text,
+            channelName: ele.channel_name,
           };
         });
 

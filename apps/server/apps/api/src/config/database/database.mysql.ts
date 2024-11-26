@@ -20,7 +20,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     );
     return connectionName === 'default'
       ? {
-          type: 'mysql',
+          type: 'mariadb',
           host: this.configService.get('db.DB_HOST'),
           port: +this.configService.get<number>('db.DB_PORT'),
           username: this.configService.get('db.MYSQL_USER'),
@@ -36,7 +36,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
           synchronize: this.configService.get('app.NODE_ENV') === 'development',
         }
       : {
-          type: 'mysql',
+          type: 'mariadb',
           host: this.configService.get('db.ONPROMISES_DB_HOST'),
           port: +this.configService.get<number>('db.ONPROMISES_DB_PORT'),
           username: this.configService.get('db.ONPROMISES_MYSQL_ROOT_USER'),

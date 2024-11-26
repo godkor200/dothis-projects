@@ -7,15 +7,6 @@ import {
   ChannelAdapterOutboundResult,
 } from '@Apps/modules/channel/domain/ports/channel.adapter.port';
 
-interface ChannelData {
-  channelId: string;
-  channelName: string;
-  channelDescription: string;
-  channelTags: string[];
-  channelSubscribers: number;
-  channelTotalViews: number;
-}
-
 export class ChannelDataAdapter implements ChannelAdapterOutboundPort {
   constructor(
     @Inject(getOpensearchClientToken())
@@ -44,8 +35,12 @@ export class ChannelDataAdapter implements ChannelAdapterOutboundPort {
           channelDescription: doc._source.channel_description,
           channelTags: doc._source.channel_tags,
           channelThumbnail: doc._source.channel_thumbnail,
+          channelCountry: doc._source.channel_country,
+          channelSince: doc._source.channel_since,
+          channelCluster: doc._source.channel_cluster,
+          channelIdPart: doc._source.channel_id_part,
         }));
-
+      console.log(body.docs);
       return Ok(channelData);
     } catch (error) {
       console.error('Error fetching channel data:', error);

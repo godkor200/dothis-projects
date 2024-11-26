@@ -32,10 +32,10 @@ export class User {
   @Column({ name: 'channel_id', type: 'varchar' })
   channelId: string;
 
-  @Column({ name: 'token_refresh', type: 'varchar' })
+  @Column({ name: 'token_refresh', type: 'varchar', nullable: true })
   tokenRefresh: string;
 
-  @Column({ name: 'agree_promotion', type: 'boolean' })
+  @Column({ name: 'agree_promotion', type: 'boolean', nullable: true })
   agreePromotion: boolean;
 
   @Column({
@@ -47,7 +47,7 @@ export class User {
   })
   plan: string;
 
-  @Column({ type: 'boolean', name: 'is_admin' })
+  @Column({ type: 'boolean', name: 'is_admin', nullable: true })
   isAdmin: boolean;
 
   @Column({
@@ -86,6 +86,8 @@ export class User {
   @Column({
     name: 'isEnvLocal',
     type: 'boolean',
+    default: false,
+    nullable: true,
   })
   isEnvLocal: boolean;
 

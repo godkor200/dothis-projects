@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {
   dataObject,
+  zCategoryNumberMulti,
   zDateQuery,
   zPaginatedQuery,
   zSearchKeyword,
@@ -25,6 +26,24 @@ export const zClusterSeparationQuery = z.object({
     return val;
   }, z.boolean().optional().describe('클러스터별 분리')),
 });
+/**
+ * from: string
+ * - 언제부터 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-01'
+ *
+ * to: string
+ * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
+ *
+ * limit: string
+ * - 페이지 표시할 갯수
+ *
+ * categoryNumbers: string[]
+ * - 카테고리 번호 하나 단독, 다수의 카테고리로 페이지네이션 합니다. ex) 4, 93, 14, 13, 57, 5, 43, 1, 10, 45
+ */
+
+export const zCategoryIssueVideos = zPaginatedQuery
+  .pick({ limit: true })
+  .merge(zDateQuery)
+  .merge(zCategoryNumberMulti);
 
 /**
  * findVideoBySearchKeyword 스키마 정의:
@@ -41,6 +60,7 @@ export const zClusterSeparationQuery = z.object({
  * to: string
  * - 까지 날짜. 형식: 'YYYY-MM-DD'. 기본값: '2024-05-07'
  */
+
 export const findVideoBySearchKeyword = zSearchKeyword.merge(zDateQuery);
 
 export const zAllOptionalSearchKeyword = zSearchKeyword

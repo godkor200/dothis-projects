@@ -22,45 +22,51 @@ export class GoogleLoginRedirectCommandHandler
   async execute(
     command: UserInfoCommandDto,
   ): Promise<Result<GoogleLoginRedirectRes, InternalServerErrorException>> {
-    let isNewUser: boolean = false;
-    let checkUser = await this.userRepository.findOneByEmail(command.userEmail);
-
-    if (!checkUser) {
-      const user = User.create(command);
-
-      await this.userRepository.transaction(
-        async () => await this.userRepository.insert(user),
+    try {
+      let isNewUser: boolean = false;
+      let checkUser = await this.userRepository.findOneByEmail(
+        command.userEmail,
       );
-      checkUser = await this.userRepository.findOneByEmail(command.userEmail);
-      isNewUser = true;
-    }
-    if (!checkUser) return Err(new InternalServerErrorException());
-    const refreshToken = this.jwtService.sign(
-      {
-        id: checkUser.id,
-      },
-      { expiresIn: '24h' },
-    );
-    const googleAccessToken = command.googleAccessToken;
-    const googleRefreshToken = command.googleRefreshToken;
-    await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
 
-    return Ok({
-      accessToken: this.jwtService.sign(
+      if (!checkUser) {
+        const user = User.create(command);
+
+        await this.userRepository.transaction(
+          async () => await this.userRepository.insert(user),
+        );
+        checkUser = await this.userRepository.findOneByEmail(command.userEmail);
+        isNewUser = true;
+      }
+
+      const refreshToken = this.jwtService.sign(
         {
           id: checkUser.id,
-          channelId: checkUser.channelId,
-          userEmail: checkUser.userEmail,
-          isAdmin: checkUser.isAdmin,
-          isEnvLocal: checkUser.isEnvLocal,
         },
-        { expiresIn: '1h' },
-      ),
-      refreshToken,
-      isNewUser,
-      isEnvLocal: checkUser.isEnvLocal,
-      googleAccessToken,
-      googleRefreshToken,
-    });
+        { expiresIn: '24h' },
+      );
+      const googleAccessToken = command.googleAccessToken;
+      const googleRefreshToken = command.googleRefreshToken;
+      await this.userRepository.updateRefreshToken(checkUser.id, refreshToken);
+
+      return Ok({
+        accessToken: this.jwtService.sign(
+          {
+            id: checkUser.id,
+            channelId: checkUser.channelId,
+            userEmail: checkUser.userEmail,
+            isAdmin: checkUser.isAdmin,
+            isEnvLocal: checkUser.isEnvLocal,
+          },
+          { expiresIn: '1h' },
+        ),
+        refreshToken,
+        isNewUser,
+        isEnvLocal: checkUser.isEnvLocal,
+        googleAccessToken,
+        googleRefreshToken,
+      });
+    } catch (e) {
+      return Err(new InternalServerErrorException());
+    }
   }
 }

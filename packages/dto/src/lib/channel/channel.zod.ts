@@ -90,11 +90,21 @@ export const zChannelNameAutocompleteQuery = zInfluentialChannelRes.pick({
   channelName: true,
 });
 
-export const zChannelNameAutocompleteResponse = z.object({
-  thumbnail: z.string().url().describe('Channel thumbnail URL'),
-  channelName: zChannelNameAutocompleteQuery.shape.channelName,
-  subscriberCount: z.number().int().nonnegative().describe('Subscriber count'),
-});
+export const zChannelNameAutocompleteResponse = z
+  .object({
+    thumbnail: z.string().url().describe('Channel thumbnail URL'),
+    channelName: zChannelNameAutocompleteQuery.shape.channelName,
+    subscriberCount: z
+      .number()
+      .int()
+      .nonnegative()
+      .describe('Subscriber count'),
+  })
+  .merge(
+    zChannelListResponseObject.pick({
+      channelId: true,
+    }),
+  );
 
 export const zChannelNameAutocompleteList = z.array(
   zChannelNameAutocompleteResponse,

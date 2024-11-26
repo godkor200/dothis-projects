@@ -69,3 +69,11 @@ export interface ITodayIssue
   search: string;
   related?: string;
 }
+
+export interface ICategoryIssueVideo
+  extends Pick<
+    TodayIssueVideo,
+    'videoId' | 'videoTitle' | 'videoPublished' | 'videoViews' | 'channelName'
+  > {
+  avgViews: number;
+}

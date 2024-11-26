@@ -15,6 +15,7 @@ import { GoogleLoginRedirectRes } from '@Apps/common/auth/interfaces/google-logi
 import { match, Result } from 'oxide.ts';
 import { InternalServerErrorException, User } from '@Libs/commons';
 import { GoogleOAuthGuard } from '@Libs/oauth';
+import { LoginRedirectionResponse } from '@Apps/common/auth/interfaces/login-redirection.response';
 
 const { getGoogleRedirect } = nestControllerContract(apiRouter.auth);
 const { description, summary, responses } = getGoogleRedirect;
@@ -30,6 +31,10 @@ export class GoogleLoginRedirectHttpController {
   @ApiInternalServerErrorResponse({
     description: InternalServerErrorException.message,
   })
+  @ApiOkResponse({
+    type: LoginRedirectionResponse,
+    description: '성공적인 리디렉션 응답',
+  })
   async googleAuthRedirect(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -37,7 +42,6 @@ export class GoogleLoginRedirectHttpController {
   ) {
     const result: Result<GoogleLoginRedirectRes, InternalServerErrorException> =
       await this.commandBus.execute(new UserInfoCommandDto(userInfo));
-
     return match(result, {
       Ok: (result) => {
         const options: CookieOptions = {

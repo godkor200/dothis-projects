@@ -22,7 +22,7 @@ export const authApi = c.router({
     responses: { 200: c.type<{ message: string }>(), ...zErrResBase },
     summary: '유저 로그인 후 토큰 리턴',
     description:
-      '유저 관련 토큰 accessToken, refreshToken, isNewUser은 쿼리로 보내어진다.',
+      '유저 관련 토큰 accessToken, refreshToken, isNewUser은 쿼리 파라미터로 전송됩니다',
   },
   getVerifyToken: {
     method: 'GET',
@@ -33,7 +33,7 @@ export const authApi = c.router({
     },
     summary: '토큰 확인(accessToken, refreshToken) 후 갱신된 토큰 리턴',
     description:
-      '유저 관련 토큰 accessToken, refreshToken은 쿠키, 바디로 보내어진다.',
+      '유저 관련 토큰 accessToken, refreshToken은 검증후 쿠키, 바디로 전송됩니다.',
   },
   getOwnInfo: {
     method: 'GET',

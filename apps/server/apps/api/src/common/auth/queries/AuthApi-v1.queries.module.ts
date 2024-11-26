@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { USER_REPOSITORY } from '@Apps/modules/user/user.di-token';
 import { UserRepository } from '@Apps/modules/user/database/user.repository';
 import { GetOwnInfoQueryHandler } from '@Apps/common/auth/queries/v1/get-own-info/get-own-info.query-handler';
+import { CHANNEL_DATA_DI_TOKEN } from '@Apps/modules/channel/channel.di-token';
+import { ChannelDataAdapter } from '@Apps/modules/channel/infrastucture/adapters';
 
 const strategies: Provider[] = [AtStrategy];
 
@@ -16,6 +18,10 @@ const queryHandlers: Provider[] = [GetOwnInfoQueryHandler];
 
 const repositories: Provider[] = [
   { provide: USER_REPOSITORY, useClass: UserRepository },
+  {
+    provide: CHANNEL_DATA_DI_TOKEN,
+    useClass: ChannelDataAdapter,
+  },
 ];
 @Module({
   controllers: [...httpControllers],
